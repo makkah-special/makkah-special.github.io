@@ -1,0 +1,106 @@
+body{
+    font-family: Tahoma;
+    margin:0;
+    background:#f4f6f9;
+}
+
+/* الشريط العلوي */
+.topbar{
+    background:#1f3f6e;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+}
+
+.topbar a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    font-size:14px;
+}
+
+.topbar a:hover{
+    opacity:0.8;
+}
+
+/* القسم الرئيسي */
+.hero{
+    display:flex;
+    justify-content:space-between;
+    padding:60px 80px;
+    align-items:center;
+}
+
+.hero-right{
+    width:55%;
+}
+
+.hero-right h1{
+    font-size:32px;
+    margin-bottom:20px;
+    color:#1f3f6e;
+}
+
+.hero-right p{
+    font-size:16px;
+    color:#555;
+    line-height:1.8;
+}
+
+.hero-buttons{
+    margin-top:25px;
+}
+
+.btn-primary{
+    background:#2f6fd1;
+    color:white;
+    padding:12px 25px;
+    border-radius:25px;
+    text-decoration:none;
+    margin-left:10px;
+    display:inline-block;
+}
+
+.btn-secondary{
+    background:#4b86e8;
+    color:white;
+    padding:12px 25px;
+    border-radius:25px;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover{
+    opacity:0.9;
+}
+
+/* الكروت */
+.hero-left{
+    width:35%;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.card h3{
+    margin-top:0;
+    color:#1f3f6e;
+}
+
+/* الفوتر */
+.footer{
+    background:#1f3f6e;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    font-size:14px;
+}
