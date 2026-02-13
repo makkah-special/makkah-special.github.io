@@ -343,23 +343,134 @@
       </ul>
     </section>
 
-    <!-- Quiz -->
-    <section id="quiz" class="section-card">
-      <h2>خامسًا: اختبر معلوماتك</h2>
-      <p class="muted">اختبار قصير (اختياري) — تقدر تربطه بجافاسكربت لاحقًا لعرض النتيجة.</p>
+  <!-- Quiz -->
+<section class="card" id="quiz">
+  <h2>خامساً: اختبر معلوماتك عن برنامج يسير</h2>
+  <p class="muted">اختبار قصير موجّه لقائد المدرسة والمعلمين وأولياء الأمور.</p>
 
-      <h3>1) من أمثلة التكييفات الصفية المناسبة؟</h3>
-      <ul>
-        <li>استخدام تعليمات مختصرة + دعم بصري.</li>
-        <li>ترك الطالب بدون دعم لأن الدمج يعني “نفس كل الطلاب”.</li>
-      </ul>
+  <form id="quizForm" class="quiz-form">
+    <!-- سؤال 1 -->
+    <div class="q">
+      <div class="q-title">1) نطاق درجة الذكاء الحدّي للطلبة المستهدفين في برنامج يسير هو تقريباً:</div>
+      <label class="opt"><input type="radio" name="q1" value="0"> 50-60</label>
+      <label class="opt"><input type="radio" name="q1" value="0"> 70-80</label>
+      <label class="opt"><input type="radio" name="q1" value="1"> 90-110</label>
+    </div>
 
-      <h3>2) من أهم عناصر نجاح الخطة؟</h3>
-      <ul>
-        <li>التنسيق بين الأسرة والمدرسة ومتابعة الهدف.</li>
-        <li>تغيير الخطة يوميًا بدون بيانات.</li>
-      </ul>
-    </section>
+    <!-- سؤال 2 -->
+    <div class="q">
+      <div class="q-title">2) أين يتلقى طالب يسير تعليمه في الأصل؟</div>
+      <label class="opt"><input type="radio" name="q2" value="1"> في فصل التعليم العام مع الاستفادة من غرفة المصادر.</label>
+      <label class="opt"><input type="radio" name="q2" value="0"> في معهد التربية الفكرية فقط.</label>
+    </div>
+
+    <!-- سؤال 3 -->
+    <div class="q">
+      <div class="q-title">3) الحد الأعلى المعتاد للوقت الذي يقضيه الطالب في غرفة المصادر هو:</div>
+      <label class="opt"><input type="radio" name="q3" value="1"> لا يزيد عن 50% من اليوم الدراسي.</label>
+      <label class="opt"><input type="radio" name="q3" value="0"> اليوم الدراسي كاملاً.</label>
+    </div>
+
+    <!-- سؤال 4 -->
+    <div class="q">
+      <div class="q-title">4) يبدأ القبول في برنامج يسير لطلبة ذوي الذكاء الحدّي من:</div>
+      <label class="opt"><input type="radio" name="q4" value="0"> الصف الأول الابتدائي.</label>
+      <label class="opt"><input type="radio" name="q4" value="0"> الصف الثاني الابتدائي.</label>
+      <label class="opt"><input type="radio" name="q4" value="1"> المرحلة المتوسطة فقط.</label>
+    </div>
+
+    <!-- سؤال 5 -->
+    <div class="q">
+      <div class="q-title">5) من عناصر البرنامج التربوي الفردي لطالب يسير:</div>
+      <label class="opt"><input type="radio" name="q5" value="1"> أهداف تعليمية فردية واستراتيجيات تدريس وتقويم مناسب.</label>
+      <label class="opt"><input type="radio" name="q5" value="0"> نفس أهداف الفصل العام دون أي تكييف.</label>
+    </div>
+
+    <!-- سؤال 6 -->
+    <div class="q">
+      <div class="q-title">6) الهدف الرئيس لبرنامج يسير هو:</div>
+      <label class="opt"><input type="radio" name="q6" value="1"> دعم الطلبة ذوي الذكاء الحدّي أكاديمياً ومهارياً داخل بيئة المدرسة.</label>
+      <label class="opt"><input type="radio" name="q6" value="0"> عزل الطالب عن التعليم العام بشكل كامل.</label>
+    </div>
+
+    <!-- سؤال 7 -->
+    <div class="q">
+      <div class="q-title">7) من أهم عوامل نجاح خطة يسير:</div>
+      <label class="opt"><input type="radio" name="q7" value="1"> التنسيق بين الأسرة والمدرسة ومتابعة الخطة.</label>
+      <label class="opt"><input type="radio" name="q7" value="0"> تغيير الخطة يومياً دون بيانات.</label>
+    </div>
+
+    <div class="quiz-actions">
+      <button type="button" class="btn primary" onclick="calculateScore()">عرض النتيجة</button>
+    </div>
+  </form>
+
+  <div id="result" class="quiz-result" aria-live="polite"></div>
+</section>
+
+<style>
+  /* Quiz styling */
+  .quiz-form { margin-top: 14px; }
+  .q {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 14px;
+    padding: 14px;
+    margin: 12px 0;
+  }
+  .q-title {
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.8;
+  }
+  .opt {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 8px 0;
+    line-height: 1.9;
+    cursor: pointer;
+  }
+  .opt input[type="radio"]{
+    margin-top: 6px;
+    transform: scale(1.05);
+  }
+  .quiz-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+  }
+  .quiz-result{
+    margin-top: 14px;
+    text-align: center;
+    font-weight: 800;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(0,0,0,.18);
+    border: 1px solid rgba(255,255,255,.10);
+  }
+</style>
+
+<script>
+  function calculateScore() {
+    const total = 7;
+    let score = 0;
+
+    // تحقق أن كل سؤال تم الإجابة عليه
+    for (let i = 1; i <= total; i++) {
+      const picked = document.querySelector(`input[name="q${i}"]:checked`);
+      if (!picked) {
+        document.getElementById("result").innerText = "فضلاً أجب على جميع الأسئلة قبل عرض النتيجة.";
+        return;
+      }
+      score += Number(picked.value);
+    }
+
+    const percent = Math.round((score / total) * 100);
+    document.getElementById("result").innerText =
+      `عدد الإجابات الصحيحة: ${score} من ${total} — نتيجتك: ${percent}%`;
+  }
+</script>
 
     <!-- Forms -->
     <section id="forms" class="section-card">
@@ -400,4 +511,5 @@
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
 </body>
+
 </html>
