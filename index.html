@@ -1,305 +1,215 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>مدرسة مكة المكرمة المتوسطة | بوابة قسم ذوي الإعاقة</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مدرسة مكة المكرمة المتوسطة | بوابة قسم ذوي الإعاقة</title>
 
-  <meta name="description" content="بوابة برامج قسم ذوي الإعاقة في مدرسة مكة المكرمة المتوسطة: الإعاقة العقلية وبرنامج يسير التعليمي ولوحات متابعة." />
-  <meta name="keywords" content="مدرسة مكة المكرمة المتوسطة, قسم ذوي الإعاقة, الإعاقة العقلية, برنامج يسير التعليمي, لوحة متابعة" />
+<meta name="description" content="بوابة برامج قسم ذوي الإعاقة في مدرسة مكة المكرمة المتوسطة: الإعاقة العقلية وبرنامج يسير التعليمي ولوحات المتابعة." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0b1220;
+  --bg2:#0a1a2b;
+  --card:rgba(255,255,255,.06);
+  --stroke:rgba(255,255,255,.10);
+  --text:#eaf2ff;
+  --muted:rgba(234,242,255,.70);
+  --shadow:0 18px 60px rgba(0,0,0,.35);
+  --radius:22px;
+}
+*{box-sizing:border-box}
 
-  <link rel="stylesheet" href="style.css" />
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 500px at 20% 10%, rgba(59,130,246,.25), transparent 60%),
+    radial-gradient(1000px 600px at 80% 0%, rgba(34,197,94,.18), transparent 55%),
+    linear-gradient(160deg,var(--bg1),var(--bg2));
+  min-height:100vh;
+}
 
-  <!-- ✅ إضافات خفيفة للون الجديد + لوحة الإحصاءات (بدون تغيير تصميمك الأساسي) -->
-  <style>
-    /* ===== Color touch (اختياري/خفيف) ===== */
-    /* لو style.css عندك فيه primary مختلف، هذا بيغطيه في الرئيسية فقط */
-    :root{
-      --accentA: rgba(59,130,246,.30); /* أزرق */
-      --accentB: rgba(34,197,94,.18);  /* أخضر */
-    }
-    /* نخلي بعض الأزرار/الواجهات أقرب للهوية الجديدة بدون كسر تنسيق style.css */
-    .btn.primary{
-      background: linear-gradient(135deg, var(--accentA), var(--accentB));
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    .badge{
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-    }
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:24px 16px 40px;
+}
 
-    /* ===== Stats Strip (Bottom) ===== */
-    .stats-strip{ padding: 10px 0 28px; }
-    .stats-strip .section-head{ margin-bottom: 12px; }
-    .stats-strip .section-head h2{ font-size: 18px; }
+header{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
 
-    .stats-grid{
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-    .s-card{
-      grid-column: span 3;
-      border-radius: 18px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 16px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-    }
-    .s-left{
-      display:flex;
-      flex-direction:column;
-      gap: 4px;
-      min-width: 0;
-    }
-    .s-num{
-      font-size: 26px;
-      font-weight: 800;
-      line-height: 1;
-    }
-    .s-label{
-      font-size: 13px;
-      color: rgba(255,255,255,.70);
-      line-height: 1.6;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .s-ic{
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display:grid;
-      place-items:center;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.10);
-      flex: 0 0 auto;
-      font-size: 20px;
-    }
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
 
-    .s-wide{
-      grid-column: span 12;
-      align-items:flex-start;
-    }
-    .s-wide .s-label{
-      white-space: normal;
-      overflow: visible;
-      text-overflow: clip;
-    }
-    .s-wide .s-num{ font-size: 20px; }
+.logo{
+  width:62px;
+  height:62px;
+  border-radius:18px;
+  border:1px solid var(--stroke);
+  background:rgba(255,255,255,.05);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
 
-    @media (max-width: 900px){
-      .s-card{ grid-column: span 6; }
-      .s-wide{ grid-column: span 12; }
-    }
-    @media (max-width: 560px){
-      .s-card{ grid-column: span 12; }
-    }
-  </style>
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:10px;
+}
+
+h1{
+  margin:0;
+  font-size:20px;
+  line-height:1.4;
+}
+
+.sub{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+.hero{
+  margin-top:10px;
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+
+.grid{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr;}
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+  position:relative;
+  overflow:hidden;
+}
+
+.card h3{
+  margin:0 0 8px;
+  font-size:16px;
+  font-weight:900;
+}
+
+.card p{
+  margin:0 0 14px;
+  font-size:13px;
+  line-height:1.7;
+  color:var(--muted);
+}
+
+.btn{
+  display:inline-block;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid var(--stroke);
+  background:linear-gradient(135deg,rgba(59,130,246,.30),rgba(34,197,94,.18));
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+  font-size:13px;
+  transition:.2s;
+}
+.btn:hover{
+  transform:translateY(-2px);
+  opacity:.95;
+}
+
+footer{
+  margin-top:28px;
+  text-align:center;
+  color:rgba(255,255,255,.50);
+  font-size:12px;
+}
+</style>
 </head>
 
 <body>
 
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="school-logo.png" alt="شعار المدرسة">
-        </div>
-        <div>
-          <div class="brand-title">مدرسة مكة المكرمة المتوسطة</div>
-          <div class="brand-sub">بوابة برامج قسم ذوي الإعاقة</div>
-        </div>
-      </div>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <div class="logo">
+      <img src="school-logo.png" alt="شعار المدرسة">
     </div>
-  </header>
+    <div>
+      <h1>مدرسة مكة المكرمة المتوسطة | بوابة قسم ذوي الإعاقة</h1>
+      <div class="sub">برامج القسم + لوحة متابعة فصول التعليم العام — بإشراف أ. سعد الزهراني</div>
+    </div>
+  </div>
+</header>
 
-  <main>
+<section class="hero">
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container hero-inner">
-        <div>
-          <div class="badge">✨ منصة حديثة</div>
-          <h1>برامج قسم ذوي الإعاقة</h1>
-          <p class="hero-desc">
-            منصة رقمية متقدمة لعرض برامج قسم ذوي الإعاقة داخل المدرسة،
-            مخصصة للإعاقة العقلية وبرنامج يسير التعليمي ولوحات المتابعة.
-          </p>
+  <div class="grid">
 
-          <div class="hero-actions">
-            <a class="btn primary" href="#programs">استعراض البرامج</a>
-            <a class="btn ghost" href="general-yaseer.html">اللوحة التفاعلية لبرنامج يسير التعليمي </a>
-          </div>
+    <!-- الإعاقة العقلية -->
+    <article class="card">
+      <h3>برنامج الإعاقة العقلية</h3>
+      <p>نماذج وخطط وملفات البرنامج — وتنظيم محتوى الإعاقة العقلية داخل المدرسة.</p>
+      <a class="btn" href="Intellectualdisability.html">دخول البرنامج</a>
+    </article>
 
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-num">2</div>
-              <div class="stat-label">برامج رئيسية</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">42</div>
-              <div class="stat-label">إجمالي الطلاب</div>
-            </div>
-          </div>
-        </div>
+    <!-- يسير -->
+    <article class="card">
+      <h3>برنامج يسير التعليمي</h3>
+      <p>متابعة الطلاب، خطط الدعم، أدوات مساندة، واختبار معلومات.</p>
+      <a class="btn" href="Slowlearning.html">دخول البرنامج</a>
+    </article>
 
-        <div class="glass-card">
-          <div class="glass-title">وصول سريع</div>
+    <!-- لوحة التعليم العام -->
+    <article class="card">
+      <h3>لوحة فصول التعليم العام</h3>
+      <p>تشخيص طلاب يسير في جميع الفصول — بيانات مباشرة محدثة تلقائياً من الشيت.</p>
+      <a class="btn" href="dashboard.html">دخول اللوحة</a>
+    </article>
 
-          <div class="quick-grid">
+  </div>
 
-            <a class="quick" href="Intellectualdisability.html">
-              <span class="ic">🧠</span>
-              <span>
-                <b>الإعاقة العقلية</b>
-                <small>خدمات وتعريف وإرشادات</small>
-              </span>
-              <span class="arr">‹</span>
-            </a>
+</section>
 
-            <a class="quick" href="Slowlearning.html">
-              <span class="ic">📘</span>
-              <span>
-                <b>برنامج يسير التعليمي</b>
-                <small>دعم وخطط متابعة</small>
-              </span>
-              <span class="arr">‹</span>
-            </a>
+<footer>
+  © <span id="y"></span> مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة
+</footer>
 
-            <!-- ✅ إضافة جديدة: اللوحة التفاعلية لبرنامج يسير التعليمي -->
-            <a class="quick" href="general-yaseer.html">
-              <span class="ic">📊</span>
-              <span>
-                <b>اللوحة التفاعلية لبرنامج يسيرالتعليمي</b>
-                <small>متابعة أعداد طلاب يسير حسب الفصول</small>
-              </span>
-              <span class="arr">‹</span>
-            </a>
+</div>
 
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- PROGRAMS -->
-    <section class="section" id="programs">
-      <div class="container">
-        <div class="section-head">
-          <h2>البرامج المتاحة</h2>
-          <p>اختر البرنامج للدخول للصفحة التفصيلية.</p>
-        </div>
-
-        <div class="cards">
-
-          <article class="card">
-            <div class="card-top">
-              <div class="card-ic">🧠</div>
-              <div>
-                <h3>الإعاقة العقلية</h3>
-                <p>تعريف، خدمات، إرشادات، ونماذج مساندة داخل المدرسة.</p>
-              </div>
-            </div>
-            <a class="btn small" href="Intellectualdisability.html">دخول الصفحة</a>
-          </article>
-
-          <article class="card">
-            <div class="card-top">
-              <div class="card-ic">📘</div>
-              <div>
-                <h3>برنامج يسير التعليمي</h3>
-                <p>متابعة الطلاب، خطط الدعم، وأدوات مساندة تعليمية.</p>
-              </div>
-            </div>
-            <a class="btn small" href="Slowlearning.html">دخول الصفحة</a>
-          </article>
-
-          <!-- ✅ إضافة جديدة: بطاقة اللوحة التفاعلية لبرنامج يسير التعليمي -->
-          <article class="card">
-            <div class="card-top">
-              <div class="card-ic">📊</div>
-              <div>
-                <h3>اللوحة التفاعلية لبرنامج يسير التعليمي</h3>
-                <p>لوحة تفاعلية لمتابعة أعداد طلاب برنامج يسير حسب فصول التعليم العام.</p>
-              </div>
-            </div>
-            <a class="btn small" href="general-yaseer.html">دخول اللوحة</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ✅ إحصائيات القسم (أسفل الصفحة بهيدر صغير) -->
-    <section class="section stats-strip" id="stats">
-      <div class="container">
-        <div class="section-head">
-          <h2>إحصاءات القسم</h2>
-          <p>ملخص سريع لأعداد الطلاب والكوادر داخل برامج قسم ذوي الإعاقة.</p>
-        </div>
-
-        <div class="stats-grid">
-
-          <div class="s-card">
-            <div class="s-left">
-              <div class="s-num">21</div>
-              <div class="s-label">عدد طلاب الإعاقة العقلية</div>
-            </div>
-            <div class="s-ic">🧠</div>
-          </div>
-
-          <div class="s-card">
-            <div class="s-left">
-              <div class="s-num">21</div>
-              <div class="s-label">عدد طلاب برنامج يسير</div>
-            </div>
-            <div class="s-ic">📘</div>
-          </div>
-
-          <div class="s-card">
-            <div class="s-left">
-              <div class="s-num">6</div>
-              <div class="s-label">معلمي الإعاقة العقلية</div>
-            </div>
-            <div class="s-ic">👩‍🏫</div>
-          </div>
-
-          <div class="s-card">
-            <div class="s-left">
-              <div class="s-num">2</div>
-              <div class="s-label">معلمي برنامج يسير</div>
-            </div>
-            <div class="s-ic">👨‍🏫</div>
-          </div>
-
-          <div class="s-card s-wide">
-            <div class="s-left">
-              <div class="s-num">كوادر مساندة</div>
-              <div class="s-label">
-                1 معلم تربية فنية • 1 موجه طلابي • 1 إداري تربية خاصة • مدير المدرسة • وكيل المدرسة
-              </div>
-            </div>
-            <div class="s-ic">🏫</div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer style="text-align:center;padding:20px;color:rgba(255,255,255,.5)">
-    © 2026 مدرسة مكة المكرمة المتوسطة
-  </footer>
+<script>
+document.getElementById("y").textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
