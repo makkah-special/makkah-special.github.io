@@ -1,136 +1,247 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مدرسة مكة المكرمة المتوسطة | برامج المدرسة</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>مدرسة مكة المكرمة المتوسطة | بوابة برامج التربية الخاصة</title>
 
-<style>
-body{
-  margin:0;
-  font-family: "Tahoma", sans-serif;
-  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:white;
-}
+  <meta name="description" content="بوابة برامج التربية الخاصة في مدرسة مكة المكرمة المتوسطة: تعليم عام، الإعاقة العقلية، برنامج يسير التعليمي، ونماذج وخطط (IEP) جاهزة للاستخدام." />
+  <meta name="keywords" content="مدرسة مكة المكرمة المتوسطة, التربية الخاصة, تعليم عام, الإعاقة العقلية, برنامج يسير التعليمي, خطط IEP, نماذج" />
+  <meta name="author" content="مدرسة مكة المكرمة المتوسطة" />
 
-header{
-  text-align:center;
-  padding:60px 20px 40px;
-}
+  <meta property="og:title" content="بوابة برامج التربية الخاصة - مدرسة مكة المكرمة المتوسطة" />
+  <meta property="og:description" content="منصة منظمة وحديثة لبرامج التربية الخاصة والنماذج والروابط المهمة." />
+  <meta property="og:type" content="website" />
 
-.school-logo{
-  width:140px;
-  margin-bottom:20px;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-h1{
-  font-size:34px;
-  margin-bottom:10px;
-}
-
-.subtitle{
-  opacity:.85;
-  font-size:18px;
-}
-
-section{
-  padding:50px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-h2{
-  text-align:center;
-  margin-bottom:40px;
-  font-size:28px;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-  gap:25px;
-}
-
-.card{
-  background: rgba(255,255,255,0.08);
-  padding:25px;
-  border-radius:18px;
-  backdrop-filter: blur(10px);
-  transition:.3s;
-}
-
-.card:hover{
-  transform: translateY(-5px);
-  background: rgba(255,255,255,0.12);
-}
-
-.card h3{
-  margin-top:0;
-  font-size:22px;
-}
-
-.card p{
-  opacity:.85;
-  line-height:1.6;
-}
-
-.card a{
-  display:inline-block;
-  margin-top:15px;
-  padding:10px 18px;
-  background: linear-gradient(45deg,#3b82f6,#6366f1);
-  border-radius:10px;
-  text-decoration:none;
-  color:white;
-  font-size:14px;
-}
-
-footer{
-  text-align:center;
-  padding:30px;
-  opacity:.6;
-  font-size:14px;
-}
-</style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
 
-<header>
-  <img src="school-logo.png" class="school-logo">
-  <h1>مدرسة مكة المكرمة المتوسطة</h1>
-  <div class="subtitle">تعليم عام – برامج ذوي الإعاقة</div>
-</header>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-logo">
+          <!-- ضع شعار المدرسة هنا: اسم الملف عندك school-logo.png -->
+          <img src="school-logo.png" alt="شعار مدرسة مكة المكرمة المتوسطة" />
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">مدرسة مكة المكرمة المتوسطة</div>
+          <div class="brand-sub">بوابة برامج التربية الخاصة</div>
+        </div>
+      </div>
 
-<section id="programs">
-  <h2>برامج المدرسة</h2>
-
-  <div class="cards">
-
-    <div class="card">
-      <h3>تعليم عام</h3>
-      <p>دعم أكاديمي، متابعة الطلاب، وخطط تعليمية علاجية.</p>
-      <a href="general.html">دخول الصفحة</a>
+      <nav class="nav">
+        <a class="nav-link" href="#programs">البرامج</a>
+        <a class="nav-link" href="#iep">النماذج</a>
+        <a class="nav-link" href="#contact">التواصل</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="card">
-      <h3>الإعاقة العقلية</h3>
-      <p>خدمات تعليمية فردية، نماذج IEP، وخطط متابعة متخصصة.</p>
-      <a href="intellectual.html">دخول الصفحة</a>
-    </div>
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <div class="hero-left">
+          <div class="badge">✨ منصة مدرسية حديثة</div>
+          <h1>بوابة برامج التربية الخاصة</h1>
+          <p class="hero-desc">
+            مرجع عملي منظم لمدير المدرسة والمعلمين وأولياء الأمور لفهم برامج التربية الخاصة،
+            مع روابط الصفحات والنماذج والخطط الجاهزة للاستخدام.
+          </p>
 
-    <div class="card">
-      <h3>برنامج يسير التعليمي</h3>
-      <p>برنامج مخصص لدعم الطلاب بآليات تعليمية مرنة وخطط فردية.</p>
-      <a href="slowlearning.html">دخول الصفحة</a>
-    </div>
+          <div class="hero-actions">
+            <a class="btn primary" href="#programs">استعراض البرامج</a>
+            <a class="btn ghost" href="#iep">النماذج والخطط</a>
+          </div>
 
-  </div>
-</section>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-num">3</div>
+              <div class="stat-label">مسارات رئيسية</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">4</div>
+              <div class="stat-label">نماذج IEP</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">PDF</div>
+              <div class="stat-label">فتح مباشر</div>
+            </div>
+          </div>
+        </div>
 
-<footer>
-© 2026 مدرسة مكة المكرمة المتوسطة – جميع الحقوق محفوظة
-</footer>
+        <div class="hero-right">
+          <div class="glass-card">
+            <div class="glass-title">وصول سريع</div>
 
+            <div class="quick-grid">
+              <a class="quick" href="general.html">
+                <span class="ic">🎓</span>
+                <span>
+                  <b>تعليم عام</b>
+                  <small>دعم أكاديمي وخطط علاجية</small>
+                </span>
+                <span class="arr">‹</span>
+              </a>
+
+              <a class="quick" href="Intellectualdisability.html">
+                <span class="ic">🧠</span>
+                <span>
+                  <b>الإعاقة العقلية</b>
+                  <small>تعريف وخدمات وإرشادات</small>
+                </span>
+                <span class="arr">‹</span>
+              </a>
+
+              <a class="quick" href="Slowlearning.html">
+                <span class="ic">📘</span>
+                <span>
+                  <b>برنامج يسير التعليمي</b>
+                  <small>متابعة وخطط ودعم تعلم</small>
+                </span>
+                <span class="arr">‹</span>
+              </a>
+
+              <a class="quick" href="#iep">
+                <span class="ic">📄</span>
+                <span>
+                  <b>نماذج وخطط (IEP)</b>
+                  <small>تحميل PDF جاهز</small>
+                </span>
+                <span class="arr">‹</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMS -->
+    <section class="section" id="programs">
+      <div class="container">
+        <div class="section-head">
+          <h2>برامج التربية الخاصة</h2>
+          <p>اختر البرنامج للدخول للصفحة التفصيلية.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-top">
+              <div class="card-ic">🎓</div>
+              <div>
+                <h3>تعليم عام</h3>
+                <p>دعم أكاديمي، متابعة الطلاب، وخطط علاجية.</p>
+              </div>
+            </div>
+            <a class="btn small" href="general.html">دخول الصفحة</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div class="card-ic">🧠</div>
+              <div>
+                <h3>الإعاقة العقلية</h3>
+                <p>تعريف وخدمات وإرشادات ونماذج مساندة داخل المدرسة.</p>
+              </div>
+            </div>
+            <a class="btn small" href="Intellectualdisability.html">دخول الصفحة</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div class="card-ic">📘</div>
+              <div>
+                <h3>برنامج يسير التعليمي</h3>
+                <p>محتوى منظم لدعم الطلاب وخطط المتابعة والتقارير.</p>
+              </div>
+            </div>
+            <a class="btn small" href="Slowlearning.html">دخول الصفحة</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- IEP -->
+    <section class="section" id="iep">
+      <div class="container">
+        <div class="section-head">
+          <h2>نماذج وخطط تربوية فردية (IEP)</h2>
+          <p>روابط تحميل مباشرة (PDF).</p>
+        </div>
+
+        <div class="download-list">
+          <a class="download" href="iep-math-level1-2026.pdf" target="_blank" rel="noopener">
+            <span class="dl-ic">📄</span>
+            <span class="dl-text">
+              <b>خطة رياضيات المستوى الأول 2026</b>
+              <small>PDF</small>
+            </span>
+            <span class="dl-go">فتح</span>
+          </a>
+
+          <a class="download" href="iep-math-level2-2026.pdf" target="_blank" rel="noopener">
+            <span class="dl-ic">📄</span>
+            <span class="dl-text">
+              <b>خطة رياضيات المستوى الثاني 2026</b>
+              <small>PDF</small>
+            </span>
+            <span class="dl-go">فتح</span>
+          </a>
+
+          <a class="download" href="iep-arabic-level1-2026.pdf" target="_blank" rel="noopener">
+            <span class="dl-ic">📄</span>
+            <span class="dl-text">
+              <b>خطة لغتي المستوى الأول 2026</b>
+              <small>PDF</small>
+            </span>
+            <span class="dl-go">فتح</span>
+          </a>
+
+          <a class="download" href="iep-arabic-level2-2026.pdf" target="_blank" rel="noopener">
+            <span class="dl-ic">📄</span>
+            <span class="dl-text">
+              <b>خطة لغتي المستوى الثاني 2026</b>
+              <small>PDF</small>
+            </span>
+            <span class="dl-go">فتح</span>
+          </a>
+        </div>
+
+        <div class="note">
+          <b>ملاحظة:</b> إذا طلع لك 404 لملف PDF رغم أنه موجود، غالبًا السبب:
+          اسم الملف مختلف حرفيًا (حروف كبيرة/صغيرة) أو فيه مسافة/رمز مختلف.
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="footer-card">
+          <div>
+            <h3>التواصل</h3>
+            <p>هذه الصفحة مرجعية داخلية للمدرسة، ويمكن إضافة بيانات التواصل لاحقًا (هاتف/بريد/موقع).</p>
+          </div>
+          <a class="btn ghost" href="#top">رجوع للأعلى</a>
+        </div>
+
+        <div class="copyright">
+          © <span id="y"></span> مدرسة مكة المكرمة المتوسطة — بوابة برامج التربية الخاصة
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
