@@ -5,26 +5,37 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>مدرسة مكة المكرمة المتوسطة | بوابة التربية الخاصة</title>
 
-  <meta name="description" content="بوابة برامج التربية الخاصة في مدرسة مكة المكرمة المتوسطة: الإعاقة العقلية وبرنامج يسير التعليمي." />
-  <meta name="keywords" content="مدرسة مكة المكرمة المتوسطة, التربية الخاصة, الإعاقة العقلية, برنامج يسير التعليمي" />
+  <meta name="description" content="بوابة برامج التربية الخاصة في مدرسة مكة المكرمة المتوسطة: الإعاقة العقلية وبرنامج يسير التعليمي ولوحات متابعة." />
+  <meta name="keywords" content="مدرسة مكة المكرمة المتوسطة, التربية الخاصة, الإعاقة العقلية, برنامج يسير التعليمي, لوحة متابعة" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 
-  <!-- إضافة بسيطة فقط للإحصائيات (بدون تغيير تصميمك) -->
+  <!-- ✅ إضافات خفيفة للون الجديد + لوحة الإحصاءات (بدون تغيير تصميمك الأساسي) -->
   <style>
+    /* ===== Color touch (اختياري/خفيف) ===== */
+    /* لو style.css عندك فيه primary مختلف، هذا بيغطيه في الرئيسية فقط */
+    :root{
+      --accentA: rgba(59,130,246,.30); /* أزرق */
+      --accentB: rgba(34,197,94,.18);  /* أخضر */
+    }
+    /* نخلي بعض الأزرار/الواجهات أقرب للهوية الجديدة بدون كسر تنسيق style.css */
+    .btn.primary{
+      background: linear-gradient(135deg, var(--accentA), var(--accentB));
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .badge{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+
     /* ===== Stats Strip (Bottom) ===== */
-    .stats-strip{
-      padding: 10px 0 28px;
-    }
-    .stats-strip .section-head{
-      margin-bottom: 12px;
-    }
-    .stats-strip .section-head h2{
-      font-size: 18px;
-    }
+    .stats-strip{ padding: 10px 0 28px; }
+    .stats-strip .section-head{ margin-bottom: 12px; }
+    .stats-strip .section-head h2{ font-size: 18px; }
+
     .stats-grid{
       display: grid;
       grid-template-columns: repeat(12, 1fr);
@@ -83,9 +94,7 @@
       overflow: visible;
       text-overflow: clip;
     }
-    .s-wide .s-num{
-      font-size: 20px;
-    }
+    .s-wide .s-num{ font-size: 20px; }
 
     @media (max-width: 900px){
       .s-card{ grid-column: span 6; }
@@ -123,12 +132,12 @@
           <h1>برامج التربية الخاصة</h1>
           <p class="hero-desc">
             منصة رقمية متقدمة لعرض برامج التربية الخاصة داخل المدرسة،
-            مخصصة للإعاقة العقلية وبرنامج يسير التعليمي.
+            مخصصة للإعاقة العقلية وبرنامج يسير التعليمي ولوحات المتابعة.
           </p>
 
           <div class="hero-actions">
             <a class="btn primary" href="#programs">استعراض البرامج</a>
-            <!-- تم حذف زر "النماذج" لأننا ألغينا قسم IEP من الرئيسية -->
+            <a class="btn ghost" href="general-yaseer.html">لوحة التعليم العام</a>
           </div>
 
           <div class="stats">
@@ -162,6 +171,16 @@
               <span>
                 <b>برنامج يسير التعليمي</b>
                 <small>دعم وخطط متابعة</small>
+              </span>
+              <span class="arr">‹</span>
+            </a>
+
+            <!-- ✅ إضافة جديدة: لوحة التعليم العام -->
+            <a class="quick" href="general-yaseer.html">
+              <span class="ic">📊</span>
+              <span>
+                <b>لوحة التعليم العام</b>
+                <small>متابعة أعداد طلاب يسير حسب الفصول</small>
               </span>
               <span class="arr">‹</span>
             </a>
@@ -202,6 +221,18 @@
               </div>
             </div>
             <a class="btn small" href="Slowlearning.html">دخول الصفحة</a>
+          </article>
+
+          <!-- ✅ إضافة جديدة: بطاقة لوحة التعليم العام -->
+          <article class="card">
+            <div class="card-top">
+              <div class="card-ic">📊</div>
+              <div>
+                <h3>لوحة التعليم العام</h3>
+                <p>لوحة تفاعلية لمتابعة أعداد طلاب برنامج يسير حسب فصول التعليم العام.</p>
+              </div>
+            </div>
+            <a class="btn small" href="general-yaseer.html">دخول اللوحة</a>
           </article>
 
         </div>
