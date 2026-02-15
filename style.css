@@ -67,7 +67,7 @@ body{
   padding-left:110px;
 }
 
-/* ✅ شعار وزارة التعليم (يوضع داخل .topbar-inner) */
+/* ✅ شعار وزارة التعليم (الآن هو <a class="moe-logo">) */
 .moe-logo{
   position:absolute;
   left:28px;
@@ -77,16 +77,27 @@ body{
   align-items:center;
   z-index:5;
   opacity:.9;
+
+  /* ✅ جديد: لأنه رابط */
+  text-decoration:none;
+  cursor:pointer;
+  -webkit-tap-highlight-color: transparent; /* يخفف لمعة الضغط في الجوال */
+  transition:.25s ease;
 }
+
 .moe-logo img{
   height:52px;
   /* يخلي الشعار فاتح/أبيض على الخلفية الداكنة */
   filter: brightness(0) invert(1) drop-shadow(0 6px 14px rgba(0,0,0,.35));
   transition:.25s ease;
 }
-.moe-logo img:hover{
-  transform: scale(1.05);
+
+/* ✅ جديد: Hover على الرابط نفسه */
+.moe-logo:hover{
   opacity:1;
+}
+.moe-logo:hover img{
+  transform: scale(1.05);
 }
 
 /* ضبط الجوال */
