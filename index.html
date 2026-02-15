@@ -40,11 +40,19 @@
       align-items: center;
       z-index: 5;
       opacity: .9;
+      text-decoration: none; /* عشان الرابط ما يطلع خط */
+      cursor: pointer;
+      transition: .25s ease;
     }
     .moe-logo img{
       height: 52px;
       /* يجعل الشعار فاتح/أبيض على الخلفية الداكنة */
       filter: brightness(0) invert(1) drop-shadow(0 6px 14px rgba(0,0,0,.35));
+      transition: .25s ease;
+    }
+    .moe-logo:hover img{
+      transform: scale(1.05);
+      opacity: 1;
     }
     /* على الجوال */
     @media (max-width: 768px){
@@ -132,10 +140,10 @@
   <header class="topbar">
     <div class="container topbar-inner">
 
-      <!-- ✅ شعار وزارة التعليم -->
-      <div class="moe-logo">
+      <!-- ✅ شعار وزارة التعليم (قابل للنقر) -->
+      <a class="moe-logo" href="https://www.moe.gov.sa" target="_blank" rel="noopener">
         <img src="moe-logo.png" alt="شعار وزارة التعليم">
-      </div>
+      </a>
 
       <div class="brand">
         <div class="brand-logo">
