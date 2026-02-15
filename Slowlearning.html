@@ -35,6 +35,30 @@
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 60px}
 
+    /* ===== زر لوحة المتابعة الجديد ===== */
+    .dashboard-banner{
+      display:flex;
+      justify-content:center;
+      margin-bottom:18px;
+    }
+    .dashboard-banner a{
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      padding:14px 26px;
+      border-radius:16px;
+      font-weight:700;
+      font-size:15px;
+      color:#fff;
+      box-shadow: 0 14px 30px rgba(79,140,255,.35);
+      transition:.3s ease;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .dashboard-banner a:hover{
+      transform:translateY(-3px);
+      box-shadow: 0 18px 40px rgba(124,92,255,.55);
+    }
+
     /* Header */
     .hero{
       border:1px solid var(--border);
@@ -61,40 +85,6 @@
     h1{margin:0; font-size:22px; letter-spacing:.2px}
     .subtitle{margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7}
 
-    /* Nav */
-    .nav{
-      margin-top:16px;
-      display:flex; flex-wrap:wrap; gap:10px;
-      padding:12px 14px;
-      border-top:1px solid var(--border);
-      background: rgba(0,0,0,.10);
-    }
-    .chip{
-      padding:10px 12px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background: rgba(255,255,255,.04);
-      font-size:13px;
-      display:flex; align-items:center; gap:8px;
-      transition:.2s ease;
-    }
-    .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18)}
-    .chip svg{width:16px; height:16px; opacity:.95}
-
-    /* Section */
-    section{margin-top:18px}
-    .section-card{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
-      padding:18px 16px;
-    }
-    h2{margin:0 0 10px; font-size:18px}
-    h3{margin:16px 0 8px; font-size:15px}
-    p{margin:0; color:var(--muted); line-height:1.9; font-size:14px}
-
-    /* Buttons */
     .cta{
       margin-top:14px;
       display:flex; gap:10px; flex-wrap:wrap;
@@ -115,64 +105,30 @@
       color:#fff;
     }
     .btn:hover{transform:translateY(-1px)}
-    .btn svg{width:18px; height:18px}
 
-    /* Grid cards */
-    .grid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-    }
-    .kpi{
-      grid-column: span 4;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.10);
-      border-radius: var(--radius);
-      padding:14px;
-      display:flex; gap:12px;
-      align-items:flex-start;
-    }
-    .kpi .icon{
-      width:42px; height:42px; border-radius:14px;
-      background: rgba(79,140,255,.14);
-      display:grid; place-items:center;
-      border:1px solid rgba(79,140,255,.25);
-      flex:0 0 auto;
-    }
-    .kpi .icon svg{width:20px; height:20px}
-    .kpi strong{display:block; margin-top:1px}
-    .kpi small{display:block; color:var(--muted); margin-top:6px; line-height:1.7}
-    @media (max-width:900px){ .kpi{grid-column: span 6;} }
-    @media (max-width:560px){ .kpi{grid-column: span 12;} }
-
-    /* List */
-    ul{margin:8px 0 0; padding:0 18px 0 0; color:var(--muted); line-height:1.9; font-size:14px}
-    li{margin:6px 0}
-
-    /* Footer */
-    .footer{
-      margin-top:14px;
-      padding-top:12px;
-      border-top:1px solid var(--border);
-      display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap;
-      color:var(--muted);
-      font-size:12.5px;
-    }
-    .muted{color:var(--muted)}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header class="hero" id="top">
+
+    <!-- زر لوحة المتابعة الجديد -->
+    <div class="dashboard-banner">
+      <a href="https://makkah-special.github.io/special-education-intermediate-mecca/dashboard.html" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M4 19h16M6 17l4-6 4 3 4-8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        الدخول إلى لوحة المتابعة التفاعلية
+      </a>
+    </div>
+
+    <header class="hero">
       <div class="hero-inner">
         <div class="toprow">
           <div class="brand">
-            <div class="badge" aria-hidden="true">
-              <!-- Spark icon -->
+            <div class="badge">
               <svg viewBox="0 0 24 24" fill="none">
-                <path d="M12 2l1.6 6.1L20 10l-6.4 1.9L12 18l-1.6-6.1L4 10l6.4-1.9L12 2z" stroke="white" stroke-width="1.6" opacity=".95"/>
+                <path d="M12 2l1.6 6.1L20 10l-6.4 1.9L12 18l-1.6-6.1L4 10l6.4-1.9L12 2z" stroke="white" stroke-width="1.6"/>
               </svg>
             </div>
             <div>
@@ -182,361 +138,13 @@
           </div>
 
           <div class="cta">
-            <a class="btn primary" href="#definition">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M8 5h8M8 12h8M8 19h8" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>
-              ابدأ من التعريف
-            </a>
-            <a class="btn" href="#forms">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v16H7z" stroke="white" stroke-width="1.6"/><path d="M9 8h6M9 12h6M9 16h4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-              النماذج
-            </a>
+            <a class="btn primary" href="#definition">ابدأ من التعريف</a>
+            <a class="btn" href="#forms">النماذج</a>
           </div>
         </div>
       </div>
-
-      <nav class="nav" aria-label="التنقّل">
-        <a class="chip" href="index.html">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5l8-6 8 6V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9.5z" stroke="white" stroke-width="1.6"/></svg>
-          الرئيسية
-        </a>
-        <a class="chip" href="#definition">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 7h8M12 12h8M12 17h8" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M4.5 7.5l1.5 1.5 3-3" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-          تعريف البرنامج
-        </a>
-        <a class="chip" href="#eligibility">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 12l4 4 8-10" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          الأهلية والقبول
-        </a>
-        <a class="chip" href="#teachers">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6l8-3 8 3-8 3-8-3z" stroke="white" stroke-width="1.6"/><path d="M6 10v6c0 2 3 4 6 4s6-2 6-4v-6" stroke="white" stroke-width="1.6"/></svg>
-          للمعلمين
-        </a>
-        <a class="chip" href="#parents">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M8 20v-2a4 4 0 0 1 8 0v2" stroke="white" stroke-width="1.6"/><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" stroke="white" stroke-width="1.6"/></svg>
-          لأولياء الأمور
-        </a>
-        <a class="chip" href="#quiz">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 18h.01" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M9 9a3 3 0 1 1 4.5 2.6c-.9.5-1.5 1.2-1.5 2.4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-          اختبر نفسك
-        </a>
-        <a class="chip" href="#forms">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="white" stroke-width="1.6"/><path d="M9 10h6M9 14h6M9 18h4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-          النماذج
-        </a>
-      </nav>
     </header>
 
-    <!-- Intro -->
-    <section class="section-card" aria-label="مقدمة">
-      <h2>نبذة عن برنامج يسير التعليمي</h2>
-      <p>
-        صفحة توعوية توضّح فكرة البرنامج، الفئة المستهدفة، مكان تقديم الخدمة، وآلية العمل داخل المدرسة، مع نقاط عملية للمعلمين وأولياء الأمور.
-        (عدّل النص هنا حسب اعتمادكم داخل المدرسة).
-      </p>
-
-      <div class="grid" role="list">
-        <div class="kpi" role="listitem">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="white" stroke-width="1.6" opacity=".9"/></svg>
-          </div>
-          <div>
-            <strong>الفئة المستهدفة</strong>
-            <small>طلاب لديهم خصائص طلاب بطئ التعلم ويحتاجون دعمًا تربويًا وفق خطط فردية.</small>
-          </div>
-        </div>
-
-        <div class="kpi" role="listitem">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.4-7-11a7 7 0 0 1 14 0c0 6.6-7 11-7 11z" stroke="white" stroke-width="1.6"/></svg>
-          </div>
-          <div>
-            <strong>مكان تقديم الخدمة</strong>
-            <small>داخل المدرسة عبر الدمج قدر الإمكان، وغرفة مصادر/جلسات دعم حسب الخطة.</small>
-          </div>
-        </div>
-
-        <div class="kpi" role="listitem">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 19h16M6 17l4-6 4 3 4-8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div>
-            <strong>هدف البرنامج</strong>
-            <small>تنمية مهارات التواصل والسلوك التكيفي والمهارات الأكاديمية والحياتية.</small>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Definition -->
-    <section id="definition" class="section-card">
-      <h2>أولًا: تعريف بطء الذكاء الحدي والبرنامج</h2>
-      <h3>ما هو الذكاء الحدي؟</h3>
-      <ul>
-        <li>قدرات عقلية تقع بين الإعاقة الفكرية والقدرات العقلية العامة.</li>
-        <li>درجة ذكاء تقريبية تتراوح بين 70–80 على اختبار ستانفورد–بينيه (الصورة الخامسة) أو ما يعادلها من الاختبارات المقننة.</li>
-      </ul>
-
-      <h3>ما هو برنامج يسير التعليمي؟</h3>
-      <p>
-       برنامج يسير هو أحد البرامج التعليمية في مدارس التعليم العام، صُمم لخدمة الطلبة ذوي الذكاء الحدي من خلال:
-      </p>
-    </section>
-
-    <!-- Eligibility -->
-    <section id="eligibility" class="section-card">
-      <h2>ثانيًا: الأهلية والقبول وخدمات البرنامج</h2>
-      <h3>معايير الأهلية والقبول</h3>
-      <ul>
-        <li>أن تكون درجة ذكاء الطالب بين 70–80 مع انخفاض في السلوك التكيفي.</li>
-        <li>ألا تكون المشكلة ناتجة مباشرة عن إعاقة أخرى مصاحبة.</li>
-        <li>وجود تكرار في الرسوب الدراسي لأسباب غير أسرية أو اجتماعية أو صحية.</li>
-       <li>موافقة فريق عمل التربية الخاصة برئاسة قائد المدرسة أو الوكيل.</li>
-       <li>يبدأ القبول من الصف الثاني الابتدائي، ويستمر حتى المرحلة المتوسطة والثانوية ما دامت الأهلية متحققة.</li>
-       <li>يتم التحاق الطالب بالبرنامج في السنة التالية لسنة رسوبه أو سنة تشخيص حالته.</li>
-      </ul>
-
-      <h3>المكان التربوي وخدمات البرنامج</h3>
-      <ul>
-        <li>يلتحق الطالب في فصل التعليم العام مع زملائه.</li>
-        <li>تُفتتح برامج يسير في المدارس الحكومية التي تتوفر فيها المتطلبات.</li>
-        <li>ألا تزيد نسبة الطلبة ذوي الإعاقة عن 20٪ من إجمالي طلبة المدرسة.</li>
-       <li>ألا يزيد عدد الطلبة ذوي الذكاء الحدي في الفصل عن ثلاثة طلبة.</li>
-       <li>تُقدم خدمات غرفة المصادر بما لا يتجاوز 50٪ من اليوم الدراسي (مع إمكانية الزيادة في حالات محددة حسب البرنامج التربوي الفردي).</li>
-       <li>يستفيد الطلبة من الخدمات المساندة (نطق، علاج وظيفي، إرشاد نفسي) بحسب احتياجهم.</li>
-       <li>يستفيد طلبة البرنامج من النقل المدرسي والمكافأة الشهرية وفق اللوائح المنظمة.</li>
-      </ul>
-    </section>
-
-    <!-- Teachers -->
-    <section id="teachers" class="section-card">
-      <h2>ثالثًا: دليل المعلمين في برنامج يسير التعليمي</h2>
-      <h3>مهام معلم التربية الخاصة</h3>
-      <ul>
-        <li>إعداد الخطة التربوية الفردية (IEP) ومتابعة التنفيذ.</li>
-        <li>تقديم أدوات دعم بصري/سلوكي وتدريب الطالب عليها.</li>
-        <li>التنسيق مع معلمي المواد بشأن التكييفات والتقويم.</li>
-      </ul>
-
-      <h3>مهام معلم التعليم العام</h3>
-      <ul>
-        <li>تهيئة بيئة الصف وتقليل المشتتات.</li>
-        <li>تقسيم الواجبات وتوضيح المتوقع خطوة بخطوة.</li>
-        <li>مشاركة البيانات مع فريق البرنامج بشكل دوري.</li>
-      </ul>
-    </section>
-
-    <!-- Parents -->
-    <section id="parents" class="section-card">
-      <h2>رابعًا: حقوق ومسؤوليات الأسرة</h2>
-      <h3>حقوق الأسرة</h3>
-      <ul>
-        <li>الاطلاع على الخطة الفردية والمشاركة في القرارات.</li>
-        <li>توضيح الخدمات المقدمة وما يقابلها من أهداف.</li>
-        <li>الحفاظ على سرية بيانات الطالب.</li>
-      </ul>
-
-      <h3>مسؤوليات الأسرة</h3>
-      <ul>
-        <li>الالتزام بخطة المتابعة المنزلية (روتين/تعزيز/تواصل).</li>
-        <li>إبلاغ المدرسة بأي تغييرات مؤثرة في سلوك الطالب أو صحته.</li>
-        <li>حضور الاجتماعات ومشاركة الملاحظات.</li>
-      </ul>
-    </section>
-
-  <!-- Quiz -->
-<section class="card" id="quiz">
-  <h2>خامساً: اختبر معلوماتك عن برنامج يسير</h2>
-  <p class="muted">اختبار قصير موجّه لقائد المدرسة والمعلمين وأولياء الأمور.</p>
-
-  <form id="quizForm" class="quiz-form">
-    <!-- سؤال 1 -->
-    <div class="q">
-      <div class="q-title">1) نطاق درجة الذكاء الحدّي للطلبة المستهدفين في برنامج يسير هو تقريباً:</div>
-      <label class="opt"><input type="radio" name="q1" value="0"> 50-60</label>
-      <label class="opt"><input type="radio" name="q1" value="1"> 70-80</label>
-      <label class="opt"><input type="radio" name="q1" value="0"> 90-110</label>
-    </div>
-
-    <!-- سؤال 2 -->
-    <div class="q">
-      <div class="q-title">2) أين يتلقى طالب يسير تعليمه في الأصل؟</div>
-      <label class="opt"><input type="radio" name="q2" value="1"> في فصل التعليم العام مع الاستفادة من غرفة المصادر.</label>
-      <label class="opt"><input type="radio" name="q2" value="0"> في معهد التربية الفكرية فقط.</label>
-    </div>
-
-    <!-- سؤال 3 -->
-    <div class="q">
-      <div class="q-title">3) الحد الأعلى المعتاد للوقت الذي يقضيه الطالب في غرفة المصادر هو:</div>
-      <label class="opt"><input type="radio" name="q3" value="1"> لا يزيد عن 50% من اليوم الدراسي.</label>
-      <label class="opt"><input type="radio" name="q3" value="0"> اليوم الدراسي كاملاً.</label>
-    </div>
-
-    <!-- سؤال 4 -->
-    <div class="q">
-      <div class="q-title">4) يبدأ القبول في برنامج يسير لطلبة ذوي الذكاء الحدّي من:</div>
-      <label class="opt"><input type="radio" name="q4" value="0"> الصف الأول الابتدائي.</label>
-      <label class="opt"><input type="radio" name="q4" value="1"> الصف الثاني الابتدائي.</label>
-      <label class="opt"><input type="radio" name="q4" value="0"> المرحلة المتوسطة فقط.</label>
-    </div>
-
-    <!-- سؤال 5 -->
-    <div class="q">
-      <div class="q-title">5) من عناصر البرنامج التربوي الفردي لطالب يسير:</div>
-      <label class="opt"><input type="radio" name="q5" value="1"> أهداف تعليمية فردية واستراتيجيات تدريس وتقويم مناسب.</label>
-      <label class="opt"><input type="radio" name="q5" value="0"> نفس أهداف الفصل العام دون أي تكييف.</label>
-    </div>
-
-    <!-- سؤال 6 -->
-    <div class="q">
-      <div class="q-title">6) الهدف الرئيس لبرنامج يسير هو:</div>
-      <label class="opt"><input type="radio" name="q6" value="1"> دعم الطلبة ذوي الذكاء الحدّي أكاديمياً ومهارياً داخل بيئة المدرسة.</label>
-      <label class="opt"><input type="radio" name="q6" value="0"> عزل الطالب عن التعليم العام بشكل كامل.</label>
-    </div>
-
-    <!-- سؤال 7 -->
-    <div class="q">
-      <div class="q-title">7) من أهم عوامل نجاح خطة يسير:</div>
-      <label class="opt"><input type="radio" name="q7" value="1"> التنسيق بين الأسرة والمدرسة ومتابعة الخطة.</label>
-      <label class="opt"><input type="radio" name="q7" value="0"> تغيير الخطة يومياً دون بيانات.</label>
-    </div>
-
-    <div class="quiz-actions">
-      <button type="button" class="btn primary" onclick="calculateScore()">عرض النتيجة</button>
-    </div>
-  </form>
-
-  <div id="result" class="quiz-result" aria-live="polite"></div>
-</section>
-
-<style>
-  /* Quiz styling */
-  .quiz-form { margin-top: 14px; }
-  .q {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.10);
-    border-radius: 14px;
-    padding: 14px;
-    margin: 12px 0;
-  }
-  .q-title {
-    font-weight: 800;
-    margin-bottom: 10px;
-    line-height: 1.8;
-  }
-  .opt {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    margin: 8px 0;
-    line-height: 1.9;
-    cursor: pointer;
-  }
-  .opt input[type="radio"]{
-    margin-top: 6px;
-    transform: scale(1.05);
-  }
-  .quiz-actions {
-    margin-top: 14px;
-    display: flex;
-    justify-content: center;
-  }
-  .quiz-result{
-    margin-top: 14px;
-    text-align: center;
-    font-weight: 800;
-    padding: 12px;
-    border-radius: 14px;
-    background: rgba(0,0,0,.18);
-    border: 1px solid rgba(255,255,255,.10);
-  }
-</style>
-
-<script>
-  function calculateScore() {
-    const total = 7;
-    let score = 0;
-
-    // تحقق أن كل سؤال تم الإجابة عليه
-    for (let i = 1; i <= total; i++) {
-      const picked = document.querySelector(`input[name="q${i}"]:checked`);
-      if (!picked) {
-        document.getElementById("result").innerText = "فضلاً أجب على جميع الأسئلة قبل عرض النتيجة.";
-        return;
-      }
-      score += Number(picked.value);
-    }
-
-    const percent = Math.round((score / total) * 100);
-    document.getElementById("result").innerText =
-      `عدد الإجابات الصحيحة: ${score} من ${total} — نتيجتك: ${percent}%`;
-  }
-</script>
-
-    <!-- Forms -->
-    <section id="forms" class="section-card">
-      <h2>سادسًا: النماذج والملفات</h2>
-      <p>روابط تحميل (عدّلها حسب ملفاتكم في Canva/Drive/موقع المدرسة):</p>
-
-      <h3>نماذج الخطط التربوية الفردية (IEP)</h3>
-<ul>
-  <li>
-    <a class="btn" href="iep-math-level1-2026.pdf" target="_blank">
-      خطة رياضيات المستوى الأول 2026
-    </a>
-  </li>
-
-  <li>
-    <a class="btn" href="iep-math-level2-2026.pdf" target="_blank">
-      خطة رياضيات المستوى الثاني 2026
-    </a>
-  </li>
-
-  <li>
-    <a class="btn" href="iep-arabic-level1-2026.pdf" target="_blank">
-      خطة لغتي المستوى الأول 2026
-    </a>
-  </li>
-
-  <li>
-    <a class="btn" href="iep-arabic-level2-2026.pdf" target="_blank">
-      خطة لغتي المستوى الثاني 2026
-    </a>
-  </li>
-
-</ul>
-
-      <h3>نموذج متابعة أسبوعية</h3>
-      <ul>
-        <li><a class="btn" href="#" onclick="alert('ضع رابط التحميل هنا');return false;">رابط التحميل</a></li>
-      </ul>
-
-      <h3>نموذج تواصل مع الأسرة</h3>
-      <ul>
-        <li><a class="btn" href="#" onclick="alert('ضع رابط التحميل هنا');return false;">رابط التحميل</a></li>
-      </ul>
-
-      <div class="footer">
-        <div>إعداد وتنفيذ: أ. سعد الزهراني — برنامج التربية الخاصة</div>
-        <div>© <span id="y"></span> جميع الحقوق محفوظة</div>
-      </div>
-    </section>
-
-    <section class="section-card" style="margin-top:12px;">
-      <a class="btn" href="#top">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V6" stroke="white" stroke-width="1.7" stroke-linecap="round"/><path d="M7 10l5-5 5 5" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        رجوع للأعلى
-      </a>
-      <p style="margin-top:10px;" class="muted">ملاحظة: هذه الصفحة توعوية ولا تغني عن التشخيص الطبي/النفسي المتخصص.</p>
-    </section>
   </div>
-
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
 </body>
-
 </html>
-
-
-
-
