@@ -1,4 +1,4 @@
-:root{
+ :root{
   /* ✅ Official palette: Navy + MOE green */
   --bg0:#071322;
   --bg1:#0b1f35;
@@ -431,4 +431,9 @@ body{
   background: none !important;
   content: none !important;
   opacity: 0 !important;
+}
+
+/* إزالة اللون الأخضر من قسم about فقط */
+#about{
+  background: linear-gradient(135deg, #070B14, #0A1226) !important;
 }
