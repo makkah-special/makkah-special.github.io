@@ -30,7 +30,6 @@
     }
 
     /* ===== شعار وزارة التعليم (أعلى يسار الهيدر) ===== */
-    .topbar{ position: relative; } /* مهم عشان absolute يشتغل صح */
     .moe-logo{
       position: absolute;
       left: 28px;
@@ -40,19 +39,11 @@
       align-items: center;
       z-index: 5;
       opacity: .9;
-      text-decoration: none; /* عشان الرابط ما يطلع خط */
-      cursor: pointer;
-      transition: .25s ease;
     }
     .moe-logo img{
       height: 52px;
       /* يجعل الشعار فاتح/أبيض على الخلفية الداكنة */
       filter: brightness(0) invert(1) drop-shadow(0 6px 14px rgba(0,0,0,.35));
-      transition: .25s ease;
-    }
-    .moe-logo:hover img{
-      transform: scale(1.05);
-      opacity: 1;
     }
     /* على الجوال */
     @media (max-width: 768px){
@@ -140,10 +131,10 @@
   <header class="topbar">
     <div class="container topbar-inner">
 
-      <!-- ✅ شعار وزارة التعليم (قابل للنقر) -->
-      <a class="moe-logo" href="https://www.moe.gov.sa" target="_blank" rel="noopener">
+      <!-- ✅ شعار وزارة التعليم -->
+      <div class="moe-logo">
         <img src="moe-logo.png" alt="شعار وزارة التعليم">
-      </a>
+      </div>
 
       <div class="brand">
         <div class="brand-logo">
@@ -179,11 +170,13 @@
 
           <div class="stats">
             <div class="stat">
-              <div class="stat-num">2</div>
+              <!-- ✅ Animated Counter -->
+              <div class="stat-num counter" data-count="2">0</div>
               <div class="stat-label">برامج رئيسية</div>
             </div>
             <div class="stat">
-              <div class="stat-num">42</div>
+              <!-- ✅ Animated Counter -->
+              <div class="stat-num counter" data-count="42">0</div>
               <div class="stat-label">إجمالي الطلاب</div>
             </div>
           </div>
@@ -320,7 +313,8 @@
 
           <div class="s-card">
             <div class="s-left">
-              <div class="s-num">21</div>
+              <!-- ✅ Animated Counter -->
+              <div class="s-num counter" data-count="21">0</div>
               <div class="s-label">عدد طلاب الإعاقة العقلية</div>
             </div>
             <div class="s-ic">🧠</div>
@@ -328,7 +322,8 @@
 
           <div class="s-card">
             <div class="s-left">
-              <div class="s-num">21</div>
+              <!-- ✅ Animated Counter -->
+              <div class="s-num counter" data-count="21">0</div>
               <div class="s-label">عدد طلاب برنامج يسير</div>
             </div>
             <div class="s-ic">📘</div>
@@ -336,7 +331,8 @@
 
           <div class="s-card">
             <div class="s-left">
-              <div class="s-num">6</div>
+              <!-- ✅ Animated Counter -->
+              <div class="s-num counter" data-count="6">0</div>
               <div class="s-label">معلمي الإعاقة العقلية</div>
             </div>
             <div class="s-ic">👨‍🏫</div>
@@ -344,7 +340,8 @@
 
           <div class="s-card">
             <div class="s-left">
-              <div class="s-num">2</div>
+              <!-- ✅ Animated Counter -->
+              <div class="s-num counter" data-count="2">0</div>
               <div class="s-label">معلمي برنامج يسير</div>
             </div>
             <div class="s-ic">👨‍🏫</div>
@@ -369,6 +366,38 @@
   <footer style="text-align:center;padding:20px;color:rgba(255,255,255,.5)">
     ©️ 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد وتنفيذ أ. سعد الزهراني
   </footer>
+
+  <!-- ✅ Animated Counter Script (يشتغل عند ظهور الأرقام) -->
+  <script>
+    function animateCounter(el, to, duration = 900) {
+      const startTime = performance.now();
+      const from = 0;
+
+      function frame(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const value = Math.floor(from + (to - from) * p);
+        el.textContent = value.toLocaleString("ar-SA");
+        if (p < 1) requestAnimationFrame(frame);
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    const counters = document.querySelectorAll(".counter[data-count]");
+    const seen = new WeakSet();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !seen.has(e.target)) {
+          seen.add(e.target);
+          const to = parseInt(e.target.getAttribute("data-count"), 10) || 0;
+          animateCounter(e.target, to);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    counters.forEach((c) => io.observe(c));
+  </script>
 
 </body>
 </html>

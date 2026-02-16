@@ -6,144 +6,215 @@
   <title>تواصل معنا | مدرسة مكة المكرمة المتوسطة</title>
   <meta name="description" content="صفحة تواصل رسمية لمدرسة مكة المكرمة المتوسطة – برامج قسم ذوي الإعاقة." />
 
-  <!-- نفس خطك (إن كنت تستخدمه) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 
-  <!-- نفس ملف التنسيق عندك -->
+  <!-- نفس ملف التنسيق -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- إضافات خفيفة جداً لضمان نفس الهوية بدون ما نغير تصميمك -->
+  <!-- إضافات بسيطة فقط للتواصل (ما تغيّر تصميمك الأساسي) -->
   <style>
     :root{ color-scheme: dark; }
-    body{ font-family: "Tajawal", system-ui, -apple-system, "Segoe UI", sans-serif; }
-    .wrap{ max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
-    .grid{ display: grid; gap: 16px; grid-template-columns: 1fr; }
-    @media (min-width: 900px){ .grid{ grid-template-columns: 1.1fr .9fr; } }
-    .card{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 18px;
-      padding: 18px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+
+    /* نخلي الهيدر مثل الرئيسي + شعار الوزارة قابل للضغط */
+    .topbar-inner{ position:relative; padding-left:110px; }
+    .moe-logo{
+      position:absolute;
+      left:28px;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      align-items:center;
+      z-index:5;
+      opacity:.92;
+      text-decoration:none;
     }
-    .title{ margin: 0 0 6px; font-weight: 800; font-size: 22px; }
-    .muted{ opacity:.85; margin: 0 0 14px; }
-    .row{ display:flex; gap:10px; flex-wrap: wrap; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 10px 14px; border-radius: 14px; text-decoration:none;
-      border: 1px solid rgba(255,255,255,.14);
-      background: linear-gradient(135deg, rgba(79,140,255,.85), rgba(124,92,255,.85));
-      color: #fff; font-weight: 800;
+    .moe-logo img{
+      height:52px;
+      filter: brightness(0) invert(1) drop-shadow(0 6px 14px rgba(0,0,0,.35));
+      transition:.25s ease;
     }
+    .moe-logo:hover img{ transform: scale(1.05); opacity:1; }
+
+    @media (max-width: 768px){
+      .topbar-inner{ padding-left:72px; }
+      .moe-logo{ left:14px; }
+      .moe-logo img{ height:40px; }
+    }
+
+    /* تخطيط صفحة التواصل */
+    .contact-wrap{ padding: 22px 0 40px; }
+    .contact-grid{
+      display:grid;
+      gap:14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 980px){
+      .contact-grid{ grid-template-columns: 1.1fr .9fr; }
+    }
+
+    /* نموذج */
+    .form-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    label{ display:block; margin: 10px 0 6px; font-weight:800; opacity:.95; }
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline:none;
+      font-family:"Tajawal",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    }
+    textarea{ min-height:150px; resize:vertical; }
+    .hint{ color: rgba(234,240,255,.65); line-height:1.8; font-size:.95rem; margin:0 0 10px; }
+
+    /* أزرار صغيرة داخل بطاقة البيانات */
+    .mini-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .mini-actions a{ text-decoration:none; }
     .btn.secondary{
       background: rgba(255,255,255,.06);
-      color: #eaf0ff;
+      border-color: rgba(255,255,255,.14);
     }
-    label{ display:block; margin: 10px 0 6px; font-weight: 700; opacity:.95; }
-    input, textarea{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-      color: #eaf0ff;
-      outline: none;
-    }
-    textarea{ min-height: 140px; resize: vertical; }
-    .note{ font-size: 13px; opacity: .8; margin-top: 10px; }
     .divider{ height:1px; background: rgba(255,255,255,.10); margin: 14px 0; }
-    .footer{ margin-top: 18px; opacity: .75; font-size: 13px; }
+    .contact-line{ margin:0 0 10px; color: rgba(234,240,255,.88); line-height:1.9; }
+    .contact-line a{ color:#eaf0ff; }
+    .page-footer{
+      text-align:center;
+      padding:20px 0 0;
+      color: rgba(234,240,255,.45);
+      font-weight:600;
+    }
   </style>
 </head>
 
 <body>
 
-  <main class="wrap">
-    <!-- رأس الصفحة -->
-    <section class="card" style="margin-bottom:16px;">
-      <h1 class="title">تواصل معنا</h1>
-      <p class="muted">للاستفسارات والملاحظات المتعلقة بـ <b>برامج قسم ذوي الإعاقة</b> في مدرسة مكة المكرمة المتوسطة.</p>
-      <div class="row">
-        <a class="btn secondary" href="index.html">الرجوع للرئيسية</a>
-        <a class="btn" href="https://makkah-special.github.io" target="_blank" rel="noopener">زيارة الموقع</a>
+  <!-- نفس هيدر الموقع -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+
+      <!-- شعار الوزارة (قابل للضغط) -->
+      <a class="moe-logo" href="https://www.moe.gov.sa/" target="_blank" rel="noopener" aria-label="وزارة التعليم">
+        <img src="moe-logo.png" alt="شعار وزارة التعليم">
+      </a>
+
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="school-logo.png" alt="شعار المدرسة">
+        </div>
+        <div>
+          <div class="brand-title">مدرسة مكة المكرمة المتوسطة</div>
+          <div class="brand-sub">صفحة التواصل الرسمية — قسم ذوي الإعاقة</div>
+        </div>
+      </div>
+
+
+    </div>
+  </header>
+
+  <main class="container contact-wrap">
+
+    <section class="section" style="padding-top:0;">
+      <div class="section-head">
+        <h2>تواصل معنا</h2>
+        <p>للاستفسارات والملاحظات المتعلقة ببرامج قسم ذوي الإعاقة.</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- بطاقة النموذج -->
+        <section class="card">
+          <div class="card-top">
+            <div class="card-ic">📨</div>
+            <div>
+              <h3 style="margin:0 0 6px;">إرسال رسالة</h3>
+              <p class="hint">املأ البيانات، وسيتم فتح البريد برسالة جاهزة للإرسال (بدون حفظ أي بيانات).</p>
+            </div>
+          </div>
+
+          <form id="contactForm">
+            <label for="name">الاسم</label>
+            <input id="name" name="name" type="text" placeholder="مثال: ولي أمر الطالب ..." required>
+
+            <label for="phone">رقم التواصل (اختياري)</label>
+            <input id="phone" name="phone" type="tel" placeholder="05xxxxxxxx">
+
+            <label for="message">الرسالة</label>
+            <textarea id="message" name="message" placeholder="اكتب رسالتك هنا..." required></textarea>
+
+            <div class="form-row">
+              <button class="btn primary" type="submit">إرسال عبر البريد</button>
+              <a class="btn secondary" href="index.html">رجوع للرئيسية</a>
+            </div>
+
+            <p class="hint" style="margin-top:10px;">
+              * ملاحظة: الصفحة لا ترسل تلقائياً؛ فقط تجهّز رسالة في تطبيق البريد لديك.
+            </p>
+          </form>
+        </section>
+
+        <!-- بطاقة البيانات الرسمية -->
+        <aside class="card">
+          <div class="card-top">
+            <div class="card-ic">📍</div>
+            <div>
+              <h3 style="margin:0 0 6px;">بيانات التواصل الرسمية</h3>
+              <p class="hint" style="margin:0;">مدرسة مكة المكرمة المتوسطة — برامج قسم ذوي الإعاقة</p>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="contact-line">
+            ✉️ البريد:
+            <a href="mailto:32455@mkhb.moe.gov.sa">32455@mkhb.moe.gov.sa</a>
+          </p>
+
+          <p class="contact-line">
+            📞 الجوال:
+            <a href="tel:+966544644111">+966 54 464 4111</a>
+          </p>
+
+          <p class="contact-line" style="margin-bottom:0;">
+            🗺️ الموقع على الخرائط:
+            <a href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank" rel="noopener">فتح الموقع</a>
+          </p>
+
+          <div class="mini-actions">
+            <a class="btn small" href="tel:+966544644111">اتصال</a>
+            <a class="btn small secondary" href="mailto:32455@mkhb.moe.gov.sa">بريد</a>
+            <a class="btn small secondary" href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank" rel="noopener">خرائط</a>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="hint" style="margin:0;">
+            ساعات التواصل: أثناء الدوام الرسمي.<br>
+            (يمكنك تعديل هذه العبارة أو حذفها)
+          </p>
+
+        </aside>
+
+      </div>
+
+      <div class="page-footer">
+        ©️ 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد وتنفيذ أ. سعد الزهراني
       </div>
     </section>
 
-    <section class="grid">
-      <!-- نموذج التواصل -->
-      <section class="card">
-        <h2 class="title" style="font-size:18px;">إرسال رسالة</h2>
-        <p class="muted" style="margin-bottom:10px;">املأ البيانات التالية، وسيتم فتح البريد لإرسال رسالتك (بدون أي اشتراكات).</p>
-
-        <!-- نموذج يفتح بريد Gmail/Outlook مباشرة -->
-        <form id="contactForm">
-          <label for="name">الاسم</label>
-          <input id="name" name="name" type="text" placeholder="مثال: ولي أمر الطالب ..." required>
-
-          <label for="phone">رقم التواصل (اختياري)</label>
-          <input id="phone" name="phone" type="text" placeholder="05xxxxxxxx">
-
-          <label for="message">الرسالة</label>
-          <textarea id="message" name="message" placeholder="اكتب رسالتك هنا..." required></textarea>
-
-          <div class="row" style="margin-top:12px;">
-            <button class="btn" type="submit">إرسال عبر البريد</button>
-            <a class="btn secondary" href="index.html">إلغاء</a>
-          </div>
-
-          <div class="note">
-            * ملاحظة: هذه الصفحة لا تحفظ أي بيانات؛ فقط تجهّز رسالة بريد جاهزة للإرسال.
-          </div>
-        </form>
-      </section>
-
-      <!-- بيانات رسمية -->
-      <aside class="card">
-        <h2 class="title" style="font-size:18px;">بيانات التواصل</h2>
-
-        <div class="divider"></div>
-
-        <p class="muted" style="margin:0 0 10px;">
-          <b>مدرسة مكة المكرمة المتوسطة</b><br>
-          <span>برامج قسم ذوي الإعاقة</span>
-        </p>
-
-        <!-- عدّل البريد هنا لاحقاً -->
-        <p style="margin:0 0 10px;">
-          ✉️ البريد: <a href="mailto:REPLACE_WITH_OFFICIAL_EMAIL" style="color:#eaf0ff;">REPLACE_WITH_OFFICIAL_EMAIL</a>
-        </p>
-
-        <!-- عدّل الرقم هنا لاحقاً -->
-        <p style="margin:0 0 10px;">
-          📞 الهاتف: <span style="opacity:.9;">REPLACE_WITH_PHONE</span>
-        </p>
-
-        <!-- عدّل الموقع هنا لاحقاً -->
-        <p style="margin:0;">
-          📍 الموقع: <span style="opacity:.9;">REPLACE_WITH_LOCATION</span>
-        </p>
-
-        <div class="divider"></div>
-
-        <p class="footer">© 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</p>
-      </aside>
-    </section>
   </main>
 
   <script>
-    // ✅ يفتح البريد برسالة جاهزة (بدون سيرفر)
-    const TO_EMAIL = "REPLACE_WITH_OFFICIAL_EMAIL"; // غيّرها لبريد المدرسة/القسم
+    // ✅ فتح البريد برسالة جاهزة (بدون سيرفر)
+    const TO_EMAIL = "32455@mkhb.moe.gov.sa";
     const SUBJECT  = "تواصل - مدرسة مكة المكرمة المتوسطة (قسم ذوي الإعاقة)";
 
     document.getElementById("contactForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      const name = document.getElementById("name").value.trim();
+      const name  = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
-      const msg = document.getElementById("message").value.trim();
+      const msg   = document.getElementById("message").value.trim();
 
       const body =
         `الاسم: ${name}\n` +
@@ -151,7 +222,11 @@
         `\nالرسالة:\n${msg}\n\n` +
         `— تم الإرسال عبر صفحة التواصل بالموقع`;
 
-      const mailto = `mailto:${encodeURIComponent(TO_EMAIL)}?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(body)}`;
+      const mailto =
+        `mailto:${encodeURIComponent(TO_EMAIL)}` +
+        `?subject=${encodeURIComponent(SUBJECT)}` +
+        `&body=${encodeURIComponent(body)}`;
+
       window.location.href = mailto;
     });
   </script>
