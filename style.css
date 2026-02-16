@@ -420,3 +420,15 @@ body{
   .brand{ min-width:unset; }
   .hero h1{ font-size:2rem; }
 }
+
+/* إزالة اللون الأخضر من بطاقة رسالتنا فقط */
+.card.mission-card{
+  background: rgba(255,255,255,.06) !important;
+}
+
+.card.mission-card::before,
+.card.mission-card::after{
+  background: none !important;
+  content: none !important;
+  opacity: 0 !important;
+}
