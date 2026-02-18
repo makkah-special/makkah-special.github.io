@@ -13,8 +13,49 @@
 
   <link rel="stylesheet" href="style.css" />
 
-  <!-- ✅ فقط تنسيقات (إحصاءات القسم) بدون ألوان ولا topbar -->
   <style>
+    /* ===== شريط الأخبار العاجلة (الجديد) ===== */
+    .news-ticker-container {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05); /* شفافية ليتناسب مع تصميمك الزجاجي */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      padding: 0;
+      overflow: hidden;
+      direction: rtl;
+    }
+
+    .ticker-label {
+      background: #ffd600; /* لون أصفر للتنبيه */
+      color: #000;
+      padding: 10px 20px;
+      font-weight: 800;
+      font-size: 14px;
+      white-space: nowrap;
+      z-index: 2;
+      position: relative;
+    }
+
+    /* تأثير السهم الصغير بعد كلمة تنبيهات */
+    .ticker-label::after {
+      content: "";
+      position: absolute;
+      left: -15px;
+      top: 0;
+      border-width: 20px 0 20px 15px;
+      border-style: solid;
+      border-color: transparent transparent transparent #ffd600;
+    }
+
+    .ticker-content {
+      flex-grow: 1;
+      font-size: 15px;
+      color: #fff;
+      padding-right: 25px;
+    }
+
     /* ===== Stats Strip (Bottom) ===== */
     .stats-strip{ padding: 10px 0 28px; }
     .stats-strip .section-head{ margin-bottom: 12px; }
@@ -86,6 +127,7 @@
     }
     @media (max-width: 560px){
       .s-card{ grid-column: span 12; }
+      .ticker-label { font-size: 12px; padding: 10px 10px; }
     }
   </style>
 </head>
@@ -95,7 +137,6 @@
   <header class="topbar">
     <div class="container topbar-inner">
 
-      <!-- ✅ شعار وزارة التعليم (رابط) -->
       <a class="moe-logo" href="https://www.moe.gov.sa/" target="_blank" rel="noopener" aria-label="وزارة التعليم">
         <img src="moe-logo.png" alt="شعار وزارة التعليم">
       </a>
@@ -113,9 +154,16 @@
     </div>
   </header>
 
-  <main>
+  <div class="news-ticker-container">
+    <div class="ticker-label">💡 تنبيهات هامة:</div>
+    <div class="ticker-content">
+      <marquee behavior="scroll" direction="right" onmouseover="this.stop();" onmouseout="this.start();">
+        أهلاً بكم في بوابة قسم ذوي الإعاقة.. يرجى من أولياء الأمور الإطلاع على الخطة الفردية المحدثة وتوقيع الإقرار إلكترونياً.. نسعد بتواصلكم عبر أيقونة اتصل بنا..
+      </marquee>
+    </div>
+  </div>
 
-    <!-- HERO -->
+  <main>
     <section class="hero">
       <div class="container hero-inner">
         <div>
@@ -147,7 +195,6 @@
           <div class="glass-title">وصول سريع</div>
 
           <div class="quick-grid">
-
             <a class="quick" href="Intellectualdisability.html">
               <span class="ic">🧠</span>
               <span>
@@ -166,7 +213,7 @@
               <span class="arr">‹</span>
             </a>
 
-                 <a class="quick" href="acknowledgement.html">
+            <a class="quick" href="acknowledgement.html">
               <span class="ic">✍️</span>
               <span>
                 <b>إقرار إطلاع ولي الأمر على الخطة الفردية</b>
@@ -183,23 +230,18 @@
               </span>
               <span class="arr">‹</span>
             </a>
-
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- PROGRAMS -->
     <section class="section" id="programs">
       <div class="container">
         <div class="section-head">
           <h2>البرامج المتاحة</h2>
           <p>اختر البرنامج للدخول للصفحة التفصيلية.</p>
         </div>
-
         <div class="cards">
-
           <article class="card">
             <div class="card-top">
               <div class="card-ic">🧠</div>
@@ -210,7 +252,6 @@
             </div>
             <a class="btn small" href="Intellectualdisability.html">دخول الصفحة</a>
           </article>
-
           <article class="card">
             <div class="card-top">
               <div class="card-ic">📘</div>
@@ -221,33 +262,25 @@
             </div>
             <a class="btn small" href="Slowlearning.html">دخول الصفحة</a>
           </article>
-         
-
         </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section class="section" id="about">
       <div class="container">
         <div class="section-head">
           <h2>عن قسم ذوي الإعاقة</h2>
           <p>نبذة مختصرة عن دور القسم داخل المدرسة.</p>
         </div>
-
         <div class="cards">
           <article class="card mission-card">
             <div class="card-top">
               <div class="card-ic">🏫</div>
               <div>
                 <h3>رسالتنا</h3>
-                <p>
-                  يقدّم قسم ذوي الإعاقة خدمات تربوية وتنظيمية داعمة للطلاب، بالتعاون مع الأسرة والمعلمين،
-                  بهدف تهيئة بيئة تعليمية مناسبة وتعزيز فرص التعلم وفق احتياجات كل طالب.
-                </p>
+                <p>يقدّم قسم ذوي الإعاقة خدمات تربوية وتنظيمية داعمة للطلاب بالتعاون مع الأسرة والمعلمين.</p>
               </div>
             </div>
-
             <div style="margin-top:10px;color:rgba(255,255,255,.78);line-height:1.9">
               <ul style="margin:0;padding:0 18px 0 0">
                 <li>متابعة البرامج والخطط الفردية والتعليمية.</li>
@@ -256,7 +289,6 @@
               </ul>
             </div>
           </article>
-
           <article class="card">
             <div class="card-top">
               <div class="card-ic">📩</div>
@@ -271,16 +303,13 @@
       </div>
     </section>
 
-    <!-- STATS STRIP -->
     <section class="section stats-strip" id="stats">
       <div class="container">
         <div class="section-head">
           <h2>إحصاءات القسم</h2>
-          <p>ملخص سريع لأعداد الطلاب والكوادر داخل برامج قسم ذوي الإعاقة.</p>
+          <p>ملخص سريع لأعداد الطلاب والكوادر.</p>
         </div>
-
         <div class="stats-grid">
-
           <div class="s-card">
             <div class="s-left">
               <div class="s-num counter" data-count="21">0</div>
@@ -288,7 +317,6 @@
             </div>
             <div class="s-ic">🧠</div>
           </div>
-
           <div class="s-card">
             <div class="s-left">
               <div class="s-num counter" data-count="21">0</div>
@@ -296,7 +324,6 @@
             </div>
             <div class="s-ic">📘</div>
           </div>
-
           <div class="s-card">
             <div class="s-left">
               <div class="s-num counter" data-count="6">0</div>
@@ -304,7 +331,6 @@
             </div>
             <div class="s-ic">👨‍🏫</div>
           </div>
-
           <div class="s-card">
             <div class="s-left">
               <div class="s-num counter" data-count="2">0</div>
@@ -312,33 +338,26 @@
             </div>
             <div class="s-ic">👨‍🏫</div>
           </div>
-
           <div class="s-card s-wide">
             <div class="s-left">
               <div class="s-num">كوادر مساندة</div>
-              <div class="s-label">
-                1 معلم تربية فنية • 1 موجه طلابي • 1 إداري تربية خاصة • مدير المدرسة • وكيل المدرسة
-              </div>
+              <div class="s-label">1 معلم تربية فنية • 1 موجه طلابي • 1 إداري تربية خاصة • مدير المدرسة • وكيل المدرسة</div>
             </div>
             <div class="s-ic">🏫</div>
           </div>
-
         </div>
       </div>
     </section>
-
   </main>
 
   <footer style="text-align:center;padding:20px;color:rgba(255,255,255,.5)">
     ©️ 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد وتنفيذ أ. سعد الزهراني
   </footer>
 
-  <!-- ✅ Animated Counter Script -->
   <script>
     function animateCounter(el, to, duration = 900) {
       const startTime = performance.now();
       const from = 0;
-
       function frame(now) {
         const p = Math.min((now - startTime) / duration, 1);
         const value = Math.floor(from + (to - from) * p);
@@ -347,10 +366,8 @@
       }
       requestAnimationFrame(frame);
     }
-
     const counters = document.querySelectorAll(".counter[data-count]");
     const seen = new WeakSet();
-
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting && !seen.has(e.target)) {
@@ -360,9 +377,7 @@
         }
       });
     }, { threshold: 0.35 });
-
     counters.forEach((c) => io.observe(c));
   </script>
-
 </body>
 </html>
