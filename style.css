@@ -1,4 +1,4 @@
- :root{
+:root{
   /* ✅ Official palette: Navy + MOE green */
   --bg0:#071322;
   --bg1:#0b1f35;
@@ -36,6 +36,56 @@ body{
   overflow-x:hidden;
 }
 
+/* ===== ✅ شريط الأخبار العاجلة (تنسيق متوافق مع تصميمك) ===== */
+.news-ticker-container {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0;
+  overflow: hidden;
+  direction: rtl;
+  z-index: 40;
+}
+
+.ticker-label {
+  background: var(--primary); /* يستخدم لون الوزارة الأخضر */
+  color: white;
+  padding: 12px 24px;
+  font-weight: 800;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 2;
+  position: relative;
+  box-shadow: 10px 0 20px rgba(0,0,0,0.2);
+}
+
+.ticker-label::after {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0;
+  border-width: 22px 0 22px 14px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--primary);
+}
+
+.ticker-content {
+  flex-grow: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  padding-right: 20px;
+}
+
+.ticker-content marquee {
+  margin-top: 4px;
+}
+
+/* ========================================================== */
+
 .container{
   width:min(1100px, 92vw);
   margin-inline:auto;
@@ -64,7 +114,6 @@ body{
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-/* ✅ مهم: نخلي الحاوية مرجع للشعار absolute */
 .topbar-inner{
   position:relative;
   display:flex;
@@ -72,12 +121,9 @@ body{
   justify-content:space-between;
   padding:12px 0;
   gap:14px;
-
-  /* ✅ مساحة للشعار يسار */
   padding-left:110px;
 }
 
-/* ✅ شعار وزارة التعليم (يوضع داخل .topbar-inner) */
 .moe-logo{
   position:absolute;
   left:28px;
@@ -99,7 +145,6 @@ body{
   opacity:1;
 }
 
-/* ضبط الجوال */
 @media (max-width: 768px){
   .topbar-inner{ padding-left:72px; }
   .moe-logo{ left:14px; }
@@ -208,7 +253,6 @@ body{
   background:rgba(255,255,255,.09);
 }
 
-/* ✅ Primary button uses MOE green */
 .btn.primary{
   border-color:rgba(14,163,127,.45);
   background: linear-gradient(135deg, rgba(14,163,127,.95), rgba(13,143,111,.92));
@@ -421,7 +465,6 @@ body{
   .hero h1{ font-size:2rem; }
 }
 
-/* إزالة اللون الأخضر من بطاقة رسالتنا فقط */
 .card.mission-card{
   background: rgba(255,255,255,.06) !important;
 }
@@ -433,7 +476,6 @@ body{
   opacity: 0 !important;
 }
 
-/* إزالة اللون الأخضر من قسم about فقط */
 #about{
   background: linear-gradient(135deg, #070B14, #0A1226) !important;
 }
