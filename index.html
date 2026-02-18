@@ -1,166 +1,368 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-color: #00796b; /* أخضر تعليمي */
-            --secondary-color: #26a69a;
-            --accent-color: #ffd600;
-            --text-dark: #333;
-            --bg-light: #f4f7f6;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>مدرسة مكة المكرمة المتوسطة | بوابة قسم ذوي الإعاقة</title>
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg-light);
-            margin: 0;
-            color: var(--text-dark);
-        }
+  <meta name="description" content="بوابة برامج قسم ذوي الإعاقة في مدرسة مكة المكرمة المتوسطة: الإعاقة العقلية وبرنامج يسير التعليمي ولوحات متابعة." />
+  <meta name="keywords" content="مدرسة مكة المكرمة المتوسطة, قسم ذوي الإعاقة, الإعاقة العقلية, برنامج يسير التعليمي, لوحة متابعة" />
 
-        /* شريط التنقل */
-        nav {
-            background: #fff;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-area img { height: 50px; }
+  <link rel="stylesheet" href="style.css" />
 
-        /* قسم الترحيب Hero Section */
-        .hero {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 80px 5%;
-            text-align: center;
-            clip-path: ellipse(150% 100% at 50% 0%);
-        }
+  <!-- ✅ فقط تنسيقات (إحصاءات القسم) بدون ألوان ولا topbar -->
+  <style>
+    /* ===== Stats Strip (Bottom) ===== */
+    .stats-strip{ padding: 10px 0 28px; }
+    .stats-strip .section-head{ margin-bottom: 12px; }
+    .stats-strip .section-head h2{ font-size: 18px; }
 
-        .hero h1 { font-size: 2.5rem; margin-bottom: 15px; }
-        .hero p { font-size: 1.2rem; opacity: 0.9; }
+    .stats-grid{
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .s-card{
+      grid-column: span 3;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 16px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .s-left{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .s-num{
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .s-label{
+      font-size: 13px;
+      color: rgba(255,255,255,.70);
+      line-height: 1.6;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .s-ic{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      flex: 0 0 auto;
+      font-size: 20px;
+    }
 
-        /* قسم الأخبار العاجلة */
-        .news-ticker {
-            background: var(--accent-color);
-            padding: 10px;
-            font-weight: bold;
-            display: flex;
-            gap: 20px;
-            overflow: hidden;
-        }
+    .s-wide{
+      grid-column: span 12;
+      align-items:flex-start;
+    }
+    .s-wide .s-label{
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+    }
+    .s-wide .s-num{ font-size: 20px; }
 
-        /* بطاقات البرامج المتميزة */
-        .container { padding: 50px 5%; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-bottom: 5px solid var(--primary-color);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .card i { font-size: 3rem; color: var(--primary-color); margin-bottom: 20px; }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 25px;
-            background: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            margin-top: 15px;
-            transition: 0.3s;
-        }
-
-        .btn:hover { background: var(--secondary-color); }
-
-        /* تذييل الصفحة */
-        footer {
-            background: #222;
-            color: white;
-            padding: 40px 5%;
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
+    @media (max-width: 900px){
+      .s-card{ grid-column: span 6; }
+      .s-wide{ grid-column: span 12; }
+    }
+    @media (max-width: 560px){
+      .s-card{ grid-column: span 12; }
+    }
+  </style>
 </head>
+
 <body>
 
-    <nav>
-        <div class="logo-area">
-            <img src="moe-logo.png" alt="وزارة التعليم">
-            <div style="font-weight: bold;">مدرسة مكة المكرمة</div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+
+      <!-- ✅ شعار وزارة التعليم (رابط) -->
+      <a class="moe-logo" href="https://www.moe.gov.sa/" target="_blank" rel="noopener" aria-label="وزارة التعليم">
+        <img src="moe-logo.png" alt="شعار وزارة التعليم">
+      </a>
+
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="school-logo.png" alt="شعار المدرسة">
         </div>
         <div>
-            <a href="contact.html" class="btn" style="margin:0">تواصل معنا</a>
+          <div class="brand-title">مدرسة مكة المكرمة المتوسطة</div>
+          <div class="brand-sub">بوابة برامج قسم ذوي الإعاقة</div>
         </div>
-    </nav>
+      </div>
 
-    <div class="news-ticker">
-        <span>📢 تنبيه:</span>
-        <marquee>بدء تحديث الخطط الفردية للفصل الدراسي الحالي.. يرجى من أولياء الأمور الإطلاع والتوقيع إلكترونياً.</marquee>
     </div>
+  </header>
 
+  <main>
+
+    <!-- HERO -->
     <section class="hero">
-        <h1>بوابة برامج ذوي الإعاقة</h1>
-        <p>نحو بيئة تعليمية دامجة وممكنة لأبنائنا الطلاب</p>
+      <div class="container hero-inner">
+        <div>
+          <div class="badge">✨ منصة حديثة</div>
+          <h1>برامج قسم ذوي الإعاقة</h1>
+          <p class="hero-desc">
+            منصة رقمية متقدمة لعرض برامج قسم ذوي الإعاقة داخل المدرسة،
+            مخصصة للإعاقة العقلية وبرنامج يسير التعليمي ولوحات المتابعة.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#programs">استعراض البرامج</a>
+            <a class="btn ghost" href="contact.html">تواصل معنا</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-num counter" data-count="2">0</div>
+              <div class="stat-label">برامج رئيسية</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num counter" data-count="42">0</div>
+              <div class="stat-label">إجمالي الطلاب</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="glass-title">وصول سريع</div>
+
+          <div class="quick-grid">
+
+            <a class="quick" href="Intellectualdisability.html">
+              <span class="ic">🧠</span>
+              <span>
+                <b>الإعاقة العقلية</b>
+                <small>خدمات وتعريف وإرشادات</small>
+              </span>
+              <span class="arr">‹</span>
+            </a>
+
+            <a class="quick" href="Slowlearning.html">
+              <span class="ic">📘</span>
+              <span>
+                <b>برنامج يسير التعليمي</b>
+                <small>دعم وخطط متابعة</small>
+              </span>
+              <span class="arr">‹</span>
+            </a>
+
+                 <a class="quick" href="acknowledgement.html">
+              <span class="ic">✍️</span>
+              <span>
+                <b>إقرار إطلاع ولي الأمر على الخطة الفردية</b>
+                <small>الإطلاع على الخطة، الإقرار على الإطلاع على الخطة</small>
+              </span>
+              <span class="arr">‹</span>
+            </a>
+
+            <a class="quick" href="contact.html">
+              <span class="ic">📩</span>
+              <span>
+                <b>تواصل معنا</b>
+                <small>استفسارات وملاحظات أولياء الأمور</small>
+              </span>
+              <span class="arr">‹</span>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <div class="container">
-        <h2 style="text-align: center;">البرامج والخدمات</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fas fa-brain"></i>
-                <h3>الإعاقة العقلية</h3>
-                <p>خدمات تربوية متخصصة، برامج تأهيلية، وإرشادات لولي الأمر.</p>
-                <a href="Intellectualdisability.html" class="btn">عرض التفاصيل</a>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-book-reader"></i>
-                <h3>برنامج يسير</h3>
-                <p>دعم تعليمي مكثف وخطط متابعة دقيقة لطلاب صعوبات التعلم.</p>
-                <a href="Slowlearning.html" class="btn">عرض التفاصيل</a>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-file-signature"></i>
-                <h3>النماذج الإلكترونية</h3>
-                <p>الإطلاع على الخطط الفردية والتوقيع عليها إلكترونياً بكل سهولة.</p>
-                <a href="acknowledgement.html" class="btn">النماذج والإقرارات</a>
-            </div>
+    <!-- PROGRAMS -->
+    <section class="section" id="programs">
+      <div class="container">
+        <div class="section-head">
+          <h2>البرامج المتاحة</h2>
+          <p>اختر البرنامج للدخول للصفحة التفصيلية.</p>
         </div>
-    </div>
 
-    <footer>
-        <p>© 2026 مدرسة مكة المكرمة المتوسطة - قسم ذوي الإعاقة</p>
-        <p>إشراف أ. سعد الزهراني</p>
-    </footer>
+        <div class="cards">
+
+          <article class="card">
+            <div class="card-top">
+              <div class="card-ic">🧠</div>
+              <div>
+                <h3>الإعاقة العقلية</h3>
+                <p>تعريف، خدمات، إرشادات، ونماذج مساندة داخل المدرسة.</p>
+              </div>
+            </div>
+            <a class="btn small" href="Intellectualdisability.html">دخول الصفحة</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div class="card-ic">📘</div>
+              <div>
+                <h3>برنامج يسير التعليمي</h3>
+                <p>متابعة الطلاب، خطط الدعم، وأدوات مساندة تعليمية.</p>
+              </div>
+            </div>
+            <a class="btn small" href="Slowlearning.html">دخول الصفحة</a>
+          </article>
+         
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head">
+          <h2>عن قسم ذوي الإعاقة</h2>
+          <p>نبذة مختصرة عن دور القسم داخل المدرسة.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card mission-card">
+            <div class="card-top">
+              <div class="card-ic">🏫</div>
+              <div>
+                <h3>رسالتنا</h3>
+                <p>
+                  يقدّم قسم ذوي الإعاقة خدمات تربوية وتنظيمية داعمة للطلاب، بالتعاون مع الأسرة والمعلمين،
+                  بهدف تهيئة بيئة تعليمية مناسبة وتعزيز فرص التعلم وفق احتياجات كل طالب.
+                </p>
+              </div>
+            </div>
+
+            <div style="margin-top:10px;color:rgba(255,255,255,.78);line-height:1.9">
+              <ul style="margin:0;padding:0 18px 0 0">
+                <li>متابعة البرامج والخطط الفردية والتعليمية.</li>
+                <li>التعاون والتواصل مع أولياء الأمور.</li>
+                <li>التوعية والإرشاد داخل المدرسة.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div class="card-ic">📩</div>
+              <div>
+                <h3>تواصل رسمي</h3>
+                <p>للاستفسارات والملاحظات، يمكنك الوصول لصفحة التواصل الرسمية.</p>
+              </div>
+            </div>
+            <a class="btn small" href="contact.html">فتح صفحة التواصل</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS STRIP -->
+    <section class="section stats-strip" id="stats">
+      <div class="container">
+        <div class="section-head">
+          <h2>إحصاءات القسم</h2>
+          <p>ملخص سريع لأعداد الطلاب والكوادر داخل برامج قسم ذوي الإعاقة.</p>
+        </div>
+
+        <div class="stats-grid">
+
+          <div class="s-card">
+            <div class="s-left">
+              <div class="s-num counter" data-count="21">0</div>
+              <div class="s-label">عدد طلاب الإعاقة العقلية</div>
+            </div>
+            <div class="s-ic">🧠</div>
+          </div>
+
+          <div class="s-card">
+            <div class="s-left">
+              <div class="s-num counter" data-count="21">0</div>
+              <div class="s-label">عدد طلاب برنامج يسير</div>
+            </div>
+            <div class="s-ic">📘</div>
+          </div>
+
+          <div class="s-card">
+            <div class="s-left">
+              <div class="s-num counter" data-count="6">0</div>
+              <div class="s-label">معلمي الإعاقة العقلية</div>
+            </div>
+            <div class="s-ic">👨‍🏫</div>
+          </div>
+
+          <div class="s-card">
+            <div class="s-left">
+              <div class="s-num counter" data-count="2">0</div>
+              <div class="s-label">معلمي برنامج يسير</div>
+            </div>
+            <div class="s-ic">👨‍🏫</div>
+          </div>
+
+          <div class="s-card s-wide">
+            <div class="s-left">
+              <div class="s-num">كوادر مساندة</div>
+              <div class="s-label">
+                1 معلم تربية فنية • 1 موجه طلابي • 1 إداري تربية خاصة • مدير المدرسة • وكيل المدرسة
+              </div>
+            </div>
+            <div class="s-ic">🏫</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="text-align:center;padding:20px;color:rgba(255,255,255,.5)">
+    ©️ 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد وتنفيذ أ. سعد الزهراني
+  </footer>
+
+  <!-- ✅ Animated Counter Script -->
+  <script>
+    function animateCounter(el, to, duration = 900) {
+      const startTime = performance.now();
+      const from = 0;
+
+      function frame(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const value = Math.floor(from + (to - from) * p);
+        el.textContent = value.toLocaleString("ar-SA");
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    const counters = document.querySelectorAll(".counter[data-count]");
+    const seen = new WeakSet();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !seen.has(e.target)) {
+          seen.add(e.target);
+          const to = parseInt(e.target.getAttribute("data-count"), 10) || 0;
+          animateCounter(e.target, to);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    counters.forEach((c) => io.observe(c));
+  </script>
 
 </body>
 </html>
