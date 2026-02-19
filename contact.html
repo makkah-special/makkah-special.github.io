@@ -1,234 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تواصل معنا | مدرسة مكة المكرمة المتوسطة</title>
-  <meta name="description" content="صفحة تواصل رسمية لمدرسة مكة المكرمة المتوسطة – برامج قسم ذوي الإعاقة." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تواصل معنا | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #c8973a;
+    --accent-light: #f0b84a;
+    --red: #dc2626;
+    --red-light: #ef4444;
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --border: #e0d8c8;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  header {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 60%, #b91c1c 100%);
+    position:relative; overflow:hidden;
+  }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .header-logos { display:flex; align-items:center; gap:14px; }
+  .logo-icon { width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; }
+  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
+  .header-sub-name { color:rgba(255,255,255,0.5); font-size:0.75rem; }
+  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; transition:all 0.2s; }
+  .back-link:hover { background:rgba(255,255,255,0.18); }
 
-  <!-- نفس ملف التنسيق -->
-  <link rel="stylesheet" href="style.css" />
+  .hero { padding:44px 40px 54px; text-align:center; }
+  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:18px; }
+  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:900; color:#fff; margin-bottom:10px; }
+  .hero h1 span { color:var(--accent-light); }
+  .hero p { color:rgba(255,255,255,0.65); font-size:0.92rem; max-width:460px; margin:0 auto; line-height:1.8; }
 
-  <!-- إضافات بسيطة فقط للتواصل (ما تغيّر تصميمك الأساسي) -->
-  <style>
-    :root{ color-scheme: dark; }
+  main { max-width:800px; margin:0 auto; padding:36px 24px 60px; }
 
-    /* نخلي الهيدر مثل الرئيسي + شعار الوزارة قابل للضغط */
-    .topbar-inner{ position:relative; padding-left:110px; }
-    .moe-logo{
-      position:absolute;
-      left:28px;
-      top:50%;
-      transform:translateY(-50%);
-      display:flex;
-      align-items:center;
-      z-index:5;
-      opacity:.92;
-      text-decoration:none;
-    }
-    .moe-logo img{
-      height:52px;
-      filter: brightness(0) invert(1) drop-shadow(0 6px 14px rgba(0,0,0,.35));
-      transition:.25s ease;
-    }
-    .moe-logo:hover img{ transform: scale(1.05); opacity:1; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:28px; }
 
-    @media (max-width: 768px){
-      .topbar-inner{ padding-left:72px; }
-      .moe-logo{ left:14px; }
-      .moe-logo img{ height:40px; }
-    }
+  /* FORM CARD */
+  .form-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); }
+  .card-head { padding:16px 22px; border-bottom:1px solid var(--border); font-weight:800; font-size:0.95rem; color:var(--primary); display:flex; align-items:center; gap:9px; background:linear-gradient(135deg,#fff8f8,#fff0f0); }
+  .card-body { padding:22px; }
 
-    /* تخطيط صفحة التواصل */
-    .contact-wrap{ padding: 22px 0 40px; }
-    .contact-grid{
-      display:grid;
-      gap:14px;
-      grid-template-columns: 1fr;
-    }
-    @media (min-width: 980px){
-      .contact-grid{ grid-template-columns: 1.1fr .9fr; }
-    }
+  .field-group { margin-bottom:16px; }
+  .field-label { display:block; font-size:0.82rem; font-weight:700; color:var(--primary); margin-bottom:7px; }
+  .field-input {
+    width:100%; padding:11px 16px;
+    border:2px solid var(--border); border-radius:10px;
+    font-family:'Cairo',sans-serif; font-size:0.88rem;
+    color:var(--text); background:#fafafa; outline:none;
+    transition:all 0.2s;
+  }
+  .field-input:focus { border-color:var(--red-light); background:#fff; box-shadow:0 0 0 3px rgba(239,68,68,0.1); }
+  textarea.field-input { resize:vertical; min-height:110px; }
 
-    /* نموذج */
-    .form-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
-    label{ display:block; margin: 10px 0 6px; font-weight:800; opacity:.95; }
-    input, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.22);
-      color: var(--text);
-      outline:none;
-      font-family:"Tajawal",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-    }
-    textarea{ min-height:150px; resize:vertical; }
-    .hint{ color: rgba(234,240,255,.65); line-height:1.8; font-size:.95rem; margin:0 0 10px; }
+  .send-btn {
+    width:100%; padding:13px;
+    background:linear-gradient(135deg, #dc2626, #ef4444);
+    color:#fff; border:none; border-radius:11px;
+    font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800;
+    cursor:pointer; transition:all 0.3s;
+    box-shadow:0 4px 16px rgba(220,38,38,0.3);
+  }
+  .send-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(220,38,38,0.4); }
 
-    /* أزرار صغيرة داخل بطاقة البيانات */
-    .mini-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
-    .mini-actions a{ text-decoration:none; }
-    .btn.secondary{
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.14);
-    }
-    .divider{ height:1px; background: rgba(255,255,255,.10); margin: 14px 0; }
-    .contact-line{ margin:0 0 10px; color: rgba(234,240,255,.88); line-height:1.9; }
-    .contact-line a{ color:#eaf0ff; }
-    .page-footer{
-      text-align:center;
-      padding:20px 0 0;
-      color: rgba(234,240,255,.45);
-      font-weight:600;
-    }
-  </style>
+  .note { font-size:0.75rem; color:var(--muted); margin-top:10px; text-align:center; }
+
+  /* INFO CARD */
+  .info-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); }
+
+  .info-item { padding:18px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:14px; transition:background 0.15s; }
+  .info-item:last-child { border-bottom:none; }
+  .info-item:hover { background:#fff8f8; }
+  .info-icon { width:44px; height:44px; border-radius:11px; background:#fff0f0; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+  .info-label { font-size:0.75rem; color:var(--muted); font-weight:600; margin-bottom:3px; }
+  .info-value { font-size:0.9rem; font-weight:800; color:var(--primary); }
+  .info-value a { color:var(--red); text-decoration:none; }
+  .info-value a:hover { text-decoration:underline; }
+
+  .hours-badge { background:#fff0f0; border:1px solid #fca5a5; color:#991b1b; padding:5px 14px; border-radius:14px; font-size:0.75rem; font-weight:700; display:inline-block; margin-top:4px; }
+
+  /* QUICK ACTIONS */
+  .quick-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+  .quick-btn {
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    padding:18px 12px; background:var(--card);
+    border:1px solid var(--border); border-radius:14px;
+    text-decoration:none; color:var(--primary);
+    font-size:0.82rem; font-weight:700;
+    transition:all 0.25s;
+    box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  }
+  .quick-btn:hover { transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,0,0,0.1); }
+  .quick-btn span { font-size:1.8rem; }
+
+  footer { background:var(--primary); color:rgba(255,255,255,0.65); text-align:center; padding:22px 40px; font-size:0.8rem; border-top:3px solid var(--accent); }
+  footer strong { color:var(--accent-light); }
+
+  .fade-in { opacity:0; transform:translateY(18px); transition:all 0.5s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:640px) {
+    .header-top { padding:12px 18px; }
+    .hero { padding:32px 18px 40px; }
+    main { padding:22px 16px 40px; }
+    .contact-grid { grid-template-columns:1fr; }
+    .quick-actions { grid-template-columns:repeat(3,1fr); }
+  }
+</style>
 </head>
-
 <body>
 
-  <!-- نفس هيدر الموقع -->
-  <header class="topbar">
-    <div class="container topbar-inner">
-
-      <!-- شعار الوزارة (قابل للضغط) -->
-      <a class="moe-logo" href="https://www.moe.gov.sa/" target="_blank" rel="noopener" aria-label="وزارة التعليم">
-        <img src="moe-logo.png" alt="شعار وزارة التعليم">
-      </a>
-
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="school-logo.png" alt="شعار المدرسة">
-        </div>
-        <div>
-          <div class="brand-title">مدرسة مكة المكرمة المتوسطة</div>
-          <div class="brand-sub">صفحة التواصل الرسمية — قسم ذوي الإعاقة</div>
-        </div>
+<header>
+  <div class="header-top">
+    <div class="header-logos">
+      <div class="logo-icon">📩</div>
+      <div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="header-sub-name">قسم ذوي الإعاقة — التواصل الرسمي</div>
       </div>
-
-
     </div>
-  </header>
+    <a href="index.html" class="back-link">← الرئيسية</a>
+  </div>
+  <div class="hero">
+    <div class="hero-badge">📩 تواصل معنا</div>
+    <h1>تواصل <span>معنا</span></h1>
+    <p>للاستفسارات والملاحظات المتعلقة ببرامج قسم ذوي الإعاقة — نسعد بخدمتكم</p>
+  </div>
+</header>
 
-  <main class="container contact-wrap">
+<main>
 
-    <section class="section" style="padding-top:0;">
-      <div class="section-head">
-        <h2>تواصل معنا</h2>
-        <p>للاستفسارات والملاحظات المتعلقة ببرامج قسم ذوي الإعاقة.</p>
+  <div class="contact-grid fade-in">
+
+    <!-- FORM -->
+    <div class="form-card">
+      <div class="card-head">📨 إرسال رسالة</div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">👤 الاسم</label>
+          <input type="text" class="field-input" id="msg-name" placeholder="اسمك الكريم">
+        </div>
+        <div class="field-group">
+          <label class="field-label">📞 رقم التواصل (اختياري)</label>
+          <input type="tel" class="field-input" id="msg-phone" placeholder="05xxxxxxxx">
+        </div>
+        <div class="field-group">
+          <label class="field-label">✉️ الرسالة</label>
+          <textarea class="field-input" id="msg-body" placeholder="اكتب استفسارك أو ملاحظتك هنا..."></textarea>
+        </div>
+        <button class="send-btn" onclick="sendEmail()">📤 إرسال عبر البريد</button>
+        <p class="note">* سيتم فتح تطبيق البريد برسالة جاهزة للإرسال</p>
       </div>
+    </div>
 
-      <div class="contact-grid">
-
-        <!-- بطاقة النموذج -->
-        <section class="card">
-          <div class="card-top">
-            <div class="card-ic">📨</div>
-            <div>
-              <h3 style="margin:0 0 6px;">إرسال رسالة</h3>
-              <p class="hint">املأ البيانات، وسيتم فتح البريد برسالة جاهزة للإرسال (بدون حفظ أي بيانات).</p>
-            </div>
-          </div>
-
-          <form id="contactForm">
-            <label for="name">الاسم</label>
-            <input id="name" name="name" type="text" placeholder="مثال: ولي أمر الطالب ..." required>
-
-            <label for="phone">رقم التواصل (اختياري)</label>
-            <input id="phone" name="phone" type="tel" placeholder="05xxxxxxxx">
-
-            <label for="message">الرسالة</label>
-            <textarea id="message" name="message" placeholder="اكتب رسالتك هنا..." required></textarea>
-
-            <div class="form-row">
-              <button class="btn primary" type="submit">إرسال عبر البريد</button>
-              <a class="btn secondary" href="index.html">رجوع للرئيسية</a>
-            </div>
-
-            <p class="hint" style="margin-top:10px;">
-              * ملاحظة: الصفحة لا ترسل تلقائياً؛ فقط تجهّز رسالة في تطبيق البريد لديك.
-            </p>
-          </form>
-        </section>
-
-        <!-- بطاقة البيانات الرسمية -->
-        <aside class="card">
-          <div class="card-top">
-            <div class="card-ic">📍</div>
-            <div>
-              <h3 style="margin:0 0 6px;">بيانات التواصل الرسمية</h3>
-              <p class="hint" style="margin:0;">مدرسة مكة المكرمة المتوسطة — برامج قسم ذوي الإعاقة</p>
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <p class="contact-line">
-            ✉️ البريد الإلكتروني:
-            <a href="mailto:32455@mkhb.moe.gov.sa">32455@mkhb.moe.gov.sa</a>
-          </p>
-
-          <p class="contact-line">
-            📞 الجوال:
-            <a href="tel:+966544644111">+966 54 464 4111</a>
-          </p>
-
-          <p class="contact-line" style="margin-bottom:0;">
-            🗺️ الموقع على الخرائط:
-            <a href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank" rel="noopener">فتح الموقع</a>
-          </p>
-
-          <div class="mini-actions">
-            <a class="btn small" href="tel:+966544644111">اتصال</a>
-            <a class="btn small secondary" href="mailto:32455@mkhb.moe.gov.sa">البريد الإلكتروني</a>
-            <a class="btn small secondary" href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank" rel="noopener">الموقع</a>
-          </div>
-
-          <div class="divider"></div>
-
-          <p class="hint" style="margin:0;">
-            ساعات التواصل: أثناء الدوام الرسمي.<br>
-          </p>
-
-        </aside>
-
+    <!-- INFO -->
+    <div class="info-card">
+      <div class="card-head">📍 بيانات التواصل الرسمية</div>
+      <div class="info-item">
+        <div class="info-icon">✉️</div>
+        <div>
+          <div class="info-label">البريد الإلكتروني</div>
+          <div class="info-value"><a href="mailto:32455@mkhb.moe.gov.sa">32455@mkhb.moe.gov.sa</a></div>
+        </div>
       </div>
-
-      <div class="page-footer">
-        ©️ 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد وتنفيذ أ. سعد الزهراني
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">جوال القسم</div>
+          <div class="info-value"><a href="tel:+966544644111">+966 54 464 4111</a></div>
+        </div>
       </div>
-    </section>
+      <div class="info-item">
+        <div class="info-icon">🗺️</div>
+        <div>
+          <div class="info-label">الموقع الجغرافي</div>
+          <div class="info-value"><a href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank">فتح على الخرائط ↗</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div>
+          <div class="info-label">ساعات التواصل</div>
+          <div class="info-value">
+            <div class="hours-badge">أثناء الدوام الرسمي فقط</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  </main>
+  </div>
 
-  <script>
-    // ✅ فتح البريد برسالة جاهزة (بدون سيرفر)
-    const TO_EMAIL = "32455@mkhb.moe.gov.sa";
-    const SUBJECT  = "تواصل - مدرسة مكة المكرمة المتوسطة (قسم ذوي الإعاقة)";
+  <!-- QUICK ACTIONS -->
+  <div class="quick-actions fade-in">
+    <a href="tel:+966544644111" class="quick-btn">
+      <span>📞</span>
+      اتصال مباشر
+    </a>
+    <a href="mailto:32455@mkhb.moe.gov.sa" class="quick-btn">
+      <span>📧</span>
+      البريد الإلكتروني
+    </a>
+    <a href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank" class="quick-btn">
+      <span>📍</span>
+      الموقع
+    </a>
+  </div>
 
-    document.getElementById("contactForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name  = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const msg   = document.getElementById("message").value.trim();
+</main>
 
-      const body =
-        `الاسم: ${name}\n` +
-        (phone ? `رقم التواصل: ${phone}\n` : ``) +
-        `\nالرسالة:\n${msg}\n\n` +
-        `— تم الإرسال عبر صفحة التواصل بالموقع`;
+<footer>
+  © 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
 
-      const mailto =
-        `mailto:${encodeURIComponent(TO_EMAIL)}` +
-        `?subject=${encodeURIComponent(SUBJECT)}` +
-        `&body=${encodeURIComponent(body)}`;
+<script>
+  function sendEmail() {
+    const name = document.getElementById('msg-name').value.trim();
+    const phone = document.getElementById('msg-phone').value.trim();
+    const body = document.getElementById('msg-body').value.trim();
+    if (!body) { alert('يرجى كتابة رسالتك أولاً'); return; }
+    let text = '';
+    if (name) text += `الاسم: ${name}\n`;
+    if (phone) text += `رقم التواصل: ${phone}\n`;
+    text += `\nالرسالة:\n${body}`;
+    const subject = encodeURIComponent('استفسار من بوابة قسم ذوي الإعاقة');
+    const mailto = `mailto:32455@mkhb.moe.gov.sa?subject=${subject}&body=${encodeURIComponent(text)}`;
+    window.location.href = mailto;
+  }
 
-      window.location.href = mailto;
-    });
-  </script>
-
+  const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.08});
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
