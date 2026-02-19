@@ -1,116 +1,572 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>لوحة فصول التعليم العام - طلاب يسير</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة متابعة طلاب يسير | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #c8973a;
+    --accent-light: #f0b84a;
+    --green: #1a6b4a;
+    --green-light: #22a06b;
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --border: #e0d8c8;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  /* HEADER */
+  header { background:linear-gradient(135deg,var(--green) 0%,#0d4a30 60%,#1a6b4a 100%); position:relative; overflow:hidden; }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; border-bottom:1px solid rgba(255,255,255,0.08); flex-wrap:wrap; gap:10px; }
+  .header-logos { display:flex; align-items:center; gap:14px; }
+  .logo-icon { width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
+  .header-sub { color:rgba(255,255,255,0.5); font-size:0.75rem; }
+  .header-right { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; transition:all 0.2s; white-space:nowrap; }
+  .back-link:hover { background:rgba(255,255,255,0.18); }
+  .admin-btn { background:rgba(200,151,58,0.2); border:1px solid rgba(200,151,58,0.4); color:var(--accent-light); padding:7px 16px; border-radius:8px; font-size:0.82rem; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif; transition:all 0.2s; white-space:nowrap; }
+  .admin-btn:hover { background:rgba(200,151,58,0.35); }
+  .admin-btn.active { background:rgba(200,151,58,0.4); color:#fff; }
 
-  <link rel="stylesheet" href="dashboard.css" />
+  .hero { padding:36px 40px 46px; text-align:center; }
+  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:14px; }
+  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; color:#fff; margin-bottom:6px; }
+  .hero h1 span { color:var(--accent-light); }
+  .hero p { color:rgba(255,255,255,0.6); font-size:0.88rem; }
+
+  /* ADMIN BAR */
+  .admin-bar { display:none; background:linear-gradient(135deg,#78350f,#92400e); padding:10px 40px; text-align:center; font-size:0.84rem; font-weight:700; color:#fef3c7; border-bottom:2px solid var(--accent); }
+  .admin-bar.show { display:flex; align-items:center; justify-content:center; gap:12px; }
+
+  /* STATS */
+  .stats-bar { background:var(--card); border-bottom:1px solid var(--border); box-shadow:0 4px 16px rgba(0,0,0,0.06); }
+  .stats-inner { display:flex; max-width:960px; margin:0 auto; }
+  .stat-box { flex:1; text-align:center; padding:20px 12px; border-left:1px solid var(--border); }
+  .stat-box:last-child { border-left:none; }
+  .stat-num { font-family:'Tajawal',sans-serif; font-size:1.9rem; font-weight:900; color:var(--green); display:block; line-height:1; margin-bottom:4px; }
+  .stat-label { font-size:0.73rem; color:var(--muted); font-weight:600; }
+
+  /* MAIN */
+  main { max-width:960px; margin:0 auto; padding:24px 22px 60px; }
+
+  /* FILTERS */
+  .filters-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 20px; margin-bottom:18px; box-shadow:0 2px 10px rgba(0,0,0,0.04); display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
+  .filter-group { display:flex; flex-direction:column; gap:5px; flex:1; min-width:120px; }
+  .filter-label { font-size:0.73rem; font-weight:700; color:var(--muted); }
+  .filter-select, .filter-input { padding:8px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.83rem; color:var(--text); background:#fafafa; outline:none; transition:all 0.2s; width:100%; }
+  .filter-select:focus, .filter-input:focus { border-color:var(--green-light); }
+  .filter-actions { display:flex; gap:8px; flex-shrink:0; }
+  .btn-reset { padding:8px 14px; border:1.5px solid var(--border); border-radius:8px; background:#fff; color:var(--muted); font-family:'Cairo',sans-serif; font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+  .btn-reset:hover { border-color:var(--green-light); color:var(--green); }
+  .btn-export { padding:8px 14px; border:none; border-radius:8px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; font-family:'Cairo',sans-serif; font-size:0.8rem; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(26,107,74,0.25); transition:all 0.2s; }
+  .btn-export:hover { transform:translateY(-1px); }
+
+  /* ADMIN PANEL */
+  .admin-panel { display:none; background:var(--card); border:2px solid var(--accent); border-radius:14px; overflow:hidden; margin-bottom:18px; box-shadow:0 4px 20px rgba(200,151,58,0.15); }
+  .admin-panel.show { display:block; }
+  .admin-panel-head { padding:13px 20px; background:linear-gradient(135deg,#fffbf0,#fff8e6); border-bottom:1px solid #f0d898; font-weight:800; font-size:0.9rem; color:#92400e; display:flex; align-items:center; gap:8px; }
+
+  .admin-tabs { display:flex; gap:4px; padding:12px 18px 0; background:#fffbf0; }
+  .admin-tab { padding:8px 18px; border:none; border-radius:8px 8px 0 0; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; background:#f3f4f6; color:var(--muted); transition:all 0.2s; }
+  .admin-tab.active { background:var(--green); color:#fff; }
+
+  .admin-tab-content { display:none; padding:18px 20px; }
+  .admin-tab-content.active { display:block; }
+
+  .add-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:12px; }
+  .form-group { display:flex; flex-direction:column; gap:5px; }
+  .form-label { font-size:0.75rem; font-weight:700; color:var(--primary); }
+  .form-input { padding:9px 13px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.85rem; color:var(--text); background:#fafafa; outline:none; transition:all 0.2s; }
+  .form-input:focus { border-color:var(--green-light); background:#fff; }
+  .form-input[type=number] { text-align:center; }
+  .btn-add { padding:10px 24px; border:none; border-radius:9px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; font-family:'Cairo',sans-serif; font-size:0.88rem; font-weight:800; cursor:pointer; transition:all 0.25s; box-shadow:0 3px 12px rgba(26,107,74,0.3); margin-top:14px; }
+  .btn-add:hover { transform:translateY(-2px); }
+
+  /* EDIT TABLE */
+  .edit-note { font-size:0.81rem; color:#92400e; margin-bottom:14px; background:#fffbf0; border:1px solid #f0d898; border-right:3px solid var(--accent); border-radius:8px; padding:10px 14px; }
+  .edit-tbl { width:100%; border-collapse:collapse; font-size:0.8rem; }
+  .edit-tbl th { background:var(--green); color:#fff; padding:10px 10px; text-align:center; font-weight:700; }
+  .edit-tbl td { padding:7px 8px; border-bottom:1px solid var(--border); text-align:center; vertical-align:middle; }
+  .edit-tbl tr:hover td { background:#f0faf5; }
+  .edit-input { width:64px; padding:5px 8px; border:1.5px solid var(--border); border-radius:6px; font-family:'Cairo',sans-serif; font-size:0.82rem; text-align:center; outline:none; }
+  .edit-input:focus { border-color:var(--green-light); }
+  .btn-save-row { background:#d1fae5; color:#065f46; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-family:'Cairo',sans-serif; font-size:0.75rem; font-weight:700; transition:all 0.2s; white-space:nowrap; }
+  .btn-save-row:hover { background:var(--green-light); color:#fff; }
+  .btn-del { background:#fee2e2; color:#dc2626; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.75rem; font-weight:700; transition:all 0.2s; }
+  .btn-del:hover { background:#dc2626; color:#fff; }
+
+  /* VIEW TABLE */
+  .table-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.04); }
+  .table-head-bar { padding:13px 20px; background:linear-gradient(135deg,#f0faf5,#e6f4ef); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .table-title { font-weight:800; font-size:0.9rem; color:var(--primary); display:flex; align-items:center; gap:8px; }
+  .count-badge { background:var(--green); color:#fff; padding:2px 10px; border-radius:10px; font-size:0.73rem; font-weight:700; }
+  .tbl { width:100%; border-collapse:collapse; font-size:0.83rem; }
+  .tbl thead tr { background:linear-gradient(135deg,var(--green),var(--green-light)); }
+  .tbl thead th { padding:11px 14px; color:#fff; font-weight:700; text-align:center; }
+  .tbl thead th:first-child { text-align:right; }
+  .tbl tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
+  .tbl tbody tr:last-child { border-bottom:none; }
+  .tbl tbody tr:hover { background:#f0faf5; }
+  .tbl td { padding:11px 14px; text-align:center; font-weight:600; color:var(--text); }
+  .tbl td:first-child { text-align:right; font-weight:700; }
+  .badge-has { background:#d1fae5; color:#065f46; padding:3px 10px; border-radius:10px; font-size:0.73rem; font-weight:700; }
+  .badge-none { background:#f3f4f6; color:#6b7280; padding:3px 10px; border-radius:10px; font-size:0.73rem; font-weight:700; }
+  .badge-pending { background:#fef3c7; color:#92400e; padding:3px 10px; border-radius:10px; font-size:0.73rem; font-weight:700; }
+  .empty-state { text-align:center; padding:46px 20px; color:var(--muted); }
+  .empty-icon { font-size:2.8rem; margin-bottom:10px; }
+
+  /* PIN MODAL */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:999; align-items:center; justify-content:center; }
+  .modal-overlay.show { display:flex; }
+  .modal-box { background:#fff; border-radius:20px; padding:36px 30px; max-width:340px; width:92%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.25); }
+  .modal-icon { font-size:2.6rem; margin-bottom:12px; }
+  .modal-title { font-family:'Tajawal',sans-serif; font-size:1.25rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
+  .modal-desc { font-size:0.82rem; color:var(--muted); margin-bottom:20px; line-height:1.7; }
+  .pin-input { width:100%; padding:13px; border:2px solid var(--border); border-radius:11px; font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:700; text-align:center; letter-spacing:8px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:10px; }
+  .pin-input:focus { border-color:var(--green-light); background:#fff; }
+  .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
+  .pin-error.show { display:block; }
+  .btn-confirm { width:100%; padding:12px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.92rem; font-weight:800; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 14px rgba(26,107,74,0.3); }
+  .btn-confirm:hover { transform:translateY(-2px); }
+  .btn-cancel-modal { margin-top:8px; width:100%; padding:9px; background:#fff; color:var(--muted); border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.86rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+  .btn-cancel-modal:hover { border-color:var(--muted); }
+
+  footer { background:var(--primary); color:rgba(255,255,255,0.65); text-align:center; padding:20px 40px; font-size:0.8rem; border-top:3px solid var(--accent); margin-top:40px; }
+  footer strong { color:var(--accent-light); }
+
+  @media(max-width:640px) {
+    .header-top { padding:12px 16px; }
+    .hero { padding:28px 16px 34px; }
+    main { padding:16px 14px 40px; }
+    .stats-inner { flex-wrap:wrap; }
+    .stat-box { min-width:50%; border-bottom:1px solid var(--border); }
+    .tbl { font-size:0.74rem; }
+    .tbl td, .tbl th { padding:8px 6px; }
+    .edit-input { width:52px; }
+  }
+</style>
 </head>
-
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="brand">
-        <div class="logo">📊</div>
-        <div>
-          <h1>لوحة متابعة طلاب يسير</h1>
-          <p>مدرسة مكة المكرمة المتوسطة</p>
-        </div>
-      </div>
 
-      <div class="actions">
-        <a class="btn ghost" href="index.html">⬅️ رجوع للرئيسية</a>
-      </div>
-    </div>
+<!-- PIN MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-icon">🔐</div>
+    <div class="modal-title">وضع المشرف</div>
+    <div class="modal-desc">أدخل رمز المشرف للتعديل على البيانات وإضافة أو حذف الفصول</div>
+    <input type="password" class="pin-input" id="admin-pin" maxlength="6" placeholder="• • • •"
+      onkeydown="if(event.key==='Enter') confirmPin()"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
+    <button class="btn-confirm" onclick="confirmPin()">✅ دخول</button>
+    <button class="btn-cancel-modal" onclick="closeModal()">إلغاء</button>
+  </div>
+</div>
 
-    <!-- إحصائيات -->
-    <div class="stats">
-      <div class="stat">
-        <div class="label">عدد الفصول</div>
-        <div class="value num" id="statClasses">0</div>
-      </div>
-      <div class="stat">
-        <div class="label">إجمالي طلاب يسير</div>
-        <div class="value num" id="statYaseer">0</div>
-      </div>
-      <div class="stat">
-        <div class="label">بانتظار التشخيص</div>
-        <div class="value num" id="statPending">0</div>
-      </div>
-      <div class="stat">
-        <div class="label">إجمالي طلاب المدرسة (حسب البيانات)</div>
-        <div class="value num" id="statTotal">0</div>
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="header-logos">
+      <div class="logo-icon">📊</div>
+      <div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="header-sub">قسم ذوي الإعاقة — لوحة المتابعة</div>
       </div>
     </div>
-
-    <!-- شريط أدوات -->
-    <div class="card toolbar">
-      <div class="filters">
-        <input id="q" type="text" class="input" placeholder="ابحث بالفصل أو المبنى أو الصف..." />
-
-        <div class="field select">
-          <select id="bld">
-            <option value="">كل المباني</option>
-            <option value="المبنى الشمالي">المبنى الشمالي</option>
-            <option value="المبنى الجنوبي">المبنى الجنوبي</option>
-            <option value="المبنى الرئيسي">المبنى الرئيسي</option>
-          </select>
-        </div>
-
-        <div class="field select">
-          <select id="grade">
-            <option value="">كل الصفوف</option>
-            <option value="أول متوسط">أول متوسط</option>
-            <option value="ثاني متوسط">ثاني متوسط</option>
-            <option value="ثالث متوسط">ثالث متوسط</option>
-          </select>
-        </div>
-
-        <div class="field select">
-          <select id="only">
-            <option value="all">عرض الكل</option>
-            <option value="has">فصول فيها طلاب يسير</option>
-            <option value="none">فصول بدون طلاب يسير</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="filters">
-        <button class="btn ghost" id="reset">إعادة ضبط</button>
-        <button class="btn primary" id="export">تصدير CSV</button>
-      </div>
+    <div class="header-right">
+      <button class="admin-btn" id="admin-toggle-btn" onclick="toggleAdmin()">🔐 وضع المشرف</button>
+      <a href="index.html" class="back-link">← الرئيسية</a>
     </div>
+  </div>
+  <div class="hero">
+    <div class="hero-badge">📊 لوحة تفاعلية</div>
+    <h1>لوحة متابعة <span>طلاب يسير</span></h1>
+    <p>متابعة توزيع طلاب برنامج يسير على فصول التعليم العام</p>
+  </div>
+</header>
 
-    <!-- الجدول -->
-    <div class="card table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>الفصل</th>
-            <th>المبنى</th>
-            <th>الصف</th>
-            <th>عدد طلاب يسير</th>
-            <th>بانتظار التشخيص</th>
-            <th>إجمالي طلاب الفصل</th>
-            <th>الحالة</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
+<!-- ADMIN STATUS BAR -->
+<div class="admin-bar" id="admin-bar">
+  🔓 أنت في وضع المشرف — يمكنك الإضافة والتعديل والحذف
+  <button onclick="logoutAdmin()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fef3c7;padding:4px 12px;border-radius:6px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;">خروج</button>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-box"><span class="stat-num" id="stat-classes">0</span><span class="stat-label">عدد الفصول</span></div>
+    <div class="stat-box"><span class="stat-num" id="stat-yaseer">0</span><span class="stat-label">إجمالي طلاب يسير</span></div>
+    <div class="stat-box"><span class="stat-num" id="stat-pending">0</span><span class="stat-label">بانتظار التشخيص</span></div>
+    <div class="stat-box"><span class="stat-num" id="stat-total">0</span><span class="stat-label">إجمالي طلاب المدرسة</span></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- FILTERS -->
+  <div class="filters-card">
+    <div class="filter-group">
+      <span class="filter-label">🔍 بحث</span>
+      <input type="text" class="filter-input" id="filter-search" placeholder="ابحث بالفصل..." oninput="render()">
     </div>
-
-    <div class="footer card">
-      <div>© <span id="year"></span> مدرسة مكة المكرمة المتوسطة — جميع الحقوق محفوظة</div>
-      <div class="badge">لوحة تفاعلية</div>
+    <div class="filter-group">
+      <span class="filter-label">🏢 المبنى</span>
+      <select class="filter-select" id="filter-building" onchange="render()">
+        <option value="">كل المباني</option>
+        <option>المبنى الشمالي</option>
+        <option>المبنى الجنوبي</option>
+        <option>المبنى الرئيسي</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">🏫 الصف</span>
+      <select class="filter-select" id="filter-grade" onchange="render()">
+        <option value="">كل الصفوف</option>
+        <option>أول متوسط</option>
+        <option>ثاني متوسط</option>
+        <option>ثالث متوسط</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">📋 عرض</span>
+      <select class="filter-select" id="filter-status" onchange="render()">
+        <option value="">عرض الكل</option>
+        <option value="has">فيها طلاب يسير</option>
+        <option value="none">بدون طلاب يسير</option>
+      </select>
+    </div>
+    <div class="filter-actions">
+      <button class="btn-reset" onclick="resetFilters()">↺ ضبط</button>
+      <button class="btn-export" onclick="exportCSV()">⬇️ CSV</button>
     </div>
   </div>
 
-  <!-- البيانات ثم المنطق -->
-  <script src="dashboard-data.js"></script>
-  <script src="dashboard.js"></script>
+  <!-- ADMIN PANEL -->
+  <div class="admin-panel" id="admin-panel">
+    <div class="admin-panel-head">🛠️ لوحة تحكم المشرف</div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab('add',this)">➕ إضافة فصل</button>
+      <button class="admin-tab" onclick="switchTab('edit',this)">✏️ تعديل البيانات</button>
+    </div>
+
+    <!-- ADD TAB -->
+    <div class="admin-tab-content active" id="admin-tab-add">
+      <div class="add-grid">
+        <div class="form-group">
+          <label class="form-label">اسم الفصل *</label>
+          <input type="text" class="form-input" id="f-class" placeholder="مثال: 11/1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">المبنى *</label>
+          <select class="form-input" id="f-building">
+            <option value="">اختر</option>
+            <option>المبنى الشمالي</option>
+            <option>المبنى الجنوبي</option>
+            <option>المبنى الرئيسي</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">الصف *</label>
+          <select class="form-input" id="f-grade">
+            <option value="">اختر</option>
+            <option>أول متوسط</option>
+            <option>ثاني متوسط</option>
+            <option>ثالث متوسط</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">طلاب يسير</label>
+          <input type="number" class="form-input" id="f-yaseer" min="0" value="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">بانتظار التشخيص</label>
+          <input type="number" class="form-input" id="f-pending" min="0" value="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">إجمالي الفصل</label>
+          <input type="number" class="form-input" id="f-total" min="0" value="0">
+        </div>
+      </div>
+      <button class="btn-add" onclick="addClass()">✅ إضافة الفصل</button>
+    </div>
+
+    <!-- EDIT TAB -->
+    <div class="admin-tab-content" id="admin-tab-edit">
+      <div class="edit-note">💡 عدّل الأرقام مباشرة ثم اضغط <strong>💾 حفظ</strong> لكل صف على حدة</div>
+      <div style="overflow-x:auto;">
+        <table class="edit-tbl" id="edit-tbl"></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW TABLE -->
+  <div class="table-card">
+    <div class="table-head-bar">
+      <div class="table-title">📋 جدول الفصول <span class="count-badge" id="shown-count">0</span></div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>الفصل</th><th>المبنى</th><th>الصف</th>
+            <th>طلاب يسير</th><th>بانتظار التشخيص</th>
+            <th>إجمالي الفصل</th><th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+      <div class="empty-state" id="empty-state" style="display:none;">
+        <div class="empty-icon">📭</div>
+        <p>لا توجد نتائج مطابقة</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
+
+<script>
+// ============================================================
+// رمز المشرف — غيّره هنا
+// ============================================================
+const ADMIN_PIN = "1446";
+
+// ============================================================
+// البيانات الأصلية
+// ============================================================
+const DEFAULT_DATA = [
+  { name:"1/1",  building:"المبنى الرئيسي", grade:"أول متوسط",  yaseer:1, pending:3, total:47 },
+  { name:"2/1",  building:"المبنى الشمالي", grade:"أول متوسط",  yaseer:2, pending:0, total:32 },
+  { name:"3/1",  building:"المبنى الشمالي", grade:"أول متوسط",  yaseer:0, pending:0, total:30 },
+  { name:"4/1",  building:"المبنى الجنوبي", grade:"أول متوسط",  yaseer:1, pending:0, total:31 },
+  { name:"5/1",  building:"المبنى الرئيسي", grade:"أول متوسط",  yaseer:1, pending:0, total:46 },
+  { name:"6/1",  building:"المبنى الجنوبي", grade:"أول متوسط",  yaseer:1, pending:0, total:30 },
+  { name:"7/1",  building:"المبنى الشمالي", grade:"أول متوسط",  yaseer:0, pending:0, total:27 },
+  { name:"8/1",  building:"المبنى الرئيسي", grade:"أول متوسط",  yaseer:0, pending:0, total:23 },
+  { name:"9/1",  building:"المبنى الرئيسي", grade:"أول متوسط",  yaseer:0, pending:0, total:18 },
+  { name:"10/1", building:"المبنى الرئيسي", grade:"أول متوسط",  yaseer:0, pending:0, total:20 },
+  { name:"1/2",  building:"المبنى الشمالي", grade:"ثاني متوسط", yaseer:0, pending:0, total:43 },
+  { name:"2/2",  building:"المبنى الرئيسي", grade:"ثاني متوسط", yaseer:2, pending:0, total:29 },
+  { name:"3/2",  building:"المبنى الشمالي", grade:"ثاني متوسط", yaseer:0, pending:0, total:40 },
+  { name:"4/2",  building:"المبنى الجنوبي", grade:"ثاني متوسط", yaseer:2, pending:0, total:30 },
+  { name:"5/2",  building:"المبنى الرئيسي", grade:"ثاني متوسط", yaseer:1, pending:0, total:28 },
+  { name:"6/2",  building:"المبنى الجنوبي", grade:"ثاني متوسط", yaseer:0, pending:0, total:29 },
+  { name:"7/2",  building:"المبنى الشمالي", grade:"ثاني متوسط", yaseer:0, pending:0, total:22 },
+  { name:"8/2",  building:"المبنى الرئيسي", grade:"ثاني متوسط", yaseer:1, pending:0, total:26 },
+  { name:"9/2",  building:"المبنى الرئيسي", grade:"ثاني متوسط", yaseer:0, pending:0, total:17 },
+  { name:"10/2", building:"المبنى الرئيسي", grade:"ثاني متوسط", yaseer:0, pending:0, total:2  },
+  { name:"1/3",  building:"المبنى الجنوبي", grade:"ثالث متوسط", yaseer:2, pending:0, total:26 },
+  { name:"2/3",  building:"المبنى الجنوبي", grade:"ثالث متوسط", yaseer:0, pending:0, total:26 },
+  { name:"3/3",  building:"المبنى الشمالي", grade:"ثالث متوسط", yaseer:2, pending:0, total:26 },
+  { name:"4/3",  building:"المبنى الجنوبي", grade:"ثالث متوسط", yaseer:1, pending:0, total:26 },
+  { name:"5/3",  building:"المبنى الرئيسي", grade:"ثالث متوسط", yaseer:0, pending:0, total:40 },
+  { name:"6/3",  building:"المبنى الجنوبي", grade:"ثالث متوسط", yaseer:0, pending:0, total:41 },
+  { name:"7/3",  building:"المبنى الشمالي", grade:"ثالث متوسط", yaseer:0, pending:0, total:20 },
+  { name:"8/3",  building:"المبنى الرئيسي", grade:"ثالث متوسط", yaseer:0, pending:0, total:22 },
+  { name:"9/3",  building:"المبنى الرئيسي", grade:"ثالث متوسط", yaseer:0, pending:0, total:5  },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let isAdmin = false;
+let classes = JSON.parse(localStorage.getItem('yaseer_v2') || 'null');
+if (!classes) { classes = JSON.parse(JSON.stringify(DEFAULT_DATA)); save(); }
+
+function save() { localStorage.setItem('yaseer_v2', JSON.stringify(classes)); }
+
+// ============================================================
+// RENDER — VIEW TABLE
+// ============================================================
+function render() {
+  const q  = (document.getElementById('filter-search').value||'').toLowerCase();
+  const fb = document.getElementById('filter-building').value;
+  const fg = document.getElementById('filter-grade').value;
+  const fs = document.getElementById('filter-status').value;
+
+  const filtered = classes.filter(c => {
+    if (q  && !c.name.toLowerCase().includes(q) && !c.building.includes(q) && !c.grade.includes(q)) return false;
+    if (fb && c.building !== fb) return false;
+    if (fg && c.grade    !== fg) return false;
+    if (fs === 'has'  && c.yaseer === 0) return false;
+    if (fs === 'none' && c.yaseer  >  0) return false;
+    return true;
+  });
+
+  document.getElementById('stat-classes').textContent = classes.length;
+  document.getElementById('stat-yaseer').textContent  = classes.reduce((s,c)=>s+c.yaseer,0);
+  document.getElementById('stat-pending').textContent = classes.reduce((s,c)=>s+c.pending,0);
+  document.getElementById('stat-total').textContent   = classes.reduce((s,c)=>s+c.total,0);
+  document.getElementById('shown-count').textContent  = filtered.length;
+
+  const tbody = document.getElementById('tbl-body');
+  const empty = document.getElementById('empty-state');
+
+  if (!filtered.length) { tbody.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = filtered.map(c => {
+    const status = c.yaseer > 0
+      ? `<span class="badge-has">✅ فيها طلاب</span>`
+      : `<span class="badge-none">— لا يوجد</span>`;
+    const pend = c.pending > 0
+      ? `<span class="badge-pending">${c.pending}</span>`
+      : `<span style="color:var(--muted)">—</span>`;
+    return `<tr>
+      <td>${c.name}</td><td>${c.building}</td><td>${c.grade}</td>
+      <td><strong style="color:var(--green);font-size:0.95rem;">${c.yaseer}</strong></td>
+      <td>${pend}</td><td>${c.total||'—'}</td><td>${status}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// RENDER — EDIT TABLE
+// ============================================================
+function renderEditTable() {
+  const tbl = document.getElementById('edit-tbl');
+  tbl.innerHTML = `<tr>
+    <th>الفصل</th><th>المبنى</th><th>الصف</th>
+    <th>يسير</th><th>انتظار</th><th>الإجمالي</th>
+    <th>حفظ</th><th>حذف</th>
+  </tr>` + classes.map((c,i) => `
+    <tr id="erow-${i}">
+      <td><strong>${c.name}</strong></td>
+      <td style="font-size:0.74rem;">${c.building}</td>
+      <td style="font-size:0.74rem;">${c.grade}</td>
+      <td><input class="edit-input" id="ey-${i}" type="number" min="0" value="${c.yaseer}"></td>
+      <td><input class="edit-input" id="ep-${i}" type="number" min="0" value="${c.pending}"></td>
+      <td><input class="edit-input" id="et-${i}" type="number" min="0" value="${c.total}"></td>
+      <td><button class="btn-save-row" id="sbtn-${i}" onclick="saveRow(${i})">💾 حفظ</button></td>
+      <td><button class="btn-del" onclick="deleteClass(${i})">🗑️</button></td>
+    </tr>
+  `).join('');
+}
+
+// ============================================================
+// ADMIN MODAL
+// ============================================================
+function toggleAdmin() {
+  if (isAdmin) { logoutAdmin(); return; }
+  document.getElementById('modal-overlay').classList.add('show');
+  setTimeout(() => document.getElementById('admin-pin').focus(), 100);
+}
+
+function confirmPin() {
+  const val = document.getElementById('admin-pin').value;
+  const err = document.getElementById('pin-error');
+  const inp = document.getElementById('admin-pin');
+  if (val === ADMIN_PIN) {
+    isAdmin = true;
+    document.getElementById('modal-overlay').classList.remove('show');
+    document.getElementById('admin-panel').classList.add('show');
+    document.getElementById('admin-bar').classList.add('show');
+    document.getElementById('admin-toggle-btn').textContent = '🔓 وضع المشرف مفعّل';
+    document.getElementById('admin-toggle-btn').classList.add('active');
+    inp.value = '';
+    err.classList.remove('show');
+    renderEditTable();
+  } else {
+    err.classList.add('show');
+    inp.classList.add('error');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
+  }
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+  document.getElementById('admin-pin').value = '';
+  document.getElementById('pin-error').classList.remove('show');
+}
+
+function logoutAdmin() {
+  isAdmin = false;
+  document.getElementById('admin-panel').classList.remove('show');
+  document.getElementById('admin-bar').classList.remove('show');
+  document.getElementById('admin-toggle-btn').textContent = '🔐 وضع المشرف';
+  document.getElementById('admin-toggle-btn').classList.remove('active');
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('admin-tab-'+id).classList.add('active');
+  if (id === 'edit') renderEditTable();
+}
+
+// ============================================================
+// CRUD
+// ============================================================
+function addClass() {
+  if (!isAdmin) return;
+  const name     = document.getElementById('f-class').value.trim();
+  const building = document.getElementById('f-building').value;
+  const grade    = document.getElementById('f-grade').value;
+  const yaseer   = parseInt(document.getElementById('f-yaseer').value)||0;
+  const pending  = parseInt(document.getElementById('f-pending').value)||0;
+  const total    = parseInt(document.getElementById('f-total').value)||0;
+  if (!name||!building||!grade) { alert('⚠️ اسم الفصل والمبنى والصف مطلوبة'); return; }
+  classes.push({ name, building, grade, yaseer, pending, total });
+  save(); render();
+  document.getElementById('f-class').value='';
+  document.getElementById('f-yaseer').value='0';
+  document.getElementById('f-pending').value='0';
+  document.getElementById('f-total').value='0';
+  renderEditTable();
+}
+
+function saveRow(i) {
+  if (!isAdmin) return;
+  classes[i].yaseer  = parseInt(document.getElementById(`ey-${i}`).value)||0;
+  classes[i].pending = parseInt(document.getElementById(`ep-${i}`).value)||0;
+  classes[i].total   = parseInt(document.getElementById(`et-${i}`).value)||0;
+  save(); render();
+  const btn = document.getElementById(`sbtn-${i}`);
+  if (btn) { btn.textContent='✅ تم!'; setTimeout(()=>{ btn.textContent='💾 حفظ'; },1500); }
+}
+
+function deleteClass(i) {
+  if (!isAdmin) return;
+  if (!confirm(`هل تريد حذف الفصل "${classes[i].name}"؟`)) return;
+  classes.splice(i,1); save(); render(); renderEditTable();
+}
+
+function resetFilters() {
+  document.getElementById('filter-search').value='';
+  document.getElementById('filter-building').value='';
+  document.getElementById('filter-grade').value='';
+  document.getElementById('filter-status').value='';
+  render();
+}
+
+function exportCSV() {
+  const h = ['الفصل','المبنى','الصف','طلاب يسير','بانتظار التشخيص','إجمالي الفصل'];
+  const rows = classes.map(c=>[c.name,c.building,c.grade,c.yaseer,c.pending,c.total].join(','));
+  const csv = '\uFEFF' + [h.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download = 'yaseer_classes.csv';
+  a.click();
+}
+
+// INIT
+render();
+</script>
 </body>
 </html>
