@@ -1,503 +1,387 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>برنامج الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
-  <meta name="description" content="صفحة توعوية لبرنامج الدمج الفكري ضمن برامج التربية الخاصة، للمعلمين وأولياء الأمور." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>برنامج الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --primary-light: #2563a8;
+    --accent: #c8973a;
+    --accent-light: #f0b84a;
+    --blue: #1e3a8a;
+    --blue-light: #2563a8;
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --border: #e0d8c8;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); }
 
-  <!-- (اختياري) نفس خط index -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f2060 60%, #1e40af 100%);
+    position:relative; overflow:hidden;
+  }
+  header::after {
+    content:''; position:absolute; bottom:0; left:0; right:0;
+    height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent));
+  }
+  .header-top {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .header-logos { display:flex; align-items:center; gap:14px; }
+  .logo-icon {
+    width:52px; height:52px; border-radius:50%;
+    background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4);
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+  }
+  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
+  .header-sub-name { color:rgba(255,255,255,0.5); font-size:0.75rem; }
+  .back-link {
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+    color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px;
+    text-decoration:none; font-size:0.82rem; font-weight:600; transition:all 0.2s;
+  }
+  .back-link:hover { background:rgba(255,255,255,0.18); }
+  .hero { padding:50px 40px 60px; text-align:center; }
+  .hero-badge {
+    display:inline-block; background:rgba(200,151,58,0.15);
+    border:1px solid rgba(200,151,58,0.35); color:var(--accent-light);
+    padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:18px;
+  }
+  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:900; color:#fff; margin-bottom:12px; line-height:1.3; }
+  .hero h1 span { color:var(--accent-light); }
+  .hero p { color:rgba(255,255,255,0.65); font-size:0.95rem; max-width:520px; margin:0 auto 28px; line-height:1.8; }
+  .hero-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .btn-gold { background:linear-gradient(135deg,var(--accent),var(--accent-light)); color:var(--primary); padding:11px 26px; border-radius:9px; font-weight:800; font-size:0.9rem; text-decoration:none; box-shadow:0 4px 18px rgba(200,151,58,0.35); transition:all 0.3s; }
+  .btn-gold:hover { transform:translateY(-2px); }
+  .btn-outline { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.9); padding:11px 26px; border-radius:9px; font-weight:700; font-size:0.9rem; text-decoration:none; transition:all 0.2s; }
+  .btn-outline:hover { background:rgba(255,255,255,0.15); }
 
-  <style>
-    :root{
-      /* ✅ Official palette: Navy + MOE green (مطابق لثيم index) */
-      --bg0:#071322;
-      --bg1:#0b1f35;
+  .sticky-nav { background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+  .nav-inner { display:flex; overflow-x:auto; padding:0 20px; max-width:900px; margin:0 auto; scrollbar-width:none; }
+  .nav-inner::-webkit-scrollbar { display:none; }
+  .nav-link { padding:14px 18px; color:var(--muted); text-decoration:none; font-size:0.82rem; font-weight:700; white-space:nowrap; border-bottom:3px solid transparent; transition:all 0.2s; }
+  .nav-link:hover { color:var(--blue-light); border-bottom-color:var(--blue-light); }
 
-      --card:rgba(255,255,255,.08);
-      --card2:rgba(255,255,255,.06);
-      --stroke:rgba(255,255,255,.14);
+  main { max-width:860px; margin:0 auto; padding:36px 24px 60px; }
 
-      --text:#EAF0FF;
-      --muted:rgba(234,240,255,.72);
-      --muted2:rgba(234,240,255,.55);
+  .intro-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:36px; }
+  .intro-item { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; box-shadow:0 2px 10px rgba(0,0,0,0.04); border-right:4px solid var(--blue-light); }
+  .intro-item h4 { font-size:0.82rem; font-weight:800; color:var(--blue-light); margin-bottom:6px; }
+  .intro-item p { font-size:0.83rem; color:var(--muted); line-height:1.7; }
 
-      /* ✅ Primary (MOE green) */
-      --primary:#0ea37f;
-      --primary2:#0d8f6f;
+  .section { margin-bottom:40px; }
+  .section-head { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:14px; display:flex; align-items:center; gap:10px; padding-bottom:10px; border-bottom:2px solid var(--border); }
+  .section-head span { background:var(--blue-light); color:#fff; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.85rem; flex-shrink:0; }
 
-      /* ✅ Orbs */
-      --accentA: rgba(14,163,127,.28);
-      --accentB: rgba(14,163,127,.14);
+  .content-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:14px; box-shadow:0 2px 10px rgba(0,0,0,0.04); }
+  .content-card-head { padding:13px 20px; background:#f0f4ff; border-bottom:1px solid var(--border); font-weight:800; font-size:0.9rem; color:var(--primary); display:flex; align-items:center; gap:8px; }
+  .content-card-body { padding:18px 20px; }
+  .content-list { list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .content-list li { display:flex; align-items:flex-start; gap:10px; font-size:0.86rem; color:var(--muted); line-height:1.7; }
+  .content-list li::before { content:'✓'; color:var(--blue-light); font-weight:900; flex-shrink:0; margin-top:1px; }
 
-      --good:#2EE59D;
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
 
-      --border:rgba(255,255,255,.10);
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
+  .quiz-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px; box-shadow:0 2px 10px rgba(0,0,0,0.04); margin-bottom:12px; }
+  .quiz-q { font-size:0.88rem; font-weight:700; color:var(--primary); margin-bottom:12px; }
+  .quiz-options { display:flex; flex-direction:column; gap:8px; }
+  .quiz-opt { display:flex; align-items:center; gap:10px; background:#f8f8f8; border:1px solid var(--border); border-radius:9px; padding:10px 14px; cursor:pointer; font-size:0.84rem; transition:all 0.2s; }
+  .quiz-opt input { accent-color:var(--blue-light); width:16px; height:16px; }
+  .quiz-opt:hover { background:#f0f4ff; border-color:var(--blue-light); }
+  .quiz-opt.correct { background:#d1fae5; border-color:#6ee7b7; color:#065f46; }
+  .quiz-opt.wrong { background:#fee2e2; border-color:#fca5a5; color:#991b1b; }
+  .quiz-submit { background:linear-gradient(135deg,var(--blue),var(--blue-light)); color:#fff; border:none; padding:12px 28px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; margin-top:16px; box-shadow:0 4px 14px rgba(30,58,138,0.3); transition:all 0.25s; }
+  .quiz-submit:hover { transform:translateY(-2px); }
+  .result-box { display:none; margin-top:16px; padding:14px 18px; border-radius:10px; font-weight:700; font-size:0.9rem; }
 
-      --radius: 18px;
-      --max: 1100px;
-      --font: "Tajawal", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Kufi Arabic", Arial;
-    }
+  .file-row { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); gap:14px; transition:background 0.15s; }
+  .file-row:last-child { border-bottom:none; }
+  .file-row:hover { background:#f0f4ff; }
+  .file-left { display:flex; align-items:center; gap:12px; }
+  .file-icon { width:40px; height:40px; border-radius:10px; background:#e8f0ff; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+  .file-name { font-size:0.88rem; font-weight:700; color:var(--primary); }
+  .file-type { font-size:0.75rem; color:var(--muted); margin-top:2px; }
+  .btn-download { background:linear-gradient(135deg,var(--blue),var(--blue-light)); color:#fff; padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.8rem; font-weight:700; white-space:nowrap; transition:all 0.2s; flex-shrink:0; }
+  .btn-download:hover { transform:translateY(-1px); }
 
-    *{box-sizing:border-box}
-    html{ scroll-behavior:smooth; }
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% 20%, var(--accentA), transparent 60%),
-        radial-gradient(1000px 600px at 80% 25%, var(--accentB), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
-    }
+  footer { background:var(--primary); color:rgba(255,255,255,0.65); text-align:center; padding:22px 40px; font-size:0.8rem; border-top:3px solid var(--accent); }
+  footer strong { color:var(--accent-light); }
 
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 60px}
+  .fade-in { opacity:0; transform:translateY(18px); transition:all 0.5s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
 
-    /* Header */
-    .hero{
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border-radius: calc(var(--radius) + 6px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .hero-inner{padding:26px 22px 18px}
-    .toprow{
-      display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
-    .badge{
-      width:44px; height:44px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(14,163,127,.95), rgba(13,143,111,.92));
-      display:grid; place-items:center;
-      box-shadow: 0 10px 18px rgba(14,163,127,.18);
-    }
-    .badge svg{width:22px; height:22px}
-    h1{margin:0; font-size:22px; letter-spacing:.2px}
-    .subtitle{margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7}
-
-    /* Nav */
-    .nav{
-      margin-top:16px;
-      display:flex; flex-wrap:wrap; gap:10px;
-      padding:12px 14px;
-      border-top:1px solid var(--border);
-      background: var(--card2);
-    }
-    .chip{
-      padding:10px 12px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background: rgba(255,255,255,.04);
-      font-size:13px;
-      display:flex; align-items:center; gap:8px;
-      transition:.2s ease;
-    }
-    .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18)}
-    .chip svg{width:16px; height:16px; opacity:.95}
-
-    /* Section */
-    section{margin-top:18px}
-    .section-card{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      border-radius: var(--radius);
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
-      padding:18px 16px;
-    }
-    h2{margin:0 0 10px; font-size:18px}
-    h3{margin:16px 0 8px; font-size:15px}
-    p{margin:0; color:var(--muted); line-height:1.9; font-size:14px}
-
-    /* Buttons */
-    .cta{
-      margin-top:14px;
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
-    .btn{
-      padding:12px 14px;
-      border-radius: 14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      display:inline-flex; align-items:center; gap:10px;
-      font-size:14px;
-      transition:.2s ease;
-      color:var(--text);
-    }
-    .btn.primary{
-      border:1px solid rgba(14,163,127,.45);
-      background: linear-gradient(135deg, rgba(14,163,127,.95), rgba(13,143,111,.92));
-      box-shadow: 0 12px 20px rgba(14,163,127,.18);
-      color:#fff;
-    }
-    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.09)}
-    .btn.primary:hover{filter:brightness(1.03)}
-    .btn svg{width:18px; height:18px}
-
-    /* Grid cards */
-    .grid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-    }
-    .kpi{
-      grid-column: span 4;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      border-radius: var(--radius);
-      padding:14px;
-      display:flex; gap:12px;
-      align-items:flex-start;
-    }
-    .kpi .icon{
-      width:42px; height:42px; border-radius:14px;
-      background: rgba(14,163,127,.14);
-      display:grid; place-items:center;
-      border:1px solid rgba(14,163,127,.24);
-      flex:0 0 auto;
-    }
-    .kpi .icon svg{width:20px; height:20px}
-    .kpi strong{display:block; margin-top:1px}
-    .kpi small{display:block; color:var(--muted); margin-top:6px; line-height:1.7}
-    @media (max-width:900px){ .kpi{grid-column: span 6;} }
-    @media (max-width:560px){ .kpi{grid-column: span 12;} }
-
-    /* List */
-    ul{margin:8px 0 0; padding:0 18px 0 0; color:var(--muted); line-height:1.9; font-size:14px}
-    li{margin:6px 0}
-
-    /* Footer */
-    .footer{
-      margin-top:14px;
-      padding-top:12px;
-      border-top:1px solid var(--border);
-      display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap;
-      color:var(--muted);
-      font-size:12.5px;
-    }
-    .muted{color:var(--muted)}
-
-    /* Quiz */
-    .quiz-form { margin-top: 14px; }
-    .q {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding: 14px;
-      margin: 12px 0;
-    }
-    .q-title {
-      font-weight: 800;
-      margin-bottom: 10px;
-      line-height: 1.8;
-    }
-    .opt {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin: 8px 0;
-      line-height: 1.9;
-      cursor: pointer;
-    }
-    .opt input[type="radio"]{
-      margin-top: 6px;
-      transform: scale(1.05);
-    }
-    .quiz-actions {
-      margin-top: 14px;
-      display: flex;
-      justify-content: center;
-    }
-    .quiz-result{
-      margin-top: 14px;
-      text-align: center;
-      font-weight: 800;
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(0,0,0,.18);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-  </style>
+  @media(max-width:640px) {
+    .header-top { padding:12px 18px; }
+    .hero { padding:36px 18px 44px; }
+    main { padding:24px 16px 40px; }
+    .two-col { grid-template-columns:1fr; }
+  }
+</style>
 </head>
-
 <body>
-  <div class="wrap">
-    <header class="hero" id="top">
-      <div class="hero-inner">
-        <div class="toprow">
-          <div class="brand">
-            <div class="badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M12 2l1.6 6.1L20 10l-6.4 1.9L12 18l-1.6-6.1L4 10l6.4-1.9L12 2z" stroke="white" stroke-width="1.6" opacity=".95"/>
-              </svg>
-            </div>
-            <div>
-              <h1>برنامج الدمج الفكري</h1>
-              <p class="subtitle">ضمن برامج قسم ذوي الإعاقة في مدرسة مكة المكرمة المتوسطة — صفحة توعوية للمعلمين وأولياء الأمور</p>
-            </div>
-          </div>
 
-          <div class="cta">
-            <a class="btn primary" href="#definition">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M8 5h8M8 12h8M8 19h8" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>
-              ابدأ من التعريف
-            </a>
-            <a class="btn" href="#forms">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v16H7z" stroke="white" stroke-width="1.6"/><path d="M9 8h6M9 12h6M9 16h4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-              الملفات
-            </a>
-          </div>
-        </div>
+<header>
+  <div class="header-top">
+    <div class="header-logos">
+      <div class="logo-icon">🧠</div>
+      <div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="header-sub-name">قسم ذوي الإعاقة — الدمج الفكري</div>
       </div>
+    </div>
+    <a href="index.html" class="back-link">← الرئيسية</a>
+  </div>
+  <div class="hero">
+    <div class="hero-badge">🧠 برنامج الدمج الفكري</div>
+    <h1>برنامج <span>الدمج الفكري</span></h1>
+    <p>صفحة توعوية للمعلمين وأولياء الأمور — ضمن برامج قسم ذوي الإعاقة في مدرسة مكة المكرمة المتوسطة</p>
+    <div class="hero-btns">
+      <a href="#definition" class="btn-gold">ابدأ من التعريف</a>
+      <a href="#forms" class="btn-outline">📎 الملفات</a>
+    </div>
+  </div>
+</header>
 
-      <nav class="nav" aria-label="التنقّل">
-        <a class="chip" href="index.html">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5l8-6 8 6V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9.5z" stroke="white" stroke-width="1.6"/></svg>
-          الرئيسية
-        </a>
-        <a class="chip" href="#definition">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 7h8M12 12h8M12 17h8" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M4.5 7.5l1.5 1.5 3-3" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-          تعريف البرنامج
-        </a>
-        <a class="chip" href="#eligibility">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 12l4 4 8-10" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          الفئة المستهدفة
-        </a>
-        <a class="chip" href="#teachers">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6l8-3 8 3-8 3-8-3z" stroke="white" stroke-width="1.6"/><path d="M6 10v6c0 2 3 4 6 4s6-2 6-4v-6" stroke="white" stroke-width="1.6"/></svg>
-          للمعلمين
-        </a>
-        <a class="chip" href="#parents">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M8 20v-2a4 4 0 0 1 8 0v2" stroke="white" stroke-width="1.6"/><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" stroke="white" stroke-width="1.6"/></svg>
-          لأولياء الأمور
-        </a>
-        <a class="chip" href="#quiz">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 18h.01" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M9 9a3 3 0 1 1 4.5 2.6c-.9.5-1.5 1.2-1.5 2.4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-          اختبر نفسك
-        </a>
-        <a class="chip" href="#forms">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="white" stroke-width="1.6"/><path d="M9 10h6M9 14h6M9 18h4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-          الملفات
-        </a>
-      </nav>
-    </header>
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#definition" class="nav-link">🔍 تعريف البرنامج</a>
+    <a href="#eligibility" class="nav-link">👥 الفئة المستهدفة</a>
+    <a href="#teachers" class="nav-link">👨‍🏫 للمعلمين</a>
+    <a href="#parents" class="nav-link">👨‍👩‍👦 لأولياء الأمور</a>
+    <a href="#quiz" class="nav-link">🧠 اختبر نفسك</a>
+    <a href="#forms" class="nav-link">📎 الملفات</a>
+  </div>
+</nav>
 
-    <!-- Intro -->
-    <section class="section-card" aria-label="مقدمة">
-      <h2>نبذة عن برنامج الإعاقة العقلية</h2>
-      <p>
-        صفحة توعوية توضّح مفهوم الإعاقة العقلية، الفئة المستهدفة، أهم الممارسات التربوية داخل المدرسة،
-        ونقاط عملية للمعلمين وأولياء الأمور. (عدّل النص حسب اعتمادكم داخل المدرسة).
-      </p>
+<main>
 
-      <div class="grid" role="list">
-        <div class="kpi" role="listitem">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="white" stroke-width="1.6" opacity=".9"/></svg>
-          </div>
-          <div>
-            <strong>الفئة المستهدفة</strong>
-            <small>طلاب يحتاجون دعمًا تربويًا مكثفًا وخططًا فردية متدرجة حسب قدراتهم واحتياجهم.</small>
-          </div>
-        </div>
-
-        <div class="kpi" role="listitem">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.4-7-11a7 7 0 0 1 14 0c0 6.6-7 11-7 11z" stroke="white" stroke-width="1.6"/></svg>
-          </div>
-          <div>
-            <strong>مكان تقديم الخدمة</strong>
-            <small>داخل المدرسة وفق الخطة، مع تنظيم بيئة التعلم وتقديم الدعم داخل الصف/غرفة المصادر حسب الحاجة.</small>
-          </div>
-        </div>
-
-        <div class="kpi" role="listitem">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 19h16M6 17l4-6 4 3 4-8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div>
-            <strong>هدف البرنامج</strong>
-            <small>تنمية مهارات الاستقلالية والتواصل، والمهارات الأكاديمية الوظيفية، والسلوك التكيفي.</small>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Definition -->
-    <section id="definition" class="section-card">
-      <h2>أولًا: تعريف الإعاقة العقلية</h2>
-      <h3>ما المقصود بالإعاقة العقلية؟</h3>
-      <ul>
-        <li>حالة نمائية تؤثر على القدرات الذهنية وبعض مهارات التكيف (التواصل، العناية الذاتية، التعلم، التفاعل الاجتماعي).</li>
-        <li>تختلف الاحتياجات من طالب لآخر، لذلك تعتمد المدرسة على خطة تربوية فردية (IEP) بأهداف قابلة للقياس.</li>
-      </ul>
-
-      <h3>أهم ما يركز عليه البرنامج داخل المدرسة</h3>
-      <p>
-        بناء مهارات أساسية تدريجيًا من خلال التدرّج، التكرار، الدعم البصري، والتعزيز الإيجابي،
-        مع توثيق التقدّم بشكل دوري.
-      </p>
-    </section>
-
-    <!-- Eligibility -->
-    <section id="eligibility" class="section-card">
-      <h2>ثانيًا: الفئة المستهدفة وآلية العمل داخل المدرسة</h2>
-      <h3>الفئة المستهدفة</h3>
-      <ul>
-        <li>طلاب لديهم احتياج واضح لدعم تربوي متخصص وخطة فردية.</li>
-        <li>تحديد الاحتياج يكون عبر فريق المدرسة والبيانات التربوية وملاحظات الأداء.</li>
-      </ul>
-
-      <h3>آلية العمل</h3>
-      <ul>
-        <li>تحديد نقاط القوة والاحتياج (Baseline) ثم صياغة أهداف قصيرة وطويلة المدى.</li>
-        <li>تقديم تكييفات تعليمية: تبسيط التعليمات، تقسيم المهام، وقت إضافي، ودعم بصري.</li>
-        <li>متابعة التقدم وتوثيق النتائج وتحسين الخطة عند الحاجة.</li>
-      </ul>
-    </section>
-
-    <!-- Teachers -->
-    <section id="teachers" class="section-card">
-      <h2>ثالثًا: دليل المعلمين</h2>
-      <h3>ممارسات صفية فعّالة</h3>
-      <ul>
-        <li>تجزئة المهارات إلى خطوات قصيرة + تدريب متكرر.</li>
-        <li>استخدام وسائل بصرية (صور/جداول/بطاقات) لتثبيت الفهم.</li>
-        <li>تعزيز إيجابي فوري وواضح لسلوك/إنجاز محدد.</li>
-      </ul>
-
-      <h3>التقويم والتكييفات</h3>
-      <ul>
-        <li>تقليل عدد الأسئلة مع الحفاظ على الهدف.</li>
-        <li>بدائل للتقويم (شفهي/عملي/اختيارات) حسب القدرة.</li>
-        <li>إتاحة وقت إضافي وتقديم مثال محلول قبل التدريب.</li>
-      </ul>
-    </section>
-
-    <!-- Parents -->
-    <section id="parents" class="section-card">
-      <h2>رابعًا: دور الأسرة</h2>
-      <h3>حقوق الأسرة</h3>
-      <ul>
-        <li>المشاركة في الخطة الفردية ومعرفة الأهداف وآلية القياس.</li>
-        <li>الاطلاع على التقدّم الدوري ومناقشة أي صعوبات.</li>
-        <li>الحفاظ على سرية بيانات الطالب.</li>
-      </ul>
-
-      <h3>مسؤوليات الأسرة</h3>
-      <ul>
-        <li>تعزيز الروتين المنزلي والاستقلالية (العناية الذاتية/تنظيم الوقت).</li>
-        <li>التواصل المستمر مع المدرسة ومشاركة الملاحظات.</li>
-        <li>دعم السلوك الإيجابي بنفس أسلوب المدرسة قدر الإمكان.</li>
-      </ul>
-    </section>
-
-    <!-- Quiz -->
-    <section class="section-card" id="quiz">
-      <h2>خامساً: اختبر معلوماتك عن برنامج الدمج الفكري</h2>
-      <p class="muted">اختبار قصير موجّه لقائد المدرسة والمعلمين وأولياء الأمور.</p>
-
-      <form id="quizForm" class="quiz-form">
-        <div class="q">
-          <div class="q-title">1) من أهم مبادئ التدريس الفعّال لطلاب الإعاقة العقلية:</div>
-          <label class="opt"><input type="radio" name="q1" value="1"> التجزئة والتدرج والتكرار مع تعزيز إيجابي.</label>
-          <label class="opt"><input type="radio" name="q1" value="0"> تقديم مهام طويلة دون تقسيم.</label>
-        </div>
-
-        <div class="q">
-          <div class="q-title">2) ما المقصود بالدعم البصري داخل الصف؟</div>
-          <label class="opt"><input type="radio" name="q2" value="1"> صور/جداول/بطاقات تساعد على الفهم وتنظيم الخطوات.</label>
-          <label class="opt"><input type="radio" name="q2" value="0"> منع استخدام أي وسائل مساعدة.</label>
-        </div>
-
-        <div class="q">
-          <div class="q-title">3) الهدف من الخطة التربوية الفردية (IEP) هو:</div>
-          <label class="opt"><input type="radio" name="q3" value="1"> وضع أهداف فردية قابلة للقياس والمتابعة.</label>
-          <label class="opt"><input type="radio" name="q3" value="0"> تطبيق نفس خطة جميع الطلاب دون تعديل.</label>
-        </div>
-
-        <div class="q">
-          <div class="q-title">4) أي خيار يُعد تكييفًا مناسبًا للتقويم؟</div>
-          <label class="opt"><input type="radio" name="q4" value="1"> وقت إضافي/تقليل عدد الأسئلة/بدائل شفهيّة أو عملية.</label>
-          <label class="opt"><input type="radio" name="q4" value="0"> إلزام الطالب بنفس طريقة اختبار الجميع دون دعم.</label>
-        </div>
-
-        <div class="q">
-          <div class="q-title">5) من عوامل نجاح البرنامج داخل المدرسة:</div>
-          <label class="opt"><input type="radio" name="q5" value="1"> تعاون المدرسة والأسرة واستمرار المتابعة.</label>
-          <label class="opt"><input type="radio" name="q5" value="0"> تغيير الخطة بشكل عشوائي دون بيانات.</label>
-        </div>
-
-        <div class="quiz-actions">
-          <button type="button" class="btn primary" onclick="calculateScore()">عرض النتيجة</button>
-        </div>
-      </form>
-
-      <div id="result" class="quiz-result" aria-live="polite"></div>
-    </section>
-
-    <script>
-      function calculateScore() {
-        const total = 5;
-        let score = 0;
-
-        for (let i = 1; i <= total; i++) {
-          const picked = document.querySelector(`input[name="q${i}"]:checked`);
-          if (!picked) {
-            document.getElementById("result").innerText = "فضلاً أجب على جميع الأسئلة قبل عرض النتيجة.";
-            return;
-          }
-          score += Number(picked.value);
-        }
-
-        const percent = Math.round((score / total) * 100);
-        document.getElementById("result").innerText =
-          `عدد الإجابات الصحيحة: ${score} من ${total} — نتيجتك: ${percent}%`;
-      }
-    </script>
-
-    <!-- Forms -->
-    <section id="forms" class="section-card">
-      <h2>سادسًا: الملفات</h2>
-      <p>قسم الخطة التربوية الفردية سيكون جاهز، وسيتم رفع الملفات لاحقًا.</p>
-
-      <h3>نماذج الخطط التربوية الفردية (IEP)</h3>
-      <ul>
-        <li><a class="btn" href="Math_IEP_1st_Intermediate.pdf" target="_blank"> خطة رياضيات أول متوسط </a></li>
-        <li><a class="btn" href="Arabic_IEP_1st_Intermediate.pdf" target="_blank"> خطة لغتي أول متوسط </a></li>
-        <li><a class="btn" href="#" onclick="alert('سيتم رفع الملف لاحقاً');return false;">تحميل الملف</a></li>
-      </ul>
-
-      <div class="footer">
-        <div>إعداد وتنفيذ: أ. سعد الزهراني — قسم ذوي الإعاقة</div>
-        <div>© <span id="y"></span> جميع الحقوق محفوظة</div>
-      </div>
-    </section>
-
-    <section class="section-card" style="margin-top:12px;">
-      <a class="btn" href="#top">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V6" stroke="white" stroke-width="1.7" stroke-linecap="round"/><path d="M7 10l5-5 5 5" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        رجوع للأعلى
-      </a>
-      <p style="margin-top:10px;" class="muted">ملاحظة: هذه الصفحة توعوية ولا تغني عن التشخيص الطبي/النفسي المتخصص.</p>
-    </section>
+  <div class="intro-grid fade-in">
+    <div class="intro-item">
+      <h4>👥 الفئة المستهدفة</h4>
+      <p>طلاب يحتاجون دعمًا تربويًا مكثفًا وخططًا فردية متدرجة حسب قدراتهم واحتياجاتهم</p>
+    </div>
+    <div class="intro-item">
+      <h4>🏫 مكان تقديم الخدمة</h4>
+      <p>داخل المدرسة وفق الخطة مع تنظيم بيئة التعلم وتقديم الدعم داخل الصف وغرفة المصادر</p>
+    </div>
+    <div class="intro-item">
+      <h4>🎯 هدف البرنامج</h4>
+      <p>تنمية مهارات الاستقلالية والتواصل والمهارات الأكاديمية الوظيفية والسلوك التكيفي</p>
+    </div>
   </div>
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+  <!-- DEFINITION -->
+  <div class="section fade-in" id="definition">
+    <div class="section-head"><span>١</span> تعريف الإعاقة العقلية</div>
+    <div class="two-col">
+      <div class="content-card">
+        <div class="content-card-head">🧠 ما المقصود بالإعاقة العقلية؟</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>حالة نمائية تؤثر على القدرات الذهنية وبعض مهارات التكيف</li>
+            <li>تشمل: التواصل، العناية الذاتية، التعلم، التفاعل الاجتماعي</li>
+            <li>تختلف الاحتياجات من طالب لآخر لذلك تعتمد المدرسة على IEP</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-head">🎯 ما يركز عليه البرنامج</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>بناء مهارات أساسية تدريجيًا من خلال التدرّج والتكرار</li>
+            <li>الدعم البصري والتعزيز الإيجابي</li>
+            <li>توثيق التقدّم بشكل دوري ومنتظم</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELIGIBILITY -->
+  <div class="section fade-in" id="eligibility">
+    <div class="section-head"><span>٢</span> الفئة المستهدفة وآلية العمل</div>
+    <div class="two-col">
+      <div class="content-card">
+        <div class="content-card-head">👥 الفئة المستهدفة</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>طلاب لديهم احتياج واضح لدعم تربوي متخصص وخطة فردية</li>
+            <li>تحديد الاحتياج عبر فريق المدرسة والبيانات التربوية وملاحظات الأداء</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-head">⚙️ آلية العمل</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>تحديد نقاط القوة والاحتياج (Baseline) وصياغة الأهداف</li>
+            <li>تقديم تكييفات: تبسيط التعليمات، تقسيم المهام، وقت إضافي</li>
+            <li>متابعة التقدم وتوثيق النتائج وتحسين الخطة عند الحاجة</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEACHERS -->
+  <div class="section fade-in" id="teachers">
+    <div class="section-head"><span>٣</span> دليل المعلمين</div>
+    <div class="two-col">
+      <div class="content-card">
+        <div class="content-card-head">📋 ممارسات صفية فعّالة</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>تجزئة المهارات إلى خطوات قصيرة وتدريب متكرر</li>
+            <li>استخدام وسائل بصرية (صور/جداول/بطاقات) لتثبيت الفهم</li>
+            <li>تعزيز إيجابي فوري وواضح لسلوك أو إنجاز محدد</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-head">📝 التقويم والتكييفات</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>تقليل عدد الأسئلة مع الحفاظ على الهدف</li>
+            <li>بدائل للتقويم (شفهي/عملي/اختيارات) حسب القدرة</li>
+            <li>إتاحة وقت إضافي وتقديم مثال محلول قبل التدريب</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARENTS -->
+  <div class="section fade-in" id="parents">
+    <div class="section-head"><span>٤</span> دور الأسرة</div>
+    <div class="two-col">
+      <div class="content-card">
+        <div class="content-card-head">⭐ حقوق الأسرة</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>المشاركة في الخطة الفردية ومعرفة الأهداف وآلية القياس</li>
+            <li>الاطلاع على التقدّم الدوري ومناقشة أي صعوبات</li>
+            <li>الحفاظ على سرية بيانات الطالب</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-head">📌 مسؤوليات الأسرة</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>تعزيز الروتين المنزلي والاستقلالية (العناية الذاتية/تنظيم الوقت)</li>
+            <li>التواصل المستمر مع المدرسة ومشاركة الملاحظات</li>
+            <li>دعم السلوك الإيجابي بنفس أسلوب المدرسة قدر الإمكان</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="section fade-in" id="quiz">
+    <div class="section-head"><span>٥</span> اختبر معلوماتك عن برنامج الدمج الفكري</div>
+    <div class="quiz-card">
+      <div class="quiz-q">١) من أهم مبادئ التدريس الفعّال لطلاب الإعاقة العقلية:</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q1" value="a"> التجزئة والتدرج والتكرار مع تعزيز إيجابي</label>
+        <label class="quiz-opt"><input type="radio" name="q1" value="b"> تقديم مهام طويلة دون تقسيم</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٢) ما المقصود بالدعم البصري داخل الصف؟</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q2" value="a"> صور/جداول/بطاقات تساعد على الفهم وتنظيم الخطوات</label>
+        <label class="quiz-opt"><input type="radio" name="q2" value="b"> منع استخدام أي وسائل مساعدة</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٣) الهدف من الخطة التربوية الفردية (IEP) هو:</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q3" value="a"> وضع أهداف فردية قابلة للقياس والمتابعة</label>
+        <label class="quiz-opt"><input type="radio" name="q3" value="b"> تطبيق نفس خطة جميع الطلاب دون تعديل</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٤) أي خيار يُعد تكييفًا مناسبًا للتقويم؟</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q4" value="a"> وقت إضافي/تقليل عدد الأسئلة/بدائل شفهية أو عملية</label>
+        <label class="quiz-opt"><input type="radio" name="q4" value="b"> إلزام الطالب بنفس طريقة اختبار الجميع دون دعم</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٥) من عوامل نجاح البرنامج داخل المدرسة:</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q5" value="a"> تعاون المدرسة والأسرة واستمرار المتابعة</label>
+        <label class="quiz-opt"><input type="radio" name="q5" value="b"> تغيير الخطة بشكل عشوائي دون بيانات</label>
+      </div>
+    </div>
+    <button class="quiz-submit" onclick="checkQuiz()">📊 عرض النتيجة</button>
+    <div class="result-box" id="result-box"></div>
+  </div>
+
+  <!-- FORMS -->
+  <div class="section fade-in" id="forms">
+    <div class="section-head"><span>٦</span> الملفات والنماذج</div>
+    <div class="content-card">
+      <div class="content-card-head">📋 نماذج الخطط التربوية الفردية (IEP)</div>
+      <div class="file-row">
+        <div class="file-left">
+          <div class="file-icon">📐</div>
+          <div>
+            <div class="file-name">خطة رياضيات أول متوسط</div>
+            <div class="file-type">PDF — خطة فردية</div>
+          </div>
+        </div>
+        <a href="Math_IEP_1st_Intermediate.pdf" class="btn-download" target="_blank">⬇️ تحميل</a>
+      </div>
+      <div class="file-row">
+        <div class="file-left">
+          <div class="file-icon">📖</div>
+          <div>
+            <div class="file-name">خطة لغتي أول متوسط</div>
+            <div class="file-type">PDF — خطة فردية</div>
+          </div>
+        </div>
+        <a href="Arabic_IEP_1st_Intermediate.pdf" class="btn-download" target="_blank">⬇️ تحميل</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
+
+<script>
+  const answers = { q1:'a', q2:'a', q3:'a', q4:'a', q5:'a' };
+  function checkQuiz() {
+    let score = 0;
+    Object.keys(answers).forEach(q => {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      document.querySelectorAll(`input[name="${q}"]`).forEach(r => {
+        const opt = r.closest('.quiz-opt');
+        if (r.value === answers[q]) opt.classList.add('correct');
+        else if (selected && r.value === selected.value) opt.classList.add('wrong');
+      });
+      if (selected && selected.value === answers[q]) score++;
+    });
+    const rb = document.getElementById('result-box');
+    rb.style.display = 'block';
+    if (score === 5) { rb.style.background='#d1fae5'; rb.style.color='#065f46'; rb.style.border='1px solid #6ee7b7'; rb.textContent=`🏆 ممتاز! حصلت على ${score}/5`; }
+    else if (score >= 3) { rb.style.background='#fef3c7'; rb.style.color='#92400e'; rb.style.border='1px solid #fde68a'; rb.textContent=`👍 جيد! حصلت على ${score}/5`; }
+    else { rb.style.background='#fee2e2'; rb.style.color='#991b1b'; rb.style.border='1px solid #fca5a5'; rb.textContent=`📚 حصلت على ${score}/5 — راجع المحتوى أعلاه`; }
+  }
+  const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.08});
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
-
-
-
-
