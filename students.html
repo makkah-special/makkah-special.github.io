@@ -367,6 +367,15 @@
     font-weight: 700;
   }
   .tag-green { background: #d1fae5; color: #065f46; }
+  .btn-download-report {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: linear-gradient(135deg, #1a3a5c, #2563a8);
+    color: #fff; padding: 5px 12px; border-radius: 8px;
+    font-size: 0.75rem; font-weight: 700; text-decoration: none;
+    white-space: nowrap; transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(26,58,92,0.2);
+  }
+  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26,58,92,0.3); }
   .tag-blue  { background: #dbeafe; color: #1e40af; }
   .tag-blue { background: #dbeafe; color: #1e40af; }
   .tag-yellow { background: #fef3c7; color: #92400e; }
@@ -1361,13 +1370,32 @@ function loadStudent(pin) {
 
   // REPORTS
   const rl = document.getElementById('reports-list');
+  const pin = Object.keys(STUDENTS).find(k => STUDENTS[k] === s) || s.pin || '';
+  const SB_STORAGE = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/";
+
+  // دالة للتحقق من وجود الملف
+  async function checkFile(url) {
+    try {
+      const r = await fetch(url, { method: 'HEAD' });
+      return r.ok;
+    } catch { return false; }
+  }
+
   // التقارير الثابتة لكل طالب
   const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447" },
-    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447" },
+    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${pin}` },
+    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${pin}` },
   ];
-  const allReports = [...fixedReports, ...s.reports];
-  rl.innerHTML = allReports.map(r => `
+
+  const reportsWithFiles = s.reports.map((r, i) => ({
+    ...r,
+    fileKey: r.fileKey || `report${i+1}-${pin}`
+  }));
+
+  const allReports = [...fixedReports, ...reportsWithFiles];
+
+  // رسم التقارير أولاً
+  rl.innerHTML = allReports.map((r, idx) => `
     <div class="report-row">
       <div class="report-left">
         <div class="report-icon" style="background:${r.bg}">${r.icon}</div>
@@ -1376,9 +1404,34 @@ function loadStudent(pin) {
           <div class="report-date">📅 ${r.date}</div>
         </div>
       </div>
-      <span class="tag ${r.tagClass}">${r.tag}</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="tag ${r.tagClass}">${r.tag}</span>
+        <span id="dl-btn-${idx}" class="btn-download-report" style="opacity:0.4;cursor:default;">⏳</span>
+      </div>
     </div>
   `).join('');
+
+  // التحقق من وجود كل ملف وتحديث الأزرار
+  allReports.forEach(async (r, idx) => {
+    const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+    let found = false;
+    for (const ext of extensions) {
+      const url = `${SB_STORAGE}${r.fileKey}.${ext}`;
+      const exists = await checkFile(url);
+      if (exists) {
+        const btn = document.getElementById(`dl-btn-${idx}`);
+        if (btn) {
+          btn.outerHTML = `<a href="${url}" download target="_blank" class="btn-download-report" title="تحميل ${r.title}">⬇️ تحميل</a>`;
+        }
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      const btn = document.getElementById(`dl-btn-${idx}`);
+      if (btn) { btn.textContent = '—'; btn.style.opacity = '0.3'; }
+    }
+  });
 
   // INFO
   const it = document.getElementById('info-tbl');
