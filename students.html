@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -1326,11 +1327,13 @@ function loadStudent(pin) {
   document.getElementById('disp-grade').textContent = s.grade === 'انتساب' ? '📋 انتساب' : '🏫 ' + s.grade;
   document.getElementById('disp-id').textContent = 'السجل: ' + s.id_full;
 
-  // PLAN — PDF viewer
+  // PLAN — PDF viewer + Supabase custom plan
   const levels = PLAN_LEVELS[pin] || { math: 1, arabic: 1 };
-  const mathPdf  = `${BASE_URL}iep-math-level${levels.math}-2026.pdf`;
-  const arabicPdf = `${BASE_URL}iep-arabic-level${levels.arabic}-2026.pdf`;
+  const mathPdf    = `${BASE_URL}iep-math-level${levels.math}-2026.pdf`;
+  const arabicPdf  = `${BASE_URL}iep-arabic-level${levels.arabic}-2026.pdf`;
+  const SB_PLAN    = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/";
 
+  // رسم الخطط الافتراضية أولاً
   document.getElementById('plan-pdfs').innerHTML = `
     <div class="pdf-section">
       <div class="pdf-section-title">
@@ -1359,7 +1362,36 @@ function loadStudent(pin) {
         <a href="${arabicPdf}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة</a>
       </div>
     </div>
+
+    <div class="pdf-section" id="custom-plan-section" style="display:none;">
+      <div class="pdf-section-title">📋 الخطة الفردية المخصصة</div>
+      <div class="pdf-frame-wrap" id="custom-plan-frame"></div>
+      <div class="pdf-actions" id="custom-plan-actions"></div>
+    </div>
   `;
+
+  // التحقق من وجود خطة مخصصة في Supabase
+  (async () => {
+    const exts = ['pdf','PDF','docx','doc'];
+    for (const ext of exts) {
+      const url = `${SB_PLAN}plan-${pin}.${ext}`;
+      try {
+        const res = await fetch(url, { method: 'HEAD' });
+        if (res.ok) {
+          document.getElementById('custom-plan-section').style.display = 'block';
+          document.getElementById('custom-plan-frame').innerHTML =
+            ext === 'pdf' || ext === 'PDF'
+              ? `<iframe src="${url}" title="الخطة الفردية المخصصة"></iframe>`
+              : `<div style="padding:20px;text-align:center;color:#5a6478;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
+          document.getElementById('custom-plan-actions').innerHTML = `
+            <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح الخطة</a>
+            <a href="${url}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة الفردية</a>
+          `;
+          break;
+        }
+      } catch(e) {}
+    }
+  })();
 
   // REPORTS
   const rl = document.getElementById('reports-list');
