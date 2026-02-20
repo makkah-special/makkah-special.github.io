@@ -1483,13 +1483,84 @@ function checkPin() {
   }
 }
 
-function loadAdminPanel() {
+async function loadAdminPanel() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('student-portal').style.display = 'none';
   document.getElementById('admin-portal').style.display = 'block';
-  document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
-  renderStudentCards();
+  document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
   window.scrollTo(0, 0);
+  await syncFromSupabase();
+  renderStudentCards();
+}
+
+// ===== SUPABASE SYNC =====
+const SB_TABLE = SUPABASE_URL + '/rest/v1/dumaj_students';
+const SB_HEADERS = {
+  'apikey': SUPABASE_KEY,
+  'Authorization': 'Bearer ' + SUPABASE_KEY,
+  'Content-Type': 'application/json',
+  'Prefer': 'return=minimal'
+};
+
+async function syncFromSupabase() {
+  try {
+    const res = await fetch(SB_TABLE + '?select=*', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (!res.ok) throw new Error('fetch failed');
+    const rows = await res.json();
+    if (rows.length > 0) {
+      rows.forEach(row => {
+        if (STUDENTS[row.pin]) {
+          STUDENTS[row.pin].name    = row.name    || STUDENTS[row.pin].name;
+          STUDENTS[row.pin].grade   = row.grade   || STUDENTS[row.pin].grade;
+          STUDENTS[row.pin].id_full = row.id_full || STUDENTS[row.pin].id_full;
+          STUDENTS[row.pin].phone   = row.phone   || STUDENTS[row.pin].phone;
+          if (row.plan     && row.plan.length)     STUDENTS[row.pin].plan     = row.plan;
+          if (row.followup && row.followup.length) STUDENTS[row.pin].followup = row.followup;
+        } else {
+          STUDENTS[row.pin] = {
+            name: row.name, id_full: row.id_full, grade: row.grade,
+            phone: row.phone, plan: row.plan||[], reports: [], followup: row.followup||[]
+          };
+        }
+      });
+    }
+    console.log('✅ بيانات الدمج محمّلة من Supabase');
+  } catch(e) {
+    console.warn('⚠️ تعذّر تحميل Supabase:', e);
+  }
+}
+
+async function upsertToSupabase(pin, studentData) {
+  try {
+    const body = JSON.stringify({
+      pin,
+      name:     studentData.name,
+      id_full:  studentData.id_full,
+      grade:    studentData.grade,
+      phone:    studentData.phone,
+      plan:     studentData.plan     || [],
+      followup: studentData.followup || [],
+      updated_at: new Date().toISOString()
+    });
+    const res = await fetch(SB_TABLE, {
+      method: 'POST',
+      headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body
+    });
+    if (!res.ok) { const err = await res.text(); console.error('Supabase error:', err); }
+    else console.log('✅ حُفظ في Supabase:', pin);
+  } catch(e) { console.error('خطأ في الحفظ:', e); }
+}
+
+async function deleteFromSupabase(pin) {
+  try {
+    await fetch(SB_TABLE + '?pin=eq.' + pin, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+  } catch(e) { console.error('خطأ في الحذف:', e); }
 }
 
 function adminLogout() {
@@ -1638,17 +1709,19 @@ function saveStudentEdits() {
   });
   closeModal();
   renderStudentCards();
-  showToast('✅ تم حفظ بيانات ' + s.name);
+  showToast('⏳ جاري الحفظ...');
+  upsertToSupabase(editingPin, s).then(() => showToast('✅ تم حفظ بيانات ' + s.name));
 }
 
 function deleteStudent() {
   if (!editingPin) return;
   const s = STUDENTS[editingPin];
   if (!confirm(`⚠️ هل أنت متأكد من حذف الطالب "${s.name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
-  delete STUDENTS[editingPin];
+  const deletedPin = editingPin;
+  delete STUDENTS[deletedPin];
   closeModal();
   renderStudentCards();
-  showToast('🗑️ تم حذف الطالب ' + s.name);
+  deleteFromSupabase(deletedPin).then(() => showToast('🗑️ تم حذف الطالب ' + s.name));
 }
 
 document.addEventListener('input', e => {
@@ -1673,7 +1746,10 @@ function addNewStudent() {
   });
   openAdminTab('list', document.querySelector('.admin-tab-btn'));
   renderStudentCards();
-  showToast('✅ تمت إضافة الطالب ' + name + ' — الرمز: ' + pin);
+  showToast('⏳ جاري الحفظ...');
+  upsertToSupabase(pin, STUDENTS[pin]).then(() =>
+    showToast('✅ تمت إضافة الطالب ' + name + ' — الرمز: ' + pin)
+  );
 }
 
 function showToast(msg) {
