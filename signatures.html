@@ -301,8 +301,12 @@ function downloadPNG(dataUrl, name) {
 function downloadPDF(idx) {
   const s = allSigs[idx];
   if (!s) return;
-  const date = new Date(s.signed_at).toLocaleDateString('ar-SA-u-nu-latn', {
-    year:'numeric', month:'long', day:'numeric'
+  const dateObj = new Date(s.signed_at);
+  const date = dateObj.toLocaleDateString('ar-SA-u-nu-latn', {
+    year:'numeric', month:'long', day:'numeric', weekday:'long'
+  });
+  const time = dateObj.toLocaleTimeString('ar-SA-u-nu-latn', {
+    hour:'2-digit', minute:'2-digit', hour12:true
   });
   const win = window.open('', '_blank');
   win.document.write(`
@@ -321,6 +325,7 @@ function downloadPDF(idx) {
         .sub { font-size:0.83rem; color:#5a6478; }
         .iqrar-text { background:#fffbf0; border:1px solid #f0d898; border-right:4px solid #c8973a; border-radius:10px; padding:16px 18px; margin:20px 0; font-size:0.88rem; line-height:2; }
         .fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0; }
+        .fields .field:last-child:nth-child(odd) { grid-column: span 2; }
         .field { border:1px solid #e0d8c8; border-radius:8px; padding:10px 14px; }
         .field-label { font-size:0.7rem; font-weight:700; color:#5a6478; margin-bottom:3px; }
         .field-value { font-size:0.88rem; font-weight:800; color:#1a3a5c; }
@@ -347,7 +352,8 @@ function downloadPDF(idx) {
         <div class="field"><div class="field-label">اسم الطالب</div><div class="field-value">${s.student_name}</div></div>
         <div class="field"><div class="field-label">الصف الدراسي</div><div class="field-value">${s.grade || '—'}</div></div>
         <div class="field"><div class="field-label">البرنامج</div><div class="field-value">📘 برنامج يسير التعليمي</div></div>
-        <div class="field"><div class="field-label">تاريخ الإقرار</div><div class="field-value">${date}</div></div>
+        <div class="field"><div class="field-label">تاريخ التوقيع</div><div class="field-value">${date}</div></div>
+        <div class="field"><div class="field-label">وقت التوقيع</div><div class="field-value">${time}</div></div>
       </div>
       <div class="sign-section">
         <div class="sign-title">✍️ توقيع ولي الأمر</div>
