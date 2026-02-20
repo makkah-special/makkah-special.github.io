@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رفع تقارير الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #7a2800;
+    --accent: #e07020;
+    --accent-light: #f59040;
+    --green: #c25a00;
+    --green-light: #e07020;
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --border: #e0d8c8;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  header { background:linear-gradient(135deg,#7a2800 0%,#a33800 60%,#c25a00 100%); position:relative; }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; }
+  .logo-wrap { display:flex; align-items:center; gap:14px; }
+  .logo-icon { width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; }
+  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
+  .header-sub { color:rgba(255,255,255,0.5); font-size:0.75rem; }
+  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; }
+  .hero { padding:28px 40px 36px; text-align:center; }
+  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:12px; }
+  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.5rem,4vw,2rem); font-weight:900; color:#fff; margin-bottom:6px; }
+  .hero h1 span { color:var(--accent-light); }
+  .hero p { color:rgba(255,255,255,0.6); font-size:0.85rem; }
+
+  /* PIN */
+  .pin-screen { display:flex; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
+  .pin-box { background:var(--card); border-radius:20px; padding:40px 32px; max-width:360px; width:100%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.1); }
+  .pin-icon { font-size:2.6rem; margin-bottom:14px; }
+  .pin-title { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
+  .pin-desc { font-size:0.83rem; color:var(--muted); margin-bottom:22px; }
+  .pin-input { width:100%; padding:13px; border:2px solid var(--border); border-radius:11px; font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:700; text-align:center; letter-spacing:8px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:10px; }
+  .pin-input:focus { border-color:var(--primary); background:#fff; }
+  .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
+  .pin-error.show { display:block; }
+  .btn-enter { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; }
+
+  /* CONTENT */
+  .content { display:none; }
+  main { max-width:1000px; margin:0 auto; padding:26px 22px 60px; }
+
+  /* Student Selector */
+  .selector-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .selector-title { font-size:0.9rem; font-weight:800; color:var(--primary); margin-bottom:12px; }
+  .student-select { width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:600; outline:none; background:#fafafa; color:var(--text); cursor:pointer; }
+  .student-select:focus { border-color:var(--primary); }
+
+  /* Upload Area */
+  .upload-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+  .upload-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04); transition:all 0.2s; }
+  .upload-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  .upload-head { padding:14px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
+  .upload-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .upload-title { font-size:0.85rem; font-weight:800; color:var(--primary); }
+  .upload-filename { font-size:0.72rem; color:var(--muted); margin-top:2px; font-family:monospace; }
+  .upload-body { padding:14px 16px; }
+
+  .drop-zone { border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:all 0.2s; background:#fafafa; position:relative; }
+  .drop-zone:hover, .drop-zone.dragover { border-color:var(--primary); background:#f0f4ff; }
+  .drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .drop-icon { font-size:1.6rem; margin-bottom:6px; }
+  .drop-text { font-size:0.78rem; color:var(--muted); font-weight:600; }
+  .drop-sub { font-size:0.7rem; color:#9ca3af; margin-top:3px; }
+
+  /* Status */
+  .upload-status { margin-top:10px; font-size:0.78rem; font-weight:700; text-align:center; padding:6px 10px; border-radius:8px; display:none; }
+  .status-uploading { background:#fef3c7; color:#92400e; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .status-success { background:#d1fae5; color:#065f46; }
+  .status-error { background:#fee2e2; color:#dc2626; }
+  .status-exists { background:#dbeafe; color:#1e40af; }
+
+  /* File preview */
+  .file-preview { margin-top:10px; padding:8px 12px; background:#f0f4ff; border-radius:8px; display:none; align-items:center; gap:8px; font-size:0.78rem; color:var(--primary); font-weight:600; }
+  .file-preview .del-btn { margin-right:auto; background:#fee2e2; color:#dc2626; border:none; border-radius:6px; padding:3px 8px; font-size:0.72rem; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; }
+
+  .btn-upload { width:100%; padding:9px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:10px; display:none; transition:all 0.2s; box-shadow:0 3px 10px rgba(26,107,74,0.25); }
+  .btn-upload:hover { transform:translateY(-1px); }
+
+  .progress-bar { height:4px; background:#e0d8c8; border-radius:2px; margin-top:8px; display:none; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--green-light)); border-radius:2px; transition:width 0.3s; width:0%; }
+  .btn-delete { width:100%; padding:9px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:6px; transition:all 0.2s; }
+  .btn-delete:hover { background:#dc2626; color:#fff; }
+
+  footer { background:var(--primary); color:rgba(255,255,255,0.6); text-align:center; padding:18px; font-size:0.78rem; border-top:3px solid var(--accent); }
+  footer strong { color:var(--accent-light); }
+
+  @media(max-width:640px) {
+    .header-top { padding:12px 16px; }
+    .hero { padding:22px 16px 28px; }
+    main { padding:16px 14px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo-wrap">
+      <div class="logo-icon">📁</div>
+      <div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="header-sub">الدمج الفكري — رفع التقارير</div>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">← الرئيسية</a>
+  </div>
+  <div class="hero">
+    <div class="hero-badge">🧠 برنامج الدمج الفكري</div>
+    <h1>رفع <span>تقارير الدمج الفكري</span></h1>
+    <p>اختر الطالب ثم ارفع ملفات تقاريره مباشرة من جهازك</p>
+  </div>
+</header>
+
+<!-- PIN -->
+<div class="pin-screen" id="pin-screen">
+  <div class="pin-box">
+    <div class="pin-icon">🔐</div>
+    <div class="pin-title">صفحة المشرف</div>
+    <div class="pin-desc">أدخل رمز المشرف للوصول لرفع التقارير</div>
+    <input type="password" class="pin-input" id="admin-pin" maxlength="6" placeholder="• • • •"
+      onkeydown="if(event.key==='Enter') checkPin()"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
+    <button class="btn-enter" onclick="checkPin()">✅ دخول</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content" id="content">
+  <main>
+    <!-- اختيار الطالب -->
+    <div class="selector-card">
+      <div class="selector-title">👤 اختر الطالب</div>
+      <select class="student-select" id="student-select" onchange="loadStudentUploads()">
+        <option value="">— اختر الطالب —</option>
+        <option value="0001">طالب الدمج الفكري ١ — 0001</option>
+        <option value="0002">طالب الدمج الفكري ٢ — 0002</option>
+        <option value="0003">طالب الدمج الفكري ٣ — 0003</option>
+        <option value="0004">طالب الدمج الفكري ٤ — 0004</option>
+        <option value="0005">طالب الدمج الفكري ٥ — 0005</option>
+      </select>
+    </div>
+
+    <!-- بطاقات الرفع -->
+    <div class="upload-grid" id="upload-grid"></div>
+  </main>
+</div>
+
+<footer>
+  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
+
+<script>
+const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+const BUCKET = "reports";
+const ADMIN_PIN = "1129";
+
+const REPORT_TYPES = [
+  { key: "psych",   label: "التقرير النفسي الموحد", icon: "🧠", color: "#ede9fe" },
+  { key: "medical", label: "التقرير الطبي",          icon: "🏥", color: "#dbeafe" },
+  { key: "report1", label: "التقرير الدوري ١",       icon: "📄", color: "#fef3c7" },
+  { key: "report2", label: "التقرير الدوري ٢",       icon: "📊", color: "#d1fae5" },
+  { key: "report3", label: "التقرير الدوري ٣",       icon: "📋", color: "#ede9fe" },
+];
+
+let selectedFiles = {};
+
+function checkPin() {
+  const val = document.getElementById('admin-pin').value;
+  if (val === ADMIN_PIN) {
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  } else {
+    const err = document.getElementById('pin-error');
+    const inp = document.getElementById('admin-pin');
+    err.classList.add('show');
+    inp.classList.add('error');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
+  }
+}
+
+function loadStudentUploads() {
+  const pin = document.getElementById('student-select').value;
+  const grid = document.getElementById('upload-grid');
+  if (!pin) { grid.innerHTML = ''; return; }
+
+  selectedFiles = {};
+  grid.innerHTML = REPORT_TYPES.map(r => `
+    <div class="upload-card" id="card-${r.key}">
+      <div class="upload-head">
+        <div class="upload-icon" style="background:${r.color}">${r.icon}</div>
+        <div>
+          <div class="upload-title">${r.label}</div>
+          <div class="upload-filename" id="fname-${r.key}">${r.key}-${pin}.pdf</div>
+        </div>
+      </div>
+      <div class="upload-body">
+        <div class="drop-zone" id="drop-${r.key}"
+          ondragover="event.preventDefault();this.classList.add('dragover')"
+          ondragleave="this.classList.remove('dragover')"
+          ondrop="handleDrop(event,'${r.key}','${pin}')">
+          <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" onchange="handleFile(this,'${r.key}','${pin}')">
+          <div class="drop-icon">📂</div>
+          <div class="drop-text">اضغط لاختيار الملف أو اسحبه هنا</div>
+          <div class="drop-sub">PDF, Word, صور</div>
+        </div>
+        <div class="file-preview" id="preview-${r.key}">
+          <span>📎</span>
+          <span id="preview-name-${r.key}"></span>
+          <button class="del-btn" onclick="clearFile('${r.key}')">✕ إلغاء</button>
+        </div>
+        <div class="progress-bar" id="progress-${r.key}">
+          <div class="progress-fill" id="progress-fill-${r.key}"></div>
+        </div>
+        <div class="upload-status" id="status-${r.key}"></div>
+        <button class="btn-upload" id="btn-${r.key}" onclick="uploadFile('${r.key}','${pin}')">
+          ⬆️ رفع الملف
+        </button>
+        <button class="btn-delete" id="del-btn-${r.key}" onclick="deleteFile('${r.key}','${pin}')" style="display:none;">
+          🗑️ حذف الملف المرفوع
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  // تحقق من الملفات الموجودة
+  checkExistingFiles(pin);
+}
+
+async function checkExistingFiles(pin) {
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  for (const r of REPORT_TYPES) {
+    for (const ext of extensions) {
+      try {
+        const fileName = `${r.key}-${pin}.${ext}`;
+        const url = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/dumaj/${fileName}`;
+        const res = await fetch(url, { method: 'HEAD' });
+        if (res.ok) {
+          showStatus(r.key, 'exists', `✅ يوجد ملف مرفوع — ${fileName}`);
+          document.getElementById(`del-btn-${r.key}`).style.display = 'block';
+          document.getElementById(`fname-${r.key}`).textContent = fileName;
+          // عرض معاينة الملف الموجود
+          document.getElementById(`preview-name-${r.key}`).textContent = fileName;
+          document.getElementById(`preview-${r.key}`).style.display = 'flex';
+          break;
+        }
+      } catch(e) {}
+    }
+  }
+}
+
+function handleFile(input, key, pin) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function handleDrop(e, key, pin) {
+  e.preventDefault();
+  document.getElementById(`drop-${key}`).classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function showPreview(key, name, pin) {
+  document.getElementById(`preview-name-${key}`).textContent = name;
+  document.getElementById(`preview-${key}`).style.display = 'flex';
+  document.getElementById(`btn-${key}`).style.display = 'block';
+  document.getElementById(`status-${key}`).style.display = 'none';
+}
+
+function clearFile(key) {
+  delete selectedFiles[key];
+  document.getElementById(`preview-${key}`).style.display = 'none';
+  document.getElementById(`btn-${key}`).style.display = 'none';
+  document.getElementById(`status-${key}`).style.display = 'none';
+  document.getElementById(`progress-${key}`).style.display = 'none';
+}
+
+async function uploadFile(key, pin) {
+  const file = selectedFiles[key];
+  if (!file) return;
+
+  const ext = file.name.split('.').pop();
+  const fileName = `${key}-${pin}.${ext}`;
+
+  const btn = document.getElementById(`btn-${key}`);
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الرفع...';
+
+  showStatus(key, 'uploading', '⏳ جاري رفع الملف...');
+  document.getElementById(`progress-${key}`).style.display = 'block';
+
+  // Simulate progress
+  let prog = 0;
+  const interval = setInterval(() => {
+    prog = Math.min(prog + 10, 85);
+    document.getElementById(`progress-fill-${key}`).style.width = prog + '%';
+  }, 200);
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'true'
+      },
+      body: file
+    });
+
+    clearInterval(interval);
+    document.getElementById(`progress-fill-${key}`).style.width = '100%';
+
+    if (res.ok) {
+      showStatus(key, 'success', `✅ تم رفع الملف بنجاح — ${fileName}`);
+      document.getElementById(`fname-${key}`).textContent = fileName;
+      btn.textContent = '✅ تم الرفع';
+      document.getElementById(`del-btn-${key}`).style.display = 'block';
+    } else {
+      const err = await res.text();
+      showStatus(key, 'error', '❌ فشل الرفع — حاول مرة أخرى');
+      btn.textContent = '⬆️ إعادة المحاولة';
+      btn.disabled = false;
+    }
+  } catch(e) {
+    clearInterval(interval);
+    showStatus(key, 'error', '❌ خطأ في الاتصال');
+    btn.textContent = '⬆️ إعادة المحاولة';
+    btn.disabled = false;
+  }
+}
+
+async function deleteFile(key, pin) {
+  if (!confirm(`هل تريد حذف ملف "${key}-${pin}" نهائياً؟`)) return;
+
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  let deleted = false;
+
+  for (const ext of extensions) {
+    const fileName = `${key}-${pin}.${ext}`;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
+      });
+      if (res.ok) {
+        deleted = true;
+        showStatus(key, 'error', '🗑️ تم حذف الملف بنجاح');
+        document.getElementById(`del-btn-${key}`).style.display = 'none';
+        document.getElementById(`fname-${key}`).textContent = `${key}-${pin}.pdf`;
+        clearFile(key);
+        break;
+      }
+    } catch(e) {}
+  }
+
+  if (!deleted) showStatus(key, 'error', '❌ لم يُعثر على ملف للحذف');
+}
+
+function showStatus(key, type, msg) {
+  const el = document.getElementById(`status-${key}`);
+  el.style.display = 'block';
+  el.className = `upload-status status-${type}`;
+  el.textContent = msg;
+}
+</script>
+</body>
+</html>
