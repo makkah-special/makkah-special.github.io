@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -29,6 +30,101 @@
     background: var(--bg);
     color: var(--text);
     overflow-x: hidden;
+  }
+
+  /* ========= RAMADAN DECORATION ========= */
+  .ramadan-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+  }
+
+  /* نجوم متلألئة */
+  .ramadan-star {
+    position: absolute;
+    color: #f0b84a;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    font-size: var(--size, 14px);
+    opacity: 0;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.9; transform: scale(1.2); }
+  }
+
+  /* الفوانيس المتدلية */
+  .lantern-wrap {
+    position: fixed;
+    top: 0;
+    pointer-events: none;
+    z-index: 9998;
+    animation: swing var(--sw, 4s) ease-in-out infinite alternate;
+    transform-origin: top center;
+  }
+
+  @keyframes swing {
+    from { transform: rotate(-6deg); }
+    to   { transform: rotate(6deg); }
+  }
+
+  .lantern {
+    width: var(--lw, 28px);
+    filter: drop-shadow(0 4px 12px rgba(200,151,58,0.6));
+  }
+
+  /* الهلال في الأعلى */
+  .crescent-wrap {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9997;
+    pointer-events: none;
+    animation: floatCrescent 6s ease-in-out infinite;
+  }
+
+  @keyframes floatCrescent {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  .crescent-svg {
+    filter: drop-shadow(0 0 18px rgba(240,184,74,0.8));
+  }
+
+  /* شريط رمضاني */
+  .ramadan-banner {
+    background: linear-gradient(135deg, #7a4a00, #c8973a, #7a4a00);
+    color: #fff8e7;
+    text-align: center;
+    padding: 8px 16px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid #f0b84a;
+  }
+
+  .ramadan-banner::before {
+    content: '🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙';
+    position: absolute;
+    top: 0; left: -100%;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    opacity: 0.25;
+    animation: scrollBanner 20s linear infinite;
+    line-height: 36px;
+  }
+
+  @keyframes scrollBanner {
+    from { left: -100%; }
+    to   { left: 100%; }
   }
 
   /* ========= HEADER ========= */
@@ -688,6 +784,98 @@
 </head>
 <body>
 
+<!-- RAMADAN DECORATION -->
+<div class="ramadan-banner">
+  رمضان كريم 🌙 — تقبّل الله منا ومنكم صالح الأعمال ✨
+</div>
+
+<!-- فوانيس متدلية -->
+<div class="lantern-wrap" style="left:3%; --sw:3.5s;">
+  <svg class="lantern" style="--lw:32px;" viewBox="0 0 40 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
+    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
+    <rect x="10" y="13" width="20" height="38" rx="4" fill="#c25a00" opacity="0.9"/>
+    <rect x="10" y="13" width="20" height="38" rx="4" fill="url(#lg1)" opacity="0.7"/>
+    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
+    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
+    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
+    <defs>
+      <linearGradient id="lg1" x1="10" y1="13" x2="30" y2="51" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#f0b84a" stop-opacity="0.4"/>
+        <stop offset="50%" stop-color="#ff8c00" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#f0b84a" stop-opacity="0.4"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+<div class="lantern-wrap" style="right:4%; --sw:4.2s; animation-delay:0.8s;">
+  <svg class="lantern" style="--lw:26px;" viewBox="0 0 40 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
+    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
+    <rect x="10" y="13" width="20" height="38" rx="4" fill="#1a3a5c" opacity="0.9"/>
+    <rect x="10" y="13" width="20" height="38" rx="4" fill="url(#lg2)" opacity="0.7"/>
+    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
+    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
+    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
+    <defs>
+      <linearGradient id="lg2" x1="10" y1="13" x2="30" y2="51" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#4a90d9" stop-opacity="0.4"/>
+        <stop offset="50%" stop-color="#f0b84a" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#4a90d9" stop-opacity="0.4"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+<div class="lantern-wrap" style="left:12%; --sw:5s; animation-delay:1.5s;">
+  <svg class="lantern" style="--lw:20px;" viewBox="0 0 40 70" fill="none">
+    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
+    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
+    <rect x="10" y="13" width="20" height="38" rx="4" fill="#1a6b4a" opacity="0.9"/>
+    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
+    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
+    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
+  </svg>
+</div>
+
+<div class="lantern-wrap" style="right:14%; --sw:3.8s; animation-delay:2s;">
+  <svg class="lantern" style="--lw:22px;" viewBox="0 0 40 70" fill="none">
+    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
+    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
+    <rect x="10" y="13" width="20" height="38" rx="4" fill="#7a2800" opacity="0.9"/>
+    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
+    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
+    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
+  </svg>
+</div>
+
+<!-- هلال رمضان -->
+<div class="crescent-wrap">
+  <svg class="crescent-svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <circle cx="30" cy="30" r="22" fill="#f0b84a" opacity="0.95"/>
+    <circle cx="40" cy="22" r="18" fill="#0f2440"/>
+    <circle cx="48" cy="14" r="3" fill="#f0b84a" opacity="0.9"/>
+    <circle cx="42" cy="10" r="1.8" fill="#f0b84a" opacity="0.7"/>
+    <circle cx="54" cy="20" r="1.4" fill="#f0b84a" opacity="0.6"/>
+  </svg>
+</div>
+
+<!-- نجوم -->
+<div class="ramadan-overlay" id="starsLayer"></div>
+
 <!-- HEADER -->
 <header>
   <div class="header-top">
@@ -938,6 +1126,36 @@
 </footer>
 
 <script>
+  // ===== RAMADAN STARS =====
+  const starsLayer = document.getElementById('starsLayer');
+  const starPositions = [
+    {top:'8%',left:'5%',size:'12px',dur:'2.5s',delay:'0s'},
+    {top:'5%',left:'15%',size:'8px',dur:'3.2s',delay:'0.4s'},
+    {top:'12%',left:'25%',size:'10px',dur:'2.8s',delay:'0.8s'},
+    {top:'6%',left:'38%',size:'7px',dur:'3.5s',delay:'1.2s'},
+    {top:'9%',left:'55%',size:'11px',dur:'2.3s',delay:'0.6s'},
+    {top:'4%',left:'68%',size:'8px',dur:'3.8s',delay:'1.5s'},
+    {top:'11%',left:'78%',size:'9px',dur:'2.6s',delay:'0.3s'},
+    {top:'7%',left:'88%',size:'13px',dur:'3s',delay:'1s'},
+    {top:'15%',left:'92%',size:'7px',dur:'2.9s',delay:'1.8s'},
+    {top:'3%',left:'45%',size:'15px',dur:'4s',delay:'0.2s'},
+    {top:'18%',left:'8%',size:'8px',dur:'3.3s',delay:'2s'},
+    {top:'16%',left:'60%',size:'9px',dur:'2.7s',delay:'1.3s'},
+  ];
+  starPositions.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'ramadan-star';
+    el.textContent = '✦';
+    el.style.cssText = `top:${s.top};left:${s.left};font-size:${s.size};--dur:${s.dur};--delay:${s.delay};`;
+    starsLayer.appendChild(el);
+  });
+
+  // إخفاء تلقائي بعد رمضان (نهاية مارس 2026)
+  const ramadanEnd = new Date('2026-03-30');
+  if (new Date() > ramadanEnd) {
+    document.querySelectorAll('.ramadan-banner,.ramadan-overlay,.lantern-wrap,.crescent-wrap').forEach(el => el.remove());
+  }
+
   // Animate counters
   function animateCount(el, target, suffix='') {
     let cur = 0;
