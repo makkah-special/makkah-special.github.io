@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -815,33 +814,6 @@ async function sbSaveSignature(pin, name, grade, signData) {
 // قاعدة بيانات الطلاب — برنامج يسير
 // الرمز = آخر 4 أرقام من السجل المدني
 // =====================================================
-// =====================================================
-// مستويات الخطط لكل طالب
-// math: 1 أو 2 | arabic: 1 أو 2
-// عدّل هنا فقط لتغيير مستوى أي طالب
-// =====================================================
-const PLAN_LEVELS = {
-  "5271": { math: 1, arabic: 1 },
-  "3955": { math: 1, arabic: 1 },
-  "3154": { math: 1, arabic: 1 },
-  "3493": { math: 1, arabic: 1 },
-  "9055": { math: 1, arabic: 1 },
-  "4073": { math: 1, arabic: 1 },
-  "0788": { math: 1, arabic: 1 },
-  "8726": { math: 1, arabic: 1 },
-  "2261": { math: 1, arabic: 1 },
-  "9446": { math: 1, arabic: 1 },
-  "7895": { math: 1, arabic: 1 },
-  "5362": { math: 1, arabic: 1 },
-  "2571": { math: 1, arabic: 1 },
-  "3590": { math: 1, arabic: 1 },
-  "8151": { math: 1, arabic: 1 },
-  "8061": { math: 1, arabic: 1 },
-  "5455": { math: 1, arabic: 1 },
-  "6812": { math: 1, arabic: 1 },
-  "5237": { math: 1, arabic: 1 },
-};
-
 const BASE_URL = "https://makkah-special.github.io/";
 
 const STUDENTS = {
@@ -1301,6 +1273,21 @@ const STUDENTS = {
 // =====================================================
 let currentStudent = null;
 
+function hidePlanSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'none';
+}
+
+function checkIframe(iframe, sectionId) {
+  try {
+    // إذا كان المحتوى 404 نخفي القسم
+    const loc = iframe.contentWindow.location.href;
+    if (loc.includes('404') || loc.includes('not-found')) hidePlanSection(sectionId);
+  } catch(e) {
+    // cross-origin = الملف موجود
+  }
+}
+
 function checkPin() {
   const pin = document.getElementById('pin-input').value.trim();
   const err = document.getElementById('error-msg');
@@ -1327,57 +1314,33 @@ function loadStudent(pin) {
   document.getElementById('disp-grade').textContent = s.grade === 'انتساب' ? '📋 انتساب' : '🏫 ' + s.grade;
   document.getElementById('disp-id').textContent = 'السجل: ' + s.id_full;
 
-  // PLAN — PDF viewer + Supabase custom plan
-  const levels = PLAN_LEVELS[pin] || { math: 1, arabic: 1 };
-  const mathPdf    = `${BASE_URL}iep-math-level${levels.math}-2026.pdf`;
-  const arabicPdf  = `${BASE_URL}iep-arabic-level${levels.arabic}-2026.pdf`;
-  const SB_PLAN    = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/";
+  // PLAN — من Supabase فقط
+  const SB_PLAN = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/";
 
-  // رسم الخطط الافتراضية أولاً
   document.getElementById('plan-pdfs').innerHTML = `
-    <div class="pdf-section">
-      <div class="pdf-section-title">
-        📐 خطة الرياضيات
-        <span class="pdf-level-badge">المستوى ${levels.math}</span>
-      </div>
-      <div class="pdf-frame-wrap">
-        <iframe src="${mathPdf}" title="خطة الرياضيات"></iframe>
-      </div>
-      <div class="pdf-actions">
-        <a href="${mathPdf}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح في تبويب جديد</a>
-        <a href="${mathPdf}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة</a>
-      </div>
-    </div>
-
-    <div class="pdf-section">
-      <div class="pdf-section-title">
-        📖 خطة لغتي
-        <span class="pdf-level-badge">المستوى ${levels.arabic}</span>
-      </div>
-      <div class="pdf-frame-wrap">
-        <iframe src="${arabicPdf}" title="خطة لغتي"></iframe>
-      </div>
-      <div class="pdf-actions">
-        <a href="${arabicPdf}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح في تبويب جديد</a>
-        <a href="${arabicPdf}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة</a>
-      </div>
-    </div>
-
     <div class="pdf-section" id="custom-plan-section" style="display:none;">
       <div class="pdf-section-title">📋 الخطة الفردية المخصصة</div>
       <div class="pdf-frame-wrap" id="custom-plan-frame"></div>
       <div class="pdf-actions" id="custom-plan-actions"></div>
     </div>
+    <div id="no-plan-msg" style="text-align:center;padding:40px;color:#9ca3af;">
+      <div style="font-size:2.5rem;margin-bottom:12px;">📋</div>
+      <div style="font-weight:700;font-size:0.95rem;">لم يتم رفع الخطة الفردية بعد</div>
+      <div style="font-size:0.8rem;margin-top:6px;">سيتم إشعارك عند إضافتها</div>
+    </div>
   `;
 
-  // التحقق من وجود خطة مخصصة في Supabase
+  // التحقق من وجود خطة في Supabase
   (async () => {
     const exts = ['pdf','PDF','docx','doc'];
+    let found = false;
     for (const ext of exts) {
       const url = `${SB_PLAN}plan-${pin}.${ext}`;
       try {
         const res = await fetch(url, { method: 'HEAD' });
         if (res.ok) {
+          found = true;
+          document.getElementById('no-plan-msg').style.display = 'none';
           document.getElementById('custom-plan-section').style.display = 'block';
           document.getElementById('custom-plan-frame').innerHTML =
             ext === 'pdf' || ext === 'PDF'
