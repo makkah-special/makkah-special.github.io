@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سجل التوقيعات | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #c8973a;
+    --accent-light: #f0b84a;
+    --green: #1a6b4a;
+    --green-light: #22a06b;
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --border: #e0d8c8;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  header { background:linear-gradient(135deg,var(--primary) 0%,#0f2448 60%,#1a3a5c 100%); position:relative; }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .header-logos { display:flex; align-items:center; gap:14px; }
+  .logo-icon { width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; }
+  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
+  .header-sub { color:rgba(255,255,255,0.5); font-size:0.75rem; }
+  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; transition:all 0.2s; }
+  .back-link:hover { background:rgba(255,255,255,0.18); }
+  .hero { padding:36px 40px 44px; text-align:center; }
+  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:14px; }
+  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:900; color:#fff; margin-bottom:6px; }
+  .hero h1 span { color:var(--accent-light); }
+  .hero p { color:rgba(255,255,255,0.6); font-size:0.88rem; }
+
+  /* PIN */
+  .pin-screen { display:flex; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
+  .pin-box { background:var(--card); border-radius:20px; padding:40px 32px; max-width:360px; width:100%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.1); }
+  .pin-icon { font-size:2.6rem; margin-bottom:14px; }
+  .pin-title { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
+  .pin-desc { font-size:0.83rem; color:var(--muted); margin-bottom:22px; line-height:1.7; }
+  .pin-input { width:100%; padding:13px; border:2px solid var(--border); border-radius:11px; font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:700; text-align:center; letter-spacing:8px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:10px; }
+  .pin-input:focus { border-color:var(--primary); background:#fff; }
+  .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
+  .pin-error.show { display:block; }
+  .btn-enter { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(26,58,92,0.3); transition:all 0.2s; }
+  .btn-enter:hover { transform:translateY(-2px); }
+
+  /* CONTENT */
+  .content { display:none; }
+  main { max-width:960px; margin:0 auto; padding:26px 22px 60px; }
+
+  .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:22px; }
+  .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .stat-num { font-family:'Tajawal',sans-serif; font-size:2rem; font-weight:900; color:var(--primary); }
+  .stat-label { font-size:0.75rem; color:var(--muted); font-weight:600; margin-top:4px; }
+
+  .toolbar { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:18px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .search-input { flex:1; min-width:180px; padding:8px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.84rem; outline:none; background:#fafafa; }
+  .search-input:focus { border-color:var(--primary); }
+  .btn-refresh { padding:8px 16px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+  .btn-refresh:hover { background:#2563a8; }
+
+  .sigs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+  .sig-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.05); transition:all 0.2s; }
+  .sig-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+  .sig-head { padding:14px 16px; background:linear-gradient(135deg,#f0f4ff,#e8f0ff); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+  .sig-avatar { width:38px; height:38px; background:var(--primary); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; font-weight:800; flex-shrink:0; }
+  .sig-name { font-size:0.88rem; font-weight:800; color:var(--primary); }
+  .sig-grade { font-size:0.74rem; color:var(--muted); margin-top:2px; }
+  .sig-img-wrap { padding:12px 16px; background:#f9f9f9; border-bottom:1px solid var(--border); height:100px; display:flex; align-items:center; justify-content:center; }
+  .sig-img-wrap img { max-height:88px; max-width:100%; object-fit:contain; }
+  .sig-foot { padding:10px 16px; display:flex; align-items:center; justify-content:space-between; }
+  .sig-date { font-size:0.73rem; color:var(--muted); }
+  .sig-badge { background:#d1fae5; color:#065f46; padding:3px 10px; border-radius:10px; font-size:0.72rem; font-weight:700; }
+
+  .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
+  .empty-icon { font-size:3rem; margin-bottom:12px; }
+
+  .loading-spinner { text-align:center; padding:40px; color:var(--muted); font-size:0.9rem; }
+
+  footer { background:var(--primary); color:rgba(255,255,255,0.65); text-align:center; padding:20px 40px; font-size:0.8rem; border-top:3px solid var(--accent); margin-top:40px; }
+  footer strong { color:var(--accent-light); }
+
+  @media(max-width:640px) {
+    .header-top { padding:12px 16px; }
+    .hero { padding:28px 16px 34px; }
+    main { padding:16px 14px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="header-logos">
+      <div class="logo-icon">✍️</div>
+      <div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="header-sub">قسم ذوي الإعاقة — سجل التوقيعات</div>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">← الرئيسية</a>
+  </div>
+  <div class="hero">
+    <div class="hero-badge">✍️ سجل التوقيعات</div>
+    <h1>إقرارات <span>أولياء الأمور</span></h1>
+    <p>عرض جميع توقيعات الإقرار المحفوظة من بوابة الطلاب</p>
+  </div>
+</header>
+
+<!-- PIN SCREEN -->
+<div class="pin-screen" id="pin-screen">
+  <div class="pin-box">
+    <div class="pin-icon">🔐</div>
+    <div class="pin-title">صفحة المشرف</div>
+    <div class="pin-desc">أدخل رمز المشرف لعرض سجل توقيعات أولياء الأمور</div>
+    <input type="password" class="pin-input" id="admin-pin" maxlength="6" placeholder="• • • •"
+      onkeydown="if(event.key==='Enter') checkPin()"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
+    <button class="btn-enter" onclick="checkPin()">✅ دخول</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content" id="content">
+  <main>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">إجمالي التوقيعات</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-today">0</div>
+        <div class="stat-label">توقيعات اليوم</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-students">0</div>
+        <div class="stat-label">طلاب وقّعوا</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" class="search-input" id="search-input" placeholder="🔍 ابحث باسم الطالب أو الصف..." oninput="filterSigs()">
+      <button class="btn-refresh" onclick="loadSignatures()">🔄 تحديث</button>
+    </div>
+
+    <div id="sigs-container">
+      <div class="loading-spinner">⏳ جاري التحميل...</div>
+    </div>
+  </main>
+</div>
+
+<footer>
+  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
+
+<script>
+const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+const ADMIN_PIN    = "1129";
+
+let allSigs = [];
+
+function checkPin() {
+  const val = document.getElementById('admin-pin').value;
+  if (val === ADMIN_PIN) {
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    loadSignatures();
+  } else {
+    const err = document.getElementById('pin-error');
+    const inp = document.getElementById('admin-pin');
+    err.classList.add('show');
+    inp.classList.add('error');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
+  }
+}
+
+async function loadSignatures() {
+  document.getElementById('sigs-container').innerHTML = '<div class="loading-spinner">⏳ جاري التحميل...</div>';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/signatures?order=signed_at.desc`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      }
+    });
+    allSigs = await res.json();
+    updateStats();
+    renderSigs(allSigs);
+  } catch(e) {
+    document.getElementById('sigs-container').innerHTML = '<div class="empty-state"><div class="empty-icon">❌</div><p>خطأ في تحميل البيانات</p></div>';
+  }
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = allSigs.length;
+  const today = new Date().toDateString();
+  const todayCount = allSigs.filter(s => new Date(s.signed_at).toDateString() === today).length;
+  document.getElementById('stat-today').textContent = todayCount;
+  const unique = new Set(allSigs.map(s => s.student_pin)).size;
+  document.getElementById('stat-students').textContent = unique;
+}
+
+function renderSigs(sigs) {
+  const container = document.getElementById('sigs-container');
+  if (!sigs.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد توقيعات محفوظة بعد</p></div>';
+    return;
+  }
+  container.innerHTML = `<div class="sigs-grid">${sigs.map(s => {
+    const date = new Date(s.signed_at).toLocaleDateString('ar-SA-u-nu-latn', {
+      year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'
+    });
+    const initial = s.student_name ? s.student_name.split(' ').map(w=>w[0]).join('').slice(0,2) : '؟';
+    return `
+      <div class="sig-card">
+        <div class="sig-head">
+          <div class="sig-avatar">${initial}</div>
+          <div>
+            <div class="sig-name">${s.student_name || '—'}</div>
+            <div class="sig-grade">${s.grade || '—'}</div>
+          </div>
+        </div>
+        <div class="sig-img-wrap">
+          ${s.signature_data
+            ? `<img src="${s.signature_data}" alt="التوقيع">`
+            : '<span style="color:#9ca3af;font-size:0.8rem;">لا يوجد توقيع</span>'}
+        </div>
+        <div class="sig-foot">
+          <span class="sig-date">📅 ${date}</span>
+          <span class="sig-badge">✅ موقّع</span>
+        </div>
+      </div>
+    `;
+  }).join('')}</div>`;
+}
+
+function filterSigs() {
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  if (!q) { renderSigs(allSigs); return; }
+  const filtered = allSigs.filter(s =>
+    (s.student_name||'').includes(q) || (s.grade||'').includes(q)
+  );
+  renderSigs(filtered);
+}
+</script>
+</body>
+</html>
