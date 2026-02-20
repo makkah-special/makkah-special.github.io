@@ -989,13 +989,6 @@ const STUDENTS = {
     ]
   },
 
-  // م٧ — أمجد مرزوق علي المحوري
-  "7AA": { _alias: true }, // سيتم تعيينه بعدها
-  // م٨ — مراد علي ظلميس المنتشري
-  // م٩ — فيصل حاتم حامد الغامدي
-  // م١٠ — عبدالرحمن توفيق علوان مقري
-  // ... إلخ
-
   // م٧
   "0788": {
     name: "أمجد مرزوق علي المحوري",
@@ -1370,7 +1363,7 @@ function loadStudent(pin) {
 
   // REPORTS
   const rl = document.getElementById('reports-list');
-  const pin = Object.keys(STUDENTS).find(k => STUDENTS[k] === s) || s.pin || '';
+  const studentPin = s.pin || Object.keys(STUDENTS).find(k => STUDENTS[k] === s) || '';
   const SB_STORAGE = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/";
 
   // دالة للتحقق من وجود الملف
@@ -1383,13 +1376,13 @@ function loadStudent(pin) {
 
   // التقارير الثابتة لكل طالب
   const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${pin}` },
-    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${pin}` },
+    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
+    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
   ];
 
   const reportsWithFiles = s.reports.map((r, i) => ({
     ...r,
-    fileKey: r.fileKey || `report${i+1}-${pin}`
+    fileKey: r.fileKey || `report${i+1}-${studentPin}`
   }));
 
   const allReports = [...fixedReports, ...reportsWithFiles];
