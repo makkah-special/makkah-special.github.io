@@ -696,8 +696,7 @@
         <img src="moe-logo.png" alt="شعار وزارة التعليم" style="height:70px; width:auto; object-fit:contain;">
       </a>
       <div class="header-text">
-        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">الإدارة العامة للتعليم بمحافظة جدة</div>   
-        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">قسم ذوي الإعاقة</div>
+        <div class="header-title-top">وزارة التعليم — المملكة العربية السعودية</div>
         <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">مدرسة مكة المكرمة المتوسطة</div>
       </div>
     </div>
@@ -763,11 +762,17 @@
         <p>متابعة الطلاب وخطط الدعم والأدوات التعليمية</p>
         <span class="quick-arrow" style="color:#1a6b4a;">← دخول الصفحة</span>
       </a>
-      <a href="students.html" class="quick-card" style="--card-color:#7c3aed; --card-bg:#f0ebff;">
-        <div class="quick-icon">🎓</div>
-        <h3>بوابة ملفات الطلاب</h3>
-        <p>الدخول برمز خاص للاطلاع على الخطة والتقارير والمتابعة</p>
-        <span class="quick-arrow" style="color:#7c3aed;">← دخول البوابة</span>
+      <a href="students.html" class="quick-card" style="--card-color:#1a6b4a; --card-bg:#e6f4ef;">
+        <div class="quick-icon">📘</div>
+        <h3>بوابة طلاب يسير</h3>
+        <p>الدخول برمز خاص للاطلاع على الخطة والتقارير</p>
+        <span class="quick-arrow" style="color:#1a6b4a;">← دخول البوابة</span>
+      </a>
+      <a href="dumaj-students.html" class="quick-card" style="--card-color:#c25a00; --card-bg:#fff3e0;">
+        <div class="quick-icon">🧠</div>
+        <h3>بوابة طلاب الدمج الفكري</h3>
+        <p>الدخول برمز خاص للاطلاع على الخطة والتقارير</p>
+        <span class="quick-arrow" style="color:#c25a00;">← دخول البوابة</span>
       </a>
 
       <a href="contact.html" class="quick-card" style="--card-color:#dc2626; --card-bg:#fff0f0;">
@@ -842,19 +847,39 @@
     </div>
   </div>
 
-  <!-- STUDENT PORTAL CTA -->
-  <div class="student-portal-section fade-in">
-    <div class="portal-text">
-      <h2>🎓 بوابة ملفات الطلاب</h2>
-      <p>نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم الكاملة بسرية تامة عبر رمز دخول خاص</p>
-      <div class="portal-features">
-        <div class="portal-feature"><div class="portal-feature-dot"></div> الخطة التعليمية الفردية</div>
-        <div class="portal-feature"><div class="portal-feature-dot"></div> التقارير الفصلية والسلوكية</div>
-        <div class="portal-feature"><div class="portal-feature-dot"></div> لوحة المتابعة الشهرية</div>
-        <div class="portal-feature"><div class="portal-feature-dot"></div> رمز دخول خاص لكل طالب</div>
+  <!-- STUDENT PORTALS CTA -->
+  <div class="fade-in" style="margin-bottom:28px;">
+    <div class="section-title">🔐 بوابات الطلاب</div>
+    <div class="section-sub">بوابة خاصة لكل برنامج — الدخول برمز سري خاص بكل طالب</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:18px;">
+
+      <div class="student-portal-section fade-in" style="background:linear-gradient(135deg,#7a2800,#c25a00); margin-bottom:0;">
+        <div class="portal-text">
+          <h2>🧠 بوابة طلاب الدمج الفكري</h2>
+          <p>نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</p>
+          <div class="portal-features">
+            <div class="portal-feature"><div class="portal-feature-dot" style="background:#f59040;"></div> الخطة التعليمية الفردية</div>
+            <div class="portal-feature"><div class="portal-feature-dot" style="background:#f59040;"></div> التقارير الفصلية</div>
+            <div class="portal-feature"><div class="portal-feature-dot" style="background:#f59040;"></div> إقرار ولي الأمر</div>
+          </div>
+        </div>
+        <a href="dumaj-students.html" class="portal-btn" style="background:#fff; color:#c25a00;">🔐 دخول البوابة</a>
       </div>
+
+      <div class="student-portal-section fade-in" style="background:linear-gradient(135deg,#0d3320,#1a6b4a); margin-bottom:0;">
+        <div class="portal-text">
+          <h2>📘 بوابة طلاب يسير</h2>
+          <p>نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج يسير التعليمي</p>
+          <div class="portal-features">
+            <div class="portal-feature"><div class="portal-feature-dot"></div> الخطة التعليمية الفردية</div>
+            <div class="portal-feature"><div class="portal-feature-dot"></div> التقارير الفصلية</div>
+            <div class="portal-feature"><div class="portal-feature-dot"></div> إقرار ولي الأمر</div>
+          </div>
+        </div>
+        <a href="students.html" class="portal-btn" style="background:#fff; color:#1a6b4a;">🔐 دخول البوابة</a>
+      </div>
+
     </div>
-    <a href="students.html" class="portal-btn">🔐 دخول البوابة</a>
   </div>
 
   <!-- ABOUT -->
@@ -905,8 +930,9 @@
 <footer>
   © 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
   <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
-  <div style="margin-top:12px;">
-    <a href="signatures.html" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.5)'">🔐 بوابة المشرف</a>
+  <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <a href="signatures.html" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.5)'">🔐 مشرف يسير</a>
+    <a href="signatures-dumaj.html" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.5)'">🔐 مشرف الدمج الفكري</a>
   </div>
 </footer>
 
