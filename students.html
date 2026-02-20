@@ -773,6 +773,35 @@
 
 <script>
 // =====================================================
+// Supabase Config
+// =====================================================
+const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+
+async function sbSaveSignature(pin, name, grade, signData) {
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/signatures', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        student_pin: pin,
+        student_name: name,
+        grade: grade,
+        signature_data: signData
+      })
+    });
+    console.log('✅ التوقيع حُفظ في Supabase');
+  } catch(e) {
+    console.error('خطأ في حفظ التوقيع:', e);
+  }
+}
+
+// =====================================================
 // قاعدة بيانات الطلاب — برنامج يسير
 // الرمز = آخر 4 أرقام من السجل المدني
 // =====================================================
@@ -1288,6 +1317,7 @@ function checkPin() {
 
 function loadStudent(pin) {
   const s = STUDENTS[pin];
+  s.pin = pin;
   currentStudent = s;
 
   document.getElementById('disp-name').textContent = s.name;
@@ -1515,7 +1545,7 @@ function clearSign() {
   if (btn) { btn.textContent = '✅ تأكيد الإقرار والتوقيع'; btn.disabled = false; btn.style.opacity = '1'; }
 }
 
-function submitIqrar() {
+async function submitIqrar() {
   if (!signCanvas) return;
   const data = signCtx.getImageData(0, 0, signCanvas.width, signCanvas.height).data;
   const hasDrawing = Array.from(data).some((v, i) => i % 4 === 3 && v > 0);
@@ -1523,17 +1553,24 @@ function submitIqrar() {
     alert('⚠️ يرجى رسم توقيعك في المربع أولاً');
     return;
   }
+
   // Embed signature image into iqrar
   const signImg = signCanvas.toDataURL('image/png');
   const signArea = document.getElementById('sign-area');
   signArea.innerHTML = `<img src="${signImg}" style="width:100%;height:100%;object-fit:contain;padding:6px;">`;
   signArea.classList.add('signed');
 
-  document.getElementById('signed-badge').style.display = 'flex';
+  // حفظ التوقيع في Supabase
+  const s = currentStudent;
   const btn = document.querySelector('.btn-sign');
-  btn.textContent = '✅ تم تسجيل الإقرار';
+  btn.textContent = '⏳ جاري الحفظ...';
   btn.disabled = true;
   btn.style.opacity = '0.7';
+
+  await sbSaveSignature(s.pin, s.name, s.grade, signImg);
+
+  document.getElementById('signed-badge').style.display = 'flex';
+  btn.textContent = '✅ تم تسجيل الإقرار وحفظ التوقيع';
 
   // Show PDF save button
   document.getElementById('btn-save-pdf').style.display = 'inline-flex';
