@@ -2351,36 +2351,35 @@ function renderStudentCards() {
   document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
 }
 
-function openEditModal(pin) {
+async function openEditModal(pin) {
+  // جلب أحدث بيانات من Supabase أولاً
+  await loadStudentDataFromStorage(pin);
   editingPin = pin;
-  const sModal = STUDENTS[pin];
-  document.getElementById('modal-title').textContent = '✏️ تعديل: ' + sModal.name;
-  document.getElementById('edit-name').value  = sModal.name;
-  document.getElementById('edit-grade').value = sModal.grade;
-  document.getElementById('edit-id').value    = sModal.id_full;
-  document.getElementById('edit-phone').value = sModal.phone || '';
-  // تحميل الخطة
-  renderPlanEditor(sModal.plan || []);
-  // تحميل المتابعة
-  renderFollowupEditor(sModal.followup || []);
-  // تحميل البيانات التفصيلية
-  document.getElementById('edit-birthdate').value = sModal.birthdate || '';
-  document.getElementById('edit-nationality').value = sModal.nationality || '';
-  document.getElementById('edit-age').value = sModal.age || '';
-  document.getElementById('edit-address').value = sModal.address || '';
-  document.getElementById('edit-iq').value = sModal.iq || '';
-  document.getElementById('edit-sibling-order').value = sModal.sibling_order || '';
-  document.getElementById('edit-economic-level').value = sModal.economic_level || '';
-  document.getElementById('edit-father-edu').value = sModal.father_edu || '';
-  document.getElementById('edit-mother-edu').value = sModal.mother_edu || '';
-  document.getElementById('edit-status-psych').value = sModal.status_psych || '';
-  document.getElementById('edit-status-social').value = sModal.status_social || '';
-  document.getElementById('edit-status-health').value = sModal.status_health || '';
-  document.getElementById('edit-diagnosis').value = sModal.diagnosis || '';
-  document.getElementById('edit-program-place').value = sModal.program_place || '';
-  document.getElementById('edit-program-start').value = sModal.program_start || '';
-  document.getElementById('edit-program-end').value = sModal.program_end || '';
-  // فتح تبويب البيانات
+  const s = STUDENTS[pin];
+  document.getElementById('modal-title').textContent = '✏️ تعديل: ' + s.name;
+  document.getElementById('edit-name').value  = s.name  || '';
+  document.getElementById('edit-grade').value = s.grade || '';
+  document.getElementById('edit-id').value    = s.id_full || '';
+  document.getElementById('edit-phone').value = s.phone || '';
+  renderPlanEditor(s.plan || []);
+  renderFollowupEditor(s.followup || []);
+  // البيانات التفصيلية
+  document.getElementById('edit-birthdate').value = s.birthdate || '';
+  document.getElementById('edit-nationality').value = s.nationality || '';
+  document.getElementById('edit-age').value = s.age || '';
+  document.getElementById('edit-address').value = s.address || '';
+  document.getElementById('edit-iq').value = s.iq || '';
+  document.getElementById('edit-sibling-order').value = s.sibling_order || '';
+  document.getElementById('edit-economic-level').value = s.economic_level || '';
+  document.getElementById('edit-father-edu').value = s.father_edu || '';
+  document.getElementById('edit-mother-edu').value = s.mother_edu || '';
+  document.getElementById('edit-status-psych').value = s.status_psych || '';
+  document.getElementById('edit-status-social').value = s.status_social || '';
+  document.getElementById('edit-status-health').value = s.status_health || '';
+  document.getElementById('edit-diagnosis').value = s.diagnosis || '';
+  document.getElementById('edit-program-place').value = s.program_place || '';
+  document.getElementById('edit-program-start').value = s.program_start || '';
+  document.getElementById('edit-program-end').value = s.program_end || '';
   openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
   document.getElementById('edit-modal').classList.add('open');
 }
