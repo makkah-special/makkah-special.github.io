@@ -167,6 +167,8 @@ tbody tr:last-child { border-bottom:none; }
 .status-select.val-a { background:#fee2e2; color:#dc2626; border-color:#fca5a5; }
 .status-select.val-l { background:#fef9c3; color:#b45309; border-color:#fde047; }
 .status-select.val-e { background:#ede9fe; color:#7c3aed; border-color:#c4b5fd; }
+.status-select.val-h { background:#e0f2fe; color:#0369a1; border-color:#7dd3fc; }
+.status-select.val-s { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
 
 .note-cell { padding:8px 6px; }
 .note-input {
@@ -341,10 +343,12 @@ const SB_URL    = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
 const SB_KEY    = 'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere';
 const DAYS      = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
 const STATUS_OPTS = [
-  {val:'p', label:'✅ حاضر',  cls:'val-p'},
-  {val:'a', label:'❌ غائب',  cls:'val-a'},
-  {val:'l', label:'⏰ متأخر', cls:'val-l'},
-  {val:'e', label:'📋 بعذر',  cls:'val-e'},
+  {val:'p', label:'✅ حاضر',         cls:'val-p'},
+  {val:'a', label:'❌ غياب',         cls:'val-a'},
+  {val:'l', label:'⏰ متأخر',        cls:'val-l'},
+  {val:'e', label:'📋 بعذر',         cls:'val-e'},
+  {val:'h', label:'🏖️ إجازة',       cls:'val-h'},
+  {val:'s', label:'🚫 تعليق دراسة', cls:'val-s'},
 ];
 
 const STUDENTS = [
