@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -22,850 +21,849 @@
     --muted: #5a6478;
   }
 
-- { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-font-family: ‘Cairo’, sans-serif;
-background: var(–bg);
-color: var(–text);
-min-height: 100vh;
-}
-
-/* ===== HEADER ===== */
-header {
-background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
-padding: 16px 36px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-bottom: 3px solid var(–accent);
-}
-
-.header-left { display: flex; align-items: center; gap: 14px; }
-
-.header-icon {
-width: 46px; height: 46px;
-border-radius: 12px;
-background: rgba(200,151,58,0.18);
-border: 1px solid rgba(200,151,58,0.35);
-display: flex; align-items: center; justify-content: center;
-font-size: 1.4rem;
-}
-
-.header-title { color: #fff; font-family: ‘Tajawal’, sans-serif; font-size: 1.1rem; font-weight: 900; }
-.header-sub { color: rgba(255,255,255,0.55); font-size: 0.76rem; margin-top: 2px; }
-
-.back-btn {
-background: rgba(255,255,255,0.08);
-border: 1px solid rgba(255,255,255,0.18);
-color: rgba(255,255,255,0.8);
-padding: 8px 18px;
-border-radius: 8px;
-text-decoration: none;
-font-size: 0.82rem;
-font-weight: 600;
-transition: all 0.2s;
-}
-.back-btn:hover { background: rgba(255,255,255,0.15); }
-
-/* ===== LOGIN SCREEN ===== */
-#login-screen {
-min-height: calc(100vh - 76px);
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 40px 20px;
-}
-
-.login-card {
-background: var(–card);
-border: 1px solid var(–border);
-border-radius: 24px;
-padding: 48px 40px;
-max-width: 420px;
-width: 100%;
-box-shadow: 0 24px 64px rgba(0,0,0,0.1);
-text-align: center;
-}
-
-.login-badge {
-display: inline-flex;
-align-items: center;
-gap: 8px;
-background: #ede9fe;
-border: 1px solid #c4b5fd;
-color: var(–purple);
-padding: 6px 18px;
-border-radius: 20px;
-font-size: 0.8rem;
-font-weight: 700;
-margin-bottom: 20px;
-}
-
-.login-icon-big {
-width: 80px; height: 80px;
-border-radius: 20px;
-background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-margin: 0 auto 22px;
-display: flex; align-items: center; justify-content: center;
-font-size: 2.6rem;
-box-shadow: 0 8px 24px rgba(109,40,217,0.2);
-}
-
-.login-card h2 {
-font-family: ‘Tajawal’, sans-serif;
-font-size: 1.5rem;
-font-weight: 900;
-color: var(–primary);
-margin-bottom: 8px;
-}
-
-.login-card .login-desc {
-color: var(–muted);
-font-size: 0.86rem;
-line-height: 1.7;
-margin-bottom: 30px;
-}
-
-.input-label {
-text-align: right;
-font-size: 0.83rem;
-font-weight: 700;
-color: var(–primary);
-margin-bottom: 8px;
-display: flex;
-align-items: center;
-gap: 6px;
-}
-
-.pin-input {
-width: 100%;
-padding: 15px 20px;
-border: 2px solid var(–border);
-border-radius: 12px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 1.3rem;
-font-weight: 700;
-text-align: center;
-letter-spacing: 8px;
-color: var(–primary);
-outline: none;
-transition: all 0.25s;
-background: #fafafa;
-margin-bottom: 12px;
-}
-
-.pin-input:focus {
-border-color: var(–purple-light);
-background: #fff;
-box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
-}
-
-.pin-input.error {
-border-color: #ef4444;
-background: #fff5f5;
-animation: shake 0.4s ease;
-}
-
-@keyframes shake {
-0%,100% { transform: translateX(0); }
-20% { transform: translateX(-10px); }
-60% { transform: translateX(10px); }
-80% { transform: translateX(-5px); }
-}
-
-.error-msg {
-display: none;
-color: #dc2626;
-font-size: 0.82rem;
-font-weight: 700;
-margin-bottom: 12px;
-background: #fee2e2;
-border-radius: 8px;
-padding: 8px 14px;
-}
-.error-msg.show { display: block; }
-
-.login-btn {
-width: 100%;
-padding: 14px;
-background: linear-gradient(135deg, var(–purple), var(–purple-light));
-color: #fff;
-border: none;
-border-radius: 12px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 1rem;
-font-weight: 800;
-cursor: pointer;
-transition: all 0.3s;
-box-shadow: 0 6px 20px rgba(109,40,217,0.3);
-letter-spacing: 0.5px;
-}
-.login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(109,40,217,0.45); }
-.login-btn:active { transform: translateY(0); }
-
-.hint-box {
-margin-top: 22px;
-background: #fffbf0;
-border: 1px solid #f0d898;
-border-right: 3px solid var(–accent);
-border-radius: 10px;
-padding: 13px 16px;
-font-size: 0.79rem;
-color: #7a5800;
-text-align: right;
-line-height: 1.7;
-}
-
-/* ===== PORTAL ===== */
-#student-portal { display: none; }
-
-.portal-banner {
-background: linear-gradient(135deg, var(–green) 0%, #0d4a30 100%);
-padding: 26px 36px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-wrap: wrap;
-gap: 14px;
-border-bottom: 3px solid var(–accent);
-}
-
-.student-identity { color: #fff; display:flex; align-items:center; gap:16px; }
-
-.student-photo-wrap {
-position: relative;
-flex-shrink: 0;
-}
-.student-photo {
-width: 70px; height: 70px;
-border-radius: 50%;
-object-fit: cover;
-border: 3px solid rgba(240,184,74,0.7);
-background: rgba(255,255,255,0.1);
-display: flex; align-items: center; justify-content: center;
-font-size: 2rem;
-cursor: pointer;
-transition: all 0.2s;
-}
-.student-photo:hover { border-color: #f0b84a; transform: scale(1.05); }
-.student-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
-.photo-change-btn {
-position: absolute;
-bottom: 0; left: 0;
-background: #f0b84a;
-color: #1a3a5c;
-border: none;
-border-radius: 50%;
-width: 22px; height: 22px;
-font-size: 0.65rem;
-cursor: pointer;
-display: flex; align-items: center; justify-content: center;
-font-weight: 900;
-box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-.photo-input { display: none; }
-
-.student-name-display {
-font-family: ‘Tajawal’, sans-serif;
-font-size: 1.4rem;
-font-weight: 900;
-margin-bottom: 4px;
-}
-
-.student-meta-display {
-opacity: 0.7;
-font-size: 0.82rem;
-display: flex;
-align-items: center;
-gap: 12px;
-flex-wrap: wrap;
-}
-
-.meta-chip {
-background: rgba(255,255,255,0.12);
-border: 1px solid rgba(255,255,255,0.2);
-padding: 3px 12px;
-border-radius: 12px;
-font-size: 0.76rem;
-}
-
-.logout-btn {
-background: rgba(255,255,255,0.1);
-border: 1px solid rgba(255,255,255,0.2);
-color: rgba(255,255,255,0.85);
-padding: 9px 20px;
-border-radius: 9px;
-cursor: pointer;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.84rem;
-font-weight: 700;
-transition: all 0.2s;
-}
-.logout-btn:hover { background: rgba(255,255,255,0.2); }
-
-.portal-body {
-max-width: 960px;
-margin: 0 auto;
-padding: 28px 36px 60px;
-}
-
-/* TABS */
-.tabs {
-display: flex;
-gap: 4px;
-background: #fff;
-border: 1px solid var(–border);
-border-radius: 14px;
-padding: 6px;
-margin-bottom: 26px;
-box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-}
-
-.tab-btn {
-flex: 1;
-padding: 10px 8px;
-border: none;
-background: transparent;
-border-radius: 9px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.84rem;
-font-weight: 700;
-color: var(–muted);
-cursor: pointer;
-transition: all 0.22s;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 5px;
-}
-
-.tab-btn.active {
-background: linear-gradient(135deg, var(–green), var(–green-light));
-color: #fff;
-box-shadow: 0 3px 12px rgba(26,107,74,0.35);
-}
-
-.tab-pane { display: none; animation: fadeIn 0.3s ease; }
-.tab-pane.active { display: block; }
-
-@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-/* CARD */
-.s-card {
-background: var(–card);
-border: 1px solid var(–border);
-border-radius: 16px;
-overflow: hidden;
-margin-bottom: 18px;
-box-shadow: 0 2px 14px rgba(0,0,0,0.04);
-}
-
-.s-card-head {
-padding: 14px 22px;
-border-bottom: 1px solid var(–border);
-display: flex;
-align-items: center;
-gap: 9px;
-font-weight: 800;
-font-size: 0.92rem;
-color: var(–primary);
-background: linear-gradient(135deg, #f8fffe, #f0faf5);
-}
-
-/* INFO TABLE */
-.info-tbl { width: 100%; border-collapse: collapse; }
-.info-tbl tr { border-bottom: 1px solid var(–border); }
-.info-tbl tr:last-child { border-bottom: none; }
-.info-tbl th {
-padding: 12px 22px;
-text-align: right;
-font-size: 0.8rem;
-font-weight: 700;
-color: var(–muted);
-background: #f9f9f9;
-width: 30%;
-}
-.info-tbl td {
-padding: 12px 22px;
-font-size: 0.88rem;
-font-weight: 600;
-color: var(–text);
-}
-
-.tag {
-display: inline-block;
-padding: 3px 12px;
-border-radius: 12px;
-font-size: 0.76rem;
-font-weight: 700;
-}
-.tag-green { background: #d1fae5; color: #065f46; }
-.btn-download-report {
-display: inline-flex; align-items: center; gap: 4px;
-background: linear-gradient(135deg, #1a3a5c, #2563a8);
-color: #fff; padding: 5px 12px; border-radius: 8px;
-font-size: 0.75rem; font-weight: 700; text-decoration: none;
-white-space: nowrap; transition: all 0.2s;
-box-shadow: 0 2px 6px rgba(26,58,92,0.2);
-}
-.btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26,58,92,0.3); }
-.tag-blue  { background: #dbeafe; color: #1e40af; }
-.tag-blue { background: #dbeafe; color: #1e40af; }
-.tag-yellow { background: #fef3c7; color: #92400e; }
-.tag-purple { background: #ede9fe; color: #5b21b6; }
-.tag-gray { background: #f3f4f6; color: #4b5563; }
-
-/* PLAN GRID */
-.plan-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-gap: 14px;
-padding: 18px;
-}
-
-.plan-box {
-border: 1px solid var(–border);
-border-radius: 12px;
-padding: 16px;
-background: #fafcff;
-transition: all 0.2s;
-}
-.plan-box:hover { border-color: var(–green-light); transform: translateY(-2px); }
-
-.plan-box-head {
-display: flex;
-align-items: center;
-gap: 8px;
-margin-bottom: 10px;
-}
-
-.plan-dot {
-width: 9px; height: 9px;
-border-radius: 50%;
-flex-shrink: 0;
-}
-
-.plan-box h4 { font-size: 0.86rem; font-weight: 800; color: var(–primary); }
-.plan-box p { font-size: 0.8rem; color: var(–muted); line-height: 1.7; }
-
-/* REPORTS */
-.report-row {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 16px 22px;
-border-bottom: 1px solid var(–border);
-transition: background 0.15s;
-gap: 14px;
-}
-.report-row:last-child { border-bottom: none; }
-.report-row:hover { background: #f8fffe; }
-
-.report-left { display: flex; align-items: center; gap: 14px; }
-
-.report-icon {
-width: 42px; height: 42px;
-border-radius: 10px;
-display: flex; align-items: center; justify-content: center;
-font-size: 1.2rem;
-flex-shrink: 0;
-}
-
-.report-name { font-size: 0.88rem; font-weight: 700; color: var(–primary); }
-.report-date { font-size: 0.75rem; color: var(–muted); margin-top: 2px; }
-
-/* FOLLOW-UP TABLE */
-.fu-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-.fu-table th {
-background: linear-gradient(135deg, var(–green), var(–green-light));
-color: #fff;
-padding: 11px 14px;
-text-align: center;
-font-weight: 700;
-}
-.fu-table td {
-padding: 10px 14px;
-text-align: center;
-border-bottom: 1px solid var(–border);
-color: var(–text);
-font-weight: 600;
-}
-.fu-table tr:last-child td { border-bottom: none; }
-.fu-table tr:hover td { background: #f0faf5; }
-
-.circle {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-width: 28px; height: 28px;
-border-radius: 50%;
-font-size: 0.85rem;
-}
-.c-done { background: #d1fae5; color: #065f46; }
-.c-part { background: #fef3c7; color: #92400e; }
-.c-no   { background: #fee2e2; color: #991b1b; }
-
-/* PDF VIEWER */
-.pdf-section {
-margin-bottom: 24px;
-}
-
-.pdf-section-title {
-display: flex;
-align-items: center;
-gap: 10px;
-font-size: 0.95rem;
-font-weight: 800;
-color: var(–primary);
-margin-bottom: 12px;
-padding-bottom: 10px;
-border-bottom: 2px solid var(–border);
-}
-
-.pdf-level-badge {
-background: var(–accent);
-color: #fff;
-padding: 3px 12px;
-border-radius: 12px;
-font-size: 0.76rem;
-font-weight: 700;
-}
-
-.pdf-frame-wrap {
-border: 1px solid var(–border);
-border-radius: 12px;
-overflow: hidden;
-background: #f5f5f5;
-position: relative;
-}
-
-.pdf-frame-wrap iframe {
-width: 100%;
-height: 500px;
-border: none;
-display: block;
-}
-
-.pdf-actions {
-display: flex;
-gap: 10px;
-margin-top: 10px;
-flex-wrap: wrap;
-}
-
-.btn-pdf {
-display: inline-flex;
-align-items: center;
-gap: 7px;
-padding: 9px 18px;
-border-radius: 9px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.84rem;
-font-weight: 700;
-text-decoration: none;
-transition: all 0.2s;
-border: none;
-cursor: pointer;
-}
-
-.btn-pdf-primary {
-background: linear-gradient(135deg, var(–primary), var(–primary-light, #2563a8));
-color: #fff;
-box-shadow: 0 3px 12px rgba(26,58,92,0.25);
-}
-
-.btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,58,92,0.35); }
-
-.btn-pdf-secondary {
-background: #fff;
-color: var(–primary);
-border: 1px solid var(–border);
-}
-
-.btn-pdf-secondary:hover { border-color: var(–primary); background: #f0f4ff; }
-
-/* IQRAR */
-.iqrar-box {
-background: linear-gradient(135deg, #fffbf0, #fff8e6);
-border: 1px solid #f0d898;
-border-right: 4px solid var(–accent);
-border-radius: 14px;
-padding: 24px;
-margin-bottom: 20px;
-font-size: 0.9rem;
-line-height: 2;
-color: var(–text);
-}
-
-.iqrar-box h3 {
-font-family: ‘Tajawal’, sans-serif;
-font-size: 1.1rem;
-font-weight: 900;
-color: var(–primary);
-margin-bottom: 14px;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.iqrar-fields {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 14px;
-margin: 20px 0;
-}
-
-.iqrar-field {
-background: #fff;
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 12px 16px;
-}
-
-.iqrar-field label {
-display: block;
-font-size: 0.76rem;
-font-weight: 700;
-color: var(–muted);
-margin-bottom: 6px;
-}
-
-.iqrar-field span {
-font-size: 0.9rem;
-font-weight: 700;
-color: var(–primary);
-}
-
-.sign-area {
-border: 2px dashed var(–border);
-border-radius: 12px;
-background: #fff;
-height: 120px;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-gap: 8px;
-cursor: pointer;
-transition: all 0.25s;
-margin: 16px 0;
-position: relative;
-overflow: hidden;
-}
-
-.sign-area:hover { border-color: var(–accent); background: #fffbf0; }
-.sign-area.signed { border-color: var(–green-light); border-style: solid; background: #f0faf5; }
-
-.sign-area canvas {
-position: absolute;
-top: 0; left: 0;
-width: 100%; height: 100%;
-}
-
-.sign-placeholder { color: var(–muted); font-size: 0.84rem; font-weight: 600; text-align: center; }
-.sign-placeholder span { font-size: 1.6rem; display: block; margin-bottom: 4px; }
-
-.iqrar-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-
-.btn-sign {
-background: linear-gradient(135deg, var(–green), var(–green-light));
-color: #fff;
-border: none;
-padding: 12px 24px;
-border-radius: 10px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.9rem;
-font-weight: 800;
-cursor: pointer;
-transition: all 0.25s;
-box-shadow: 0 4px 14px rgba(26,107,74,0.3);
-}
-
-.btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,74,0.4); }
-
-.btn-clear-sign {
-background: #fff;
-color: var(–muted);
-border: 1px solid var(–border);
-padding: 12px 20px;
-border-radius: 10px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.88rem;
-font-weight: 700;
-cursor: pointer;
-transition: all 0.2s;
-}
-
-.btn-clear-sign:hover { border-color: #ef4444; color: #ef4444; }
-
-.signed-badge {
-display: none;
-background: #d1fae5;
-border: 1px solid #6ee7b7;
-color: #065f46;
-padding: 10px 18px;
-border-radius: 10px;
-font-size: 0.85rem;
-font-weight: 700;
-align-items: center;
-gap: 8px;
-}
-
-/* ADMIN PANEL */
-#admin-portal { display:none; }
-
-.admin-banner {
-background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
-padding: 22px 36px;
-display: flex; align-items: center; justify-content: space-between;
-border-bottom: 4px solid #c8973a;
-}
-.admin-badge {
-background: rgba(200,151,58,0.2); border: 1px solid rgba(200,151,58,0.4);
-color: #f0b84a; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
-}
-.admin-body { max-width: 960px; margin: 0 auto; padding: 28px 36px 60px; }
-
-.admin-tabs {
-display: flex; gap: 4px; background: #fff; border: 1px solid var(–border);
-border-radius: 14px; padding: 6px; margin-bottom: 26px;
-box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-}
-.admin-tab-btn {
-flex: 1; padding: 10px 8px; border: none; background: transparent; border-radius: 9px;
-font-family: ‘Cairo’, sans-serif; font-size: 0.84rem; font-weight: 700;
-color: var(–muted); cursor: pointer; transition: all 0.22s;
-display: flex; align-items: center; justify-content: center; gap: 5px;
-}
-.admin-tab-btn.active {
-background: linear-gradient(135deg, #1a3a5c, #2563a8);
-color: #fff; box-shadow: 0 3px 12px rgba(26,58,92,0.35);
-}
-.admin-tab-pane { display: none; animation: fadeIn 0.3s ease; }
-.admin-tab-pane.active { display: block; }
-
-/* Student cards grid */
-.students-grid {
-display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
-}
-.stu-card {
-background: #fff; border: 1px solid var(–border); border-radius: 14px;
-padding: 16px 18px; cursor: pointer; transition: all 0.2s;
-display: flex; align-items: center; gap: 12px;
-}
-.stu-card:hover { border-color: var(–green-light); box-shadow: 0 4px 18px rgba(26,107,74,0.12); transform: translateY(-2px); }
-.stu-card-avatar {
-width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#e6f4ef,#d1fae5);
-display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;
-}
-.stu-card-name { font-weight: 800; font-size: 0.88rem; color: var(–primary); margin-bottom: 3px; }
-.stu-card-meta { font-size: 0.75rem; color: var(–muted); }
-.stu-card-pin { font-size: 0.72rem; background: #ede9fe; color: #5b21b6; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
-
-/* Edit Modal */
-.modal-overlay {
-display: none; position: fixed; inset: 0;
-background: rgba(0,0,0,0.5); z-index: 1000;
-align-items: center; justify-content: center; padding: 20px;
-}
-.modal-overlay.open { display: flex; }
-.modal-box {
-background: #fff; border-radius: 20px; padding: 32px; width: 100%;
-max-width: 560px; max-height: 90vh; overflow-y: auto;
-box-shadow: 0 24px 64px rgba(0,0,0,0.25);
-animation: fadeIn 0.2s ease;
-}
-.modal-title {
-font-family: ‘Tajawal’, sans-serif; font-size: 1.2rem; font-weight: 900;
-color: var(–primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
-border-bottom: 2px solid var(–border); padding-bottom: 14px;
-}
-.form-group { margin-bottom: 16px; }
-.form-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(–muted); margin-bottom: 6px; }
-.form-input {
-width: 100%; padding: 11px 14px; border: 1.5px solid var(–border); border-radius: 10px;
-font-family: ‘Cairo’, sans-serif; font-size: 0.88rem; color: var(–text); outline: none;
-transition: border-color 0.2s;
-}
-.form-input:focus { border-color: var(–green-light); box-shadow: 0 0 0 3px rgba(34,160,107,0.1); }
-.form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-.btn-save {
-background: linear-gradient(135deg, var(–green), var(–green-light)); color: #fff;
-border: none; padding: 12px 24px; border-radius: 10px;
-font-family: ‘Cairo’, sans-serif; font-size: 0.9rem; font-weight: 800;
-cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(26,107,74,0.3);
-}
-.btn-save:hover { transform: translateY(-2px); }
-.btn-cancel {
-background: #fff; color: var(–muted); border: 1px solid var(–border);
-padding: 12px 20px; border-radius: 10px; font-family: ‘Cairo’, sans-serif;
-font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
-}
-.btn-delete-student {
-background: #fff; color: #dc2626; border: 1px solid #fecaca;
-padding: 12px 20px; border-radius: 10px; font-family: ‘Cairo’, sans-serif;
-font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-right: auto;
-}
-.btn-delete-student:hover { background: #fee2e2; }
-
-/* Plan goals editor */
-.goal-row {
-background: #f9fafb; border: 1px solid var(–border); border-radius: 10px;
-padding: 12px 14px; margin-bottom: 10px; position: relative;
-}
-.goal-row .form-input { margin-bottom: 8px; }
-.goal-row .form-input:last-of-type { margin-bottom: 0; }
-.btn-remove-goal {
-position: absolute; top: 8px; left: 8px; background: #fee2e2; color: #dc2626;
-border: none; border-radius: 6px; width: 26px; height: 26px; cursor: pointer;
-font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
-}
-.btn-add-goal {
-background: #f0faf5; border: 1.5px dashed var(–green-light); color: var(–green);
-width: 100%; padding: 10px; border-radius: 10px; font-family: ‘Cairo’, sans-serif;
-font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px;
-}
-.btn-add-goal:hover { background: #e6f4ef; }
-
-/* Follow-up editor */
-.fu-edit-row {
-display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 28px;
-gap: 6px; align-items: center; margin-bottom: 8px;
-}
-.fu-edit-row input, .fu-edit-row select {
-padding: 8px 10px; border: 1.5px solid var(–border); border-radius: 8px;
-font-family: ‘Cairo’, sans-serif; font-size: 0.78rem; outline: none; width: 100%;
-}
-.fu-edit-row select { text-align: center; }
-
-/* Add student form */
-.add-student-card {
-background: #fff; border: 2px dashed var(–green-light); border-radius: 16px;
-padding: 28px; text-align: center; cursor: pointer; transition: all 0.2s;
-color: var(–green); font-weight: 700;
-}
-.add-student-card:hover { background: #f0faf5; }
-
-.success-toast {
-position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-background: #1a6b4a; color: #fff; padding: 12px 28px; border-radius: 12px;
-font-weight: 700; font-size: 0.88rem; z-index: 9999;
-box-shadow: 0 8px 24px rgba(26,107,74,0.4); display: none;
-animation: fadeIn 0.3s ease;
-}
-
-/* RESPONSIVE */
-@media (max-width: 640px) {
-header { padding: 12px 18px; }
-.portal-banner { padding: 18px; }
-.portal-body { padding: 18px 16px 40px; }
-.tabs { flex-wrap: wrap; }
-.tab-btn { font-size: 0.75rem; padding: 8px 4px; }
-.login-card { padding: 32px 22px; }
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
+    padding: 16px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .header-left { display: flex; align-items: center; gap: 14px; }
+
+  .header-icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: rgba(200,151,58,0.18);
+    border: 1px solid rgba(200,151,58,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+
+  .header-title { color: #fff; font-family: 'Tajawal', sans-serif; font-size: 1.1rem; font-weight: 900; }
+  .header-sub { color: rgba(255,255,255,0.55); font-size: 0.76rem; margin-top: 2px; }
+
+  .back-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.8);
+    padding: 8px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.15); }
+
+  /* ===== LOGIN SCREEN ===== */
+  #login-screen {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 40px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .login-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ede9fe;
+    border: 1px solid #c4b5fd;
+    color: var(--purple);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .login-icon-big {
+    width: 80px; height: 80px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    margin: 0 auto 22px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.6rem;
+    box-shadow: 0 8px 24px rgba(109,40,217,0.2);
+  }
+
+  .login-card h2 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+
+  .login-card .login-desc {
+    color: var(--muted);
+    font-size: 0.86rem;
+    line-height: 1.7;
+    margin-bottom: 30px;
+  }
+
+  .input-label {
+    text-align: right;
+    font-size: 0.83rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pin-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 8px;
+    color: var(--primary);
+    outline: none;
+    transition: all 0.25s;
+    background: #fafafa;
+    margin-bottom: 12px;
+  }
+
+  .pin-input:focus {
+    border-color: var(--purple-light);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
+  }
+
+  .pin-input.error {
+    border-color: #ef4444;
+    background: #fff5f5;
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    60% { transform: translateX(10px); }
+    80% { transform: translateX(-5px); }
+  }
+
+  .error-msg {
+    display: none;
+    color: #dc2626;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: #fee2e2;
+    border-radius: 8px;
+    padding: 8px 14px;
+  }
+  .error-msg.show { display: block; }
+
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(109,40,217,0.3);
+    letter-spacing: 0.5px;
+  }
+  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(109,40,217,0.45); }
+  .login-btn:active { transform: translateY(0); }
+
+  .hint-box {
+    margin-top: 22px;
+    background: #fffbf0;
+    border: 1px solid #f0d898;
+    border-right: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 0.79rem;
+    color: #7a5800;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* ===== PORTAL ===== */
+  #student-portal { display: none; }
+
+  .portal-banner {
+    background: linear-gradient(135deg, var(--green) 0%, #0d4a30 100%);
+    padding: 26px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .student-identity { color: #fff; display:flex; align-items:center; gap:16px; }
+
+  .student-photo-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .student-photo {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(240,184,74,0.7);
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .student-photo:hover { border-color: #f0b84a; transform: scale(1.05); }
+  .student-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
+  .photo-change-btn {
+    position: absolute;
+    bottom: 0; left: 0;
+    background: #f0b84a;
+    color: #1a3a5c;
+    border: none;
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    font-size: 0.65rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .photo-input { display: none; }
+
+  .student-name-display {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .student-meta-display {
+    opacity: 0.7;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .meta-chip {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.76rem;
+  }
+
+  .logout-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.85);
+    padding: 9px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  .logout-btn:hover { background: rgba(255,255,255,0.2); }
+
+  .portal-body {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 28px 36px 60px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 6px;
+    margin-bottom: 26px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    background: transparent;
+    border-radius: 9px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.22s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(26,107,74,0.35);
+  }
+
+  .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+  .tab-pane.active { display: block; }
+
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* CARD */
+  .s-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+  }
+
+  .s-card-head {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: var(--primary);
+    background: linear-gradient(135deg, #f8fffe, #f0faf5);
+  }
+
+  /* INFO TABLE */
+  .info-tbl { width: 100%; border-collapse: collapse; }
+  .info-tbl tr { border-bottom: 1px solid var(--border); }
+  .info-tbl tr:last-child { border-bottom: none; }
+  .info-tbl th {
+    padding: 12px 22px;
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: #f9f9f9;
+    width: 30%;
+  }
+  .info-tbl td {
+    padding: 12px 22px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+  .tag-green { background: #d1fae5; color: #065f46; }
+  .btn-download-report {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: linear-gradient(135deg, #1a3a5c, #2563a8);
+    color: #fff; padding: 5px 12px; border-radius: 8px;
+    font-size: 0.75rem; font-weight: 700; text-decoration: none;
+    white-space: nowrap; transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(26,58,92,0.2);
+  }
+  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26,58,92,0.3); }
+  .tag-blue  { background: #dbeafe; color: #1e40af; }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-yellow { background: #fef3c7; color: #92400e; }
+  .tag-purple { background: #ede9fe; color: #5b21b6; }
+  .tag-gray { background: #f3f4f6; color: #4b5563; }
+
+  /* PLAN GRID */
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .plan-box {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    background: #fafcff;
+    transition: all 0.2s;
+  }
+  .plan-box:hover { border-color: var(--green-light); transform: translateY(-2px); }
+
+  .plan-box-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .plan-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .plan-box h4 { font-size: 0.86rem; font-weight: 800; color: var(--primary); }
+  .plan-box p { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+  /* REPORTS */
+  .report-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+    gap: 14px;
+  }
+  .report-row:last-child { border-bottom: none; }
+  .report-row:hover { background: #f8fffe; }
+
+  .report-left { display: flex; align-items: center; gap: 14px; }
+
+  .report-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .report-name { font-size: 0.88rem; font-weight: 700; color: var(--primary); }
+  .report-date { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+  /* FOLLOW-UP TABLE */
+  .fu-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .fu-table th {
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: #fff;
+    padding: 11px 14px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .fu-table td {
+    padding: 10px 14px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .fu-table tr:last-child td { border-bottom: none; }
+  .fu-table tr:hover td { background: #f0faf5; }
+
+  .circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    font-size: 0.85rem;
+  }
+  .c-done { background: #d1fae5; color: #065f46; }
+  .c-part { background: #fef3c7; color: #92400e; }
+  .c-no   { background: #fee2e2; color: #991b1b; }
+
+  /* PDF VIEWER */
+  .pdf-section {
+    margin-bottom: 24px;
+  }
+
+  .pdf-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .pdf-level-badge {
+    background: var(--accent);
+    color: #fff;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+
+  .pdf-frame-wrap {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f5f5f5;
+    position: relative;
+  }
+
+  .pdf-frame-wrap iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    display: block;
+  }
+
+  .pdf-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    border-radius: 9px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-pdf-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light, #2563a8));
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(26,58,92,0.25);
+  }
+
+  .btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,58,92,0.35); }
+
+  .btn-pdf-secondary {
+    background: #fff;
+    color: var(--primary);
+    border: 1px solid var(--border);
+  }
+
+  .btn-pdf-secondary:hover { border-color: var(--primary); background: #f0f4ff; }
+
+  /* IQRAR */
+  .iqrar-box {
+    background: linear-gradient(135deg, #fffbf0, #fff8e6);
+    border: 1px solid #f0d898;
+    border-right: 4px solid var(--accent);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    line-height: 2;
+    color: var(--text);
+  }
+
+  .iqrar-box h3 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .iqrar-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .iqrar-field {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+
+  .iqrar-field label {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .iqrar-field span {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .sign-area {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    background: #fff;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.25s;
+    margin: 16px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sign-area:hover { border-color: var(--accent); background: #fffbf0; }
+  .sign-area.signed { border-color: var(--green-light); border-style: solid; background: #f0faf5; }
+
+  .sign-area canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+
+  .sign-placeholder { color: var(--muted); font-size: 0.84rem; font-weight: 600; text-align: center; }
+  .sign-placeholder span { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+
+  .iqrar-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+  .btn-sign {
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 4px 14px rgba(26,107,74,0.3);
+  }
+
+  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,74,0.4); }
+
+  .btn-clear-sign {
+    background: #fff;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-clear-sign:hover { border-color: #ef4444; color: #ef4444; }
+
+  .signed-badge {
+    display: none;
+    background: #d1fae5;
+    border: 1px solid #6ee7b7;
+    color: #065f46;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ADMIN PANEL */
+  #admin-portal { display:none; }
+
+  .admin-banner {
+    background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
+    padding: 22px 36px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 4px solid #c8973a;
+  }
+  .admin-badge {
+    background: rgba(200,151,58,0.2); border: 1px solid rgba(200,151,58,0.4);
+    color: #f0b84a; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+  }
+  .admin-body { max-width: 960px; margin: 0 auto; padding: 28px 36px 60px; }
+
+  .admin-tabs {
+    display: flex; gap: 4px; background: #fff; border: 1px solid var(--border);
+    border-radius: 14px; padding: 6px; margin-bottom: 26px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .admin-tab-btn {
+    flex: 1; padding: 10px 8px; border: none; background: transparent; border-radius: 9px;
+    font-family: 'Cairo', sans-serif; font-size: 0.84rem; font-weight: 700;
+    color: var(--muted); cursor: pointer; transition: all 0.22s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .admin-tab-btn.active {
+    background: linear-gradient(135deg, #1a3a5c, #2563a8);
+    color: #fff; box-shadow: 0 3px 12px rgba(26,58,92,0.35);
+  }
+  .admin-tab-pane { display: none; animation: fadeIn 0.3s ease; }
+  .admin-tab-pane.active { display: block; }
+
+  /* Student cards grid */
+  .students-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+  }
+  .stu-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 18px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .stu-card:hover { border-color: var(--green-light); box-shadow: 0 4px 18px rgba(26,107,74,0.12); transform: translateY(-2px); }
+  .stu-card-avatar {
+    width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#e6f4ef,#d1fae5);
+    display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;
+  }
+  .stu-card-name { font-weight: 800; font-size: 0.88rem; color: var(--primary); margin-bottom: 3px; }
+  .stu-card-meta { font-size: 0.75rem; color: var(--muted); }
+  .stu-card-pin { font-size: 0.72rem; background: #ede9fe; color: #5b21b6; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
+
+  /* Edit Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); z-index: 1000;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: #fff; border-radius: 20px; padding: 32px; width: 100%;
+    max-width: 560px; max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-title {
+    font-family: 'Tajawal', sans-serif; font-size: 1.2rem; font-weight: 900;
+    color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+    border-bottom: 2px solid var(--border); padding-bottom: 14px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+    font-family: 'Cairo', sans-serif; font-size: 0.88rem; color: var(--text); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(34,160,107,0.1); }
+  .form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .btn-save {
+    background: linear-gradient(135deg, var(--green), var(--green-light)); color: #fff;
+    border: none; padding: 12px 24px; border-radius: 10px;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 800;
+    cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(26,107,74,0.3);
+  }
+  .btn-save:hover { transform: translateY(-2px); }
+  .btn-cancel {
+    background: #fff; color: var(--muted); border: 1px solid var(--border);
+    padding: 12px 20px; border-radius: 10px; font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-delete-student {
+    background: #fff; color: #dc2626; border: 1px solid #fecaca;
+    padding: 12px 20px; border-radius: 10px; font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-right: auto;
+  }
+  .btn-delete-student:hover { background: #fee2e2; }
+
+  /* Plan goals editor */
+  .goal-row {
+    background: #f9fafb; border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 10px; position: relative;
+  }
+  .goal-row .form-input { margin-bottom: 8px; }
+  .goal-row .form-input:last-of-type { margin-bottom: 0; }
+  .btn-remove-goal {
+    position: absolute; top: 8px; left: 8px; background: #fee2e2; color: #dc2626;
+    border: none; border-radius: 6px; width: 26px; height: 26px; cursor: pointer;
+    font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
+  }
+  .btn-add-goal {
+    background: #f0faf5; border: 1.5px dashed var(--green-light); color: var(--green);
+    width: 100%; padding: 10px; border-radius: 10px; font-family: 'Cairo', sans-serif;
+    font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px;
+  }
+  .btn-add-goal:hover { background: #e6f4ef; }
+
+  /* Follow-up editor */
+  .fu-edit-row {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 28px;
+    gap: 6px; align-items: center; margin-bottom: 8px;
+  }
+  .fu-edit-row input, .fu-edit-row select {
+    padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: 'Cairo', sans-serif; font-size: 0.78rem; outline: none; width: 100%;
+  }
+  .fu-edit-row select { text-align: center; }
+
+  /* Add student form */
+  .add-student-card {
+    background: #fff; border: 2px dashed var(--green-light); border-radius: 16px;
+    padding: 28px; text-align: center; cursor: pointer; transition: all 0.2s;
+    color: var(--green); font-weight: 700;
+  }
+  .add-student-card:hover { background: #f0faf5; }
+
+  .success-toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: #1a6b4a; color: #fff; padding: 12px 28px; border-radius: 12px;
+    font-weight: 700; font-size: 0.88rem; z-index: 9999;
+    box-shadow: 0 8px 24px rgba(26,107,74,0.4); display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    header { padding: 12px 18px; }
+    .portal-banner { padding: 18px; }
+    .portal-body { padding: 18px 16px 40px; }
+    .tabs { flex-wrap: wrap; }
+    .tab-btn { font-size: 0.75rem; padding: 8px 4px; }
+    .login-card { padding: 32px 22px; }
+  }
 </style>
-
 </head>
 <body>
 
@@ -881,7 +879,6 @@ header { padding: 12px 18px; }
 </header>
 
 <!-- ============ LOGIN ============ -->
-
 <div id="login-screen">
   <div class="login-card">
     <div class="login-badge">🔐 بوابة آمنة</div>
@@ -901,7 +898,6 @@ header { padding: 12px 18px; }
 </div>
 
 <!-- ============ PORTAL ============ -->
-
 <div id="student-portal">
 
   <div class="portal-banner">
@@ -926,52 +922,49 @@ header { padding: 12px 18px; }
 
   <div class="portal-body">
 
-```
-<div class="tabs">
-  <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
-  <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
-  <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
-  <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
-</div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
+      <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
+      <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
+      <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
+    </div>
 
-<!-- INFO -->
-<div class="tab-pane active" id="tab-info">
-  <div class="s-card">
-    <div class="s-card-head">👤 بيانات الطالب</div>
-    <table class="info-tbl" id="info-tbl"></table>
-  </div>
-</div>
+    <!-- INFO -->
+    <div class="tab-pane active" id="tab-info">
+      <div class="s-card">
+        <div class="s-card-head">👤 بيانات الطالب</div>
+        <table class="info-tbl" id="info-tbl"></table>
+      </div>
+    </div>
 
-<!-- REPORTS -->
-<div class="tab-pane" id="tab-reports">
-  <div class="s-card">
-    <div class="s-card-head">📊 التقارير والوثائق</div>
-    <div id="reports-list"></div>
-  </div>
-</div>
+    <!-- REPORTS -->
+    <div class="tab-pane" id="tab-reports">
+      <div class="s-card">
+        <div class="s-card-head">📊 التقارير والوثائق</div>
+        <div id="reports-list"></div>
+      </div>
+    </div>
 
-<!-- PLAN -->
-<div class="tab-pane" id="tab-plan">
-  <div class="s-card">
-    <div class="s-card-head">📋 الخطة التعليمية الفردية — الفصل الثاني 1447هـ</div>
-    <div style="padding:20px;" id="plan-pdfs"></div>
-  </div>
-</div>
+    <!-- PLAN -->
+    <div class="tab-pane" id="tab-plan">
+      <div class="s-card">
+        <div class="s-card-head">📋 الخطة التعليمية الفردية — الفصل الثاني 1447هـ</div>
+        <div style="padding:20px;" id="plan-pdfs"></div>
+      </div>
+    </div>
 
-<!-- IQRAR -->
-<div class="tab-pane" id="tab-iqrar">
-  <div class="s-card">
-    <div class="s-card-head">✍️ إقرار اطلاع ولي الأمر على الخطة الفردية</div>
-    <div style="padding:24px;" id="iqrar-content"></div>
-  </div>
-</div>
-```
+    <!-- IQRAR -->
+    <div class="tab-pane" id="tab-iqrar">
+      <div class="s-card">
+        <div class="s-card-head">✍️ إقرار اطلاع ولي الأمر على الخطة الفردية</div>
+        <div style="padding:24px;" id="iqrar-content"></div>
+      </div>
+    </div>
 
   </div>
 </div>
 
 <!-- ============ ADMIN PORTAL ============ -->
-
 <div id="admin-portal">
   <div class="admin-banner">
     <div style="display:flex;align-items:center;gap:14px;">
@@ -989,126 +982,119 @@ header { padding: 12px 18px; }
 
   <div class="admin-body">
 
-```
-<div class="admin-tabs">
-  <button class="admin-tab-btn active" onclick="openAdminTab('list',this)">👨‍🎓 قائمة الطلاب</button>
-  <button class="admin-tab-btn" onclick="openAdminTab('add',this)">➕ إضافة طالب</button>
-</div>
-
-<!-- قائمة الطلاب -->
-<div class="admin-tab-pane active" id="admin-tab-list">
-  <div style="margin-bottom:14px;">
-    <input type="text" class="form-input" id="admin-search" placeholder="🔍 ابحث باسم الطالب أو رمز الدخول..." oninput="renderStudentCards()" style="max-width:400px;">
-  </div>
-  <div class="students-grid" id="students-grid"></div>
-</div>
-
-<!-- إضافة طالب جديد -->
-<div class="admin-tab-pane" id="admin-tab-add">
-  <div class="s-card">
-    <div class="s-card-head">➕ إضافة طالب جديد</div>
-    <div style="padding:24px;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-        <div class="form-group">
-          <label class="form-label">اسم الطالب الكامل *</label>
-          <input type="text" class="form-input" id="new-name" placeholder="مثال: محمد أحمد الزهراني">
-        </div>
-        <div class="form-group">
-          <label class="form-label">رقم السجل المدني / الإقامة *</label>
-          <input type="text" class="form-input" id="new-id" placeholder="10 أرقام" maxlength="10">
-        </div>
-        <div class="form-group">
-          <label class="form-label">الصف الدراسي *</label>
-          <input type="text" class="form-input" id="new-grade" placeholder="مثال: الصف الأول متوسط / 1">
-        </div>
-        <div class="form-group">
-          <label class="form-label">جوال ولي الأمر</label>
-          <input type="text" class="form-input" id="new-phone" placeholder="05xxxxxxxx">
-        </div>
-      </div>
-      <div class="form-group" style="margin-top:8px;">
-        <label class="form-label">💡 رمز الدخول (سيكون آخر 4 أرقام من السجل تلقائياً)</label>
-        <input type="text" class="form-input" id="new-pin-preview" placeholder="يُحسب تلقائياً" readonly style="background:#f9f9f9;color:var(--muted);">
-      </div>
-      <button class="btn-save" onclick="addNewStudent()" style="margin-top:8px;">✅ إضافة الطالب</button>
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" onclick="openAdminTab('list',this)">👨‍🎓 قائمة الطلاب</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('add',this)">➕ إضافة طالب</button>
     </div>
-  </div>
-</div>
-```
+
+    <!-- قائمة الطلاب -->
+    <div class="admin-tab-pane active" id="admin-tab-list">
+      <div style="margin-bottom:14px;">
+        <input type="text" class="form-input" id="admin-search" placeholder="🔍 ابحث باسم الطالب أو رمز الدخول..." oninput="renderStudentCards()" style="max-width:400px;">
+      </div>
+      <div class="students-grid" id="students-grid"></div>
+    </div>
+
+    <!-- إضافة طالب جديد -->
+    <div class="admin-tab-pane" id="admin-tab-add">
+      <div class="s-card">
+        <div class="s-card-head">➕ إضافة طالب جديد</div>
+        <div style="padding:24px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label class="form-label">اسم الطالب الكامل *</label>
+              <input type="text" class="form-input" id="new-name" placeholder="مثال: محمد أحمد الزهراني">
+            </div>
+            <div class="form-group">
+              <label class="form-label">رقم السجل المدني / الإقامة *</label>
+              <input type="text" class="form-input" id="new-id" placeholder="10 أرقام" maxlength="10">
+            </div>
+            <div class="form-group">
+              <label class="form-label">الصف الدراسي *</label>
+              <input type="text" class="form-input" id="new-grade" placeholder="مثال: الصف الأول متوسط / 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label">جوال ولي الأمر</label>
+              <input type="text" class="form-input" id="new-phone" placeholder="05xxxxxxxx">
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:8px;">
+            <label class="form-label">💡 رمز الدخول (سيكون آخر 4 أرقام من السجل تلقائياً)</label>
+            <input type="text" class="form-input" id="new-pin-preview" placeholder="يُحسب تلقائياً" readonly style="background:#f9f9f9;color:var(--muted);">
+          </div>
+          <button class="btn-save" onclick="addNewStudent()" style="margin-top:8px;">✅ إضافة الطالب</button>
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>
 
 <!-- EDIT MODAL -->
-
 <div class="modal-overlay" id="edit-modal">
   <div class="modal-box">
     <div class="modal-title" id="modal-title">✏️ تعديل بيانات الطالب</div>
 
-```
-<!-- تبويبات التعديل -->
-<div style="display:flex;gap:4px;background:#f5f2eb;border-radius:10px;padding:4px;margin-bottom:20px;">
-  <button class="admin-tab-btn active" onclick="openEditTab('basic',this)" style="font-size:0.78rem;padding:7px 4px;">👤 البيانات</button>
-  <button class="admin-tab-btn" onclick="openEditTab('plan',this)" style="font-size:0.78rem;padding:7px 4px;">📋 الخطة</button>
-  <button class="admin-tab-btn" onclick="openEditTab('followup',this)" style="font-size:0.78rem;padding:7px 4px;">📊 المتابعة</button>
-</div>
+    <!-- تبويبات التعديل -->
+    <div style="display:flex;gap:4px;background:#f5f2eb;border-radius:10px;padding:4px;margin-bottom:20px;">
+      <button class="admin-tab-btn active" onclick="openEditTab('basic',this)" style="font-size:0.78rem;padding:7px 4px;">👤 البيانات</button>
+      <button class="admin-tab-btn" onclick="openEditTab('plan',this)" style="font-size:0.78rem;padding:7px 4px;">📋 الخطة</button>
+      <button class="admin-tab-btn" onclick="openEditTab('followup',this)" style="font-size:0.78rem;padding:7px 4px;">📊 المتابعة</button>
+    </div>
 
-<!-- البيانات الأساسية -->
-<div id="edit-tab-basic">
-  <div class="form-group">
-    <label class="form-label">اسم الطالب</label>
-    <input type="text" class="form-input" id="edit-name">
-  </div>
-  <div class="form-group">
-    <label class="form-label">الصف الدراسي</label>
-    <input type="text" class="form-input" id="edit-grade">
-  </div>
-  <div class="form-group">
-    <label class="form-label">رقم السجل المدني / الإقامة</label>
-    <input type="text" class="form-input" id="edit-id">
-  </div>
-  <div class="form-group">
-    <label class="form-label">جوال ولي الأمر</label>
-    <input type="text" class="form-input" id="edit-phone">
-  </div>
-</div>
+    <!-- البيانات الأساسية -->
+    <div id="edit-tab-basic">
+      <div class="form-group">
+        <label class="form-label">اسم الطالب</label>
+        <input type="text" class="form-input" id="edit-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">الصف الدراسي</label>
+        <input type="text" class="form-input" id="edit-grade">
+      </div>
+      <div class="form-group">
+        <label class="form-label">رقم السجل المدني / الإقامة</label>
+        <input type="text" class="form-input" id="edit-id">
+      </div>
+      <div class="form-group">
+        <label class="form-label">جوال ولي الأمر</label>
+        <input type="text" class="form-input" id="edit-phone">
+      </div>
+    </div>
 
-<!-- الخطة التعليمية -->
-<div id="edit-tab-plan" style="display:none;">
-  <div id="plan-goals-editor"></div>
-  <button class="btn-add-goal" onclick="addGoalRow()">+ إضافة هدف جديد</button>
-</div>
+    <!-- الخطة التعليمية -->
+    <div id="edit-tab-plan" style="display:none;">
+      <div id="plan-goals-editor"></div>
+      <button class="btn-add-goal" onclick="addGoalRow()">+ إضافة هدف جديد</button>
+    </div>
 
-<!-- جدول المتابعة -->
-<div id="edit-tab-followup" style="display:none;">
-  <div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px;background:#f0faf5;padding:10px;border-radius:8px;">
-    ✓ = حقق &nbsp;|&nbsp; ~ = جزئياً &nbsp;|&nbsp; ✗ = لم يحقق
-  </div>
-  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 28px;gap:6px;margin-bottom:8px;">
-    <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">المهارة</div>
-    <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م١</div>
-    <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٢</div>
-    <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٣</div>
-    <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٤</div>
-    <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٥</div>
-    <div></div>
-  </div>
-  <div id="followup-editor"></div>
-  <button class="btn-add-goal" onclick="addFollowupRow()">+ إضافة مهارة</button>
-</div>
+    <!-- جدول المتابعة -->
+    <div id="edit-tab-followup" style="display:none;">
+      <div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px;background:#f0faf5;padding:10px;border-radius:8px;">
+        ✓ = حقق &nbsp;|&nbsp; ~ = جزئياً &nbsp;|&nbsp; ✗ = لم يحقق
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 28px;gap:6px;margin-bottom:8px;">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">المهارة</div>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م١</div>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٢</div>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٣</div>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٤</div>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٥</div>
+        <div></div>
+      </div>
+      <div id="followup-editor"></div>
+      <button class="btn-add-goal" onclick="addFollowupRow()">+ إضافة مهارة</button>
+    </div>
 
-<div class="form-actions">
-  <button class="btn-delete-student" onclick="deleteStudent()">🗑️ حذف الطالب</button>
-  <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
-  <button class="btn-save" onclick="saveStudentEdits()">💾 حفظ التعديلات</button>
-</div>
-```
-
+    <div class="form-actions">
+      <button class="btn-delete-student" onclick="deleteStudent()">🗑️ حذف الطالب</button>
+      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+      <button class="btn-save" onclick="saveStudentEdits()">💾 حفظ التعديلات</button>
+    </div>
   </div>
 </div>
 
 <!-- Toast -->
-
 <div class="success-toast" id="success-toast">✅ تم الحفظ بنجاح</div>
 
 <script>
@@ -1948,7 +1934,7 @@ function getPos(e) {
 
 function startDraw(e) {
   isDrawing = true;
-  const pos = getPos(e);
+  let pos = getPos(e);
   signCtx.beginPath();
   signCtx.moveTo(pos.x, pos.y);
   document.getElementById('sign-placeholder').style.display = 'none';
@@ -1957,7 +1943,7 @@ function startDraw(e) {
 
 function draw(e) {
   if (!isDrawing) return;
-  const pos = getPos(e);
+  let pos = getPos(e);
   signCtx.lineTo(pos.x, pos.y);
   signCtx.stroke();
 }
@@ -1971,13 +1957,13 @@ function clearSign() {
   if (ph) ph.style.display = 'flex';
   document.getElementById('sign-area').classList.remove('signed');
   document.getElementById('signed-badge').style.display = 'none';
-  const btn = document.querySelector('.btn-sign');
-  if (btn) { btn.textContent = '✅ تأكيد الإقرار والتوقيع'; btn.disabled = false; btn.style.opacity = '1'; }
+  const btnClear = document.querySelector('.btn-sign');
+  if (btnClear) { btnClear.textContent = '✅ تأكيد الإقرار والتوقيع'; btnClear.disabled = false; btnClear.style.opacity = '1'; }
 }
 
 async function submitIqrar() {
   if (!signCanvas) return;
-  const data = signCtx.getImageData(0, 0, signCanvas.width, signCanvas.height).data;
+  let data = signCtx.getImageData(0, 0, signCanvas.width, signCanvas.height).data;
   const hasDrawing = Array.from(data).some((v, i) => i % 4 === 3 && v > 0);
   if (!hasDrawing) {
     alert('⚠️ يرجى رسم توقيعك في المربع أولاً');
@@ -1985,32 +1971,32 @@ async function submitIqrar() {
   }
 
   // Embed signature image into iqrar
-  const signImg = signCanvas.toDataURL('image/png');
+  let signImg = signCanvas.toDataURL('image/png');
   const signArea = document.getElementById('sign-area');
   signArea.innerHTML = `<img src="${signImg}" style="width:100%;height:100%;object-fit:contain;padding:6px;">`;
   signArea.classList.add('signed');
 
   // حفظ التوقيع في Supabase
-  const s = currentStudent;
-  const btn = document.querySelector('.btn-sign');
-  btn.textContent = '⏳ جاري الحفظ...';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
+  const sIqrar = currentStudent;
+  const btnSign = document.querySelector('.btn-sign');
+  btnSign.textContent = '⏳ جاري الحفظ...';
+  btnSign.disabled = true;
+  btnSign.style.opacity = '0.7';
 
-  await sbSaveSignature(s.pin, s.name, s.grade, signImg);
+  await sbSaveSignature(sIqrar.pin, sIqrar.name, sIqrar.grade, signImg);
 
   document.getElementById('signed-badge').style.display = 'flex';
-  btn.textContent = '✅ تم تسجيل الإقرار وحفظ التوقيع';
+  btnSign.textContent = '✅ تم تسجيل الإقرار وحفظ التوقيع';
 
   // Show PDF save button
   document.getElementById('btn-save-pdf').style.display = 'inline-flex';
 }
 
 function saveIqrarPDF() {
-  const s = currentStudent;
-  const signImg = document.querySelector('#sign-area img');
-  const signSrc = signImg ? signImg.src : '';
-  const today = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
+  const sPDF = currentStudent;
+  let signImg = document.querySelector('#sign-area img');
+  let signSrc = signImg ? signImg.src : '';
+  let todayPDF = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
 
   const win = window.open('', '_blank');
   win.document.write(`
@@ -2018,7 +2004,7 @@ function saveIqrarPDF() {
     <html lang="ar" dir="rtl">
     <head>
       <meta charset="UTF-8">
-      <title>إقرار ولي الأمر — ${s.name}</title>
+      <title>إقرار ولي الأمر — ${sPDF.name}</title>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -2039,47 +2025,45 @@ function saveIqrarPDF() {
         .footer { margin-top:30px; text-align:center; font-size:0.75rem; color:#9ca3af; border-top:1px solid #e0d8c8; padding-top:14px; }
         @media print { body { padding:20px; } }
       </style>
+    </head>
+    <body>
+      <div class="header">
+        <div class="badge">وزارة التعليم — مدرسة مكة المكرمة المتوسطة</div>
+        <h1>إقرار اطلاع ولي الأمر على الخطة الفردية</h1>
+        <p>قسم ذوي الإعاقة — برنامج يسير التعليمي</p>
+      </div>
 
-```
-</head>
-<body>
-  <div class="header">
-    <div class="badge">وزارة التعليم — مدرسة مكة المكرمة المتوسطة</div>
-    <h1>إقرار اطلاع ولي الأمر على الخطة الفردية</h1>
-    <p>قسم ذوي الإعاقة — برنامج يسير التعليمي</p>
-  </div>
+      <div class="iqrar-text">
+        أنا ولي أمر الطالب / <strong>${s.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
+        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
+        وأتعهد بالتعاون مع فريق التربية الخاصة لتحقيق أفضل النتائج لابني.
+      </div>
 
-  <div class="iqrar-text">
-    أنا ولي أمر الطالب / <strong>${s.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-    للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
-    وأتعهد بالتعاون مع فريق التربية الخاصة لتحقيق أفضل النتائج لابني.
-  </div>
+      <div class="fields">
+        <div class="field"><div class="field-label">اسم الطالب</div><div class="field-value">${s.name}</div></div>
+        <div class="field"><div class="field-label">الصف الدراسي</div><div class="field-value">${s.grade}</div></div>
+        <div class="field"><div class="field-label">البرنامج</div><div class="field-value">📘 برنامج يسير التعليمي</div></div>
+        <div class="field"><div class="field-label">تاريخ الإقرار</div><div class="field-value">${todayPDF}</div></div>
+      </div>
 
-  <div class="fields">
-    <div class="field"><div class="field-label">اسم الطالب</div><div class="field-value">${s.name}</div></div>
-    <div class="field"><div class="field-label">الصف الدراسي</div><div class="field-value">${s.grade}</div></div>
-    <div class="field"><div class="field-label">البرنامج</div><div class="field-value">📘 برنامج يسير التعليمي</div></div>
-    <div class="field"><div class="field-label">تاريخ الإقرار</div><div class="field-value">${today}</div></div>
-  </div>
+      <div class="sign-section">
+        <div class="sign-title">✍️ توقيع ولي الأمر</div>
+        <div class="sign-box">
+          ${signSrc ? `<img src="${signSrc}">` : '<span style="color:#9ca3af;font-size:0.85rem;">لا يوجد توقيع</span>'}
+        </div>
+      </div>
 
-  <div class="sign-section">
-    <div class="sign-title">✍️ توقيع ولي الأمر</div>
-    <div class="sign-box">
-      ${signSrc ? `<img src="${signSrc}">` : '<span style="color:#9ca3af;font-size:0.85rem;">لا يوجد توقيع</span>'}
-    </div>
-  </div>
-
-  <div class="footer">
-    © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
-  </div>
-  <script>window.onload=()=>window.print();<\/script>
-</body>
-</html>
-```
-
-`);
-win.document.close();
+      <div class="footer">
+        © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
+      </div>
+      <script>window.onload=()=>window.print();<\/script>
+    </body>
+    </html>
+  `);
+  win.document.close();
 }
+
+
 
 // =====================================================
 // ADMIN PANEL FUNCTIONS
@@ -2087,369 +2071,379 @@ win.document.close();
 let editingPin = null;
 
 function checkPin() {
-const pin = document.getElementById(‘pin-input’).value.trim();
-const err = document.getElementById(‘error-msg’);
-const input = document.getElementById(‘pin-input’);
+  const enteredPin = document.getElementById('pin-input').value.trim();
+  const errMsg = document.getElementById('error-msg');
+  const pinInput = document.getElementById('pin-input');
 
-if (pin === ADMIN_PIN) {
-// دخول المشرف
-err.classList.remove(‘show’);
-input.classList.remove(‘error’);
-loadAdminPanel();
-} else if (STUDENTS[pin]) {
-err.classList.remove(‘show’);
-input.classList.remove(‘error’);
-loadStudentWithSync(pin);
-} else {
-err.classList.add(‘show’);
-input.classList.add(‘error’);
-input.value = ‘’;
-setTimeout(() => input.classList.remove(‘error’), 500);
-}
+  if (enteredPin === ADMIN_PIN) {
+    // دخول المشرف
+    err.classList.remove('show');
+    input.classList.remove('error');
+    loadAdminPanel();
+  } else if (STUDENTS[enteredPin]) {
+    errMsg.classList.remove('show');
+    pinInput.classList.remove('error');
+    loadStudentWithSync(enteredPin);
+  } else {
+    errMsg.classList.add('show');
+    pinInput.classList.add('error');
+    pinInput.value = '';
+    setTimeout(() => pinInput.classList.remove('error'), 500);
+  }
 }
 
 async function loadAdminPanel() {
-document.getElementById(‘login-screen’).style.display = ‘none’;
-document.getElementById(‘student-portal’).style.display = ‘none’;
-document.getElementById(‘admin-portal’).style.display = ‘block’;
-document.getElementById(‘admin-student-count’).textContent = ‘⏳ جاري التحميل…’;
-window.scrollTo(0, 0);
-await syncFromSupabase();
-renderStudentCards();
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('student-portal').style.display = 'none';
+  document.getElementById('admin-portal').style.display = 'block';
+  document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
+  window.scrollTo(0, 0);
+  await syncFromSupabase();
+  renderStudentCards();
 }
 
 // ===== SUPABASE SYNC =====
-const SB_TABLE = SUPABASE_URL + ‘/rest/v1/yaseer_students’;
+const SB_TABLE = SUPABASE_URL + '/rest/v1/yaseer_students';
 const SB_HEADERS = {
-‘apikey’: SUPABASE_KEY,
-‘Authorization’: ’Bearer ’ + SUPABASE_KEY,
-‘Content-Type’: ‘application/json’,
-‘Prefer’: ‘return=minimal’
+  'apikey': SUPABASE_KEY,
+  'Authorization': 'Bearer ' + SUPABASE_KEY,
+  'Content-Type': 'application/json',
+  'Prefer': 'return=minimal'
 };
 
 async function syncFromSupabase() {
-try {
-const res = await fetch(SB_TABLE + ‘?select=*’, {
-headers: { ‘apikey’: SUPABASE_KEY, ‘Authorization’: ’Bearer ’ + SUPABASE_KEY }
-});
-if (!res.ok) throw new Error(‘fetch failed’);
-const rows = await res.json();
-if (rows.length > 0) {
-// دمج بيانات Supabase مع البيانات المحلية (Supabase تأخذ الأولوية)
-rows.forEach(row => {
-if (STUDENTS[row.pin]) {
-STUDENTS[row.pin].name    = row.name    || STUDENTS[row.pin].name;
-STUDENTS[row.pin].grade   = row.grade   || STUDENTS[row.pin].grade;
-STUDENTS[row.pin].id_full = row.id_full || STUDENTS[row.pin].id_full;
-STUDENTS[row.pin].phone   = row.phone   || STUDENTS[row.pin].phone;
-if (row.plan     && row.plan.length)     STUDENTS[row.pin].plan     = row.plan;
-if (row.followup && row.followup.length) STUDENTS[row.pin].followup = row.followup;
-} else {
-// طالب جديد أضيف من Supabase
-STUDENTS[row.pin] = {
-name: row.name, id_full: row.id_full, grade: row.grade,
-phone: row.phone, plan: row.plan||[], reports: [], followup: row.followup||[]
-};
-}
-});
-}
-console.log(‘✅ البيانات محمّلة من Supabase’);
-} catch(e) {
-console.warn(‘⚠️ تعذّر تحميل Supabase، يُستخدم الاحتياط المحلي:’, e);
-}
+  try {
+    let res = await fetch(SB_TABLE + '?select=*', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (!res.ok) throw new Error('fetch failed');
+    let rows = await res.json();
+    if (rows.length > 0) {
+      // دمج بيانات Supabase مع البيانات المحلية (Supabase تأخذ الأولوية)
+      rows.forEach(row => {
+        if (STUDENTS[row.pin]) {
+          STUDENTS[row.pin].name    = row.name    || STUDENTS[row.pin].name;
+          STUDENTS[row.pin].grade   = row.grade   || STUDENTS[row.pin].grade;
+          STUDENTS[row.pin].id_full = row.id_full || STUDENTS[row.pin].id_full;
+          STUDENTS[row.pin].phone   = row.phone   || STUDENTS[row.pin].phone;
+          if (row.plan     && row.plan.length)     STUDENTS[row.pin].plan     = row.plan;
+          if (row.followup && row.followup.length) STUDENTS[row.pin].followup = row.followup;
+        } else {
+          // طالب جديد أضيف من Supabase
+          STUDENTS[row.pin] = {
+            name: row.name, id_full: row.id_full, grade: row.grade,
+            phone: row.phone, plan: row.plan||[], reports: [], followup: row.followup||[]
+          };
+        }
+      });
+    }
+    console.log('✅ البيانات محمّلة من Supabase');
+  } catch(e) {
+    console.warn('⚠️ تعذّر تحميل Supabase، يُستخدم الاحتياط المحلي:', e);
+  }
 }
 
 async function loadStudentWithSync(pin) {
-// جلب بيانات هذا الطالب تحديداً من Supabase
-try {
-const res = await fetch(SB_TABLE + ‘?pin=eq.’ + pin + ‘&select=*’, {
-headers: { ‘apikey’: SUPABASE_KEY, ‘Authorization’: ’Bearer ’ + SUPABASE_KEY }
-});
-if (res.ok) {
-const rows = await res.json();
-if (rows.length > 0) {
-const row = rows[0];
-if (STUDENTS[pin]) {
-STUDENTS[pin].name    = row.name    || STUDENTS[pin].name;
-STUDENTS[pin].grade   = row.grade   || STUDENTS[pin].grade;
-STUDENTS[pin].id_full = row.id_full || STUDENTS[pin].id_full;
-STUDENTS[pin].phone   = row.phone   || STUDENTS[pin].phone;
-if (row.plan     && row.plan.length)     STUDENTS[pin].plan     = row.plan;
-if (row.followup && row.followup.length) STUDENTS[pin].followup = row.followup;
-}
-}
-}
-} catch(e) { console.warn(‘sync error:’, e); }
-loadStudent(pin);
+  // جلب بيانات هذا الطالب تحديداً من Supabase
+  try {
+    let res = await fetch(SB_TABLE + '?pin=eq.' + pin + '&select=*', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (res.ok) {
+      let rows = await res.json();
+      if (rows.length > 0) {
+        const row = rows[0];
+        if (STUDENTS[pin]) {
+          STUDENTS[pin].name    = row.name    || STUDENTS[pin].name;
+          STUDENTS[pin].grade   = row.grade   || STUDENTS[pin].grade;
+          STUDENTS[pin].id_full = row.id_full || STUDENTS[pin].id_full;
+          STUDENTS[pin].phone   = row.phone   || STUDENTS[pin].phone;
+          if (row.plan     && row.plan.length)     STUDENTS[pin].plan     = row.plan;
+          if (row.followup && row.followup.length) STUDENTS[pin].followup = row.followup;
+        }
+      }
+    }
+  } catch(e) { console.warn('sync error:', e); }
+  loadStudent(pin);
 }
 
 async function upsertToSupabase(pin, studentData) {
-try {
-const body = JSON.stringify({
-pin,
-name:     studentData.name,
-id_full:  studentData.id_full,
-grade:    studentData.grade,
-phone:    studentData.phone,
-plan:     studentData.plan     || [],
-followup: studentData.followup || [],
-updated_at: new Date().toISOString()
-});
-const res = await fetch(SB_TABLE, {
-method: ‘POST’,
-headers: { …SB_HEADERS, ‘Prefer’: ‘resolution=merge-duplicates,return=minimal’ },
-body
-});
-if (!res.ok) {
-const err = await res.text();
-console.error(‘Supabase error:’, err);
-} else {
-console.log(‘✅ حُفظ في Supabase:’, pin);
-}
-} catch(e) { console.error(‘خطأ في الحفظ:’, e); }
+  try {
+    let body = JSON.stringify({
+      pin,
+      name:     studentData.name,
+      id_full:  studentData.id_full,
+      grade:    studentData.grade,
+      phone:    studentData.phone,
+      plan:     studentData.plan     || [],
+      followup: studentData.followup || [],
+      updated_at: new Date().toISOString()
+    });
+    let res = await fetch(SB_TABLE, {
+      method: 'POST',
+      headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body
+    });
+    if (!res.ok) {
+      let err = await res.text();
+      console.error('Supabase error:', err);
+    } else {
+      console.log('✅ حُفظ في Supabase:', pin);
+    }
+  } catch(e) { console.error('خطأ في الحفظ:', e); }
 }
 
 async function deleteFromSupabase(pin) {
-try {
-await fetch(SB_TABLE + ‘?pin=eq.’ + pin, {
-method: ‘DELETE’,
-headers: { ‘apikey’: SUPABASE_KEY, ‘Authorization’: ’Bearer ’ + SUPABASE_KEY }
-});
-} catch(e) { console.error(‘خطأ في الحذف:’, e); }
+  try {
+    await fetch(SB_TABLE + '?pin=eq.' + pin, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+  } catch(e) { console.error('خطأ في الحذف:', e); }
 }
 
 function adminLogout() {
-document.getElementById(‘pin-input’).value = ‘’;
-document.getElementById(‘admin-portal’).style.display = ‘none’;
-document.getElementById(‘login-screen’).style.display = ‘flex’;
+  document.getElementById('pin-input').value = '';
+  document.getElementById('admin-portal').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
 }
 
 function openAdminTab(id, btn) {
-document.querySelectorAll(’#admin-portal .admin-tab-pane’).forEach(p => p.classList.remove(‘active’));
-document.querySelectorAll(’#admin-portal .admin-tab-btn’).forEach(b => b.classList.remove(‘active’));
-document.getElementById(‘admin-tab-’ + id).classList.add(‘active’);
-btn.classList.add(‘active’);
+  document.querySelectorAll('#admin-portal .admin-tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('admin-tab-' + id).classList.add('active');
+  btn.classList.add('active');
 }
 
 function renderStudentCards() {
-const search = (document.getElementById(‘admin-search’)?.value || ‘’).toLowerCase();
-const grid = document.getElementById(‘students-grid’);
-const entries = Object.entries(STUDENTS).filter(([pin, s]) =>
-s.name.toLowerCase().includes(search) || pin.includes(search)
-);
+  const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
+  const grid = document.getElementById('students-grid');
+  const entries = Object.entries(STUDENTS).filter(([pin, s]) =>
+    s.name.toLowerCase().includes(search) || pin.includes(search)
+  );
 
-// ترتيب حسب الصف
-entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, ‘ar’));
+  // ترتيب حسب الصف
+  entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, 'ar'));
 
-grid.innerHTML = entries.map(([pin, s]) => `<div class="stu-card" onclick="openEditModal('${pin}')"> <div class="stu-card-avatar">🎓</div> <div style="flex:1;min-width:0;"> <div class="stu-card-name">${s.name}</div> <div class="stu-card-meta">${s.grade}</div> <div style="margin-top:4px;display:flex;gap:6px;align-items:center;"> <span class="stu-card-pin">${pin}</span> <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span> </div> </div> <div style="color:var(--muted);font-size:1.1rem;">✏️</div> </div>`).join(’’);
+  grid.innerHTML = entries.map(([pin, s]) => `
+    <div class="stu-card" onclick="openEditModal('${pin}')">
+      <div class="stu-card-avatar">🎓</div>
+      <div style="flex:1;min-width:0;">
+        <div class="stu-card-name">${s.name}</div>
+        <div class="stu-card-meta">${s.grade}</div>
+        <div style="margin-top:4px;display:flex;gap:6px;align-items:center;">
+          <span class="stu-card-pin">${pin}</span>
+          <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
+        </div>
+      </div>
+      <div style="color:var(--muted);font-size:1.1rem;">✏️</div>
+    </div>
+  `).join('');
 
-// إضافة عداد
-document.getElementById(‘admin-student-count’).textContent = Object.keys(STUDENTS).length + ’ طالب’;
+  // إضافة عداد
+  document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
 }
 
 function openEditModal(pin) {
-editingPin = pin;
-const s = STUDENTS[pin];
-document.getElementById(‘modal-title’).textContent = ’✏️ تعديل: ’ + s.name;
-document.getElementById(‘edit-name’).value = s.name;
-document.getElementById(‘edit-grade’).value = s.grade;
-document.getElementById(‘edit-id’).value = s.id_full;
-document.getElementById(‘edit-phone’).value = s.phone || ‘’;
+  editingPin = pin;
+  const sModal = STUDENTS[pin];
+  document.getElementById('modal-title').textContent = '✏️ تعديل: ' + sModal.name;
+  document.getElementById('edit-name').value = sModal.name;
+  document.getElementById('edit-grade').value = sModal.grade;
+  document.getElementById('edit-id').value = sModal.id_full;
+  document.getElementById('edit-phone').value = sModal.phone || '';
 
-// تحميل الخطة
-renderPlanEditor(s.plan || []);
-// تحميل المتابعة
-renderFollowupEditor(s.followup || []);
+  // تحميل الخطة
+  renderPlanEditor(sModal.plan || []);
+  // تحميل المتابعة
+  renderFollowupEditor(sModal.followup || []);
 
-// فتح تبويب البيانات
-openEditTab(‘basic’, document.querySelector(’#edit-modal .admin-tab-btn’));
-document.getElementById(‘edit-modal’).classList.add(‘open’);
+  // فتح تبويب البيانات
+  openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
+  document.getElementById('edit-modal').classList.add('open');
 }
 
 function openEditTab(id, btn) {
-[‘basic’,‘plan’,‘followup’].forEach(t => {
-document.getElementById(‘edit-tab-’ + t).style.display = t === id ? ‘block’ : ‘none’;
-});
-document.querySelectorAll(’#edit-modal .admin-tab-btn’).forEach(b => b.classList.remove(‘active’));
-if (btn) btn.classList.add(‘active’);
+  ['basic','plan','followup'].forEach(t => {
+    document.getElementById('edit-tab-' + t).style.display = t === id ? 'block' : 'none';
+  });
+  document.querySelectorAll('#edit-modal .admin-tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
 }
 
 function closeModal() {
-document.getElementById(‘edit-modal’).classList.remove(‘open’);
-editingPin = null;
+  document.getElementById('edit-modal').classList.remove('open');
+  editingPin = null;
 }
 
 // ===== PLAN EDITOR =====
 function renderPlanEditor(plan) {
-const container = document.getElementById(‘plan-goals-editor’);
-container.innerHTML = plan.map((g, i) => goalRowHTML(g.title, g.desc, i)).join(’’);
+  let container = document.getElementById('plan-goals-editor');
+  container.innerHTML = plan.map((g, i) => goalRowHTML(g.title, g.desc, i)).join('');
 }
 
 function goalRowHTML(title, desc, i) {
-return `<div class="goal-row" id="goal-row-${i}">
-<button class="btn-remove-goal" onclick="removeGoalRow(${i})">✕</button>
-<input type="text" class="form-input" placeholder="عنوان الهدف" value="${title || ''}" data-goal-title="${i}">
-<input type="text" class="form-input" placeholder="وصف الهدف" value="${desc || ''}" data-goal-desc="${i}">
-
+  return `<div class="goal-row" id="goal-row-${i}">
+    <button class="btn-remove-goal" onclick="removeGoalRow(${i})">✕</button>
+    <input type="text" class="form-input" placeholder="عنوان الهدف" value="${title || ''}" data-goal-title="${i}">
+    <input type="text" class="form-input" placeholder="وصف الهدف" value="${desc || ''}" data-goal-desc="${i}">
   </div>`;
 }
 
 function addGoalRow() {
-const container = document.getElementById(‘plan-goals-editor’);
-const i = container.children.length;
-const div = document.createElement(‘div’);
-div.innerHTML = goalRowHTML(’’, ‘’, i);
-container.appendChild(div.firstChild);
+  let container = document.getElementById('plan-goals-editor');
+  let i = container.children.length;
+  let div = document.createElement('div');
+  div.innerHTML = goalRowHTML('', '', i);
+  container.appendChild(div.firstChild);
 }
 
 function removeGoalRow(i) {
-document.getElementById(‘goal-row-’ + i)?.remove();
+  document.getElementById('goal-row-' + i)?.remove();
 }
 
 // ===== FOLLOWUP EDITOR =====
-const FU_OPTIONS = [‘✓’,’~’,‘✗’];
+const FU_OPTIONS = ['✓','~','✗'];
 
 function renderFollowupEditor(followup) {
-const container = document.getElementById(‘followup-editor’);
-container.innerHTML = followup.map((f, i) => followupRowHTML(f, i)).join(’’);
+  let container = document.getElementById('followup-editor');
+  container.innerHTML = followup.map((f, i) => followupRowHTML(f, i)).join('');
 }
 
 function followupRowHTML(f, i) {
-const sel = (val, key) => FU_OPTIONS.map(o =>
-`<option value="${o}" ${f[key]===o?'selected':''}>${o}</option>`
-).join(’’);
-return `<div class="fu-edit-row" id="fu-row-${i}">
-<input type="text" placeholder="المهارة" value="${f.skill||''}" data-fu-skill="${i}">
-<select data-fu-m1="${i}">${sel(f.m1,‘m1’)}</select>
-<select data-fu-m2="${i}">${sel(f.m2,‘m2’)}</select>
-<select data-fu-m3="${i}">${sel(f.m3,‘m3’)}</select>
-<select data-fu-m4="${i}">${sel(f.m4,‘m4’)}</select>
-<select data-fu-m5="${i}">${sel(f.m5,‘m5’)}</select>
-<button onclick="removeFuRow(${i})" style="background:#fee2e2;color:#dc2626;border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:0.8rem;">✕</button>
-
+  const sel = (val, key) => FU_OPTIONS.map(o =>
+    `<option value="${o}" ${f[key]===o?'selected':''}>${o}</option>`
+  ).join('');
+  return `<div class="fu-edit-row" id="fu-row-${i}">
+    <input type="text" placeholder="المهارة" value="${f.skill||''}" data-fu-skill="${i}">
+    <select data-fu-m1="${i}">${sel(f.m1,'m1')}</select>
+    <select data-fu-m2="${i}">${sel(f.m2,'m2')}</select>
+    <select data-fu-m3="${i}">${sel(f.m3,'m3')}</select>
+    <select data-fu-m4="${i}">${sel(f.m4,'m4')}</select>
+    <select data-fu-m5="${i}">${sel(f.m5,'m5')}</select>
+    <button onclick="removeFuRow(${i})" style="background:#fee2e2;color:#dc2626;border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:0.8rem;">✕</button>
   </div>`;
 }
 
 function addFollowupRow() {
-const container = document.getElementById(‘followup-editor’);
-const i = container.children.length;
-const div = document.createElement(‘div’);
-div.innerHTML = followupRowHTML({skill:’’,m1:’~’,m2:’~’,m3:’~’,m4:’~’,m5:’~’}, i);
-container.appendChild(div.firstChild);
+  let container = document.getElementById('followup-editor');
+  let i = container.children.length;
+  let div = document.createElement('div');
+  div.innerHTML = followupRowHTML({skill:'',m1:'~',m2:'~',m3:'~',m4:'~',m5:'~'}, i);
+  container.appendChild(div.firstChild);
 }
 
 function removeFuRow(i) {
-document.getElementById(‘fu-row-’ + i)?.remove();
+  document.getElementById('fu-row-' + i)?.remove();
 }
 
 // ===== SAVE =====
 function saveStudentEdits() {
-if (!editingPin) return;
-const s = STUDENTS[editingPin];
+  if (!editingPin) return;
+  const sEdit = STUDENTS[editingPin];
 
-// البيانات الأساسية
-s.name  = document.getElementById(‘edit-name’).value.trim() || s.name;
-s.grade = document.getElementById(‘edit-grade’).value.trim() || s.grade;
-s.id_full = document.getElementById(‘edit-id’).value.trim() || s.id_full;
-s.phone = document.getElementById(‘edit-phone’).value.trim();
+  // البيانات الأساسية
+  sEdit.name  = document.getElementById('edit-name').value.trim() || sEdit.name;
+  sEdit.grade = document.getElementById('edit-grade').value.trim() || sEdit.grade;
+  sEdit.id_full = document.getElementById('edit-id').value.trim() || sEdit.id_full;
+  sEdit.phone = document.getElementById('edit-phone').value.trim();
 
-// الخطة
-const goalTitles = document.querySelectorAll(’[data-goal-title]’);
-const goalDescs  = document.querySelectorAll(’[data-goal-desc]’);
-s.plan = [];
-goalTitles.forEach((el, i) => {
-const title = el.value.trim();
-const desc  = goalDescs[i]?.value.trim() || ‘’;
-if (title) s.plan.push({ title, desc, color: (s.plan[i]||{}).color || ‘#1a6b4a’ });
-});
+  // الخطة
+  const goalTitles = document.querySelectorAll('[data-goal-title]');
+  const goalDescs  = document.querySelectorAll('[data-goal-desc]');
+  s.plan = [];
+  goalTitles.forEach((el, i) => {
+    const title = el.value.trim();
+    const desc  = goalDescs[i]?.value.trim() || '';
+    if (title) s.plan.push({ title, desc, color: (s.plan[i]||{}).color || '#1a6b4a' });
+  });
 
-// المتابعة
-const fuSkills = document.querySelectorAll(’[data-fu-skill]’);
-s.followup = [];
-fuSkills.forEach((el, i) => {
-const skill = el.value.trim();
-if (skill) s.followup.push({
-skill,
-m1: document.querySelector(`[data-fu-m1="${i}"]`)?.value || ‘~’,
-m2: document.querySelector(`[data-fu-m2="${i}"]`)?.value || ’~’,
-m3: document.querySelector(`[data-fu-m3="${i}"]`)?.value || ‘~’,
-m4: document.querySelector(`[data-fu-m4="${i}"]`)?.value || ’~’,
-m5: document.querySelector(`[data-fu-m5="${i}"]`)?.value || ‘~’,
-});
-});
+  // المتابعة
+  const fuSkills = document.querySelectorAll('[data-fu-skill]');
+  s.followup = [];
+  fuSkills.forEach((el, i) => {
+    const skill = el.value.trim();
+    if (skill) sEdit.followup.push({
+      skill,
+      m1: document.querySelector(`[data-fu-m1="${i}"]`)?.value || '~',
+      m2: document.querySelector(`[data-fu-m2="${i}"]`)?.value || '~',
+      m3: document.querySelector(`[data-fu-m3="${i}"]`)?.value || '~',
+      m4: document.querySelector(`[data-fu-m4="${i}"]`)?.value || '~',
+      m5: document.querySelector(`[data-fu-m5="${i}"]`)?.value || '~',
+    });
+  });
 
-closeModal();
-renderStudentCards();
-showToast(‘⏳ جاري الحفظ…’);
-upsertToSupabase(editingPin, s).then(() => showToast(’✅ تم حفظ بيانات ’ + s.name));
+  closeModal();
+  renderStudentCards();
+  showToast('⏳ جاري الحفظ...');
+  upsertToSupabase(editingPin, sEdit).then(() => showToast('✅ تم حفظ بيانات ' + sEdit.name));
 }
 
 // ===== DELETE =====
 function deleteStudent() {
-if (!editingPin) return;
-const s = STUDENTS[editingPin];
-if (!confirm(`⚠️ هل أنت متأكد من حذف الطالب "${s.name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
-const deletedPin = editingPin;
-delete STUDENTS[deletedPin];
-closeModal();
-renderStudentCards();
-deleteFromSupabase(deletedPin).then(() => showToast(’🗑️ تم حذف الطالب ’ + s.name));
+  if (!editingPin) return;
+  const sDel = STUDENTS[editingPin];
+  if (!confirm(`⚠️ هل أنت متأكد من حذف الطالب "${sDel.name}"؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
+  const deletedPin = editingPin;
+  delete STUDENTS[deletedPin];
+  closeModal();
+  renderStudentCards();
+  deleteFromSupabase(deletedPin).then(() => showToast('🗑️ تم حذف الطالب ' + sDel.name));
 }
 
 // ===== ADD NEW STUDENT =====
 // auto-fill pin from ID
-document.addEventListener(‘input’, e => {
-if (e.target.id === ‘new-id’) {
-const val = e.target.value.trim();
-document.getElementById(‘new-pin-preview’).value = val.length >= 4 ? val.slice(-4) : ‘’;
-}
+document.addEventListener('input', e => {
+  if (e.target.id === 'new-id') {
+    const val = e.target.value.trim();
+    document.getElementById('new-pin-preview').value = val.length >= 4 ? val.slice(-4) : '';
+  }
 });
 
 function addNewStudent() {
-const name  = document.getElementById(‘new-name’).value.trim();
-const id    = document.getElementById(‘new-id’).value.trim();
-const grade = document.getElementById(‘new-grade’).value.trim();
-const phone = document.getElementById(‘new-phone’).value.trim();
+  const newName  = document.getElementById('new-name').value.trim();
+  const newId    = document.getElementById('new-id').value.trim();
+  const newGrade = document.getElementById('new-grade').value.trim();
+  const newPhone = document.getElementById('new-phone').value.trim();
 
-if (!name || !id || !grade) { alert(‘⚠️ يرجى تعبئة الاسم والسجل والصف’); return; }
-if (id.length < 4) { alert(‘⚠️ رقم السجل قصير جداً’); return; }
+  if (!newName || !newId || !newGrade) { alert('⚠️ يرجى تعبئة الاسم والسجل والصف'); return; }
+  if (newId.length < 4) { alert('⚠️ رقم السجل قصير جداً'); return; }
 
-const pin = id.slice(-4);
-if (STUDENTS[pin]) {
-alert(`⚠️ الرمز "${pin}" مستخدم للطالب: ${STUDENTS[pin].name}\nيرجى التحقق من رقم السجل.`);
-return;
-}
+  const newPin = newId.slice(-4);
+  if (STUDENTS[newPin]) {
+    alert(`⚠️ الرمز "${newPin}" مستخدم للطالب: ${STUDENTS[newPin].name}\nيرجى التحقق من رقم السجل.`);
+    return;
+  }
 
-STUDENTS[pin] = { name, id_full: id, grade, phone, plan: [], reports: [], followup: [] };
+  STUDENTS[newPin] = { name: newName, id_full: newId, grade: newGrade, phone: newPhone, plan: [], reports: [], followup: [] };
 
-// إعادة ضبط النموذج
-[‘new-name’,‘new-id’,‘new-grade’,‘new-phone’,‘new-pin-preview’].forEach(id => {
-const el = document.getElementById(id);
-if (el) el.value = ‘’;
-});
+  // إعادة ضبط النموذج
+  ['new-name','new-id','new-grade','new-phone','new-pin-preview'].forEach(fieldId => {
+    const fieldEl = document.getElementById(fieldId);
+    if (fieldEl) fieldEl.value = '';
+  });
 
-// الانتقال لقائمة الطلاب
-openAdminTab(‘list’, document.querySelector(’.admin-tab-btn’));
-renderStudentCards();
-showToast(‘⏳ جاري الحفظ…’);
-upsertToSupabase(pin, STUDENTS[pin]).then(() =>
-showToast(’✅ تمت إضافة الطالب ’ + name + ’ — الرمز: ’ + pin)
-);
+  // الانتقال لقائمة الطلاب
+  openAdminTab('list', document.querySelector('.admin-tab-btn'));
+  renderStudentCards();
+  showToast('⏳ جاري الحفظ...');
+  upsertToSupabase(newPin, STUDENTS[newPin]).then(() =>
+    showToast('✅ تمت إضافة الطالب ' + newName + ' — الرمز: ' + newPin)
+  );
 }
 
 // ===== TOAST =====
 function showToast(msg) {
-const t = document.getElementById(‘success-toast’);
-t.textContent = msg;
-t.style.display = ‘block’;
-setTimeout(() => t.style.display = ‘none’, 3000);
+  const t = document.getElementById('success-toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
 }
 
 // إغلاق المودال بالضغط خارجه
-document.getElementById(‘edit-modal’)?.addEventListener(‘click’, e => {
-if (e.target === document.getElementById(‘edit-modal’)) closeModal();
+document.getElementById('edit-modal')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('edit-modal')) closeModal();
 });
 </script>
-
 </body>
 </html>
