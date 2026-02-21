@@ -169,6 +169,7 @@ tbody tr:last-child { border-bottom:none; }
 .status-select.val-e { background:#ede9fe; color:#7c3aed; border-color:#c4b5fd; }
 .status-select.val-h { background:#e0f2fe; color:#0369a1; border-color:#7dd3fc; }
 .status-select.val-s { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
+.status-select.val-n { background:#fdf4ff; color:#7e22ce; border-color:#d8b4fe; }
 
 .note-cell { padding:8px 6px; }
 .note-input {
@@ -349,6 +350,7 @@ const STATUS_OPTS = [
   {val:'e', label:'📋 بعذر',         cls:'val-e'},
   {val:'h', label:'🏖️ إجازة',       cls:'val-h'},
   {val:'s', label:'🚫 تعليق دراسة', cls:'val-s'},
+  {val:'n', label:'📝 انتساب',       cls:'val-n'},
 ];
 
 const STUDENTS = [
@@ -541,11 +543,12 @@ function updateStats() {
     const rec = attendanceData[wk]?.[stu.pin] || {};
     DAYS.forEach((_, di) => {
       const v = rec[`d${di}`] || 'p';
+      if (v==='n') return; // انتساب لا يُحسب
       total++;
       if (v==='p') p++;
       else if (v==='a') a++;
       else if (v==='l') l++;
-      else if (v==='e') e++;
+      else if (v==='e' || v==='h' || v==='s') e++;
     });
   });
   document.getElementById('statP').textContent = p;
@@ -671,9 +674,9 @@ function printAttendance() {
   const tchName = document.getElementById('teacherName').value;
   const tchSign = canvases['teacherCanvas']?.hasContent    ? document.getElementById('teacherCanvas').toDataURL()    : null;
 
-  const statusLabel = {p:'حاضر', a:'غائب', l:'متأخر', e:'بعذر'};
-  const statusColor = {p:'#dcfce7', a:'#fee2e2', l:'#fef9c3', e:'#ede9fe'};
-  const statusTxt   = {p:'#16a34a', a:'#dc2626', l:'#b45309', e:'#7c3aed'};
+  const statusLabel = {p:'حاضر', a:'غياب', l:'متأخر', e:'بعذر', h:'إجازة', s:'تعليق', n:'انتساب'};
+  const statusColor = {p:'#dcfce7', a:'#fee2e2', l:'#fef9c3', e:'#ede9fe', h:'#e0f2fe', s:'#f1f5f9', n:'#fdf4ff'};
+  const statusTxt   = {p:'#16a34a', a:'#dc2626', l:'#b45309', e:'#7c3aed', h:'#0369a1', s:'#475569', n:'#7e22ce'};
 
   const rows = STUDENTS.map((stu, idx) => {
     const rec = attendanceData[wk]?.[stu.pin] || {};
