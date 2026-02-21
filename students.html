@@ -2168,46 +2168,61 @@ async function loadStudentWithSync(pin) {
 
 async function upsertToSupabase(pin, studentData) {
   try {
-    const payload = {
-      name:       studentData.name,
-      id_full:    studentData.id_full,
-      grade:      studentData.grade,
-      phone:      studentData.phone || '',
-      plan:       studentData.plan     || [],
-      followup:   studentData.followup || [],
-      updated_at: new Date().toISOString()
-    };
-
-    // حاول PATCH أولاً (تحديث موجود)
-    let res = await fetch(SB_TABLE + '?pin=eq.' + pin, {
+    // الخطوة 1: تحديث السجل الموجود
+    const patchRes = await fetch(SB_TABLE + '?pin=eq.' + encodeURIComponent(pin), {
       method: 'PATCH',
-      headers: SB_HEADERS,
-      body: JSON.stringify(payload)
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
+        name:     studentData.name,
+        id_full:  studentData.id_full,
+        grade:    studentData.grade,
+        phone:    studentData.phone || '',
+        plan:     studentData.plan     || [],
+        followup: studentData.followup || []
+      })
     });
 
-    // إذا لم يجد السجل (0 rows updated) استخدم POST (إضافة جديد)
-    if (res.ok) {
-      const affected = res.headers.get('content-range');
-      if (affected === '*/0' || affected === null) {
-        // السجل غير موجود — أضفه
-        res = await fetch(SB_TABLE, {
-          method: 'POST',
-          headers: { ...SB_HEADERS, 'Prefer': 'return=minimal' },
-          body: JSON.stringify({ pin, ...payload })
-        });
-      }
-    }
+    const patchData = await patchRes.json();
+    console.log('PATCH status:', patchRes.status, 'data:', patchData);
 
-    if (!res.ok) {
-      const errText = await res.text();
-      console.error('❌ Supabase خطأ:', errText);
-      showToast('❌ خطأ في الحفظ: ' + errText.slice(0,60));
+    // إذا لم يُحدَّث أي سجل — أضفه كجديد
+    if (!Array.isArray(patchData) || patchData.length === 0) {
+      const postRes = await fetch(SB_TABLE, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          pin,
+          name:     studentData.name,
+          id_full:  studentData.id_full,
+          grade:    studentData.grade,
+          phone:    studentData.phone || '',
+          plan:     studentData.plan     || [],
+          followup: studentData.followup || []
+        })
+      });
+      console.log('POST status:', postRes.status);
+      if (!postRes.ok) {
+        const e = await postRes.text();
+        showToast('❌ ' + e.slice(0, 80));
+      } else {
+        showToast('✅ تمت إضافة البيانات للسحابة');
+      }
     } else {
-      console.log('✅ حُفظ في Supabase:', pin);
+      showToast('✅ تم حفظ ' + studentData.name + ' في السحابة');
     }
   } catch(e) {
-    console.error('❌ خطأ في الاتصال:', e);
-    showToast('❌ تعذّر الاتصال بالسحابة');
+    console.error('خطأ:', e);
+    showToast('❌ خطأ في الاتصال');
   }
 }
 
