@@ -1690,23 +1690,6 @@ function checkIframe(iframe, sectionId) {
   }
 }
 
-function checkPin() {
-  const pin = document.getElementById('pin-input').value.trim();
-  const err = document.getElementById('error-msg');
-  const input = document.getElementById('pin-input');
-
-  if (STUDENTS[pin]) {
-    err.classList.remove('show');
-    input.classList.remove('error');
-    loadStudent(pin);
-  } else {
-    err.classList.add('show');
-    input.classList.add('error');
-    input.value = '';
-    setTimeout(() => input.classList.remove('error'), 500);
-  }
-}
-
 function loadStudent(pin) {
   const s = STUDENTS[pin];
   s.pin = pin;
