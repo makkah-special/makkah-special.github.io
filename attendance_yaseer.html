@@ -425,8 +425,12 @@ function renderAll() {
 
 function updateWeekHeader() {
   const days = getWeekDays();
-  const wk   = Math.ceil((currentWeekStart - new Date(currentWeekStart.getFullYear(), 0, 1)) / 604800000);
-  document.getElementById('weekLabel').textContent = `الأسبوع ${wk}`;
+  // رقم الأسبوع من بداية الفصل الدراسي (11 يناير 2026)
+  const semesterStart = new Date(Date.UTC(2026, 0, 11)); // 11 يناير 2026 بتوقيت UTC
+  const startUTC = Date.UTC(currentWeekStart.getFullYear(), currentWeekStart.getMonth(), currentWeekStart.getDate());
+  const wk = Math.floor((startUTC - semesterStart) / 604800000) + 1;
+  const wkLabel = wk >= 1 ? `الأسبوع ${wk}` : 'قبل الفصل';
+  document.getElementById('weekLabel').textContent = wkLabel;
   document.getElementById('weekDates').textContent =
     `${days[0].dateStr} — ${days[4].dateStr}`;
 }
