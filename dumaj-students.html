@@ -849,6 +849,7 @@
     <div style="display:flex;align-items:center;gap:12px;">
       <div class="admin-badge" id="admin-student-count">— طالب</div>
       <button class="logout-btn" onclick="adminLogout()">🚪 خروج</button>
+      <button onclick="window.open('attendance_dumaj.html','_blank')" style="background:#c25a00;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;gap:6px;">📋 كشف الحضور</button>
     </div>
   </div>
   <div class="admin-body">
@@ -1486,126 +1487,68 @@ const SB_HEADERS = {
 };
 
 async function syncFromSupabase() {
+  // جلب بيانات جميع الطلاب من Storage
+  const pins = Object.keys(STUDENTS);
+  await Promise.all(pins.map(pin => loadStudentDataFromStorage(pin)));
+}
+
+async function loadStudentDataFromStorage(pin) {
   try {
-    let res = await fetch(SB_TABLE + '?select=*', {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
-    if (!res.ok) throw new Error('fetch failed');
-    let rows = await res.json();
-    if (rows.length > 0) {
-      rows.forEach(row => {
-        if (STUDENTS[row.pin]) {
-          STUDENTS[row.pin].name     = row.name;
-          STUDENTS[row.pin].grade    = row.grade;
-          STUDENTS[row.pin].id_full  = row.id_full;
-          STUDENTS[row.pin].phone    = row.phone || '';
-          STUDENTS[row.pin].plan     = row.plan     || STUDENTS[row.pin].plan || [];
-          STUDENTS[row.pin].followup = row.followup || STUDENTS[row.pin].followup || [];
-        } else {
-          STUDENTS[row.pin] = {
-            name: row.name, id_full: row.id_full, grade: row.grade,
-            phone: row.phone || '', plan: row.plan||[], reports: [], followup: row.followup||[]
-          };
-        }
-      });
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json`);
+    if (!res.ok) return; // لا يوجد ملف محفوظ بعد
+    const data = await res.json();
+    if (data && STUDENTS[pin]) {
+      STUDENTS[pin].name     = data.name     || STUDENTS[pin].name;
+      STUDENTS[pin].grade    = data.grade    || STUDENTS[pin].grade;
+      STUDENTS[pin].id_full  = data.id_full  || STUDENTS[pin].id_full;
+      STUDENTS[pin].phone    = data.phone    || STUDENTS[pin].phone || '';
+      STUDENTS[pin].plan     = data.plan     || STUDENTS[pin].plan     || [];
+      STUDENTS[pin].followup = data.followup || STUDENTS[pin].followup || [];
     }
-    console.log('✅ بيانات الدمج محمّلة من Supabase');
-  } catch(e) {
-    console.warn('⚠️ تعذّر تحميل Supabase:', e);
-  }
+  } catch(e) { /* ملف غير موجود */ }
 }
 
 async function loadStudentWithSync(pin) {
-  try {
-    let res = await fetch(SB_TABLE + '?pin=eq.' + pin + '&select=*', {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
-    if (res.ok) {
-      let rows = await res.json();
-      if (rows.length > 0) {
-        const row = rows[0];
-        if (STUDENTS[pin]) {
-          STUDENTS[pin].name     = row.name;
-          STUDENTS[pin].grade    = row.grade;
-          STUDENTS[pin].id_full  = row.id_full;
-          STUDENTS[pin].phone    = row.phone || '';
-          STUDENTS[pin].plan     = row.plan     || STUDENTS[pin].plan || [];
-          STUDENTS[pin].followup = row.followup || STUDENTS[pin].followup || [];
-        }
-      }
-    }
-  } catch(e) { console.warn('sync error:', e); }
+  await loadStudentDataFromStorage(pin);
   loadStudent(pin);
 }
 
 async function upsertToSupabase(pin, studentData) {
   try {
-    // الخطوة 1: تحديث السجل الموجود
-    const patchRes = await fetch(SB_TABLE + '?pin=eq.' + encodeURIComponent(pin), {
-      method: 'PATCH',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=representation'
-      },
-      body: JSON.stringify({
-        name:     studentData.name,
-        id_full:  studentData.id_full,
-        grade:    studentData.grade,
-        phone:    studentData.phone || '',
-        plan:     studentData.plan     || [],
-        followup: studentData.followup || []
-      })
+    const jsonStr = JSON.stringify({
+      pin,
+      name:     studentData.name,
+      id_full:  studentData.id_full,
+      grade:    studentData.grade,
+      phone:    studentData.phone || '',
+      plan:     studentData.plan     || [],
+      followup: studentData.followup || []
     });
-
-    const patchData = await patchRes.json();
-    console.log('PATCH status:', patchRes.status, 'data:', patchData);
-
-    // إذا لم يُحدَّث أي سجل — أضفه كجديد
-    if (!Array.isArray(patchData) || patchData.length === 0) {
-      const postRes = await fetch(SB_TABLE, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
-          pin,
-          name:     studentData.name,
-          id_full:  studentData.id_full,
-          grade:    studentData.grade,
-          phone:    studentData.phone || '',
-          plan:     studentData.plan     || [],
-          followup: studentData.followup || []
-        })
-      });
-      console.log('POST status:', postRes.status);
-      if (!postRes.ok) {
-        const e = await postRes.text();
-        showToast('❌ ' + e.slice(0, 80));
-      } else {
-        showToast('✅ تمت إضافة البيانات للسحابة');
-      }
+    const blob = new Blob([jsonStr], {type: 'application/json'});
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json',
+        'x-upsert': 'true'
+      },
+      body: blob
+    });
+    if (res.ok) {
+      showToast('✅ تم حفظ بيانات ' + studentData.name);
     } else {
-      showToast('✅ تم حفظ ' + studentData.name + ' في السحابة');
+      const err = await res.text();
+      console.error('Storage error:', err);
+      showToast('❌ خطأ: ' + err.slice(0,60));
     }
   } catch(e) {
     console.error('خطأ:', e);
-    showToast('❌ خطأ في الاتصال');
+    showToast('❌ تعذّر الاتصال');
   }
 }
 
-async function deleteFromSupabase(pin) {
-  try {
-    await fetch(SB_TABLE + '?pin=eq.' + pin, {
-      method: 'DELETE',
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
-  } catch(e) { console.error('خطأ في الحذف:', e); }
-}
+
 
 function adminLogout() {
   document.getElementById('pin-input').value = '';
