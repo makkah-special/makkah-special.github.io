@@ -618,9 +618,7 @@ async function saveAttendance() {
     semester:   sem,
     program:    PROGRAM,
     data:       attendanceData[wk] || {},
-    supervisor: document.getElementById('supervisorName').value,
     teacher:    document.getElementById('teacherName').value,
-    supervisorSign,
     teacherSign,
     savedAt:    new Date().toISOString(),
   };
@@ -652,7 +650,7 @@ async function loadAttendance(wk) {
     if (payload.data) {
       attendanceData[wk] = payload.data;
       // استعادة أسماء الموقّعين
-      if (payload.supervisor) document.getElementById('supervisorName').value = payload.supervisor;
+      // supervisor removed
       if (payload.teacher)    document.getElementById('teacherName').value    = payload.teacher;
     }
     renderTable();
@@ -665,9 +663,8 @@ function printAttendance() {
   const wk   = weekKey(currentWeekStart);
   const days = getWeekDays();
   const sem  = document.getElementById('semesterSelect').value;
-  const supName = document.getElementById('supervisorName').value;
+  const supName = '';
   const tchName = document.getElementById('teacherName').value;
-  const supSign = null;
   const tchSign = canvases['teacherCanvas']?.hasContent    ? document.getElementById('teacherCanvas').toDataURL()    : null;
 
   const statusLabel = {p:'حاضر', a:'غائب', l:'متأخر', e:'بعذر'};
