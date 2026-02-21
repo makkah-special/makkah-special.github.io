@@ -2076,9 +2076,8 @@ function checkPin() {
   const pinInput = document.getElementById('pin-input');
 
   if (enteredPin === ADMIN_PIN) {
-    // دخول المشرف
-    err.classList.remove('show');
-    input.classList.remove('error');
+    errMsg.classList.remove('show');
+    pinInput.classList.remove('error');
     loadAdminPanel();
   } else if (STUDENTS[enteredPin]) {
     errMsg.classList.remove('show');
@@ -2122,12 +2121,12 @@ async function syncFromSupabase() {
       // دمج بيانات Supabase مع البيانات المحلية (Supabase تأخذ الأولوية)
       rows.forEach(row => {
         if (STUDENTS[row.pin]) {
-          STUDENTS[row.pin].name    = row.name    || STUDENTS[row.pin].name;
-          STUDENTS[row.pin].grade   = row.grade   || STUDENTS[row.pin].grade;
-          STUDENTS[row.pin].id_full = row.id_full || STUDENTS[row.pin].id_full;
-          STUDENTS[row.pin].phone   = row.phone   || STUDENTS[row.pin].phone;
-          if (row.plan     && row.plan.length)     STUDENTS[row.pin].plan     = row.plan;
-          if (row.followup && row.followup.length) STUDENTS[row.pin].followup = row.followup;
+          STUDENTS[row.pin].name     = row.name;
+          STUDENTS[row.pin].grade    = row.grade;
+          STUDENTS[row.pin].id_full  = row.id_full;
+          STUDENTS[row.pin].phone    = row.phone || '';
+          STUDENTS[row.pin].plan     = row.plan     || STUDENTS[row.pin].plan || [];
+          STUDENTS[row.pin].followup = row.followup || STUDENTS[row.pin].followup || [];
         } else {
           // طالب جديد أضيف من Supabase
           STUDENTS[row.pin] = {
@@ -2154,12 +2153,12 @@ async function loadStudentWithSync(pin) {
       if (rows.length > 0) {
         const row = rows[0];
         if (STUDENTS[pin]) {
-          STUDENTS[pin].name    = row.name    || STUDENTS[pin].name;
-          STUDENTS[pin].grade   = row.grade   || STUDENTS[pin].grade;
-          STUDENTS[pin].id_full = row.id_full || STUDENTS[pin].id_full;
-          STUDENTS[pin].phone   = row.phone   || STUDENTS[pin].phone;
-          if (row.plan     && row.plan.length)     STUDENTS[pin].plan     = row.plan;
-          if (row.followup && row.followup.length) STUDENTS[pin].followup = row.followup;
+          STUDENTS[pin].name     = row.name;
+          STUDENTS[pin].grade    = row.grade;
+          STUDENTS[pin].id_full  = row.id_full;
+          STUDENTS[pin].phone    = row.phone || '';
+          STUDENTS[pin].plan     = row.plan     || STUDENTS[pin].plan || [];
+          STUDENTS[pin].followup = row.followup || STUDENTS[pin].followup || [];
         }
       }
     }
