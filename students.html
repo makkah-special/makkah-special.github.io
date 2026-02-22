@@ -2221,7 +2221,7 @@ async function syncFromSupabase() {
 
 async function loadStudentDataFromStorage(pin) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/yaseer/data/student-${pin}.json`);
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/yaseer/data/student-${pin}.json?t=${Date.now()}`);
     if (!res.ok) return; // لا يوجد ملف محفوظ بعد
     const data = await res.json();
     if (data && STUDENTS[pin]) {
@@ -2512,6 +2512,20 @@ function saveStudentEdits() {
   renderStudentCards();
   showToast('⏳ جاري الحفظ...');
   upsertToSupabase(editingPin, sEdit).then(() => showToast('✅ تم حفظ بيانات ' + sEdit.name));
+}
+
+// ===== DELETE FROM SUPABASE =====
+async function deleteFromSupabase(pin) {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+      }
+    });
+    if (!res.ok) console.error('Delete error:', await res.text());
+  } catch(e) { console.error('Delete error:', e); }
 }
 
 // ===== DELETE =====
