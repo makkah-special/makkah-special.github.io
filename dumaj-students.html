@@ -1477,7 +1477,7 @@ async function submitIqrar() {
 function saveIqrarPDF() {
   const sPDF = currentStudent;
   let signImgPDF = document.querySelector('#sign-area img');
-  const signSrc = signImgPDF ? signImgPDF.src : '';
+  const signSrc = signImgPDF ? signImg.src : '';
   let todayPDF = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
 
   const win = window.open('', '_blank');
@@ -1556,17 +1556,32 @@ function checkPin() {
   const enteredPin = document.getElementById('pin-input').value.trim();
   const errMsg = document.getElementById('error-msg');
   const pinInput = document.getElementById('pin-input');
+
   if (enteredPin === ADMIN_PIN) {
     errMsg.classList.remove('show'); pinInput.classList.remove('error');
     loadAdminPanel();
-  } else if (STUDENTS[enteredPin]) {
-    errMsg.classList.remove('show'); pinInput.classList.remove('error');
-    loadStudentWithSync(enteredPin);
-  } else {
+    return;
+  }
+
+  // جرّب DB أولاً (عشان يشتغل من أي جهاز)
+  errMsg.classList.remove('show'); pinInput.classList.remove('error');
+  fetchStudentFromDB(enteredPin).then(row => {
+    if (row) {
+      STUDENTS[enteredPin] = { ...(STUDENTS[enteredPin] || {}), ...rowToStudent(row) };
+      loadStudent(enteredPin);
+      return;
+    }
+
+    // fallback: بيانات محلية (لو موجودة)
+    if (STUDENTS[enteredPin]) {
+      loadStudentWithSync(enteredPin);
+      return;
+    }
+
     errMsg.classList.add('show'); pinInput.classList.add('error');
     pinInput.value = '';
     setTimeout(() => pinInput.classList.remove('error'), 500);
-  }
+  });
 }
 
 async function loadAdminPanel() {
@@ -1579,106 +1594,135 @@ async function loadAdminPanel() {
   renderStudentCards();
 }
 
-// ===== SUPABASE SYNC =====
+// ===== SUPABASE (DATABASE) SYNC =====
 const SB_TABLE = SUPABASE_URL + '/rest/v1/dumaj_students';
-const SB_HEADERS = {
+
+const SB_HEADERS_GET = {
+  'apikey': SUPABASE_KEY,
+  'Authorization': 'Bearer ' + SUPABASE_KEY
+};
+
+const SB_HEADERS_WRITE = {
   'apikey': SUPABASE_KEY,
   'Authorization': 'Bearer ' + SUPABASE_KEY,
   'Content-Type': 'application/json',
-  'Prefer': 'return=minimal'
+  'Prefer': 'resolution=merge-duplicates,return=minimal'
 };
 
-async function syncFromSupabase() {
-  // جلب بيانات جميع الطلاب من Storage
-  const pins = Object.keys(STUDENTS);
-  await Promise.all(pins.map(pin => loadStudentDataFromStorage(pin)));
+function rowToStudent(row) {
+  return {
+    name: row.name || '',
+    id_full: row.id_full || '',
+    grade: row.grade || '',
+    phone: row.phone || '',
+    plan: Array.isArray(row.plan) ? row.plan : (row.plan || []),
+    reports: Array.isArray(row.reports) ? row.reports : (row.reports || []),
+    followup: Array.isArray(row.followup) ? row.followup : (row.followup || []),
+
+    birthdate: row.birthdate || '',
+    nationality: row.nationality || '',
+    age: row.age || '',
+    address: row.address || '',
+    iq: row.iq || '',
+    sibling_order: row.sibling_order || '',
+    economic_level: row.economic_level || '',
+    father_edu: row.father_edu || '',
+    mother_edu: row.mother_edu || '',
+    status_psych: row.status_psych || '',
+    status_social: row.status_social || '',
+    status_health: row.status_health || '',
+    diagnosis: row.diagnosis || '',
+    program_place: row.program_place || '',
+    program_start: row.program_start || '',
+    program_end: row.program_end || ''
+  };
 }
 
-async function loadStudentDataFromStorage(pin) {
-  try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json?t=${Date.now()}`);
-    if (!res.ok) return; // لا يوجد ملف محفوظ بعد
-    const data = await res.json();
-    if (data && STUDENTS[pin]) {
-      STUDENTS[pin].name     = data.name     || STUDENTS[pin].name;
-      STUDENTS[pin].grade    = data.grade    || STUDENTS[pin].grade;
-      STUDENTS[pin].id_full  = data.id_full  || STUDENTS[pin].id_full;
-      STUDENTS[pin].phone    = data.phone    || STUDENTS[pin].phone || '';
-      STUDENTS[pin].plan     = data.plan     || STUDENTS[pin].plan     || [];
-      STUDENTS[pin].followup = data.followup || STUDENTS[pin].followup || [];
-      STUDENTS[pin].birthdate = data.birthdate || '';
-      STUDENTS[pin].nationality = data.nationality || '';
-      STUDENTS[pin].age = data.age || '';
-      STUDENTS[pin].address = data.address || '';
-      STUDENTS[pin].iq = data.iq || '';
-      STUDENTS[pin].sibling_order = data.sibling_order || '';
-      STUDENTS[pin].economic_level = data.economic_level || '';
-      STUDENTS[pin].father_edu = data.father_edu || '';
-      STUDENTS[pin].mother_edu = data.mother_edu || '';
-      STUDENTS[pin].status_psych = data.status_psych || '';
-      STUDENTS[pin].status_social = data.status_social || '';
-      STUDENTS[pin].status_health = data.status_health || '';
-      STUDENTS[pin].diagnosis = data.diagnosis || '';
-      STUDENTS[pin].program_place = data.program_place || '';
-      STUDENTS[pin].program_start = data.program_start || '';
-      STUDENTS[pin].program_end = data.program_end || '';
-    }
-  } catch(e) { /* ملف غير موجود */ }
+function studentToRow(pin, s) {
+  return {
+    pin,
+    name: s.name || '',
+    id_full: s.id_full || '',
+    grade: s.grade || '',
+    phone: s.phone || '',
+    plan: s.plan || [],
+    reports: s.reports || [],
+    followup: s.followup || [],
+    updated_at: new Date().toISOString(),
+
+    birthdate: s.birthdate || '',
+    nationality: s.nationality || '',
+    age: s.age || '',
+    address: s.address || '',
+    iq: s.iq || '',
+    sibling_order: s.sibling_order || '',
+    economic_level: s.economic_level || '',
+    father_edu: s.father_edu || '',
+    mother_edu: s.mother_edu || '',
+    status_psych: s.status_psych || '',
+    status_social: s.status_social || '',
+    status_health: s.status_health || '',
+    diagnosis: s.diagnosis || '',
+    program_place: s.program_place || '',
+    program_start: s.program_start || '',
+    program_end: s.program_end || ''
+  };
+}
+
+async function fetchStudentFromDB(pin) {
+  const url = `${SB_TABLE}?pin=eq.${encodeURIComponent(pin)}&select=*`;
+  const res = await fetch(url, { headers: SB_HEADERS_GET });
+  if (!res.ok) return null;
+  const rows = await res.json();
+  return rows && rows.length ? rows[0] : null;
+}
+
+async function fetchAllStudentsFromDB() {
+  const url = `${SB_TABLE}?select=*`;
+  const res = await fetch(url, { headers: SB_HEADERS_GET });
+  if (!res.ok) return [];
+  return await res.json();
+}
+
+async function syncFromSupabase() {
+  const rows = await fetchAllStudentsFromDB();
+  rows.forEach(row => {
+    const pin = row.pin;
+    if (!pin) return;
+    STUDENTS[pin] = { ...(STUDENTS[pin] || {}), ...rowToStudent(row) };
+  });
 }
 
 async function loadStudentWithSync(pin) {
-  await loadStudentDataFromStorage(pin);
+  const row = await fetchStudentFromDB(pin);
+  if (row) {
+    STUDENTS[pin] = { ...(STUDENTS[pin] || {}), ...rowToStudent(row) };
+  }
   loadStudent(pin);
 }
 
 async function upsertToSupabase(pin, studentData) {
-  try {
-    const jsonStr = JSON.stringify({
-      pin,
-      name:     studentData.name,
-      id_full:  studentData.id_full,
-      grade:    studentData.grade,
-      phone:    studentData.phone || '',
-      plan:     studentData.plan     || [],
-      followup: studentData.followup || [],
-      birthdate:  studentData.birthdate || '',
-      nationality:  studentData.nationality || '',
-      age:  studentData.age || '',
-      address:  studentData.address || '',
-      iq:  studentData.iq || '',
-      sibling_order:  studentData.sibling_order || '',
-      economic_level:  studentData.economic_level || '',
-      father_edu:  studentData.father_edu || '',
-      mother_edu:  studentData.mother_edu || '',
-      status_psych:  studentData.status_psych || '',
-      status_social:  studentData.status_social || '',
-      status_health:  studentData.status_health || '',
-      diagnosis:  studentData.diagnosis || '',
-      program_place:  studentData.program_place || '',
-      program_start:  studentData.program_start || '',
-      program_end:  studentData.program_end || '',
-    });
-    const blob = new Blob([jsonStr], {type: 'application/json'});
-    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
-      method: 'POST',
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Content-Type': 'application/json',
-        'x-upsert': 'true'
-      },
-      body: blob
-    });
-    if (res.ok) {
-      showToast('✅ تم حفظ بيانات ' + studentData.name);
-    } else {
-      const err = await res.text();
-      console.error('Storage error:', err);
-      showToast('❌ خطأ: ' + err.slice(0,60));
-    }
-  } catch(e) {
-    console.error('خطأ:', e);
-    showToast('❌ تعذّر الاتصال');
+  const row = studentToRow(pin, studentData);
+  const url = `${SB_TABLE}?on_conflict=pin`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: SB_HEADERS_WRITE,
+    body: JSON.stringify(row)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('DB upsert error:', err);
+    throw new Error(err.slice(0, 140));
+  }
+}
+
+async function deleteFromSupabase(pin) {
+  const url = `${SB_TABLE}?pin=eq.${encodeURIComponent(pin)}`;
+  const res = await fetch(url, { method: 'DELETE', headers: SB_HEADERS_WRITE });
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('DB delete error:', err);
+    throw new Error(err.slice(0, 140));
   }
 }
 
@@ -1721,8 +1765,7 @@ function renderStudentCards() {
   document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
 }
 
-async function openEditModal(pin) {
-  await loadStudentDataFromStorage(pin);
+function openEditModal(pin) {
   editingPin = pin;
   const sModal = STUDENTS[pin];
   document.getElementById('modal-title').textContent = '✏️ تعديل: ' + sModal.name;
@@ -1732,24 +1775,6 @@ async function openEditModal(pin) {
   document.getElementById('edit-phone').value = sModal.phone || '';
   renderPlanEditor(sModal.plan || []);
   renderFollowupEditor(sModal.followup || []);
-  // البيانات التفصيلية
-  const setVal = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ''; };
-  setVal('edit-birthdate', sModal.birthdate);
-  setVal('edit-nationality', sModal.nationality);
-  setVal('edit-age', sModal.age);
-  setVal('edit-address', sModal.address);
-  setVal('edit-iq', sModal.iq);
-  setVal('edit-sibling-order', sModal.sibling_order);
-  setVal('edit-economic-level', sModal.economic_level);
-  setVal('edit-father-edu', sModal.father_edu);
-  setVal('edit-mother-edu', sModal.mother_edu);
-  setVal('edit-status-psych', sModal.status_psych);
-  setVal('edit-status-social', sModal.status_social);
-  setVal('edit-status-health', sModal.status_health);
-  setVal('edit-diagnosis', sModal.diagnosis);
-  setVal('edit-program-place', sModal.program_place);
-  setVal('edit-program-start', sModal.program_start);
-  setVal('edit-program-end', sModal.program_end);
   openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
   document.getElementById('edit-modal').classList.add('open');
 }
@@ -1879,20 +1904,6 @@ function deleteStudent() {
   closeModal();
   renderStudentCards();
   deleteFromSupabase(deletedPin).then(() => showToast('🗑️ تم حذف الطالب ' + sDel.name));
-}
-
-// ===== DELETE FROM SUPABASE =====
-async function deleteFromSupabase(pin) {
-  try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
-      method: 'DELETE',
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-      }
-    });
-    if (!res.ok) console.error('Delete error:', await res.text());
-  } catch(e) { console.error('Delete error:', e); }
 }
 
 document.addEventListener('input', e => {
