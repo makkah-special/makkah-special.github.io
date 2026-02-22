@@ -1,1889 +1,625 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>بوابة طلاب الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #1a3a5c;
-    --accent: #e07020;
-    --accent-light: #f59040;
-    --purple: #6d28d9;
-    --purple-light: #7c3aed;
-    --green: #c25a00;
-    --green-light: #e07020;
-    --bg: #f5f2eb;
-    --card: #ffffff;
-    --border: #e0d8c8;
-    --text: #1a1a2e;
-    --muted: #5a6478;
+  :root{
+    --primary:#1a3a5c;
+    --accent:#e07020;
+    --bg:#f5f2eb;
+    --card:#ffffff;
+    --border:#e0d8c8;
+    --text:#1a1a2e;
+    --muted:#5a6478;
+    --green:#0d7a55;
+    --green2:#10b981;
+    --danger:#dc2626;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  header{
+    background:linear-gradient(135deg,#1a3a5c 0%,#0f2440 60%,#1a4a6c 100%);
+    padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+    border-bottom:3px solid var(--accent);
   }
-
-  /* ===== HEADER ===== */
-  header {
-    background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
-    padding: 16px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 3px solid var(--accent);
+  .h-left{display:flex;align-items:center;gap:12px}
+  .h-ico{width:44px;height:44px;border-radius:12px;background:rgba(224,112,32,.14);border:1px solid rgba(224,112,32,.35);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+  .h-title{color:#fff;font-family:'Tajawal',sans-serif;font-weight:900;font-size:1.05rem}
+  .h-sub{color:rgba(255,255,255,.6);font-size:.76rem;margin-top:2px}
+  .back-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9);
+    padding:8px 14px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.82rem}
+  .wrap{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:0 10px 26px rgba(0,0,0,.06);overflow:hidden}
+  .card-h{padding:14px 18px;border-bottom:1px solid var(--border);font-weight:900;color:var(--primary);background:linear-gradient(135deg,#fff,#fff7f0)}
+  .pad{padding:18px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .col{flex:1;min-width:220px}
+  label{display:block;font-size:.8rem;font-weight:800;color:var(--primary);margin:0 0 6px}
+  input,select,textarea{
+    width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;
+    outline:none;background:#fff;font-size:.9rem;color:var(--text)
   }
-
-  .header-left { display: flex; align-items: center; gap: 14px; }
-
-  .header-icon {
-    width: 46px; height: 46px;
-    border-radius: 12px;
-    background: rgba(200,151,58,0.18);
-    border: 1px solid rgba(200,151,58,0.35);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
+  textarea{resize:vertical;min-height:80px}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(224,112,32,.12)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:900;font-family:'Cairo',sans-serif;
+    font-size:.9rem;text-decoration:none
   }
-
-  .header-title { color: #fff; font-family: 'Tajawal', sans-serif; font-size: 1.1rem; font-weight: 900; }
-  .header-sub { color: rgba(255,255,255,0.55); font-size: 0.76rem; margin-top: 2px; }
-
-  .back-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
-    color: rgba(255,255,255,0.8);
-    padding: 8px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 0.82rem;
-    font-weight: 600;
-    transition: all 0.2s;
-  }
-  .back-btn:hover { background: rgba(255,255,255,0.15); }
-
-  /* ===== LOGIN SCREEN ===== */
-  #login-screen {
-    min-height: calc(100vh - 76px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-
-  .login-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 48px 40px;
-    max-width: 420px;
-    width: 100%;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-
-  .login-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #ede9fe;
-    border: 1px solid #c4b5fd;
-    color: var(--purple);
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
-  .login-icon-big {
-    width: 80px; height: 80px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-    margin: 0 auto 22px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.6rem;
-    box-shadow: 0 8px 24px rgba(109,40,217,0.2);
-  }
-
-  .login-card h2 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--primary);
-    margin-bottom: 8px;
-  }
-
-  .login-card .login-desc {
-    color: var(--muted);
-    font-size: 0.86rem;
-    line-height: 1.7;
-    margin-bottom: 30px;
-  }
-
-  .input-label {
-    text-align: right;
-    font-size: 0.83rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .pin-input {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: 8px;
-    color: var(--primary);
-    outline: none;
-    transition: all 0.25s;
-    background: #fafafa;
-    margin-bottom: 12px;
-  }
-
-  .pin-input:focus {
-    border-color: var(--purple-light);
-    background: #fff;
-    box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
-  }
-
-  .pin-input.error {
-    border-color: #ef4444;
-    background: #fff5f5;
-    animation: shake 0.4s ease;
-  }
-
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    20% { transform: translateX(-10px); }
-    60% { transform: translateX(10px); }
-    80% { transform: translateX(-5px); }
-  }
-
-  .error-msg {
-    display: none;
-    color: #dc2626;
-    font-size: 0.82rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    background: #fee2e2;
-    border-radius: 8px;
-    padding: 8px 14px;
-  }
-  .error-msg.show { display: block; }
-
-  .login-btn {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, var(--purple), var(--purple-light));
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(109,40,217,0.3);
-    letter-spacing: 0.5px;
-  }
-  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(109,40,217,0.45); }
-  .login-btn:active { transform: translateY(0); }
-
-  .hint-box {
-    margin-top: 22px;
-    background: #fffbf0;
-    border: 1px solid #f0d898;
-    border-right: 3px solid var(--accent);
-    border-radius: 10px;
-    padding: 13px 16px;
-    font-size: 0.79rem;
-    color: #7a5800;
-    text-align: right;
-    line-height: 1.7;
-  }
-
-  /* ===== PORTAL ===== */
-  #student-portal { display: none; }
-
-  .portal-banner {
-    background: linear-gradient(135deg, var(--green) 0%, #0d4a30 100%);
-    padding: 26px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 14px;
-    border-bottom: 3px solid var(--accent);
-  }
-
-  .student-identity { color: #fff; display:flex; align-items:center; gap:16px; }
-  .student-photo-wrap { position:relative; flex-shrink:0; }
-  .student-photo { width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid rgba(240,184,74,0.7); background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; transition:all 0.2s; }
-  .student-photo:hover { border-color:#f59040; transform:scale(1.05); }
-  .student-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
-  .photo-change-btn { position:absolute; bottom:0; left:0; background:#f59040; color:#7a2800; border:none; border-radius:50%; width:22px; height:22px; font-size:0.65rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:900; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
-  .photo-input { display:none; }
-
-  .student-name-display {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 900;
-    margin-bottom: 4px;
-  }
-
-  .student-meta-display {
-    opacity: 0.7;
-    font-size: 0.82rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .meta-chip {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.76rem;
-  }
-
-  .logout-btn {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.85);
-    padding: 9px 20px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    transition: all 0.2s;
-  }
-  .logout-btn:hover { background: rgba(255,255,255,0.2); }
-
-  .portal-body {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 28px 36px 60px;
-  }
-
-  /* TABS */
-  .tabs {
-    display: flex;
-    gap: 4px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 6px;
-    margin-bottom: 26px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-
-  .tab-btn {
-    flex: 1;
-    padding: 10px 8px;
-    border: none;
-    background: transparent;
-    border-radius: 9px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.22s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-  }
-
-  .tab-btn.active {
-    background: linear-gradient(135deg, var(--green), var(--green-light));
-    color: #fff;
-    box-shadow: 0 3px 12px rgba(26,107,74,0.35);
-  }
-
-  .tab-pane { display: none; animation: fadeIn 0.3s ease; }
-  .tab-pane.active { display: block; }
-
-  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-  /* CARD */
-  .s-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 18px;
-    box-shadow: 0 2px 14px rgba(0,0,0,0.04);
-  }
-
-  .s-card-head {
-    padding: 14px 22px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    font-weight: 800;
-    font-size: 0.92rem;
-    color: var(--primary);
-    background: linear-gradient(135deg, #f8fffe, #f0faf5);
-  }
-
-  /* INFO TABLE */
-  .info-tbl { width: 100%; border-collapse: collapse; }
-  .info-tbl tr { border-bottom: 1px solid var(--border); }
-  .info-tbl tr:last-child { border-bottom: none; }
-  .info-tbl th {
-    padding: 12px 22px;
-    text-align: right;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--muted);
-    background: #f9f9f9;
-    width: 30%;
-  }
-  .info-tbl td {
-    padding: 12px 22px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .tag {
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.76rem;
-    font-weight: 700;
-  }
-  .tag-green { background: #d1fae5; color: #065f46; }
-  .btn-download-report {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: linear-gradient(135deg, #1a3a5c, #2563a8);
-    color: #fff; padding: 5px 12px; border-radius: 8px;
-    font-size: 0.75rem; font-weight: 700; text-decoration: none;
-    white-space: nowrap; transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(26,58,92,0.2);
-  }
-  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26,58,92,0.3); }
-  .tag-blue  { background: #dbeafe; color: #1e40af; }
-  .tag-orange { background: #fff3e0; color: #c25a00; }
-  .tag-blue { background: #dbeafe; color: #1e40af; }
-  .tag-yellow { background: #fef3c7; color: #92400e; }
-  .tag-purple { background: #ede9fe; color: #5b21b6; }
-  .tag-gray { background: #f3f4f6; color: #4b5563; }
-
-  /* PLAN GRID */
-  .plan-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 14px;
-    padding: 18px;
-  }
-
-  .plan-box {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    background: #fafcff;
-    transition: all 0.2s;
-  }
-  .plan-box:hover { border-color: var(--green-light); transform: translateY(-2px); }
-
-  .plan-box-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-
-  .plan-dot {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .plan-box h4 { font-size: 0.86rem; font-weight: 800; color: var(--primary); }
-  .plan-box p { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
-
-  /* REPORTS */
-  .report-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 22px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-    gap: 14px;
-  }
-  .report-row:last-child { border-bottom: none; }
-  .report-row:hover { background: #f8fffe; }
-
-  .report-left { display: flex; align-items: center; gap: 14px; }
-
-  .report-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-  }
-
-  .report-name { font-size: 0.88rem; font-weight: 700; color: var(--primary); }
-  .report-date { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-
-  /* FOLLOW-UP TABLE */
-  .fu-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-  .fu-table th {
-    background: linear-gradient(135deg, var(--green), var(--green-light));
-    color: #fff;
-    padding: 11px 14px;
-    text-align: center;
-    font-weight: 700;
-  }
-  .fu-table td {
-    padding: 10px 14px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
-    font-weight: 600;
-  }
-  .fu-table tr:last-child td { border-bottom: none; }
-  .fu-table tr:hover td { background: #f0faf5; }
-
-  .circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    font-size: 0.85rem;
-  }
-  .c-done { background: #d1fae5; color: #065f46; }
-  .c-part { background: #fef3c7; color: #92400e; }
-  .c-no   { background: #fee2e2; color: #991b1b; }
-
-  /* PDF VIEWER */
-  .pdf-section {
-    margin-bottom: 24px;
-  }
-
-  .pdf-section-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--border);
-  }
-
-  .pdf-level-badge {
-    background: var(--accent);
-    color: #fff;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.76rem;
-    font-weight: 700;
-  }
-
-  .pdf-frame-wrap {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    background: #f5f5f5;
-    position: relative;
-  }
-
-  .pdf-frame-wrap iframe {
-    width: 100%;
-    height: 500px;
-    border: none;
-    display: block;
-  }
-
-  .pdf-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-
-  .btn-pdf {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 18px;
-    border-radius: 9px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s;
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn-pdf-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light, #2563a8));
-    color: #fff;
-    box-shadow: 0 3px 12px rgba(26,58,92,0.25);
-  }
-
-  .btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,58,92,0.35); }
-
-  .btn-pdf-secondary {
-    background: #fff;
-    color: var(--primary);
-    border: 1px solid var(--border);
-  }
-
-  .btn-pdf-secondary:hover { border-color: var(--primary); background: #f0f4ff; }
-
-  /* IQRAR */
-  .iqrar-box {
-    background: linear-gradient(135deg, #fffbf0, #fff8e6);
-    border: 1px solid #f0d898;
-    border-right: 4px solid var(--accent);
-    border-radius: 14px;
-    padding: 24px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    line-height: 2;
-    color: var(--text);
-  }
-
-  .iqrar-box h3 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 900;
-    color: var(--primary);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .iqrar-fields {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 20px 0;
-  }
-
-  .iqrar-field {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-  }
-
-  .iqrar-field label {
-    display: block;
-    font-size: 0.76rem;
-    font-weight: 700;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-
-  .iqrar-field span {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--primary);
-  }
-
-  .sign-area {
-    border: 2px dashed var(--border);
-    border-radius: 12px;
-    background: #fff;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.25s;
-    margin: 16px 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .sign-area:hover { border-color: var(--accent); background: #fffbf0; }
-  .sign-area.signed { border-color: var(--green-light); border-style: solid; background: #f0faf5; }
-
-  .sign-area canvas {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-  }
-
-  .sign-placeholder { color: var(--muted); font-size: 0.84rem; font-weight: 600; text-align: center; }
-  .sign-placeholder span { font-size: 1.6rem; display: block; margin-bottom: 4px; }
-
-  .iqrar-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-
-  .btn-sign {
-    background: linear-gradient(135deg, var(--green), var(--green-light));
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 10px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.25s;
-    box-shadow: 0 4px 14px rgba(26,107,74,0.3);
-  }
-
-  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,74,0.4); }
-
-  .btn-clear-sign {
-    background: #fff;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-clear-sign:hover { border-color: #ef4444; color: #ef4444; }
-
-  .signed-badge {
-    display: none;
-    background: #d1fae5;
-    border: 1px solid #6ee7b7;
-    color: #065f46;
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* ADMIN PANEL */
-  #admin-portal { display:none; }
-  .admin-banner { background:linear-gradient(135deg,#7a2800 0%,#a33800 60%,#c25a00 100%); padding:22px 36px; display:flex; align-items:center; justify-content:space-between; border-bottom:4px solid #f59040; }
-  .admin-badge { background:rgba(245,144,64,0.2); border:1px solid rgba(245,144,64,0.4); color:#f59040; padding:5px 16px; border-radius:20px; font-size:0.8rem; font-weight:700; }
-  .admin-body { max-width:960px; margin:0 auto; padding:28px 36px 60px; }
-  .admin-tabs { display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:26px; box-shadow:0 2px 12px rgba(0,0,0,0.04); }
-  .admin-tab-btn { flex:1; padding:10px 8px; border:none; background:transparent; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all 0.22s; display:flex; align-items:center; justify-content:center; gap:5px; }
-  .admin-tab-btn.active { background:linear-gradient(135deg,#c25a00,#e07020); color:#fff; box-shadow:0 3px 12px rgba(194,90,0,0.35); }
-  .admin-tab-pane { display:none; animation:fadeIn 0.3s ease; }
-  .admin-tab-pane.active { display:block; }
-  .students-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
-  .stu-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px 18px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:12px; }
-  .stu-card:hover { border-color:#e07020; box-shadow:0 4px 18px rgba(194,90,0,0.12); transform:translateY(-2px); }
-  .stu-card-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#fff3e0,#ffe0b2); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
-  .stu-card-name { font-weight:800; font-size:0.88rem; color:var(--primary); margin-bottom:3px; }
-  .stu-card-meta { font-size:0.75rem; color:var(--muted); }
-  .stu-card-pin { font-size:0.72rem; background:#fff3e0; color:#c25a00; padding:2px 8px; border-radius:8px; font-weight:700; }
-  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; padding:20px; }
-  .modal-overlay.open { display:flex; }
-  .modal-box { background:#fff; border-radius:20px; padding:32px; width:100%; max-width:560px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,0.25); animation:fadeIn 0.2s ease; }
-  .modal-title { font-family:'Tajawal',sans-serif; font-size:1.2rem; font-weight:900; color:var(--primary); margin-bottom:20px; display:flex; align-items:center; gap:8px; border-bottom:2px solid var(--border); padding-bottom:14px; }
-  .form-group { margin-bottom:16px; }
-  .form-label { display:block; font-size:0.8rem; font-weight:700; color:var(--muted); margin-bottom:6px; }
-  .form-input { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; color:var(--text); outline:none; transition:border-color 0.2s; }
-  .form-input:focus { border-color:#e07020; box-shadow:0 0 0 3px rgba(224,112,32,0.1); }
-  .form-actions { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
-  .btn-save { background:linear-gradient(135deg,#c25a00,#e07020); color:#fff; border:none; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 14px rgba(194,90,0,0.3); }
-  .btn-save:hover { transform:translateY(-2px); }
-  .btn-cancel { background:#fff; color:var(--muted); border:1px solid var(--border); padding:12px 20px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; font-weight:700; cursor:pointer; }
-  .btn-delete-student { background:#fff; color:#dc2626; border:1px solid #fecaca; padding:12px 20px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; font-weight:700; cursor:pointer; margin-right:auto; }
-  .btn-delete-student:hover { background:#fee2e2; }
-  .goal-row { background:#f9fafb; border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:10px; position:relative; }
-  .goal-row .form-input { margin-bottom:8px; }
-  .goal-row .form-input:last-of-type { margin-bottom:0; }
-  .btn-remove-goal { position:absolute; top:8px; left:8px; background:#fee2e2; color:#dc2626; border:none; border-radius:6px; width:26px; height:26px; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; justify-content:center; }
-  .btn-add-goal { background:#fff3e0; border:1.5px dashed #e07020; color:#c25a00; width:100%; padding:10px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:8px; }
-  .btn-add-goal:hover { background:#ffe0b2; }
-  .fu-edit-row { display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 28px; gap:6px; align-items:center; margin-bottom:8px; }
-  .fu-edit-row input, .fu-edit-row select { padding:8px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; outline:none; width:100%; }
-  .success-toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#c25a00; color:#fff; padding:12px 28px; border-radius:12px; font-weight:700; font-size:0.88rem; z-index:9999; box-shadow:0 8px 24px rgba(194,90,0,0.4); display:none; animation:fadeIn 0.3s ease; }
-
-  /* RESPONSIVE */
-  @media (max-width: 640px) {
-    header { padding: 12px 18px; }
-    .portal-banner { padding: 18px; }
-    .portal-body { padding: 18px 16px 40px; }
-    .tabs { flex-wrap: wrap; }
-    .tab-btn { font-size: 0.75rem; padding: 8px 4px; }
-    .login-card { padding: 32px 22px; }
+  .btn-primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;box-shadow:0 8px 18px rgba(16,185,129,.25)}
+  .btn-secondary{background:#fff;border:1px solid var(--border);color:var(--primary)}
+  .btn-danger{background:#fff;border:1px solid #fecaca;color:var(--danger)}
+  .muted{color:var(--muted);font-size:.82rem;line-height:1.8}
+  .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:800;font-size:.75rem}
+  .pill-ok{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+  .pill-warn{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+  .stu{background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px;cursor:pointer;transition:.15s;display:flex;gap:10px;align-items:center}
+  .stu:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.08);border-color:rgba(224,112,32,.6)}
+  .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fff7ed,#ffe5d0);display:flex;align-items:center;justify-content:center}
+  .name{font-weight:900;color:var(--primary);font-size:.9rem;margin-bottom:2px}
+  .meta{color:var(--muted);font-size:.78rem}
+  .pin{font-weight:900;font-size:.74rem;background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;border-radius:10px;padding:2px 8px}
+  .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+  .tabs{display:flex;gap:6px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:6px;margin-bottom:14px}
+  .tab{flex:1;padding:9px 8px;border:none;background:transparent;border-radius:10px;cursor:pointer;font-weight:900;color:var(--muted);font-size:.82rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#ff9a4a);color:#fff;box-shadow:0 8px 16px rgba(224,112,32,.18)}
+  .pane{display:none}
+  .pane.active{display:block}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 16px;border-radius:12px;font-weight:800;font-size:.85rem;display:none;z-index:9999}
+  .err{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:12px;padding:10px 12px;font-weight:800;font-size:.82rem;display:none;margin-top:10px}
+  @media (max-width:640px){
+    header{padding:12px 14px}
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-left">
-    <div class="header-icon">📘</div>
+  <div class="h-left">
+    <div class="h-ico">📘</div>
     <div>
-      <div class="header-title">بوابة ملفات الطلاب — برنامج الدمج الفكري</div>
-      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+      <div class="h-title">بوابة ملفات الطلاب — برنامج الدمج الفكري</div>
+      <div class="h-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
     </div>
   </div>
-  <a href="index.html" class="back-btn">← الرئيسية</a>
+  <a class="back-btn" href="index.html">← الرئيسية</a>
 </header>
 
-<!-- ============ LOGIN ============ -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-badge">🔐 بوابة آمنة</div>
-    <div class="login-icon-big">🎓</div>
-    <h2>بوابة ملفات الطلاب</h2>
-    <p class="login-desc">
-      أدخل آخر 4 أرقام من السجل المدني للطالب للاطلاع على ملفه الكامل
-    </p>
-    <div class="input-label">🔑 رمز الدخول (آخر 4 أرقام من السجل المدني)</div>
-    <input type="password" class="pin-input" id="pin-input" maxlength="4" placeholder="• • • •" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')" onkeydown="if(event.key==='Enter') checkPin()">
-    <div class="error-msg" id="error-msg">❌ الرمز غير صحيح، يرجى المحاولة مجدداً</div>
-    <button class="login-btn" onclick="checkPin()">🔓 دخول البوابة</button>
-    <div class="hint-box">
-      💡 <strong>لأولياء الأمور:</strong> رمز الدخول هو آخر 4 أرقام من السجل المدني لابنكم. في حال وجود أي استفسار تواصلوا مع المعلم المختص.
-    </div>
-  </div>
-</div>
+<div class="wrap">
 
-<!-- ============ PORTAL ============ -->
-<div id="student-portal">
-
-  <div class="portal-banner">
-    <div class="student-identity">
-      <div class="student-photo-wrap">
-        <div class="student-photo" id="student-photo-circle" onclick="document.getElementById('photo-input').click()">
-          <img id="student-photo-img" src="" alt="" style="display:none;">
-          <span id="student-photo-emoji">🎓</span>
+  <!-- LOGIN -->
+  <div id="loginView" class="card">
+    <div class="card-h">🔐 الدخول</div>
+    <div class="pad">
+      <p class="muted">أدخل رمز الدخول (آخر 4 أرقام من السجل). للمشرف أدخل رمز المشرف.</p>
+      <div class="row" style="margin-top:14px">
+        <div class="col" style="max-width:320px">
+          <label>رمز الدخول</label>
+          <input id="pinInput" inputmode="numeric" maxlength="4" placeholder="••••" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
         </div>
-        <button class="photo-change-btn" onclick="document.getElementById('photo-input').click()" title="تغيير الصورة">✏️</button>
-        <input type="file" id="photo-input" class="photo-input" accept="image/*" onchange="uploadStudentPhoto(this)">
       </div>
-      <div class="student-name-display" id="disp-name">—</div>
-      <div class="student-meta-display">
-        <span class="meta-chip" id="disp-grade">—</span>
-        <span class="meta-chip">📘 برنامج الدمج الفكري</span>
-        <span class="meta-chip" id="disp-id">—</span>
+      <div class="row" style="margin-top:12px">
+        <button class="btn btn-primary" onclick="handleLogin()">دخول</button>
+      </div>
+      <div id="loginErr" class="err"></div>
+      <div class="muted" style="margin-top:14px">
+        ⚙️ <strong>ملاحظة:</strong> هذا الإصدار يحفظ ويجلب البيانات من <b>Supabase Database</b> مباشرة (وليس Storage)، لذلك التعديل يصير ثابت على كل الأجهزة.
       </div>
     </div>
-    <button class="logout-btn" onclick="logout()">🚪 خروج</button>
   </div>
 
-  <div class="portal-body">
+  <!-- STUDENT -->
+  <div id="studentView" style="display:none">
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-h">👤 ملف الطالب</div>
+      <div class="pad">
+        <div class="topbar">
+          <div>
+            <div class="name" id="stuName">—</div>
+            <div class="meta" id="stuMeta">—</div>
+          </div>
+          <div class="row">
+            <span class="pill pill-ok" id="stuPinPill">PIN: —</span>
+            <button class="btn btn-secondary" onclick="logout()">خروج</button>
+          </div>
+        </div>
 
-    <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
-      <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
-      <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
-      <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
-    </div>
+        <div class="tabs">
+          <button class="tab active" onclick="openStuTab('basic',this)">البيانات</button>
+          <button class="tab" onclick="openStuTab('details',this)">التفاصيل</button>
+          <button class="tab" onclick="openStuTab('plan',this)">الخطة (نص)</button>
+        </div>
 
-    <!-- INFO -->
-    <div class="tab-pane active" id="tab-info">
-      <div class="s-card">
-        <div class="s-card-head">👤 بيانات الطالب</div>
-        <table class="info-tbl" id="info-tbl"></table>
-      </div>
-    </div>
+        <div id="stu-basic" class="pane active">
+          <div class="row">
+            <div class="col"><label>اسم الطالب</label><input id="s_name" disabled></div>
+            <div class="col"><label>رقم السجل</label><input id="s_id" disabled></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>الصف</label><input id="s_grade" disabled></div>
+            <div class="col"><label>جوال ولي الأمر</label><input id="s_phone" disabled></div>
+          </div>
+          <div class="muted" style="margin-top:10px">هذه البيانات يحدّثها المشرف من لوحة التحكم.</div>
+        </div>
 
-    <!-- REPORTS -->
-    <div class="tab-pane" id="tab-reports">
-      <div class="s-card">
-        <div class="s-card-head">📊 التقارير والوثائق</div>
-        <div id="reports-list"></div>
-      </div>
-    </div>
+        <div id="stu-details" class="pane">
+          <div class="muted" style="margin-bottom:10px">يعرض تفاصيل الطالب كما أدخلها المشرف.</div>
+          <div class="row">
+            <div class="col"><label>تاريخ الميلاد</label><input id="sd_birth" disabled></div>
+            <div class="col"><label>الجنسية</label><input id="sd_nat" disabled></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>العمر</label><input id="sd_age" disabled></div>
+            <div class="col"><label>العنوان</label><input id="sd_addr" disabled></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>درجة الذكاء</label><input id="sd_iq" disabled></div>
+            <div class="col"><label>المكان التربوي</label><input id="sd_place" disabled></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>التشخيص</label><textarea id="sd_diag" disabled></textarea></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>الوضع الصحي</label><textarea id="sd_health" disabled></textarea></div>
+            <div class="col"><label>الوضع النفسي</label><textarea id="sd_psych" disabled></textarea></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>الوضع الاجتماعي</label><textarea id="sd_social" disabled></textarea></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>الترتيب بين إخوته</label><input id="sd_sib" disabled></div>
+            <div class="col"><label>المستوى الاقتصادي</label><input id="sd_eco" disabled></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div class="col"><label>تعليم الأب</label><input id="sd_fedu" disabled></div>
+            <div class="col"><label>تعليم الأم</label><input id="sd_medu" disabled></div>
+          </div>
+        </div>
 
-    <!-- PLAN -->
-    <div class="tab-pane" id="tab-plan">
-      <div class="s-card">
-        <div class="s-card-head">📋 الخطة التعليمية الفردية — الفصل الثاني 1447هـ</div>
-        <div style="padding:20px;" id="plan-pdfs"></div>
-      </div>
-    </div>
-
-    <!-- IQRAR -->
-    <div class="tab-pane" id="tab-iqrar">
-      <div class="s-card">
-        <div class="s-card-head">✍️ إقرار اطلاع ولي الأمر على الخطة الفردية</div>
-        <div style="padding:24px;" id="iqrar-content"></div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ============ ADMIN PORTAL ============ -->
-<div id="admin-portal">
-  <div class="admin-banner">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <div style="width:46px;height:46px;border-radius:12px;background:rgba(245,144,64,0.2);border:1px solid rgba(245,144,64,0.35);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔧</div>
-      <div>
-        <div style="color:#fff;font-family:'Tajawal',sans-serif;font-size:1.1rem;font-weight:900;">لوحة تحكم المشرف — برنامج الدمج الفكري</div>
-        <div style="color:rgba(255,255,255,0.55);font-size:0.76rem;margin-top:2px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div class="admin-badge" id="admin-student-count">— طالب</div>
-      <button class="logout-btn" onclick="adminLogout()">🚪 خروج</button>
-      <button onclick="window.open('attendance_dumaj.html','_blank')" style="background:#c25a00;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;gap:6px;">📋 كشف الحضور</button>
-    </div>
-  </div>
-  <div class="admin-body">
-    <div class="admin-tabs">
-      <button class="admin-tab-btn active" onclick="openAdminTab('list',this)">👨‍🎓 قائمة الطلاب</button>
-      <button class="admin-tab-btn" onclick="openAdminTab('add',this)">➕ إضافة طالب</button>
-    </div>
-    <div class="admin-tab-pane active" id="admin-tab-list">
-      <div style="margin-bottom:14px;">
-        <input type="text" class="form-input" id="admin-search" placeholder="🔍 ابحث باسم الطالب أو رمز الدخول..." oninput="renderStudentCards()" style="max-width:400px;">
-      </div>
-      <div class="students-grid" id="students-grid"></div>
-    </div>
-    <div class="admin-tab-pane" id="admin-tab-add">
-      <div class="s-card">
-        <div class="s-card-head">➕ إضافة طالب جديد</div>
-        <div style="padding:24px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div class="form-group">
-              <label class="form-label">اسم الطالب الكامل *</label>
-              <input type="text" class="form-input" id="new-name" placeholder="مثال: محمد أحمد الزهراني">
-            </div>
-            <div class="form-group">
-              <label class="form-label">رقم السجل المدني / الإقامة *</label>
-              <input type="text" class="form-input" id="new-id" placeholder="10 أرقام" maxlength="10">
-            </div>
-            <div class="form-group">
-              <label class="form-label">الصف الدراسي *</label>
-              <input type="text" class="form-input" id="new-grade" placeholder="مثال: الأول المتوسط / 1">
-            </div>
-            <div class="form-group">
-              <label class="form-label">جوال ولي الأمر</label>
-              <input type="text" class="form-input" id="new-phone" placeholder="05xxxxxxxx">
+        <div id="stu-plan" class="pane">
+          <div class="muted" style="margin-bottom:10px">الخطة هنا كنص (ممكن لاحقًا تربط PDF من Storage).</div>
+          <div id="planBox" class="card" style="border-radius:14px">
+            <div class="pad">
+              <div id="planText" class="muted">لا توجد خطة نصية.</div>
             </div>
           </div>
-          <div class="form-group" style="margin-top:8px;">
-            <label class="form-label">💡 رمز الدخول (آخر 4 أرقام من السجل تلقائياً)</label>
-            <input type="text" class="form-input" id="new-pin-preview" placeholder="يُحسب تلقائياً" readonly style="background:#f9f9f9;color:var(--muted);">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="adminView" style="display:none">
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-h">🔧 لوحة المشرف</div>
+      <div class="pad">
+        <div class="topbar">
+          <div class="muted">إدارة طلاب برنامج الدمج الفكري — حفظ مباشر في Supabase DB</div>
+          <div class="row">
+            <span class="pill pill-warn" id="countPill">— طالب</span>
+            <button class="btn btn-secondary" onclick="logout()">خروج</button>
           </div>
-          <button class="btn-save" onclick="addNewStudent()" style="margin-top:8px;">✅ إضافة الطالب</button>
         </div>
+
+        <div class="row" style="margin-bottom:12px">
+          <div class="col" style="max-width:420px">
+            <input id="searchInput" placeholder="🔍 ابحث بالاسم أو PIN..." oninput="renderList()">
+          </div>
+          <button class="btn btn-primary" onclick="openNew()">➕ إضافة طالب</button>
+        </div>
+
+        <div id="list" class="grid"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h" id="formTitle">✏️ تعديل / إضافة</div>
+      <div class="pad">
+        <div class="row">
+          <div class="col"><label>اسم الطالب *</label><input id="f_name"></div>
+          <div class="col"><label>رقم السجل (10 أرقام) *</label><input id="f_id" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,''); updatePinPreview();"></div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div class="col"><label>الصف *</label><input id="f_grade" placeholder="مثال: الأول المتوسط / ١"></div>
+          <div class="col"><label>جوال ولي الأمر</label><input id="f_phone" placeholder="05xxxxxxxx" inputmode="numeric"></div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div class="col" style="max-width:260px"><label>PIN (آخر 4 أرقام)</label><input id="f_pin" disabled></div>
+          <div class="col"><label>الخطة (نص مختصر)</label><input id="f_plan_text" placeholder="مثال: أهداف مهارية مختصرة..."></div>
+        </div>
+
+        <div class="card" style="margin-top:14px;border-radius:16px">
+          <div class="card-h">📝 التفاصيل (كلها اختيارية)</div>
+          <div class="pad">
+            <div class="row">
+              <div class="col"><label>تاريخ الميلاد</label><input id="d_birth" type="date"></div>
+              <div class="col"><label>الجنسية</label><input id="d_nat"></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div class="col"><label>العمر</label><input id="d_age"></div>
+              <div class="col"><label>العنوان</label><input id="d_addr"></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div class="col"><label>درجة الذكاء</label><input id="d_iq"></div>
+              <div class="col"><label>المكان التربوي</label><input id="d_place" placeholder="الدمج"></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div class="col"><label>التشخيص</label><textarea id="d_diag"></textarea></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div class="col"><label>الوضع الصحي</label><textarea id="d_health"></textarea></div>
+              <div class="col"><label>الوضع النفسي</label><textarea id="d_psych"></textarea></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div class="col"><label>الوضع الاجتماعي</label><textarea id="d_social"></textarea></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div class="col"><label>الترتيب بين إخوته</label><input id="d_sib"></div>
+              <div class="col"><label>المستوى الاقتصادي</label><input id="d_eco"></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div class="col"><label>تعليم الأب</label><input id="d_fedu"></div>
+              <div class="col"><label>تعليم الأم</label><input id="d_medu"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:14px">
+          <button class="btn btn-primary" onclick="save()">💾 حفظ</button>
+          <button class="btn btn-danger" onclick="remove()">🗑️ حذف</button>
+          <button class="btn btn-secondary" onclick="clearForm()">تفريغ</button>
+        </div>
+        <div id="formErr" class="err"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- EDIT MODAL -->
-<div class="modal-overlay" id="edit-modal">
-  <div class="modal-box">
-    <div class="modal-title" id="modal-title">✏️ تعديل بيانات الطالب</div>
-    <div style="display:flex;gap:4px;background:#f5f2eb;border-radius:10px;padding:4px;margin-bottom:20px;">
-      <button class="admin-tab-btn active" onclick="openEditTab('basic',this)" style="font-size:0.78rem;padding:7px 4px;">👤 البيانات</button>
-      <button class="admin-tab-btn" onclick="openEditTab('plan',this)" style="font-size:0.78rem;padding:7px 4px;">📋 الخطة</button>
-      <button class="admin-tab-btn" onclick="openEditTab('followup',this)" style="font-size:0.78rem;padding:7px 4px;">📊 المتابعة</button>
-      <button class="admin-tab-btn" onclick="openEditTab('details',this)" style="font-size:0.78rem;padding:7px 4px;">📝 التفاصيل</button>
-    </div>
-    <div id="edit-tab-basic">
-      <div class="form-group"><label class="form-label">اسم الطالب</label><input type="text" class="form-input" id="edit-name"></div>
-      <div class="form-group"><label class="form-label">الصف الدراسي</label><input type="text" class="form-input" id="edit-grade"></div>
-      <div class="form-group"><label class="form-label">رقم السجل المدني / الإقامة</label><input type="text" class="form-input" id="edit-id"></div>
-      <div class="form-group"><label class="form-label">جوال ولي الأمر</label><input type="text" class="form-input" id="edit-phone"></div>
-    </div>
-    <div id="edit-tab-plan" style="display:none;">
-      <div id="plan-goals-editor"></div>
-      <button class="btn-add-goal" onclick="addGoalRow()">+ إضافة هدف جديد</button>
-    </div>
-    <div id="edit-tab-followup" style="display:none;">
-      <div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px;background:#fff3e0;padding:10px;border-radius:8px;">✓ = حقق &nbsp;|&nbsp; ~ = جزئياً &nbsp;|&nbsp; ✗ = لم يحقق</div>
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 28px;gap:6px;margin-bottom:8px;">
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">المهارة</div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م١</div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٢</div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٣</div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٤</div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-align:center;">م٥</div>
-        <div></div>
-      </div>
-      <div id="followup-editor"></div>
-      <button class="btn-add-goal" onclick="addFollowupRow()">+ إضافة مهارة</button>
-    </div>
-    <!-- البيانات التفصيلية -->
-    <div id="edit-tab-details" style="display:none;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div class="form-group">
-          <label class="form-label" style="font-size:0.8rem;font-weight:800;color:var(--primary);">📋 المعلومات الشخصية</label>
-        </div>
-      <div class="form-group">
-        <label class="form-label">تاريخ الميلاد</label>
-        <input type="date" class="form-input" id="edit-birthdate">
-      </div>
-      <div class="form-group">
-        <label class="form-label">الجنسية</label>
-        <input type="text" class="form-input" id="edit-nationality" placeholder="الجنسية">
-      </div>
-      <div class="form-group">
-        <label class="form-label">العمر</label>
-        <input type="text" class="form-input" id="edit-age" placeholder="العمر">
-      </div>
-      <div class="form-group">
-        <label class="form-label">العنوان</label>
-        <input type="text" class="form-input" id="edit-address" placeholder="العنوان">
-      </div>
-      <div class="form-group">
-        <label class="form-label">درجة الذكاء</label>
-        <input type="text" class="form-input" id="edit-iq" placeholder="درجة الذكاء">
-      </div>
-      <div class="form-group">
-        <label class="form-label">ترتيب الطالب بين إخوته</label>
-        <input type="text" class="form-input" id="edit-sibling-order" placeholder="ترتيب الطالب بين إخوته">
-      </div>
-      <div class="form-group">
-        <label class="form-label">المستوى الاقتصادي للأسرة</label>
-        <select class="form-input" id="edit-economic-level"><option value="">اختر...</option><option value="منخفض">منخفض</option>
-<option value="متوسط">متوسط</option>
-<option value="مرتفع">مرتفع</option></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">مستوى تعليم الأب</label>
-        <select class="form-input" id="edit-father-edu"><option value="">اختر...</option><option value="ابتدائي">ابتدائي</option>
-<option value="متوسط">متوسط</option>
-<option value="ثانوي">ثانوي</option>
-<option value="جامعي">جامعي</option>
-<option value="دراسات عليا">دراسات عليا</option>
-<option value="غير متعلم">غير متعلم</option></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">مستوى تعليم الأم</label>
-        <select class="form-input" id="edit-mother-edu"><option value="">اختر...</option><option value="ابتدائي">ابتدائي</option>
-<option value="متوسط">متوسط</option>
-<option value="ثانوي">ثانوي</option>
-<option value="جامعي">جامعي</option>
-<option value="دراسات عليا">دراسات عليا</option>
-<option value="غير متعلم">غير متعلم</option></select>
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label">الوضع النفسي للطالب</label>
-        <textarea class="form-input" id="edit-status-psych" rows="2" style="resize:vertical;"></textarea>
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label">الوضع الاجتماعي للطالب</label>
-        <textarea class="form-input" id="edit-status-social" rows="2" style="resize:vertical;"></textarea>
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label">الوضع الصحي للطالب</label>
-        <textarea class="form-input" id="edit-status-health" rows="2" style="resize:vertical;"></textarea>
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label">التشخيص</label>
-        <textarea class="form-input" id="edit-diagnosis" rows="2" style="resize:vertical;"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">المكان التربوي المناسب</label>
-        <input type="text" class="form-input" id="edit-program-place" placeholder="المكان التربوي المناسب">
-      </div>
-      <div class="form-group">
-        <label class="form-label">تاريخ بدء البرنامج</label>
-        <input type="text" class="form-input" id="edit-program-start" placeholder="تاريخ بدء البرنامج">
-      </div>
-      <div class="form-group">
-        <label class="form-label">تاريخ إنهاء البرنامج</label>
-        <input type="text" class="form-input" id="edit-program-end" placeholder="تاريخ إنهاء البرنامج">
-      </div>
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn-delete-student" onclick="deleteStudent()">🗑️ حذف الطالب</button>
-      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
-      <button class="btn-save" onclick="saveStudentEdits()">💾 حفظ التعديلات</button>
-    </div>
-  </div>
-</div>
-
-<!-- Toast -->
-<div class="success-toast" id="success-toast">✅ تم الحفظ بنجاح</div>
+<div id="toast" class="toast"></div>
 
 <script>
-// =====================================================
-// Supabase Config
-// =====================================================
+/* =====================================================
+   1) ضع بيانات Supabase هنا فقط
+   ===================================================== */
 const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5cnh3cWdhcHdqd2hpc2tvd2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDM3MjcsImV4cCI6MjA4NzExOTcyN30.nEJivQNdtbI8Vn7thWe29zHEOzK-Z8eZVQMnSyvKlII";
-const ADMIN_PIN = "7410"; // رمز مشرف الدمج
+const SUPABASE_ANON_KEY = "ضع-مفتاح-anon-هنا"; // من Supabase > Settings > API > anon public
+const ADMIN_PIN = "7410";
 
-async function sbSaveSignature(pin, name, grade, signData) {
-  try {
-    await fetch(SUPABASE_URL + '/rest/v1/signatures', {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({
-        student_pin: pin,
-        student_name: name,
-        grade: grade,
-        signature_data: signData
-      })
-    });
-    console.log('✅ التوقيع حُفظ في Supabase');
-  } catch(e) {
-    console.error('خطأ في حفظ التوقيع:', e);
-  }
+/* =====================================================
+   2) Helpers
+   ===================================================== */
+const SB_TABLE = SUPABASE_URL + "/rest/v1/dumaj_students";
+const H_GET = { "apikey": SUPABASE_ANON_KEY, "Authorization": "Bearer " + SUPABASE_ANON_KEY };
+const H_WRITE = { ...H_GET, "Content-Type":"application/json", "Prefer":"resolution=merge-duplicates,return=minimal" };
+
+let mode = "none";      // student | admin
+let currentPin = null;  // student pin
+let cache = {};         // pin -> row
+let editingPin = null;  // admin form pin
+
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  setTimeout(()=>t.style.display="none", 2200);
 }
-
-// =====================================================
-// قاعدة بيانات الطلاب — برنامج الدمج الفكري
-// الرمز = آخر 4 أرقام من السجل المدني
-// =====================================================
-// =====================================================
-// مستويات الخطط لكل طالب
-// math: 1 أو 2 | arabic: 1 أو 2
-// عدّل هنا فقط لتغيير مستوى أي طالب
-// =====================================================
-
-
-const BASE_URL = "https://makkah-special.github.io/";
-
-const STUDENTS = {
-  // ===== الصف الأول المتوسط =====
-  "7405": { name: "اياد موسى حولي القرني",        id_full: "1152837405", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4526": { name: "عبدالله صالح أحمد المشجري",     id_full: "2297474526", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "9050": { name: "علي محمد مطر السهيمي",          id_full: "1158819050", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4612": { name: "محمد علي محمد المنتشري",        id_full: "1153884612", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "0977": { name: "مشاري فيحان سميح البقمي",      id_full: "1149660977", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "6630": { name: "يزن محمد مصلح سلامي",          id_full: "1166376630", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  // ===== الصف الثاني المتوسط =====
-  "7543": { name: "احمد عبدالله معطي الجدعاني",   id_full: "1151467543", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4218": { name: "راكان سمير فقيهي اليماني",      id_full: "1205014218", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "7892": { name: "عبدالرحمن حسن سعد القحطاني",   id_full: "1144197892", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4304": { name: "فهد علي حسين الصومالي",        id_full: "1160744304", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  // ===== الصف الثالث المتوسط =====
-  "4511": { name: "حسن خالد حسن صغير",           id_full: "1150674511", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "6984": { name: "خالد ابراهيم منصور العامري",    id_full: "1159536984", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "5210": { name: "سامي اقبال أحمد أحمد",         id_full: "2293985210", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4447": { name: "عبدالله احمد بن ابراهيم الزهراني", id_full: "1157024447", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "5460": { name: "ماجد نادر أحمد عيسى",          id_full: "1162795460", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "7907": { name: "محمد سليمان ابراهيم طواشي",    id_full: "1148347907", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "8315": { name: "مشاري خليل ابراهيم الزهراني",  id_full: "1204218315", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "2407": { name: "مهند محمد عبدالله الشهري",     id_full: "1145092407", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "9867": { name: "مؤيد مشعل علي العمري",         id_full: "1137239867", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "2335": { name: "مؤيد نعيم ابراهيم بدير",       id_full: "2288502335", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "9258": { name: "وليد عبدالله يحي الشهري",      id_full: "1152469258", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
+function showErr(el, msg){
+  el.textContent = msg;
+  el.style.display = "block";
 }
-// =====================================================
-// LOGIC
-// =====================================================
-let currentStudent = null;
+function hideErr(el){ el.style.display="none"; el.textContent=""; }
 
-// ===== STUDENT PHOTO =====
-const SB_PHOTOS = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/dumaj/photos/";
-const SB_URL    = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SB_KEY    = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-
-async function loadStudentPhoto(pin) {
-  const exts = ['jpg','jpeg','png','webp'];
-  for (const ext of exts) {
-    const url = `${SB_PHOTOS}photo-${pin}.${ext}`;
-    try {
-      const r = await fetch(url, { method: 'HEAD' });
-      if (r.ok) {
-        document.getElementById('student-photo-img').src = url;
-        document.getElementById('student-photo-img').style.display = 'block';
-        document.getElementById('student-photo-emoji').style.display = 'none';
-        break;
-      }
-    } catch(e) {}
-  }
-}
-
-async function uploadStudentPhoto(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const pin = currentStudent?.pin;
-  if (!pin) return;
-  const ext = file.name.split('.').pop();
-  const fileName = `reports/dumaj/photos/photo-${pin}.${ext}`;
-  const reader = new FileReader();
-  reader.onload = e => {
-    document.getElementById('student-photo-img').src = e.target.result;
-    document.getElementById('student-photo-img').style.display = 'block';
-    document.getElementById('student-photo-emoji').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-  try {
-    await fetch(`${SB_URL}/storage/v1/object/${fileName}`, {
-      method: 'POST',
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': file.type, 'x-upsert': 'true' },
-      body: file
-    });
-  } catch(e) { console.error('خطأ:', e); }
-}
-
-function loadStudent(pin) {
-  const s = STUDENTS[pin];
-  s.pin = pin;
-  currentStudent = s;
-
-  document.getElementById('disp-name').textContent = s.name;
-  document.getElementById('student-photo-img').style.display = 'none';
-  document.getElementById('student-photo-emoji').style.display = 'block';
-  loadStudentPhoto(pin);
-  document.getElementById('disp-grade').textContent = s.grade === 'انتساب' ? '📋 انتساب' : '🏫 ' + s.grade;
-  document.getElementById('disp-id').textContent = 'السجل: ' + s.id_full;
-
-  // PLAN — من Supabase فقط
-  const SB_PLAN = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/dumaj/";
-
-  document.getElementById('plan-pdfs').innerHTML = `
-    <div class="pdf-section" id="custom-plan-section" style="display:none;">
-      <div class="pdf-section-title">📋 الخطة الفردية المخصصة</div>
-      <div class="pdf-frame-wrap" id="custom-plan-frame"></div>
-      <div class="pdf-actions" id="custom-plan-actions"></div>
-    </div>
-    <div id="no-plan-msg" style="text-align:center;padding:40px;color:#9ca3af;">
-      <div style="font-size:2.5rem;margin-bottom:12px;">📋</div>
-      <div style="font-weight:700;font-size:0.95rem;">لم يتم رفع الخطة الفردية بعد</div>
-      <div style="font-size:0.8rem;margin-top:6px;">سيتم إشعارك عند إضافتها</div>
-    </div>
-  `;
-
-  // التحقق من وجود خطة في Supabase
-  (async () => {
-    const exts = ['pdf','PDF','docx','doc'];
-    for (const ext of exts) {
-      const url = `${SB_PLAN}plan-${pin}.${ext}`;
-      try {
-        const res = await fetch(url, { method: 'HEAD' });
-        if (res.ok) {
-          document.getElementById('no-plan-msg').style.display = 'none';
-          document.getElementById('custom-plan-section').style.display = 'block';
-          document.getElementById('custom-plan-frame').innerHTML =
-            ext === 'pdf' || ext === 'PDF'
-              ? `<iframe src="${url}" title="الخطة الفردية المخصصة"></iframe>`
-              : `<div style="padding:20px;text-align:center;color:#5a6478;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
-          document.getElementById('custom-plan-actions').innerHTML = `
-            <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح الخطة</a>
-            <a href="${url}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة الفردية</a>
-          `;
-          break;
-        }
-      } catch(e) {}
-    }
-  })();
-
-  // REPORTS
-  const rl = document.getElementById('reports-list');
-  const studentPin = s.pin || Object.keys(STUDENTS).find(k => STUDENTS[k] === s) || '';
-  const SB_STORAGE = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/dumaj/";
-
-  // دالة للتحقق من وجود الملف
-  async function checkFile(url) {
-    try {
-      const r = await fetch(url, { method: 'HEAD' });
-      return r.ok;
-    } catch { return false; }
-  }
-
-  // التقارير الثابتة لكل طالب
-  const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
-    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
-  ];
-
-  const reportsWithFiles = s.reports.map((r, i) => ({
-    ...r,
-    fileKey: r.fileKey || `report${i+1}-${studentPin}`
-  }));
-
-  const allReports = [...fixedReports, ...reportsWithFiles];
-
-  // رسم التقارير أولاً
-  rl.innerHTML = allReports.map((r, idx) => `
-    <div class="report-row">
-      <div class="report-left">
-        <div class="report-icon" style="background:${r.bg}">${r.icon}</div>
-        <div>
-          <div class="report-name">${r.title}</div>
-          <div class="report-date">📅 ${r.date}</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span class="tag ${r.tagClass}">${r.tag}</span>
-        <span id="dl-btn-${idx}" class="btn-download-report" style="opacity:0.4;cursor:default;">⏳</span>
-      </div>
-    </div>
-  `).join('');
-
-  // التحقق من وجود كل ملف وتحديث الأزرار
-  allReports.forEach(async (r, idx) => {
-    const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
-    let found = false;
-    for (const ext of extensions) {
-      const url = `${SB_STORAGE}${r.fileKey}.${ext}`;
-      const exists = await checkFile(url);
-      if (exists) {
-        const btn = document.getElementById(`dl-btn-${idx}`);
-        if (btn) {
-          btn.outerHTML = `<a href="${url}" download target="_blank" class="btn-download-report" title="تحميل ${r.title}">⬇️ تحميل</a>`;
-        }
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      const btn = document.getElementById(`dl-btn-${idx}`);
-      if (btn) { btn.textContent = '—'; btn.style.opacity = '0.3'; }
-    }
-  });
-
-  // INFO
-  const it = document.getElementById('info-tbl');
-  it.innerHTML = `
-    <tr><th>اسم الطالب</th><td>${s.name}</td></tr>
-    <tr><th>رقم السجل المدني</th><td>${s.id_full}</td></tr>
-    <tr><th>الصف الدراسي</th><td>${s.grade}</td></tr>
-    <tr><th>البرنامج</th><td><span class="tag tag-green">📘 برنامج الدمج الفكري</span></td></tr>
-    <tr><th>جوال ولي الأمر</th><td><a href="tel:${s.phone}" style="color:var(--green); font-weight:700;">${s.phone}</a></td></tr>
-    <tr><th>العام الدراسي</th><td>1447هـ</td></tr>
-    <tr><th>الفصل الدراسي</th><td>الفصل الثاني</td></tr>
-    ${s.birthdate ? `<tr><th>تاريخ الميلاد</th><td>${s.birthdate}</td></tr>` : ''}
-    ${s.nationality ? `<tr><th>الجنسية</th><td>${s.nationality}</td></tr>` : ''}
-    ${s.age ? `<tr><th>العمر</th><td>${s.age}</td></tr>` : ''}
-    ${s.address ? `<tr><th>العنوان</th><td>${s.address}</td></tr>` : ''}
-    ${s.iq ? `<tr><th>درجة الذكاء</th><td>${s.iq}</td></tr>` : ''}
-    ${s.diagnosis ? `<tr><th>التشخيص</th><td>${s.diagnosis}</td></tr>` : ''}
-    ${s.program_place ? `<tr><th>المكان التربوي</th><td>${s.program_place}</td></tr>` : ''}
-    ${s.program_start ? `<tr><th>تاريخ بدء البرنامج</th><td>${s.program_start}</td></tr>` : ''}
-    ${s.program_end ? `<tr><th>تاريخ إنهاء البرنامج</th><td>${s.program_end}</td></tr>` : ''}
-    ${s.status_health ? `<tr><th>الوضع الصحي</th><td>${s.status_health}</td></tr>` : ''}
-    ${s.status_psych ? `<tr><th>الوضع النفسي</th><td>${s.status_psych}</td></tr>` : ''}
-    ${s.status_social ? `<tr><th>الوضع الاجتماعي</th><td>${s.status_social}</td></tr>` : ''}
-    ${s.sibling_order ? `<tr><th>الترتيب بين إخوته</th><td>${s.sibling_order}</td></tr>` : ''}
-    ${s.economic_level ? `<tr><th>المستوى الاقتصادي</th><td>${s.economic_level}</td></tr>` : ''}
-    ${s.father_edu ? `<tr><th>تعليم الأب</th><td>${s.father_edu}</td></tr>` : ''}
-    ${s.mother_edu ? `<tr><th>تعليم الأم</th><td>${s.mother_edu}</td></tr>` : ''}
-  `;
-
-  // IQRAR
-  const today = new Date();
-  const dateStr = today.toLocaleDateString('ar-SA-u-nu-latn', { year:'numeric', month:'long', day:'numeric' });
-  document.getElementById('iqrar-content').innerHTML = `
-    <div class="iqrar-box">
-      <h3>📄 نص الإقرار</h3>
-      <p>
-        أنا ولي أمر الطالب / <strong>${s.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
-        وأتعهد بالتعاون مع فريق برنامج الدمج الفكري لتحقيق أفضل النتائج لابني.
-      </p>
-    </div>
-
-    <div class="iqrar-fields">
-      <div class="iqrar-field">
-        <label>اسم الطالب</label>
-        <span>${s.name}</span>
-      </div>
-      <div class="iqrar-field">
-        <label>الصف الدراسي</label>
-        <span>${s.grade}</span>
-      </div>
-      <div class="iqrar-field">
-        <label>البرنامج</label>
-        <span>📘 برنامج الدمج الفكري</span>
-      </div>
-      <div class="iqrar-field">
-        <label>تاريخ الإقرار</label>
-        <span id="iqrar-date">${dateStr}</span>
-      </div>
-    </div>
-
-    <div style="font-size:0.84rem; font-weight:700; color:var(--primary); margin-bottom:8px;">✍️ توقيع ولي الأمر (ارسم توقيعك بالأسفل)</div>
-    <div class="sign-area" id="sign-area">
-      <canvas id="sign-canvas"></canvas>
-      <div class="sign-placeholder" id="sign-placeholder">
-        <span>✍️</span>
-        اضغط هنا وارسم توقيعك
-      </div>
-    </div>
-
-    <div class="iqrar-actions">
-      <button class="btn-sign" onclick="submitIqrar()">✅ تأكيد الإقرار والتوقيع</button>
-      <button class="btn-clear-sign" onclick="clearSign()">🗑️ مسح التوقيع</button>
-      <button id="btn-save-pdf" onclick="saveIqrarPDF()" style="display:none; align-items:center; gap:7px; padding:9px 18px; border-radius:9px; background:linear-gradient(135deg,#1a3a5c,#2563a8); color:#fff; border:none; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; cursor:pointer; box-shadow:0 3px 12px rgba(26,58,92,0.3);">🖨️ طباعة / حفظ PDF</button>
-    </div>
-
-    <div class="signed-badge" id="signed-badge">
-      ✅ تم تسجيل إقرارك بنجاح — شكراً لتعاونكم
-    </div>
-  `;
-
-  // Initialize signature canvas
-  initCanvas();
-
-  // SHOW PORTAL
-  // Reset to first tab (info)
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
-  document.querySelectorAll('.tab-pane').forEach((p,i) => p.classList.toggle('active', i===0));
-
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('student-portal').style.display = 'block';
-  window.scrollTo(0, 0);
-}
-
-function logout() {
-  currentStudent = null;
-  document.getElementById('pin-input').value = '';
-  document.getElementById('student-portal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  // Reset tabs
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-plan').classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.tab-btn').classList.add('active');
-}
-
-function openTab(id, btn) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active');
-  // Init canvas when iqrar tab is opened
-  if (id === 'iqrar') setTimeout(initCanvas, 100);
-}
-
-// Legend
-// =====================================================
-// SIGNATURE CANVAS
-// =====================================================
-let isDrawing = false;
-let signCanvas, signCtx;
-
-function initCanvas() {
-  setTimeout(() => {
-    signCanvas = document.getElementById('sign-canvas');
-    if (!signCanvas) return;
-    const area = document.getElementById('sign-area');
-    signCanvas.width = area.offsetWidth;
-    signCanvas.height = area.offsetHeight;
-    signCtx = signCanvas.getContext('2d');
-    signCtx.strokeStyle = '#1a3a5c';
-    signCtx.lineWidth = 2.5;
-    signCtx.lineCap = 'round';
-    signCtx.lineJoin = 'round';
-
-    signCanvas.addEventListener('mousedown', startDraw);
-    signCanvas.addEventListener('mousemove', draw);
-    signCanvas.addEventListener('mouseup', stopDraw);
-    signCanvas.addEventListener('mouseleave', stopDraw);
-    signCanvas.addEventListener('touchstart', e => { e.preventDefault(); startDraw(e.touches[0]); }, {passive:false});
-    signCanvas.addEventListener('touchmove', e => { e.preventDefault(); draw(e.touches[0]); }, {passive:false});
-    signCanvas.addEventListener('touchend', stopDraw);
-  }, 150);
-}
-
-function getPos(e) {
-  const rect = signCanvas.getBoundingClientRect();
-  return {
-    x: (e.clientX - rect.left) * (signCanvas.width / rect.width),
-    y: (e.clientY - rect.top) * (signCanvas.height / rect.height)
-  };
-}
-
-function startDraw(e) {
-  isDrawing = true;
-  let pos = getPos(e);
-  signCtx.beginPath();
-  signCtx.moveTo(pos.x, pos.y);
-  document.getElementById('sign-placeholder').style.display = 'none';
-  document.getElementById('sign-area').classList.add('signed');
-}
-
-function draw(e) {
-  if (!isDrawing) return;
-  let pos = getPos(e);
-  signCtx.lineTo(pos.x, pos.y);
-  signCtx.stroke();
-}
-
-function stopDraw() { isDrawing = false; }
-
-function clearSign() {
-  if (!signCtx) return;
-  signCtx.clearRect(0, 0, signCanvas.width, signCanvas.height);
-  const ph = document.getElementById('sign-placeholder');
-  if (ph) ph.style.display = 'flex';
-  document.getElementById('sign-area').classList.remove('signed');
-  document.getElementById('signed-badge').style.display = 'none';
-  const btnClear = document.querySelector('.btn-sign');
-  if (btnClear) { btnClear.textContent = '✅ تأكيد الإقرار والتوقيع'; btnClear.disabled = false; btnClear.style.opacity = '1'; }
-}
-
-async function submitIqrar() {
-  if (!signCanvas) return;
-  const data = signCtx.getImageData(0, 0, signCanvas.width, signCanvas.height).data;
-  const hasDrawing = Array.from(data).some((v, i) => i % 4 === 3 && v > 0);
-  if (!hasDrawing) {
-    alert('⚠️ يرجى رسم توقيعك في المربع أولاً');
-    return;
-  }
-
-  // Embed signature image into iqrar
-  let signImg = signCanvas.toDataURL('image/png');
-  const signArea = document.getElementById('sign-area');
-  signArea.innerHTML = `<img src="${signImg}" style="width:100%;height:100%;object-fit:contain;padding:6px;">`;
-  signArea.classList.add('signed');
-
-  // حفظ التوقيع في Supabase
-  const sIqrar = currentStudent;
-  const btnSign = document.querySelector('.btn-sign');
-  btnSign.textContent = '⏳ جاري الحفظ...';
-  btnSign.disabled = true;
-  btnSign.style.opacity = '0.7';
-
-  await sbSaveSignature(sIqrar.pin, sIqrar.name, sIqrar.grade, signImg);
-
-  document.getElementById('signed-badge').style.display = 'flex';
-  btnSign.textContent = '✅ تم تسجيل الإقرار وحفظ التوقيع';
-
-  // Show PDF save button
-  document.getElementById('btn-save-pdf').style.display = 'inline-flex';
-}
-
-function saveIqrarPDF() {
-  const sPDF = currentStudent;
-  let signImgPDF = document.querySelector('#sign-area img');
-  const signSrc = signImgPDF ? signImg.src : '';
-  let todayPDF = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
-
-  const win = window.open('', '_blank');
-  win.document.write(`
-    <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
-    <head>
-      <meta charset="UTF-8">
-      <title>إقرار ولي الأمر — ${sPDF.name}</title>
-      <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Cairo',sans-serif; background:#fff; color:#1a1a2e; padding:40px; direction:rtl; }
-        .header { text-align:center; margin-bottom:30px; border-bottom:3px solid #1a3a5c; padding-bottom:20px; }
-        .header h1 { font-size:1.4rem; font-weight:800; color:#1a3a5c; margin-bottom:4px; }
-        .header p { font-size:0.85rem; color:#5a6478; }
-        .badge { display:inline-block; background:#1a3a5c; color:#fff; padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:10px; }
-        .iqrar-text { background:#fffbf0; border:1px solid #f0d898; border-right:4px solid #c8973a; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
-        .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
-        .field { border:1px solid #e0d8c8; border-radius:8px; padding:10px 14px; }
-        .field-label { font-size:0.72rem; font-weight:700; color:#5a6478; margin-bottom:4px; }
-        .field-value { font-size:0.9rem; font-weight:800; color:#1a3a5c; }
-        .sign-section { margin-top:24px; }
-        .sign-title { font-size:0.85rem; font-weight:700; color:#1a3a5c; margin-bottom:10px; }
-        .sign-box { border:2px solid #1a3a5c; border-radius:10px; height:120px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-        .sign-box img { max-height:110px; }
-        .footer { margin-top:30px; text-align:center; font-size:0.75rem; color:#9ca3af; border-top:1px solid #e0d8c8; padding-top:14px; }
-        @media print { body { padding:20px; } }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <div class="badge">وزارة التعليم — مدرسة مكة المكرمة المتوسطة</div>
-        <h1>إقرار اطلاع ولي الأمر على الخطة الفردية</h1>
-        <p>قسم ذوي الإعاقة — برنامج الدمج الفكري</p>
-      </div>
-
-      <div class="iqrar-text">
-        أنا ولي أمر الطالب / <strong>${sPDF.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
-        وأتعهد بالتعاون مع فريق برنامج الدمج الفكري لتحقيق أفضل النتائج لابني.
-      </div>
-
-      <div class="fields">
-        <div class="field"><div class="field-label">اسم الطالب</div><div class="field-value">${sPDF.name}</div></div>
-        <div class="field"><div class="field-label">الصف الدراسي</div><div class="field-value">${sPDF.grade}</div></div>
-        <div class="field"><div class="field-label">البرنامج</div><div class="field-value">📘 برنامج الدمج الفكري</div></div>
-        <div class="field"><div class="field-label">تاريخ الإقرار</div><div class="field-value">${todayPDF}</div></div>
-      </div>
-
-      <div class="sign-section">
-        <div class="sign-title">✍️ توقيع ولي الأمر</div>
-        <div class="sign-box">
-          ${signSrc ? `<img src="${signSrc}">` : '<span style="color:#9ca3af;font-size:0.85rem;">لا يوجد توقيع</span>'}
-        </div>
-      </div>
-
-      <div class="footer">
-        © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
-      </div>
-      <scr' + 'ipt>window.onload=()=>window.print();</scr' + 'ipt>
-    </body>
-    </html>
-  `);
-  win.document.close();
-}
-
-
-
-// =====================================================
-// ADMIN PANEL FUNCTIONS
-// =====================================================
-let editingPin = null;
-
-function checkPin() {
-  const enteredPin = document.getElementById('pin-input').value.trim();
-  const errMsg = document.getElementById('error-msg');
-  const pinInput = document.getElementById('pin-input');
-
-  if (enteredPin === ADMIN_PIN) {
-    errMsg.classList.remove('show'); 
-    pinInput.classList.remove('error');
-    loadAdminPanel();
-    return;
-  }
-
-  errMsg.classList.remove('show');
-  pinInput.classList.remove('error');
-
-  fetchStudentFromDB(enteredPin).then(row => {
-    if (row) {
-      STUDENTS[enteredPin] = rowToStudent(row);
-      loadStudent(enteredPin);
-      return;
-    }
-
-    errMsg.classList.add('show');
-    pinInput.classList.add('error');
-    pinInput.value = '';
-    setTimeout(() => pinInput.classList.remove('error'), 500);
-  });
-}
-
-
-async function loadAdminPanel() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('student-portal').style.display = 'none';
-  document.getElementById('admin-portal').style.display = 'block';
-  document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
-  window.scrollTo(0, 0);
-  await syncFromSupabase();
-  renderStudentCards();
-}
-
-// ===== SUPABASE (DATABASE) SYNC =====
-const SB_TABLE = SUPABASE_URL + '/rest/v1/dumaj_students';
-
-const SB_HEADERS_GET = {
-  'apikey': SUPABASE_KEY,
-  'Authorization': 'Bearer ' + SUPABASE_KEY
-};
-
-const SB_HEADERS_WRITE = {
-  'apikey': SUPABASE_KEY,
-  'Authorization': 'Bearer ' + SUPABASE_KEY,
-  'Content-Type': 'application/json',
-  'Prefer': 'resolution=merge-duplicates,return=minimal'
-};
-
-function rowToStudent(row) {
-  return {
-    ...row,
-    plan: Array.isArray(row.plan) ? row.plan : (row.plan || []),
-    reports: Array.isArray(row.reports) ? row.reports : (row.reports || []),
-    followup: Array.isArray(row.followup) ? row.followup : (row.followup || [])
-  };
-}
-
-function studentToRow(pin, s) {
-  return {
-    ...s,
-    pin,
-    updated_at: new Date().toISOString()
-  };
-}
-
-async function fetchStudentFromDB(pin) {
+/* =====================================================
+   3) DB functions (Database only)
+   ===================================================== */
+async function dbGet(pin){
   const url = `${SB_TABLE}?pin=eq.${encodeURIComponent(pin)}&select=*`;
-  const res = await fetch(url, { headers: SB_HEADERS_GET });
-  if (!res.ok) return null;
+  const res = await fetch(url, { headers: H_GET });
+  if(!res.ok) return null;
   const rows = await res.json();
   return rows && rows.length ? rows[0] : null;
 }
-
-async function upsertToSupabase(pin, studentData) {
-  if (!pin && window.currentStudent && window.currentStudent.pin) {
-    pin = window.currentStudent.pin;
-  }
-
-  const row = studentToRow(pin, studentData);
+async function dbList(){
+  const url = `${SB_TABLE}?select=pin,name,grade,phone,id_full,details,plan_text&order=grade.asc,name.asc`;
+  const res = await fetch(url, { headers: H_GET });
+  if(!res.ok) return [];
+  return await res.json();
+}
+async function dbUpsert(row){
   const url = `${SB_TABLE}?on_conflict=pin`;
-
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: SB_HEADERS_WRITE,
-    body: JSON.stringify(row)
-  });
-
-  if (!res.ok) {
+  const payload = { ...row, updated_at: new Date().toISOString() };
+  const res = await fetch(url, { method:"POST", headers:H_WRITE, body: JSON.stringify(payload)});
+  if(!res.ok){
     const err = await res.text();
-    console.error('DB upsert error:', err);
-    throw new Error(err.slice(0, 200));
+    throw new Error(err);
   }
-
-  console.log("Saved to Supabase successfully");
 }
-
-async function deleteFromSupabase(pin) {
+async function dbDelete(pin){
   const url = `${SB_TABLE}?pin=eq.${encodeURIComponent(pin)}`;
-  const res = await fetch(url, { method: 'DELETE', headers: SB_HEADERS_WRITE });
-
-  if (!res.ok) {
+  const res = await fetch(url, { method:"DELETE", headers:H_WRITE });
+  if(!res.ok){
     const err = await res.text();
-    console.error('DB delete error:', err);
-    throw new Error(err.slice(0, 200));
+    throw new Error(err);
   }
 }
 
+/* =====================================================
+   4) Login
+   ===================================================== */
+async function handleLogin(){
+  const pin = document.getElementById("pinInput").value.trim();
+  const err = document.getElementById("loginErr");
+  hideErr(err);
 
+  if(!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.includes("ضع-مفتاح")){
+    showErr(err, "⚠️ لازم تحط anon key داخل الملف (SUPABASE_ANON_KEY).");
+    return;
+  }
 
+  if(pin === ADMIN_PIN){
+    mode = "admin";
+    await openAdmin();
+    return;
+  }
 
-function adminLogout() {
-  document.getElementById('pin-input').value = '';
-  document.getElementById('admin-portal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
+  if(pin.length !== 4){
+    showErr(err, "⚠️ أدخل 4 أرقام.");
+    return;
+  }
+
+  const row = await dbGet(pin);
+  if(!row){
+    showErr(err, "❌ الرمز غير صحيح أو الطالب غير موجود في قاعدة البيانات.");
+    return;
+  }
+
+  mode = "student";
+  currentPin = pin;
+  cache[pin] = row;
+  openStudent(row);
 }
 
-function openAdminTab(id, btn) {
-  document.querySelectorAll('#admin-portal .admin-tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('admin-tab-' + id).classList.add('active');
-  btn.classList.add('active');
+function logout(){
+  mode="none"; currentPin=null; editingPin=null;
+  document.getElementById("pinInput").value="";
+  document.getElementById("loginView").style.display="block";
+  document.getElementById("studentView").style.display="none";
+  document.getElementById("adminView").style.display="none";
 }
 
-function renderStudentCards() {
-  const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
-  const grid = document.getElementById('students-grid');
-  const entries = Object.entries(STUDENTS).filter(([pin, s]) =>
-    s.name.toLowerCase().includes(search) || pin.includes(search)
+/* =====================================================
+   5) Student view
+   ===================================================== */
+function openStudent(row){
+  document.getElementById("loginView").style.display="none";
+  document.getElementById("adminView").style.display="none";
+  document.getElementById("studentView").style.display="block";
+
+  document.getElementById("stuName").textContent = row.name || "—";
+  document.getElementById("stuMeta").textContent = `${row.grade || "—"} • 📘 برنامج الدمج الفكري`;
+  document.getElementById("stuPinPill").textContent = `PIN: ${row.pin}`;
+
+  document.getElementById("s_name").value = row.name || "";
+  document.getElementById("s_id").value = row.id_full || "";
+  document.getElementById("s_grade").value = row.grade || "";
+  document.getElementById("s_phone").value = row.phone || "";
+
+  const d = row.details || {};
+  document.getElementById("sd_birth").value = d.birthdate || "";
+  document.getElementById("sd_nat").value = d.nationality || "";
+  document.getElementById("sd_age").value = d.age || "";
+  document.getElementById("sd_addr").value = d.address || "";
+  document.getElementById("sd_iq").value = d.iq || "";
+  document.getElementById("sd_place").value = d.program_place || "";
+  document.getElementById("sd_diag").value = d.diagnosis || "";
+  document.getElementById("sd_health").value = d.status_health || "";
+  document.getElementById("sd_psych").value = d.status_psych || "";
+  document.getElementById("sd_social").value = d.status_social || "";
+  document.getElementById("sd_sib").value = d.sibling_order || "";
+  document.getElementById("sd_eco").value = d.economic_level || "";
+  document.getElementById("sd_fedu").value = d.father_edu || "";
+  document.getElementById("sd_medu").value = d.mother_edu || "";
+
+  document.getElementById("planText").textContent = row.plan_text || "لا توجد خطة نصية.";
+
+  openStuTab("basic", document.querySelector(".tabs .tab"));
+  window.scrollTo(0,0);
+}
+
+function openStuTab(id, btn){
+  document.querySelectorAll("#studentView .pane").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll("#studentView .tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById("stu-"+id).classList.add("active");
+  btn.classList.add("active");
+}
+
+/* =====================================================
+   6) Admin view
+   ===================================================== */
+async function openAdmin(){
+  document.getElementById("loginView").style.display="none";
+  document.getElementById("studentView").style.display="none";
+  document.getElementById("adminView").style.display="block";
+
+  await refreshList();
+  openNew();
+  window.scrollTo(0,0);
+}
+
+async function refreshList(){
+  const rows = await dbList();
+  cache = {};
+  rows.forEach(r=>cache[r.pin]=r);
+  document.getElementById("countPill").textContent = `${rows.length} طالب`;
+  renderList();
+}
+
+function renderList(){
+  const q = (document.getElementById("searchInput").value || "").toLowerCase().trim();
+  const list = Object.values(cache).filter(r =>
+    (r.name || "").toLowerCase().includes(q) ||
+    (r.pin || "").includes(q)
   );
-  entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, 'ar'));
-  grid.innerHTML = entries.map(([pin, s]) => `
-    <div class="stu-card" onclick="openEditModal('${pin}')">
-      <div class="stu-card-avatar">🧠</div>
-      <div style="flex:1;min-width:0;">
-        <div class="stu-card-name">${s.name}</div>
-        <div class="stu-card-meta">${s.grade}</div>
-        <div style="margin-top:4px;display:flex;gap:6px;align-items:center;">
-          <span class="stu-card-pin">${pin}</span>
-          <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
-        </div>
+  const el = document.getElementById("list");
+  el.innerHTML = list.map(r=>`
+    <div class="stu" onclick="openEdit('${r.pin}')">
+      <div class="av">🧠</div>
+      <div style="flex:1;min-width:0">
+        <div class="name">${escapeHtml(r.name || "—")}</div>
+        <div class="meta">${escapeHtml(r.grade || "—")} • <span class="pin">${r.pin}</span></div>
       </div>
-      <div style="color:var(--muted);font-size:1.1rem;">✏️</div>
+      <div style="color:var(--muted);font-size:1.1rem">✏️</div>
     </div>
-  `).join('');
-  document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
+  `).join("");
 }
 
-function openEditModal(pin) {
-  editingPin = pin;
-  const sModal = STUDENTS[pin];
-  document.getElementById('modal-title').textContent = '✏️ تعديل: ' + sModal.name;
-  document.getElementById('edit-name').value = sModal.name;
-  document.getElementById('edit-grade').value = sModal.grade;
-  document.getElementById('edit-id').value = sModal.id_full;
-  document.getElementById('edit-phone').value = sModal.phone || '';
-  renderPlanEditor(sModal.plan || []);
-  renderFollowupEditor(sModal.followup || []);
-  openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
-  document.getElementById('edit-modal').classList.add('open');
-}
-
-function openEditTab(id, btn) {
-  ['basic','plan','followup','details'].forEach(t => {
-    document.getElementById('edit-tab-' + t).style.display = t === id ? 'block' : 'none';
-  });
-  document.querySelectorAll('#edit-modal .admin-tab-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-}
-
-function closeModal() {
-  document.getElementById('edit-modal').classList.remove('open');
+function openNew(){
   editingPin = null;
+  document.getElementById("formTitle").textContent = "➕ إضافة طالب";
+  clearForm();
 }
 
-function renderPlanEditor(plan) {
-  let container = document.getElementById('plan-goals-editor');
-  container.innerHTML = plan.map((g, i) => goalRowHTML(g.title, g.desc, i)).join('');
+function openEdit(pin){
+  const r = cache[pin];
+  if(!r) return;
+  editingPin = pin;
+  document.getElementById("formTitle").textContent = "✏️ تعديل الطالب (PIN: " + pin + ")";
+  hideErr(document.getElementById("formErr"));
+
+  document.getElementById("f_name").value = r.name || "";
+  document.getElementById("f_id").value = r.id_full || "";
+  document.getElementById("f_grade").value = r.grade || "";
+  document.getElementById("f_phone").value = r.phone || "";
+  document.getElementById("f_pin").value = r.pin || "";
+  document.getElementById("f_plan_text").value = r.plan_text || "";
+
+  const d = r.details || {};
+  document.getElementById("d_birth").value = d.birthdate || "";
+  document.getElementById("d_nat").value = d.nationality || "";
+  document.getElementById("d_age").value = d.age || "";
+  document.getElementById("d_addr").value = d.address || "";
+  document.getElementById("d_iq").value = d.iq || "";
+  document.getElementById("d_place").value = d.program_place || "";
+  document.getElementById("d_diag").value = d.diagnosis || "";
+  document.getElementById("d_health").value = d.status_health || "";
+  document.getElementById("d_psych").value = d.status_psych || "";
+  document.getElementById("d_social").value = d.status_social || "";
+  document.getElementById("d_sib").value = d.sibling_order || "";
+  document.getElementById("d_eco").value = d.economic_level || "";
+  document.getElementById("d_fedu").value = d.father_edu || "";
+  document.getElementById("d_medu").value = d.mother_edu || "";
 }
 
-function goalRowHTML(title, desc, i) {
-  return `<div class="goal-row" id="goal-row-${i}">
-    <button class="btn-remove-goal" onclick="removeGoalRow(${i})">✕</button>
-    <input type="text" class="form-input" placeholder="عنوان الهدف" value="${title||''}" data-goal-title="${i}">
-    <input type="text" class="form-input" placeholder="وصف الهدف" value="${desc||''}" data-goal-desc="${i}">
-  </div>`;
+function clearForm(){
+  ["f_name","f_id","f_grade","f_phone","f_plan_text",
+   "d_birth","d_nat","d_age","d_addr","d_iq","d_place",
+   "d_diag","d_health","d_psych","d_social","d_sib","d_eco","d_fedu","d_medu"
+  ].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("f_pin").value = "";
+  hideErr(document.getElementById("formErr"));
 }
 
-function addGoalRow() {
-  let container = document.getElementById('plan-goals-editor');
-  let i = container.children.length;
-  let div = document.createElement('div');
-  div.innerHTML = goalRowHTML('', '', i);
-  container.appendChild(div.firstChild);
+function updatePinPreview(){
+  const id = document.getElementById("f_id").value.trim();
+  document.getElementById("f_pin").value = id.length >= 4 ? id.slice(-4) : "";
 }
 
-function removeGoalRow(i) { document.getElementById('goal-row-' + i)?.remove(); }
+/* =====================================================
+   7) Save / Delete
+   ===================================================== */
+async function save(){
+  const err = document.getElementById("formErr");
+  hideErr(err);
 
-const FU_OPTIONS = ['✓','~','✗'];
+  const name = document.getElementById("f_name").value.trim();
+  const id_full = document.getElementById("f_id").value.trim();
+  const grade = document.getElementById("f_grade").value.trim();
+  const phone = document.getElementById("f_phone").value.trim();
+  const pin = (id_full.length >= 4) ? id_full.slice(-4) : "";
 
-function renderFollowupEditor(followup) {
-  document.getElementById('followup-editor').innerHTML = followup.map((f, i) => followupRowHTML(f, i)).join('');
-}
-
-function followupRowHTML(f, i) {
-  const sel = (val, key) => FU_OPTIONS.map(o => `<option value="${o}" ${f[key]===o?'selected':''}>${o}</option>`).join('');
-  return `<div class="fu-edit-row" id="fu-row-${i}">
-    <input type="text" placeholder="المهارة" value="${f.skill||''}" data-fu-skill="${i}">
-    <select data-fu-m1="${i}">${sel(f.m1,'m1')}</select>
-    <select data-fu-m2="${i}">${sel(f.m2,'m2')}</select>
-    <select data-fu-m3="${i}">${sel(f.m3,'m3')}</select>
-    <select data-fu-m4="${i}">${sel(f.m4,'m4')}</select>
-    <select data-fu-m5="${i}">${sel(f.m5,'m5')}</select>
-    <button onclick="removeFuRow(${i})" style="background:#fee2e2;color:#dc2626;border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:0.8rem;">✕</button>
-  </div>`;
-}
-
-function addFollowupRow() {
-  let container = document.getElementById('followup-editor');
-  let i = container.children.length;
-  let div = document.createElement('div');
-  div.innerHTML = followupRowHTML({skill:'',m1:'~',m2:'~',m3:'~',m4:'~',m5:'~'}, i);
-  container.appendChild(div.firstChild);
-}
-
-function removeFuRow(i) { document.getElementById('fu-row-' + i)?.remove(); }
-
-function saveStudentEdits() {
-  if (!editingPin) return;
-  const sEdit = STUDENTS[editingPin];
-  sEdit.name    = document.getElementById('edit-name').value.trim() || sEdit.name;
-  sEdit.grade   = document.getElementById('edit-grade').value.trim() || sEdit.grade;
-  sEdit.id_full = document.getElementById('edit-id').value.trim() || sEdit.id_full;
-  sEdit.phone   = document.getElementById('edit-phone').value.trim();
-  // البيانات التفصيلية
-  sEdit.birthdate = document.getElementById('edit-birthdate').value.trim();
-  sEdit.nationality = document.getElementById('edit-nationality').value.trim();
-  sEdit.age = document.getElementById('edit-age').value.trim();
-  sEdit.address = document.getElementById('edit-address').value.trim();
-  sEdit.iq = document.getElementById('edit-iq').value.trim();
-  sEdit.sibling_order = document.getElementById('edit-sibling-order').value.trim();
-  sEdit.economic_level = document.getElementById('edit-economic-level').value.trim();
-  sEdit.father_edu = document.getElementById('edit-father-edu').value.trim();
-  sEdit.mother_edu = document.getElementById('edit-mother-edu').value.trim();
-  sEdit.status_psych = document.getElementById('edit-status-psych').value.trim();
-  sEdit.status_social = document.getElementById('edit-status-social').value.trim();
-  sEdit.status_health = document.getElementById('edit-status-health').value.trim();
-  sEdit.diagnosis = document.getElementById('edit-diagnosis').value.trim();
-  sEdit.program_place = document.getElementById('edit-program-place').value.trim();
-  sEdit.program_start = document.getElementById('edit-program-start').value.trim();
-  sEdit.program_end = document.getElementById('edit-program-end').value.trim();
-  const goalTitles = document.querySelectorAll('[data-goal-title]');
-  const goalDescs  = document.querySelectorAll('[data-goal-desc]');
-  sEdit.plan = [];
-  goalTitles.forEach((el, i) => {
-    const title = el.value.trim();
-    const desc  = goalDescs[i]?.value.trim() || '';
-    if (title) sEdit.plan.push({ title, desc, color: '#c25a00' });
-  });
-  const fuSkills = document.querySelectorAll('[data-fu-skill]');
-  sEdit.followup = [];
-  fuSkills.forEach((el, i) => {
-    const skill = el.value.trim();
-    if (skill) sEdit.followup.push({
-      skill,
-      m1: document.querySelector(`[data-fu-m1="${i}"]`)?.value || '~',
-      m2: document.querySelector(`[data-fu-m2="${i}"]`)?.value || '~',
-      m3: document.querySelector(`[data-fu-m3="${i}"]`)?.value || '~',
-      m4: document.querySelector(`[data-fu-m4="${i}"]`)?.value || '~',
-      m5: document.querySelector(`[data-fu-m5="${i}"]`)?.value || '~',
-    });
-  });
-  closeModal();
-  renderStudentCards();
-  showToast('⏳ جاري الحفظ...');
-  upsertToSupabase(editingPin, sEdit).then(() => showToast('✅ تم حفظ بيانات ' + sEdit.name));
-}
-
-function deleteStudent() {
-  if (!editingPin) return;
-  const sDel = STUDENTS[editingPin];
-  if (!confirm(`⚠️ هل أنت متأكد من حذف الطالب "${sDel.name}"?`)) return;
-  const deletedPin = editingPin;
-  delete STUDENTS[deletedPin];
-  closeModal();
-  renderStudentCards();
-  deleteFromSupabase(deletedPin).then(() => showToast('🗑️ تم حذف الطالب ' + sDel.name));
-}
-
-document.addEventListener('input', e => {
-  if (e.target.id === 'new-id') {
-    const val = e.target.value.trim();
-    document.getElementById('new-pin-preview').value = val.length >= 4 ? val.slice(-4) : '';
+  if(!name || !id_full || !grade){
+    showErr(err, "⚠️ الاسم + السجل + الصف مطلوبة.");
+    return;
   }
-});
+  if(pin.length !== 4){
+    showErr(err, "⚠️ السجل لازم يكون صحيح عشان نطلع PIN.");
+    return;
+  }
 
-function addNewStudent() {
-  const newName  = document.getElementById('new-name').value.trim();
-  const newId    = document.getElementById('new-id').value.trim();
-  const newGrade = document.getElementById('new-grade').value.trim();
-  const newPhone = document.getElementById('new-phone').value.trim();
-  if (!newName || !newId || !newGrade) { alert('⚠️ يرجى تعبئة الاسم والسجل والصف'); return; }
-  if (newId.length < 4) { alert('⚠️ رقم السجل قصير جداً'); return; }
-  const newPin = newId.slice(-4);
-  if (STUDENTS[newPin]) { alert(`⚠️ الرمز "${newPin}" مستخدم للطالب: ${STUDENTS[newPin].name}`); return; }
-  STUDENTS[newPin] = { name: newName, id_full: newId, grade: newGrade, phone: newPhone, plan: [], reports: [], followup: [] };
-  ['new-name','new-id','new-grade','new-phone','new-pin-preview'].forEach(fieldId => {
-    const fieldEl = document.getElementById(fieldId); if (fieldEl) fieldEl.value = '';
-  });
-  openAdminTab('list', document.querySelector('.admin-tab-btn'));
-  renderStudentCards();
-  showToast('⏳ جاري الحفظ...');
-  upsertToSupabase(newPin, STUDENTS[newPin]).then(() =>
-    showToast('✅ تمت إضافة الطالب ' + newName + ' — الرمز: ' + newPin)
-  );
+  const details = {
+    birthdate: document.getElementById("d_birth").value || "",
+    nationality: document.getElementById("d_nat").value.trim() || "",
+    age: document.getElementById("d_age").value.trim() || "",
+    address: document.getElementById("d_addr").value.trim() || "",
+    iq: document.getElementById("d_iq").value.trim() || "",
+    program_place: document.getElementById("d_place").value.trim() || "",
+    diagnosis: document.getElementById("d_diag").value.trim() || "",
+    status_health: document.getElementById("d_health").value.trim() || "",
+    status_psych: document.getElementById("d_psych").value.trim() || "",
+    status_social: document.getElementById("d_social").value.trim() || "",
+    sibling_order: document.getElementById("d_sib").value.trim() || "",
+    economic_level: document.getElementById("d_eco").value.trim() || "",
+    father_edu: document.getElementById("d_fedu").value.trim() || "",
+    mother_edu: document.getElementById("d_medu").value.trim() || ""
+  };
+
+  const row = {
+    pin,
+    name,
+    id_full,
+    grade,
+    phone,
+    plan_text: document.getElementById("f_plan_text").value.trim() || "",
+    details
+  };
+
+  try{
+    toast("⏳ جاري الحفظ...");
+    await dbUpsert(row);
+    toast("✅ تم الحفظ");
+    await refreshList();
+    openEdit(pin);
+  }catch(e){
+    console.error(e);
+    showErr(err, "❌ فشل الحفظ. افتح Console وشوف الخطأ. (غالبًا RLS أو anon key)");
+  }
 }
 
-function showToast(msg) {
-  const t = document.getElementById('success-toast');
-  t.textContent = msg; t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 3000);
+async function remove(){
+  const err = document.getElementById("formErr");
+  hideErr(err);
+  const pin = editingPin || document.getElementById("f_pin").value.trim();
+  if(!pin){
+    showErr(err, "⚠️ اختر طالب أولاً.");
+    return;
+  }
+  if(!confirm("⚠️ متأكد حذف الطالب؟")) return;
+
+  try{
+    toast("⏳ جاري الحذف...");
+    await dbDelete(pin);
+    toast("🗑️ تم الحذف");
+    await refreshList();
+    openNew();
+  }catch(e){
+    console.error(e);
+    showErr(err, "❌ فشل الحذف. (RLS أو anon key)");
+  }
 }
 
-document.getElementById('edit-modal')?.addEventListener('click', e => {
-  if (e.target === document.getElementById('edit-modal')) closeModal();
-});
+/* =====================================================
+   8) small utils
+   ===================================================== */
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
 </script>
+
 </body>
 </html>
