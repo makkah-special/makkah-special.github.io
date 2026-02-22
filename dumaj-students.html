@@ -1477,7 +1477,7 @@ async function submitIqrar() {
 function saveIqrarPDF() {
   const sPDF = currentStudent;
   let signImgPDF = document.querySelector('#sign-area img');
-  const signSrc = signImgPDF ? signImg.src : '';
+  const signSrc = signImgPDF ? signImgPDF.src : '';
   let todayPDF = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
 
   const win = window.open('', '_blank');
@@ -1596,7 +1596,7 @@ async function syncFromSupabase() {
 
 async function loadStudentDataFromStorage(pin) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json`);
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json?t=${Date.now()}`);
     if (!res.ok) return; // لا يوجد ملف محفوظ بعد
     const data = await res.json();
     if (data && STUDENTS[pin]) {
@@ -1606,6 +1606,22 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].phone    = data.phone    || STUDENTS[pin].phone || '';
       STUDENTS[pin].plan     = data.plan     || STUDENTS[pin].plan     || [];
       STUDENTS[pin].followup = data.followup || STUDENTS[pin].followup || [];
+      STUDENTS[pin].birthdate = data.birthdate || '';
+      STUDENTS[pin].nationality = data.nationality || '';
+      STUDENTS[pin].age = data.age || '';
+      STUDENTS[pin].address = data.address || '';
+      STUDENTS[pin].iq = data.iq || '';
+      STUDENTS[pin].sibling_order = data.sibling_order || '';
+      STUDENTS[pin].economic_level = data.economic_level || '';
+      STUDENTS[pin].father_edu = data.father_edu || '';
+      STUDENTS[pin].mother_edu = data.mother_edu || '';
+      STUDENTS[pin].status_psych = data.status_psych || '';
+      STUDENTS[pin].status_social = data.status_social || '';
+      STUDENTS[pin].status_health = data.status_health || '';
+      STUDENTS[pin].diagnosis = data.diagnosis || '';
+      STUDENTS[pin].program_place = data.program_place || '';
+      STUDENTS[pin].program_start = data.program_start || '';
+      STUDENTS[pin].program_end = data.program_end || '';
     }
   } catch(e) { /* ملف غير موجود */ }
 }
@@ -1624,7 +1640,23 @@ async function upsertToSupabase(pin, studentData) {
       grade:    studentData.grade,
       phone:    studentData.phone || '',
       plan:     studentData.plan     || [],
-      followup: studentData.followup || []
+      followup: studentData.followup || [],
+      birthdate:  studentData.birthdate || '',
+      nationality:  studentData.nationality || '',
+      age:  studentData.age || '',
+      address:  studentData.address || '',
+      iq:  studentData.iq || '',
+      sibling_order:  studentData.sibling_order || '',
+      economic_level:  studentData.economic_level || '',
+      father_edu:  studentData.father_edu || '',
+      mother_edu:  studentData.mother_edu || '',
+      status_psych:  studentData.status_psych || '',
+      status_social:  studentData.status_social || '',
+      status_health:  studentData.status_health || '',
+      diagnosis:  studentData.diagnosis || '',
+      program_place:  studentData.program_place || '',
+      program_start:  studentData.program_start || '',
+      program_end:  studentData.program_end || '',
     });
     const blob = new Blob([jsonStr], {type: 'application/json'});
     const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
@@ -1689,7 +1721,8 @@ function renderStudentCards() {
   document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
 }
 
-function openEditModal(pin) {
+async function openEditModal(pin) {
+  await loadStudentDataFromStorage(pin);
   editingPin = pin;
   const sModal = STUDENTS[pin];
   document.getElementById('modal-title').textContent = '✏️ تعديل: ' + sModal.name;
@@ -1699,6 +1732,24 @@ function openEditModal(pin) {
   document.getElementById('edit-phone').value = sModal.phone || '';
   renderPlanEditor(sModal.plan || []);
   renderFollowupEditor(sModal.followup || []);
+  // البيانات التفصيلية
+  const setVal = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ''; };
+  setVal('edit-birthdate', sModal.birthdate);
+  setVal('edit-nationality', sModal.nationality);
+  setVal('edit-age', sModal.age);
+  setVal('edit-address', sModal.address);
+  setVal('edit-iq', sModal.iq);
+  setVal('edit-sibling-order', sModal.sibling_order);
+  setVal('edit-economic-level', sModal.economic_level);
+  setVal('edit-father-edu', sModal.father_edu);
+  setVal('edit-mother-edu', sModal.mother_edu);
+  setVal('edit-status-psych', sModal.status_psych);
+  setVal('edit-status-social', sModal.status_social);
+  setVal('edit-status-health', sModal.status_health);
+  setVal('edit-diagnosis', sModal.diagnosis);
+  setVal('edit-program-place', sModal.program_place);
+  setVal('edit-program-start', sModal.program_start);
+  setVal('edit-program-end', sModal.program_end);
   openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
   document.getElementById('edit-modal').classList.add('open');
 }
@@ -1828,6 +1879,20 @@ function deleteStudent() {
   closeModal();
   renderStudentCards();
   deleteFromSupabase(deletedPin).then(() => showToast('🗑️ تم حذف الطالب ' + sDel.name));
+}
+
+// ===== DELETE FROM SUPABASE =====
+async function deleteFromSupabase(pin) {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+      }
+    });
+    if (!res.ok) console.error('Delete error:', await res.text());
+  } catch(e) { console.error('Delete error:', e); }
 }
 
 document.addEventListener('input', e => {
