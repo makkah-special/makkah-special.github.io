@@ -1037,7 +1037,7 @@ const ADMIN_PIN = "7410"; // رمز مشرف الدمج
 
 async function sbSaveSignature(pin, name, grade, signData) {
   try {
-    await fetch(SUPABASE_URL + '/rest/v1/signatures', {
+    await fetch(SUPABASE_URL + '/rest/v1/signatures_dumaj', {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_KEY,
@@ -1052,7 +1052,7 @@ async function sbSaveSignature(pin, name, grade, signData) {
         signature_data: signData
       })
     });
-    console.log('✅ التوقيع حُفظ في Supabase');
+    console.log('✅ التوقيع حُفظ في Supabase - الدمج الفكري');
   } catch(e) {
     console.error('خطأ في حفظ التوقيع:', e);
   }
