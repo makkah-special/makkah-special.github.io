@@ -1702,6 +1702,11 @@ async function loadStudentWithSync(pin) {
 }
 
 async function upsertToSupabase(pin, studentData) {
+  // إصلاح: إذا pin فاضي خذه من الطالب الجاري
+  if (!pin && window.currentStudent && window.currentStudent.pin) {
+    pin = window.currentStudent.pin;
+  }
+
   const row = studentToRow(pin, studentData);
   const url = `${SB_TABLE}?on_conflict=pin`;
   const res = await fetch(url, {
