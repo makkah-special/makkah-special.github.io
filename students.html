@@ -926,6 +926,7 @@
       <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
       <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
+      <button class="tab-btn" onclick="openTab('skills',this)">📊 مهارات</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
     </div>
 
@@ -953,6 +954,54 @@
       </div>
     </div>
 
+
+    <!-- SKILLS -->
+    <div class="tab-pane" id="tab-skills">
+      <div class="s-card">
+        <div class="s-card-head">📊 تقييم المهارات</div>
+        <div style="padding:20px;" id="skills-content">
+          <div id="skills-loading" style="text-align:center;padding:40px;color:#9ca3af;">
+            <div style="font-size:2rem;margin-bottom:10px;">⏳</div>
+            <div style="font-size:0.9rem;font-weight:700;">جاري تحميل تقييم المهارات...</div>
+          </div>
+          <div id="skills-table-wrap" style="display:none;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+              <div style="font-size:0.85rem;font-weight:700;color:#1a6b4a;">📋 جدول متابعة مهارات الطالب</div>
+              <button onclick="downloadSkillsExcel()" class="btn-pdf btn-pdf-primary" style="font-size:0.8rem;padding:8px 14px;">📥 تحميل Excel</button>
+            </div>
+            <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);">
+              <table id="skills-tbl" style="width:100%;border-collapse:collapse;font-size:0.82rem;min-width:580px;">
+                <thead>
+                  <tr style="background:linear-gradient(135deg,#1a6b4a,#22a06b);color:#fff;">
+                    <th style="padding:11px 14px;text-align:right;font-weight:700;min-width:160px;">المهارة</th>
+                    <th style="padding:11px 14px;text-align:center;font-weight:700;">المحور</th>
+                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م١</th>
+                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٢</th>
+                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٣</th>
+                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٤</th>
+                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٥</th>
+                    <th style="padding:11px 14px;text-align:right;font-weight:700;">الملاحظات</th>
+                  </tr>
+                </thead>
+                <tbody id="skills-tbody"></tbody>
+              </table>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+              <span style="font-size:0.75rem;background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:6px;font-weight:700;">✓ تحقق</span>
+              <span style="font-size:0.75rem;background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:6px;font-weight:700;">~ جزئياً</span>
+              <span style="font-size:0.75rem;background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:6px;font-weight:700;">✗ لم يتحقق</span>
+              <span style="font-size:0.75rem;background:#f3f4f6;color:#6b7280;padding:3px 10px;border-radius:6px;font-weight:700;">— لم يُقيَّم</span>
+            </div>
+          </div>
+          <div id="no-skills-msg" style="display:none;text-align:center;padding:40px;color:#9ca3af;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">📊</div>
+            <div style="font-weight:700;font-size:0.95rem;">لم يتم رفع تقييم المهارات بعد</div>
+            <div style="font-size:0.8rem;margin-top:6px;">سيتم إضافته من المشرف</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- IQRAR -->
     <div class="tab-pane" id="tab-iqrar">
       <div class="s-card">
@@ -974,9 +1023,8 @@
         <div style="color:rgba(255,255,255,0.55);font-size:0.76rem;margin-top:2px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:12px;">
       <div class="admin-badge" id="admin-student-count">— طالب</div>
-      <button onclick="saveAllStudents()" id="btn-save-all" style="background:linear-gradient(135deg,#c8973a,#f0b84a);color:#1a3a5c;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(200,151,58,0.4);">💾 حفظ جميع البيانات</button>
       <button class="logout-btn" onclick="adminLogout()">🚪 خروج</button>
       <button onclick="window.open('attendance_yaseer.html','_blank')" style="background:#1a6b4a;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;gap:6px;">📋 كشف الحضور</button>
     </div>
@@ -1242,20 +1290,7 @@ const STUDENTS = {
       { skill: "الكتابة الصحيحة",  m1:"✓", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الجمع والطرح",      m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الانتباه",          m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"~" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "13",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٢ — عبدالله قائد عبدالله الشهراني
@@ -1280,20 +1315,7 @@ const STUDENTS = {
       { skill: "الإملاء",            m1:"~", m2:"✓", m3:"✓", m4:"~", m5:"✓" },
       { skill: "الرياضيات",          m1:"✓", m2:"✓", m3:"~", m4:"✓", m5:"✓" },
       { skill: "التفاعل الاجتماعي",  m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "14",
-    sibling_order: "الثاني",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٣ — بسام خالد عبدالرحمن المالكي
@@ -1317,20 +1339,7 @@ const STUDENTS = {
       { skill: "الكتابة",            m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الحساب",             m1:"✓", m2:"✓", m3:"✓", m4:"~", m5:"✓" },
       { skill: "الاستقلالية",        m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "14",
-    sibling_order: "الثالث",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٤ — وسام عوض بن شينان السهيمي
@@ -1355,20 +1364,7 @@ const STUDENTS = {
       { skill: "التعبير الكتابي",    m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الضرب والقسمة",      m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "تنظيم الوقت",        m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "16",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٥ — حسن صالح حسن الزهراني
@@ -1392,20 +1388,7 @@ const STUDENTS = {
       { skill: "المفردات",           m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الجبر",              m1:"✗", m2:"~", m3:"~", m4:"✓", m5:"✓" },
       { skill: "المشاركة الصفية",    m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "17",
-    sibling_order: "الثاني",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٦ — إياد خليل طاهر مصطفى
@@ -1421,20 +1404,7 @@ const STUDENTS = {
       { title: "الأهداف السلوكية", desc: "الالتزام بقواعد الفصل والتفاعل الإيجابي مع المعلم", color: "#2563a8" },
     ],
     reports: [],
-    followup: [],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "13",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    followup: []
   },
 
   // م٧ — محمد عمر محمد بلقاسم الحرازي
@@ -1459,20 +1429,7 @@ const STUDENTS = {
       { skill: "الكتابة الوظيفية",   m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الحساب الذهني",      m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "ضبط الانفعالات",     m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "14",
-    sibling_order: "الثاني",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٧
@@ -1496,20 +1453,7 @@ const STUDENTS = {
       { skill: "الإملاء",            m1:"~", m2:"✓", m3:"~", m4:"✓", m5:"✓" },
       { skill: "الهندسة",            m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "العمل الجماعي",      m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "14",
-    sibling_order: "الثالث",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٨
@@ -1534,20 +1478,7 @@ const STUDENTS = {
       { skill: "التعبير الكتابي",    m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الكسور",             m1:"✗", m2:"✗", m3:"~", m4:"✓", m5:"✓" },
       { skill: "تقدير الذات",        m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "15",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م٩
@@ -1571,20 +1502,7 @@ const STUDENTS = {
       { skill: "التلخيص",            m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "المعادلات",          m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "التفكير الناقد",     m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "16",
-    sibling_order: "الثاني",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٠
@@ -1609,20 +1527,7 @@ const STUDENTS = {
       { skill: "الكتابة الموجهة",    m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الإحصاء",            m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الاستقلالية",        m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "17",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١١
@@ -1647,20 +1552,7 @@ const STUDENTS = {
       { skill: "الإنشاء",            m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الهندسة",            m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "التخطيط",            m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "20",
-    sibling_order: "الثالث",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٢ — وسيم أحمد علي الرزقي (انتساب)
@@ -1680,20 +1572,7 @@ const STUDENTS = {
     followup: [
       { skill: "المتابعة الإلكترونية", m1:"✓", m2:"✓", m3:"~", m4:"✓", m5:"✓" },
       { skill: "الاختبارات",           m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"~" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "15",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٣
@@ -1717,20 +1596,7 @@ const STUDENTS = {
       { skill: "الكتابة",            m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الأعداد",            m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الانتباه",           m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "13",
-    sibling_order: "الثاني",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٤
@@ -1754,20 +1620,7 @@ const STUDENTS = {
       { skill: "الإملاء",            m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الجمع والطرح",       m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "المشاركة",           m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "13",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٥
@@ -1792,20 +1645,7 @@ const STUDENTS = {
       { skill: "التعبير الشفهي",     m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الضرب",              m1:"✗", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الضبط الانفعالي",    m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "15",
-    sibling_order: "الثالث",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٦
@@ -1829,20 +1669,7 @@ const STUDENTS = {
       { skill: "الخط",               m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "المسائل اللفظية",    m1:"✗", m2:"~", m3:"~", m4:"✓", m5:"✓" },
       { skill: "حل النزاعات",        m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "15",
-    sibling_order: "الثاني",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٧
@@ -1867,20 +1694,7 @@ const STUDENTS = {
       { skill: "التعبير الكتابي",    m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الجبر",              m1:"~", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "القيادة",            m1:"~", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "17",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٨ — لوى أحمد علي الرزقي (انتساب)
@@ -1900,20 +1714,7 @@ const STUDENTS = {
     followup: [
       { skill: "المتابعة الإلكترونية", m1:"✓", m2:"~", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الاختبارات",           m1:"~", m2:"✓", m3:"✓", m4:"~", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "15",
-    sibling_order: "الثاني",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
+    ]
   },
 
   // م١٩ — عبدالله ماجد الزهراني (انتساب)
@@ -1933,21 +1734,8 @@ const STUDENTS = {
     followup: [
       { skill: "المتابعة الإلكترونية", m1:"✓", m2:"✓", m3:"✓", m4:"✓", m5:"✓" },
       { skill: "الاختبارات",           m1:"~", m2:"✓", m3:"~", m4:"✓", m5:"✓" },
-    ],
-    diagnosis: "بطء التعلم",
-    program_place: "فصول التعليم العام مع برنامج يسير التعليمي",
-    program_start: "1/1/1447هـ",
-    program_end: "1/5/1447هـ",
-    nationality: "سعودي",
-    age: "15",
-    sibling_order: "الأول",
-    economic_level: "متوسط",
-    father_edu: "ثانوي",
-    mother_edu: "ثانوي",
-    status_psych: "مستقر نفسياً",
-    status_social: "طبيعي اجتماعياً",
-    status_health: "جيد صحياً",
-  }
+    ]
+  },
 };
 
 // =====================================================
@@ -2070,8 +1858,8 @@ function loadStudent(pin) {
               ? `<iframe src="${url}" title="الخطة الفردية المخصصة"></iframe>`
               : `<div style="padding:20px;text-align:center;color:#5a6478;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
           document.getElementById('custom-plan-actions').innerHTML = `
-            <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح الخطة</a>
-            <a href="${url}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة الفردية</a>
+            <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">👁️ اطلع على الخطة</a>
+            <button onclick="savePlanAsPDF('${url}')" class="btn-pdf btn-pdf-secondary">💾 حفظ كـ PDF</button>
           `;
           break;
         }
@@ -2482,7 +2270,7 @@ async function syncFromSupabase() {
 
 async function loadStudentDataFromStorage(pin) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/yaseer/data/student-${pin}.json?t=${Date.now()}`);
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/yaseer/data/student-${pin}.json`);
     if (!res.ok) return; // لا يوجد ملف محفوظ بعد
     const data = await res.json();
     if (data && STUDENTS[pin]) {
@@ -2576,55 +2364,6 @@ function adminLogout() {
   document.getElementById('login-screen').style.display = 'flex';
 }
 
-// ===== حفظ جميع الطلاب دفعة واحدة =====
-async function saveAllStudents() {
-  const btn = document.getElementById('btn-save-all');
-  const pins = Object.keys(STUDENTS);
-  btn.textContent = '⏳ جاري الحفظ...';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
-
-  let success = 0;
-  let failed = 0;
-
-  for (const pin of pins) {
-    try {
-      const s = STUDENTS[pin];
-      const jsonStr = JSON.stringify({
-        pin, name: s.name, id_full: s.id_full, grade: s.grade,
-        phone: s.phone || '', plan: s.plan || [], followup: s.followup || [],
-        birthdate: s.birthdate || '', nationality: s.nationality || '',
-        age: s.age || '', address: s.address || '', iq: s.iq || '',
-        sibling_order: s.sibling_order || '', economic_level: s.economic_level || '',
-        father_edu: s.father_edu || '', mother_edu: s.mother_edu || '',
-        status_psych: s.status_psych || '', status_social: s.status_social || '',
-        status_health: s.status_health || '', diagnosis: s.diagnosis || '',
-        program_place: s.program_place || '', program_start: s.program_start || '',
-        program_end: s.program_end || '',
-      });
-      const blob = new Blob([jsonStr], {type: 'application/json'});
-      const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
-        method: 'POST',
-        headers: {
-          'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY,
-          'Content-Type': 'application/json', 'x-upsert': 'true'
-        },
-        body: blob
-      });
-      if (res.ok) success++; else failed++;
-    } catch(e) { failed++; }
-  }
-
-  btn.disabled = false;
-  btn.style.opacity = '1';
-  btn.textContent = '💾 حفظ جميع البيانات';
-  if (failed === 0) {
-    showToast(`✅ تم حفظ بيانات ${success} طالب بنجاح`);
-  } else {
-    showToast(`⚠️ تم حفظ ${success} ونجح ${failed} طالب`);
-  }
-}
-
 function openAdminTab(id, btn) {
   document.querySelectorAll('#admin-portal .admin-tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
@@ -2643,121 +2382,22 @@ function renderStudentCards() {
   entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, 'ar'));
 
   grid.innerHTML = entries.map(([pin, s]) => `
-    <div class="stu-card" style="flex-direction:column;align-items:stretch;cursor:default;padding:0;overflow:hidden;">
-      <!-- رأس البطاقة -->
-      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:linear-gradient(135deg,#f8fffe,#f0faf5);border-bottom:1px solid var(--border);" onclick="openEditModal('${pin}')">
-        <div class="stu-card-avatar">🎓</div>
-        <div style="flex:1;min-width:0;">
-          <div class="stu-card-name">${s.name}</div>
-          <div class="stu-card-meta">${s.grade}</div>
-          <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-            <span class="stu-card-pin">${pin}</span>
-            <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
-          </div>
-        </div>
-        <div style="color:var(--muted);font-size:1rem;">✏️</div>
-      </div>
-      <!-- المعلومات الشخصية -->
-      <div style="padding:12px 16px;font-size:0.75rem;border-bottom:1px solid var(--border);background:#fafcff;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-          <div style="color:var(--muted);">تاريخ الميلاد: <span style="color:var(--text);font-weight:700;">${s.birthdate || '—'}</span></div>
-          <div style="color:var(--muted);">الجنسية: <span style="color:var(--text);font-weight:700;">${s.nationality || '—'}</span></div>
-          <div style="color:var(--muted);">العمر: <span style="color:var(--text);font-weight:700;">${s.age || '—'}</span></div>
-          <div style="color:var(--muted);">درجة الذكاء: <span style="color:var(--text);font-weight:700;">${s.iq || '—'}</span></div>
-          <div style="color:var(--muted);">العنوان: <span style="color:var(--text);font-weight:700;">${s.address || '—'}</span></div>
-          <div style="color:var(--muted);">رقم الجوال: <span style="color:var(--text);font-weight:700;">${s.phone || '—'}</span></div>
-          <div style="color:var(--muted);grid-column:1/-1;">التشخيص: <span style="color:#1a6b4a;font-weight:700;">${s.diagnosis || '—'}</span></div>
+    <div class="stu-card" onclick="openEditModal('${pin}')">
+      <div class="stu-card-avatar">🎓</div>
+      <div style="flex:1;min-width:0;">
+        <div class="stu-card-name">${s.name}</div>
+        <div class="stu-card-meta">${s.grade}</div>
+        <div style="margin-top:4px;display:flex;gap:6px;align-items:center;">
+          <span class="stu-card-pin">${pin}</span>
+          <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
         </div>
       </div>
-      <!-- أزرار الحفظ والطباعة -->
-      <div style="display:flex;gap:8px;padding:10px 16px;background:#fff;">
-        <button onclick="saveOneStudent('${pin}')" style="flex:1;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
-        <button onclick="printStudentCard('${pin}')" style="flex:1;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">🖨️ طباعة</button>
-      </div>
+      <div style="color:var(--muted);font-size:1.1rem;">✏️</div>
     </div>
   `).join('');
 
   // إضافة عداد
   document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
-}
-
-// حفظ طالب واحد
-async function saveOneStudent(pin) {
-  const s = STUDENTS[pin];
-  const jsonStr = JSON.stringify({
-    pin, name: s.name, id_full: s.id_full, grade: s.grade,
-    phone: s.phone || '', plan: s.plan || [], followup: s.followup || [],
-    birthdate: s.birthdate || '', nationality: s.nationality || '',
-    age: s.age || '', address: s.address || '', iq: s.iq || '',
-    sibling_order: s.sibling_order || '', economic_level: s.economic_level || '',
-    father_edu: s.father_edu || '', mother_edu: s.mother_edu || '',
-    status_psych: s.status_psych || '', status_social: s.status_social || '',
-    status_health: s.status_health || '', diagnosis: s.diagnosis || '',
-    program_place: s.program_place || '', program_start: s.program_start || '',
-    program_end: s.program_end || '',
-  });
-  const blob = new Blob([jsonStr], {type: 'application/json'});
-  const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
-    method: 'POST',
-    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
-    body: blob
-  });
-  if (res.ok) showToast('✅ تم حفظ بيانات ' + s.name);
-  else showToast('❌ فشل الحفظ');
-}
-
-// طباعة بطاقة طالب
-function printStudentCard(pin) {
-  const s = STUDENTS[pin];
-  const win = window.open('', '_blank');
-  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    <meta charset="UTF-8">
-    <title>بطاقة الطالب — ${s.name}</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
-      *{margin:0;padding:0;box-sizing:border-box;}
-      body{font-family:'Cairo',sans-serif;background:#fff;color:#1a1a2e;padding:30px;direction:rtl;}
-      .header{text-align:center;margin-bottom:24px;border-bottom:3px solid #1a3a5c;padding-bottom:16px;}
-      .header h1{font-size:1.3rem;font-weight:800;color:#1a3a5c;}
-      .header p{font-size:0.8rem;color:#5a6478;margin-top:4px;}
-      .section-title{background:#1a3a5c;color:#fff;padding:8px 16px;font-size:0.88rem;font-weight:800;margin:16px 0 8px;border-radius:6px;}
-      table{width:100%;border-collapse:collapse;margin-bottom:12px;}
-      th{background:#f0faf5;padding:8px 14px;text-align:right;font-size:0.78rem;font-weight:700;color:#5a6478;border:1px solid #e0d8c8;width:35%;}
-      td{padding:8px 14px;font-size:0.85rem;font-weight:600;border:1px solid #e0d8c8;}
-      .footer{margin-top:24px;text-align:center;font-size:0.72rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
-      @media print{body{padding:15px;}}
-    </style>
-  </head><body>
-    <div class="header">
-      <div style="background:#1a3a5c;color:#fff;display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;">برنامج يسير التعليمي</div>
-      <h1>بطاقة الطالب — الخطة التربوية الفردية</h1>
-      <p>مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
-    </div>
-    <div class="section-title">📋 المعلومات الشخصية</div>
-    <table>
-      <tr><th>الطالب</th><td>${s.name}</td><th>تاريخ الميلاد</th><td>${s.birthdate||'—'}</td></tr>
-      <tr><th>الجنسية</th><td>${s.nationality||'—'}</td><th>الصف</th><td>${s.grade}</td></tr>
-      <tr><th>العمر</th><td>${s.age||'—'}</td><th>درجة الذكاء</th><td>${s.iq||'—'}</td></tr>
-      <tr><th>العنوان</th><td>${s.address||'—'}</td><th>رقم الجوال</th><td>${s.phone||'—'}</td></tr>
-    </table>
-    <div class="section-title">📊 معلومات عامة</div>
-    <table>
-      <tr><th>ترتيب الطالب بين إخوته</th><td>${s.sibling_order||'—'}</td><th>المستوى الاقتصادي للأسرة</th><td>${s.economic_level||'—'}</td></tr>
-      <tr><th>مستوى تعليم الأب</th><td>${s.father_edu||'—'}</td><th>مستوى تعليم الأم</th><td>${s.mother_edu||'—'}</td></tr>
-      <tr><th>الوضع النفسي</th><td colspan="3">${s.status_psych||'—'}</td></tr>
-      <tr><th>الوضع الاجتماعي</th><td colspan="3">${s.status_social||'—'}</td></tr>
-      <tr><th>الوضع الصحي</th><td colspan="3">${s.status_health||'—'}</td></tr>
-    </table>
-    <div class="section-title">🏥 التشخيص والبرنامج</div>
-    <table>
-      <tr><th>التشخيص</th><td colspan="3">${s.diagnosis||'—'}</td></tr>
-      <tr><th>المكان التربوي المناسب</th><td colspan="3">${s.program_place||'—'}</td></tr>
-      <tr><th>تاريخ بدء البرنامج</th><td>${s.program_start||'—'}</td><th>تاريخ إنهاء البرنامج</th><td>${s.program_end||'—'}</td></tr>
-    </table>
-    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
-    <script>window.onload=()=>window.print();<\/script>
-  </body></html>`);
-  win.document.close();
 }
 
 async function openEditModal(pin) {
@@ -2923,20 +2563,6 @@ function saveStudentEdits() {
   upsertToSupabase(editingPin, sEdit).then(() => showToast('✅ تم حفظ بيانات ' + sEdit.name));
 }
 
-// ===== DELETE FROM SUPABASE =====
-async function deleteFromSupabase(pin) {
-  try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
-      method: 'DELETE',
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-      }
-    });
-    if (!res.ok) console.error('Delete error:', await res.text());
-  } catch(e) { console.error('Delete error:', e); }
-}
-
 // ===== DELETE =====
 function deleteStudent() {
   if (!editingPin) return;
@@ -3002,6 +2628,108 @@ function showToast(msg) {
 document.getElementById('edit-modal')?.addEventListener('click', e => {
   if (e.target === document.getElementById('edit-modal')) closeModal();
 });
+
+// ===== تحميل مهارات الطالب =====
+async function loadStudentSkills(pin) {
+  const SB_SKILLS = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/yaseer/";
+  document.getElementById('skills-loading').style.display = 'block';
+  document.getElementById('skills-table-wrap').style.display = 'none';
+  document.getElementById('no-skills-msg').style.display = 'none';
+  const url = `${SB_SKILLS}skills-${pin}.json`;
+  try {
+    const res = await fetch(url + '?t=' + Date.now());
+    if (res.ok) {
+      const data = await res.json();
+      renderSkillsTable(data.skills || data);
+      document.getElementById('skills-loading').style.display = 'none';
+      document.getElementById('skills-table-wrap').style.display = 'block';
+      window._skillsData = data.skills || data;
+      window._skillsPin = pin;
+      return;
+    }
+  } catch(e) {}
+  // Load from followup data
+  const s = STUDENTS[pin];
+  if (s && s.followup && s.followup.length > 0) {
+    const skillsFromFollowup = s.followup.map(f => ({
+      skill: f.skill, axis: '—', m1: f.m1||'—', m2: f.m2||'—',
+      m3: f.m3||'—', m4: f.m4||'—', m5: f.m5||'—', note: ''
+    }));
+    renderSkillsTable(skillsFromFollowup);
+    document.getElementById('skills-loading').style.display = 'none';
+    document.getElementById('skills-table-wrap').style.display = 'block';
+    window._skillsData = skillsFromFollowup;
+    window._skillsPin = pin;
+  } else {
+    document.getElementById('skills-loading').style.display = 'none';
+    document.getElementById('no-skills-msg').style.display = 'block';
+  }
+}
+
+function renderSkillsTable(skills) {
+  const tbody = document.getElementById('skills-tbody');
+  if (!tbody || !skills) return;
+  const statusStyle = {
+    '\u2713': 'background:#d1fae5;color:#065f46',
+    '~': 'background:#fef3c7;color:#92400e',
+    '\u2717': 'background:#fee2e2;color:#991b1b',
+    '\u2014': 'background:#f3f4f6;color:#6b7280',
+  };
+  const getStyle = v => statusStyle[v] || 'background:#f3f4f6;color:#6b7280';
+  tbody.innerHTML = skills.map((r, i) => `
+    <tr style="border-bottom:1px solid var(--border);${i%2===0?'background:#fafafa;':'background:#fff;'}">
+      <td style="padding:9px 14px;text-align:right;font-weight:600;">${r.skill||'—'}</td>
+      <td style="padding:9px 14px;text-align:center;font-size:0.78rem;color:var(--muted);">${r.axis||'—'}</td>
+      ${['m1','m2','m3','m4','m5'].map(m => {
+        const v = r[m] || '—';
+        return `<td style="padding:9px 14px;text-align:center;"><span style="${getStyle(v)};padding:3px 9px;border-radius:8px;font-weight:700;font-size:0.8rem;">${v}</span></td>`;
+      }).join('')}
+      <td style="padding:9px 14px;text-align:right;font-size:0.78rem;color:var(--muted);">${r.note||''}</td>
+    </tr>
+  `).join('');
+}
+
+function downloadSkillsExcel() {
+  const data = window._skillsData;
+  if (!data || !data.length) return;
+  const pin = window._skillsPin || '';
+  const s = STUDENTS[pin];
+  const name = s ? s.name : 'الطالب';
+  const headers = ['المهارة', 'المحور', 'م١', 'م٢', 'م٣', 'م٤', 'م٥', 'الملاحظات'];
+  const rows = data.map(r => [r.skill||'', r.axis||'', r.m1||'', r.m2||'', r.m3||'', r.m4||'', r.m5||'', r.note||'']);
+  let csv = '\uFEFF' + headers.join(',') + '\n';
+  csv += rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `مهارات-${name}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function savePlanAsPDF(url) {
+  const win = window.open('', '_blank');
+  const s = currentStudent;
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8"><title>الخطة الفردية — ${s ? s.name : ''}</title>
+    <style>body{margin:0;padding:0;direction:rtl;font-family:Arial,sans-serif;}
+    iframe{width:100%;height:100vh;border:none;}
+    .info-bar{background:#1a3a5c;color:#fff;padding:10px 20px;font-size:0.85rem;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+    </style></head><body>
+    <div class="info-bar">
+      <span>📋 الخطة الفردية — ${s ? s.name : ''}</span>
+      <button onclick="window.print()" style="background:#22a06b;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:700;">🖨️ طباعة / حفظ PDF</button>
+    </div>
+    <iframe src="${url}"></iframe>
+    </body></html>`);
+  win.document.close();
+}
+
+const _origOpenTab = openTab;
+function openTab(id, btn) {
+  _origOpenTab(id, btn);
+  if (id === 'skills' && currentStudent) loadStudentSkills(currentStudent.pin);
+}
+
 </script>
 </body>
 </html>
