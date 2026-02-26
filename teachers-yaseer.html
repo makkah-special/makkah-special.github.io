@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة معلمي يسير التعليمي | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-dark: #0f2340;
+  --accent: #c8973a;
+  --accent-light: #f0b84a;
+  --gold: #c8973a;
+  --bg: #f5f2eb;
+  --card: #ffffff;
+  --border: #e0d8c8;
+  --text: #1a1a2e;
+  --muted: #5a6478;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+/* HEADER */
+header { background:linear-gradient(135deg,#1a3a5c 0%,#1e4d7a 60%,#2563a8 100%); position:relative; overflow:hidden; }
+header::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--accent-light),var(--gold)); }
+.header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; position:relative; }
+.header-logo { display:flex; align-items:center; gap:14px; }
+.logo-circle { width:48px; height:48px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
+.header-info .name { color:#fff; font-family:'Tajawal',sans-serif; font-size:1rem; font-weight:800; }
+.header-info .sub { color:rgba(255,255,255,0.55); font-size:0.75rem; margin-top:1px; }
+.back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; font-family:'Cairo',sans-serif; transition:all 0.2s; }
+.back-link:hover { background:rgba(255,255,255,0.18); }
+.hero { padding:32px 40px 40px; text-align:center; position:relative; }
+.hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:12px; font-family:'Cairo',sans-serif; }
+.hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.5rem,4vw,2rem); font-weight:900; color:#fff; margin-bottom:6px; }
+.hero h1 span { color:var(--accent-light); }
+.hero p { color:rgba(255,255,255,0.6); font-size:0.85rem; font-family:'Cairo',sans-serif; }
+
+/* LOGIN */
+.login-screen { display:flex; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
+.login-box { background:#fff; border-radius:20px; padding:36px 30px; max-width:340px; width:100%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.1); border:1px solid var(--border); }
+.login-icon { font-size:2.4rem; margin-bottom:12px; }
+.login-title { font-family:'Tajawal',sans-serif; font-size:1.2rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
+.login-sub { font-size:0.8rem; color:var(--muted); margin-bottom:20px; line-height:1.7; }
+.select-input { width:100%; padding:11px 14px; border:2px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; outline:none; background:#fafafa; margin-bottom:10px; color:var(--text); cursor:pointer; }
+.select-input:focus { border-color:var(--primary); }
+.pin-input { width:100%; padding:11px; border:2px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:1.2rem; font-weight:700; text-align:center; letter-spacing:6px; outline:none; background:#fafafa; margin-bottom:10px; }
+.pin-input:focus { border-color:var(--primary); }
+.pin-error { display:none; color:#dc2626; font-size:0.78rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
+.pin-error.show { display:block; }
+.btn-login { width:100%; padding:12px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.92rem; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(26,58,92,0.3); transition:all 0.2s; }
+.btn-login:hover { transform:translateY(-2px); }
+
+/* PORTAL */
+.portal { display:none; }
+main { max-width:960px; margin:0 auto; padding:24px 20px 60px; }
+
+/* TEACHER HEADER CARD */
+.teacher-card { background:#fff; border-radius:16px; border:1px solid var(--border); padding:24px 28px; margin-bottom:22px; display:flex; align-items:center; gap:20px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.teacher-avatar { width:72px; height:72px; border-radius:16px; background:linear-gradient(135deg,var(--primary),#1e6091); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:#fff; flex-shrink:0; box-shadow:0 4px 14px rgba(26,58,92,0.3); }
+.teacher-name { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); }
+.teacher-role { font-size:0.82rem; color:var(--muted); margin-top:3px; }
+.teacher-badges { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+.badge { padding:3px 12px; border-radius:12px; font-size:0.72rem; font-weight:700; font-family:'Cairo',sans-serif; }
+.badge-orange { background:#fff3e0; color:#c25a00; border:1px solid #f59040; }
+.badge-blue { background:#e8f0ff; color:#1a3a5c; border:1px solid #bfdbfe; }
+.badge-green { background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; }
+.btn-logout { margin-right:auto; padding:8px 18px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+.btn-logout:hover { background:#dc2626; color:#fff; }
+
+/* TABS */
+.tabs { display:flex; gap:6px; margin-bottom:20px; background:#fff; border:1px solid var(--border); border-radius:12px; padding:6px; box-shadow:0 2px 8px rgba(0,0,0,0.04); flex-wrap:wrap; }
+.tab-btn { flex:1; min-width:100px; padding:9px 14px; border:none; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.8rem; font-weight:700; cursor:pointer; background:transparent; color:var(--muted); transition:all 0.2s; text-align:center; }
+.tab-btn.active { background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; box-shadow:0 3px 10px rgba(26,58,92,0.25); }
+.tab-pane { display:none; }
+.tab-pane.active { display:block; }
+
+/* SECTION TITLE */
+.section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:10px; }
+.section-title { font-family:'Tajawal',sans-serif; font-size:1rem; font-weight:800; color:var(--primary); display:flex; align-items:center; gap:8px; }
+.section-title::before { content:''; width:4px; height:20px; background:var(--accent); border-radius:3px; display:block; }
+
+/* FORM */
+.form-card { background:#fff; border-radius:14px; border:1px solid var(--border); padding:22px 24px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1/-1; }
+label { font-size:0.78rem; font-weight:700; color:var(--muted); font-family:'Cairo',sans-serif; }
+.form-input, .form-textarea { padding:9px 12px; border:1.5px solid var(--border); border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.85rem; outline:none; background:#fafafa; color:var(--text); transition:border-color 0.2s; }
+.form-input:focus, .form-textarea:focus { border-color:var(--accent); background:#fff; }
+.form-textarea { resize:vertical; min-height:80px; }
+.btn-save { padding:10px 22px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:800; cursor:pointer; transition:all 0.2s; }
+.btn-save:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(26,58,92,0.3); }
+.btn-add { padding:8px 18px; background:linear-gradient(135deg,#1a6b4a,#2d9e70); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+.btn-add:hover { transform:translateY(-1px); }
+.btn-danger { padding:6px 14px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:7px; font-family:'Cairo',sans-serif; font-size:0.75rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+.btn-danger:hover { background:#dc2626; color:#fff; }
+
+/* ACHIEVEMENT ENTRIES */
+.entry-card { background:#fafcff; border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:12px; position:relative; }
+.entry-card:hover { border-color:var(--accent); }
+.entry-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:8px; }
+.entry-title { font-weight:700; font-size:0.9rem; color:var(--primary); font-family:'Cairo',sans-serif; }
+.entry-date { font-size:0.72rem; color:var(--muted); background:#f0f0f0; padding:2px 10px; border-radius:8px; white-space:nowrap; }
+.entry-desc { font-size:0.82rem; color:var(--muted); line-height:1.7; }
+.entry-tags { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+.entry-tag { padding:2px 10px; border-radius:10px; font-size:0.7rem; font-weight:700; }
+.tag-achievement { background:#d1fae5; color:#065f46; }
+.tag-training { background:#e8f0ff; color:#1e40af; }
+.tag-activity { background:#fff3e0; color:#c25a00; }
+.tag-award { background:#fef3c7; color:#92400e; }
+.tag-other { background:#f3f4f6; color:#374151; }
+
+/* STATS */
+.stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin-bottom:20px; }
+.stat-box { background:#fff; border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,0.04); }
+.stat-num { font-family:'Tajawal',sans-serif; font-size:1.8rem; font-weight:900; color:var(--primary); }
+.stat-label { font-size:0.72rem; color:var(--muted); font-weight:600; margin-top:3px; }
+
+/* EMPTY STATE */
+.empty { text-align:center; padding:40px 20px; color:var(--muted); }
+.empty-icon { font-size:2.5rem; margin-bottom:10px; }
+.empty-text { font-size:0.85rem; }
+
+/* TOAST */
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(100px); background:#1a3a5c; color:#fff; padding:12px 24px; border-radius:12px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:700; box-shadow:0 8px 24px rgba(0,0,0,0.2); z-index:9999; transition:transform 0.3s; }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+footer { background:var(--primary-dark); color:rgba(255,255,255,0.6); text-align:center; padding:18px 40px; font-size:0.78rem; border-top:3px solid var(--gold); margin-top:40px; font-family:'Cairo',sans-serif; }
+footer strong { color:var(--accent-light); }
+
+@media(max-width:640px) {
+  .header-top { padding:12px 16px; }
+  .hero { padding:24px 16px 32px; }
+  main { padding:16px 14px 40px; }
+  .form-grid { grid-template-columns:1fr; }
+  .teacher-card { flex-direction:column; text-align:center; }
+  .btn-logout { margin-right:0; }
+}
+
+/* ATTACHMENTS */
+.attach-zone { border:2px dashed var(--border); border-radius:10px; padding:16px; text-align:center; cursor:pointer; background:#fafafa; transition:all 0.2s; margin-top:10px; }
+.attach-zone:hover { border-color:var(--accent); background:#fff8f3; }
+.attach-zone input { display:none; }
+.attach-zone label { cursor:pointer; font-size:0.82rem; color:var(--muted); font-family:'Cairo',sans-serif; }
+.attach-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.attach-chip { display:flex; align-items:center; gap:6px; background:#e8f0ff; border:1px solid #bfdbfe; border-radius:8px; padding:4px 10px; font-size:0.75rem; color:#1a3a5c; font-family:'Cairo',sans-serif; }
+.attach-chip button { background:none; border:none; color:#dc2626; cursor:pointer; font-size:0.8rem; line-height:1; padding:0 2px; }
+.attach-chip a { color:#1a3a5c; text-decoration:none; max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block; }
+
+/* PRINT BUTTON */
+.btn-print { padding:10px 22px; background:linear-gradient(135deg,#1a3a5c,#2563a8); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:800; cursor:pointer; transition:all 0.2s; }
+.btn-print:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(26,58,92,0.3); }
+
+/* SAVE STATUS */
+.save-status { font-size:0.75rem; color:#2d9e70; font-family:'Cairo',sans-serif; background:#d1fae5; padding:4px 12px; border-radius:8px; display:none; }
+.save-status.show { display:inline-block; }
+
+@media print {
+  header, .tabs, .stats-row, .btn-logout, .back-link, .btn-add, .btn-danger, .btn-save, .btn-print, .attach-zone, footer { display:none !important; }
+  .portal { display:block !important; }
+  body { background:#fff; padding:0; }
+  .teacher-card { box-shadow:none; border:2px solid #1a3a5c; }
+  .entry-card { break-inside:avoid; border:1px solid #ddd; }
+  main { padding:0; max-width:100%; }
+  #tab-achievements { display:block !important; }
+  #tab-profile, #tab-add { display:none !important; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="header-logo">
+      <div class="logo-circle">👨‍🏫</div>
+      <div class="header-info">
+        <div class="name">بوابة معلمي يسير التعليمي</div>
+        <div class="sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">← الرئيسية</a>
+  </div>
+  <div class="hero">
+    <div class="hero-badge">👨‍🏫 بوابة المعلمين</div>
+    <h1>ملف إنجاز <span>المعلم</span></h1>
+    <p>سجل إنجازاتك المهنية وتطورك التدريبي وأنشطتك خلال العام الدراسي</p>
+  </div>
+</header>
+
+<!-- شاشة الدخول -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <div class="login-title">دخول المعلم</div>
+    <div class="login-sub">اختر اسمك ثم أدخل رمزك الشخصي</div>
+    <select class="select-input" id="teacher-select">
+      <option value="">— اختر اسمك —</option>
+      <option value="حسين منصور الكبيشي">أ. حسين منصور الكبيشي</option>
+      <option value="سعد سالم الزهراني">أ. سعد سالم الزهراني</option>
+    </select>
+    <input type="password" class="pin-input" id="pin-input" placeholder="• • • •" maxlength="6"
+      onkeydown="if(event.key==='Enter')doLogin()"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
+    <button class="btn-login" onclick="doLogin()">✅ دخول</button>
+  </div>
+</div>
+
+<!-- البوابة الرئيسية -->
+<div class="portal" id="portal">
+  <main>
+
+    <!-- بطاقة المعلم -->
+    <div class="teacher-card">
+      <div class="teacher-avatar" id="t-avatar">👨‍🏫</div>
+      <div style="flex:1;">
+        <div class="teacher-name" id="t-name">—</div>
+        <div class="teacher-role" id="t-role">معلم تربية خاصة — برنامج يسير التعليمي</div>
+        <div class="teacher-badges">
+          <span class="badge badge-orange">📘 يسير التعليمي</span>
+          <span class="badge badge-blue" id="t-exp">—</span>
+          <span class="badge badge-green" id="t-entries-badge">0 إنجاز</span>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">🚪 خروج</button>
+    </div>
+
+    <!-- إحصائيات -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">إجمالي الإنجازات</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-training">0</div>
+        <div class="stat-label">دورات تدريبية</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-activity">0</div>
+        <div class="stat-label">أنشطة وفعاليات</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-award">0</div>
+        <div class="stat-label">شهادات وتكريم</div>
+      </div>
+    </div>
+
+    <!-- التبويبات -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('achievements',this)">🏆 الإنجازات</button>
+      <button class="tab-btn" onclick="switchTab('profile',this)">👤 البيانات الشخصية</button>
+      <button class="tab-btn" onclick="switchTab('add',this)">➕ إضافة إنجاز</button>
+    </div>
+
+    <!-- تبويب الإنجازات -->
+    <div class="tab-pane active" id="tab-achievements">
+      <div class="section-header">
+        <div class="section-title">ملف الإنجازات</div>
+      </div>
+      <div id="entries-list">
+        <div class="empty"><div class="empty-icon">📂</div><div class="empty-text">لا توجد إنجازات مضافة بعد<br>انتقل لتبويب "إضافة إنجاز"</div></div>
+      </div>
+    </div>
+
+    <!-- تبويب البيانات الشخصية -->
+    <div class="tab-pane" id="tab-profile">
+      <div class="section-header">
+        <div class="section-title">البيانات الشخصية والوظيفية</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <button class="btn-print" onclick="printProfile()">🖨️ طباعة الملف</button>
+        <button class="btn-save" onclick="saveProfile()">💾 حفظ البيانات</button>
+        <span class="save-status" id="save-status">✅ تم الحفظ</span>
+        </div>
+      </div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>الاسم الرباعي</label>
+            <input class="form-input" id="p-name" placeholder="الاسم الكامل">
+          </div>
+          <div class="form-group">
+            <label>التخصص</label>
+            <input class="form-input" id="p-major" placeholder="مثال: تربية خاصة">
+          </div>
+          <div class="form-group">
+            <label>الدرجة العلمية</label>
+            <select class="form-input" id="p-degree">
+              <option>بكالوريوس</option>
+              <option>ماجستير</option>
+              <option>دكتوراه</option>
+              <option>دبلوم</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>سنوات الخبرة</label>
+            <input class="form-input" id="p-exp" type="number" min="0" placeholder="عدد السنوات">
+          </div>
+          <div class="form-group">
+            <label>البريد الإلكتروني</label>
+            <input class="form-input" id="p-email" type="email" placeholder="example@gmail.com">
+          </div>
+          <div class="form-group">
+            <label>رقم الجوال</label>
+            <input class="form-input" id="p-phone" placeholder="05xxxxxxxx">
+          </div>
+          <div class="form-group full">
+            <label>نبذة مهنية</label>
+            <textarea class="form-textarea" id="p-bio" placeholder="اكتب نبذة عن تجربتك المهنية وأهدافك..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>عدد الطلاب الحاليين</label>
+            <input class="form-input" id="p-students" type="number" min="0" placeholder="عدد الطلاب">
+          </div>
+          <div class="form-group">
+            <label>المواد التي يدرّسها</label>
+            <input class="form-input" id="p-subjects" placeholder="مثال: اللغة العربية، الرياضيات">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- تبويب إضافة إنجاز -->
+    <div class="tab-pane" id="tab-add">
+      <div class="section-header">
+        <div class="section-title">إضافة إنجاز جديد</div>
+      </div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>عنوان الإنجاز</label>
+            <input class="form-input" id="e-title" placeholder="مثال: اجتياز دورة تعليم ذوي الاحتياجات الخاصة">
+          </div>
+          <div class="form-group">
+            <label>النوع</label>
+            <select class="form-input" id="e-type">
+              <option value="achievement">🏆 إنجاز مهني</option>
+              <option value="training">📚 دورة تدريبية</option>
+              <option value="activity">🎯 نشاط وفعالية</option>
+              <option value="award">🥇 شهادة وتكريم</option>
+              <option value="other">📌 أخرى</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>التاريخ</label>
+            <input class="form-input" id="e-date" type="date">
+          </div>
+          <div class="form-group">
+            <label>الجهة المانحة / المنظِّمة</label>
+            <input class="form-input" id="e-org" placeholder="مثال: وزارة التعليم">
+          </div>
+          <div class="form-group">
+            <label>المدة (للدورات)</label>
+            <input class="form-input" id="e-duration" placeholder="مثال: 20 ساعة تدريبية">
+          </div>
+          <div class="form-group full">
+            <label>وصف تفصيلي</label>
+            <textarea class="form-textarea" id="e-desc" placeholder="اكتب تفاصيل الإنجاز أو الدورة أو الفعالية..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>المهارات المكتسبة / الفائدة</label>
+            <input class="form-input" id="e-skills" placeholder="مثال: إدارة الفصل، استراتيجيات التدريس الفردي">
+          </div>
+
+          <div class="form-group full">
+            <label>📎 إرفاق ملفات (صور، شهادات، PDF)</label>
+            <div class="attach-zone" id="drop-zone" ondrop="handleDrop(event)" ondragover="event.preventDefault()">
+              <input type="file" id="attach-input" multiple accept="image/*,.pdf,.doc,.docx" onchange="handleFiles(this.files)">
+              <label for="attach-input">📎 اضغط لرفع ملف أو اسحبه هنا<br><span style="font-size:0.7rem;opacity:0.6;">يدعم: صور، PDF، Word</span></label>
+            </div>
+            <div class="attach-list" id="attach-preview"></div>
+          </div>
+        </div>
+        <div style="margin-top:16px;text-align:left;">
+          <button class="btn-add" onclick="addEntry()">➕ إضافة للملف</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== بيانات المعلمين الافتراضية =====
+const TEACHERS = {
+  "حسين منصور الكبيشي": {
+    pin: "1111", role: "معلم تربية خاصة — برنامج يسير التعليمي", avatar: "حك",
+    profile: { name:"حسين منصور الكبيشي", major:"تربية خاصة", degree:"بكالوريوس", exp:"8", email:"h.kubaishi@school.edu.sa", phone:"0541112001", bio:"معلم تربية خاصة متخصص في دعم طلاب البطء التعليمي وتطوير خطط التدخل الفردية لبرنامج يسير.", students:"20", subjects:"اللغة العربية، التربية الإسلامية، المهارات الحياتية" },
+    entries: [
+      { id:1, title:"دورة التدخل المبكر لصعوبات التعلم", type:"training", date:"2025-09-10", org:"وزارة التعليم", duration:"25 ساعة", desc:"دورة متخصصة في استراتيجيات التدخل المبكر لطلاب البطء التعليمي.", skills:"التدخل المبكر، بناء الخطط الفردية", attachments:[] }
+    ]
+  },
+  "سعد سالم الزهراني": {
+    pin: "2222", role: "مشرف برنامج يسير التعليمي", avatar: "سز",
+    profile: { name:"سعد سالم الزهراني", major:"إدارة تربوية", degree:"بكالوريوس", exp:"10", email:"saad.z@school.edu.sa", phone:"0542223002", bio:"مشرف برنامج يسير التعليمي ومطوّر المنصة الرقمية لقسم ذوي الإعاقة بمدرسة مكة المكرمة المتوسطة.", students:"20", subjects:"الإشراف التربوي، التقنية التعليمية" },
+    entries: [
+      { id:1, title:"تطوير البوابة الرقمية لطلاب يسير", type:"achievement", date:"2025-09-01", org:"مدرسة مكة المكرمة المتوسطة", duration:"", desc:"أشرف على تصميم وتطوير البوابة الرقمية المتكاملة لملفات طلاب برنامج يسير.", skills:"التقنية التعليمية، إدارة المشاريع", attachments:[] },
+      { id:2, title:"تكريم معلم متميز الفصل الأول 1447هـ", type:"award", date:"2025-11-20", org:"إدارة المدرسة", duration:"", desc:"حصل على تكريم المعلم المتميز تقديراً لجهوده في تطوير برنامج يسير رقمياً.", skills:"التميز المهني", attachments:[] }
+    ]
+  }
+};
+
+let currentTeacher = null;
+let nextId = 100;
+
+function doLogin() {
+  const sel = document.getElementById('teacher-select').value;
+  const pin = document.getElementById('pin-input').value;
+  if (!sel) { showError('اختر اسمك أولاً'); return; }
+  const t = TEACHERS[sel];
+  if (!t || pin !== t.pin) { showError('الرمز غير صحيح'); return; }
+  currentTeacher = sel;
+  openPortal(t);
+}
+
+function showError(msg) {
+  const err = document.getElementById('pin-error');
+  err.textContent = '❌ ' + msg;
+  err.classList.add('show');
+  document.getElementById('pin-input').classList.add('error');
+  setTimeout(() => { err.classList.remove('show'); }, 2500);
+}
+
+function openPortal(t) {
+  loadSavedData(currentTeacher);
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('portal').style.display = 'block';
+  document.getElementById('t-avatar').textContent = t.avatar;
+  document.getElementById('t-name').textContent = currentTeacher;
+  document.getElementById('t-role').textContent = t.role;
+  document.getElementById('t-exp').textContent = (t.profile.exp || '0') + ' سنوات خبرة';
+  loadProfile(t.profile);
+  renderEntries();
+  updateStats();
+}
+
+function doLogout() {
+  currentTeacher = null;
+  document.getElementById('portal').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pin-input').value = '';
+  document.getElementById('teacher-select').value = '';
+  switchTab('achievements', document.querySelector('.tab-btn'));
+}
+
+function loadProfile(p) {
+  document.getElementById('p-name').value = p.name || '';
+  document.getElementById('p-major').value = p.major || '';
+  document.getElementById('p-degree').value = p.degree || 'بكالوريوس';
+  document.getElementById('p-exp').value = p.exp || '';
+  document.getElementById('p-email').value = p.email || '';
+  document.getElementById('p-phone').value = p.phone || '';
+  document.getElementById('p-bio').value = p.bio || '';
+  document.getElementById('p-students').value = p.students || '';
+  document.getElementById('p-subjects').value = p.subjects || '';
+}
+
+function saveProfile() {
+  if (!currentTeacher) return;
+  TEACHERS[currentTeacher].profile = {
+    name: document.getElementById('p-name').value,
+    major: document.getElementById('p-major').value,
+    degree: document.getElementById('p-degree').value,
+    exp: document.getElementById('p-exp').value,
+    email: document.getElementById('p-email').value,
+    phone: document.getElementById('p-phone').value,
+    bio: document.getElementById('p-bio').value,
+    students: document.getElementById('p-students').value,
+    subjects: document.getElementById('p-subjects').value,
+  };
+  document.getElementById('t-exp').textContent = (document.getElementById('p-exp').value||'0') + ' سنوات خبرة';
+  showToast('✅ تم حفظ البيانات الشخصية');
+}
+
+function addEntry() {
+  const title = document.getElementById('e-title').value.trim();
+  if (!title) { showToast('⚠️ أدخل عنوان الإنجاز أولاً'); return; }
+  if (!currentTeacher) return;
+  const entry = {
+    id: nextId++,
+    title,
+    type: document.getElementById('e-type').value,
+    date: document.getElementById('e-date').value,
+    org: document.getElementById('e-org').value,
+    duration: document.getElementById('e-duration').value,
+    desc: document.getElementById('e-desc').value,
+    skills: document.getElementById('e-skills').value,
+    attachments: [...pendingAttachments],
+  };
+  TEACHERS[currentTeacher].entries.unshift(entry);
+  ['e-title','e-date','e-org','e-duration','e-desc','e-skills'].forEach(id => document.getElementById(id).value = '');
+  pendingAttachments = [];
+  renderAttachPreview();
+  document.getElementById('e-type').value = 'achievement';
+  renderEntries();
+  updateStats();
+  switchTab('achievements', document.querySelectorAll('.tab-btn')[0]);
+  showToast('✅ تم إضافة الإنجاز بنجاح');
+}
+
+function deleteEntry(id) {
+  if (!confirm('هل تريد حذف هذا الإنجاز؟')) return;
+  TEACHERS[currentTeacher].entries = TEACHERS[currentTeacher].entries.filter(e => e.id !== id);
+  renderEntries();
+  updateStats();
+  showToast('🗑️ تم حذف الإنجاز');
+}
+
+const typeLabels = {
+  achievement: ['🏆 إنجاز مهني', 'tag-achievement'],
+  training: ['📚 دورة تدريبية', 'tag-training'],
+  activity: ['🎯 نشاط وفعالية', 'tag-activity'],
+  award: ['🥇 شهادة وتكريم', 'tag-award'],
+  other: ['📌 أخرى', 'tag-other'],
+};
+
+function renderEntries() {
+  if (!currentTeacher) return;
+  const entries = TEACHERS[currentTeacher].entries;
+  const container = document.getElementById('entries-list');
+  if (!entries.length) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">📂</div><div class="empty-text">لا توجد إنجازات مضافة بعد<br>انتقل لتبويب "إضافة إنجاز"</div></div>';
+    return;
+  }
+  container.innerHTML = entries.map(e => {
+    const [label, cls] = typeLabels[e.type] || typeLabels.other;
+    const dateStr = e.date ? new Date(e.date).toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'}) : '—';
+    return `
+    <div class="entry-card">
+      <div class="entry-head">
+        <div class="entry-title">${e.title}</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="entry-date">📅 ${dateStr}</span>
+          <button class="btn-danger" onclick="deleteEntry(${e.id})">🗑️</button>
+        </div>
+      </div>
+      ${e.org ? `<div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px;">🏛️ ${e.org}${e.duration?' — ⏱️ '+e.duration:''}</div>` : ''}
+      ${e.desc ? `<div class="entry-desc">${e.desc}</div>` : ''}
+      <div class="entry-tags">
+        <span class="entry-tag ${cls}">${label}</span>
+        ${e.skills ? e.skills.split('،').map(s=>`<span class="entry-tag tag-other">✦ ${s.trim()}</span>`).join('') : ''}
+        ${(e.attachments||[]).length ? `<div style='margin-top:6px;'>${(e.attachments||[]).map(a=>`<a href='${a.dataUrl}' target='_blank' class='attach-chip' style='text-decoration:none;'>📎 <span>${a.name.length>18?a.name.slice(0,16)+'…':a.name}</span></a>`).join('')}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateStats() {
+  if (!currentTeacher) return;
+  const entries = TEACHERS[currentTeacher].entries;
+  document.getElementById('stat-total').textContent = entries.length;
+  document.getElementById('stat-training').textContent = entries.filter(e=>e.type==='training').length;
+  document.getElementById('stat-activity').textContent = entries.filter(e=>e.type==='activity').length;
+  document.getElementById('stat-award').textContent = entries.filter(e=>e.type==='award').length;
+  document.getElementById('t-entries-badge').textContent = entries.length + ' إنجاز';
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ===== المرفقات =====
+let pendingAttachments = []; // [{name, dataUrl}]
+
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    if (file.size > 5*1024*1024) { showToast('⚠️ الملف أكبر من 5MB'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+      pendingAttachments.push({ name: file.name, dataUrl: e.target.result });
+      renderAttachPreview();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  handleFiles(e.dataTransfer.files);
+}
+
+function renderAttachPreview() {
+  const list = document.getElementById('attach-preview');
+  if (!list) return;
+  list.innerHTML = pendingAttachments.map((a,i) => `
+    <div class="attach-chip">
+      <a href="${a.dataUrl}" target="_blank" title="${a.name}">${a.name.length>20?a.name.slice(0,18)+'…':a.name}</a>
+      <button onclick="removeAttach(${i})">✕</button>
+    </div>`).join('');
+}
+
+function removeAttach(i) {
+  pendingAttachments.splice(i,1);
+  renderAttachPreview();
+}
+
+// ===== حفظ البيانات في localStorage =====
+function getSaveKey(teacher) {
+  return 'teacher_' + btoa(encodeURIComponent(teacher));
+}
+
+function saveProfile() {
+  if (!currentTeacher) return;
+  TEACHERS[currentTeacher].profile = {
+    name: document.getElementById('p-name').value,
+    major: document.getElementById('p-major').value,
+    degree: document.getElementById('p-degree').value,
+    exp: document.getElementById('p-exp').value,
+    email: document.getElementById('p-email').value,
+    phone: document.getElementById('p-phone').value,
+    bio: document.getElementById('p-bio').value,
+    students: document.getElementById('p-students').value,
+    subjects: document.getElementById('p-subjects').value,
+  };
+  document.getElementById('t-exp').textContent = (document.getElementById('p-exp').value||'0') + ' سنوات خبرة';
+  // Save to localStorage
+  try {
+    localStorage.setItem(getSaveKey(currentTeacher), JSON.stringify({
+      profile: TEACHERS[currentTeacher].profile,
+      entries: TEACHERS[currentTeacher].entries
+    }));
+  } catch(e) {}
+  const status = document.getElementById('save-status');
+  status.classList.add('show');
+  setTimeout(() => status.classList.remove('show'), 2500);
+  showToast('✅ تم حفظ البيانات');
+}
+
+function loadSavedData(teacher) {
+  try {
+    const saved = localStorage.getItem(getSaveKey(teacher));
+    if (saved) {
+      const data = JSON.parse(saved);
+      if (data.profile) TEACHERS[teacher].profile = data.profile;
+      if (data.entries) TEACHERS[teacher].entries = data.entries;
+    }
+  } catch(e) {}
+}
+
+// ===== الطباعة =====
+function printProfile() {
+  if (!currentTeacher) return;
+  const t = TEACHERS[currentTeacher];
+  const p = t.profile;
+  const entries = t.entries;
+  const typeLabelsLocal = {
+    achievement: '🏆 إنجاز مهني', training: '📚 دورة تدريبية',
+    activity: '🎯 نشاط وفعالية', award: '🥇 شهادة وتكريم', other: '📌 أخرى'
+  };
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8">
+    <title>ملف إنجاز — ${currentTeacher}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;800;900&display=swap" rel="stylesheet">
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Cairo',sans-serif;background:#fff;color:#1a1a2e;padding:30px;direction:rtl;font-size:13px;}
+      .header{background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:16px;}
+      .avatar{width:56px;height:56px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;flex-shrink:0;}
+      h1{font-family:'Tajawal',sans-serif;font-size:1.2rem;font-weight:900;}
+      .sub{font-size:0.78rem;opacity:0.75;margin-top:2px;}
+      .section{margin-bottom:18px;}
+      .section-title{background:#f5f2eb;border-right:4px solid #c8973a;padding:7px 12px;font-weight:800;font-size:0.88rem;color:#1a3a5c;margin-bottom:10px;border-radius:0 6px 6px 0;}
+      .fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+      .field{background:#fafafa;border:1px solid #e0d8c8;border-radius:7px;padding:8px 12px;}
+      .field-label{font-size:0.68rem;color:#5a6478;font-weight:700;margin-bottom:2px;}
+      .field-value{font-size:0.85rem;font-weight:700;color:#1a1a2e;}
+      .bio{background:#fff8f0;border:1px solid #f0d898;border-radius:8px;padding:12px;font-size:0.82rem;line-height:1.8;grid-column:1/-1;}
+      .entry{background:#fafafa;border:1px solid #e0d8c8;border-radius:8px;padding:12px;margin-bottom:10px;break-inside:avoid;}
+      .entry-title{font-weight:800;font-size:0.88rem;color:#1a3a5c;margin-bottom:4px;}
+      .entry-meta{font-size:0.72rem;color:#5a6478;margin-bottom:6px;}
+      .entry-desc{font-size:0.8rem;line-height:1.7;color:#374151;}
+      .tag{display:inline-block;background:#fff3e0;color:#c25a00;padding:2px 10px;border-radius:8px;font-size:0.7rem;font-weight:700;margin-left:6px;}
+      .footer{margin-top:24px;text-align:center;font-size:0.7rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
+      .attach-thumb{display:inline-block;margin:4px;border:1px solid #e0d8c8;border-radius:6px;padding:3px 8px;font-size:0.7rem;color:#1a3a5c;background:#e8f0ff;}
+      @media print{body{padding:15px;}}
+    </style>
+  </head><body>
+    <div class="header">
+      <div class="avatar">${t.avatar}</div>
+      <div>
+        <h1>${currentTeacher}</h1>
+        <div class="sub">${t.role}</div>
+        <div class="sub" style="margin-top:4px;">📅 ${new Date().toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'})}</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">📋 البيانات الشخصية والوظيفية</div>
+      <div class="fields">
+        <div class="field"><div class="field-label">الاسم الكامل</div><div class="field-value">${p.name||'—'}</div></div>
+        <div class="field"><div class="field-label">التخصص</div><div class="field-value">${p.major||'—'}</div></div>
+        <div class="field"><div class="field-label">الدرجة العلمية</div><div class="field-value">${p.degree||'—'}</div></div>
+        <div class="field"><div class="field-label">سنوات الخبرة</div><div class="field-value">${p.exp||'—'} سنوات</div></div>
+        <div class="field"><div class="field-label">البريد الإلكتروني</div><div class="field-value">${p.email||'—'}</div></div>
+        <div class="field"><div class="field-label">رقم الجوال</div><div class="field-value">${p.phone||'—'}</div></div>
+        <div class="field"><div class="field-label">عدد الطلاب</div><div class="field-value">${p.students||'—'} طالب</div></div>
+        <div class="field"><div class="field-label">المواد</div><div class="field-value">${p.subjects||'—'}</div></div>
+        ${p.bio ? `<div class="bio">${p.bio}</div>` : ''}
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">🏆 ملف الإنجازات (${entries.length} إنجاز)</div>
+      ${entries.length ? entries.map(e => {
+        const dateStr = e.date ? new Date(e.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '—';
+        const attachHtml = (e.attachments||[]).map(a=>`<span class="attach-thumb">📎 ${a.name}</span>`).join('');
+        return `<div class="entry">
+          <div class="entry-title">${e.title} <span class="tag">${typeLabelsLocal[e.type]||e.type}</span></div>
+          <div class="entry-meta">📅 ${dateStr}${e.org?' — 🏛️ '+e.org:''}${e.duration?' — ⏱️ '+e.duration:''}</div>
+          ${e.desc?`<div class="entry-desc">${e.desc}</div>`:''}
+          ${e.skills?`<div style="font-size:0.75rem;color:#5a6478;margin-top:4px;">✦ ${e.skills}</div>`:''}
+          ${attachHtml?`<div style="margin-top:6px;">${attachHtml}</div>`:''}
+        </div>`;
+      }).join('') : '<div style="text-align:center;color:#9ca3af;padding:20px;">لا توجد إنجازات مسجلة</div>'}
+    </div>
+    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني</div>
+    <script>window.onload=()=>window.print();<\/script>
+  </body></html>`);
+  win.document.close();
+}
+</script>
+</body>
+</html>
