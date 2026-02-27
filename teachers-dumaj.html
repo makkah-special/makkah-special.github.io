@@ -146,80 +146,6 @@ footer strong{color:var(--accent-light);}
   main{padding:16px 14px 40px;}.form-grid{grid-template-columns:1fr;}
   .teacher-card{flex-direction:column;text-align:center;}.btn-logout{margin-right:0;}
 }
-
-/* ===== STUDENTS ===== */
-.stu-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
-.stu-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 14px 12px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
-.stu-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:linear-gradient(180deg,var(--primary),#c25a00);}
-.stu-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(122,40,0,0.12);border-color:var(--primary);}
-.stu-av{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#c25a00);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.92rem;margin-bottom:8px;}
-.stu-name{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.9rem;color:var(--primary);}
-.stu-info{font-size:0.73rem;color:var(--muted);margin-top:2px;}
-.stu-teacher{font-size:0.7rem;background:rgba(122,40,0,0.07);color:var(--primary);padding:2px 8px;border-radius:8px;display:inline-block;margin-top:5px;}
-.mini-bar{height:4px;background:#e8ddd0;border-radius:4px;margin-top:7px;overflow:hidden;}
-.mini-fill{height:100%;background:linear-gradient(90deg,var(--primary),#c25a00);border-radius:4px;}
-.stu-pct{font-size:0.68rem;color:var(--muted);margin-top:2px;}
-/* Modal */
-.sm-ov{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:flex;align-items:flex-start;justify-content:center;padding:14px;overflow-y:auto;}
-.sm-box{background:#fff;border-radius:20px;width:100%;max-width:820px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,0.22);}
-.sm-head{background:linear-gradient(135deg,#7a2800,#c25a00);border-radius:20px 20px 0 0;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;}
-.sm-title{color:#fff;font-family:'Tajawal',sans-serif;font-weight:900;font-size:1.05rem;}
-.sm-sub{color:rgba(255,255,255,0.7);font-size:0.75rem;margin-top:2px;}
-.sm-close{background:rgba(255,255,255,0.15);border:none;color:#fff;width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:0.95rem;}
-.sm-body{padding:18px 22px 22px;max-height:82vh;overflow-y:auto;}
-/* Info fields */
-.sf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.sf-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.sf label{display:block;font-size:0.7rem;color:var(--muted);font-weight:700;margin-bottom:3px;}
-.sf input,.sf select{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.82rem;outline:none;background:#fafafa;}
-.sf input:focus,.sf select:focus{border-color:var(--primary);background:#fff;}
-.sf input[readonly]{background:#f0f0f0;color:#777;cursor:default;}
-/* Subjects tabs */
-.subj-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.subj-tab{padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;font-family:'Cairo',sans-serif;font-size:0.75rem;cursor:pointer;background:#fff;transition:all 0.15s;}
-.subj-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
-.subj-tab:hover:not(.active){border-color:var(--primary);color:var(--primary);}
-/* Skills table */
-.sk-section-title{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.88rem;color:var(--primary);margin-bottom:8px;}
-.sk-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-.sk-tbl{width:100%;border-collapse:collapse;}
-.sk-tbl th{background:linear-gradient(135deg,#7a2800,#a33800);color:#fff;padding:8px 10px;font-family:'Tajawal',sans-serif;font-size:0.77rem;font-weight:700;text-align:right;}
-.sk-tbl td{padding:6px 10px;border-bottom:1px solid #f0ebe3;font-size:0.77rem;vertical-align:middle;}
-.sk-tbl tr:last-child td{border-bottom:none;}
-.sk-tbl tr:nth-child(even) td{background:#fdf9f5;}
-.sk-tbl tr:hover td{background:#f7efe5;}
-.sk-num{color:var(--muted);font-size:0.7rem;font-weight:700;text-align:center;width:28px;}
-.sk-sel{padding:4px 6px;border:1.5px solid var(--border);border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.74rem;outline:none;width:118px;}
-.sk-sel:focus{border-color:var(--primary);}
-.sk-sel[disabled]{pointer-events:none;background:#f0f0f0;color:#888;}
-.lv1{background:#dcfce7!important;color:#166534!important;border-color:#86efac!important;}
-.lv2{background:#dbeafe!important;color:#1e40af!important;border-color:#93c5fd!important;}
-.lv3{background:#fef9c3!important;color:#854d0e!important;border-color:#fde047!important;}
-.lv4{background:#fee2e2!important;color:#991b1b!important;border-color:#fca5a5!important;}
-/* Analysis */
-.an-box{background:#faf6f0;border:1px solid #e8ddd0;border-radius:10px;padding:14px 16px;margin-top:14px;}
-.an-title{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.87rem;color:var(--primary);margin-bottom:10px;}
-.an-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
-.an-stat{background:#fff;border-radius:8px;padding:9px 6px;text-align:center;border:1px solid var(--border);}
-.an-n{font-family:'Tajawal',sans-serif;font-weight:900;font-size:1.25rem;}
-.an-l{font-size:0.65rem;color:var(--muted);margin-top:1px;}
-.an-stat.a1 .an-n{color:#166534;} .an-stat.a2 .an-n{color:#1e40af;}
-.an-stat.a3 .an-n{color:#854d0e;} .an-stat.a4 .an-n{color:#991b1b;}
-.pbar-bg{flex:1;height:9px;background:#e8ddd0;border-radius:9px;overflow:hidden;}
-.pbar-fg{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--primary),#c25a00);transition:width 0.5s;}
-.mastery-row{display:flex;align-items:center;gap:10px;}
-.mastery-pct-lbl{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.95rem;color:var(--primary);min-width:42px;}
-/* Modal actions */
-.sm-actions{display:flex;gap:8px;justify-content:flex-end;padding-top:12px;margin-top:8px;border-top:1px solid var(--border);}
-.btn-sv{background:linear-gradient(135deg,var(--primary),#c25a00);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-family:'Cairo',sans-serif;font-size:0.83rem;font-weight:700;cursor:pointer;}
-.btn-cl{background:#f0f0f0;color:#555;border:none;border-radius:9px;padding:9px 14px;font-family:'Cairo',sans-serif;font-size:0.83rem;cursor:pointer;}
-.btn-pr{background:#fff;border:1.5px solid var(--primary);color:var(--primary);border-radius:9px;padding:9px 14px;font-family:'Cairo',sans-serif;font-size:0.83rem;cursor:pointer;}
-.btn-del{background:#fff;border:1.5px solid #dc2626;color:#dc2626;border-radius:9px;padding:9px 12px;font-family:'Cairo',sans-serif;font-size:0.8rem;cursor:pointer;}
-.add-stu-btn{background:linear-gradient(135deg,var(--primary),#c25a00);color:#fff;border:none;border-radius:9px;padding:9px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;}
-.par-badge{background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32;border-radius:7px;padding:3px 10px;font-size:0.7rem;font-weight:700;}
-.par-view-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.85);padding:6px 12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.76rem;cursor:pointer;margin-left:8px;}
-
 </style>
 </head>
 <body>
@@ -281,12 +207,12 @@ footer strong{color:var(--accent-light);}
         <div class="teacher-name" id="t-name">—</div>
         <div class="teacher-role" id="t-role">معلم تربية خاصة — برنامج يسير التعليمي</div>
         <div class="teacher-badges">
-          <span class="badge badge-orange">🧠 الدمج الفكري</span>
+          <span class="badge badge-orange">🧑🏻‍🏫 الدمج الفكري</span>
           <span class="badge badge-blue" id="t-exp">—</span>
           <span class="badge badge-green" id="t-entries-badge">0 إنجاز</span>
         </div>
       </div>
-      <button class="par-view-btn" onclick="openParentView()">👁 ولي الأمر</button><button class="btn-logout" onclick="doLogout()">🚪 خروج</button>
+      <button class="btn-logout" onclick="doLogout()">🚪 خروج</button>
     </div>
 
     <div class="stats-row">
@@ -302,7 +228,6 @@ footer strong{color:var(--accent-light);}
       <button class="tab-btn" onclick="switchTab('profile',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="switchTab('add',this)">➕ إضافة إنجاز</button>
       <button class="tab-btn tab-btn-witness" onclick="switchTab('witnesses',this)">📋 الشواهد والأعمال</button>
-      <button class="tab-btn" onclick="switchTab('students',this)">👨‍🎓 الطلاب</button>
     </div>
 
     <!-- الإنجازات -->
@@ -398,17 +323,6 @@ footer strong{color:var(--accent-light);}
         <button class="btn-witness" onclick="openWitnessModal()">📋 إضافة شاهد جديد</button>
       </div>
       <div id="witnesses-list"><div class="empty"><div class="empty-icon">📋</div><div style="font-size:0.85rem">لا توجد شواهد مضافة بعد</div></div></div>
-
-    <!-- تبويب الطلاب -->
-    <div class="tab-pane" id="tab-students">
-      <div class="stu-header">
-        <div class="section-title">👨‍🎓 طلاب برنامج الدمج الفكري</div>
-        <button class="add-stu-btn" onclick="openAddStudent()">➕ إضافة طالب</button>
-      </div>
-      <div id="stu-grid" class="stu-grid">
-        <div class="empty"><div class="empty-icon">👨‍🎓</div><div style="font-size:0.85rem">لا يوجد طلاب مُسنَدون لك — اضغط إضافة طالب</div></div>
-      </div>
-    </div>
     </div>
   </main>
 </div>
@@ -574,45 +488,62 @@ async function sbSet(key, data) {
 // ============================================================
 const TEACHERS = {
   "محمد أحمد السهيمي": {
-    pin:"1234", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"مس",
+    pin:"1234", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"السهيمي",
     profile:{name:"محمد أحمد السهيمي",major:"تربية خاصة",degree:"بكالوريوس",exp:"7",
       email:"m.suhayymi@school.edu.sa",phone:"0501234001",
-      bio:"معلم تربية خاصة متخصص في برنامج الدمج الفكري.",students:"15",subjects:"اللغة العربية، التربية الإسلامية",photo:null},
-    entries:[], witnesses:[]},
-  "علي محمد الزهراني": {
-    pin:"2345", role:"معلم لغة عربية — برنامج الدمج الفكري", avatar:"عز",
-    profile:{name:"علي محمد الزهراني",major:"لغة عربية",degree:"بكالوريوس",exp:"5",
+      bio:"معلم تربية خاصة متخصص في برنامج الدمج الفكري، يعمل على تطوير الخطط التربوية الفردية.",
+      students:"15",subjects:"اللغة العربية، التربية الإسلامية",photo:null},
+    entries:[], witnesses:[]
+  },
+  "زين العابدين سعد القرني": {
+    pin:"6789", role:"ممعلم تربية خاصة — برنامج الدمج الفكري", avatar:"زين",
+    profile:{name:"زين العابدين سعد القرني",major:"تربية خاصة",degree:"بكالوريوس",exp:"5",
       email:"a.zahrani@school.edu.sa",phone:"0502345002",
-      bio:"معلم لغة عربية يعمل مع طلاب الدمج الفكري.",students:"12",subjects:"اللغة العربية",photo:null},
-    entries:[], witnesses:[]},
+      bio:"معلم تربية خاصة يعمل مع طلاب الدمج الفكري بأساليب تدريسية مبتكرة.",
+      students:"12",subjects:"اللغة العربية",photo:null},
+    entries:[], witnesses:[]
+  },
   "علي سعيد الغامدي": {
-    pin:"3456", role:"معلم رياضيات — برنامج الدمج الفكري", avatar:"عغ",
+    pin:"3456", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"كرات",
     profile:{name:"علي سعيد الغامدي",major:"رياضيات",degree:"بكالوريوس",exp:"6",
       email:"a.ghamdi@school.edu.sa",phone:"0503456003",
-      bio:"معلم رياضيات يبسّط المفاهيم لطلاب الدمج الفكري.",students:"12",subjects:"الرياضيات",photo:null},
-    entries:[], witnesses:[]},
+      bio:"معلم رياضيات يبسّط المفاهيم الحسابية لطلاب الدمج الفكري.",
+      students:"12",subjects:"الرياضيات",photo:null},
+    entries:[], witnesses:[]
+  },
   "علي محمد المالكي": {
-    pin:"4567", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"عم",
+    pin:"4567", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"العاصمي",
     profile:{name:"علي محمد المالكي",major:"تربية خاصة",degree:"بكالوريوس",exp:"4",
       email:"a.malki@school.edu.sa",phone:"0504567004",
-      bio:"معلم تربية خاصة يركز على المهارات الحياتية.",students:"10",subjects:"المهارات الحياتية",photo:null},
-    entries:[], witnesses:[]},
+      bio:"معلم تربية خاصة يركز على تنمية المهارات الحياتية والاجتماعية.",
+      students:"10",subjects:"المهارات الحياتية، التربية الفنية",photo:null},
+    entries:[], witnesses:[]
+  },
   "حسن علي العلياني": {
-    pin:"5678", role:"معلم تربية بدنية — برنامج الدمج الفكري", avatar:"حع",
+    pin:"5678", role:"معلم تربية خاصة— برنامج الدمج الفكري", avatar:"حسن",
     profile:{name:"حسن علي العلياني",major:"تربية بدنية",degree:"بكالوريوس",exp:"9",
       email:"h.ulyani@school.edu.sa",phone:"0505678005",
-      bio:"معلم تربية بدنية يصمم برامج حركية للطلاب.",students:"21",subjects:"التربية البدنية",photo:null},
-    entries:[], witnesses:[]},
-  "زين العابدين سعد القرني": {
-    pin:"6789", role:"مشرف برنامج الدمج الفكري", avatar:"زق",
-    profile:{name:"زين العابدين سعد القرني",major:"إدارة تربوية",degree:"ماجستير",exp:"14",
+      bio:"معلم تربية خاصة يصمم برامج حركية لطلاب الدمج الفكري.",
+      students:"21",subjects:"التربية المهنية، الأنشطة الحركية",photo:null},
+    entries:[], witnesses:[]
+  },
+  "علي محمد الزهراني": {
+    pin:"2345", role:"مشرف برنامج الدمج الفكري", avatar:"هياس",
+    profile:{name:"علي محمد الزهراني",major:"إدارة تربوية",degree:"بكالوريوس",exp:"14",
       email:"z.qarni@school.edu.sa",phone:"0506789006",
-      bio:"مشرف برنامج الدمج الفكري ومتابع جودة الخدمات.",students:"21",subjects:"الإشراف التربوي",photo:null},
+      bio:"مشرف برنامج الدمج الفكري ومتابع تطوير الخطط التربوية الفردية وضمان جودة الخدمات.",
+      students:"21",subjects:"الإشراف التربوي العام",photo:null},
     entries:[
       {id:1,title:"إطلاق البوابة الرقمية لقسم ذوي الإعاقة",type:"achievement",date:"2025-09-01",
         org:"مدرسة مكة المكرمة المتوسطة",duration:"",
-        desc:"أشرف على تطوير البوابة الرقمية المتكاملة.",skills:"القيادة الرقمية",attachments:[]},
-    ], witnesses:[]}
+        desc:"أشرف على تطوير وإطلاق البوابة الرقمية المتكاملة لملفات الطلاب.",
+        skills:"القيادة الرقمية، إدارة المشاريع",attachments:[]},
+      {id:2,title:"حضور ملتقى التربية الخاصة الوطني",type:"activity",date:"2025-11-10",
+        org:"وزارة التعليم",duration:"3 أيام",
+        desc:"المشاركة في الملتقى الوطني للتربية الخاصة وتقديم ورقة عمل.",
+        skills:"العرض والتقديم، التشبيك المهني",attachments:[]}
+    ], witnesses:[]
+  }
 };
 
 let currentTeacher = null, nextId = 200, nextWitnessId = 300;
@@ -729,7 +660,6 @@ async function loadFromSupabase(teacher) {
     if (data.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, data.profile);
     if (Array.isArray(data.entries)) TEACHERS[teacher].entries = data.entries;
     if (Array.isArray(data.witnesses)) TEACHERS[teacher].witnesses = data.witnesses;
-    if (Array.isArray(data.students)) studentsData = data.students;
     try { localStorage.setItem('teacher_bk_' + teacher, JSON.stringify(data)); } catch(e) {}
     showSyncBar('saved', '✅ تم تحميل بياناتك من Supabase');
     setTimeout(hideSyncBar, 2000);
@@ -743,7 +673,6 @@ async function loadFromSupabase(teacher) {
         if (d.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, d.profile);
         if (Array.isArray(d.entries)) TEACHERS[teacher].entries = d.entries;
         if (Array.isArray(d.witnesses)) TEACHERS[teacher].witnesses = d.witnesses;
-        if (Array.isArray(d.students)) studentsData = d.students;
         loadedFromLocal = true;
       }
     } catch(e) {}
@@ -768,8 +697,7 @@ async function autoSave() {
   const payload = {
     profile: TEACHERS[currentTeacher].profile,
     entries: TEACHERS[currentTeacher].entries || [],
-    witnesses: TEACHERS[currentTeacher].witnesses || [],
-    students: studentsData
+    witnesses: TEACHERS[currentTeacher].witnesses || []
   };
   // حفظ محلي فوري كنسخة احتياطية
   try { localStorage.setItem('teacher_bk_' + currentTeacher, JSON.stringify(payload)); } catch(e) {}
@@ -1057,7 +985,7 @@ function printWitness(id) {
     (imgs.length ? '<div class="sec"><div class="sec-t">الصور المرفقة</div><div class="imgs">' + imgs.map(f => '<img src="' + f.dataUrl + '" alt="">').join('') + '</div></div>' : '') +
     (others.length ? '<div class="sec"><div class="sec-t">الملفات المرفقة</div>' + others.map(f => '<div style="font-size:0.82rem;padding:4px 0">📎 ' + escHtml(f.name) + '</div>').join('') + '</div>' : '') +
     '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>' +
-    '<sc'+'ript>window.onload=()=>window.print();<\/sc'+'ript></body></html>');
+    '<script>window.onload=()=>window.print();<\/script></body></html>');
   win.document.close();
 }
 
@@ -1199,7 +1127,7 @@ function printProfile() {
     html += '</div>';
   }
   html += '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>';
-  html += '<sc'+'ript>window.onload=()=>window.print();<\/sc'+'ript></body></html>';
+  html += '<script>window.onload=()=>window.print();<\/script></body></html>';
   win.document.write(html); win.document.close();
 }
 
@@ -1214,366 +1142,6 @@ function showToast(msg) {
   const t = document.getElementById('toast'); t.textContent = msg;
   t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800);
 }
-
-// ============================================================
-// STUDENTS MODULE
-// ============================================================
-const SKILLS_LIST = [
-  "معرفة تنوين الضم و تنوين الفتح و تنوين الكسر",
-  "يحفظ شكل تنوين الضم و تنوين الفتح و تنوين الكسر",
-  "ينطق الحروف باستخدام تنوين الضم وتنوين الفتح و تنوين الكسر",
-  "يستخرج تنوين الضم و تنوين الفتح و تنوين الكسر في الكلمات",
-  "يكتب تنوين الضم وتنوين الكسر وتنوين الفتح على الكلمة",
-  "معرفة اللام الشمسية واللام القمرية",
-  "يتعرف على اللام الشمسية واللام القمرية",
-  "ينطق كلمات تحتوي على اللام الشمسية واللام القمرية",
-  "يستخرج كلمات تحتوي على اللام الشمية واللام القمرية",
-  "معرفة التاء المفتوحة والتاء المربوطة",
-  "يسمي كلمات تنتهي بتاء مفتوحة وتاء مربوطة",
-  "يستخرج كلمات تنتهي بتاء مفتوحة وتاء مربوطة",
-  "يكتب نهاية الكلمات بما يناسبها (تاء مربوطة وتاء مفتوحة)",
-  "ربط الجمل بالصور",
-  "يطابق الصور مع ما يماثلها",
-  "يستخرج الصورة المناسبة مع الجملة",
-  "يشير إلى الجملة المناسبة للصورة",
-  "قراءة الجمل المكونة من أربع كلمات",
-  "معرفة آل التعريف",
-  "ربط الجمل بظرف الزمان صباحاً ومساءً",
-  "معرفة علامات الترقيم - علامة الاستفهام والفاصلة",
-  "التعرف على القراءة الصامتة والجهرية",
-  "يتهجى الكلمات في الجملة",
-  "يستخرج الكلمات من الجملة",
-  "يرتب أربع كلمات ليكون جملة",
-  "يتعرف على ال التعريف",
-  "يسمي كلمات بها ال التعريف",
-  "يستخرج كلمات بها ال التعريف",
-  "يتعرف على ظرف الزمان صباحاً ومساءً",
-  "يستخرج ظرف الزمان صباحاً ومساءً",
-  "يربط الجملة بظرف الزمان صباحاً ومساءً",
-  "يسمي علامات الترقيم",
-  "يستخرج علامات الترقيم",
-  "يكتب علامات الترقيم الاستفهام والفاصلة",
-  "يسمي أنواع القراءة الصامتة والجهرية",
-  "يقرأ الجملة قراءة جهرية",
-  "يقرأ الجملة قراءة صامتة"
-];
-
-const DEFAULT_SUBJECTS = ["المادة 1","المادة 2","المادة 3","المادة 4","المادة 5","المادة 6","المادة 7","المادة 8","المادة 9","المادة 10"];
-
-let studentsData = [];
-let currentStuIdx = null;
-let currentSubjIdx = 0;
-let isStuReadOnly = false;
-
-function stuInitials(name) {
-  const p = name.trim().split(" ");
-  return (p[0] ? p[0][0] : "") + (p[1] ? p[1][0] : "");
-}
-
-function getMastery(stu, subjIdx) {
-  const subj = stu.subjects[subjIdx];
-  if (!subj) return 0;
-  const lvls = subj.skills.map(function(s){ return s.level; });
-  const mastered = lvls.filter(function(l){ return l==="متفوق"||l==="متقدم"||l==="متمكن"; }).length;
-  return lvls.length > 0 ? Math.round(mastered / lvls.length * 100) : 0;
-}
-
-function getOverallMastery(stu) {
-  let total = 0, mastered = 0;
-  stu.subjects.forEach(function(subj) {
-    subj.skills.forEach(function(sk) {
-      total++;
-      if (sk.level==="متفوق"||sk.level==="متقدم"||sk.level==="متمكن") mastered++;
-    });
-  });
-  return total > 0 ? Math.round(mastered/total*100) : 0;
-}
-
-function renderStuGrid() {
-  const grid = document.getElementById("stu-grid");
-  const mine = studentsData.filter(function(s){ return s.teacher===currentTeacher; });
-  if (mine.length === 0) {
-    grid.innerHTML = "<div class=\"empty\"><div class=\"empty-icon\">&#x1F468;&#x200D;&#x1F393;</div><div style=\"font-size:0.85rem\">لا يوجد طلاب مُسنَدون لك — اضغط إضافة طالب</div></div>";
-    return;
-  }
-  grid.innerHTML = mine.map(function(s) {
-    const gi = studentsData.indexOf(s);
-    const pct = getOverallMastery(s);
-    const ini = stuInitials(s.name);
-    return "<div class=\"stu-card\" onclick=\"openStu(" + gi + ")\">" +
-      "<div class=\"stu-av\">" + ini + "</div>" +
-      "<div class=\"stu-name\">" + s.name + "</div>" +
-      "<div class=\"stu-info\">" + s.grade + " &middot; " + (s.subjects[0] ? s.subjects[0].name : "") + "</div>" +
-      "<div class=\"stu-teacher\">&#x1F464; " + s.teacher + "</div>" +
-      "<div class=\"mini-bar\"><div class=\"mini-fill\" style=\"width:" + pct + "%\"></div></div>" +
-      "<div class=\"stu-pct\">نسبة الإتقان: " + pct + "%</div>" +
-      "</div>";
-  }).join("");
-}
-
-function makeNewStudent() {
-  return {
-    id: Date.now(),
-    name: "", grade: "", teacher: currentTeacher, parentPin: "",
-    subjects: DEFAULT_SUBJECTS.map(function(nm) {
-      return { name: nm, skills: SKILLS_LIST.map(function(g){ return { goal: g, level: "" }; }) };
-    })
-  };
-}
-
-function openAddStudent() {
-  studentsData.push(makeNewStudent());
-  currentStuIdx = studentsData.length - 1;
-  currentSubjIdx = 0;
-  isStuReadOnly = false;
-  buildStuModal();
-  document.getElementById("sm-ov").style.display = "flex";
-}
-
-function openStu(idx) {
-  currentStuIdx = idx;
-  currentSubjIdx = 0;
-  isStuReadOnly = false;
-  buildStuModal();
-  document.getElementById("sm-ov").style.display = "flex";
-}
-
-function closeSM() {
-  document.getElementById("sm-ov").style.display = "none";
-}
-
-function switchSubj(idx) {
-  currentSubjIdx = idx;
-  buildStuModal();
-}
-
-function buildStuModal() {
-  const s = studentsData[currentStuIdx];
-  const ro = isStuReadOnly;
-  document.getElementById("sm-title").textContent = s.name || "طالب جديد";
-  document.getElementById("sm-sub").textContent = s.grade || "";
-  document.getElementById("par-badge").style.display = ro ? "inline-flex" : "none";
-
-  // Subject tabs
-  const subjTabs = s.subjects.map(function(subj, i) {
-    const cls = "subj-tab" + (i===currentSubjIdx ? " active" : "");
-    return "<button class=\"" + cls + "\" onclick=\"switchSubj(" + i + ")\">" + subj.name + "</button>";
-  }).join("");
-
-  // Current subject skills
-  const subj = s.subjects[currentSubjIdx];
-  const skillRows = subj.skills.map(function(sk, i) {
-    const lvCls = sk.level === "متفوق" ? "sk-sel lv1" :
-                  sk.level === "متقدم" ? "sk-sel lv2" :
-                  sk.level === "متمكن" ? "sk-sel lv3" :
-                  sk.level === "غير مجتاز" ? "sk-sel lv4" : "sk-sel";
-    const dis = ro ? " disabled" : "";
-    return "<tr>" +
-      "<td class=\"sk-num\">" + (i+1) + "</td>" +
-      "<td>" + sk.goal + "</td>" +
-      "<td style=\"text-align:center\">" +
-        "<select class=\"" + lvCls + "\"" + dis + " onchange=\"updateLevel(" + currentStuIdx + "," + currentSubjIdx + "," + i + ",this)\">" +
-          "<option value=\"\"" + (sk.level===""?" selected":"") + ">— اختر —</option>" +
-          "<option value=\"متفوق\"" + (sk.level==="متفوق"?" selected":"") + ">متفوق</option>" +
-          "<option value=\"متقدم\"" + (sk.level==="متقدم"?" selected":"") + ">متقدم</option>" +
-          "<option value=\"متمكن\"" + (sk.level==="متمكن"?" selected":"") + ">متمكن</option>" +
-          "<option value=\"غير مجتاز\"" + (sk.level==="غير مجتاز"?" selected":"") + ">غير مجتاز</option>" +
-        "</select>" +
-      "</td></tr>";
-  }).join("");
-
-  // Analysis for current subject
-  const lvls = subj.skills.map(function(sk){ return sk.level; });
-  const c1 = lvls.filter(function(l){return l==="متفوق";}).length;
-  const c2 = lvls.filter(function(l){return l==="متقدم";}).length;
-  const c3 = lvls.filter(function(l){return l==="متمكن";}).length;
-  const c4 = lvls.filter(function(l){return l==="غير مجتاز";}).length;
-  const tot = subj.skills.length;
-  const mas = c1+c2+c3;
-  const pct = tot>0 ? Math.round(mas/tot*100) : 0;
-
-  // Teacher options
-  const tchOpts = Object.keys(TEACHERS).map(function(t) {
-    return "<option value=\"" + t + "\"" + (s.teacher===t?" selected":"") + ">" + t + "</option>";
-  }).join("");
-
-  // Subject name edit row (only when not readonly)
-  const subjNameEdit = ro ? "" :
-    "<div class=\"sf-grid\" style=\"margin-top:8px;margin-bottom:14px\">" +
-      "<div class=\"sf\"><label>اسم المادة الحالية</label>" +
-        "<input type=\"text\" value=\"" + subj.name + "\" oninput=\"renameSubj(" + currentStuIdx + "," + currentSubjIdx + ",this.value)\" placeholder=\"أدخل اسم المادة\">" +
-      "</div></div>";
-
-  document.getElementById("sm-body").innerHTML =
-    "<div class=\"sf-grid\">" +
-      "<div class=\"sf\"><label>اسم الطالب الرباعي</label><input type=\"text\" id=\"sin\" value=\"" + s.name + "\"" + (ro?" readonly":"") + " oninput=\"studentsData[" + currentStuIdx + "].name=this.value;document.getElementById('sm-title').textContent=this.value||'طالب جديد'\"></div>" +
-      "<div class=\"sf\"><label>الصف</label><input type=\"text\" id=\"sgr\" value=\"" + s.grade + "\"" + (ro?" readonly":"") + " oninput=\"studentsData[" + currentStuIdx + "].grade=this.value\"></div>" +
-      "<div class=\"sf\"><label>رمز ولي الأمر</label><input type=\"password\" id=\"spp\" value=\"" + (s.parentPin||"") + "\" placeholder=\"رمز لعرض النتائج\"" + (ro?" readonly":"") + " oninput=\"studentsData[" + currentStuIdx + "].parentPin=this.value\"></div>" +
-    "</div>" +
-    "<div class=\"sf-grid2\" style=\"margin-bottom:14px\">" +
-      "<div class=\"sf\"><label>المعلم المُسنَد</label><select" + (ro?" disabled":"") + " onchange=\"studentsData[" + currentStuIdx + "].teacher=this.value;renderStuGrid()\">" + tchOpts + "</select></div>" +
-    "</div>" +
-    "<div class=\"sk-section-title\">📚 المواد الدراسية العشر</div>" +
-    "<div class=\"subj-tabs\" id=\"subj-tabs\">" + subjTabs + "</div>" +
-    subjNameEdit +
-    "<div class=\"sk-section-title\">📊 الأهداف — " + subj.name + " <span style=\"font-size:0.7rem;color:var(--muted);font-weight:400\">(" + tot + " هدفاً)</span></div>" +
-    "<div class=\"sk-wrap\"><table class=\"sk-tbl\">" +
-      "<thead><tr><th style=\"width:30px;text-align:center\">#</th><th>الهدف</th><th style=\"width:125px;text-align:center\">المستوى</th></tr></thead>" +
-      "<tbody>" + skillRows + "</tbody>" +
-    "</table></div>" +
-    "<div class=\"an-box\">" +
-      "<div class=\"an-title\">📈 تحليل نتائج — " + subj.name + "</div>" +
-      "<div class=\"an-stats\">" +
-        "<div class=\"an-stat a1\"><div class=\"an-n\" id=\"an1\">" + c1 + "</div><div class=\"an-l\">متفوق</div></div>" +
-        "<div class=\"an-stat a2\"><div class=\"an-n\" id=\"an2\">" + c2 + "</div><div class=\"an-l\">متقدم</div></div>" +
-        "<div class=\"an-stat a3\"><div class=\"an-n\" id=\"an3\">" + c3 + "</div><div class=\"an-l\">متمكن</div></div>" +
-        "<div class=\"an-stat a4\"><div class=\"an-n\" id=\"an4\">" + c4 + "</div><div class=\"an-l\">غير مجتاز</div></div>" +
-      "</div>" +
-      "<div class=\"mastery-row\">" +
-        "<span class=\"mastery-pct-lbl\" id=\"anpct\">" + pct + "%</span>" +
-        "<div class=\"pbar-bg\"><div class=\"pbar-fg\" id=\"anbar\" style=\"width:" + pct + "%\"></div></div>" +
-        "<span style=\"font-size:0.73rem;color:var(--muted)\">" + mas + " من " + tot + " هدف متقن</span>" +
-      "</div>" +
-    "</div>" +
-    "<div class=\"sm-actions\">" +
-      (ro ? "" : "<button class=\"btn-del\" onclick=\"deleteStu(" + currentStuIdx + ")\">🗑 حذف</button>") +
-      "<button class=\"btn-pr\" onclick=\"printStu(" + currentStuIdx + ")\">🖨 طباعة</button>" +
-      "<button class=\"btn-cl\" onclick=\"closeSM()\">إغلاق</button>" +
-      (ro ? "" : "<button class=\"btn-sv\" onclick=\"saveStu()\">💾 حفظ</button>") +
-    "</div>";
-}
-
-function renameSubj(stuIdx, subjIdx, val) {
-  studentsData[stuIdx].subjects[subjIdx].name = val;
-  // Update tab label live
-  const tabs = document.querySelectorAll(".subj-tab");
-  if (tabs[subjIdx]) tabs[subjIdx].textContent = val || ("المادة " + (subjIdx+1));
-}
-
-function updateLevel(stuIdx, subjIdx, skillIdx, sel) {
-  const lv = sel.value;
-  studentsData[stuIdx].subjects[subjIdx].skills[skillIdx].level = lv;
-  sel.className = "sk-sel" + (lv==="متفوق"?" lv1":lv==="متقدم"?" lv2":lv==="متمكن"?" lv3":lv==="غير مجتاز"?" lv4":"");
-  // Refresh analysis
-  const subj = studentsData[stuIdx].subjects[subjIdx];
-  const lvls = subj.skills.map(function(sk){ return sk.level; });
-  const c1=lvls.filter(function(l){return l==="متفوق";}).length;
-  const c2=lvls.filter(function(l){return l==="متقدم";}).length;
-  const c3=lvls.filter(function(l){return l==="متمكن";}).length;
-  const c4=lvls.filter(function(l){return l==="غير مجتاز";}).length;
-  const tot=subj.skills.length; const mas=c1+c2+c3;
-  const pct=tot>0?Math.round(mas/tot*100):0;
-  document.getElementById("an1").textContent=c1;
-  document.getElementById("an2").textContent=c2;
-  document.getElementById("an3").textContent=c3;
-  document.getElementById("an4").textContent=c4;
-  document.getElementById("anpct").textContent=pct+"%";
-  document.getElementById("anbar").style.width=pct+"%";
-}
-
-function saveStu() {
-  const s = studentsData[currentStuIdx];
-  if (!s.name.trim()) { alert("يرجى إدخال اسم الطالب"); return; }
-  renderStuGrid();
-  scheduleSave();
-  showSyncBar("saved","✅ تم حفظ بيانات الطالب");
-  setTimeout(hideSyncBar,2500);
-}
-
-function deleteStu(idx) {
-  if (!confirm("هل تريد حذف بيانات هذا الطالب نهائياً؟")) return;
-  studentsData.splice(idx,1);
-  closeSM();
-  renderStuGrid();
-  scheduleSave();
-}
-
-function printStu(idx) {
-  const s = studentsData[idx];
-  let html = "<!DOCTYPE html><html lang=\"ar\" dir=\"rtl\"><head><meta charset=\"UTF-8\">";
-  html += "<title>" + s.name + "</title>";
-  html += "<link href=\"https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@700;900&display=swap\" rel=\"stylesheet\">";
-  html += "<style>body{font-family:Cairo,sans-serif;margin:0;padding:16px;color:#1a1a2e;direction:rtl;}";
-  html += ".hdr{background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;padding:16px 20px;border-radius:10px;margin-bottom:14px;}";
-  html += "h1{font-family:Tajawal,sans-serif;font-size:1rem;margin:0 0 3px;}";
-  html += ".meta{font-size:0.75rem;opacity:0.8;}";
-  html += ".subj-hdr{background:#7a2800;color:#fff;padding:7px 10px;font-family:Tajawal,sans-serif;font-weight:900;font-size:0.85rem;margin-top:14px;border-radius:6px;}";
-  html += "table{width:100%;border-collapse:collapse;margin-top:4px;font-size:12px;}";
-  html += "th{background:#a33800;color:#fff;padding:6px 8px;text-align:right;}";
-  html += "td{padding:5px 8px;border-bottom:1px solid #eee;}";
-  html += ".st1{background:#dcfce7;color:#166534;font-weight:700;} .st2{background:#dbeafe;color:#1e40af;font-weight:700;}";
-  html += ".st3{background:#fef9c3;color:#854d0e;font-weight:700;} .st4{background:#fee2e2;color:#991b1b;font-weight:700;}";
-  html += ".stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0;}";
-  html += ".sbox{border:1px solid #ddd;border-radius:6px;padding:8px;text-align:center;}";
-  html += ".sn{font-family:Tajawal,sans-serif;font-weight:900;font-size:1.1rem;}";
-  html += ".pbar{background:#e8ddd0;border-radius:6px;height:8px;margin:6px 0;}";
-  html += ".pfill{height:8px;background:linear-gradient(90deg,#7a2800,#c25a00);border-radius:6px;}";
-  html += "@media print{.nopr{display:none;}}</style></head><body>";
-  html += "<div class=\"hdr\"><h1>تقرير تقييم مهارات الدمج الفكري — " + s.name + "</h1>";
-  html += "<div class=\"meta\">" + s.grade + " | المعلم: " + s.teacher + "</div></div>";
-
-  s.subjects.forEach(function(subj) {
-    const lvls = subj.skills.map(function(sk){ return sk.level; });
-    const c1=lvls.filter(function(l){return l==="متفوق";}).length;
-    const c2=lvls.filter(function(l){return l==="متقدم";}).length;
-    const c3=lvls.filter(function(l){return l==="متمكن";}).length;
-    const c4=lvls.filter(function(l){return l==="غير مجتاز";}).length;
-    const tot=lvls.length; const mas=c1+c2+c3;
-    const pct=tot>0?Math.round(mas/tot*100):0;
-    html += "<div class=\"subj-hdr\">" + subj.name + " — نسبة الإتقان: " + pct + "%</div>";
-    html += "<div class=\"stats\">";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#166534\">" + c1 + "</div><div style=\"font-size:10px;color:#888\">متفوق</div></div>";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#1e40af\">" + c2 + "</div><div style=\"font-size:10px;color:#888\">متقدم</div></div>";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#854d0e\">" + c3 + "</div><div style=\"font-size:10px;color:#888\">متمكن</div></div>";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#991b1b\">" + c4 + "</div><div style=\"font-size:10px;color:#888\">غير مجتاز</div></div>";
-    html += "</div>";
-    html += "<div class=\"pbar\"><div class=\"pfill\" style=\"width:" + pct + "%\"></div></div>";
-    html += "<table><thead><tr><th style=\"width:28px;text-align:center\">#</th><th>الهدف</th><th style=\"width:90px;text-align:center\">المستوى</th></tr></thead><tbody>";
-    subj.skills.forEach(function(sk,i) {
-      const cls = sk.level==="متفوق"?"st1":sk.level==="متقدم"?"st2":sk.level==="متمكن"?"st3":sk.level==="غير مجتاز"?"st4":"";
-      html += "<tr><td style=\"text-align:center;color:#888\">" + (i+1) + "</td><td>" + sk.goal + "</td><td class=\"" + cls + "\" style=\"text-align:center\">" + (sk.level||"—") + "</td></tr>";
-    });
-    html += "</tbody></table>";
-  });
-
-  html += "<div class=\"nopr\" style=\"margin-top:14px;text-align:center\">";
-  html += "<button onclick=\"window.print()\" style=\"padding:8px 20px;background:#7a2800;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:Cairo,sans-serif\">طباعة</button>";
-  html += "</div></body></html>";
-
-  const win = window.open("","_blank");
-  win.document.write(html);
-  win.document.close();
-}
-
-function openParentView() {
-  const pin = prompt("أدخل رمز ولي الأمر:");
-  if (!pin) return;
-  const stu = studentsData.find(function(s){ return s.parentPin && s.parentPin===pin; });
-  if (!stu) { alert("رمز غير صحيح"); return; }
-  currentStuIdx = studentsData.indexOf(stu);
-  currentSubjIdx = 0;
-  isStuReadOnly = true;
-  buildStuModal();
-  document.getElementById("sm-ov").style.display = "flex";
-}
-
 </script>
-
-<!-- Student Modal -->
-<div id="sm-ov" class="sm-ov" style="display:none" onclick="if(event.target===this)closeSM()">
-  <div class="sm-box">
-    <div class="sm-head">
-      <div>
-        <div class="sm-title" id="sm-title">طالب جديد</div>
-        <div class="sm-sub" id="sm-sub"></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span id="par-badge" class="par-badge" style="display:none">👁 عرض ولي الأمر</span>
-        <button class="sm-close" onclick="closeSM()">✕</button>
-      </div>
-    </div>
-    <div class="sm-body" id="sm-body"></div>
-  </div>
-</div>
 </body>
 </html>
