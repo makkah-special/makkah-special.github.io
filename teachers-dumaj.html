@@ -40,7 +40,7 @@ header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;ba
 main{max-width:960px;margin:0 auto;padding:24px 20px 60px;}
 .teacher-card{background:#fff;border-radius:16px;border:1px solid var(--border);padding:24px 28px;margin-bottom:22px;display:flex;align-items:center;gap:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
 .teacher-avatar-wrap{position:relative;flex-shrink:0;cursor:pointer;}
-.teacher-avatar{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--primary),#c25a00);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;box-shadow:0 4px 14px rgba(26,58,92,0.3);overflow:hidden;}
+.teacher-avatar{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--primary),#c25a00);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;box-shadow:0 4px 14px rgba(122,40,0,0.3);overflow:hidden;}
 .teacher-avatar img{width:100%;height:100%;object-fit:cover;}
 .avatar-overlay{position:absolute;inset:0;border-radius:16px;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;color:#fff;font-size:1.3rem;}
 .teacher-avatar-wrap:hover .avatar-overlay{opacity:1;}
@@ -200,7 +200,7 @@ footer strong{color:var(--accent-light);}
       </div>
       <div style="flex:1">
         <div class="teacher-name" id="t-name">—</div>
-        <div class="teacher-role" id="t-role">معلم تربية خاصة — برنامج الدمج الفكري</div>
+        <div class="teacher-role" id="t-role">معلم تربية خاصة — برنامج يسير التعليمي</div>
         <div class="teacher-badges">
           <span class="badge badge-orange">🧠 الدمج الفكري</span>
           <span class="badge badge-blue" id="t-exp">—</span>
@@ -445,35 +445,62 @@ async function sbSet(key, data) {
 // TEACHER DATA
 // ============================================================
 const TEACHERS = {
-  "حسين منصور الكبيشي": {
-    pin:"1111", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"حك",
-    profile:{name:"حسين منصور الكبيشي",major:"تربية خاصة",degree:"بكالوريوس",exp:"8",
-      email:"h.kubaishi@school.edu.sa",phone:"0541112001",
-      bio:"معلم تربية خاصة متخصص في دعم طلاب البطء التعليمي وتطوير خطط التدخل الفردية.",
-      students:"20",subjects:"اللغة العربية، التربية الإسلامية، المهارات الحياتية",photo:null},
-    entries:[{id:1,title:"دورة التدخل المبكر لصعوبات التعلم",type:"training",date:"2025-09-10",
-      org:"وزارة التعليم",duration:"25 ساعة",
-      desc:"دورة متخصصة في استراتيجيات التدخل المبكر لطلاب البطء التعليمي.",
-      skills:"التدخل المبكر، بناء الخطط الفردية",attachments:[]}],
-    witnesses:[]
+  "محمد أحمد السهيمي": {
+    pin:"1234", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"مس",
+    profile:{name:"محمد أحمد السهيمي",major:"تربية خاصة",degree:"بكالوريوس",exp:"7",
+      email:"m.suhayymi@school.edu.sa",phone:"0501234001",
+      bio:"معلم تربية خاصة متخصص في برنامج الدمج الفكري، يعمل على تطوير الخطط التربوية الفردية.",
+      students:"15",subjects:"اللغة العربية، التربية الإسلامية",photo:null},
+    entries:[], witnesses:[]
   },
-  "سعد سالم الزهراني": {
-    pin:"2222", role:"مشرف برنامج الدمج الفكري", avatar:"سز",
-    profile:{name:"سعد سالم الزهراني",major:"إدارة تربوية",degree:"بكالوريوس",exp:"10",
-      email:"saad.z@school.edu.sa",phone:"0542223002",
-      bio:"مشرف برنامج الدمج الفكري ومطوّر المنصة الرقمية لقسم ذوي الإعاقة.",
-      students:"20",subjects:"الإشراف التربوي، التقنية التعليمية",photo:null},
+  "علي محمد الزهراني": {
+    pin:"2345", role:"معلم لغة عربية — برنامج الدمج الفكري", avatar:"عز",
+    profile:{name:"علي محمد الزهراني",major:"لغة عربية",degree:"بكالوريوس",exp:"5",
+      email:"a.zahrani@school.edu.sa",phone:"0502345002",
+      bio:"معلم لغة عربية يعمل مع طلاب الدمج الفكري بأساليب تدريسية مبتكرة.",
+      students:"12",subjects:"اللغة العربية",photo:null},
+    entries:[], witnesses:[]
+  },
+  "علي سعيد الغامدي": {
+    pin:"3456", role:"معلم رياضيات — برنامج الدمج الفكري", avatar:"عغ",
+    profile:{name:"علي سعيد الغامدي",major:"رياضيات",degree:"بكالوريوس",exp:"6",
+      email:"a.ghamdi@school.edu.sa",phone:"0503456003",
+      bio:"معلم رياضيات يبسّط المفاهيم الحسابية لطلاب الدمج الفكري.",
+      students:"12",subjects:"الرياضيات",photo:null},
+    entries:[], witnesses:[]
+  },
+  "علي محمد المالكي": {
+    pin:"4567", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"عم",
+    profile:{name:"علي محمد المالكي",major:"تربية خاصة",degree:"بكالوريوس",exp:"4",
+      email:"a.malki@school.edu.sa",phone:"0504567004",
+      bio:"معلم تربية خاصة يركز على تنمية المهارات الحياتية والاجتماعية.",
+      students:"10",subjects:"المهارات الحياتية، التربية الفنية",photo:null},
+    entries:[], witnesses:[]
+  },
+  "حسن علي العلياني": {
+    pin:"5678", role:"معلم تربية بدنية — برنامج الدمج الفكري", avatar:"حع",
+    profile:{name:"حسن علي العلياني",major:"تربية بدنية",degree:"بكالوريوس",exp:"9",
+      email:"h.ulyani@school.edu.sa",phone:"0505678005",
+      bio:"معلم تربية بدنية يصمم برامج حركية لطلاب الدمج الفكري.",
+      students:"21",subjects:"التربية البدنية، الأنشطة الحركية",photo:null},
+    entries:[], witnesses:[]
+  },
+  "زين العابدين سعد القرني": {
+    pin:"6789", role:"مشرف برنامج الدمج الفكري", avatar:"زق",
+    profile:{name:"زين العابدين سعد القرني",major:"إدارة تربوية",degree:"ماجستير",exp:"14",
+      email:"z.qarni@school.edu.sa",phone:"0506789006",
+      bio:"مشرف برنامج الدمج الفكري ومتابع تطوير الخطط التربوية الفردية وضمان جودة الخدمات.",
+      students:"21",subjects:"الإشراف التربوي العام",photo:null},
     entries:[
-      {id:1,title:"تطوير البوابة الرقمية لطلاب يسير",type:"achievement",date:"2025-09-01",
+      {id:1,title:"إطلاق البوابة الرقمية لقسم ذوي الإعاقة",type:"achievement",date:"2025-09-01",
         org:"مدرسة مكة المكرمة المتوسطة",duration:"",
-        desc:"أشرف على تصميم وتطوير البوابة الرقمية المتكاملة لملفات طلاب برنامج يسير.",
-        skills:"التقنية التعليمية، إدارة المشاريع",attachments:[]},
-      {id:2,title:"تكريم معلم متميز الفصل الأول 1447هـ",type:"award",date:"2025-11-20",
-        org:"إدارة المدرسة",duration:"",
-        desc:"حصل على تكريم المعلم المتميز تقديراً لجهوده.",
-        skills:"التميز المهني",attachments:[]}
-    ],
-    witnesses:[]
+        desc:"أشرف على تطوير وإطلاق البوابة الرقمية المتكاملة لملفات الطلاب.",
+        skills:"القيادة الرقمية، إدارة المشاريع",attachments:[]},
+      {id:2,title:"حضور ملتقى التربية الخاصة الوطني",type:"activity",date:"2025-11-10",
+        org:"وزارة التعليم",duration:"3 أيام",
+        desc:"المشاركة في الملتقى الوطني للتربية الخاصة وتقديم ورقة عمل.",
+        skills:"العرض والتقديم، التشبيك المهني",attachments:[]}
+    ], witnesses:[]
   }
 };
 
