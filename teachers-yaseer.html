@@ -181,12 +181,18 @@ footer strong{color:var(--accent-light);}
       onkeydown="if(event.key==='Enter')doLogin()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
     <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
     <button class="btn-login" onclick="doLogin()">✅ دخول</button>
+    <div id="conn-status" style="margin-top:12px;font-size:0.75rem;color:#5a6478;padding:7px;border-radius:8px;background:#f5f5f5;display:none"></div>
+    <button onclick="testConnection()" style="margin-top:8px;width:100%;padding:8px;background:#f0f0f0;border:1px solid #ddd;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.75rem;cursor:pointer;color:#5a6478">🔌 اختبار الاتصال بـ Supabase</button>
   </div>
 </div>
 
 <div class="portal" id="portal">
   <main>
     <div id="sync-bar" class="sync-bar hidden"></div>
+  <div id="env-warning" style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:0.82rem;color:#856404;line-height:1.8">
+    ⚠️ <strong>تنبيه:</strong> الملف يعمل داخل Claude ولا يمكنه الاتصال بـ Supabase من هنا.<br>
+    📥 <strong>قم بتحميل الملف وفتحه مباشرة على جهازك</strong> للحصول على المزامنة الكاملة.
+  </div>
 
     <div class="teacher-card">
       <div class="teacher-avatar-wrap" id="avatar-wrap" title="اضغط لتغيير الصورة">
@@ -408,33 +414,70 @@ footer strong{color:var(--accent-light);}
 // SUPABASE CONFIG
 // ============================================================
 const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5cnh3cWdhcHdqd2hpc2tvd2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0NzgzNDUsImV4cCI6MjA1ODA1NDM0NX0.xHHHtgLDVEcWCSxC85C1F43rTgEo9-2q8UvDMHqHLrk";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5cnh3cWdhcHdqd2hpc2tvd2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDM3MjcsImV4cCI6MjA4NzExOTcyN30.nEJivQNdtbI8Vn7thWe29zHEOzK-Z8eZVQMnSyvKlII";
 const SB_TABLE = "teacher_portfolios";
 const PROGRAM = "yaseer";
 
 async function sbGet(key) {
   try {
-    const res = await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${encodeURIComponent(key)}&select=data`, {
-      headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY }
-    });
+    const res = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${encodeURIComponent(key)}&select=data`,
+      { headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Accept": "application/json" } }
+    );
+    if (!res.ok) return null;
     const rows = await res.json();
-    if (rows && rows.length > 0) return rows[0].data;
+    if (Array.isArray(rows) && rows.length > 0) return rows[0].data;
     return null;
-  } catch(e) { return null; }
+  } catch(e) { console.error('sbGet error:', e); return null; }
 }
 
 async function sbSet(key, data) {
   try {
-    const res = await fetch(`${SB_URL}/rest/v1/${SB_TABLE}`, {
-      method: "POST",
-      headers: {
-        "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
-        "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"
-      },
-      body: JSON.stringify({ teacher_key: key, data: data })
-    });
-    return res.ok;
-  } catch(e) { return false; }
+    // استخدام UPSERT الصحيح في Supabase عبر POST مع onConflict
+    const res = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?on_conflict=teacher_key`,
+      {
+        method: "POST",
+        headers: {
+          "apikey": SB_KEY,
+          "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "resolution=merge-duplicates,return=minimal"
+        },
+        body: JSON.stringify({ teacher_key: key, data: data, updated_at: new Date().toISOString() })
+      }
+    );
+    if (res.ok) return true;
+    // إذا فشل UPSERT جرب DELETE ثم INSERT
+    const bodyText = await res.text();
+    console.warn('UPSERT failed:', res.status, bodyText);
+    // محاولة PATCH (تحديث سجل موجود)
+    const patchRes = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${encodeURIComponent(key)}`,
+      {
+        method: "PATCH",
+        headers: {
+          "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json", "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({ data: data, updated_at: new Date().toISOString() })
+      }
+    );
+    if (patchRes.ok) return true;
+    // إذا لم يجد السجل، أنشئه بـ INSERT
+    const insertRes = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}`,
+      {
+        method: "POST",
+        headers: {
+          "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json", "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({ teacher_key: key, data: data })
+      }
+    );
+    return insertRes.ok;
+  } catch(e) { console.error('sbSet error:', e); return false; }
 }
 
 // ============================================================
@@ -496,6 +539,34 @@ function updateHijri(inputId, labelId) {
 // ============================================================
 // AUTH
 // ============================================================
+async function testConnection() {
+  const el = document.getElementById('conn-status');
+  el.style.display = 'block';
+  el.style.background = '#fef3c7';
+  el.style.color = '#92400e';
+  el.textContent = '⏳ جاري الاتصال بـ Supabase...';
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?select=teacher_key&limit=1`,
+      { headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Accept": "application/json" } }
+    );
+    if (res.ok) {
+      el.style.background = '#d1fae5'; el.style.color = '#065f46';
+      el.textContent = '✅ الاتصال بـ Supabase يعمل بشكل صحيح!';
+    } else {
+      el.style.background = '#fee2e2'; el.style.color = '#dc2626';
+      el.textContent = '❌ خطأ في الاتصال: ' + res.status + ' — تحقق من إعدادات Supabase';
+    }
+  } catch(e) {
+    el.style.background = '#fee2e2'; el.style.color = '#dc2626';
+    if (e.message && e.message.includes('fetch')) {
+      el.textContent = '⚠️ لا يمكن الاتصال — افتح الملف مباشرة على جهازك (ليس من Claude)';
+    } else {
+      el.textContent = '❌ ' + e.message;
+    }
+  }
+}
+
 function doLogin() {
   const sel = document.getElementById('teacher-select').value;
   const pin = document.getElementById('pin-input').value;
@@ -538,51 +609,78 @@ function doLogout() {
 // SUPABASE LOAD / SAVE
 // ============================================================
 function getSaveKey(teacher) {
-  return PROGRAM + '_' + teacher;
+  // مفتاح بسيط بدون أحرف عربية لتجنب مشاكل الترميز
+  return PROGRAM + '_' + encodeURIComponent(teacher);
 }
 
 async function loadFromSupabase(teacher) {
   const key = getSaveKey(teacher);
+  showSyncBar('saving', '⏳ جاري تحميل بياناتك...');
+
+  // فحص هل نحن داخل iframe (Claude Artifacts) أم على الجهاز مباشرة
+  const isIframe = (window.self !== window.top) || window.location.href.startsWith('blob:') || window.location.href.includes('claude.ai');
+  if (isIframe) {
+    document.getElementById('env-warning').style.display = 'block';
+  }
+
   const data = await sbGet(key);
   if (data) {
-    if (data.profile) TEACHERS[teacher].profile = { ...TEACHERS[teacher].profile, ...data.profile };
-    if (data.entries) TEACHERS[teacher].entries = data.entries;
-    if (data.witnesses) TEACHERS[teacher].witnesses = data.witnesses;
-  }
-  // Fallback to localStorage if Supabase failed
-  else {
+    console.log('✅ تم تحميل البيانات من Supabase');
+    document.getElementById('env-warning').style.display = 'none';
+    if (data.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, data.profile);
+    if (Array.isArray(data.entries)) TEACHERS[teacher].entries = data.entries;
+    if (Array.isArray(data.witnesses)) TEACHERS[teacher].witnesses = data.witnesses;
+    try { localStorage.setItem('teacher_bk_' + teacher, JSON.stringify(data)); } catch(e) {}
+    showSyncBar('saved', '✅ تم تحميل بياناتك من Supabase');
+    setTimeout(hideSyncBar, 2000);
+  } else {
+    // محاولة localStorage كنسخة احتياطية
+    let loadedFromLocal = false;
     try {
-      const ls = localStorage.getItem('teacher_bk_' + btoa(encodeURIComponent(teacher)));
+      const ls = localStorage.getItem('teacher_bk_' + teacher);
       if (ls) {
         const d = JSON.parse(ls);
-        if (d.profile) TEACHERS[teacher].profile = { ...TEACHERS[teacher].profile, ...d.profile };
-        if (d.entries) TEACHERS[teacher].entries = d.entries;
-        if (d.witnesses) TEACHERS[teacher].witnesses = d.witnesses;
+        if (d.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, d.profile);
+        if (Array.isArray(d.entries)) TEACHERS[teacher].entries = d.entries;
+        if (Array.isArray(d.witnesses)) TEACHERS[teacher].witnesses = d.witnesses;
+        loadedFromLocal = true;
       }
     } catch(e) {}
+    if (loadedFromLocal) {
+      showSyncBar('error', '📱 تم التحميل من هذا الجهاز (بيانات Supabase غير متاحة)');
+    } else {
+      showSyncBar('error', '📭 لا توجد بيانات محفوظة — ابدأ بإضافة بياناتك');
+    }
+    setTimeout(hideSyncBar, 3500);
   }
 }
 
 function scheduleSave() {
   if (saveTimeout) clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(autoSave, 1200);
+  saveTimeout = setTimeout(autoSave, 800);
 }
 
 async function autoSave() {
   if (!currentTeacher) return;
-  showSyncBar('saving', '💾 جاري الحفظ...');
+  showSyncBar('saving', '💾 جاري الحفظ في Supabase...');
   const key = getSaveKey(currentTeacher);
   const payload = {
     profile: TEACHERS[currentTeacher].profile,
-    entries: TEACHERS[currentTeacher].entries,
+    entries: TEACHERS[currentTeacher].entries || [],
     witnesses: TEACHERS[currentTeacher].witnesses || []
   };
+  // حفظ محلي فوري كنسخة احتياطية
+  try { localStorage.setItem('teacher_bk_' + currentTeacher, JSON.stringify(payload)); } catch(e) {}
+  // حفظ في Supabase
   const ok = await sbSet(key, payload);
-  // Always backup in localStorage
-  try { localStorage.setItem('teacher_bk_' + btoa(encodeURIComponent(currentTeacher)), JSON.stringify(payload)); } catch(e) {}
-  if (ok) showSyncBar('saved', '✅ تم الحفظ في Supabase');
-  else showSyncBar('error', '⚠️ حُفظ محلياً فقط (تحقق من الاتصال)');
-  setTimeout(hideSyncBar, 3000);
+  if (ok) {
+    showSyncBar('saved', '✅ تم الحفظ في Supabase — يمكنك الدخول من أي جهاز');
+    console.log('✅ تم الحفظ في Supabase بمفتاح:', key);
+  } else {
+    showSyncBar('error', '⚠️ فشل الحفظ في Supabase — تم الحفظ محلياً فقط');
+    console.error('❌ فشل الحفظ في Supabase');
+  }
+  setTimeout(hideSyncBar, 3500);
 }
 
 function showSyncBar(type, msg) {
