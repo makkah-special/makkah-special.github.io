@@ -1213,7 +1213,7 @@ function loadStudent(pin) {
 
   // التقارير الثابتة لكل طالب
   const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
+    { title: "التقرير النفسي الموحد", icon: "🧑🏻‍🏫", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
     { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
   ];
 
@@ -1758,7 +1758,7 @@ function renderStudentCards() {
     <div class="stu-card" style="flex-direction:column;align-items:stretch;cursor:default;padding:0;overflow:hidden;">
       <!-- رأس البطاقة -->
       <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:linear-gradient(135deg,#fff8f3,#fff3e0);border-bottom:1px solid var(--border);" onclick="openEditModal('${pin}')">
-        <div class="stu-card-avatar">🧠</div>
+        <div class="stu-card-avatar">🧑🏻‍🏫</div>
         <div style="flex:1;min-width:0;">
           <div class="stu-card-name">${s.name}</div>
           <div class="stu-card-meta">${s.grade}</div>
