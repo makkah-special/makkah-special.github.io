@@ -692,8 +692,16 @@ async function loadFromSupabase(teacher) {
     console.log('✅ تم تحميل البيانات من Supabase');
     document.getElementById('env-warning').style.display = 'none';
     if (data.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, data.profile);
-    if (Array.isArray(data.entries)) TEACHERS[teacher].entries = data.entries;
-    if (Array.isArray(data.witnesses)) TEACHERS[teacher].witnesses = data.witnesses;
+    if (Array.isArray(data.entries)) {
+      TEACHERS[teacher].entries = data.entries;
+      const maxEntryId = data.entries.reduce((m,e) => Math.max(m, e.id||0), 0);
+      if (maxEntryId >= nextId) nextId = maxEntryId + 1;
+    }
+    if (Array.isArray(data.witnesses)) {
+      TEACHERS[teacher].witnesses = data.witnesses;
+      const maxWitId = data.witnesses.reduce((m,w) => Math.max(m, w.id||0), 0);
+      if (maxWitId >= nextWitnessId) nextWitnessId = maxWitId + 1;
+    }
     try { localStorage.setItem('teacher_bk_' + teacher, JSON.stringify(data)); } catch(e) {}
     showSyncBar('saved', '✅ تم تحميل بياناتك من Supabase');
     setTimeout(hideSyncBar, 2000);
@@ -705,8 +713,16 @@ async function loadFromSupabase(teacher) {
       if (ls) {
         const d = JSON.parse(ls);
         if (d.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, d.profile);
-        if (Array.isArray(d.entries)) TEACHERS[teacher].entries = d.entries;
-        if (Array.isArray(d.witnesses)) TEACHERS[teacher].witnesses = d.witnesses;
+        if (Array.isArray(d.entries)) {
+          TEACHERS[teacher].entries = d.entries;
+          const maxEId = d.entries.reduce((m,e) => Math.max(m, e.id||0), 0);
+          if (maxEId >= nextId) nextId = maxEId + 1;
+        }
+        if (Array.isArray(d.witnesses)) {
+          TEACHERS[teacher].witnesses = d.witnesses;
+          const maxWId = d.witnesses.reduce((m,w) => Math.max(m, w.id||0), 0);
+          if (maxWId >= nextWitnessId) nextWitnessId = maxWId + 1;
+        }
         loadedFromLocal = true;
       }
     } catch(e) {}
