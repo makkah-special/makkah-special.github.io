@@ -1528,6 +1528,7 @@ function openTab(id, btn) {
     const pin = currentStudent.pin || Object.keys(STUDENTS).find(k => STUDENTS[k] === currentStudent);
     if (pin) renderIEPView(pin);
   }
+  if (id === 'skills' && currentStudent) loadStudentSkills(currentStudent.pin);
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
   // Init canvas when iqrar tab is opened
@@ -2429,11 +2430,7 @@ function savePlanAsPDF(url) {
 }
 
 // تحميل المهارات عند فتح التبويب
-const _origOpenTab = openTab;
-function openTab(id, btn) {
-  _origOpenTab(id, btn);
-  if (id === 'skills' && currentStudent) loadStudentSkills(currentStudent.pin);
-}
+
 
 </script>
 </body>
