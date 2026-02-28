@@ -866,7 +866,6 @@ function addEntry() {
   };
   TEACHERS[currentTeacher].entries.unshift(entry);
   ['e-title','e-date','e-org','e-duration','e-desc','e-skills'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('e-hijri').classList.remove('show');
   pendingAttach = []; renderPreview('attach-preview', pendingAttach);
   document.getElementById('e-type').value = 'achievement';
   renderEntries(); updateStats(); scheduleSave();
@@ -967,7 +966,6 @@ function openWitnessModal() {
   switchDateMode('w','greg');
   ['w-title','w-date','w-desc'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('w-type').value = 'school_work';
-  document.getElementById('w-hijri').classList.remove('show');
   pendingWitnessAttach = []; renderPreview('w-attach-preview', pendingWitnessAttach);
   initHijriSelects();
   document.getElementById('witness-modal').classList.add('open');
