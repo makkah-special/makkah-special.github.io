@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary:#7a2800; --primary-dark:#5a1e00; --accent:#e07020;
+  --primary:#7a2800; --primary-dark:#5a1e00; --accent:#c8973a;
   --accent-light:#f59040; --gold:#c8973a; --bg:#f5f2eb;
   --border:#e0d8c8; --text:#1a1a2e; --muted:#5a6478;
 }
@@ -49,7 +49,7 @@ main{max-width:960px;margin:0 auto;padding:24px 20px 60px;}
 .teacher-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
 .badge{padding:3px 12px;border-radius:12px;font-size:0.72rem;font-weight:700;}
 .badge-orange{background:#fff3e0;color:#c25a00;border:1px solid #f59040;}
-.badge-blue{background:#e8f0ff;color:#1a3a5c;border:1px solid #bfdbfe;}
+.badge-blue{background:#e8f0ff;color:#7a2800;border:1px solid #bfdbfe;}
 .badge-green{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
 .btn-logout{margin-right:auto;padding:8px 18px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;}
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin-bottom:20px;}
@@ -82,8 +82,8 @@ label{font-size:0.78rem;font-weight:700;color:var(--muted);}
 .btn-print{padding:10px 22px;background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;}
 .btn-danger{padding:6px 12px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;}
 .btn-danger:hover{background:#dc2626;color:#fff;}
-.btn-edit{padding:6px 12px;background:#e8f0ff;color:#1a3a5c;border:1px solid #bfdbfe;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;}
-.btn-edit:hover{background:#1a3a5c;color:#fff;}
+.btn-edit{padding:6px 12px;background:#e8f0ff;color:#7a2800;border:1px solid #bfdbfe;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;}
+.btn-edit:hover{background:#7a2800;color:#fff;}
 .btn-print-sm{padding:6px 12px;background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;}
 .btn-print-sm:hover{background:#065f46;color:#fff;}
 .save-status{font-size:0.75rem;color:#2d9e70;background:#d1fae5;padding:4px 12px;border-radius:8px;display:none;}
@@ -114,9 +114,9 @@ label{font-size:0.78rem;font-weight:700;color:var(--muted);}
 .attach-zone input{display:none;}
 .attach-zone label{cursor:pointer;font-size:0.82rem;color:var(--muted);}
 .attach-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
-.attach-chip{display:flex;align-items:center;gap:6px;background:#e8f0ff;border:1px solid #bfdbfe;border-radius:8px;padding:4px 10px;font-size:0.75rem;color:#1a3a5c;}
+.attach-chip{display:flex;align-items:center;gap:6px;background:#e8f0ff;border:1px solid #bfdbfe;border-radius:8px;padding:4px 10px;font-size:0.75rem;color:#7a2800;}
 .attach-chip button{background:none;border:none;color:#dc2626;cursor:pointer;font-size:0.8rem;}
-.attach-chip a{color:#1a3a5c;text-decoration:none;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;}
+.attach-chip a{color:#7a2800;text-decoration:none;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;}
 .photo-wrap{display:flex;align-items:center;gap:16px;padding:14px;background:#f8faff;border-radius:12px;border:1px dashed var(--border);margin-bottom:14px;}
 .photo-preview{width:70px;height:70px;border-radius:12px;overflow:hidden;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
 .photo-preview img{width:100%;height:100%;object-fit:cover;}
@@ -135,7 +135,7 @@ label{font-size:0.78rem;font-weight:700;color:var(--muted);}
 .sync-bar.saved{background:#d1fae5;color:#065f46;}
 .sync-bar.error{background:#fee2e2;color:#dc2626;}
 .sync-bar.hidden{display:none;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a3a5c;color:#fff;padding:12px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:9999;transition:transform 0.3s;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#7a2800;color:#fff;padding:12px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:9999;transition:transform 0.3s;}
 .toast.show{transform:translateX(-50%) translateY(0);}
 .empty{text-align:center;padding:40px 20px;color:var(--muted);}
 .empty-icon{font-size:2.5rem;margin-bottom:10px;}
@@ -146,80 +146,6 @@ footer strong{color:var(--accent-light);}
   main{padding:16px 14px 40px;}.form-grid{grid-template-columns:1fr;}
   .teacher-card{flex-direction:column;text-align:center;}.btn-logout{margin-right:0;}
 }
-
-/* ===== STUDENTS ===== */
-.stu-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
-.stu-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 14px 12px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
-.stu-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:linear-gradient(180deg,var(--primary),#c25a00);}
-.stu-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(122,40,0,0.12);border-color:var(--primary);}
-.stu-av{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#c25a00);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.92rem;margin-bottom:8px;}
-.stu-name{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.9rem;color:var(--primary);}
-.stu-info{font-size:0.73rem;color:var(--muted);margin-top:2px;}
-.stu-teacher{font-size:0.7rem;background:rgba(122,40,0,0.07);color:var(--primary);padding:2px 8px;border-radius:8px;display:inline-block;margin-top:5px;}
-.mini-bar{height:4px;background:#e8ddd0;border-radius:4px;margin-top:7px;overflow:hidden;}
-.mini-fill{height:100%;background:linear-gradient(90deg,var(--primary),#c25a00);border-radius:4px;}
-.stu-pct{font-size:0.68rem;color:var(--muted);margin-top:2px;}
-/* Modal */
-.sm-ov{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:flex;align-items:flex-start;justify-content:center;padding:14px;overflow-y:auto;}
-.sm-box{background:#fff;border-radius:20px;width:100%;max-width:820px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,0.22);}
-.sm-head{background:linear-gradient(135deg,#7a2800,#c25a00);border-radius:20px 20px 0 0;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;}
-.sm-title{color:#fff;font-family:'Tajawal',sans-serif;font-weight:900;font-size:1.05rem;}
-.sm-sub{color:rgba(255,255,255,0.7);font-size:0.75rem;margin-top:2px;}
-.sm-close{background:rgba(255,255,255,0.15);border:none;color:#fff;width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:0.95rem;}
-.sm-body{padding:18px 22px 22px;max-height:82vh;overflow-y:auto;}
-/* Info fields */
-.sf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.sf-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.sf label{display:block;font-size:0.7rem;color:var(--muted);font-weight:700;margin-bottom:3px;}
-.sf input,.sf select{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.82rem;outline:none;background:#fafafa;}
-.sf input:focus,.sf select:focus{border-color:var(--primary);background:#fff;}
-.sf input[readonly]{background:#f0f0f0;color:#777;cursor:default;}
-/* Subjects tabs */
-.subj-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.subj-tab{padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;font-family:'Cairo',sans-serif;font-size:0.75rem;cursor:pointer;background:#fff;transition:all 0.15s;}
-.subj-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
-.subj-tab:hover:not(.active){border-color:var(--primary);color:var(--primary);}
-/* Skills table */
-.sk-section-title{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.88rem;color:var(--primary);margin-bottom:8px;}
-.sk-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-.sk-tbl{width:100%;border-collapse:collapse;}
-.sk-tbl th{background:linear-gradient(135deg,#7a2800,#a33800);color:#fff;padding:8px 10px;font-family:'Tajawal',sans-serif;font-size:0.77rem;font-weight:700;text-align:right;}
-.sk-tbl td{padding:6px 10px;border-bottom:1px solid #f0ebe3;font-size:0.77rem;vertical-align:middle;}
-.sk-tbl tr:last-child td{border-bottom:none;}
-.sk-tbl tr:nth-child(even) td{background:#fdf9f5;}
-.sk-tbl tr:hover td{background:#f7efe5;}
-.sk-num{color:var(--muted);font-size:0.7rem;font-weight:700;text-align:center;width:28px;}
-.sk-sel{padding:4px 6px;border:1.5px solid var(--border);border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.74rem;outline:none;width:118px;}
-.sk-sel:focus{border-color:var(--primary);}
-.sk-sel[disabled]{pointer-events:none;background:#f0f0f0;color:#888;}
-.lv1{background:#dcfce7!important;color:#166534!important;border-color:#86efac!important;}
-.lv2{background:#dbeafe!important;color:#1e40af!important;border-color:#93c5fd!important;}
-.lv3{background:#fef9c3!important;color:#854d0e!important;border-color:#fde047!important;}
-.lv4{background:#fee2e2!important;color:#991b1b!important;border-color:#fca5a5!important;}
-/* Analysis */
-.an-box{background:#faf6f0;border:1px solid #e8ddd0;border-radius:10px;padding:14px 16px;margin-top:14px;}
-.an-title{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.87rem;color:var(--primary);margin-bottom:10px;}
-.an-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
-.an-stat{background:#fff;border-radius:8px;padding:9px 6px;text-align:center;border:1px solid var(--border);}
-.an-n{font-family:'Tajawal',sans-serif;font-weight:900;font-size:1.25rem;}
-.an-l{font-size:0.65rem;color:var(--muted);margin-top:1px;}
-.an-stat.a1 .an-n{color:#166534;} .an-stat.a2 .an-n{color:#1e40af;}
-.an-stat.a3 .an-n{color:#854d0e;} .an-stat.a4 .an-n{color:#991b1b;}
-.pbar-bg{flex:1;height:9px;background:#e8ddd0;border-radius:9px;overflow:hidden;}
-.pbar-fg{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--primary),#c25a00);transition:width 0.5s;}
-.mastery-row{display:flex;align-items:center;gap:10px;}
-.mastery-pct-lbl{font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.95rem;color:var(--primary);min-width:42px;}
-/* Modal actions */
-.sm-actions{display:flex;gap:8px;justify-content:flex-end;padding-top:12px;margin-top:8px;border-top:1px solid var(--border);}
-.btn-sv{background:linear-gradient(135deg,var(--primary),#c25a00);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-family:'Cairo',sans-serif;font-size:0.83rem;font-weight:700;cursor:pointer;}
-.btn-cl{background:#f0f0f0;color:#555;border:none;border-radius:9px;padding:9px 14px;font-family:'Cairo',sans-serif;font-size:0.83rem;cursor:pointer;}
-.btn-pr{background:#fff;border:1.5px solid var(--primary);color:var(--primary);border-radius:9px;padding:9px 14px;font-family:'Cairo',sans-serif;font-size:0.83rem;cursor:pointer;}
-.btn-del{background:#fff;border:1.5px solid #dc2626;color:#dc2626;border-radius:9px;padding:9px 12px;font-family:'Cairo',sans-serif;font-size:0.8rem;cursor:pointer;}
-.add-stu-btn{background:linear-gradient(135deg,var(--primary),#c25a00);color:#fff;border:none;border-radius:9px;padding:9px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;}
-.par-badge{background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32;border-radius:7px;padding:3px 10px;font-size:0.7rem;font-weight:700;}
-.par-view-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.85);padding:6px 12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.76rem;cursor:pointer;margin-left:8px;}
-
 
 /* Dual Date Toggle */
 .date-toggle-row{display:flex;gap:6px;margin-bottom:4px;}
@@ -295,14 +221,14 @@ footer strong{color:var(--accent-light);}
       </div>
       <div style="flex:1">
         <div class="teacher-name" id="t-name">—</div>
-        <div class="teacher-role" id="t-role">معلم تربية خاصة — برنامج يسير التعليمي</div>
+        <div class="teacher-role" id="t-role">معلم تربية خاصة — برنامج الدمج الفكري</div>
         <div class="teacher-badges">
-          <span class="badge badge-orange">🧠 الدمج الفكري</span>
+          <span class="badge badge-orange">🧑🏻‍🏫 الدمج الفكري</span>
           <span class="badge badge-blue" id="t-exp">—</span>
           <span class="badge badge-green" id="t-entries-badge">0 إنجاز</span>
         </div>
       </div>
-      <button class="par-view-btn" onclick="openParentView()">👁 ولي الأمر</button><button class="btn-logout" onclick="doLogout()">🚪 خروج</button>
+      <button class="btn-logout" onclick="doLogout()">🚪 خروج</button>
     </div>
 
     <div class="stats-row">
@@ -318,12 +244,122 @@ footer strong{color:var(--accent-light);}
       <button class="tab-btn" onclick="switchTab('profile',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="switchTab('add',this)">➕ إضافة إنجاز</button>
       <button class="tab-btn tab-btn-witness" onclick="switchTab('witnesses',this)">📋 الشواهد والأعمال</button>
-      
     </div>
 
-    
+    <!-- الإنجازات -->
+    <div class="tab-pane active" id="tab-achievements">
+      <div class="section-header">
+        <div class="section-title">ملف الإنجازات</div>
+        <button class="btn-print" onclick="printProfile()">🖨️ طباعة الملف الكامل</button>
+      </div>
+      <div id="entries-list"><div class="empty"><div class="empty-icon">📂</div><div style="font-size:0.85rem">لا توجد إنجازات مضافة بعد</div></div></div>
+    </div>
+
+    <!-- البيانات -->
+    <div class="tab-pane" id="tab-profile">
+      <div class="section-header">
+        <div class="section-title">البيانات الشخصية والوظيفية</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn-save" onclick="saveProfile()">💾 حفظ البيانات</button>
+          <span class="save-status" id="save-status">✅ تم الحفظ</span>
+        </div>
+      </div>
+      <div class="form-card" style="margin-bottom:12px">
+        <div class="photo-wrap">
+          <div class="photo-preview" id="profile-photo-preview"><span>👨‍🏫</span></div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:0.9rem;color:var(--primary);margin-bottom:4px">صورة الملف الشخصي</div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px">تظهر في بطاقة المعلم وفي التقارير المطبوعة</div>
+            <label for="profile-photo-input" style="cursor:pointer;display:inline-block;padding:7px 16px;background:linear-gradient(135deg,var(--primary),#c25a00);color:#fff;border-radius:8px;font-size:0.8rem;font-weight:700">📷 رفع / تغيير الصورة</label>
+            <input type="file" id="profile-photo-input" accept="image/*" style="display:none" onchange="handleAvatarChange(this)">
+            <button onclick="removeProfilePhoto()" style="margin-right:8px;padding:7px 14px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:8px;font-size:0.78rem;font-weight:700;cursor:pointer">✕ إزالة</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-group"><label>الاسم الرباعي</label><input class="form-input" id="p-name"></div>
+          <div class="form-group"><label>التخصص</label><input class="form-input" id="p-major"></div>
+          <div class="form-group"><label>الدرجة العلمية</label>
+            <select class="form-input" id="p-degree"><option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option><option>دبلوم</option></select>
+          </div>
+          <div class="form-group"><label>سنوات الخبرة</label><input class="form-input" id="p-exp" type="number" min="0"></div>
+          <div class="form-group"><label>البريد الإلكتروني</label><input class="form-input" id="p-email" type="email"></div>
+          <div class="form-group"><label>رقم الجوال</label><input class="form-input" id="p-phone"></div>
+          <div class="form-group full"><label>نبذة مهنية</label><textarea class="form-textarea" id="p-bio"></textarea></div>
+          <div class="form-group"><label>عدد الطلاب الحاليين</label><input class="form-input" id="p-students" type="number" min="0"></div>
+          <div class="form-group"><label>المواد التي يدرّسها</label><input class="form-input" id="p-subjects"></div>
+        </div>
       </div>
     </div>
+
+    <!-- إضافة إنجاز -->
+    <div class="tab-pane" id="tab-add">
+      <div class="section-header"><div class="section-title">إضافة إنجاز جديد</div></div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-group full"><label>عنوان الإنجاز</label><input class="form-input" id="e-title" placeholder="مثال: اجتياز دورة تعليم ذوي الاحتياجات الخاصة"></div>
+          <div class="form-group"><label>النوع</label>
+            <select class="form-input" id="e-type">
+              <option value="achievement">🏆 إنجاز مهني</option>
+              <option value="training">📚 دورة تدريبية</option>
+              <option value="activity">🎯 نشاط وفعالية</option>
+              <option value="award">🥇 شهادة وتكريم</option>
+              <option value="other">📌 أخرى</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>📅 التاريخ</label>
+            <div class="date-toggle-row">
+              <button class="date-toggle-btn active" id="e-date-tog-g" onclick="switchDateMode('e','greg')">📅 ميلادي</button>
+              <button class="date-toggle-btn" id="e-date-tog-h" onclick="switchDateMode('e','hijri')">🌙 هجري</button>
+            </div>
+            <div id="e-date-greg-wrap">
+              <input class="form-input" id="e-date" type="date" oninput="updateDualDate('e')">
+            </div>
+            <div id="e-date-hijri-wrap" class="hijri-manual" style="display:none">
+              <div class="hijri-manual-row">
+                <select id="e-hijri-day" onchange="updateDualDate('e')"><option value="">اليوم</option></select>
+                <select id="e-hijri-month" onchange="updateDualDate('e')">
+                  <option value="">الشهر</option>
+                  <option value="1">محرم</option><option value="2">صفر</option>
+                  <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
+                  <option value="5">جمادى الأولى</option><option value="6">جمادى الآخرة</option>
+                  <option value="7">رجب</option><option value="8">شعبان</option>
+                  <option value="9">رمضان</option><option value="10">شوال</option>
+                  <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+                </select>
+                <select id="e-hijri-year" onchange="updateDualDate('e')"><option value="">السنة</option></select>
+              </div>
+            </div>
+            <div class="date-result-lbl" id="e-date-result"></div>
+          </div>
+          <div class="form-group"><label>الجهة المانحة / المنظِّمة</label><input class="form-input" id="e-org" placeholder="مثال: وزارة التعليم"></div>
+          <div class="form-group"><label>المدة (للدورات)</label><input class="form-input" id="e-duration" placeholder="مثال: 20 ساعة تدريبية"></div>
+          <div class="form-group full"><label>وصف تفصيلي</label><textarea class="form-textarea" id="e-desc"></textarea></div>
+          <div class="form-group full"><label>المهارات المكتسبة</label><input class="form-input" id="e-skills"></div>
+          <div class="form-group full">
+            <label>📎 إرفاق ملفات (صور، شهادات، PDF)</label>
+            <div class="attach-zone" ondrop="handleDrop(event,'entry')" ondragover="event.preventDefault()">
+              <input type="file" id="attach-input" multiple accept="image/*,.pdf,.doc,.docx" onchange="handleFiles(this.files,'entry')">
+              <label for="attach-input">📎 اضغط لرفع ملف أو اسحبه هنا<br><span style="font-size:0.7rem;opacity:0.6">يدعم: صور، PDF، Word</span></label>
+            </div>
+            <div class="attach-list" id="attach-preview"></div>
+          </div>
+        </div>
+        <div style="margin-top:16px;text-align:left">
+          <button class="btn-add" onclick="addEntry()">➕ إضافة للملف</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- الشواهد -->
+    <div class="tab-pane" id="tab-witnesses">
+      <div class="section-header">
+        <div class="section-title">الشواهد والأعمال المدرسية</div>
+        <button class="btn-witness" onclick="openWitnessModal()">📋 إضافة شاهد جديد</button>
+      </div>
+      <div id="witnesses-list"><div class="empty"><div class="empty-icon">📋</div><div style="font-size:0.85rem">لا توجد شواهد مضافة بعد</div></div></div>
     </div>
   </main>
 </div>
@@ -513,42 +549,59 @@ const TEACHERS = {
     pin:"1234", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"مس",
     profile:{name:"محمد أحمد السهيمي",major:"تربية خاصة",degree:"بكالوريوس",exp:"7",
       email:"m.suhayymi@school.edu.sa",phone:"0501234001",
-      bio:"معلم تربية خاصة متخصص في برنامج الدمج الفكري.",students:"15",subjects:"اللغة العربية، التربية الإسلامية",photo:null},
-    entries:[], witnesses:[]},
-  "علي محمد الزهراني": {
-    pin:"2345", role:"معلم لغة عربية — برنامج الدمج الفكري", avatar:"عز",
-    profile:{name:"علي محمد الزهراني",major:"لغة عربية",degree:"بكالوريوس",exp:"5",
-      email:"a.zahrani@school.edu.sa",phone:"0502345002",
-      bio:"معلم لغة عربية يعمل مع طلاب الدمج الفكري.",students:"12",subjects:"اللغة العربية",photo:null},
-    entries:[], witnesses:[]},
+      bio:"معلم تربية خاصة متخصص في برنامج الدمج الفكري، يعمل على تطوير الخطط التربوية الفردية.",
+      students:"15",subjects:"اللغة العربية، التربية الإسلامية",photo:null},
+    entries:[], witnesses:[]
+  },
+  "زين العابدين سعد القرني": {
+    pin:"6789", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"زق",
+    profile:{name:"زين العابدين سعد القرني",major:"تربية خاصة",degree:"بكالوريوس",exp:"5",
+      email:"z.qarni@school.edu.sa",phone:"0502345002",
+      bio:"معلم تربية خاصة يعمل مع طلاب الدمج الفكري بأساليب تدريسية مبتكرة.",
+      students:"12",subjects:"اللغة العربية",photo:null},
+    entries:[], witnesses:[]
+  },
   "علي سعيد الغامدي": {
-    pin:"3456", role:"معلم رياضيات — برنامج الدمج الفكري", avatar:"عغ",
+    pin:"3456", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"غد",
     profile:{name:"علي سعيد الغامدي",major:"رياضيات",degree:"بكالوريوس",exp:"6",
       email:"a.ghamdi@school.edu.sa",phone:"0503456003",
-      bio:"معلم رياضيات يبسّط المفاهيم لطلاب الدمج الفكري.",students:"12",subjects:"الرياضيات",photo:null},
-    entries:[], witnesses:[]},
+      bio:"معلم رياضيات يبسّط المفاهيم الحسابية لطلاب الدمج الفكري.",
+      students:"12",subjects:"الرياضيات",photo:null},
+    entries:[], witnesses:[]
+  },
   "علي محمد المالكي": {
-    pin:"4567", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"عم",
+    pin:"4567", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"مك",
     profile:{name:"علي محمد المالكي",major:"تربية خاصة",degree:"بكالوريوس",exp:"4",
       email:"a.malki@school.edu.sa",phone:"0504567004",
-      bio:"معلم تربية خاصة يركز على المهارات الحياتية.",students:"10",subjects:"المهارات الحياتية",photo:null},
-    entries:[], witnesses:[]},
+      bio:"معلم تربية خاصة يركز على تنمية المهارات الحياتية والاجتماعية.",
+      students:"10",subjects:"المهارات الحياتية، التربية الفنية",photo:null},
+    entries:[], witnesses:[]
+  },
   "حسن علي العلياني": {
-    pin:"5678", role:"معلم تربية بدنية — برنامج الدمج الفكري", avatar:"حع",
+    pin:"5678", role:"معلم تربية خاصة — برنامج الدمج الفكري", avatar:"حع",
     profile:{name:"حسن علي العلياني",major:"تربية بدنية",degree:"بكالوريوس",exp:"9",
       email:"h.ulyani@school.edu.sa",phone:"0505678005",
-      bio:"معلم تربية بدنية يصمم برامج حركية للطلاب.",students:"21",subjects:"التربية البدنية",photo:null},
-    entries:[], witnesses:[]},
-  "زين العابدين سعد القرني": {
-    pin:"6789", role:"مشرف برنامج الدمج الفكري", avatar:"زق",
-    profile:{name:"زين العابدين سعد القرني",major:"إدارة تربوية",degree:"ماجستير",exp:"14",
-      email:"z.qarni@school.edu.sa",phone:"0506789006",
-      bio:"مشرف برنامج الدمج الفكري ومتابع جودة الخدمات.",students:"21",subjects:"الإشراف التربوي",photo:null},
+      bio:"معلم تربية خاصة يصمم برامج حركية لطلاب الدمج الفكري.",
+      students:"21",subjects:"التربية المهنية، الأنشطة الحركية",photo:null},
+    entries:[], witnesses:[]
+  },
+  "علي محمد الزهراني": {
+    pin:"2345", role:"مشرف برنامج الدمج الفكري", avatar:"عز",
+    profile:{name:"علي محمد الزهراني",major:"إدارة تربوية",degree:"بكالوريوس",exp:"14",
+      email:"a.zahrani@school.edu.sa",phone:"0506789006",
+      bio:"مشرف برنامج الدمج الفكري ومتابع تطوير الخطط التربوية الفردية وضمان جودة الخدمات.",
+      students:"21",subjects:"الإشراف التربوي العام",photo:null},
     entries:[
       {id:1,title:"إطلاق البوابة الرقمية لقسم ذوي الإعاقة",type:"achievement",date:"2025-09-01",
         org:"مدرسة مكة المكرمة المتوسطة",duration:"",
-        desc:"أشرف على تطوير البوابة الرقمية المتكاملة.",skills:"القيادة الرقمية",attachments:[]},
-    ], witnesses:[]}
+        desc:"أشرف على تطوير وإطلاق البوابة الرقمية المتكاملة لملفات الطلاب.",
+        skills:"القيادة الرقمية، إدارة المشاريع",attachments:[]},
+      {id:2,title:"حضور ملتقى التربية الخاصة الوطني",type:"activity",date:"2025-11-10",
+        org:"وزارة التعليم",duration:"3 أيام",
+        desc:"المشاركة في الملتقى الوطني للتربية الخاصة وتقديم ورقة عمل.",
+        skills:"العرض والتقديم، التشبيك المهني",attachments:[]}
+    ], witnesses:[]
+  }
 };
 
 let currentTeacher = null, nextId = 200, nextWitnessId = 300, editingWitnessId = null;
@@ -658,20 +711,13 @@ async function loadFromSupabase(teacher) {
     document.getElementById('env-warning').style.display = 'block';
   }
 
-  // جرب المفتاح الحالي + المفتاح المُشفَّر مرتين (للتوافق مع البيانات القديمة)
+  // fallback: جرب المفتاح المُشفَّر مرتين (للتوافق مع البيانات القديمة)
   const altKey = PROGRAM + '_' + encodeURIComponent(encodeURIComponent(teacher));
-  console.log('🔑 المفتاح الرئيسي:', key);
-  console.log('🔑 المفتاح البديل:', altKey);
   let data = await sbGet(key);
   if (!data && altKey !== key) {
-    console.log('⚠️ جرب المفتاح البديل...');
     data = await sbGet(altKey);
-    if (data) {
-      console.log('✅ وُجدت البيانات بالمفتاح البديل - جاري الترحيل...');
-      await sbSet(key, data); // ترحيل للمفتاح الصحيح
-    }
+    if (data) { await sbSet(key, data); } // ترحيل للمفتاح الصحيح
   }
-  console.log('📦 نتيجة التحميل:', data ? 'وجد بيانات' : 'لم يجد بيانات');
   if (data) {
     console.log('✅ تم تحميل البيانات من Supabase');
     document.getElementById('env-warning').style.display = 'none';
@@ -691,7 +737,6 @@ async function loadFromSupabase(teacher) {
         if (d.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, d.profile);
         if (Array.isArray(d.entries)) TEACHERS[teacher].entries = d.entries;
         if (Array.isArray(d.witnesses)) TEACHERS[teacher].witnesses = d.witnesses;
-        if (Array.isArray(d.students)) studentsData = d.students;
         loadedFromLocal = true;
       }
     } catch(e) {}
@@ -699,7 +744,6 @@ async function loadFromSupabase(teacher) {
       showSyncBar('error', '📱 تم التحميل من هذا الجهاز (بيانات Supabase غير متاحة)');
     } else {
       showSyncBar('error', '📭 لا توجد بيانات محفوظة — ابدأ بإضافة بياناتك');
-    console.log('❌ لا بيانات بمفتاح:', key);
     }
     setTimeout(hideSyncBar, 3500);
   }
@@ -717,7 +761,7 @@ async function autoSave() {
   const payload = {
     profile: TEACHERS[currentTeacher].profile,
     entries: TEACHERS[currentTeacher].entries || [],
-    witnesses: TEACHERS[currentTeacher].witnesses || [],
+    witnesses: TEACHERS[currentTeacher].witnesses || []
   };
   // حفظ محلي فوري كنسخة احتياطية
   try { localStorage.setItem('teacher_bk_' + currentTeacher, JSON.stringify(payload)); } catch(e) {}
@@ -1062,7 +1106,7 @@ function printWitness(id) {
     (imgs.length ? '<div class="sec"><div class="sec-t">الصور المرفقة</div><div class="imgs">' + imgs.map(f => '<img src="' + f.dataUrl + '" alt="">').join('') + '</div></div>' : '') +
     (others.length ? '<div class="sec"><div class="sec-t">الملفات المرفقة</div>' + others.map(f => '<div style="font-size:0.82rem;padding:4px 0">📎 ' + escHtml(f.name) + '</div>').join('') + '</div>' : '') +
     '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>' +
-    '<sc'+'ript>window.onload=()=>window.print();<\/sc'+'ript></body></html>');
+    '<script>window.onload=()=>window.print();<\/script></body></html>');
   win.document.close();
 }
 
@@ -1151,12 +1195,12 @@ function printProfile() {
     '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Cairo",sans-serif;background:#fff;color:#1a1a2e;padding:28px;direction:rtl;font-size:13px}' +
     '.hdr{background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:16px}' +
     'h1{font-family:"Tajawal",sans-serif;font-size:1.2rem;font-weight:900}.sub{font-size:0.76rem;opacity:0.75;margin-top:2px}' +
-    '.sec{margin-bottom:18px}.sec-t{background:#f5f2eb;border-right:4px solid #c8973a;padding:7px 12px;font-weight:800;font-size:0.85rem;color:#1a3a5c;margin-bottom:10px;border-radius:0 6px 6px 0}' +
+    '.sec{margin-bottom:18px}.sec-t{background:#f5f2eb;border-right:4px solid #c8973a;padding:7px 12px;font-weight:800;font-size:0.85rem;color:#7a2800;margin-bottom:10px;border-radius:0 6px 6px 0}' +
     '.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f{background:#fafafa;border:1px solid #e0d8c8;border-radius:7px;padding:8px 12px}' +
     '.lbl{font-size:0.66rem;color:#5a6478;font-weight:700;margin-bottom:2px}.val{font-size:0.83rem;font-weight:700}' +
     '.bio{background:#fff8f0;border:1px solid #f0d898;border-radius:8px;padding:12px;font-size:0.8rem;line-height:1.8;grid-column:1/-1}' +
     '.entry{background:#fafafa;border:1px solid #e0d8c8;border-radius:8px;padding:12px;margin-bottom:10px;break-inside:avoid}' +
-    '.e-t{font-weight:800;font-size:0.86rem;color:#1a3a5c;margin-bottom:4px}' +
+    '.e-t{font-weight:800;font-size:0.86rem;color:#7a2800;margin-bottom:4px}' +
     '.e-m{font-size:0.7rem;color:#5a6478;margin-bottom:5px}.hij{display:inline-block;font-size:0.65rem;color:#065f46;background:#d1fae5;padding:1px 7px;border-radius:5px}' +
     '.tag{display:inline-block;background:#fff3e0;color:#c25a00;padding:2px 9px;border-radius:7px;font-size:0.7rem;font-weight:700;margin-left:5px}' +
     '.wc{background:#fff8f3;border:1px solid #f0d0a0;border-radius:8px;padding:12px;margin-bottom:10px;break-inside:avoid}' +
@@ -1204,7 +1248,7 @@ function printProfile() {
     html += '</div>';
   }
   html += '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>';
-  html += '<sc'+'ript>window.onload=()=>window.print();<\/sc'+'ript></body></html>';
+  html += '<script>window.onload=()=>window.print();<\/script></body></html>';
   win.document.write(html); win.document.close();
 }
 
@@ -1219,349 +1263,6 @@ function showToast(msg) {
   const t = document.getElementById('toast'); t.textContent = msg;
   t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800);
 }
-
-// ============================================================
-// STUDENTS MODULE
-// ============================================================
-const SKILLS_LIST = [
-  "معرفة تنوين الضم و تنوين الفتح و تنوين الكسر",
-  "يحفظ شكل تنوين الضم و تنوين الفتح و تنوين الكسر",
-  "ينطق الحروف باستخدام تنوين الضم وتنوين الفتح و تنوين الكسر",
-  "يستخرج تنوين الضم و تنوين الفتح و تنوين الكسر في الكلمات",
-  "يكتب تنوين الضم وتنوين الكسر وتنوين الفتح على الكلمة",
-  "معرفة اللام الشمسية واللام القمرية",
-  "يتعرف على اللام الشمسية واللام القمرية",
-  "ينطق كلمات تحتوي على اللام الشمسية واللام القمرية",
-  "يستخرج كلمات تحتوي على اللام الشمية واللام القمرية",
-  "معرفة التاء المفتوحة والتاء المربوطة",
-  "يسمي كلمات تنتهي بتاء مفتوحة وتاء مربوطة",
-  "يستخرج كلمات تنتهي بتاء مفتوحة وتاء مربوطة",
-  "يكتب نهاية الكلمات بما يناسبها (تاء مربوطة وتاء مفتوحة)",
-  "ربط الجمل بالصور",
-  "يطابق الصور مع ما يماثلها",
-  "يستخرج الصورة المناسبة مع الجملة",
-  "يشير إلى الجملة المناسبة للصورة",
-  "قراءة الجمل المكونة من أربع كلمات",
-  "معرفة آل التعريف",
-  "ربط الجمل بظرف الزمان صباحاً ومساءً",
-  "معرفة علامات الترقيم - علامة الاستفهام والفاصلة",
-  "التعرف على القراءة الصامتة والجهرية",
-  "يتهجى الكلمات في الجملة",
-  "يستخرج الكلمات من الجملة",
-  "يرتب أربع كلمات ليكون جملة",
-  "يتعرف على ال التعريف",
-  "يسمي كلمات بها ال التعريف",
-  "يستخرج كلمات بها ال التعريف",
-  "يتعرف على ظرف الزمان صباحاً ومساءً",
-  "يستخرج ظرف الزمان صباحاً ومساءً",
-  "يربط الجملة بظرف الزمان صباحاً ومساءً",
-  "يسمي علامات الترقيم",
-  "يستخرج علامات الترقيم",
-  "يكتب علامات الترقيم الاستفهام والفاصلة",
-  "يسمي أنواع القراءة الصامتة والجهرية",
-  "يقرأ الجملة قراءة جهرية",
-  "يقرأ الجملة قراءة صامتة"
-];
-
-const DEFAULT_SUBJECTS = ["المادة 1","المادة 2","المادة 3","المادة 4","المادة 5","المادة 6","المادة 7","المادة 8","المادة 9","المادة 10"];
-
-let studentsData = [];
-let currentStuIdx = null;
-let currentSubjIdx = 0;
-let isStuReadOnly = false;
-
-function stuInitials(name) {
-  const p = name.trim().split(" ");
-  return (p[0] ? p[0][0] : "") + (p[1] ? p[1][0] : "");
-}
-
-function getMastery(stu, subjIdx) {
-  const subj = stu.subjects[subjIdx];
-  if (!subj) return 0;
-  const lvls = subj.skills.map(function(s){ return s.level; });
-  const mastered = lvls.filter(function(l){ return l==="متفوق"||l==="متقدم"||l==="متمكن"; }).length;
-  return lvls.length > 0 ? Math.round(mastered / lvls.length * 100) : 0;
-}
-
-function getOverallMastery(stu) {
-  let total = 0, mastered = 0;
-  stu.subjects.forEach(function(subj) {
-    subj.skills.forEach(function(sk) {
-      total++;
-      if (sk.level==="متفوق"||sk.level==="متقدم"||sk.level==="متمكن") mastered++;
-    });
-  });
-  return total > 0 ? Math.round(mastered/total*100) : 0;
-}
-
-function renderStuGrid() {
-  const grid = document.getElementById("stu-grid");
-  const mine = studentsData.filter(function(s){ return s.teacher===currentTeacher; });
-  if (mine.length === 0) {
-    grid.innerHTML = "<div class=\"empty\"><div class=\"empty-icon\">&#x1F468;&#x200D;&#x1F393;</div><div style=\"font-size:0.85rem\">لا يوجد طلاب مُسنَدون لك — اضغط إضافة طالب</div></div>";
-    return;
-  }
-  grid.innerHTML = mine.map(function(s) {
-    const gi = studentsData.indexOf(s);
-    const pct = getOverallMastery(s);
-    const ini = stuInitials(s.name);
-    return "<div class=\"stu-card\" onclick=\"openStu(" + gi + ")\">" +
-      "<div class=\"stu-av\">" + ini + "</div>" +
-      "<div class=\"stu-name\">" + s.name + "</div>" +
-      "<div class=\"stu-info\">" + s.grade + " &middot; " + (s.subjects[0] ? s.subjects[0].name : "") + "</div>" +
-      "<div class=\"stu-teacher\">&#x1F464; " + s.teacher + "</div>" +
-      "<div class=\"mini-bar\"><div class=\"mini-fill\" style=\"width:" + pct + "%\"></div></div>" +
-      "<div class=\"stu-pct\">نسبة الإتقان: " + pct + "%</div>" +
-      "</div>";
-  }).join("");
-}
-
-function makeNewStudent() {
-  return {
-    id: Date.now(),
-    name: "", grade: "", teacher: currentTeacher, parentPin: "",
-    subjects: DEFAULT_SUBJECTS.map(function(nm) {
-      return { name: nm, skills: SKILLS_LIST.map(function(g){ return { goal: g, level: "" }; }) };
-    })
-  };
-}
-
-function openAddStudent() {
-  studentsData.push(makeNewStudent());
-  currentStuIdx = studentsData.length - 1;
-  currentSubjIdx = 0;
-  isStuReadOnly = false;
-  buildStuModal();
-  document.getElementById("sm-ov").style.display = "flex";
-}
-
-function openStu(idx) {
-  currentStuIdx = idx;
-  currentSubjIdx = 0;
-  isStuReadOnly = false;
-  buildStuModal();
-  document.getElementById("sm-ov").style.display = "flex";
-}
-
-function closeSM() {
-  document.getElementById("sm-ov").style.display = "none";
-}
-
-function switchSubj(idx) {
-  currentSubjIdx = idx;
-  buildStuModal();
-}
-
-function buildStuModal() {
-  const s = studentsData[currentStuIdx];
-  const ro = isStuReadOnly;
-  document.getElementById("sm-title").textContent = s.name || "طالب جديد";
-  document.getElementById("sm-sub").textContent = s.grade || "";
-  document.getElementById("par-badge").style.display = ro ? "inline-flex" : "none";
-
-  // Subject tabs
-  const subjTabs = s.subjects.map(function(subj, i) {
-    const cls = "subj-tab" + (i===currentSubjIdx ? " active" : "");
-    return "<button class=\"" + cls + "\" onclick=\"switchSubj(" + i + ")\">" + subj.name + "</button>";
-  }).join("");
-
-  // Current subject skills
-  const subj = s.subjects[currentSubjIdx];
-  const skillRows = subj.skills.map(function(sk, i) {
-    const lvCls = sk.level === "متفوق" ? "sk-sel lv1" :
-                  sk.level === "متقدم" ? "sk-sel lv2" :
-                  sk.level === "متمكن" ? "sk-sel lv3" :
-                  sk.level === "غير مجتاز" ? "sk-sel lv4" : "sk-sel";
-    const dis = ro ? " disabled" : "";
-    return "<tr>" +
-      "<td class=\"sk-num\">" + (i+1) + "</td>" +
-      "<td>" + sk.goal + "</td>" +
-      "<td style=\"text-align:center\">" +
-        "<select class=\"" + lvCls + "\"" + dis + " onchange=\"updateLevel(" + currentStuIdx + "," + currentSubjIdx + "," + i + ",this)\">" +
-          "<option value=\"\"" + (sk.level===""?" selected":"") + ">— اختر —</option>" +
-          "<option value=\"متفوق\"" + (sk.level==="متفوق"?" selected":"") + ">متفوق</option>" +
-          "<option value=\"متقدم\"" + (sk.level==="متقدم"?" selected":"") + ">متقدم</option>" +
-          "<option value=\"متمكن\"" + (sk.level==="متمكن"?" selected":"") + ">متمكن</option>" +
-          "<option value=\"غير مجتاز\"" + (sk.level==="غير مجتاز"?" selected":"") + ">غير مجتاز</option>" +
-        "</select>" +
-      "</td></tr>";
-  }).join("");
-
-  // Analysis for current subject
-  const lvls = subj.skills.map(function(sk){ return sk.level; });
-  const c1 = lvls.filter(function(l){return l==="متفوق";}).length;
-  const c2 = lvls.filter(function(l){return l==="متقدم";}).length;
-  const c3 = lvls.filter(function(l){return l==="متمكن";}).length;
-  const c4 = lvls.filter(function(l){return l==="غير مجتاز";}).length;
-  const tot = subj.skills.length;
-  const mas = c1+c2+c3;
-  const pct = tot>0 ? Math.round(mas/tot*100) : 0;
-
-  // Teacher options
-  const tchOpts = Object.keys(TEACHERS).map(function(t) {
-    return "<option value=\"" + t + "\"" + (s.teacher===t?" selected":"") + ">" + t + "</option>";
-  }).join("");
-
-  // Subject name edit row (only when not readonly)
-  const subjNameEdit = ro ? "" :
-    "<div class=\"sf-grid\" style=\"margin-top:8px;margin-bottom:14px\">" +
-      "<div class=\"sf\"><label>اسم المادة الحالية</label>" +
-        "<input type=\"text\" value=\"" + subj.name + "\" oninput=\"renameSubj(" + currentStuIdx + "," + currentSubjIdx + ",this.value)\" placeholder=\"أدخل اسم المادة\">" +
-      "</div></div>";
-
-  document.getElementById("sm-body").innerHTML =
-    "<div class=\"sf-grid\">" +
-      "<div class=\"sf\"><label>اسم الطالب الرباعي</label><input type=\"text\" id=\"sin\" value=\"" + s.name + "\"" + (ro?" readonly":"") + " oninput=\"studentsData[" + currentStuIdx + "].name=this.value;document.getElementById('sm-title').textContent=this.value||'طالب جديد'\"></div>" +
-      "<div class=\"sf\"><label>الصف</label><input type=\"text\" id=\"sgr\" value=\"" + s.grade + "\"" + (ro?" readonly":"") + " oninput=\"studentsData[" + currentStuIdx + "].grade=this.value\"></div>" +
-      "<div class=\"sf\"><label>رمز ولي الأمر</label><input type=\"password\" id=\"spp\" value=\"" + (s.parentPin||"") + "\" placeholder=\"رمز لعرض النتائج\"" + (ro?" readonly":"") + " oninput=\"studentsData[" + currentStuIdx + "].parentPin=this.value\"></div>" +
-    "</div>" +
-    "<div class=\"sf-grid2\" style=\"margin-bottom:14px\">" +
-      "<div class=\"sf\"><label>المعلم المُسنَد</label><select" + (ro?" disabled":"") + " onchange=\"studentsData[" + currentStuIdx + "].teacher=this.value;renderStuGrid()\">" + tchOpts + "</select></div>" +
-    "</div>" +
-    "<div class=\"sk-section-title\">📚 المواد الدراسية العشر</div>" +
-    "<div class=\"subj-tabs\" id=\"subj-tabs\">" + subjTabs + "</div>" +
-    subjNameEdit +
-    "<div class=\"sk-section-title\">📊 الأهداف — " + subj.name + " <span style=\"font-size:0.7rem;color:var(--muted);font-weight:400\">(" + tot + " هدفاً)</span></div>" +
-    "<div class=\"sk-wrap\"><table class=\"sk-tbl\">" +
-      "<thead><tr><th style=\"width:30px;text-align:center\">#</th><th>الهدف</th><th style=\"width:125px;text-align:center\">المستوى</th></tr></thead>" +
-      "<tbody>" + skillRows + "</tbody>" +
-    "</table></div>" +
-    "<div class=\"an-box\">" +
-      "<div class=\"an-title\">📈 تحليل نتائج — " + subj.name + "</div>" +
-      "<div class=\"an-stats\">" +
-        "<div class=\"an-stat a1\"><div class=\"an-n\" id=\"an1\">" + c1 + "</div><div class=\"an-l\">متفوق</div></div>" +
-        "<div class=\"an-stat a2\"><div class=\"an-n\" id=\"an2\">" + c2 + "</div><div class=\"an-l\">متقدم</div></div>" +
-        "<div class=\"an-stat a3\"><div class=\"an-n\" id=\"an3\">" + c3 + "</div><div class=\"an-l\">متمكن</div></div>" +
-        "<div class=\"an-stat a4\"><div class=\"an-n\" id=\"an4\">" + c4 + "</div><div class=\"an-l\">غير مجتاز</div></div>" +
-      "</div>" +
-      "<div class=\"mastery-row\">" +
-        "<span class=\"mastery-pct-lbl\" id=\"anpct\">" + pct + "%</span>" +
-        "<div class=\"pbar-bg\"><div class=\"pbar-fg\" id=\"anbar\" style=\"width:" + pct + "%\"></div></div>" +
-        "<span style=\"font-size:0.73rem;color:var(--muted)\">" + mas + " من " + tot + " هدف متقن</span>" +
-      "</div>" +
-    "</div>" +
-    "<div class=\"sm-actions\">" +
-      (ro ? "" : "<button class=\"btn-del\" onclick=\"deleteStu(" + currentStuIdx + ")\">🗑 حذف</button>") +
-      "<button class=\"btn-pr\" onclick=\"printStu(" + currentStuIdx + ")\">🖨 طباعة</button>" +
-      "<button class=\"btn-cl\" onclick=\"closeSM()\">إغلاق</button>" +
-      (ro ? "" : "<button class=\"btn-sv\" onclick=\"saveStu()\">💾 حفظ</button>") +
-    "</div>";
-}
-
-function renameSubj(stuIdx, subjIdx, val) {
-  studentsData[stuIdx].subjects[subjIdx].name = val;
-  // Update tab label live
-  const tabs = document.querySelectorAll(".subj-tab");
-  if (tabs[subjIdx]) tabs[subjIdx].textContent = val || ("المادة " + (subjIdx+1));
-}
-
-function updateLevel(stuIdx, subjIdx, skillIdx, sel) {
-  const lv = sel.value;
-  studentsData[stuIdx].subjects[subjIdx].skills[skillIdx].level = lv;
-  sel.className = "sk-sel" + (lv==="متفوق"?" lv1":lv==="متقدم"?" lv2":lv==="متمكن"?" lv3":lv==="غير مجتاز"?" lv4":"");
-  // Refresh analysis
-  const subj = studentsData[stuIdx].subjects[subjIdx];
-  const lvls = subj.skills.map(function(sk){ return sk.level; });
-  const c1=lvls.filter(function(l){return l==="متفوق";}).length;
-  const c2=lvls.filter(function(l){return l==="متقدم";}).length;
-  const c3=lvls.filter(function(l){return l==="متمكن";}).length;
-  const c4=lvls.filter(function(l){return l==="غير مجتاز";}).length;
-  const tot=subj.skills.length; const mas=c1+c2+c3;
-  const pct=tot>0?Math.round(mas/tot*100):0;
-  document.getElementById("an1").textContent=c1;
-  document.getElementById("an2").textContent=c2;
-  document.getElementById("an3").textContent=c3;
-  document.getElementById("an4").textContent=c4;
-  document.getElementById("anpct").textContent=pct+"%";
-  document.getElementById("anbar").style.width=pct+"%";
-}
-
-function saveStu() {
-  const s = studentsData[currentStuIdx];
-  if (!s.name.trim()) { alert("يرجى إدخال اسم الطالب"); return; }
-  renderStuGrid();
-  scheduleSave();
-  showSyncBar("saved","✅ تم حفظ بيانات الطالب");
-  setTimeout(hideSyncBar,2500);
-}
-
-function deleteStu(idx) {
-  if (!confirm("هل تريد حذف بيانات هذا الطالب نهائياً؟")) return;
-  studentsData.splice(idx,1);
-  closeSM();
-  renderStuGrid();
-  scheduleSave();
-}
-
-function printStu(idx) {
-  const s = studentsData[idx];
-  let html = "<!DOCTYPE html><html lang=\"ar\" dir=\"rtl\"><head><meta charset=\"UTF-8\">";
-  html += "<title>" + s.name + "</title>";
-  html += "<link href=\"https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@700;900&display=swap\" rel=\"stylesheet\">";
-  html += "<style>body{font-family:Cairo,sans-serif;margin:0;padding:16px;color:#1a1a2e;direction:rtl;}";
-  html += ".hdr{background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;padding:16px 20px;border-radius:10px;margin-bottom:14px;}";
-  html += "h1{font-family:Tajawal,sans-serif;font-size:1rem;margin:0 0 3px;}";
-  html += ".meta{font-size:0.75rem;opacity:0.8;}";
-  html += ".subj-hdr{background:#7a2800;color:#fff;padding:7px 10px;font-family:Tajawal,sans-serif;font-weight:900;font-size:0.85rem;margin-top:14px;border-radius:6px;}";
-  html += "table{width:100%;border-collapse:collapse;margin-top:4px;font-size:12px;}";
-  html += "th{background:#a33800;color:#fff;padding:6px 8px;text-align:right;}";
-  html += "td{padding:5px 8px;border-bottom:1px solid #eee;}";
-  html += ".st1{background:#dcfce7;color:#166534;font-weight:700;} .st2{background:#dbeafe;color:#1e40af;font-weight:700;}";
-  html += ".st3{background:#fef9c3;color:#854d0e;font-weight:700;} .st4{background:#fee2e2;color:#991b1b;font-weight:700;}";
-  html += ".stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0;}";
-  html += ".sbox{border:1px solid #ddd;border-radius:6px;padding:8px;text-align:center;}";
-  html += ".sn{font-family:Tajawal,sans-serif;font-weight:900;font-size:1.1rem;}";
-  html += ".pbar{background:#e8ddd0;border-radius:6px;height:8px;margin:6px 0;}";
-  html += ".pfill{height:8px;background:linear-gradient(90deg,#7a2800,#c25a00);border-radius:6px;}";
-  html += "@media print{.nopr{display:none;}}</style></head><body>";
-  html += "<div class=\"hdr\"><h1>تقرير تقييم مهارات الدمج الفكري — " + s.name + "</h1>";
-  html += "<div class=\"meta\">" + s.grade + " | المعلم: " + s.teacher + "</div></div>";
-
-  s.subjects.forEach(function(subj) {
-    const lvls = subj.skills.map(function(sk){ return sk.level; });
-    const c1=lvls.filter(function(l){return l==="متفوق";}).length;
-    const c2=lvls.filter(function(l){return l==="متقدم";}).length;
-    const c3=lvls.filter(function(l){return l==="متمكن";}).length;
-    const c4=lvls.filter(function(l){return l==="غير مجتاز";}).length;
-    const tot=lvls.length; const mas=c1+c2+c3;
-    const pct=tot>0?Math.round(mas/tot*100):0;
-    html += "<div class=\"subj-hdr\">" + subj.name + " — نسبة الإتقان: " + pct + "%</div>";
-    html += "<div class=\"stats\">";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#166534\">" + c1 + "</div><div style=\"font-size:10px;color:#888\">متفوق</div></div>";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#1e40af\">" + c2 + "</div><div style=\"font-size:10px;color:#888\">متقدم</div></div>";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#854d0e\">" + c3 + "</div><div style=\"font-size:10px;color:#888\">متمكن</div></div>";
-    html += "<div class=\"sbox\"><div class=\"sn\" style=\"color:#991b1b\">" + c4 + "</div><div style=\"font-size:10px;color:#888\">غير مجتاز</div></div>";
-    html += "</div>";
-    html += "<div class=\"pbar\"><div class=\"pfill\" style=\"width:" + pct + "%\"></div></div>";
-    html += "<table><thead><tr><th style=\"width:28px;text-align:center\">#</th><th>الهدف</th><th style=\"width:90px;text-align:center\">المستوى</th></tr></thead><tbody>";
-    subj.skills.forEach(function(sk,i) {
-      const cls = sk.level==="متفوق"?"st1":sk.level==="متقدم"?"st2":sk.level==="متمكن"?"st3":sk.level==="غير مجتاز"?"st4":"";
-      html += "<tr><td style=\"text-align:center;color:#888\">" + (i+1) + "</td><td>" + sk.goal + "</td><td class=\"" + cls + "\" style=\"text-align:center\">" + (sk.level||"—") + "</td></tr>";
-    });
-    html += "</tbody></table>";
-  });
-
-  html += "<div class=\"nopr\" style=\"margin-top:14px;text-align:center\">";
-  html += "<button onclick=\"window.print()\" style=\"padding:8px 20px;background:#7a2800;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:Cairo,sans-serif\">طباعة</button>";
-  html += "</div></body></html>";
-
-  const win = window.open("","_blank");
-  win.document.write(html);
-  win.document.close();
-}
-
-function openParentView() {
-  const pin = prompt("أدخل رمز ولي الأمر:");
-  if (!pin) return;
-  const stu = studentsData.find(function(s){ return s.parentPin && s.parentPin===pin; });
-  if (!stu) { alert("رمز غير صحيح"); return; }
-  currentStuIdx = studentsData.indexOf(stu);
-  currentSubjIdx = 0;
-  isStuReadOnly = true;
-  buildStuModal();
-  document.getElementById("sm-ov").style.display = "flex";
-}
-
 
 // ============================================================
 // DUAL DATE SYSTEM
@@ -1666,22 +1367,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
-
-<!-- Student Modal -->
-<div id="sm-ov" class="sm-ov" style="display:none" onclick="if(event.target===this)closeSM()">
-  <div class="sm-box">
-    <div class="sm-head">
-      <div>
-        <div class="sm-title" id="sm-title">طالب جديد</div>
-        <div class="sm-sub" id="sm-sub"></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span id="par-badge" class="par-badge" style="display:none">👁 عرض ولي الأمر</span>
-        <button class="sm-close" onclick="closeSM()">✕</button>
-      </div>
-    </div>
-    <div class="sm-body" id="sm-body"></div>
-  </div>
-</div>
 </body>
 </html>
