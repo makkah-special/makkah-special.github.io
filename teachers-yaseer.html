@@ -1275,7 +1275,7 @@ function switchDateMode(prefix, mode) {
 
 
 function getDateData(prefix) {
-  var mode = _dateModes[prefix] || 'greg';
+  var mode = dateModes[prefix] || 'greg';
   var resultEl = document.getElementById(prefix+'-date-result');
   var dateVal = mode === 'greg' ? ((document.getElementById(prefix+'-date')||{}).value||'') : '';
   return { date: dateVal, dateHijri: resultEl ? (resultEl.dataset.hijri||'') : '', dateMode: mode };
