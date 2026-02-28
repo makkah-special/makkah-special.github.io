@@ -167,8 +167,10 @@ footer strong{color:var(--accent-light);}
 .drag-handle{cursor:grab;color:var(--muted);font-size:1rem;padding:2px 4px;user-select:none;flex-shrink:0;}
 .drag-handle:active{cursor:grabbing;}
 .entry-card.dragging,.witness-card.dragging{opacity:0.4;border-style:dashed;}
-.entry-card.drag-over,.witness-card.drag-over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
+.entry-card.drag-over,.witness-card.drag-over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);transform:scale(1.01);}
+.entry-card,.witness-card{transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;}
 .sort-hint{font-size:0.72rem;color:var(--muted);margin-bottom:8px;text-align:left;display:flex;align-items:center;gap:5px;}
+.drag-handle{-webkit-user-drag:element;}
 </style>
 </head>
 <body>
@@ -729,8 +731,16 @@ async function loadFromSupabase(teacher) {
     console.log('✅ تم تحميل البيانات من Supabase');
     document.getElementById('env-warning').style.display = 'none';
     if (data.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, data.profile);
-    if (Array.isArray(data.entries)) TEACHERS[teacher].entries = data.entries;
-    if (Array.isArray(data.witnesses)) TEACHERS[teacher].witnesses = data.witnesses;
+    if (Array.isArray(data.entries)) {
+      TEACHERS[teacher].entries = data.entries;
+      const maxEntryId = data.entries.reduce((m,e) => Math.max(m, e.id||0), 0);
+      if (maxEntryId >= nextId) nextId = maxEntryId + 1;
+    }
+    if (Array.isArray(data.witnesses)) {
+      TEACHERS[teacher].witnesses = data.witnesses;
+      const maxWitId = data.witnesses.reduce((m,w) => Math.max(m, w.id||0), 0);
+      if (maxWitId >= nextWitnessId) nextWitnessId = maxWitId + 1;
+    }
     try { localStorage.setItem('teacher_bk_' + teacher, JSON.stringify(data)); } catch(e) {}
     showSyncBar('saved', '✅ تم تحميل بياناتك من Supabase');
     setTimeout(hideSyncBar, 2000);
@@ -742,8 +752,16 @@ async function loadFromSupabase(teacher) {
       if (ls) {
         const d = JSON.parse(ls);
         if (d.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, d.profile);
-        if (Array.isArray(d.entries)) TEACHERS[teacher].entries = d.entries;
-        if (Array.isArray(d.witnesses)) TEACHERS[teacher].witnesses = d.witnesses;
+        if (Array.isArray(d.entries)) {
+          TEACHERS[teacher].entries = d.entries;
+          const maxEId = d.entries.reduce((m,e) => Math.max(m, e.id||0), 0);
+          if (maxEId >= nextId) nextId = maxEId + 1;
+        }
+        if (Array.isArray(d.witnesses)) {
+          TEACHERS[teacher].witnesses = d.witnesses;
+          const maxWId = d.witnesses.reduce((m,w) => Math.max(m, w.id||0), 0);
+          if (maxWId >= nextWitnessId) nextWitnessId = maxWId + 1;
+        }
         loadedFromLocal = true;
       }
     } catch(e) {}
@@ -1353,12 +1371,19 @@ function onDragEnd(e) {
 }
 function onDragOver(e, idx) {
   if (!isDragging) return;
-  e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+  e.preventDefault();
+  e.stopPropagation();
+  e.dataTransfer.dropEffect = 'move';
   e.currentTarget.classList.add('drag-over');
 }
-function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function onDragLeave(e) {
+  // تجنب إزالة drag-over عند الانتقال لـ child element
+  if (e.currentTarget.contains(e.relatedTarget)) return;
+  e.currentTarget.classList.remove('drag-over');
+}
 function onDrop(e, toIdx, listType) {
   e.preventDefault();
+  e.stopPropagation();
   e.currentTarget.classList.remove('drag-over');
   if (!isDragging || dragSrcIdx === null || dragSrcIdx === toIdx || dragList !== listType) {
     isDragging = false; dragSrcIdx = null; return;
