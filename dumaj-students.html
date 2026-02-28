@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بوابة طلاب الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --primary: #1a3a5c;
@@ -736,68 +735,6 @@
     .tab-btn { font-size: 0.75rem; padding: 8px 4px; }
     .login-card { padding: 32px 22px; }
   }
-
-/* ===== الخطة التربوية الفردية المطورة ===== */
-.iep-subject-block {
-  background:#fff;border:1.5px solid var(--border);border-radius:14px;
-  margin-bottom:18px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04);
-}
-.iep-subject-head {
-  display:flex;align-items:center;justify-content:space-between;
-  padding:13px 18px;cursor:pointer;user-select:none;
-  background:linear-gradient(135deg,#c25a00 0%,#e07020 100%);color:#fff;
-  border-radius:12px 12px 0 0;
-}
-.iep-subject-head.collapsed { border-radius:12px; }
-.iep-subject-title { font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;display:flex;align-items:center;gap:8px; }
-.iep-subject-count { background:rgba(255,255,255,0.25);padding:2px 10px;border-radius:12px;font-size:0.75rem;font-weight:700; }
-.iep-subject-body { padding:16px 18px;display:block; }
-.iep-subject-body.collapsed { display:none; }
-.iep-goal-row {
-  display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;
-  background:#fafafa;border:1px solid var(--border);border-radius:10px;
-  padding:10px 12px;margin-bottom:8px;
-}
-.iep-goal-text { font-size:0.85rem;color:var(--text);line-height:1.5; }
-.iep-goal-status {
-  display:inline-flex;align-items:center;gap:4px;
-  padding:3px 10px;border-radius:10px;font-size:0.72rem;font-weight:700;
-  white-space:nowrap;
-}
-.status-excellent { background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd; }
-.status-advanced  { background:#d1fae5;color:#065f46;border:1px solid #6ee7b7; }
-.status-capable   { background:#dbeafe;color:#1e40af;border:1px solid #93c5fd; }
-.status-failed    { background:#fee2e2;color:#991b1b;border:1px solid #fca5a5; }
-.status-none      { background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb; }
-.iep-add-goal-btn {
-  width:100%;padding:9px;border:2px dashed #e07020;background:transparent;
-  color:#c25a00;border-radius:10px;font-family:'Cairo',sans-serif;
-  font-size:0.82rem;font-weight:700;cursor:pointer;margin-top:4px;
-  transition:all 0.15s;
-}
-.iep-add-goal-btn:hover { background:#fff3e0; }
-.iep-charts-wrap { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px; }
-@media(max-width:640px){ .iep-charts-wrap{grid-template-columns:1fr;} }
-.iep-chart-card {
-  background:#fff;border:1px solid var(--border);border-radius:14px;
-  padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.04);
-}
-.iep-chart-title { font-family:'Tajawal',sans-serif;font-size:0.9rem;font-weight:800;color:var(--primary);margin-bottom:12px;text-align:center; }
-/* Edit mode goals */
-.iep-edit-goal-row {
-  display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;
-  background:#fffbf5;border:1px dashed #e07020;border-radius:10px;
-  padding:10px 12px;margin-bottom:8px;
-}
-.iep-edit-goal-input { width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none; }
-.iep-edit-goal-input:focus { border-color:#e07020; }
-.iep-goal-del-btn { background:#fee2e2;color:#dc2626;border:none;border-radius:7px;padding:5px 10px;cursor:pointer;font-size:0.8rem;font-weight:700;white-space:nowrap; }
-.iep-subject-colors { background:linear-gradient(135deg,#1a3a5c,#2563a8); }
-.iep-subject-colors.subj-arabic  { background:linear-gradient(135deg,#c25a00,#e07020); }
-.iep-subject-colors.subj-math    { background:linear-gradient(135deg,#1a3a5c,#2563a8); }
-.iep-subject-colors.subj-islamic { background:linear-gradient(135deg,#065f46,#10b981); }
-.iep-subject-colors.subj-science { background:linear-gradient(135deg,#5b21b6,#8b5cf6); }
-.iep-subject-colors.subj-life    { background:linear-gradient(135deg,#92400e,#d97706); }
 </style>
 </head>
 <body>
@@ -861,8 +798,6 @@
       <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
       <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
-      <button class="tab-btn" onclick="openTab('skills',this)">📊 مهارات</button>
-      <button class="tab-btn" onclick="openTab('iep',this)">🎯 الخطة التربوية</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
     </div>
 
@@ -890,86 +825,6 @@
       </div>
     </div>
 
-
-    <!-- SKILLS -->
-    <div class="tab-pane" id="tab-skills">
-      <div class="s-card">
-        <div class="s-card-head">📊 تقييم المهارات</div>
-        <div style="padding:20px;" id="skills-content">
-          <div id="skills-loading" style="text-align:center;padding:40px;color:#9ca3af;">
-            <div style="font-size:2rem;margin-bottom:10px;">⏳</div>
-            <div style="font-size:0.9rem;font-weight:700;">جاري تحميل تقييم المهارات...</div>
-          </div>
-          <div id="skills-table-wrap" style="display:none;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
-              <div style="font-size:0.85rem;font-weight:700;color:#c25a00;">📋 جدول متابعة مهارات الطالب</div>
-              <button onclick="downloadSkillsExcel()" class="btn-pdf btn-pdf-primary" style="font-size:0.8rem;padding:8px 14px;">📥 تحميل Excel</button>
-            </div>
-            <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);">
-              <table id="skills-tbl" style="width:100%;border-collapse:collapse;font-size:0.82rem;min-width:580px;">
-                <thead>
-                  <tr style="background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;">
-                    <th style="padding:11px 14px;text-align:right;font-weight:700;min-width:160px;">المهارة</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">المحور</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م١</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٢</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٣</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٤</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٥</th>
-                    <th style="padding:11px 14px;text-align:right;font-weight:700;">الملاحظات</th>
-                  </tr>
-                </thead>
-                <tbody id="skills-tbody"></tbody>
-              </table>
-            </div>
-            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
-              <span style="font-size:0.75rem;background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:6px;font-weight:700;">✓ تحقق</span>
-              <span style="font-size:0.75rem;background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:6px;font-weight:700;">~ جزئياً</span>
-              <span style="font-size:0.75rem;background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:6px;font-weight:700;">✗ لم يتحقق</span>
-              <span style="font-size:0.75rem;background:#f3f4f6;color:#6b7280;padding:3px 10px;border-radius:6px;font-weight:700;">— لم يُقيَّم</span>
-            </div>
-          </div>
-          <div id="no-skills-msg" style="display:none;text-align:center;padding:40px;color:#9ca3af;">
-            <div style="font-size:2.5rem;margin-bottom:12px;">📊</div>
-            <div style="font-weight:700;font-size:0.95rem;">لم يتم رفع تقييم المهارات بعد</div>
-            <div style="font-size:0.8rem;margin-top:6px;">سيتم إضافته من المشرف</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- الخطة التربوية الفردية -->
-    <div class="tab-pane" id="tab-iep">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>🎯 الخطة التربوية الفردية</span>
-          <button onclick="printIEP()" class="btn-pdf btn-pdf-secondary" style="font-size:0.8rem;padding:7px 14px;">🖨️ طباعة الخطة</button>
-        </div>
-        <div style="padding:20px;">
-          <div id="iep-view-content">
-            <div style="text-align:center;padding:40px;color:#9ca3af;">
-              <div style="font-size:2rem;margin-bottom:10px;">🎯</div>
-              <div style="font-size:0.9rem;font-weight:700;">جاري تحميل الخطة...</div>
-            </div>
-          </div>
-          <div id="iep-charts-section" style="display:none;">
-            <div style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;color:#c25a00;margin:20px 0 12px;border-right:4px solid #e07020;padding-right:10px;">📊 تحليل النتائج</div>
-            <div class="iep-charts-wrap">
-              <div class="iep-chart-card">
-                <div class="iep-chart-title">📊 نسبة الأهداف لكل مادة</div>
-                <canvas id="iep-bar-chart" height="220"></canvas>
-              </div>
-              <div class="iep-chart-card">
-                <div class="iep-chart-title">🕸️ مستوى الأداء الشامل</div>
-                <canvas id="iep-radar-chart" height="220"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- IQRAR -->
     <div class="tab-pane" id="tab-iqrar">
       <div class="s-card">
@@ -991,8 +846,9 @@
         <div style="color:rgba(255,255,255,0.55);font-size:0.76rem;margin-top:2px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <div class="admin-badge" id="admin-student-count">— طالب</div>
+      <button onclick="saveAllStudents()" id="btn-save-all" style="background:linear-gradient(135deg,#f59040,#f0b84a);color:#7a2800;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(245,144,64,0.4);">💾 حفظ جميع البيانات</button>
       <button class="logout-btn" onclick="adminLogout()">🚪 خروج</button>
       <button onclick="window.open('attendance_dumaj.html','_blank')" style="background:#c25a00;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;gap:6px;">📋 كشف الحضور</button>
     </div>
@@ -1047,10 +903,9 @@
     <div class="modal-title" id="modal-title">✏️ تعديل بيانات الطالب</div>
     <div style="display:flex;gap:4px;background:#f5f2eb;border-radius:10px;padding:4px;margin-bottom:20px;">
       <button class="admin-tab-btn active" onclick="openEditTab('basic',this)" style="font-size:0.78rem;padding:7px 4px;">👤 البيانات</button>
-      <button class="admin-tab-btn" onclick="openEditTab('plan',this)" style="font-size:0.78rem;padding:7px 4px;">📋 الخطة القديمة</button>
+      <button class="admin-tab-btn" onclick="openEditTab('plan',this)" style="font-size:0.78rem;padding:7px 4px;">📋 الخطة</button>
       <button class="admin-tab-btn" onclick="openEditTab('followup',this)" style="font-size:0.78rem;padding:7px 4px;">📊 المتابعة</button>
       <button class="admin-tab-btn" onclick="openEditTab('details',this)" style="font-size:0.78rem;padding:7px 4px;">📝 التفاصيل</button>
-      <button class="admin-tab-btn" onclick="openEditTab('iep',this)" style="font-size:0.78rem;padding:7px 4px;">🎯 الخطة التربوية</button>
     </div>
     <div id="edit-tab-basic">
       <div class="form-group"><label class="form-label">اسم الطالب</label><input type="text" class="form-input" id="edit-name"></div>
@@ -1076,15 +931,6 @@
       <div id="followup-editor"></div>
       <button class="btn-add-goal" onclick="addFollowupRow()">+ إضافة مهارة</button>
     </div>
-
-    <!-- الخطة التربوية الفردية - تعديل -->
-    <div id="edit-tab-iep" style="display:none;">
-      <div style="font-size:0.82rem;color:#5a6478;background:#fff3e0;padding:10px 14px;border-radius:8px;margin-bottom:14px;">
-        🎯 أضف أهداف الخطة التربوية لكل مادة — يمكن إضافة عدد غير محدود من الأهداف
-      </div>
-      <div id="iep-editor-container"></div>
-    </div>
-
     <!-- البيانات التفصيلية -->
     <div id="edit-tab-details" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
@@ -1227,29 +1073,29 @@ const BASE_URL = "https://makkah-special.github.io/";
 
 const STUDENTS = {
   // ===== الصف الأول المتوسط =====
-  "7405": { name: "اياد موسى حولي القرني",        id_full: "1152837405", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4526": { name: "عبدالله صالح أحمد المشجري",     id_full: "2297474526", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "9050": { name: "علي محمد مطر السهيمي",          id_full: "1158819050", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4612": { name: "محمد علي محمد المنتشري",        id_full: "1153884612", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "0977": { name: "مشاري فيحان سميح البقمي",      id_full: "1149660977", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
-  "6630": { name: "يزن محمد مصلح سلامي",          id_full: "1166376630", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [] },
+  "7405": { name: "اياد موسى حولي القرني",        id_full: "1152837405", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "4526": { name: "عبدالله صالح أحمد المشجري",     id_full: "2297474526", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "9050": { name: "علي محمد مطر السهيمي",          id_full: "1158819050", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "4612": { name: "محمد علي محمد المنتشري",        id_full: "1153884612", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "0977": { name: "مشاري فيحان سميح البقمي",      id_full: "1149660977", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "6630": { name: "يزن محمد مصلح سلامي",          id_full: "1166376630", grade: "الأول المتوسط / ١",  phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
   // ===== الصف الثاني المتوسط =====
-  "7543": { name: "احمد عبدالله معطي الجدعاني",   id_full: "1151467543", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4218": { name: "راكان سمير فقيهي اليماني",      id_full: "1205014218", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "7892": { name: "عبدالرحمن حسن سعد القحطاني",   id_full: "1144197892", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4304": { name: "فهد علي حسين الصومالي",        id_full: "1160744304", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
+  "7543": { name: "احمد عبدالله معطي الجدعاني",   id_full: "1151467543", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "4218": { name: "راكان سمير فقيهي اليماني",      id_full: "1205014218", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "7892": { name: "عبدالرحمن حسن سعد القحطاني",   id_full: "1144197892", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "4304": { name: "فهد علي حسين الصومالي",        id_full: "1160744304", grade: "الثاني المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
   // ===== الصف الثالث المتوسط =====
-  "4511": { name: "حسن خالد حسن صغير",           id_full: "1150674511", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "6984": { name: "خالد ابراهيم منصور العامري",    id_full: "1159536984", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "5210": { name: "سامي اقبال أحمد أحمد",         id_full: "2293985210", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "4447": { name: "عبدالله احمد بن ابراهيم الزهراني", id_full: "1157024447", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "5460": { name: "ماجد نادر أحمد عيسى",          id_full: "1162795460", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "7907": { name: "محمد سليمان ابراهيم طواشي",    id_full: "1148347907", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "8315": { name: "مشاري خليل ابراهيم الزهراني",  id_full: "1204218315", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "2407": { name: "مهند محمد عبدالله الشهري",     id_full: "1145092407", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "9867": { name: "مؤيد مشعل علي العمري",         id_full: "1137239867", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "2335": { name: "مؤيد نعيم ابراهيم بدير",       id_full: "2288502335", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
-  "9258": { name: "وليد عبدالله يحي الشهري",      id_full: "1152469258", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [] },
+  "4511": { name: "حسن خالد حسن صغير",           id_full: "1150674511", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "6984": { name: "خالد ابراهيم منصور العامري",    id_full: "1159536984", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "5210": { name: "سامي اقبال أحمد أحمد",         id_full: "2293985210", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "4447": { name: "عبدالله احمد بن ابراهيم الزهراني", id_full: "1157024447", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "5460": { name: "ماجد نادر أحمد عيسى",          id_full: "1162795460", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "7907": { name: "محمد سليمان ابراهيم طواشي",    id_full: "1148347907", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "8315": { name: "مشاري خليل ابراهيم الزهراني",  id_full: "1204218315", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "2407": { name: "مهند محمد عبدالله الشهري",     id_full: "1145092407", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "9867": { name: "مؤيد مشعل علي العمري",         id_full: "1137239867", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "2335": { name: "مؤيد نعيم ابراهيم بدير",       id_full: "2288502335", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" },
+  "9258": { name: "وليد عبدالله يحي الشهري",      id_full: "1152469258", grade: "الثالث المتوسط / ١", phone: "0500000000", plan: [], reports: [], followup: [], diagnosis: "إعاقة ذهنية بسيطة", program_place: "برنامج الدمج التربوي مع التعليم العام", program_start: "1/1/1447هـ", program_end: "1/5/1447هـ", nationality: "سعودي", economic_level: "متوسط", father_edu: "ثانوي", mother_edu: "ثانوي", status_psych: "مستقر نفسياً", status_social: "طبيعي اجتماعياً", status_health: "جيد صحياً" }
 }
 // =====================================================
 // LOGIC
@@ -1343,8 +1189,8 @@ function loadStudent(pin) {
               ? `<iframe src="${url}" title="الخطة الفردية المخصصة"></iframe>`
               : `<div style="padding:20px;text-align:center;color:#5a6478;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
           document.getElementById('custom-plan-actions').innerHTML = `
-            <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">👁️ اطلع على الخطة</a>
-            <button onclick="savePlanAsPDF('${url}')" class="btn-pdf btn-pdf-secondary">💾 حفظ كـ PDF</button>
+            <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح الخطة</a>
+            <a href="${url}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة الفردية</a>
           `;
           break;
         }
@@ -1367,7 +1213,7 @@ function loadStudent(pin) {
 
   // التقارير الثابتة لكل طالب
   const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
+    { title: "التقرير النفسي الموحد", icon: "🧑🏻‍🏫", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
     { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
   ];
 
@@ -1525,11 +1371,6 @@ function logout() {
 function openTab(id, btn) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  if (id === 'iep' && currentStudent) {
-    const pin = currentStudent.pin || Object.keys(STUDENTS).find(k => STUDENTS[k] === currentStudent);
-    if (pin) renderIEPView(pin);
-  }
-  if (id === 'skills' && currentStudent) loadStudentSkills(currentStudent.pin);
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
   // Init canvas when iqrar tab is opened
@@ -1637,7 +1478,7 @@ async function submitIqrar() {
 function saveIqrarPDF() {
   const sPDF = currentStudent;
   let signImgPDF = document.querySelector('#sign-area img');
-  const signSrc = signImgPDF ? signImg.src : '';
+  const signSrc = signImgPDF ? signImgPDF.src : '';
   let todayPDF = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
 
   const win = window.open('', '_blank');
@@ -1756,7 +1597,7 @@ async function syncFromSupabase() {
 
 async function loadStudentDataFromStorage(pin) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json`);
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json?t=${Date.now()}`);
     if (!res.ok) return; // لا يوجد ملف محفوظ بعد
     const data = await res.json();
     if (data && STUDENTS[pin]) {
@@ -1766,7 +1607,22 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].phone    = data.phone    || STUDENTS[pin].phone || '';
       STUDENTS[pin].plan     = data.plan     || STUDENTS[pin].plan     || [];
       STUDENTS[pin].followup = data.followup || STUDENTS[pin].followup || [];
-      if (data.iep) STUDENTS[pin].iep = data.iep;
+      STUDENTS[pin].birthdate = data.birthdate || '';
+      STUDENTS[pin].nationality = data.nationality || '';
+      STUDENTS[pin].age = data.age || '';
+      STUDENTS[pin].address = data.address || '';
+      STUDENTS[pin].iq = data.iq || '';
+      STUDENTS[pin].sibling_order = data.sibling_order || '';
+      STUDENTS[pin].economic_level = data.economic_level || '';
+      STUDENTS[pin].father_edu = data.father_edu || '';
+      STUDENTS[pin].mother_edu = data.mother_edu || '';
+      STUDENTS[pin].status_psych = data.status_psych || '';
+      STUDENTS[pin].status_social = data.status_social || '';
+      STUDENTS[pin].status_health = data.status_health || '';
+      STUDENTS[pin].diagnosis = data.diagnosis || '';
+      STUDENTS[pin].program_place = data.program_place || '';
+      STUDENTS[pin].program_start = data.program_start || '';
+      STUDENTS[pin].program_end = data.program_end || '';
     }
   } catch(e) { /* ملف غير موجود */ }
 }
@@ -1786,7 +1642,22 @@ async function upsertToSupabase(pin, studentData) {
       phone:    studentData.phone || '',
       plan:     studentData.plan     || [],
       followup: studentData.followup || [],
-      iep:      studentData.iep      || {}
+      birthdate:  studentData.birthdate || '',
+      nationality:  studentData.nationality || '',
+      age:  studentData.age || '',
+      address:  studentData.address || '',
+      iq:  studentData.iq || '',
+      sibling_order:  studentData.sibling_order || '',
+      economic_level:  studentData.economic_level || '',
+      father_edu:  studentData.father_edu || '',
+      mother_edu:  studentData.mother_edu || '',
+      status_psych:  studentData.status_psych || '',
+      status_social:  studentData.status_social || '',
+      status_health:  studentData.status_health || '',
+      diagnosis:  studentData.diagnosis || '',
+      program_place:  studentData.program_place || '',
+      program_start:  studentData.program_start || '',
+      program_end:  studentData.program_end || '',
     });
     const blob = new Blob([jsonStr], {type: 'application/json'});
     const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
@@ -1820,6 +1691,55 @@ function adminLogout() {
   document.getElementById('login-screen').style.display = 'flex';
 }
 
+// ===== حفظ جميع الطلاب دفعة واحدة =====
+async function saveAllStudents() {
+  const btn = document.getElementById('btn-save-all');
+  const pins = Object.keys(STUDENTS);
+  btn.textContent = '⏳ جاري الحفظ...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  let success = 0;
+  let failed = 0;
+
+  for (const pin of pins) {
+    try {
+      const s = STUDENTS[pin];
+      const jsonStr = JSON.stringify({
+        pin, name: s.name, id_full: s.id_full, grade: s.grade,
+        phone: s.phone || '', plan: s.plan || [], followup: s.followup || [],
+        birthdate: s.birthdate || '', nationality: s.nationality || '',
+        age: s.age || '', address: s.address || '', iq: s.iq || '',
+        sibling_order: s.sibling_order || '', economic_level: s.economic_level || '',
+        father_edu: s.father_edu || '', mother_edu: s.mother_edu || '',
+        status_psych: s.status_psych || '', status_social: s.status_social || '',
+        status_health: s.status_health || '', diagnosis: s.diagnosis || '',
+        program_place: s.program_place || '', program_start: s.program_start || '',
+        program_end: s.program_end || '',
+      });
+      const blob = new Blob([jsonStr], {type: 'application/json'});
+      const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+        method: 'POST',
+        headers: {
+          'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY,
+          'Content-Type': 'application/json', 'x-upsert': 'true'
+        },
+        body: blob
+      });
+      if (res.ok) success++; else failed++;
+    } catch(e) { failed++; }
+  }
+
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.textContent = '💾 حفظ جميع البيانات';
+  if (failed === 0) {
+    showToast(`✅ تم حفظ بيانات ${success} طالب بنجاح`);
+  } else {
+    showToast(`⚠️ تم حفظ ${success} وفشل ${failed} طالب`);
+  }
+}
+
 function openAdminTab(id, btn) {
   document.querySelectorAll('#admin-portal .admin-tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
@@ -1835,23 +1755,123 @@ function renderStudentCards() {
   );
   entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, 'ar'));
   grid.innerHTML = entries.map(([pin, s]) => `
-    <div class="stu-card" onclick="openEditModal('${pin}')">
-      <div class="stu-card-avatar">🧑‍🎓</div>
-      <div style="flex:1;min-width:0;">
-        <div class="stu-card-name">${s.name}</div>
-        <div class="stu-card-meta">${s.grade}</div>
-        <div style="margin-top:4px;display:flex;gap:6px;align-items:center;">
-          <span class="stu-card-pin">${pin}</span>
-          <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
+    <div class="stu-card" style="flex-direction:column;align-items:stretch;cursor:default;padding:0;overflow:hidden;">
+      <!-- رأس البطاقة -->
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:linear-gradient(135deg,#fff8f3,#fff3e0);border-bottom:1px solid var(--border);" onclick="openEditModal('${pin}')">
+        <div class="stu-card-avatar">🧑🏻‍🏫</div>
+        <div style="flex:1;min-width:0;">
+          <div class="stu-card-name">${s.name}</div>
+          <div class="stu-card-meta">${s.grade}</div>
+          <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <span class="stu-card-pin">${pin}</span>
+            <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
+          </div>
+        </div>
+        <div style="color:var(--muted);font-size:1rem;">✏️</div>
+      </div>
+      <!-- المعلومات الشخصية -->
+      <div style="padding:12px 16px;font-size:0.75rem;border-bottom:1px solid var(--border);background:#fffaf7;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <div style="color:var(--muted);">تاريخ الميلاد: <span style="color:var(--text);font-weight:700;">${s.birthdate || '—'}</span></div>
+          <div style="color:var(--muted);">الجنسية: <span style="color:var(--text);font-weight:700;">${s.nationality || '—'}</span></div>
+          <div style="color:var(--muted);">العمر: <span style="color:var(--text);font-weight:700;">${s.age || '—'}</span></div>
+          <div style="color:var(--muted);">درجة الذكاء: <span style="color:var(--text);font-weight:700;">${s.iq || '—'}</span></div>
+          <div style="color:var(--muted);">العنوان: <span style="color:var(--text);font-weight:700;">${s.address || '—'}</span></div>
+          <div style="color:var(--muted);">رقم الجوال: <span style="color:var(--text);font-weight:700;">${s.phone || '—'}</span></div>
+          <div style="color:var(--muted);grid-column:1/-1;">التشخيص: <span style="color:#c25a00;font-weight:700;">${s.diagnosis || '—'}</span></div>
         </div>
       </div>
-      <div style="color:var(--muted);font-size:1.1rem;">✏️</div>
+      <!-- أزرار الحفظ والطباعة -->
+      <div style="display:flex;gap:8px;padding:10px 16px;background:#fff;">
+        <button onclick="saveOneStudent('${pin}')" style="flex:1;background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
+        <button onclick="printStudentCard('${pin}')" style="flex:1;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">🖨️ طباعة</button>
+      </div>
     </div>
   `).join('');
   document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
 }
 
-function openEditModal(pin) {
+// حفظ طالب واحد
+async function saveOneStudent(pin) {
+  const s = STUDENTS[pin];
+  const jsonStr = JSON.stringify({
+    pin, name: s.name, id_full: s.id_full, grade: s.grade,
+    phone: s.phone || '', plan: s.plan || [], followup: s.followup || [],
+    birthdate: s.birthdate || '', nationality: s.nationality || '',
+    age: s.age || '', address: s.address || '', iq: s.iq || '',
+    sibling_order: s.sibling_order || '', economic_level: s.economic_level || '',
+    father_edu: s.father_edu || '', mother_edu: s.mother_edu || '',
+    status_psych: s.status_psych || '', status_social: s.status_social || '',
+    status_health: s.status_health || '', diagnosis: s.diagnosis || '',
+    program_place: s.program_place || '', program_start: s.program_start || '',
+    program_end: s.program_end || '',
+  });
+  const blob = new Blob([jsonStr], {type: 'application/json'});
+  const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+    body: blob
+  });
+  if (res.ok) showToast('✅ تم حفظ بيانات ' + s.name);
+  else showToast('❌ فشل الحفظ');
+}
+
+// طباعة بطاقة طالب
+function printStudentCard(pin) {
+  const s = STUDENTS[pin];
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8">
+    <title>بطاقة الطالب — ${s.name}</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Cairo',sans-serif;background:#fff;color:#1a1a2e;padding:30px;direction:rtl;}
+      .header{text-align:center;margin-bottom:24px;border-bottom:3px solid #c25a00;padding-bottom:16px;}
+      .header h1{font-size:1.3rem;font-weight:800;color:#c25a00;}
+      .header p{font-size:0.8rem;color:#5a6478;margin-top:4px;}
+      .section-title{background:#c25a00;color:#fff;padding:8px 16px;font-size:0.88rem;font-weight:800;margin:16px 0 8px;border-radius:6px;}
+      table{width:100%;border-collapse:collapse;margin-bottom:12px;}
+      th{background:#fff8f3;padding:8px 14px;text-align:right;font-size:0.78rem;font-weight:700;color:#5a6478;border:1px solid #e0d8c8;width:35%;}
+      td{padding:8px 14px;font-size:0.85rem;font-weight:600;border:1px solid #e0d8c8;}
+      .footer{margin-top:24px;text-align:center;font-size:0.72rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
+      @media print{body{padding:15px;}}
+    </style>
+  </head><body>
+    <div class="header">
+      <div style="background:#c25a00;color:#fff;display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;">برنامج الدمج الفكري</div>
+      <h1>بطاقة الطالب — الخطة التربوية الفردية</h1>
+      <p>مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
+    </div>
+    <div class="section-title">📋 المعلومات الشخصية</div>
+    <table>
+      <tr><th>الطالب</th><td>${s.name}</td><th>تاريخ الميلاد</th><td>${s.birthdate||'—'}</td></tr>
+      <tr><th>الجنسية</th><td>${s.nationality||'—'}</td><th>الصف</th><td>${s.grade}</td></tr>
+      <tr><th>العمر</th><td>${s.age||'—'}</td><th>درجة الذكاء</th><td>${s.iq||'—'}</td></tr>
+      <tr><th>العنوان</th><td>${s.address||'—'}</td><th>رقم الجوال</th><td>${s.phone||'—'}</td></tr>
+    </table>
+    <div class="section-title">📊 معلومات عامة</div>
+    <table>
+      <tr><th>ترتيب الطالب بين إخوته</th><td>${s.sibling_order||'—'}</td><th>المستوى الاقتصادي للأسرة</th><td>${s.economic_level||'—'}</td></tr>
+      <tr><th>مستوى تعليم الأب</th><td>${s.father_edu||'—'}</td><th>مستوى تعليم الأم</th><td>${s.mother_edu||'—'}</td></tr>
+      <tr><th>الوضع النفسي</th><td colspan="3">${s.status_psych||'—'}</td></tr>
+      <tr><th>الوضع الاجتماعي</th><td colspan="3">${s.status_social||'—'}</td></tr>
+      <tr><th>الوضع الصحي</th><td colspan="3">${s.status_health||'—'}</td></tr>
+    </table>
+    <div class="section-title">🏥 التشخيص والبرنامج</div>
+    <table>
+      <tr><th>التشخيص</th><td colspan="3">${s.diagnosis||'—'}</td></tr>
+      <tr><th>المكان التربوي المناسب</th><td colspan="3">${s.program_place||'—'}</td></tr>
+      <tr><th>تاريخ بدء البرنامج</th><td>${s.program_start||'—'}</td><th>تاريخ إنهاء البرنامج</th><td>${s.program_end||'—'}</td></tr>
+    </table>
+    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
+    <script>window.onload=()=>window.print();<\/script>
+  </body></html>`);
+  win.document.close();
+}
+
+async function openEditModal(pin) {
+  await loadStudentDataFromStorage(pin);
   editingPin = pin;
   const sModal = STUDENTS[pin];
   document.getElementById('modal-title').textContent = '✏️ تعديل: ' + sModal.name;
@@ -1861,13 +1881,30 @@ function openEditModal(pin) {
   document.getElementById('edit-phone').value = sModal.phone || '';
   renderPlanEditor(sModal.plan || []);
   renderFollowupEditor(sModal.followup || []);
+  // البيانات التفصيلية
+  const setVal = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ''; };
+  setVal('edit-birthdate', sModal.birthdate);
+  setVal('edit-nationality', sModal.nationality);
+  setVal('edit-age', sModal.age);
+  setVal('edit-address', sModal.address);
+  setVal('edit-iq', sModal.iq);
+  setVal('edit-sibling-order', sModal.sibling_order);
+  setVal('edit-economic-level', sModal.economic_level);
+  setVal('edit-father-edu', sModal.father_edu);
+  setVal('edit-mother-edu', sModal.mother_edu);
+  setVal('edit-status-psych', sModal.status_psych);
+  setVal('edit-status-social', sModal.status_social);
+  setVal('edit-status-health', sModal.status_health);
+  setVal('edit-diagnosis', sModal.diagnosis);
+  setVal('edit-program-place', sModal.program_place);
+  setVal('edit-program-start', sModal.program_start);
+  setVal('edit-program-end', sModal.program_end);
   openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
   document.getElementById('edit-modal').classList.add('open');
 }
 
 function openEditTab(id, btn) {
-  if (id === 'iep' && editingPin) renderIEPEditor(editingPin);
-  ['basic','plan','followup','details','iep'].forEach(t => {
+  ['basic','plan','followup','details'].forEach(t => {
     document.getElementById('edit-tab-' + t).style.display = t === id ? 'block' : 'none';
   });
   document.querySelectorAll('#edit-modal .admin-tab-btn').forEach(b => b.classList.remove('active'));
@@ -1955,8 +1992,6 @@ function saveStudentEdits() {
   sEdit.program_place = document.getElementById('edit-program-place').value.trim();
   sEdit.program_start = document.getElementById('edit-program-start').value.trim();
   sEdit.program_end = document.getElementById('edit-program-end').value.trim();
-  // حفظ الخطة التربوية الفردية
-  if (editingPin) collectIEPFromEditor(editingPin);
   const goalTitles = document.querySelectorAll('[data-goal-title]');
   const goalDescs  = document.querySelectorAll('[data-goal-desc]');
   sEdit.plan = [];
@@ -1993,6 +2028,20 @@ function deleteStudent() {
   closeModal();
   renderStudentCards();
   deleteFromSupabase(deletedPin).then(() => showToast('🗑️ تم حذف الطالب ' + sDel.name));
+}
+
+// ===== DELETE FROM SUPABASE =====
+async function deleteFromSupabase(pin) {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+      }
+    });
+    if (!res.ok) console.error('Delete error:', await res.text());
+  } catch(e) { console.error('Delete error:', e); }
 }
 
 document.addEventListener('input', e => {
@@ -2032,474 +2081,6 @@ function showToast(msg) {
 document.getElementById('edit-modal')?.addEventListener('click', e => {
   if (e.target === document.getElementById('edit-modal')) closeModal();
 });
-
-
-// ============================================================
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-// INDIVIDUAL EDUCATION PLAN (IEP) — الخطة التربوية الفردية
-// ============================================================
-const IEP_SUBJECTS = [
-  { key: 'arabic',   label: 'لغتي',               icon: '📖', cls: 'subj-arabic'  },
-  { key: 'math',     label: 'الرياضيات',           icon: '🔢', cls: 'subj-math'    },
-  { key: 'islamic',  label: 'التربية الإسلامية',   icon: '🕌', cls: 'subj-islamic' },
-  { key: 'science',  label: 'العلوم',              icon: '🔬', cls: 'subj-science' },
-  { key: 'life',     label: 'المهارات الحياتية',   icon: '🌱', cls: 'subj-life'    },
-];
-const IEP_STATUS = {
-  excellent: { label: '🌟 متفوق',     cls: 'status-excellent', score: 4 },
-  advanced:  { label: '✅ متقدم',     cls: 'status-advanced',  score: 3 },
-  capable:   { label: '🔵 متمكن',     cls: 'status-capable',   score: 2 },
-  failed:    { label: '❌ غير مجتاز', cls: 'status-failed',    score: 1 },
-  none:      { label: '— لم يُقيَّم', cls: 'status-none',     score: 0 },
-};
-let iepChartBar = null, iepChartRadar = null;
-
-// ---- تهيئة IEP في STUDENTS إذا لم تكن موجودة ----
-function ensureIEP(pin) {
-  const s = STUDENTS[pin];
-  if (!s.iep) {
-    s.iep = {};
-    IEP_SUBJECTS.forEach(sub => { s.iep[sub.key] = []; });
-  }
-  IEP_SUBJECTS.forEach(sub => {
-    if (!s.iep[sub.key]) s.iep[sub.key] = [];
-  });
-}
-
-// ---- عرض الخطة في بوابة الطالب ----
-function renderIEPView(pin) {
-  ensureIEP(pin);
-  const s = STUDENTS[pin];
-  const iep = s.iep;
-  const container = document.getElementById('iep-view-content');
-  if (!container) return;
-
-  let hasGoals = IEP_SUBJECTS.some(sub => iep[sub.key].length > 0);
-
-  if (!hasGoals) {
-    container.innerHTML = `
-      <div style="text-align:center;padding:50px 20px;color:#9ca3af;">
-        <div style="font-size:3rem;margin-bottom:12px;">🎯</div>
-        <div style="font-weight:800;font-size:0.95rem;margin-bottom:6px;">لم تُضف أهداف الخطة بعد</div>
-        <div style="font-size:0.82rem;">يمكن للمشرف إضافة الأهداف من لوحة التحكم</div>
-      </div>`;
-    document.getElementById('iep-charts-section').style.display = 'none';
-    return;
-  }
-
-  container.innerHTML = IEP_SUBJECTS.map(sub => {
-    const goals = iep[sub.key] || [];
-    if (goals.length === 0) return '';
-    const excellent = goals.filter(g => g.status === 'excellent').length;
-    const advanced  = goals.filter(g => g.status === 'advanced').length;
-    const capable   = goals.filter(g => g.status === 'capable').length;
-    const failed    = goals.filter(g => g.status === 'failed').length;
-    const avgScore  = goals.length ? Math.round(goals.reduce((s,g) => s + (IEP_STATUS[g.status]?.score||0), 0) / goals.length * 25) : 0;
-    return `
-      <div class="iep-subject-block">
-        <div class="iep-subject-head iep-subject-colors ${sub.cls}" onclick="toggleIEPBlock(this)">
-          <div class="iep-subject-title">${sub.icon} ${sub.label}</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="iep-subject-count">${goals.length} هدف</span>
-            <span style="font-size:0.7rem;opacity:0.9;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:8px;">الأداء: ${avgScore}%</span>
-            <span style="font-size:0.9rem;">▾</span>
-          </div>
-        </div>
-        <div class="iep-subject-body">
-          ${goals.map(g => {
-            const st = IEP_STATUS[g.status] || IEP_STATUS.none;
-            return `<div class="iep-goal-row">
-              <div class="iep-goal-text">${escHtml(g.goal)}</div>
-              <span class="iep-goal-status ${st.cls}">${st.label}</span>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
-  }).join('');
-
-  document.getElementById('iep-charts-section').style.display = 'block';
-  renderIEPCharts(pin);
-}
-
-function toggleIEPBlock(head) {
-  const body = head.nextElementSibling;
-  const isCollapsed = body.classList.contains('collapsed');
-  body.classList.toggle('collapsed');
-  head.classList.toggle('collapsed');
-  head.querySelector('span:last-child').textContent = isCollapsed ? '▾' : '▸';
-}
-
-// ---- رسوم بيانية Chart.js ----
-function renderIEPCharts(pin) {
-  const iep = STUDENTS[pin].iep;
-  const labels = IEP_SUBJECTS.map(s => s.label);
-  const excellent = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='excellent').length);
-  const advanced  = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='advanced').length);
-  const capable   = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='capable').length);
-  const failed    = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='failed').length);
-  const totals    = IEP_SUBJECTS.map(s => (iep[s.key]||[]).length || 1);
-  const pct = IEP_SUBJECTS.map((s,i) => {
-    const goals = iep[s.key] || [];
-    if (!goals.length) return 0;
-    const total = goals.reduce((sum,g) => sum + (IEP_STATUS[g.status]?.score||0), 0);
-    return Math.round((total / (goals.length * 4)) * 100);
-  });
-
-  // Bar Chart — مكدّس بالمستويات الأربعة
-  const barCtx = document.getElementById('iep-bar-chart');
-  if (barCtx) {
-    if (iepChartBar) iepChartBar.destroy();
-    iepChartBar = new Chart(barCtx, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [
-          { label: '🌟 متفوق',     data: excellent, backgroundColor: '#6d28d9', borderRadius: 4 },
-          { label: '✅ متقدم',     data: advanced,  backgroundColor: '#10b981', borderRadius: 4 },
-          { label: '🔵 متمكن',     data: capable,   backgroundColor: '#3b82f6', borderRadius: 4 },
-          { label: '❌ غير مجتاز', data: failed,    backgroundColor: '#ef4444', borderRadius: 4 },
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 10 }, padding: 8 } } },
-        scales: {
-          x: { stacked: true, ticks: { font: { family: 'Cairo', size: 10 } } },
-          y: { stacked: true, beginAtZero: true, ticks: { stepSize: 1, font: { family: 'Cairo' } } }
-        }
-      }
-    });
-  }
-
-  // Radar Chart — نسبة الأداء الكلية
-  const radCtx = document.getElementById('iep-radar-chart');
-  if (radCtx) {
-    if (iepChartRadar) iepChartRadar.destroy();
-    iepChartRadar = new Chart(radCtx, {
-      type: 'radar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'نسبة الأداء %',
-          data: pct,
-          backgroundColor: 'rgba(194,90,0,0.15)',
-          borderColor: '#c25a00',
-          pointBackgroundColor: '#c25a00',
-          pointRadius: 5,
-          borderWidth: 2,
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 } } } },
-        scales: {
-          r: {
-            min: 0, max: 100,
-            ticks: { stepSize: 25, font: { family: 'Cairo', size: 9 }, backdropColor: 'transparent', callback: v => v+'%' },
-            pointLabels: { font: { family: 'Cairo', size: 10 } }
-          }
-        }
-      }
-    });
-  }
-}
-
-
-// ---- إدارة المواد (إضافة/حذف) ----
-function addIEPSubject(pin) {
-  const labelInput = document.getElementById('new-subject-label');
-  const iconInput  = document.getElementById('new-subject-icon');
-  const label = labelInput?.value.trim();
-  const icon  = iconInput?.value.trim() || '📌';
-  if (!label) { showToast('⚠️ أدخل اسم المادة أولاً'); return; }
-  const key = 'subj_' + Date.now();
-  IEP_SUBJECTS.push({ key, label, icon, cls: 'subj-arabic' });
-  ensureIEP(pin);
-  STUDENTS[pin].iep[key] = [];
-  renderIEPEditor(pin);
-  showToast('✅ تمت إضافة مادة: ' + label);
-}
-function removeIEPSubject(pin, subKey) {
-  const sub = IEP_SUBJECTS.find(s => s.key === subKey);
-  if (!sub) return;
-  if (!confirm('حذف مادة "' + sub.label + '" وجميع أهدافها؟')) return;
-  const idx = IEP_SUBJECTS.findIndex(s => s.key === subKey);
-  if (idx >= 0) IEP_SUBJECTS.splice(idx, 1);
-  if (STUDENTS[pin]?.iep) delete STUDENTS[pin].iep[subKey];
-  renderIEPEditor(pin);
-  showToast('🗑️ تم حذف المادة');
-}
-
-// ---- عرض IEP editor في edit-modal (للمشرف) ----
-function renderIEPEditor(pin) {
-  ensureIEP(pin);
-  const iep = STUDENTS[pin].iep;
-  const container = document.getElementById('iep-editor-container');
-  if (!container) return;
-
-  // قسم إدارة المواد
-  const allSubjectsManage = IEP_SUBJECTS.map(sub => {
-    const count = (iep[sub.key]||[]).length;
-    const hasExtra = !['arabic','math','islamic','science','life'].includes(sub.key);
-    return `<div style="display:flex;align-items:center;gap:8px;background:#fafafa;border:1px solid #e0d8c8;border-radius:8px;padding:7px 12px;margin-bottom:6px;">
-      <span style="font-size:1rem;">${sub.icon}</span>
-      <span style="flex:1;font-size:0.85rem;font-weight:700;">${sub.label}</span>
-      <span style="font-size:0.75rem;color:#9ca3af;">${count} هدف</span>
-      ${hasExtra ? `<button onclick="removeIEPSubject('${pin}','${sub.key}')" style="background:#fee2e2;color:#dc2626;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;font-size:0.75rem;font-weight:700;">حذف</button>` : '<span style="font-size:0.7rem;color:#10b981;font-weight:700;">أساسية</span>'}
-    </div>`;
-  }).join('');
-
-  container.innerHTML = `
-    <details style="margin-bottom:14px;background:#f5f2eb;border-radius:10px;padding:10px 14px;">
-      <summary style="cursor:pointer;font-size:0.82rem;font-weight:800;color:#c25a00;user-select:none;">⚙️ إدارة المواد (إضافة / حذف)</summary>
-      <div style="margin-top:10px;">${allSubjectsManage}</div>
-      <div style="display:flex;gap:8px;margin-top:8px;">
-        <input type="text" id="new-subject-label" placeholder="اسم المادة الجديدة" class="iep-edit-goal-input" style="flex:1;">
-        <input type="text" id="new-subject-icon" placeholder="أيقونة" class="iep-edit-goal-input" style="width:55px;text-align:center;">
-        <button onclick="addIEPSubject('${pin}')" style="background:#c25a00;color:#fff;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:0.82rem;font-weight:800;">+ إضافة</button>
-      </div>
-    </details>
-    ${IEP_SUBJECTS.map(sub => {
-    const goals = iep[sub.key] || [];
-    return `
-      <div class="iep-subject-block" style="margin-bottom:14px;">
-        <div class="iep-subject-head iep-subject-colors ${sub.cls}" onclick="toggleIEPBlock(this)">
-          <div class="iep-subject-title">${sub.icon} ${sub.label}</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="iep-subject-count">${goals.length} هدف</span>
-            <span style="font-size:0.9rem;">▾</span>
-          </div>
-        </div>
-        <div class="iep-subject-body" id="iep-edit-${sub.key}">
-          ${goals.map((g, i) => iepEditGoalRow(sub.key, i, g)).join('')}
-          <button class="iep-add-goal-btn" onclick="addIEPGoal('${sub.key}')">+ إضافة هدف</button>
-        </div>
-      </div>`;
-  }).join('')}
-  `;}
-
-function iepEditGoalRow(subKey, idx, g) {
-  const status = g.status || 'none';
-  const safeGoal = escHtml(g.goal||'');
-  return `<div class="iep-edit-goal-row" id="iep-goal-${subKey}-${idx}">
-    <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
-      <input type="text" class="iep-edit-goal-input" placeholder="نص الهدف التربوي"
-        value="${safeGoal}" data-iep-subj="${subKey}" data-iep-idx="${idx}" data-iep-field="goal">
-      <select class="iep-edit-goal-input" style="font-size:0.82rem;font-weight:700;"
-        data-iep-subj="${subKey}" data-iep-idx="${idx}" data-iep-field="status">
-        <option value="none"     ${status==='none'     ?'selected':''}>— لم يُقيَّم بعد</option>
-        <option value="excellent"${status==='excellent'?'selected':''}>🌟 متفوق</option>
-        <option value="advanced" ${status==='advanced' ?'selected':''}>✅ متقدم</option>
-        <option value="capable"  ${status==='capable'  ?'selected':''}>🔵 متمكن</option>
-        <option value="failed"   ${status==='failed'   ?'selected':''}>❌ غير مجتاز</option>
-      </select>
-    </div>
-    <button class="iep-goal-del-btn" onclick="removeIEPGoal('${subKey}',${idx})">✕</button>
-  </div>`;
-}
-
-function addIEPGoal(subKey) {
-  const container = document.getElementById('iep-edit-' + subKey);
-  if (!container) return;
-  const addBtn = container.querySelector('.iep-add-goal-btn');
-  const idx = container.querySelectorAll('.iep-edit-goal-row').length;
-  const div = document.createElement('div');
-  div.innerHTML = iepEditGoalRow(subKey, idx, { goal: '', status: 'none' });
-  container.insertBefore(div.firstElementChild, addBtn);
-  // تحديث count
-  const countEl = container.previousElementSibling?.querySelector('.iep-subject-count');
-  if (countEl) countEl.textContent = (idx+1) + ' هدف';
-}
-
-function removeIEPGoal(subKey, idx) {
-  document.getElementById(`iep-goal-${subKey}-${idx}`)?.remove();
-  // إعادة ترقيم
-  const container = document.getElementById('iep-edit-' + subKey);
-  if (!container) return;
-  container.querySelectorAll('.iep-edit-goal-row').forEach((row, i) => {
-    row.id = `iep-goal-${subKey}-${i}`;
-    row.querySelectorAll('[data-iep-idx]').forEach(el => el.dataset.iepIdx = i);
-    const delBtn = row.querySelector('.iep-goal-del-btn');
-    if (delBtn) delBtn.setAttribute('onclick', `removeIEPGoal('${subKey}',${i})`);
-  });
-  const countEl = container.previousElementSibling?.querySelector('.iep-subject-count');
-  if (countEl) countEl.textContent = container.querySelectorAll('.iep-edit-goal-row').length + ' هدف';
-}
-
-// ---- جمع بيانات IEP من editor قبل الحفظ ----
-function collectIEPFromEditor(pin) {
-  ensureIEP(pin);
-  IEP_SUBJECTS.forEach(sub => {
-    const goals = [];
-    const rows = document.querySelectorAll('[data-iep-subj="' + sub.key + '"][data-iep-field="goal"]');
-    rows.forEach(el => {
-      const i = el.dataset.iepIdx;
-      const goalText = el.value.trim();
-      if (!goalText) return;
-      const statusEl = document.querySelector('[data-iep-subj="' + sub.key + '"][data-iep-idx="' + i + '"][data-iep-field="status"]');
-      goals.push({ goal: goalText, status: statusEl?.value || 'none' });
-    });
-    STUDENTS[pin].iep[sub.key] = goals;
-  });
-  // حفظ المواد الإضافية في بيانات الطالب
-  const extraSubjects = IEP_SUBJECTS.filter(s => !['arabic','math','islamic','science','life'].includes(s.key));
-  if (extraSubjects.length) STUDENTS[pin].iep._customSubjects = extraSubjects.map(s => ({key:s.key,label:s.label,icon:s.icon}));
-}
-
-// ---- طباعة الخطة التربوية ----
-function printIEP() {
-  const pin = currentStudent?.pin || Object.keys(STUDENTS).find(k => STUDENTS[k] === currentStudent);
-  if (!pin) return;
-  const s = STUDENTS[pin];
-  ensureIEP(pin);
-  const iep = s.iep;
-  const todayG = new Date().toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'});
-  const todayH = new Date().toLocaleDateString('ar-SA-u-ca-islamic',{year:'numeric',month:'long',day:'numeric'});
-
-  let subjectsHTML = IEP_SUBJECTS.map(sub => {
-    const goals = iep[sub.key] || [];
-    if (!goals.length) return '';
-    return `<div style="margin-bottom:18px;">
-      <div style="background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;padding:10px 16px;border-radius:8px 8px 0 0;font-weight:800;font-size:0.9rem;">${sub.icon} ${sub.label}</div>
-      <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
-        <thead><tr style="background:#f5f2eb;">
-          <th style="padding:8px 12px;text-align:right;border:1px solid #e0d8c8;width:60%;">الهدف التربوي</th>
-          <th style="padding:8px 12px;text-align:center;border:1px solid #e0d8c8;width:40%;">مستوى التحقق</th>
-        </tr></thead>
-        <tbody>${goals.map((g,i) => {
-          const st = IEP_STATUS[g.status||'none'];
-          return `<tr style="background:${i%2?'#fffbf5':'#fff'}">
-            <td style="padding:8px 12px;border:1px solid #e0d8c8;">${escHtml(g.goal)}</td>
-            <td style="padding:8px 12px;border:1px solid #e0d8c8;text-align:center;font-weight:700;">${st.label}</td>
-          </tr>`;
-        }).join('')}</tbody>
-      </table>
-    </div>`;
-  }).join('');
-
-  const win = window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-    <title>الخطة التربوية — ${s.name}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@800;900&display=swap" rel="stylesheet">
-    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Cairo',sans-serif;background:#fff;color:#1a1a2e;padding:28px;direction:rtl;font-size:13px}
-    .hdr{background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;}
-    h1{font-family:'Tajawal',sans-serif;font-size:1.2rem;font-weight:900}.sub{font-size:0.78rem;opacity:0.8;margin-top:3px}
-    .ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:10px}
-    @media print{body{padding:12px}}</style></head><body>
-    <div class="hdr"><h1>🎯 الخطة التربوية الفردية</h1>
-      <div class="sub">👤 ${s.name} &nbsp;|&nbsp; 🏫 ${s.grade} &nbsp;|&nbsp; 🪪 ${s.id_full}</div>
-      <div class="sub">📅 ${todayG} &nbsp;|&nbsp; 🌙 ${todayH}</div></div>
-    ${subjectsHTML || '<div style="text-align:center;padding:40px;color:#9ca3af">لا توجد أهداف بعد</div>'}
-    <div class="ft">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — برنامج الدمج الفكري</div>
-    <script>window.onload=()=>window.print();<\/script></body></html>`);
-  win.document.close();
-}
-
-// ===== تحميل مهارات الطالب =====
-async function loadStudentSkills(pin) {
-  const SB_SKILLS = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/dumaj/";
-  document.getElementById('skills-loading').style.display = 'block';
-  document.getElementById('skills-table-wrap').style.display = 'none';
-  document.getElementById('no-skills-msg').style.display = 'none';
-  const exts = ['json'];
-  for (const ext of exts) {
-    const url = `${SB_SKILLS}skills-${pin}.${ext}`;
-    try {
-      const res = await fetch(url + '?t=' + Date.now());
-      if (res.ok) {
-        const data = await res.json();
-        renderSkillsTable(data.skills || data);
-        document.getElementById('skills-loading').style.display = 'none';
-        document.getElementById('skills-table-wrap').style.display = 'block';
-        window._skillsData = data.skills || data;
-        window._skillsPin = pin;
-        return;
-      }
-    } catch(e) {}
-  }
-  // لا يوجد ملف - عرض المهارات من followup
-  const s = STUDENTS[pin];
-  if (s && s.followup && s.followup.length > 0) {
-    const skillsFromFollowup = s.followup.map(f => ({
-      skill: f.skill, axis: '—', m1: f.m1||'—', m2: f.m2||'—',
-      m3: f.m3||'—', m4: f.m4||'—', m5: f.m5||'—', note: ''
-    }));
-    renderSkillsTable(skillsFromFollowup);
-    document.getElementById('skills-loading').style.display = 'none';
-    document.getElementById('skills-table-wrap').style.display = 'block';
-    window._skillsData = skillsFromFollowup;
-    window._skillsPin = pin;
-  } else {
-    document.getElementById('skills-loading').style.display = 'none';
-    document.getElementById('no-skills-msg').style.display = 'block';
-  }
-}
-
-function renderSkillsTable(skills) {
-  const tbody = document.getElementById('skills-tbody');
-  if (!tbody || !skills) return;
-  const statusStyle = {
-    '✓': 'background:#d1fae5;color:#065f46',
-    '~': 'background:#fef3c7;color:#92400e',
-    '✗': 'background:#fee2e2;color:#991b1b',
-    '—': 'background:#f3f4f6;color:#6b7280',
-  };
-  tbody.innerHTML = skills.map((r, i) => `
-    <tr style="border-bottom:1px solid var(--border);${i%2===0?'background:#fafafa;':'background:#fff;'}">
-      <td style="padding:9px 14px;text-align:right;font-weight:600;">${r.skill||'—'}</td>
-      <td style="padding:9px 14px;text-align:center;font-size:0.78rem;color:var(--muted);">${r.axis||'—'}</td>
-      ${['m1','m2','m3','m4','m5'].map(m => {
-        const v = r[m] || '—';
-        const st = statusStyle[v] || statusStyle['—'];
-        return `<td style="padding:9px 14px;text-align:center;"><span style="${st};padding:3px 9px;border-radius:8px;font-weight:700;font-size:0.8rem;">${v}</span></td>`;
-      }).join('')}
-      <td style="padding:9px 14px;text-align:right;font-size:0.78rem;color:var(--muted);">${r.note||''}</td>
-    </tr>
-  `).join('');
-}
-
-function downloadSkillsExcel() {
-  const data = window._skillsData;
-  if (!data || !data.length) return;
-  const pin = window._skillsPin || '';
-  const s = STUDENTS[pin];
-  const name = s ? s.name : 'الطالب';
-  // CSV as Excel-compatible
-  const headers = ['المهارة', 'المحور', 'م١', 'م٢', 'م٣', 'م٤', 'م٥', 'الملاحظات'];
-  const rows = data.map(r => [r.skill||'', r.axis||'', r.m1||'', r.m2||'', r.m3||'', r.m4||'', r.m5||'', r.note||'']);
-  let csv = '\uFEFF' + headers.join(',') + '\n';
-  csv += rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
-  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `مهارات-${name}.csv`;
-  a.click(); URL.revokeObjectURL(url);
-}
-
-// ===== حفظ الخطة كـ PDF =====
-function savePlanAsPDF(url) {
-  const win = window.open('', '_blank');
-  const s = currentStudent;
-  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    <meta charset="UTF-8"><title>الخطة الفردية — ${s ? s.name : ''}</title>
-    <style>body{margin:0;padding:0;direction:rtl;font-family:Arial,sans-serif;}
-    iframe{width:100%;height:100vh;border:none;}
-    .info-bar{background:#1a3a5c;color:#fff;padding:10px 20px;font-size:0.85rem;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
-    </style></head><body>
-    <div class="info-bar">
-      <span>📋 الخطة الفردية — ${s ? s.name : ''}</span>
-      <button onclick="window.print()" style="background:#e07020;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:700;">🖨️ طباعة / حفظ PDF</button>
-    </div>
-    <iframe src="${url}"></iframe>
-    </body></html>`);
-  win.document.close();
-}
-
-// تحميل المهارات عند فتح التبويب
-
-
 </script>
 </body>
 </html>
