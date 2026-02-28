@@ -1046,10 +1046,10 @@
     <div class="modal-title" id="modal-title">✏️ تعديل بيانات الطالب</div>
     <div style="display:flex;gap:4px;background:#f5f2eb;border-radius:10px;padding:4px;margin-bottom:20px;">
       <button class="admin-tab-btn active" onclick="openEditTab('basic',this)" style="font-size:0.78rem;padding:7px 4px;">👤 البيانات</button>
-      <button class="admin-tab-btn" onclick="openEditTab('plan',this)" style="font-size:0.78rem;padding:7px 4px;">📋 الخطة</button>
+      <button class="admin-tab-btn" onclick="openEditTab('plan',this)" style="font-size:0.78rem;padding:7px 4px;">📋 الخطة القديمة</button>
       <button class="admin-tab-btn" onclick="openEditTab('followup',this)" style="font-size:0.78rem;padding:7px 4px;">📊 المتابعة</button>
       <button class="admin-tab-btn" onclick="openEditTab('details',this)" style="font-size:0.78rem;padding:7px 4px;">📝 التفاصيل</button>
-      <button class="admin-tab-btn" onclick="openEditTab('iep',this)" style="font-size:0.78rem;padding:7px 4px;">🎯 الخطة</button>
+      <button class="admin-tab-btn" onclick="openEditTab('iep',this)" style="font-size:0.78rem;padding:7px 4px;">🎯 الخطة التربوية</button>
     </div>
     <div id="edit-tab-basic">
       <div class="form-group"><label class="form-label">اسم الطالب</label><input type="text" class="form-input" id="edit-name"></div>
@@ -1866,7 +1866,7 @@ function openEditModal(pin) {
 
 function openEditTab(id, btn) {
   if (id === 'iep' && editingPin) renderIEPEditor(editingPin);
-  ['basic','plan','followup','details'].forEach(t => {
+  ['basic','plan','followup','details','iep'].forEach(t => {
     document.getElementById('edit-tab-' + t).style.display = t === id ? 'block' : 'none';
   });
   document.querySelectorAll('#edit-modal .admin-tab-btn').forEach(b => b.classList.remove('active'));
