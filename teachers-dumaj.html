@@ -446,7 +446,7 @@ const PROGRAM = "dumaj";
 async function sbGet(key) {
   try {
     const res = await fetch(
-      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${encodeURIComponent(key)}&select=data`,
+      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${key}&select=data`,
       { headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Accept": "application/json" } }
     );
     if (!res.ok) return null;
@@ -478,7 +478,7 @@ async function sbSet(key, data) {
     console.warn('UPSERT failed:', res.status, bodyText);
     // محاولة PATCH (تحديث سجل موجود)
     const patchRes = await fetch(
-      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${encodeURIComponent(key)}`,
+      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${key}`,
       {
         method: "PATCH",
         headers: {
@@ -658,14 +658,26 @@ async function loadFromSupabase(teacher) {
     document.getElementById('env-warning').style.display = 'block';
   }
 
-  const data = await sbGet(key);
+  // جرب المفتاح الحالي + المفتاح المُشفَّر مرتين (للتوافق مع البيانات القديمة)
+  const altKey = PROGRAM + '_' + encodeURIComponent(encodeURIComponent(teacher));
+  console.log('🔑 المفتاح الرئيسي:', key);
+  console.log('🔑 المفتاح البديل:', altKey);
+  let data = await sbGet(key);
+  if (!data && altKey !== key) {
+    console.log('⚠️ جرب المفتاح البديل...');
+    data = await sbGet(altKey);
+    if (data) {
+      console.log('✅ وُجدت البيانات بالمفتاح البديل - جاري الترحيل...');
+      await sbSet(key, data); // ترحيل للمفتاح الصحيح
+    }
+  }
+  console.log('📦 نتيجة التحميل:', data ? 'وجد بيانات' : 'لم يجد بيانات');
   if (data) {
     console.log('✅ تم تحميل البيانات من Supabase');
     document.getElementById('env-warning').style.display = 'none';
     if (data.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, data.profile);
     if (Array.isArray(data.entries)) TEACHERS[teacher].entries = data.entries;
     if (Array.isArray(data.witnesses)) TEACHERS[teacher].witnesses = data.witnesses;
-    if (Array.isArray(data.students)) studentsData = data.students;
     try { localStorage.setItem('teacher_bk_' + teacher, JSON.stringify(data)); } catch(e) {}
     showSyncBar('saved', '✅ تم تحميل بياناتك من Supabase');
     setTimeout(hideSyncBar, 2000);
@@ -687,6 +699,7 @@ async function loadFromSupabase(teacher) {
       showSyncBar('error', '📱 تم التحميل من هذا الجهاز (بيانات Supabase غير متاحة)');
     } else {
       showSyncBar('error', '📭 لا توجد بيانات محفوظة — ابدأ بإضافة بياناتك');
+    console.log('❌ لا بيانات بمفتاح:', key);
     }
     setTimeout(hideSyncBar, 3500);
   }
@@ -705,7 +718,6 @@ async function autoSave() {
     profile: TEACHERS[currentTeacher].profile,
     entries: TEACHERS[currentTeacher].entries || [],
     witnesses: TEACHERS[currentTeacher].witnesses || [],
-    students: studentsData
   };
   // حفظ محلي فوري كنسخة احتياطية
   try { localStorage.setItem('teacher_bk_' + currentTeacher, JSON.stringify(payload)); } catch(e) {}
