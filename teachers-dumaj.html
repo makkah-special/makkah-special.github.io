@@ -162,6 +162,13 @@ footer strong{color:var(--accent-light);}
 .btn-edit-witness{background:#fff;border:1.5px solid var(--primary);color:var(--primary);border-radius:7px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:0.78rem;cursor:pointer;}
 .btn-edit-witness:hover{background:var(--primary);color:#fff;}
 
+
+/* Drag & Drop sorting */
+.drag-handle{cursor:grab;color:var(--muted);font-size:1rem;padding:2px 4px;user-select:none;flex-shrink:0;}
+.drag-handle:active{cursor:grabbing;}
+.entry-card.dragging,.witness-card.dragging{opacity:0.4;border-style:dashed;}
+.entry-card.drag-over,.witness-card.drag-over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
+.sort-hint{font-size:0.72rem;color:var(--muted);margin-bottom:8px;text-align:left;display:flex;align-items:center;gap:5px;}
 </style>
 </head>
 <body>
@@ -914,7 +921,8 @@ function renderEntries() {
   const entries = TEACHERS[currentTeacher].entries;
   const c = document.getElementById('entries-list');
   if (!entries.length) { c.innerHTML = '<div class="empty"><div class="empty-icon">📂</div><div style="font-size:0.85rem">لا توجد إنجازات بعد</div></div>'; return; }
-  c.innerHTML = entries.map(e => {
+  const sortHint = entries.length > 1 ? '<div class="sort-hint">☰ اسحب الكارد لإعادة الترتيب</div>' : '';
+  c.innerHTML = sortHint + entries.map((e, idx) => {
     const [lbl, cls] = TYPE_LBL[e.type] || TYPE_LBL.other;
     const greg = e.date ? new Date(e.date).toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'}) : '—';
     const hij = e.date ? toHijri(e.date) : '';
@@ -925,12 +933,21 @@ function renderEntries() {
       }
       return '<a href="' + escHtml(a.dataUrl) + '" target="_blank" class="attach-chip" style="text-decoration:none">📎 ' + escHtml(a.name.length > 16 ? a.name.slice(0,14) + '…' : a.name) + '</a>';
     }).join('');
-    return '<div class="entry-card">' +
+    return '<div class="entry-card" draggable="true"' +
+      ' ondragstart="onDragStart(event,' + idx + ',\'entries\')"' +
+      ' ondragend="onDragEnd(event)"' +
+      ' ondragover="onDragOver(event,' + idx + ')"' +
+      ' ondragleave="onDragLeave(event)"' +
+      ' ondrop="onDrop(event,' + idx + ',\'entries\')">' +
       '<div class="entry-head">' +
-        '<div class="entry-title">' + escHtml(e.title) + '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<span class="drag-handle" title="اسحب لإعادة الترتيب">☰</span>' +
+          '<div class="entry-title">' + escHtml(e.title) + '</div>' +
+        '</div>' +
         '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">' +
           '<span class="entry-date">📅 ' + greg + '</span>' +
           (hij ? '<span class="entry-date-hijri">🌙 ' + hij + '</span>' : '') +
+          '<button class="btn-print-sm" onclick="printEntry(' + e.id + ')">🖨️ طباعة</button>' +
           '<button class="btn-edit" onclick="openEditModal(' + e.id + ')">✏️ تعديل</button>' +
           '<button class="btn-danger" onclick="deleteEntry(' + e.id + ')">🗑️</button>' +
         '</div>' +
@@ -1035,7 +1052,8 @@ function renderWitnesses() {
   const witnesses = TEACHERS[currentTeacher].witnesses || [];
   const c = document.getElementById('witnesses-list');
   if (!witnesses.length) { c.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div style="font-size:0.85rem">لا توجد شواهد بعد</div></div>'; return; }
-  c.innerHTML = witnesses.map(w => {
+  const wSortHint = witnesses.length > 1 ? '<div class="sort-hint">☰ اسحب الكارد لإعادة الترتيب</div>' : '';
+  c.innerHTML = wSortHint + witnesses.map((w, widx) => {
     const imgs = (w.files || []).filter(f => f.dataUrl && f.dataUrl.startsWith('data:image'));
     const others = (w.files || []).filter(f => !f.dataUrl || !f.dataUrl.startsWith('data:image'));
     let greg = '', hij = '';
@@ -1047,11 +1065,19 @@ function renderWitnesses() {
     }
     const imgsHtml = imgs.map(f => '<img src="' + escHtml(f.dataUrl) + '" class="img-thumb" data-src="' + escHtml(f.dataUrl) + '" onclick="openLightboxFromEl(this)">').join('');
     const filesHtml = others.map(f => '<a href="' + escHtml(f.dataUrl) + '" target="_blank" class="attach-chip" style="background:#fff3e0;border-color:#f59040;color:#7a2800;text-decoration:none">📎 ' + escHtml(f.name.length > 20 ? f.name.slice(0,18) + '…' : f.name) + '</a>').join('');
-    return '<div class="witness-card">' +
+    return '<div class="witness-card" draggable="true"' +
+      ' ondragstart="onDragStart(event,' + widx + ',\'witnesses\')"' +
+      ' ondragend="onDragEnd(event)"' +
+      ' ondragover="onDragOver(event,' + widx + ')"' +
+      ' ondragleave="onDragLeave(event)"' +
+      ' ondrop="onDrop(event,' + widx + ',\'witnesses\')">' +
       '<div class="entry-head">' +
-        '<div>' +
-          '<div class="witness-title">📋 ' + escHtml(w.title) + '</div>' +
-          '<div class="witness-meta">' + (W_TYPES[w.type] || w.type) + (greg ? ' — 📅 ' + greg : '') + (hij ? ' 🌙 ' + hij : '') + '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<span class="drag-handle" title="اسحب لإعادة الترتيب">☰</span>' +
+          '<div>' +
+            '<div class="witness-title">📋 ' + escHtml(w.title) + '</div>' +
+            '<div class="witness-meta">' + (W_TYPES[w.type] || w.type) + (greg ? ' — 📅 ' + greg : '') + (hij ? ' 🌙 ' + hij : '') + '</div>' +
+          '</div>' +
         '</div>' +
         '<div style="display:flex;gap:6px;flex-shrink:0">' +
           '<button class="btn-edit-witness" onclick="editWitness(' + w.id + ')">✏️ تعديل</button>' +
@@ -1064,6 +1090,60 @@ function renderWitnesses() {
       (others.length ? '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">' + filesHtml + '</div>' : '') +
     '</div>';
   }).join('');
+}
+
+function printEntry(id) {
+  const e = (TEACHERS[currentTeacher].entries || []).find(x => x.id === id); if (!e) return;
+  const t = TEACHERS[currentTeacher]; const p = t.profile;
+  const imgs = (e.attachments || []).filter(f => f.dataUrl && f.dataUrl.startsWith('data:image'));
+  const others = (e.attachments || []).filter(f => !f.dataUrl || !f.dataUrl.startsWith('data:image'));
+  const greg = e.date ? new Date(e.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '—';
+  const hij = e.date ? toHijri(e.date) : '';
+  const todayG = new Date().toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'});
+  const todayH = new Date().toLocaleDateString('ar-SA-u-ca-islamic',{year:'numeric',month:'long',day:'numeric'});
+  const TL = {achievement:'🏆 إنجاز مهني',training:'📚 دورة تدريبية',activity:'🎯 نشاط وفعالية',award:'🥇 شهادة وتكريم',other:'📌 أخرى'};
+  const photoEl = p.photo ? '<img src="' + p.photo + '" style="width:52px;height:52px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.3)">' :
+    '<div style="width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900">' + t.avatar + '</div>';
+  const win = window.open('', '_blank');
+  const hdrColor = PROGRAM === 'dumaj' ? 'linear-gradient(135deg,#7a2800,#c25a00)' : 'linear-gradient(135deg,#1a3a5c,#2563a8)';
+  win.document.write('<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>إنجاز</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;800;900&display=swap" rel="stylesheet">' +
+    '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Cairo",sans-serif;background:#fff;color:#1a1a2e;padding:28px;direction:rtl;font-size:13px}' +
+    '.hdr{background:' + hdrColor + ';color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:14px}' +
+    'h1{font-family:"Tajawal",sans-serif;font-size:1.1rem;font-weight:900}.sub{font-size:0.76rem;opacity:0.75;margin-top:2px}' +
+    '.sec{background:#f8faff;border:1px solid #e0e8f0;border-radius:10px;padding:14px 16px;margin-bottom:16px}' +
+    '.sec-t{border-right:4px solid #c8973a;padding-right:10px;font-weight:800;font-size:0.85rem;color:#1a3a5c;margin-bottom:10px}' +
+    '.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field{background:#fafafa;border:1px solid #e0d8c8;border-radius:6px;padding:7px 10px}' +
+    '.lbl{font-size:0.65rem;color:#5a6478;font-weight:700;margin-bottom:1px}.val{font-size:0.82rem;font-weight:700}' +
+    '.tag{display:inline-block;padding:3px 12px;border-radius:10px;font-size:0.75rem;font-weight:700;background:#fff3e0;color:#c25a00;border:1px solid #f59040}' +
+    '.imgs{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}.imgs img{max-width:180px;max-height:160px;object-fit:cover;border-radius:8px;border:1px solid #e0e8f0}' +
+    '.ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:10px}' +
+    '@media print{body{padding:12px}}</style></head><body>' +
+    '<div class="hdr">' + photoEl + '<div><h1>' + escHtml(e.title) + '</h1>' +
+    '<div class="sub">' + (TL[e.type]||e.type) + ' — ' + escHtml(p.name||t.avatar) + '</div>' +
+    '<div class="sub">📅 ' + greg + (hij?' 🌙 '+hij:'') + '</div></div></div>' +
+    '<div class="sec"><div class="sec-t">معلومات المعلم</div><div class="grid2">' +
+    '<div class="field"><div class="lbl">الاسم</div><div class="val">' + escHtml(p.name||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">التخصص</div><div class="val">' + escHtml(p.major||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">الدرجة</div><div class="val">' + escHtml(p.degree||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">الخبرة</div><div class="val">' + escHtml(p.exp||'—') + ' سنوات</div></div>' +
+    '</div></div>' +
+    '<div class="sec"><div class="sec-t">تفاصيل الإنجاز</div>' +
+    '<div style="margin-bottom:10px"><span class="tag">' + (TL[e.type]||e.type) + '</span></div>' +
+    '<div class="grid2">' +
+    '<div class="field"><div class="lbl">التاريخ الميلادي</div><div class="val">' + greg + '</div></div>' +
+    '<div class="field"><div class="lbl">التاريخ الهجري</div><div class="val">' + (hij||'—') + '</div></div>' +
+    (e.org ? '<div class="field"><div class="lbl">الجهة</div><div class="val">' + escHtml(e.org) + '</div></div>' : '') +
+    (e.duration ? '<div class="field"><div class="lbl">المدة</div><div class="val">' + escHtml(e.duration) + '</div></div>' : '') +
+    '</div>' +
+    (e.desc ? '<div style="font-size:0.82rem;line-height:1.8;margin-top:10px;color:#374151">' + escHtml(e.desc) + '</div>' : '') +
+    (e.skills ? '<div style="font-size:0.78rem;color:#5a6478;margin-top:8px">✦ المهارات: ' + escHtml(e.skills) + '</div>' : '') +
+    '</div>' +
+    (imgs.length ? '<div class="sec"><div class="sec-t">المرفقات</div><div class="imgs">' + imgs.map(f => '<img src="' + f.dataUrl + '" alt="">').join('') + '</div></div>' : '') +
+    (others.length ? '<div class="sec"><div class="sec-t">ملفات مرفقة</div>' + others.map(f => '<div style="font-size:0.82rem;padding:4px 0">📎 ' + escHtml(f.name) + '</div>').join('') + '</div>' : '') +
+    '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>' +
+    '<script>window.onload=()=>window.print();<\/script></body></html>');
+  win.document.close();
 }
 
 function printWitness(id) {
@@ -1248,6 +1328,43 @@ function printProfile() {
   html += '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>';
   html += '<script>window.onload=()=>window.print();<\/script></body></html>';
   win.document.write(html); win.document.close();
+}
+
+// ============================================================
+// DRAG & DROP SORTING
+// ============================================================
+// DRAG & DROP SORTING
+// ============================================================
+let dragSrcIdx = null, dragList = null;
+
+function onDragStart(e, idx, listType) {
+  dragSrcIdx = idx; dragList = listType;
+  e.dataTransfer.effectAllowed = 'move';
+  e.currentTarget.classList.add('dragging');
+}
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+}
+function onDragOver(e, idx) {
+  e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drag-over');
+}
+function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function onDrop(e, toIdx, listType) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (dragSrcIdx === null || dragSrcIdx === toIdx || dragList !== listType) return;
+  const arr = listType === 'entries'
+    ? TEACHERS[currentTeacher].entries
+    : TEACHERS[currentTeacher].witnesses;
+  const moved = arr.splice(dragSrcIdx, 1)[0];
+  arr.splice(toIdx, 0, moved);
+  dragSrcIdx = null;
+  if (listType === 'entries') renderEntries();
+  else renderWitnesses();
+  scheduleSave();
+  showToast('✅ تم إعادة الترتيب');
 }
 
 // ============================================================
