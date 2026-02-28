@@ -1335,18 +1335,24 @@ function printProfile() {
 // ============================================================
 // DRAG & DROP SORTING
 // ============================================================
-let dragSrcIdx = null, dragList = null;
+let dragSrcIdx = null, dragList = null, isDragging = false;
 
 function onDragStart(e, idx, listType) {
+  // فقط إذا النقر على الـ drag handle
+  const handle = e.target.closest('.drag-handle');
+  if (!handle) { e.preventDefault(); return; }
+  isDragging = true;
   dragSrcIdx = idx; dragList = listType;
   e.dataTransfer.effectAllowed = 'move';
-  e.currentTarget.classList.add('dragging');
+  setTimeout(() => e.currentTarget.classList.add('dragging'), 0);
 }
 function onDragEnd(e) {
+  isDragging = false; dragSrcIdx = null; dragList = null;
   e.currentTarget.classList.remove('dragging');
   document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
 }
 function onDragOver(e, idx) {
+  if (!isDragging) return;
   e.preventDefault(); e.dataTransfer.dropEffect = 'move';
   e.currentTarget.classList.add('drag-over');
 }
@@ -1354,13 +1360,16 @@ function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
 function onDrop(e, toIdx, listType) {
   e.preventDefault();
   e.currentTarget.classList.remove('drag-over');
-  if (dragSrcIdx === null || dragSrcIdx === toIdx || dragList !== listType) return;
+  if (!isDragging || dragSrcIdx === null || dragSrcIdx === toIdx || dragList !== listType) {
+    isDragging = false; dragSrcIdx = null; return;
+  }
+  const from = dragSrcIdx;
+  isDragging = false; dragSrcIdx = null;
   const arr = listType === 'entries'
     ? TEACHERS[currentTeacher].entries
     : TEACHERS[currentTeacher].witnesses;
-  const moved = arr.splice(dragSrcIdx, 1)[0];
+  const moved = arr.splice(from, 1)[0];
   arr.splice(toIdx, 0, moved);
-  dragSrcIdx = null;
   if (listType === 'entries') renderEntries();
   else renderWitnesses();
   scheduleSave();
