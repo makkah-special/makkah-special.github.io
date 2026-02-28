@@ -146,6 +146,22 @@ footer strong{color:var(--accent-light);}
   main{padding:16px 14px 40px;}.form-grid{grid-template-columns:1fr;}
   .teacher-card{flex-direction:column;text-align:center;}.btn-logout{margin-right:0;}
 }
+
+/* Dual Date Toggle */
+.date-toggle-row{display:flex;gap:6px;margin-bottom:4px;}
+.date-toggle-btn{flex:1;padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;cursor:pointer;background:#fff;transition:all 0.15s;text-align:center;}
+.date-toggle-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.date-toggle-btn:hover:not(.active){border-color:var(--primary);}
+.hijri-input-wrap{position:relative;}
+.hijri-manual{display:none;flex-direction:column;gap:4px;}
+.hijri-manual-row{display:flex;gap:4px;}
+.hijri-manual select{flex:1;padding:7px 6px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;outline:none;background:#fafafa;}
+.hijri-manual select:focus{border-color:var(--primary);}
+.date-result-lbl{font-size:0.75rem;color:var(--muted);margin-top:3px;min-height:18px;}
+/* Witness edit */
+.btn-edit-witness{background:#fff;border:1.5px solid var(--primary);color:var(--primary);border-radius:7px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:0.78rem;cursor:pointer;}
+.btn-edit-witness:hover{background:var(--primary);color:#fff;}
+
 </style>
 </head>
 <body>
@@ -289,9 +305,30 @@ footer strong{color:var(--accent-light);}
             </select>
           </div>
           <div class="form-group">
-            <label>📅 التاريخ الميلادي</label>
-            <input class="form-input" id="e-date" type="date" oninput="updateHijri('e-date','e-hijri')">
-            <div class="hijri-label" id="e-hijri"></div>
+            <label>📅 التاريخ</label>
+            <div class="date-toggle-row">
+              <button class="date-toggle-btn active" id="e-date-tog-g" onclick="switchDateMode('e','greg')">📅 ميلادي</button>
+              <button class="date-toggle-btn" id="e-date-tog-h" onclick="switchDateMode('e','hijri')">🌙 هجري</button>
+            </div>
+            <div id="e-date-greg-wrap">
+              <input class="form-input" id="e-date" type="date" oninput="updateDualDate('e')">
+            </div>
+            <div id="e-date-hijri-wrap" class="hijri-manual" style="display:none">
+              <div class="hijri-manual-row">
+                <select id="e-hijri-day" onchange="updateDualDate('e')"><option value="">اليوم</option></select>
+                <select id="e-hijri-month" onchange="updateDualDate('e')">
+                  <option value="">الشهر</option>
+                  <option value="1">محرم</option><option value="2">صفر</option>
+                  <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
+                  <option value="5">جمادى الأولى</option><option value="6">جمادى الآخرة</option>
+                  <option value="7">رجب</option><option value="8">شعبان</option>
+                  <option value="9">رمضان</option><option value="10">شوال</option>
+                  <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+                </select>
+                <select id="e-hijri-year" onchange="updateDualDate('e')"><option value="">السنة</option></select>
+              </div>
+            </div>
+            <div class="date-result-lbl" id="e-date-result"></div>
           </div>
           <div class="form-group"><label>الجهة المانحة / المنظِّمة</label><input class="form-input" id="e-org" placeholder="مثال: وزارة التعليم"></div>
           <div class="form-group"><label>المدة (للدورات)</label><input class="form-input" id="e-duration" placeholder="مثال: 20 ساعة تدريبية"></div>
@@ -341,9 +378,30 @@ footer strong{color:var(--accent-light);}
         </select>
       </div>
       <div class="form-group">
-        <label>📅 التاريخ الميلادي</label>
-        <input class="form-input" id="w-date" type="date" oninput="updateHijri('w-date','w-hijri')">
-        <div class="hijri-label" id="w-hijri"></div>
+        <label>📅 التاريخ</label>
+        <div class="date-toggle-row">
+          <button class="date-toggle-btn active" id="w-date-tog-g" onclick="switchDateMode('w','greg')">📅 ميلادي</button>
+          <button class="date-toggle-btn" id="w-date-tog-h" onclick="switchDateMode('w','hijri')">🌙 هجري</button>
+        </div>
+        <div id="w-date-greg-wrap">
+          <input class="form-input" id="w-date" type="date" oninput="updateDualDate('w')">
+        </div>
+        <div id="w-date-hijri-wrap" class="hijri-manual" style="display:none">
+          <div class="hijri-manual-row">
+            <select id="w-hijri-day" onchange="updateDualDate('w')"><option value="">اليوم</option></select>
+            <select id="w-hijri-month" onchange="updateDualDate('w')">
+              <option value="">الشهر</option>
+              <option value="1">محرم</option><option value="2">صفر</option>
+              <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
+              <option value="5">جمادى الأولى</option><option value="6">جمادى الآخرة</option>
+              <option value="7">رجب</option><option value="8">شعبان</option>
+              <option value="9">رمضان</option><option value="10">شوال</option>
+              <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+            </select>
+            <select id="w-hijri-year" onchange="updateDualDate('w')"><option value="">السنة</option></select>
+          </div>
+        </div>
+        <div class="date-result-lbl" id="w-date-result"></div>
       </div>
       <div class="form-group full"><label>الوصف</label><textarea class="form-textarea" id="w-desc"></textarea></div>
       <div class="form-group full">
@@ -515,7 +573,7 @@ const TEACHERS = {
   }
 };
 
-let currentTeacher = null, nextId = 200, nextWitnessId = 300;
+let currentTeacher = null, nextId = 200, nextWitnessId = 300, editingWitnessId = null;
 let pendingAttach = [], pendingWitnessAttach = [];
 let saveTimeout = null;
 
@@ -762,7 +820,7 @@ function addEntry() {
   const entry = {
     id: nextId++, title,
     type: document.getElementById('e-type').value,
-    date: document.getElementById('e-date').value,
+    ...getDateData('e'),
     org: document.getElementById('e-org').value,
     duration: document.getElementById('e-duration').value,
     desc: document.getElementById('e-desc').value,
@@ -862,25 +920,76 @@ const W_TYPES = {
 };
 
 function openWitnessModal() {
+  editingWitnessId = null;
+  document.querySelector('#witness-modal .modal-title').textContent = '📋 إضافة شاهد / عمل مدرسي';
+  document.getElementById('w-title').value = '';
+  document.getElementById('w-type').value = 'school_work';
+  if (document.getElementById('w-date')) document.getElementById('w-date').value = '';
+  if (document.getElementById('w-date-result')) { document.getElementById('w-date-result').textContent = ''; document.getElementById('w-date-result').dataset.hijri = ''; }
+  document.getElementById('w-desc').value = '';
+  switchDateMode('w','greg');
   ['w-title','w-date','w-desc'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('w-type').value = 'school_work';
   document.getElementById('w-hijri').classList.remove('show');
   pendingWitnessAttach = []; renderPreview('w-attach-preview', pendingWitnessAttach);
+  initHijriSelects();
   document.getElementById('witness-modal').classList.add('open');
 }
 function saveWitness() {
   const title = document.getElementById('w-title').value.trim();
   if (!title) { showToast('⚠️ أدخل عنوان الشاهد'); return; }
-  const w = {
-    id: nextWitnessId++, title, type: document.getElementById('w-type').value,
-    date: document.getElementById('w-date').value,
-    desc: document.getElementById('w-desc').value,
-    files: [...pendingWitnessAttach]
-  };
+  const dateVal = document.getElementById('w-date') ? document.getElementById('w-date').value : '';
+  const dateHijri = document.getElementById('w-date-result') ? document.getElementById('w-date-result').dataset.hijri || '' : '';
+  const dateMode = document.getElementById('w-date-tog-h') && document.getElementById('w-date-tog-h').classList.contains('active') ? 'hijri' : 'greg';
   if (!TEACHERS[currentTeacher].witnesses) TEACHERS[currentTeacher].witnesses = [];
-  TEACHERS[currentTeacher].witnesses.unshift(w);
+  if (editingWitnessId !== null) {
+    // Edit mode
+    const idx = TEACHERS[currentTeacher].witnesses.findIndex(x => x.id === editingWitnessId);
+    if (idx >= 0) {
+      const existing = TEACHERS[currentTeacher].witnesses[idx];
+      TEACHERS[currentTeacher].witnesses[idx] = {
+        ...existing, title, type: document.getElementById('w-type').value,
+        date: dateVal, dateHijri, dateMode,
+        desc: document.getElementById('w-desc').value,
+        files: pendingWitnessAttach.length > 0 ? [...pendingWitnessAttach] : existing.files
+      };
+    }
+    editingWitnessId = null;
+    showToast('✅ تم تعديل الشاهد');
+  } else {
+    // Add mode
+    const w = {
+      id: nextWitnessId++, title, type: document.getElementById('w-type').value,
+      date: dateVal, dateHijri, dateMode,
+      desc: document.getElementById('w-desc').value,
+      files: [...pendingWitnessAttach]
+    };
+    TEACHERS[currentTeacher].witnesses.unshift(w);
+    showToast('✅ تم إضافة الشاهد');
+  }
   closeModal('witness-modal'); renderWitnesses(); updateStats(); scheduleSave();
-  showToast('✅ تم إضافة الشاهد');
+}
+function editWitness(id) {
+  const w = (TEACHERS[currentTeacher].witnesses || []).find(x => x.id === id);
+  if (!w) return;
+  editingWitnessId = id;
+  document.querySelector('#witness-modal .modal-title').textContent = '✏️ تعديل شاهد / عمل مدرسي';
+  document.getElementById('w-title').value = w.title || '';
+  document.getElementById('w-type').value = w.type || 'school_work';
+  document.getElementById('w-desc').value = w.desc || '';
+  initHijriSelects();
+  // Restore date
+  const mode = w.dateMode || 'greg';
+  switchDateMode('w', mode);
+  if (mode === 'greg' && w.date) {
+    document.getElementById('w-date').value = w.date;
+    updateDualDate('w');
+  } else if (mode === 'hijri' && w.dateHijri) {
+    document.getElementById('w-date-result').textContent = w.dateHijri;
+    document.getElementById('w-date-result').dataset.hijri = w.dateHijri;
+  }
+  pendingWitnessAttach = []; renderPreview('w-attach-preview', pendingWitnessAttach);
+  document.getElementById('witness-modal').classList.add('open');
 }
 function deleteWitness(id) {
   if (!confirm('حذف هذا الشاهد؟')) return;
@@ -894,8 +1003,13 @@ function renderWitnesses() {
   c.innerHTML = witnesses.map(w => {
     const imgs = (w.files || []).filter(f => f.dataUrl && f.dataUrl.startsWith('data:image'));
     const others = (w.files || []).filter(f => !f.dataUrl || !f.dataUrl.startsWith('data:image'));
-    const greg = w.date ? new Date(w.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '';
-    const hij = w.date ? toHijri(w.date) : '';
+    let greg = '', hij = '';
+    if (w.dateMode === 'hijri') {
+      hij = w.dateHijri || '';
+    } else {
+      greg = w.date ? new Date(w.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '';
+      hij = w.date ? toHijri(w.date) : '';
+    }
     const imgsHtml = imgs.map(f => '<img src="' + escHtml(f.dataUrl) + '" class="img-thumb" data-src="' + escHtml(f.dataUrl) + '" onclick="openLightboxFromEl(this)">').join('');
     const filesHtml = others.map(f => '<a href="' + escHtml(f.dataUrl) + '" target="_blank" class="attach-chip" style="background:#fff3e0;border-color:#f59040;color:#7a2800;text-decoration:none">📎 ' + escHtml(f.name.length > 20 ? f.name.slice(0,18) + '…' : f.name) + '</a>').join('');
     return '<div class="witness-card">' +
@@ -905,6 +1019,7 @@ function renderWitnesses() {
           '<div class="witness-meta">' + (W_TYPES[w.type] || w.type) + (greg ? ' — 📅 ' + greg : '') + (hij ? ' 🌙 ' + hij : '') + '</div>' +
         '</div>' +
         '<div style="display:flex;gap:6px;flex-shrink:0">' +
+          '<button class="btn-edit-witness" onclick="editWitness(' + w.id + ')">✏️ تعديل</button>' +
           '<button class="btn-print-sm" onclick="printWitness(' + w.id + ')">🖨️ طباعة</button>' +
           '<button class="btn-danger" onclick="deleteWitness(' + w.id + ')">🗑️</button>' +
         '</div>' +
@@ -1111,6 +1226,109 @@ function showToast(msg) {
   const t = document.getElementById('toast'); t.textContent = msg;
   t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800);
 }
+
+// ============================================================
+// DUAL DATE SYSTEM
+// ============================================================
+var dateModes = {}; // prefix -> 'greg' | 'hijri'
+
+function initHijriSelects() {
+  var prefixes = ['w','e','edit'];
+  prefixes.forEach(function(p) {
+    var dayEl = document.getElementById(p+'-hijri-day');
+    if (dayEl && dayEl.options.length <= 1) {
+      for (var d = 1; d <= 30; d++) {
+        var opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        dayEl.appendChild(opt);
+      }
+    }
+    var yrEl = document.getElementById(p+'-hijri-year');
+    if (yrEl && yrEl.options.length <= 1) {
+      for (var y = 1420; y <= 1460; y++) {
+        var opt = document.createElement('option');
+        opt.value = y; opt.textContent = y + ' هـ';
+        if (y === 1446) opt.selected = true;
+        yrEl.appendChild(opt);
+      }
+    }
+  });
+}
+
+function switchDateMode(prefix, mode) {
+  dateModes[prefix] = mode;
+  var gBtn = document.getElementById(prefix+'-date-tog-g');
+  var hBtn = document.getElementById(prefix+'-date-tog-h');
+  var gWrap = document.getElementById(prefix+'-date-greg-wrap');
+  var hWrap = document.getElementById(prefix+'-date-hijri-wrap');
+  if (!gBtn) return;
+  if (mode === 'greg') {
+    gBtn.classList.add('active'); hBtn.classList.remove('active');
+    if (gWrap) gWrap.style.display = '';
+    if (hWrap) hWrap.style.display = 'none';
+  } else {
+    hBtn.classList.add('active'); gBtn.classList.remove('active');
+    if (gWrap) gWrap.style.display = 'none';
+    if (hWrap) hWrap.style.display = 'flex';
+    initHijriSelects();
+  }
+  updateDualDate(prefix);
+}
+
+
+function getDateData(prefix) {
+  var mode = _dateModes[prefix] || 'greg';
+  var resultEl = document.getElementById(prefix+'-date-result');
+  var dateVal = mode === 'greg' ? ((document.getElementById(prefix+'-date')||{}).value||'') : '';
+  return { date: dateVal, dateHijri: resultEl ? (resultEl.dataset.hijri||'') : '', dateMode: mode };
+}
+function setDateData(prefix, data) {
+  var mode = data.dateMode || 'greg'; switchDateMode(prefix, mode);
+  if (mode === 'greg' && data.date) { var inp = document.getElementById(prefix+'-date'); if (inp) { inp.value = data.date; updateDualDate(prefix); } }
+  else if (mode === 'hijri' && data.dateHijri) { var r = document.getElementById(prefix+'-date-result'); if (r) { r.textContent = '\uD83C\uDF19 ' + data.dateHijri; r.dataset.hijri = data.dateHijri; r.classList.add('show'); } }
+}
+function resetDateField(prefix) {
+  switchDateMode(prefix, 'greg');
+  var inp = document.getElementById(prefix+'-date'); if (inp) inp.value = '';
+  var r = document.getElementById(prefix+'-date-result'); if (r) { r.textContent = ''; r.dataset.hijri = ''; r.dataset.greg = ''; r.classList.remove('show'); }
+}
+
+function updateDualDate(prefix) {
+  var mode = dateModes[prefix] || 'greg';
+  var resultEl = document.getElementById(prefix+'-date-result');
+  if (!resultEl) return;
+  if (mode === 'greg') {
+    var inp = document.getElementById(prefix+'-date');
+    if (inp && inp.value) {
+      var greg = new Date(inp.value).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'});
+      var hij = toHijri(inp.value);
+      resultEl.textContent = '📅 ' + greg + (hij ? ' — 🌙 ' + hij : '');
+      resultEl.dataset.hijri = hij;
+    } else {
+      resultEl.textContent = '';
+      resultEl.dataset.hijri = '';
+    }
+  } else {
+    var d = document.getElementById(prefix+'-hijri-day') ? document.getElementById(prefix+'-hijri-day').value : '';
+    var m = document.getElementById(prefix+'-hijri-month') ? document.getElementById(prefix+'-hijri-month').value : '';
+    var y = document.getElementById(prefix+'-hijri-year') ? document.getElementById(prefix+'-hijri-year').value : '';
+    if (d && m && y) {
+      var months = ['','محرم','صفر','ربيع الأول','ربيع الثاني','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+      var label = d + ' ' + months[parseInt(m)] + ' ' + y + ' هـ';
+      resultEl.textContent = '🌙 ' + label;
+      resultEl.dataset.hijri = label;
+    } else {
+      resultEl.textContent = '';
+      resultEl.dataset.hijri = '';
+    }
+  }
+}
+
+// Initialize hijri selects on load
+document.addEventListener('DOMContentLoaded', function() {
+  initHijriSelects();
+});
+
 </script>
 </body>
 </html>
