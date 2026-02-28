@@ -167,8 +167,10 @@ footer strong{color:var(--accent-light);}
 .drag-handle{cursor:grab;color:var(--muted);font-size:1rem;padding:2px 4px;user-select:none;flex-shrink:0;}
 .drag-handle:active{cursor:grabbing;}
 .entry-card.dragging,.witness-card.dragging{opacity:0.4;border-style:dashed;}
-.entry-card.drag-over,.witness-card.drag-over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
+.entry-card.drag-over,.witness-card.drag-over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);transform:scale(1.01);}
+.entry-card,.witness-card{transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;}
 .sort-hint{font-size:0.72rem;color:var(--muted);margin-bottom:8px;text-align:left;display:flex;align-items:center;gap:5px;}
+.drag-handle{-webkit-user-drag:element;}
 </style>
 </head>
 <body>
@@ -1331,12 +1333,19 @@ function onDragEnd(e) {
 }
 function onDragOver(e, idx) {
   if (!isDragging) return;
-  e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+  e.preventDefault();
+  e.stopPropagation();
+  e.dataTransfer.dropEffect = 'move';
   e.currentTarget.classList.add('drag-over');
 }
-function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function onDragLeave(e) {
+  // تجنب إزالة drag-over عند الانتقال لـ child element
+  if (e.currentTarget.contains(e.relatedTarget)) return;
+  e.currentTarget.classList.remove('drag-over');
+}
 function onDrop(e, toIdx, listType) {
   e.preventDefault();
+  e.stopPropagation();
   e.currentTarget.classList.remove('drag-over');
   if (!isDragging || dragSrcIdx === null || dragSrcIdx === toIdx || dragList !== listType) {
     isDragging = false; dragSrcIdx = null; return;
