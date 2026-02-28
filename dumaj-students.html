@@ -764,10 +764,11 @@
   padding:3px 10px;border-radius:10px;font-size:0.72rem;font-weight:700;
   white-space:nowrap;
 }
-.status-achieved { background:#d1fae5;color:#065f46; }
-.status-partial  { background:#fef3c7;color:#92400e; }
-.status-pending  { background:#fee2e2;color:#991b1b; }
-.status-none     { background:#f3f4f6;color:#6b7280; }
+.status-excellent { background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd; }
+.status-advanced  { background:#d1fae5;color:#065f46;border:1px solid #6ee7b7; }
+.status-capable   { background:#dbeafe;color:#1e40af;border:1px solid #93c5fd; }
+.status-failed    { background:#fee2e2;color:#991b1b;border:1px solid #fca5a5; }
+.status-none      { background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb; }
 .iep-add-goal-btn {
   width:100%;padding:9px;border:2px dashed #e07020;background:transparent;
   color:#c25a00;border-radius:10px;font-family:'Cairo',sans-serif;
@@ -2034,6 +2035,9 @@ document.getElementById('edit-modal')?.addEventListener('click', e => {
 
 
 // ============================================================
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 // INDIVIDUAL EDUCATION PLAN (IEP) — الخطة التربوية الفردية
 // ============================================================
 const IEP_SUBJECTS = [
@@ -2044,10 +2048,11 @@ const IEP_SUBJECTS = [
   { key: 'life',     label: 'المهارات الحياتية',   icon: '🌱', cls: 'subj-life'    },
 ];
 const IEP_STATUS = {
-  achieved: { label: 'تحقق ✓',    cls: 'status-achieved' },
-  partial:  { label: 'جزئي ~',    cls: 'status-partial'  },
-  pending:  { label: 'لم يتحقق ✗', cls: 'status-pending'  },
-  none:     { label: '— لم يُقيَّم', cls: 'status-none'   },
+  excellent: { label: '🌟 متفوق',     cls: 'status-excellent', score: 4 },
+  advanced:  { label: '✅ متقدم',     cls: 'status-advanced',  score: 3 },
+  capable:   { label: '🔵 متمكن',     cls: 'status-capable',   score: 2 },
+  failed:    { label: '❌ غير مجتاز', cls: 'status-failed',    score: 1 },
+  none:      { label: '— لم يُقيَّم', cls: 'status-none',     score: 0 },
 };
 let iepChartBar = null, iepChartRadar = null;
 
@@ -2087,16 +2092,18 @@ function renderIEPView(pin) {
   container.innerHTML = IEP_SUBJECTS.map(sub => {
     const goals = iep[sub.key] || [];
     if (goals.length === 0) return '';
-    const achieved = goals.filter(g => g.status === 'achieved').length;
-    const partial  = goals.filter(g => g.status === 'partial').length;
-    const pending  = goals.filter(g => g.status === 'pending').length;
+    const excellent = goals.filter(g => g.status === 'excellent').length;
+    const advanced  = goals.filter(g => g.status === 'advanced').length;
+    const capable   = goals.filter(g => g.status === 'capable').length;
+    const failed    = goals.filter(g => g.status === 'failed').length;
+    const avgScore  = goals.length ? Math.round(goals.reduce((s,g) => s + (IEP_STATUS[g.status]?.score||0), 0) / goals.length * 25) : 0;
     return `
       <div class="iep-subject-block">
         <div class="iep-subject-head iep-subject-colors ${sub.cls}" onclick="toggleIEPBlock(this)">
           <div class="iep-subject-title">${sub.icon} ${sub.label}</div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="iep-subject-count">${goals.length} هدف</span>
-            <span style="font-size:0.72rem;opacity:0.85;">✓${achieved} ~${partial} ✗${pending}</span>
+            <span style="font-size:0.7rem;opacity:0.9;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:8px;">الأداء: ${avgScore}%</span>
             <span style="font-size:0.9rem;">▾</span>
           </div>
         </div>
@@ -2128,13 +2135,19 @@ function toggleIEPBlock(head) {
 function renderIEPCharts(pin) {
   const iep = STUDENTS[pin].iep;
   const labels = IEP_SUBJECTS.map(s => s.label);
-  const achieved = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='achieved').length);
-  const partial  = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='partial').length);
-  const pending  = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='pending').length);
-  const totals   = IEP_SUBJECTS.map(s => (iep[s.key]||[]).length || 1);
-  const pct      = IEP_SUBJECTS.map((s,i) => Math.round(((achieved[i] + partial[i]*0.5) / totals[i]) * 100));
+  const excellent = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='excellent').length);
+  const advanced  = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='advanced').length);
+  const capable   = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='capable').length);
+  const failed    = IEP_SUBJECTS.map(s => (iep[s.key]||[]).filter(g=>g.status==='failed').length);
+  const totals    = IEP_SUBJECTS.map(s => (iep[s.key]||[]).length || 1);
+  const pct = IEP_SUBJECTS.map((s,i) => {
+    const goals = iep[s.key] || [];
+    if (!goals.length) return 0;
+    const total = goals.reduce((sum,g) => sum + (IEP_STATUS[g.status]?.score||0), 0);
+    return Math.round((total / (goals.length * 4)) * 100);
+  });
 
-  // Bar Chart
+  // Bar Chart — مكدّس بالمستويات الأربعة
   const barCtx = document.getElementById('iep-bar-chart');
   if (barCtx) {
     if (iepChartBar) iepChartBar.destroy();
@@ -2143,14 +2156,15 @@ function renderIEPCharts(pin) {
       data: {
         labels,
         datasets: [
-          { label: 'تحقق',   data: achieved, backgroundColor: '#10b981', borderRadius: 6 },
-          { label: 'جزئي',   data: partial,  backgroundColor: '#f59e0b', borderRadius: 6 },
-          { label: 'لم يتحقق', data: pending, backgroundColor: '#ef4444', borderRadius: 6 },
+          { label: '🌟 متفوق',     data: excellent, backgroundColor: '#6d28d9', borderRadius: 4 },
+          { label: '✅ متقدم',     data: advanced,  backgroundColor: '#10b981', borderRadius: 4 },
+          { label: '🔵 متمكن',     data: capable,   backgroundColor: '#3b82f6', borderRadius: 4 },
+          { label: '❌ غير مجتاز', data: failed,    backgroundColor: '#ef4444', borderRadius: 4 },
         ]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 } } } },
+        plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 10 }, padding: 8 } } },
         scales: {
           x: { stacked: true, ticks: { font: { family: 'Cairo', size: 10 } } },
           y: { stacked: true, beginAtZero: true, ticks: { stepSize: 1, font: { family: 'Cairo' } } }
@@ -2159,7 +2173,7 @@ function renderIEPCharts(pin) {
     });
   }
 
-  // Radar Chart
+  // Radar Chart — نسبة الأداء الكلية
   const radCtx = document.getElementById('iep-radar-chart');
   if (radCtx) {
     if (iepChartRadar) iepChartRadar.destroy();
@@ -2168,12 +2182,13 @@ function renderIEPCharts(pin) {
       data: {
         labels,
         datasets: [{
-          label: 'نسبة الإنجاز %',
+          label: 'نسبة الأداء %',
           data: pct,
-          backgroundColor: 'rgba(194,90,0,0.2)',
+          backgroundColor: 'rgba(194,90,0,0.15)',
           borderColor: '#c25a00',
           pointBackgroundColor: '#c25a00',
-          pointRadius: 4,
+          pointRadius: 5,
+          borderWidth: 2,
         }]
       },
       options: {
@@ -2181,14 +2196,40 @@ function renderIEPCharts(pin) {
         plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 } } } },
         scales: {
           r: {
-            min: 0, max: 100, stepSize: 25,
-            ticks: { font: { family: 'Cairo', size: 9 }, backdropColor: 'transparent' },
+            min: 0, max: 100,
+            ticks: { stepSize: 25, font: { family: 'Cairo', size: 9 }, backdropColor: 'transparent', callback: v => v+'%' },
             pointLabels: { font: { family: 'Cairo', size: 10 } }
           }
         }
       }
     });
   }
+}
+
+
+// ---- إدارة المواد (إضافة/حذف) ----
+function addIEPSubject(pin) {
+  const labelInput = document.getElementById('new-subject-label');
+  const iconInput  = document.getElementById('new-subject-icon');
+  const label = labelInput?.value.trim();
+  const icon  = iconInput?.value.trim() || '📌';
+  if (!label) { showToast('⚠️ أدخل اسم المادة أولاً'); return; }
+  const key = 'subj_' + Date.now();
+  IEP_SUBJECTS.push({ key, label, icon, cls: 'subj-arabic' });
+  ensureIEP(pin);
+  STUDENTS[pin].iep[key] = [];
+  renderIEPEditor(pin);
+  showToast('✅ تمت إضافة مادة: ' + label);
+}
+function removeIEPSubject(pin, subKey) {
+  const sub = IEP_SUBJECTS.find(s => s.key === subKey);
+  if (!sub) return;
+  if (!confirm('حذف مادة "' + sub.label + '" وجميع أهدافها؟')) return;
+  const idx = IEP_SUBJECTS.findIndex(s => s.key === subKey);
+  if (idx >= 0) IEP_SUBJECTS.splice(idx, 1);
+  if (STUDENTS[pin]?.iep) delete STUDENTS[pin].iep[subKey];
+  renderIEPEditor(pin);
+  showToast('🗑️ تم حذف المادة');
 }
 
 // ---- عرض IEP editor في edit-modal (للمشرف) ----
@@ -2198,7 +2239,29 @@ function renderIEPEditor(pin) {
   const container = document.getElementById('iep-editor-container');
   if (!container) return;
 
-  container.innerHTML = IEP_SUBJECTS.map(sub => {
+  // قسم إدارة المواد
+  const allSubjectsManage = IEP_SUBJECTS.map(sub => {
+    const count = (iep[sub.key]||[]).length;
+    const hasExtra = !['arabic','math','islamic','science','life'].includes(sub.key);
+    return `<div style="display:flex;align-items:center;gap:8px;background:#fafafa;border:1px solid #e0d8c8;border-radius:8px;padding:7px 12px;margin-bottom:6px;">
+      <span style="font-size:1rem;">${sub.icon}</span>
+      <span style="flex:1;font-size:0.85rem;font-weight:700;">${sub.label}</span>
+      <span style="font-size:0.75rem;color:#9ca3af;">${count} هدف</span>
+      ${hasExtra ? `<button onclick="removeIEPSubject('${pin}','${sub.key}')" style="background:#fee2e2;color:#dc2626;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;font-size:0.75rem;font-weight:700;">حذف</button>` : '<span style="font-size:0.7rem;color:#10b981;font-weight:700;">أساسية</span>'}
+    </div>`;
+  }).join('');
+
+  container.innerHTML = `
+    <details style="margin-bottom:14px;background:#f5f2eb;border-radius:10px;padding:10px 14px;">
+      <summary style="cursor:pointer;font-size:0.82rem;font-weight:800;color:#c25a00;user-select:none;">⚙️ إدارة المواد (إضافة / حذف)</summary>
+      <div style="margin-top:10px;">${allSubjectsManage}</div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <input type="text" id="new-subject-label" placeholder="اسم المادة الجديدة" class="iep-edit-goal-input" style="flex:1;">
+        <input type="text" id="new-subject-icon" placeholder="أيقونة" class="iep-edit-goal-input" style="width:55px;text-align:center;">
+        <button onclick="addIEPSubject('${pin}')" style="background:#c25a00;color:#fff;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:0.82rem;font-weight:800;">+ إضافة</button>
+      </div>
+    </details>
+    ${IEP_SUBJECTS.map(sub => {
     const goals = iep[sub.key] || [];
     return `
       <div class="iep-subject-block" style="margin-bottom:14px;">
@@ -2214,21 +2277,23 @@ function renderIEPEditor(pin) {
           <button class="iep-add-goal-btn" onclick="addIEPGoal('${sub.key}')">+ إضافة هدف</button>
         </div>
       </div>`;
-  }).join('');
-}
+  }).join('')}
+  `;}
 
 function iepEditGoalRow(subKey, idx, g) {
   const status = g.status || 'none';
+  const safeGoal = escHtml(g.goal||'');
   return `<div class="iep-edit-goal-row" id="iep-goal-${subKey}-${idx}">
-    <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
       <input type="text" class="iep-edit-goal-input" placeholder="نص الهدف التربوي"
-        value="${escHtml(g.goal||'')}" data-iep-subj="${subKey}" data-iep-idx="${idx}" data-iep-field="goal">
-      <select class="iep-edit-goal-input" style="font-size:0.8rem;"
+        value="${safeGoal}" data-iep-subj="${subKey}" data-iep-idx="${idx}" data-iep-field="goal">
+      <select class="iep-edit-goal-input" style="font-size:0.82rem;font-weight:700;"
         data-iep-subj="${subKey}" data-iep-idx="${idx}" data-iep-field="status">
-        <option value="none"    ${status==='none'    ?'selected':''}>— لم يُقيَّم بعد</option>
-        <option value="achieved"${status==='achieved'?'selected':''}>✓ تحقق</option>
-        <option value="partial" ${status==='partial' ?'selected':''}>~ جزئي</option>
-        <option value="pending" ${status==='pending' ?'selected':''}>✗ لم يتحقق</option>
+        <option value="none"     ${status==='none'     ?'selected':''}>— لم يُقيَّم بعد</option>
+        <option value="excellent"${status==='excellent'?'selected':''}>🌟 متفوق</option>
+        <option value="advanced" ${status==='advanced' ?'selected':''}>✅ متقدم</option>
+        <option value="capable"  ${status==='capable'  ?'selected':''}>🔵 متمكن</option>
+        <option value="failed"   ${status==='failed'   ?'selected':''}>❌ غير مجتاز</option>
       </select>
     </div>
     <button class="iep-goal-del-btn" onclick="removeIEPGoal('${subKey}',${idx})">✕</button>
@@ -2268,16 +2333,19 @@ function collectIEPFromEditor(pin) {
   ensureIEP(pin);
   IEP_SUBJECTS.forEach(sub => {
     const goals = [];
-    const rows = document.querySelectorAll(`[data-iep-subj="${sub.key}"][data-iep-field="goal"]`);
+    const rows = document.querySelectorAll('[data-iep-subj="' + sub.key + '"][data-iep-field="goal"]');
     rows.forEach(el => {
-      const idx = el.dataset.iepIdx;
+      const i = el.dataset.iepIdx;
       const goalText = el.value.trim();
       if (!goalText) return;
-      const statusEl = document.querySelector(`[data-iep-subj="${sub.key}"][data-iep-idx="${idx}"][data-iep-field="status"]`);
+      const statusEl = document.querySelector('[data-iep-subj="' + sub.key + '"][data-iep-idx="' + i + '"][data-iep-field="status"]');
       goals.push({ goal: goalText, status: statusEl?.value || 'none' });
     });
     STUDENTS[pin].iep[sub.key] = goals;
   });
+  // حفظ المواد الإضافية في بيانات الطالب
+  const extraSubjects = IEP_SUBJECTS.filter(s => !['arabic','math','islamic','science','life'].includes(s.key));
+  if (extraSubjects.length) STUDENTS[pin].iep._customSubjects = extraSubjects.map(s => ({key:s.key,label:s.label,icon:s.icon}));
 }
 
 // ---- طباعة الخطة التربوية ----
