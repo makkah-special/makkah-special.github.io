@@ -985,16 +985,17 @@
 <div id="admin-portal">
   <div class="admin-banner">
     <div style="display:flex;align-items:center;gap:14px;">
-      <div style="width:46px;height:46px;border-radius:12px;background:rgba(245,144,64,0.2);border:1px solid rgba(245,144,64,0.35);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔧</div>
+      <div style="width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔧</div>
       <div>
         <div style="color:#fff;font-family:'Tajawal',sans-serif;font-size:1.1rem;font-weight:900;">لوحة تحكم المشرف — برنامج الدمج الفكري</div>
         <div style="color:rgba(255,255,255,0.55);font-size:0.76rem;margin-top:2px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
       <div class="admin-badge" id="admin-student-count">— طالب</div>
+      <button onclick="saveAllStudents()" id="btn-save-all" style="background:linear-gradient(135deg,#e07020,#f59040);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(224,112,32,0.4);display:flex;align-items:center;gap:6px;">💾 حفظ جميع البيانات</button>
       <button class="logout-btn" onclick="adminLogout()">🚪 خروج</button>
-      <button onclick="window.open('attendance_dumaj.html','_blank')" style="background:#c25a00;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;gap:6px;">📋 كشف الحضور</button>
+      <button onclick="window.open('attendance_dumaj.html','_blank')" style="background:linear-gradient(135deg,#1a6b4a,#2d9e6b);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">📋 كشف الحضور</button>
     </div>
   </div>
   <div class="admin-body">
@@ -1837,21 +1838,37 @@ function renderStudentCards() {
   );
   entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, 'ar'));
   grid.innerHTML = entries.map(([pin, s]) => `
-    <div class="stu-card" onclick="openEditModal('${pin}')">
-      <div class="stu-card-avatar">🧑‍🎓</div>
-      <div style="flex:1;min-width:0;">
-        <div class="stu-card-name">${s.name}</div>
-        <div class="stu-card-meta">${s.grade}</div>
-        <div style="margin-top:4px;display:flex;gap:6px;align-items:center;">
-          <span class="stu-card-pin">${pin}</span>
-          <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.05);transition:transform 0.2s,box-shadow 0.2s;" onmouseenter="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'" onmouseleave="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.05)'">
+      <div style="padding:20px 20px 14px;text-align:center;position:relative;cursor:pointer;" onclick="openEditModal('${pin}')">
+        <button style="position:absolute;top:14px;right:14px;background:transparent;border:none;cursor:pointer;font-size:1rem;color:var(--muted);" onclick="event.stopPropagation();openEditModal('${pin}')" title="تعديل">✏️</button>
+        <div style="width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:2px solid #7dd3fc;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 12px;">🎓</div>
+        <div style="font-family:'Tajawal',sans-serif;font-size:0.98rem;font-weight:900;color:var(--primary);line-height:1.4;margin-bottom:5px;">${s.name}</div>
+        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:8px;">${s.grade}</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+          <span style="background:#ede9fe;color:#5b21b6;font-size:0.75rem;font-weight:800;padding:3px 12px;border-radius:12px;">${pin}</span>
+          <span style="font-size:0.75rem;color:var(--muted);">${s.phone || ''}</span>
         </div>
       </div>
-      <div style="color:var(--muted);font-size:1.1rem;">✏️</div>
+      <div style="padding:10px 16px;background:#fafafa;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:0.74rem;">
+          <div style="color:var(--muted);">تاريخ الميلاد: <span style="color:var(--text);font-weight:700;">${s.birthdate || '—'}</span></div>
+          <div style="color:var(--muted);">الجنسية: <span style="color:var(--text);font-weight:700;">${s.nationality || '—'}</span></div>
+          <div style="color:var(--muted);">العمر: <span style="color:var(--text);font-weight:700;">${s.age || '—'}</span></div>
+          <div style="color:var(--muted);">درجة الذكاء: <span style="color:var(--text);font-weight:700;">${s.iq || '—'}</span></div>
+          <div style="color:var(--muted);">رقم الجوال: <span style="color:var(--primary);font-weight:700;">${s.phone || '—'}</span></div>
+          <div style="color:var(--muted);">العنوان: <span style="color:var(--text);font-weight:700;">${s.address || '—'}</span></div>
+          ${s.diagnosis ? `<div style="color:var(--muted);grid-column:1/-1;">التشخيص: <span style="color:#c25a00;font-weight:700;">${s.diagnosis}</span></div>` : ''}
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;">
+        <button onclick="saveOneStudent('${pin}')" style="background:linear-gradient(135deg,#1a6b4a,#2d9e6b);color:#fff;border:none;padding:11px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity 0.2s;" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">💾 حفظ</button>
+        <button onclick="printStudentCard('${pin}')" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-right:1px solid rgba(255,255,255,0.15);padding:11px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity 0.2s;" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">🖨️ طباعة</button>
+      </div>
     </div>
   `).join('');
   document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
 }
+
 
 async function openEditModal(pin) {
   showToast('⏳ جاري تحميل البيانات...');
@@ -2016,6 +2033,123 @@ function addNewStudent() {
   upsertToSupabase(newPin, STUDENTS[newPin]).then(() =>
     showToast('✅ تمت إضافة الطالب ' + newName + ' — الرمز: ' + newPin)
   );
+}
+
+
+// ===== حفظ جميع الطلاب =====
+async function saveAllStudents() {
+  const btn = document.getElementById('btn-save-all');
+  const pins = Object.keys(STUDENTS);
+  if (btn) { btn.textContent = '⏳ جاري الحفظ...'; btn.disabled = true; btn.style.opacity = '0.7'; }
+  let success = 0, failed = 0;
+  for (const pin of pins) {
+    try {
+      const s = STUDENTS[pin];
+      const blob = new Blob([JSON.stringify({
+        pin, name: s.name, id_full: s.id_full, grade: s.grade, phone: s.phone || '',
+        plan: s.plan || [], followup: s.followup || [], iep: s.iep || {},
+        birthdate: s.birthdate || '', nationality: s.nationality || '', age: s.age || '',
+        address: s.address || '', iq: s.iq || '', sibling_order: s.sibling_order || '',
+        economic_level: s.economic_level || '', father_edu: s.father_edu || '',
+        mother_edu: s.mother_edu || '', status_psych: s.status_psych || '',
+        status_social: s.status_social || '', status_health: s.status_health || '',
+        diagnosis: s.diagnosis || '', program_place: s.program_place || '',
+        program_start: s.program_start || '', program_end: s.program_end || '',
+      })], {type: 'application/json'});
+      const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+        body: blob
+      });
+      if (res.ok) success++; else failed++;
+    } catch(e) { failed++; }
+  }
+  if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = '💾 حفظ جميع البيانات'; }
+  showToast(failed === 0 ? `✅ تم حفظ ${success} طالب بنجاح` : `⚠️ تم حفظ ${success} وفشل ${failed}`);
+}
+
+// ===== حفظ طالب واحد =====
+async function saveOneStudent(pin) {
+  const s = STUDENTS[pin];
+  const blob = new Blob([JSON.stringify({
+    pin, name: s.name, id_full: s.id_full, grade: s.grade, phone: s.phone || '',
+    plan: s.plan || [], followup: s.followup || [], iep: s.iep || {},
+    birthdate: s.birthdate || '', nationality: s.nationality || '', age: s.age || '',
+    address: s.address || '', iq: s.iq || '', sibling_order: s.sibling_order || '',
+    economic_level: s.economic_level || '', father_edu: s.father_edu || '',
+    mother_edu: s.mother_edu || '', status_psych: s.status_psych || '',
+    status_social: s.status_social || '', status_health: s.status_health || '',
+    diagnosis: s.diagnosis || '', program_place: s.program_place || '',
+    program_start: s.program_start || '', program_end: s.program_end || '',
+  })], {type: 'application/json'});
+  const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+    body: blob
+  });
+  showToast(res.ok ? '✅ تم حفظ بيانات ' + s.name : '❌ فشل الحفظ');
+}
+
+// ===== طباعة بطاقة الطالب =====
+function printStudentCard(pin) {
+  const s = STUDENTS[pin];
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8"><title>بطاقة ${s.name}</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Cairo',sans-serif;background:#fff;color:#1a1a2e;padding:30px;direction:rtl;}
+      .header{text-align:center;margin-bottom:20px;border-bottom:3px solid #c25a00;padding-bottom:14px;}
+      h1{font-size:1.2rem;font-weight:800;color:#c25a00;}
+      .section{background:#c25a00;color:#fff;padding:7px 14px;font-size:0.85rem;font-weight:800;margin:14px 0 8px;border-radius:6px;}
+      table{width:100%;border-collapse:collapse;}
+      th{background:#fff8f3;padding:7px 12px;text-align:right;font-size:0.76rem;font-weight:700;color:#5a6478;border:1px solid #e0d8c8;width:35%;}
+      td{padding:7px 12px;font-size:0.82rem;font-weight:600;border:1px solid #e0d8c8;}
+      .footer{margin-top:20px;text-align:center;font-size:0.7rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
+      @media print{body{padding:15px;}}
+    </style>
+  </head><body>
+    <div class="header">
+      <div style="background:#c25a00;color:#fff;display:inline-block;padding:3px 14px;border-radius:20px;font-size:0.76rem;font-weight:700;margin-bottom:6px;">برنامج الدمج الفكري</div>
+      <h1>بطاقة الطالب</h1>
+      <p style="font-size:0.8rem;color:#5a6478;margin-top:3px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
+    </div>
+    <div class="section">📋 المعلومات الشخصية</div>
+    <table>
+      <tr><th>الطالب</th><td>${s.name}</td><th>تاريخ الميلاد</th><td>${s.birthdate||'—'}</td></tr>
+      <tr><th>الجنسية</th><td>${s.nationality||'—'}</td><th>الصف</th><td>${s.grade}</td></tr>
+      <tr><th>العمر</th><td>${s.age||'—'}</td><th>درجة الذكاء</th><td>${s.iq||'—'}</td></tr>
+      <tr><th>العنوان</th><td>${s.address||'—'}</td><th>رقم الجوال</th><td>${s.phone||'—'}</td></tr>
+    </table>
+    <div class="section">📊 المعلومات العامة</div>
+    <table>
+      <tr><th>ترتيب الطالب</th><td>${s.sibling_order||'—'}</td><th>المستوى الاقتصادي</th><td>${s.economic_level||'—'}</td></tr>
+      <tr><th>تعليم الأب</th><td>${s.father_edu||'—'}</td><th>تعليم الأم</th><td>${s.mother_edu||'—'}</td></tr>
+      <tr><th>الوضع النفسي</th><td colspan="3">${s.status_psych||'—'}</td></tr>
+      <tr><th>الوضع الاجتماعي</th><td colspan="3">${s.status_social||'—'}</td></tr>
+      <tr><th>الوضع الصحي</th><td colspan="3">${s.status_health||'—'}</td></tr>
+    </table>
+    <div class="section">🏥 التشخيص والبرنامج</div>
+    <table>
+      <tr><th>التشخيص</th><td colspan="3">${s.diagnosis||'—'}</td></tr>
+      <tr><th>المكان التربوي</th><td colspan="3">${s.program_place||'—'}</td></tr>
+      <tr><th>تاريخ البدء</th><td>${s.program_start||'—'}</td><th>تاريخ الإنهاء</th><td>${s.program_end||'—'}</td></tr>
+    </table>
+    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
+    <scri` + `pt>window.onload=()=>window.print();</scri` + `pt>
+  </body></html>`);
+  win.document.close();
+}
+
+// ===== حذف من Supabase =====
+async function deleteFromSupabase(pin) {
+  try {
+    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+  } catch(e) { console.error('Delete error:', e); }
 }
 
 function showToast(msg) {
