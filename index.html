@@ -22,6 +22,28 @@
     --shadow: 0 8px 40px rgba(26,58,92,0.12);
   }
 
+  /* ===== DARK MODE ===== */
+  body.dark {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --border: #30363d;
+    --shadow: 0 8px 40px rgba(0,0,0,0.4);
+    --primary: #1f4068;
+  }
+  body.dark .about-card,
+  body.dark .prog-card,
+  body.dark .portal-card { background: var(--bg-card); border-color: var(--border); color: var(--text); }
+  body.dark .about-list li { color: var(--text-muted); }
+  body.dark main { background: var(--bg); }
+  body.dark .staff-bar { background: #161b22; border-color: #30363d; }
+  body.dark .staff-tag { background: #21262d; color: #8b949e; border-color: #30363d; }
+  body.dark .alert-bar { background: #1c2128; border-color: #30363d; color: #8b949e; }
+  body.dark .stats-bar { background: #0d1117; }
+  body.dark .section-title { color: var(--text); }
+  body.dark .section-sub { color: var(--text-muted); }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
@@ -30,60 +52,6 @@
     color: var(--text);
     overflow-x: hidden;
   }
-
-  /* ========= FOUNDING DAY DECORATION ========= */
-  .founding-overlay {
-    position: fixed; inset: 0; z-index: 999; pointer-events: none;
-    overflow: hidden;
-  }
-  .founding-banner {
-    background: linear-gradient(135deg, #007A3D 0%, #005a2e 50%, #007A3D 100%);
-    color: #fff; text-align: center; padding: 10px 20px;
-    font-family: 'Tajawal', sans-serif; font-size: 0.92rem; font-weight: 800;
-    letter-spacing: 1px; position: relative; overflow: hidden;
-    border-bottom: 3px solid #FFD700;
-  }
-  .founding-banner::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.15), transparent);
-    animation: shimmerF 3s linear infinite;
-  }
-  @keyframes shimmerF {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-  .founding-star {
-    position: fixed; pointer-events: none; z-index: 998;
-    animation: twinkleF var(--dur) var(--delay) ease-in-out infinite alternate;
-    color: #FFD700; font-size: var(--size, 14px);
-  }
-  @keyframes twinkleF {
-    0% { opacity: 0.2; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1.2); }
-  }
-  .founding-palm {
-    position: fixed; font-size: 3.5rem; pointer-events: none; z-index: 998;
-    animation: swayF 4s ease-in-out infinite alternate;
-    filter: drop-shadow(0 4px 8px rgba(0,122,61,0.4));
-  }
-  @keyframes swayF {
-    0% { transform: rotate(-5deg) scale(1); }
-    100% { transform: rotate(5deg) scale(1.05); }
-  }
-  .founding-sword {
-    position: fixed; font-size: 3rem; pointer-events: none; z-index: 998;
-    animation: glowF 2s ease-in-out infinite alternate;
-  }
-  @keyframes glowF {
-    0% { opacity: 0.6; filter: drop-shadow(0 0 4px #FFD700); }
-    100% { opacity: 1; filter: drop-shadow(0 0 16px #FFD700); }
-  }
-  /* تلوين الهيدر بألوان التأسيس */
-  .founding-active .hero-section {
-    background: linear-gradient(160deg, #003d1f 0%, #005a2e 30%, #1a3a5c 70%, #0f2440 100%) !important;
-  }
-
   /* ========= RAMADAN DECORATION ========= */
   .ramadan-overlay {
     position: fixed;
@@ -836,12 +804,6 @@
 </head>
 <body>
 
-<!-- FOUNDING DAY DECORATION -->
-<div class="founding-banner" id="foundingBanner">
-  🌴 يوم التأسيس السعودي المجيد — 22 فبراير 1727م ⚔️ &nbsp;|&nbsp; نفخر بتاريخنا العريق 🇸🇦
-</div>
-<div class="founding-overlay" id="foundingOverlay"></div>
-
 <!-- RAMADAN DECORATION -->
 <div class="ramadan-banner">
   رمضان كريم 🌙 — تقبّل الله منا ومنكم صالح الأعمال ✨
@@ -957,7 +919,7 @@
     <div class="hero-btns">
       <a href="#programs" class="btn-primary">🔍 استعراض البرامج</a>
       <a href="students.html" class="btn-secondary">📘 بوابة ملفات يسير</a>
-      <a href="dumaj-students.html" class="btn-secondary">🧠 بوابة ملفات الدمج الفكري</a>
+      <a href="dumaj-students.html" class="btn-secondary">🧑🏻‍🏫 بوابة ملفات الدمج الفكري</a>
       <a href="contact.html" class="btn-secondary">📩 تواصل معنا</a>
     </div>
   </div>
@@ -968,7 +930,7 @@
   <div class="stats-inner">
     <div class="stat-item">
       <span class="stat-num" id="cnt1">0</span>
-      <span class="stat-label">🧠 طلاب الدمج الفكري</span>
+      <span class="stat-label">🧑🏻‍🏫 طلاب الدمج الفكري</span>
     </div>
     <div class="stat-item">
       <span class="stat-num" id="cnt2">0</span>
@@ -1002,7 +964,7 @@
 
       <div class="program-card" style="--prog-color:#2563a8; --prog-bg:#e8f0ff;">
         <div class="program-header">
-          <div class="program-icon-big">🧠</div>
+          <div class="program-icon-big">🧑🏻‍🏫</div>
           <div>
             <h2>برنامج الدمج الفكري</h2>
             <p>يقدم خدمات تربوية وتعليمية لطلاب الإعاقة الفكرية ضمن بيئة دراسية دامجة مع أقرانهم</p>
@@ -1065,7 +1027,7 @@
 
       <div class="student-portal-section fade-in" style="background:linear-gradient(135deg,#7a2800,#c25a00); margin-bottom:0;">
         <div class="portal-text">
-          <h2>🧠 بوابة طلاب الدمج الفكري</h2>
+          <h2>🧑🏻‍🏫 بوابة طلاب الدمج الفكري</h2>
           <p>نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</p>
           <div class="portal-features">
             <div class="portal-feature"><div class="portal-feature-dot" style="background:#f59040;"></div> الخطة التعليمية الفردية</div>
@@ -1121,7 +1083,7 @@
     </div>
   </div>
 
-  <!-- STAFF -->
+    <!-- STAFF -->
   <div class="staff-bar fade-in">
     <div class="staff-bar-title">👨‍🏫 الكوادر المساندة</div>
     <div class="staff-tags">
@@ -1144,63 +1106,15 @@
     <a href="signatures-dumaj.html" style="flex:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.5)'">🔐 مشرف الدمج الفكري</a>
     <a href="signatures.html" style="flex:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.5)'">🔐 مشرف يسير</a>
   </div>
+  <!-- بوابة المعلمين -->
+  <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.08);">
+    <span style="color:rgba(255,255,255,0.28);font-size:0.68rem;font-family:'Cairo',sans-serif;margin-left:8px;">بوابة المعلمين:</span>
+    <a href="teachers-dumaj.html" style="color:rgba(255,255,255,0.38);font-size:0.68rem;text-decoration:none;margin:0 6px;padding:2px 10px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onmouseover="this.style.color='rgba(255,255,255,0.75)'" onmouseout="this.style.color='rgba(255,255,255,0.38)'">👨‍🏫 معلمو الدمج</a>
+    <a href="teachers-yaseer.html" style="color:rgba(255,255,255,0.38);font-size:0.68rem;text-decoration:none;margin:0 6px;padding:2px 10px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onmouseover="this.style.color='rgba(255,255,255,0.75)'" onmouseout="this.style.color='rgba(255,255,255,0.38)'">📘 معلمو يسير</a>
+  </div>
 </footer>
 
 <script>
-  // ===== FOUNDING DAY (22-28 فبراير) =====
-  (function() {
-    const today = new Date();
-    const yr = today.getFullYear();
-    const foundingStart = new Date(yr + '-02-21');
-    const foundingEnd   = new Date(yr + '-03-01'); // أسبوع كامل
-
-    if (today >= foundingStart && today < foundingEnd) {
-      document.body.classList.add('founding-active');
-
-      // نجوم ذهبية
-      const overlay = document.getElementById('foundingOverlay');
-      const stars = [
-        {top:'8%',left:'3%'}, {top:'5%',left:'20%'}, {top:'12%',left:'40%'},
-        {top:'6%',left:'60%'}, {top:'9%',left:'75%'}, {top:'4%',left:'88%'},
-        {top:'15%',left:'12%'},{top:'3%',left:'50%'}, {top:'11%',left:'95%'},
-        {top:'18%',left:'30%'},{top:'7%',left:'82%'}, {top:'14%',left:'65%'},
-      ];
-      const sizes = ['10px','12px','8px','14px','9px','11px'];
-      const durs  = ['2.2s','3s','2.7s','3.5s','2.5s','4s'];
-      stars.forEach((s, i) => {
-        const el = document.createElement('div');
-        el.className = 'founding-star';
-        el.textContent = '★';
-        el.style.cssText = `top:${s.top};left:${s.left};--size:${sizes[i%6]};--dur:${durs[i%6]};--delay:${(i*0.3).toFixed(1)}s;`;
-        overlay.appendChild(el);
-      });
-
-      // نخلتان على الجانبين
-      const palmL = document.createElement('div');
-      palmL.className = 'founding-palm';
-      palmL.textContent = '🌴';
-      palmL.style.cssText = 'bottom:20%;left:1%;--delay:0s;';
-      document.body.appendChild(palmL);
-
-      const palmR = document.createElement('div');
-      palmR.className = 'founding-palm';
-      palmR.textContent = '🌴';
-      palmR.style.cssText = 'bottom:20%;right:1%;transform:scaleX(-1);animation-delay:0.5s;';
-      document.body.appendChild(palmR);
-
-      // سيفان
-      const swordL = document.createElement('div');
-      swordL.className = 'founding-sword';
-      swordL.textContent = '⚔️';
-      swordL.style.cssText = 'bottom:30%;left:2%;font-size:2.5rem;';
-      document.body.appendChild(swordL);
-
-    } else {
-      // إخفاء عناصر التأسيس خارج الفترة
-      document.getElementById('foundingBanner')?.remove();
-      document.getElementById('foundingOverlay')?.remove();
-    }
-  })();
 
   // ===== RAMADAN STARS =====
   const starsLayer = document.getElementById('starsLayer');
@@ -1230,6 +1144,11 @@
   const ramadanEnd = new Date('2026-03-30');
   if (new Date() > ramadanEnd) {
     document.querySelectorAll('.ramadan-banner,.ramadan-overlay,.lantern-wrap,.crescent-wrap').forEach(el => el.remove());
+  }
+  // استعادة الوضع المحفوظ
+  if (localStorage.getItem('darkMode') === '1') {
+    document.body.classList.add('dark');
+    document.getElementById('darkToggle').textContent = '☀️';
   }
 
   // Animate counters

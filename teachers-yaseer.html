@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة معلمي يسير التعليمي | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#1a3a5c; --primary-dark:#0f2340; --accent:#c8973a;
+  --accent-light:#f0b84a; --gold:#c8973a; --bg:#f5f2eb;
+  --border:#e0d8c8; --text:#1a1a2e; --muted:#5a6478;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:linear-gradient(135deg,#1a3a5c 0%,#1e4d7a 60%,#2563a8 100%);position:relative;overflow:hidden;}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--accent-light),var(--gold));}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;}
+.header-logo{display:flex;align-items:center;gap:14px;}
+.logo-circle{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(200,151,58,0.4);display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.header-info .name{color:#fff;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;}
+.header-info .sub{color:rgba(255,255,255,0.55);font-size:0.75rem;margin-top:1px;}
+.back-link{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);padding:7px 16px;border-radius:8px;text-decoration:none;font-size:0.82rem;font-weight:600;}
+.hero{padding:32px 40px 40px;text-align:center;}
+.hero-badge{display:inline-block;background:rgba(200,151,58,0.15);border:1px solid rgba(200,151,58,0.35);color:var(--accent-light);padding:4px 16px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:12px;}
+.hero h1{font-family:'Tajawal',sans-serif;font-size:clamp(1.5rem,4vw,2rem);font-weight:900;color:#fff;margin-bottom:6px;}
+.hero h1 span{color:var(--accent-light);}
+.hero p{color:rgba(255,255,255,0.6);font-size:0.85rem;}
+.login-screen{display:flex;align-items:center;justify-content:center;min-height:60vh;padding:20px;}
+.login-box{background:#fff;border-radius:20px;padding:36px 30px;max-width:340px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.1);border:1px solid var(--border);}
+.login-icon{font-size:2.4rem;margin-bottom:12px;}
+.login-title{font-family:'Tajawal',sans-serif;font-size:1.2rem;font-weight:900;color:var(--primary);margin-bottom:6px;}
+.login-sub{font-size:0.8rem;color:var(--muted);margin-bottom:20px;line-height:1.7;}
+.select-input{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;background:#fafafa;margin-bottom:10px;color:var(--text);}
+.pin-input{width:100%;padding:11px;border:2px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:1.2rem;font-weight:700;text-align:center;letter-spacing:6px;outline:none;background:#fafafa;margin-bottom:10px;}
+.pin-error{display:none;color:#dc2626;font-size:0.78rem;font-weight:700;margin-bottom:10px;background:#fee2e2;padding:7px 12px;border-radius:8px;}
+.pin-error.show{display:block;}
+.btn-login{width:100%;padding:12px;background:linear-gradient(135deg,var(--primary),#2563a8);color:#fff;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.92rem;font-weight:800;cursor:pointer;}
+.portal{display:none;}
+main{max-width:960px;margin:0 auto;padding:24px 20px 60px;}
+.teacher-card{background:#fff;border-radius:16px;border:1px solid var(--border);padding:24px 28px;margin-bottom:22px;display:flex;align-items:center;gap:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.teacher-avatar-wrap{position:relative;flex-shrink:0;cursor:pointer;}
+.teacher-avatar{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--primary),#1e6091);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;box-shadow:0 4px 14px rgba(26,58,92,0.3);overflow:hidden;}
+.teacher-avatar img{width:100%;height:100%;object-fit:cover;}
+.avatar-overlay{position:absolute;inset:0;border-radius:16px;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;color:#fff;font-size:1.3rem;}
+.teacher-avatar-wrap:hover .avatar-overlay{opacity:1;}
+.teacher-name{font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:var(--primary);}
+.teacher-role{font-size:0.82rem;color:var(--muted);margin-top:3px;}
+.teacher-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.badge{padding:3px 12px;border-radius:12px;font-size:0.72rem;font-weight:700;}
+.badge-orange{background:#fff3e0;color:#c25a00;border:1px solid #f59040;}
+.badge-blue{background:#e8f0ff;color:#1a3a5c;border:1px solid #bfdbfe;}
+.badge-green{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+.btn-logout{margin-right:auto;padding:8px 18px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin-bottom:20px;}
+.stat-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.stat-num{font-family:'Tajawal',sans-serif;font-size:1.8rem;font-weight:900;color:var(--primary);}
+.stat-label{font-size:0.7rem;color:var(--muted);font-weight:600;margin-top:3px;}
+.tabs{display:flex;gap:6px;margin-bottom:20px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:6px;flex-wrap:wrap;}
+.tab-btn{flex:1;min-width:75px;padding:9px 6px;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.76rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);}
+.tab-btn.active{background:linear-gradient(135deg,var(--primary),#2563a8);color:#fff;box-shadow:0 3px 10px rgba(26,58,92,0.25);}
+.tab-btn-witness{background:linear-gradient(135deg,#7a2800,#c25a00)!important;color:#fff!important;opacity:0.85;}
+.tab-btn-witness.active,.tab-btn-witness:hover{opacity:1!important;}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.section-title{font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';width:4px;height:20px;background:var(--accent);border-radius:3px;display:block;}
+.form-card{background:#fff;border-radius:14px;border:1px solid var(--border);padding:22px 24px;margin-bottom:16px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.full{grid-column:1/-1;}
+label{font-size:0.78rem;font-weight:700;color:var(--muted);}
+.form-input,.form-textarea{padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;background:#fafafa;color:var(--text);}
+.form-input:focus,.form-textarea:focus{border-color:var(--accent);background:#fff;}
+.form-textarea{resize:vertical;min-height:80px;}
+.hijri-label{font-size:0.72rem;color:#065f46;font-weight:700;background:#d1fae5;padding:3px 10px;border-radius:6px;margin-top:4px;display:none;}
+.hijri-label.show{display:block;}
+.btn-save{padding:10px 22px;background:linear-gradient(135deg,var(--primary),#2563a8);color:#fff;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;}
+.btn-add{padding:8px 18px;background:linear-gradient(135deg,#1a6b4a,#2d9e70);color:#fff;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;}
+.btn-witness{padding:8px 18px;background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;}
+.btn-print{padding:10px 22px;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;}
+.btn-danger{padding:6px 12px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;}
+.btn-danger:hover{background:#dc2626;color:#fff;}
+.btn-edit{padding:6px 12px;background:#e8f0ff;color:#1a3a5c;border:1px solid #bfdbfe;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;}
+.btn-edit:hover{background:#1a3a5c;color:#fff;}
+.btn-print-sm{padding:6px 12px;background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;}
+.btn-print-sm:hover{background:#065f46;color:#fff;}
+.save-status{font-size:0.75rem;color:#2d9e70;background:#d1fae5;padding:4px 12px;border-radius:8px;display:none;}
+.save-status.show{display:inline-block;}
+.entry-card{background:#fafcff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+.entry-card:hover{border-color:var(--accent);}
+.entry-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.entry-title{font-weight:700;font-size:0.9rem;color:var(--primary);}
+.entry-date{font-size:0.72rem;color:var(--muted);background:#f0f0f0;padding:2px 10px;border-radius:8px;white-space:nowrap;}
+.entry-date-hijri{font-size:0.68rem;color:#065f46;background:#d1fae5;padding:2px 8px;border-radius:8px;white-space:nowrap;}
+.entry-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+.entry-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+.entry-tag{padding:2px 10px;border-radius:10px;font-size:0.7rem;font-weight:700;}
+.tag-achievement{background:#d1fae5;color:#065f46;}
+.tag-training{background:#e8f0ff;color:#1e40af;}
+.tag-activity{background:#fff3e0;color:#c25a00;}
+.tag-award{background:#fef3c7;color:#92400e;}
+.tag-other{background:#f3f4f6;color:#374151;}
+.witness-card{background:#fff8f3;border:1.5px solid #f0d0a0;border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+.witness-card:hover{border-color:#c25a00;}
+.witness-title{font-weight:800;font-size:0.9rem;color:#7a2800;}
+.witness-meta{font-size:0.75rem;color:var(--muted);margin:4px 0 8px;}
+.witness-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:8px;}
+.img-thumb{width:72px;height:72px;object-fit:cover;border-radius:8px;border:2px solid #f0d0a0;cursor:pointer;transition:transform 0.2s;}
+.img-thumb:hover{transform:scale(1.05);}
+.attach-zone{border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;background:#fafafa;margin-top:10px;}
+.attach-zone:hover{border-color:var(--accent);}
+.attach-zone input{display:none;}
+.attach-zone label{cursor:pointer;font-size:0.82rem;color:var(--muted);}
+.attach-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.attach-chip{display:flex;align-items:center;gap:6px;background:#e8f0ff;border:1px solid #bfdbfe;border-radius:8px;padding:4px 10px;font-size:0.75rem;color:#1a3a5c;}
+.attach-chip button{background:none;border:none;color:#dc2626;cursor:pointer;font-size:0.8rem;}
+.attach-chip a{color:#1a3a5c;text-decoration:none;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;}
+.photo-wrap{display:flex;align-items:center;gap:16px;padding:14px;background:#f8faff;border-radius:12px;border:1px dashed var(--border);margin-bottom:14px;}
+.photo-preview{width:70px;height:70px;border-radius:12px;overflow:hidden;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
+.photo-preview img{width:100%;height:100%;object-fit:cover;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:16px;padding:26px 24px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.modal-title{font-family:'Tajawal',sans-serif;font-size:1.1rem;font-weight:900;color:var(--primary);margin-bottom:18px;}
+.modal-close{position:absolute;top:14px;left:16px;background:#f3f4f6;border:none;border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--muted);}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:2000;align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:92vw;max-height:90vh;border-radius:12px;}
+.lightbox-close{position:absolute;top:16px;left:16px;background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:10px;padding:8px 16px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;}
+/* Sync status */
+.sync-bar{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;font-size:0.78rem;font-weight:700;margin-bottom:10px;}
+.sync-bar.saving{background:#fef3c7;color:#92400e;}
+.sync-bar.saved{background:#d1fae5;color:#065f46;}
+.sync-bar.error{background:#fee2e2;color:#dc2626;}
+.sync-bar.hidden{display:none;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a3a5c;color:#fff;padding:12px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:9999;transition:transform 0.3s;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.empty{text-align:center;padding:40px 20px;color:var(--muted);}
+.empty-icon{font-size:2.5rem;margin-bottom:10px;}
+footer{background:var(--primary-dark);color:rgba(255,255,255,0.6);text-align:center;padding:18px 40px;font-size:0.78rem;border-top:3px solid var(--gold);margin-top:40px;}
+footer strong{color:var(--accent-light);}
+@media(max-width:640px){
+  .header-top{padding:12px 16px;}.hero{padding:24px 16px 32px;}
+  main{padding:16px 14px 40px;}.form-grid{grid-template-columns:1fr;}
+  .teacher-card{flex-direction:column;text-align:center;}.btn-logout{margin-right:0;}
+}
+
+/* Dual Date Toggle */
+.date-toggle-row{display:flex;gap:6px;margin-bottom:4px;}
+.date-toggle-btn{flex:1;padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;cursor:pointer;background:#fff;transition:all 0.15s;text-align:center;}
+.date-toggle-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.date-toggle-btn:hover:not(.active){border-color:var(--primary);}
+.hijri-input-wrap{position:relative;}
+.hijri-manual{display:none;flex-direction:column;gap:4px;}
+.hijri-manual-row{display:flex;gap:4px;}
+.hijri-manual select{flex:1;padding:7px 6px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;outline:none;background:#fafafa;}
+.hijri-manual select:focus{border-color:var(--primary);}
+.date-result-lbl{font-size:0.75rem;color:var(--muted);margin-top:3px;min-height:18px;}
+/* Witness edit */
+.btn-edit-witness{background:#fff;border:1.5px solid var(--primary);color:var(--primary);border-radius:7px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:0.78rem;cursor:pointer;}
+.btn-edit-witness:hover{background:var(--primary);color:#fff;}
+
+
+/* Drag & Drop sorting */
+.drag-handle{cursor:grab;color:var(--muted);font-size:1rem;padding:2px 4px;user-select:none;flex-shrink:0;}
+.drag-handle:active{cursor:grabbing;}
+.entry-card.dragging,.witness-card.dragging{opacity:0.4;border-style:dashed;}
+.entry-card.drag-over,.witness-card.drag-over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);transform:scale(1.01);}
+.entry-card,.witness-card{transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;}
+.sort-hint{font-size:0.72rem;color:var(--muted);margin-bottom:8px;text-align:left;display:flex;align-items:center;gap:5px;}
+.drag-handle{-webkit-user-drag:element;}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="header-logo">
+      <div class="logo-circle">👨‍🏫</div>
+      <div class="header-info">
+        <div class="name">بوابة معلمي يسير التعليمي</div>
+        <div class="sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">← الرئيسية</a>
+  </div>
+  <div class="hero">
+    <div class="hero-badge">👨‍🏫 بوابة المعلمين</div>
+    <h1>ملف إنجاز <span>المعلم</span></h1>
+    <p>سجل إنجازاتك المهنية وتطورك التدريبي وأنشطتك خلال العام الدراسي</p>
+  </div>
+</header>
+
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <div class="login-title">دخول المعلم</div>
+    <div class="login-sub">اختر اسمك ثم أدخل رمزك الشخصي</div>
+    <select class="select-input" id="teacher-select">
+      <option value="">— اختر اسمك —</option>
+      <option value="حسين منصور الكبيشي">أ. حسين منصور الكبيشي</option>
+      <option value="سعد سالم الزهراني">أ. سعد سالم الزهراني</option>
+    </select>
+    <input type="password" class="pin-input" id="pin-input" placeholder="• • • •" maxlength="6"
+      onkeydown="if(event.key==='Enter')doLogin()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
+    <button class="btn-login" onclick="doLogin()">✅ دخول</button>
+
+  </div>
+</div>
+
+<div class="portal" id="portal">
+  <main>
+    <div id="sync-bar" class="sync-bar hidden"></div>
+  <div id="env-warning" style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:0.82rem;color:#856404;line-height:1.8">
+    ⚠️ <strong>تنبيه:</strong> الملف يعمل داخل Claude ولا يمكنه الاتصال بـ Supabase من هنا.<br>
+    📥 <strong>قم بتحميل الملف وفتحه مباشرة على جهازك</strong> للحصول على المزامنة الكاملة.
+  </div>
+
+    <div class="teacher-card">
+      <div class="teacher-avatar-wrap" id="avatar-wrap" title="اضغط لتغيير الصورة">
+        <div class="teacher-avatar" id="t-avatar-box"><span id="t-avatar-text">👨‍🏫</span></div>
+        <div class="avatar-overlay">📷</div>
+        <input type="file" id="avatar-file" accept="image/*" style="display:none" onchange="handleAvatarChange(this)">
+      </div>
+      <div style="flex:1">
+        <div class="teacher-name" id="t-name">—</div>
+        <div class="teacher-role" id="t-role">معلم تربية خاصة — برنامج يسير التعليمي</div>
+        <div class="teacher-badges">
+          <span class="badge badge-orange">📘 يسير التعليمي</span>
+          <span class="badge badge-blue" id="t-exp">—</span>
+          <span class="badge badge-green" id="t-entries-badge">0 إنجاز</span>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">🚪 خروج</button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">إجمالي الإنجازات</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-training">0</div><div class="stat-label">دورات تدريبية</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-activity">0</div><div class="stat-label">أنشطة وفعاليات</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-award">0</div><div class="stat-label">شهادات وتكريم</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-witness">0</div><div class="stat-label">شواهد وأعمال</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('achievements',this)">🏆 الإنجازات</button>
+      <button class="tab-btn" onclick="switchTab('profile',this)">👤 البيانات</button>
+      <button class="tab-btn" onclick="switchTab('add',this)">➕ إضافة إنجاز</button>
+      <button class="tab-btn tab-btn-witness" onclick="switchTab('witnesses',this)">📋 الشواهد والأعمال</button>
+    </div>
+
+    <!-- الإنجازات -->
+    <div class="tab-pane active" id="tab-achievements">
+      <div class="section-header">
+        <div class="section-title">ملف الإنجازات</div>
+        <button class="btn-print" onclick="printProfile()">🖨️ طباعة الملف الكامل</button>
+      </div>
+      <div id="entries-list"><div class="empty"><div class="empty-icon">📂</div><div style="font-size:0.85rem">لا توجد إنجازات مضافة بعد</div></div></div>
+    </div>
+
+    <!-- البيانات -->
+    <div class="tab-pane" id="tab-profile">
+      <div class="section-header">
+        <div class="section-title">البيانات الشخصية والوظيفية</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn-save" onclick="saveProfile()">💾 حفظ البيانات</button>
+          <span class="save-status" id="save-status">✅ تم الحفظ</span>
+        </div>
+      </div>
+      <div class="form-card" style="margin-bottom:12px">
+        <div class="photo-wrap">
+          <div class="photo-preview" id="profile-photo-preview"><span>👨‍🏫</span></div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:0.9rem;color:var(--primary);margin-bottom:4px">صورة الملف الشخصي</div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px">تظهر في بطاقة المعلم وفي التقارير المطبوعة</div>
+            <label for="profile-photo-input" style="cursor:pointer;display:inline-block;padding:7px 16px;background:linear-gradient(135deg,var(--primary),#2563a8);color:#fff;border-radius:8px;font-size:0.8rem;font-weight:700">📷 رفع / تغيير الصورة</label>
+            <input type="file" id="profile-photo-input" accept="image/*" style="display:none" onchange="handleAvatarChange(this)">
+            <button onclick="removeProfilePhoto()" style="margin-right:8px;padding:7px 14px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:8px;font-size:0.78rem;font-weight:700;cursor:pointer">✕ إزالة</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-group"><label>الاسم الرباعي</label><input class="form-input" id="p-name"></div>
+          <div class="form-group"><label>التخصص</label><input class="form-input" id="p-major"></div>
+          <div class="form-group"><label>الدرجة العلمية</label>
+            <select class="form-input" id="p-degree"><option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option><option>دبلوم</option></select>
+          </div>
+          <div class="form-group"><label>سنوات الخبرة</label><input class="form-input" id="p-exp" type="number" min="0"></div>
+          <div class="form-group"><label>البريد الإلكتروني</label><input class="form-input" id="p-email" type="email"></div>
+          <div class="form-group"><label>رقم الجوال</label><input class="form-input" id="p-phone"></div>
+          <div class="form-group full"><label>نبذة مهنية</label><textarea class="form-textarea" id="p-bio"></textarea></div>
+          <div class="form-group"><label>عدد الطلاب الحاليين</label><input class="form-input" id="p-students" type="number" min="0"></div>
+          <div class="form-group"><label>المواد التي يدرّسها</label><input class="form-input" id="p-subjects"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- إضافة إنجاز -->
+    <div class="tab-pane" id="tab-add">
+      <div class="section-header"><div class="section-title">إضافة إنجاز جديد</div></div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-group full"><label>عنوان الإنجاز</label><input class="form-input" id="e-title" placeholder="مثال: اجتياز دورة تعليم ذوي الاحتياجات الخاصة"></div>
+          <div class="form-group"><label>النوع</label>
+            <select class="form-input" id="e-type">
+              <option value="achievement">🏆 إنجاز مهني</option>
+              <option value="training">📚 دورة تدريبية</option>
+              <option value="activity">🎯 نشاط وفعالية</option>
+              <option value="award">🥇 شهادة وتكريم</option>
+              <option value="other">📌 أخرى</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>📅 التاريخ</label>
+            <div class="date-toggle-row">
+              <button class="date-toggle-btn active" id="e-date-tog-g" onclick="switchDateMode('e','greg')">📅 ميلادي</button>
+              <button class="date-toggle-btn" id="e-date-tog-h" onclick="switchDateMode('e','hijri')">🌙 هجري</button>
+            </div>
+            <div id="e-date-greg-wrap">
+              <input class="form-input" id="e-date" type="date" oninput="updateDualDate('e')">
+            </div>
+            <div id="e-date-hijri-wrap" class="hijri-manual" style="display:none">
+              <div class="hijri-manual-row">
+                <select id="e-hijri-day" onchange="updateDualDate('e')"><option value="">اليوم</option></select>
+                <select id="e-hijri-month" onchange="updateDualDate('e')">
+                  <option value="">الشهر</option>
+                  <option value="1">محرم</option><option value="2">صفر</option>
+                  <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
+                  <option value="5">جمادى الأولى</option><option value="6">جمادى الآخرة</option>
+                  <option value="7">رجب</option><option value="8">شعبان</option>
+                  <option value="9">رمضان</option><option value="10">شوال</option>
+                  <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+                </select>
+                <select id="e-hijri-year" onchange="updateDualDate('e')"><option value="">السنة</option></select>
+              </div>
+            </div>
+            <div class="date-result-lbl" id="e-date-result"></div>
+          </div>
+          <div class="form-group"><label>الجهة المانحة / المنظِّمة</label><input class="form-input" id="e-org" placeholder="مثال: وزارة التعليم"></div>
+          <div class="form-group"><label>المدة (للدورات)</label><input class="form-input" id="e-duration" placeholder="مثال: 20 ساعة تدريبية"></div>
+          <div class="form-group full"><label>وصف تفصيلي</label><textarea class="form-textarea" id="e-desc"></textarea></div>
+          <div class="form-group full"><label>المهارات المكتسبة</label><input class="form-input" id="e-skills"></div>
+          <div class="form-group full">
+            <label>📎 إرفاق ملفات (صور، شهادات، PDF)</label>
+            <div class="attach-zone" ondrop="handleDrop(event,'entry')" ondragover="event.preventDefault()">
+              <input type="file" id="attach-input" multiple accept="image/*,.pdf,.doc,.docx" onchange="handleFiles(this.files,'entry')">
+              <label for="attach-input">📎 اضغط لرفع ملف أو اسحبه هنا<br><span style="font-size:0.7rem;opacity:0.6">يدعم: صور، PDF، Word</span></label>
+            </div>
+            <div class="attach-list" id="attach-preview"></div>
+          </div>
+        </div>
+        <div style="margin-top:16px;text-align:left">
+          <button class="btn-add" onclick="addEntry()">➕ إضافة للملف</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- الشواهد -->
+    <div class="tab-pane" id="tab-witnesses">
+      <div class="section-header">
+        <div class="section-title">الشواهد والأعمال المدرسية</div>
+        <button class="btn-witness" onclick="openWitnessModal()">📋 إضافة شاهد جديد</button>
+      </div>
+      <div id="witnesses-list"><div class="empty"><div class="empty-icon">📋</div><div style="font-size:0.85rem">لا توجد شواهد مضافة بعد</div></div></div>
+    </div>
+  </main>
+</div>
+
+<!-- مودال الشاهد -->
+<div class="modal-overlay" id="witness-modal">
+  <div class="modal-box">
+    <div class="modal-title">📋 إضافة شاهد / عمل مدرسي</div>
+    <button class="modal-close" onclick="closeModal('witness-modal')">✕</button>
+    <div class="form-grid">
+      <div class="form-group full"><label>عنوان الشاهد / العمل</label><input class="form-input" id="w-title" placeholder="مثال: عمل طلابي متميز"></div>
+      <div class="form-group"><label>النوع</label>
+        <select class="form-input" id="w-type">
+          <option value="school_work">🎨 عمل مدرسي</option>
+          <option value="certificate">📜 شهادة</option>
+          <option value="photo_witness">📸 شاهد صوري</option>
+          <option value="student_product">🏅 منتج طلابي</option>
+          <option value="event">🎯 فعالية</option>
+          <option value="other">📌 أخرى</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>📅 التاريخ</label>
+        <div class="date-toggle-row">
+          <button class="date-toggle-btn active" id="w-date-tog-g" onclick="switchDateMode('w','greg')">📅 ميلادي</button>
+          <button class="date-toggle-btn" id="w-date-tog-h" onclick="switchDateMode('w','hijri')">🌙 هجري</button>
+        </div>
+        <div id="w-date-greg-wrap">
+          <input class="form-input" id="w-date" type="date" oninput="updateDualDate('w')">
+        </div>
+        <div id="w-date-hijri-wrap" class="hijri-manual" style="display:none">
+          <div class="hijri-manual-row">
+            <select id="w-hijri-day" onchange="updateDualDate('w')"><option value="">اليوم</option></select>
+            <select id="w-hijri-month" onchange="updateDualDate('w')">
+              <option value="">الشهر</option>
+              <option value="1">محرم</option><option value="2">صفر</option>
+              <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
+              <option value="5">جمادى الأولى</option><option value="6">جمادى الآخرة</option>
+              <option value="7">رجب</option><option value="8">شعبان</option>
+              <option value="9">رمضان</option><option value="10">شوال</option>
+              <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+            </select>
+            <select id="w-hijri-year" onchange="updateDualDate('w')"><option value="">السنة</option></select>
+          </div>
+        </div>
+        <div class="date-result-lbl" id="w-date-result"></div>
+      </div>
+      <div class="form-group full"><label>الوصف</label><textarea class="form-textarea" id="w-desc"></textarea></div>
+      <div class="form-group full">
+        <label>📎 رفع صور وملفات</label>
+        <div class="attach-zone" ondrop="handleDrop(event,'witness')" ondragover="event.preventDefault()">
+          <input type="file" id="w-attach-input" multiple accept="image/*,.pdf,.doc,.docx" onchange="handleFiles(this.files,'witness')">
+          <label for="w-attach-input">📷 اضغط لرفع صور أو ملفات<br><span style="font-size:0.7rem;opacity:0.6">يدعم: صور، PDF، Word</span></label>
+        </div>
+        <div class="attach-list" id="w-attach-preview"></div>
+      </div>
+    </div>
+    <div style="margin-top:18px;display:flex;gap:10px">
+      <button class="btn-witness" onclick="saveWitness()">💾 حفظ الشاهد</button>
+      <button class="btn-danger" onclick="closeModal('witness-modal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- مودال التعديل -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-box">
+    <div class="modal-title">✏️ تعديل الإنجاز</div>
+    <button class="modal-close" onclick="closeModal('edit-modal')">✕</button>
+    <div class="form-grid">
+      <div class="form-group full"><label>عنوان الإنجاز</label><input class="form-input" id="edit-title"></div>
+      <div class="form-group"><label>النوع</label>
+        <select class="form-input" id="edit-type">
+          <option value="achievement">🏆 إنجاز مهني</option>
+          <option value="training">📚 دورة تدريبية</option>
+          <option value="activity">🎯 نشاط وفعالية</option>
+          <option value="award">🥇 شهادة وتكريم</option>
+          <option value="other">📌 أخرى</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>📅 التاريخ الميلادي</label>
+        <input class="form-input" id="edit-date" type="date" oninput="updateHijri('edit-date','edit-hijri')">
+        <div class="hijri-label" id="edit-hijri"></div>
+      </div>
+      <div class="form-group full"><label>الجهة المانحة</label><input class="form-input" id="edit-org"></div>
+      <div class="form-group full"><label>المدة</label><input class="form-input" id="edit-duration"></div>
+      <div class="form-group full"><label>الوصف</label><textarea class="form-textarea" id="edit-desc"></textarea></div>
+      <div class="form-group full"><label>المهارات المكتسبة</label><input class="form-input" id="edit-skills"></div>
+    </div>
+    <input type="hidden" id="edit-entry-id">
+    <div style="margin-top:18px;display:flex;gap:10px">
+      <button class="btn-save" onclick="saveEditEntry()">💾 حفظ التعديلات</button>
+      <button class="btn-danger" onclick="closeModal('edit-modal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ إغلاق</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>
+  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// SUPABASE CONFIG
+// ============================================================
+const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5cnh3cWdhcHdqd2hpc2tvd2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDM3MjcsImV4cCI6MjA4NzExOTcyN30.nEJivQNdtbI8Vn7thWe29zHEOzK-Z8eZVQMnSyvKlII";
+const SB_TABLE = "teacher_portfolios";
+const PROGRAM = "yaseer";
+
+async function sbGet(key) {
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${encodeURIComponent(key)}&select=data`,
+      { headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Accept": "application/json" } }
+    );
+    if (!res.ok) return null;
+    const rows = await res.json();
+    if (Array.isArray(rows) && rows.length > 0) return rows[0].data;
+    return null;
+  } catch(e) { console.error('sbGet error:', e); return null; }
+}
+
+async function sbSet(key, data) {
+  try {
+    // استخدام UPSERT الصحيح في Supabase عبر POST مع onConflict
+    const res = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?on_conflict=teacher_key`,
+      {
+        method: "POST",
+        headers: {
+          "apikey": SB_KEY,
+          "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "resolution=merge-duplicates,return=minimal"
+        },
+        body: JSON.stringify({ teacher_key: key, data: data, updated_at: new Date().toISOString() })
+      }
+    );
+    if (res.ok) return true;
+    // إذا فشل UPSERT جرب DELETE ثم INSERT
+    const bodyText = await res.text();
+    console.warn('UPSERT failed:', res.status, bodyText);
+    // محاولة PATCH (تحديث سجل موجود)
+    const patchRes = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?teacher_key=eq.${encodeURIComponent(key)}`,
+      {
+        method: "PATCH",
+        headers: {
+          "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json", "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({ data: data, updated_at: new Date().toISOString() })
+      }
+    );
+    if (patchRes.ok) return true;
+    // إذا لم يجد السجل، أنشئه بـ INSERT
+    const insertRes = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}`,
+      {
+        method: "POST",
+        headers: {
+          "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY,
+          "Content-Type": "application/json", "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({ teacher_key: key, data: data })
+      }
+    );
+    return insertRes.ok;
+  } catch(e) { console.error('sbSet error:', e); return false; }
+}
+
+// ============================================================
+// TEACHER DATA
+// ============================================================
+const TEACHERS = {
+  "حسين منصور الكبيشي": {
+    pin:"1111", role:"معلم تربية خاصة — برنامج يسير التعليمي", avatar:"حك",
+    profile:{name:"حسين منصور الكبيشي",major:"تربية خاصة",degree:"بكالوريوس",exp:"8",
+      email:"h.kubaishi@school.edu.sa",phone:"0541112001",
+      bio:"معلم تربية خاصة متخصص في دعم طلاب البطء التعليمي وتطوير خطط التدخل الفردية.",
+      students:"20",subjects:"اللغة العربية، التربية الإسلامية، المهارات الحياتية",photo:null},
+    entries:[{id:1,title:"دورة التدخل المبكر لصعوبات التعلم",type:"training",date:"2025-09-10",
+      org:"وزارة التعليم",duration:"25 ساعة",
+      desc:"دورة متخصصة في استراتيجيات التدخل المبكر لطلاب البطء التعليمي.",
+      skills:"التدخل المبكر، بناء الخطط الفردية",attachments:[]}],
+    witnesses:[]
+  },
+  "سعد سالم الزهراني": {
+    pin:"2222", role:"مشرف برنامج يسير التعليمي", avatar:"سز",
+    profile:{name:"سعد سالم الزهراني",major:"إدارة تربوية",degree:"بكالوريوس",exp:"10",
+      email:"saad.z@school.edu.sa",phone:"0542223002",
+      bio:"مشرف برنامج يسير التعليمي ومطوّر المنصة الرقمية لقسم ذوي الإعاقة.",
+      students:"20",subjects:"الإشراف التربوي، التقنية التعليمية",photo:null},
+    entries:[
+      {id:1,title:"تطوير البوابة الرقمية لطلاب يسير",type:"achievement",date:"2025-09-01",
+        org:"مدرسة مكة المكرمة المتوسطة",duration:"",
+        desc:"أشرف على تصميم وتطوير البوابة الرقمية المتكاملة لملفات طلاب برنامج يسير.",
+        skills:"التقنية التعليمية، إدارة المشاريع",attachments:[]},
+      {id:2,title:"تكريم معلم متميز الفصل الأول 1447هـ",type:"award",date:"2025-11-20",
+        org:"إدارة المدرسة",duration:"",
+        desc:"حصل على تكريم المعلم المتميز تقديراً لجهوده.",
+        skills:"التميز المهني",attachments:[]}
+    ],
+    witnesses:[]
+  }
+};
+
+let currentTeacher = null, nextId = 200, nextWitnessId = 300, editingWitnessId = null;
+let pendingAttach = [], pendingWitnessAttach = [];
+let saveTimeout = null;
+
+// ============================================================
+// HIJRI DATE
+// ============================================================
+function toHijri(dateStr) {
+  if (!dateStr) return '';
+  try {
+    return new Date(dateStr).toLocaleDateString('ar-SA-u-ca-islamic', {year:'numeric',month:'long',day:'numeric'});
+  } catch(e) { return ''; }
+}
+function updateHijri(inputId, labelId) {
+  const v = document.getElementById(inputId).value;
+  const el = document.getElementById(labelId);
+  if (v) { el.textContent = '🌙 ' + toHijri(v); el.classList.add('show'); }
+  else { el.classList.remove('show'); }
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+async function testConnection() {
+  const el = document.getElementById('conn-status');
+  el.style.display = 'block';
+  el.style.background = '#fef3c7';
+  el.style.color = '#92400e';
+  el.textContent = '⏳ جاري الاتصال بـ Supabase...';
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/${SB_TABLE}?select=teacher_key&limit=1`,
+      { headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Accept": "application/json" } }
+    );
+    if (res.ok) {
+      el.style.background = '#d1fae5'; el.style.color = '#065f46';
+      el.textContent = '✅ الاتصال بـ Supabase يعمل بشكل صحيح!';
+    } else {
+      el.style.background = '#fee2e2'; el.style.color = '#dc2626';
+      el.textContent = '❌ خطأ في الاتصال: ' + res.status + ' — تحقق من إعدادات Supabase';
+    }
+  } catch(e) {
+    el.style.background = '#fee2e2'; el.style.color = '#dc2626';
+    if (e.message && e.message.includes('fetch')) {
+      el.textContent = '⚠️ لا يمكن الاتصال — افتح الملف مباشرة على جهازك (ليس من Claude)';
+    } else {
+      el.textContent = '❌ ' + e.message;
+    }
+  }
+}
+
+function doLogin() {
+  const sel = document.getElementById('teacher-select').value;
+  const pin = document.getElementById('pin-input').value;
+  if (!sel) { showError('اختر اسمك أولاً'); return; }
+  const t = TEACHERS[sel];
+  if (!t || pin !== t.pin) { showError('الرمز غير صحيح'); return; }
+  currentTeacher = sel;
+  openPortal(t);
+}
+function showError(msg) {
+  const e = document.getElementById('pin-error');
+  e.textContent = '❌ ' + msg; e.classList.add('show');
+  setTimeout(() => e.classList.remove('show'), 2500);
+}
+async function openPortal(t) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('portal').style.display = 'block';
+  showSyncBar('loading', '⏳ جاري تحميل البيانات...');
+  await loadFromSupabase(currentTeacher);
+  refreshAvatarBox();
+  document.getElementById('t-name').textContent = currentTeacher;
+  document.getElementById('t-role').textContent = t.role;
+  document.getElementById('t-exp').textContent = (t.profile.exp||'0') + ' سنوات خبرة';
+  loadProfileForm(t.profile);
+  renderEntries(); renderWitnesses(); updateStats();
+  hideSyncBar();
+  // Avatar click
+  document.getElementById('avatar-wrap').onclick = () => document.getElementById('avatar-file').click();
+}
+function doLogout() {
+  currentTeacher = null;
+  document.getElementById('portal').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pin-input').value = '';
+  document.getElementById('teacher-select').value = '';
+  switchTab('achievements', document.querySelector('.tab-btn'));
+}
+
+// ============================================================
+// SUPABASE LOAD / SAVE
+// ============================================================
+function getSaveKey(teacher) {
+  // مفتاح بسيط بدون أحرف عربية لتجنب مشاكل الترميز
+  return PROGRAM + '_' + encodeURIComponent(teacher);
+}
+
+async function loadFromSupabase(teacher) {
+  const key = getSaveKey(teacher);
+  showSyncBar('saving', '⏳ جاري تحميل بياناتك...');
+
+  // فحص هل نحن داخل iframe (Claude Artifacts) أم على الجهاز مباشرة
+  const isIframe = (window.self !== window.top) || window.location.href.startsWith('blob:') || window.location.href.includes('claude.ai');
+  if (isIframe) {
+    document.getElementById('env-warning').style.display = 'block';
+  }
+
+  const data = await sbGet(key);
+  if (data) {
+    console.log('✅ تم تحميل البيانات من Supabase');
+    document.getElementById('env-warning').style.display = 'none';
+    if (data.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, data.profile);
+    if (Array.isArray(data.entries)) {
+      TEACHERS[teacher].entries = data.entries;
+      const maxEntryId = data.entries.reduce((m,e) => Math.max(m, e.id||0), 0);
+      if (maxEntryId >= nextId) nextId = maxEntryId + 1;
+    }
+    if (Array.isArray(data.witnesses)) {
+      TEACHERS[teacher].witnesses = data.witnesses;
+      const maxWitId = data.witnesses.reduce((m,w) => Math.max(m, w.id||0), 0);
+      if (maxWitId >= nextWitnessId) nextWitnessId = maxWitId + 1;
+    }
+    try { localStorage.setItem('teacher_bk_' + teacher, JSON.stringify(data)); } catch(e) {}
+    showSyncBar('saved', '✅ تم تحميل بياناتك من Supabase');
+    setTimeout(hideSyncBar, 2000);
+  } else {
+    // محاولة localStorage كنسخة احتياطية
+    let loadedFromLocal = false;
+    try {
+      const ls = localStorage.getItem('teacher_bk_' + teacher);
+      if (ls) {
+        const d = JSON.parse(ls);
+        if (d.profile) TEACHERS[teacher].profile = Object.assign({}, TEACHERS[teacher].profile, d.profile);
+        if (Array.isArray(d.entries)) {
+          TEACHERS[teacher].entries = d.entries;
+          const maxEId = d.entries.reduce((m,e) => Math.max(m, e.id||0), 0);
+          if (maxEId >= nextId) nextId = maxEId + 1;
+        }
+        if (Array.isArray(d.witnesses)) {
+          TEACHERS[teacher].witnesses = d.witnesses;
+          const maxWId = d.witnesses.reduce((m,w) => Math.max(m, w.id||0), 0);
+          if (maxWId >= nextWitnessId) nextWitnessId = maxWId + 1;
+        }
+        loadedFromLocal = true;
+      }
+    } catch(e) {}
+    if (loadedFromLocal) {
+      showSyncBar('error', '📱 تم التحميل من هذا الجهاز (بيانات Supabase غير متاحة)');
+    } else {
+      showSyncBar('error', '📭 لا توجد بيانات محفوظة — ابدأ بإضافة بياناتك');
+    }
+    setTimeout(hideSyncBar, 3500);
+  }
+}
+
+function scheduleSave() {
+  if (saveTimeout) clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(autoSave, 800);
+}
+
+async function autoSave() {
+  if (!currentTeacher) return;
+  showSyncBar('saving', '💾 جاري الحفظ في Supabase...');
+  const key = getSaveKey(currentTeacher);
+  const payload = {
+    profile: TEACHERS[currentTeacher].profile,
+    entries: TEACHERS[currentTeacher].entries || [],
+    witnesses: TEACHERS[currentTeacher].witnesses || []
+  };
+  // حفظ محلي فوري كنسخة احتياطية
+  try { localStorage.setItem('teacher_bk_' + currentTeacher, JSON.stringify(payload)); } catch(e) {}
+  // حفظ في Supabase
+  const ok = await sbSet(key, payload);
+  if (ok) {
+    showSyncBar('saved', '✅ تم الحفظ في Supabase — يمكنك الدخول من أي جهاز');
+    console.log('✅ تم الحفظ في Supabase بمفتاح:', key);
+  } else {
+    showSyncBar('error', '⚠️ فشل الحفظ في Supabase — تم الحفظ محلياً فقط');
+    console.error('❌ فشل الحفظ في Supabase');
+  }
+  setTimeout(hideSyncBar, 3500);
+}
+
+function showSyncBar(type, msg) {
+  const bar = document.getElementById('sync-bar');
+  bar.className = 'sync-bar ' + type;
+  bar.textContent = msg;
+}
+function hideSyncBar() {
+  document.getElementById('sync-bar').className = 'sync-bar hidden';
+}
+
+// ============================================================
+// PHOTO
+// ============================================================
+function handleAvatarChange(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    TEACHERS[currentTeacher].profile.photo = e.target.result;
+    refreshAvatarBox(); refreshProfilePhotoPreview();
+    scheduleSave(); showToast('✅ تم تحديث الصورة');
+  };
+  reader.readAsDataURL(file);
+}
+function removeProfilePhoto() {
+  TEACHERS[currentTeacher].profile.photo = null;
+  refreshAvatarBox(); refreshProfilePhotoPreview();
+  scheduleSave(); showToast('تم إزالة الصورة');
+}
+function refreshAvatarBox() {
+  const t = TEACHERS[currentTeacher]; const box = document.getElementById('t-avatar-box');
+  box.innerHTML = t.profile && t.profile.photo
+    ? '<img src="' + t.profile.photo + '" alt="">'
+    : '<span>' + t.avatar + '</span>';
+}
+function refreshProfilePhotoPreview() {
+  const t = TEACHERS[currentTeacher]; const el = document.getElementById('profile-photo-preview');
+  el.innerHTML = t.profile && t.profile.photo
+    ? '<img src="' + t.profile.photo + '" alt="">'
+    : '<span>👨‍🏫</span>';
+}
+
+// ============================================================
+// PROFILE
+// ============================================================
+function loadProfileForm(p) {
+  ['name','major','exp','email','phone','bio','students','subjects'].forEach(f => {
+    const el = document.getElementById('p-' + f); if (el) el.value = p[f] || '';
+  });
+  const deg = document.getElementById('p-degree');
+  if (deg) deg.value = p.degree || 'بكالوريوس';
+  refreshProfilePhotoPreview();
+}
+function saveProfile() {
+  if (!currentTeacher) return;
+  TEACHERS[currentTeacher].profile = {
+    ...TEACHERS[currentTeacher].profile,
+    name: document.getElementById('p-name').value,
+    major: document.getElementById('p-major').value,
+    degree: document.getElementById('p-degree').value,
+    exp: document.getElementById('p-exp').value,
+    email: document.getElementById('p-email').value,
+    phone: document.getElementById('p-phone').value,
+    bio: document.getElementById('p-bio').value,
+    students: document.getElementById('p-students').value,
+    subjects: document.getElementById('p-subjects').value,
+  };
+  document.getElementById('t-exp').textContent = (document.getElementById('p-exp').value || '0') + ' سنوات خبرة';
+  scheduleSave();
+  const s = document.getElementById('save-status'); s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// ENTRIES
+// ============================================================
+function addEntry() {
+  const title = document.getElementById('e-title').value.trim();
+  if (!title) { showToast('⚠️ أدخل عنوان الإنجاز أولاً'); return; }
+  const entry = {
+    id: nextId++, title,
+    type: document.getElementById('e-type').value,
+    ...getDateData('e'),
+    org: document.getElementById('e-org').value,
+    duration: document.getElementById('e-duration').value,
+    desc: document.getElementById('e-desc').value,
+    skills: document.getElementById('e-skills').value,
+    attachments: [...pendingAttach]
+  };
+  TEACHERS[currentTeacher].entries.unshift(entry);
+  ['e-title','e-date','e-org','e-duration','e-desc','e-skills'].forEach(id => document.getElementById(id).value = '');
+  pendingAttach = []; renderPreview('attach-preview', pendingAttach);
+  document.getElementById('e-type').value = 'achievement';
+  renderEntries(); updateStats(); scheduleSave();
+  switchTab('achievements', document.querySelectorAll('.tab-btn')[0]);
+  showToast('✅ تم إضافة الإنجاز');
+}
+function deleteEntry(id) {
+  if (!confirm('حذف هذا الإنجاز؟')) return;
+  TEACHERS[currentTeacher].entries = TEACHERS[currentTeacher].entries.filter(e => e.id !== id);
+  renderEntries(); updateStats(); scheduleSave(); showToast('🗑️ تم الحذف');
+}
+function openEditModal(id) {
+  const e = TEACHERS[currentTeacher].entries.find(x => x.id === id); if (!e) return;
+  document.getElementById('edit-entry-id').value = id;
+  document.getElementById('edit-title').value = e.title || '';
+  document.getElementById('edit-type').value = e.type || 'achievement';
+  document.getElementById('edit-date').value = e.date || '';
+  document.getElementById('edit-org').value = e.org || '';
+  document.getElementById('edit-duration').value = e.duration || '';
+  document.getElementById('edit-desc').value = e.desc || '';
+  document.getElementById('edit-skills').value = e.skills || '';
+  if (e.date) updateHijri('edit-date', 'edit-hijri');
+  document.getElementById('edit-modal').classList.add('open');
+}
+function saveEditEntry() {
+  const id = parseInt(document.getElementById('edit-entry-id').value);
+  const idx = TEACHERS[currentTeacher].entries.findIndex(x => x.id === id); if (idx === -1) return;
+  TEACHERS[currentTeacher].entries[idx] = { ...TEACHERS[currentTeacher].entries[idx],
+    title: document.getElementById('edit-title').value,
+    type: document.getElementById('edit-type').value,
+    date: document.getElementById('edit-date').value,
+    org: document.getElementById('edit-org').value,
+    duration: document.getElementById('edit-duration').value,
+    desc: document.getElementById('edit-desc').value,
+    skills: document.getElementById('edit-skills').value,
+  };
+  closeModal('edit-modal'); renderEntries(); scheduleSave(); showToast('✅ تم حفظ التعديلات');
+}
+
+const TYPE_LBL = {
+  achievement:['🏆 إنجاز مهني','tag-achievement'], training:['📚 دورة تدريبية','tag-training'],
+  activity:['🎯 نشاط وفعالية','tag-activity'], award:['🥇 شهادة وتكريم','tag-award'], other:['📌 أخرى','tag-other']
+};
+
+function renderEntries() {
+  const entries = TEACHERS[currentTeacher].entries;
+  const c = document.getElementById('entries-list');
+  if (!entries.length) { c.innerHTML = '<div class="empty"><div class="empty-icon">📂</div><div style="font-size:0.85rem">لا توجد إنجازات بعد</div></div>'; return; }
+  const sortHint = entries.length > 1 ? '<div class="sort-hint">☰ اسحب الكارد لإعادة الترتيب</div>' : '';
+  c.innerHTML = sortHint + entries.map((e, idx) => {
+    const [lbl, cls] = TYPE_LBL[e.type] || TYPE_LBL.other;
+    const greg = e.date ? new Date(e.date).toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'}) : '—';
+    const hij = e.date ? toHijri(e.date) : '';
+    const attachHtml = (e.attachments || []).map(a => {
+      if (a.dataUrl && a.dataUrl.startsWith('data:image')) {
+        return '<img src="' + escHtml(a.dataUrl) + '" class="img-thumb" data-src="' + escHtml(a.dataUrl) + '" onclick="openLightboxFromEl(this)">';
+      }
+      return '<a href="' + escHtml(a.dataUrl) + '" target="_blank" class="attach-chip" style="text-decoration:none">📎 ' + escHtml(a.name.length > 16 ? a.name.slice(0,14) + '…' : a.name) + '</a>';
+    }).join('');
+    return '<div class="entry-card" draggable="true"' +
+      ' ondragstart="onDragStart(event,' + idx + ',\'entries\')"' +
+      ' ondragend="onDragEnd(event)"' +
+      ' ondragover="onDragOver(event,' + idx + ')"' +
+      ' ondragleave="onDragLeave(event)"' +
+      ' ondrop="onDrop(event,' + idx + ',\'entries\')">' +
+      '<div class="entry-head">' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<span class="drag-handle" title="اسحب لإعادة الترتيب">☰</span>' +
+          '<div class="entry-title">' + escHtml(e.title) + '</div>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">' +
+          '<span class="entry-date">📅 ' + greg + '</span>' +
+          (hij ? '<span class="entry-date-hijri">🌙 ' + hij + '</span>' : '') +
+          '<button class="btn-print-sm" onclick="printEntry(' + e.id + ')">🖨️ طباعة</button>' +
+          '<button class="btn-edit" onclick="openEditModal(' + e.id + ')">✏️ تعديل</button>' +
+          '<button class="btn-danger" onclick="deleteEntry(' + e.id + ')">🗑️</button>' +
+        '</div>' +
+      '</div>' +
+      (e.org ? '<div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px">🏛️ ' + escHtml(e.org) + (e.duration ? ' — ⏱️ ' + escHtml(e.duration) : '') + '</div>' : '') +
+      (e.desc ? '<div class="entry-desc">' + escHtml(e.desc) + '</div>' : '') +
+      '<div class="entry-tags">' +
+        '<span class="entry-tag ' + cls + '">' + lbl + '</span>' +
+        (e.skills ? e.skills.split('،').map(s => '<span class="entry-tag tag-other">✦ ' + escHtml(s.trim()) + '</span>').join('') : '') +
+      '</div>' +
+      (attachHtml ? '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">' + attachHtml + '</div>' : '') +
+    '</div>';
+  }).join('');
+}
+
+// ============================================================
+// WITNESSES
+// ============================================================
+const W_TYPES = {
+  school_work:'🎨 عمل مدرسي', certificate:'📜 شهادة',
+  photo_witness:'📸 شاهد صوري', student_product:'🏅 منتج طلابي',
+  event:'🎯 فعالية', other:'📌 أخرى'
+};
+
+function openWitnessModal() {
+  editingWitnessId = null;
+  document.querySelector('#witness-modal .modal-title').textContent = '📋 إضافة شاهد / عمل مدرسي';
+  document.getElementById('w-title').value = '';
+  document.getElementById('w-type').value = 'school_work';
+  if (document.getElementById('w-date')) document.getElementById('w-date').value = '';
+  if (document.getElementById('w-date-result')) { document.getElementById('w-date-result').textContent = ''; document.getElementById('w-date-result').dataset.hijri = ''; }
+  document.getElementById('w-desc').value = '';
+  switchDateMode('w','greg');
+  ['w-title','w-date','w-desc'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('w-type').value = 'school_work';
+  pendingWitnessAttach = []; renderPreview('w-attach-preview', pendingWitnessAttach);
+  initHijriSelects();
+  document.getElementById('witness-modal').classList.add('open');
+}
+function saveWitness() {
+  const title = document.getElementById('w-title').value.trim();
+  if (!title) { showToast('⚠️ أدخل عنوان الشاهد'); return; }
+  const dateVal = document.getElementById('w-date') ? document.getElementById('w-date').value : '';
+  const dateHijri = document.getElementById('w-date-result') ? document.getElementById('w-date-result').dataset.hijri || '' : '';
+  const dateMode = document.getElementById('w-date-tog-h') && document.getElementById('w-date-tog-h').classList.contains('active') ? 'hijri' : 'greg';
+  if (!TEACHERS[currentTeacher].witnesses) TEACHERS[currentTeacher].witnesses = [];
+  if (editingWitnessId !== null) {
+    // Edit mode
+    const idx = TEACHERS[currentTeacher].witnesses.findIndex(x => x.id === editingWitnessId);
+    if (idx >= 0) {
+      const existing = TEACHERS[currentTeacher].witnesses[idx];
+      TEACHERS[currentTeacher].witnesses[idx] = {
+        ...existing, title, type: document.getElementById('w-type').value,
+        date: dateVal, dateHijri, dateMode,
+        desc: document.getElementById('w-desc').value,
+        files: pendingWitnessAttach.length > 0 ? [...pendingWitnessAttach] : existing.files
+      };
+    }
+    editingWitnessId = null;
+    showToast('✅ تم تعديل الشاهد');
+  } else {
+    // Add mode
+    const w = {
+      id: nextWitnessId++, title, type: document.getElementById('w-type').value,
+      date: dateVal, dateHijri, dateMode,
+      desc: document.getElementById('w-desc').value,
+      files: [...pendingWitnessAttach]
+    };
+    TEACHERS[currentTeacher].witnesses.unshift(w);
+    showToast('✅ تم إضافة الشاهد');
+  }
+  closeModal('witness-modal'); renderWitnesses(); updateStats(); scheduleSave();
+}
+function editWitness(id) {
+  const w = (TEACHERS[currentTeacher].witnesses || []).find(x => x.id === id);
+  if (!w) return;
+  editingWitnessId = id;
+  document.querySelector('#witness-modal .modal-title').textContent = '✏️ تعديل شاهد / عمل مدرسي';
+  document.getElementById('w-title').value = w.title || '';
+  document.getElementById('w-type').value = w.type || 'school_work';
+  document.getElementById('w-desc').value = w.desc || '';
+  initHijriSelects();
+  // Restore date
+  const mode = w.dateMode || 'greg';
+  switchDateMode('w', mode);
+  if (mode === 'greg' && w.date) {
+    document.getElementById('w-date').value = w.date;
+    updateDualDate('w');
+  } else if (mode === 'hijri' && w.dateHijri) {
+    document.getElementById('w-date-result').textContent = w.dateHijri;
+    document.getElementById('w-date-result').dataset.hijri = w.dateHijri;
+  }
+  pendingWitnessAttach = []; renderPreview('w-attach-preview', pendingWitnessAttach);
+  document.getElementById('witness-modal').classList.add('open');
+}
+function deleteWitness(id) {
+  if (!confirm('حذف هذا الشاهد؟')) return;
+  TEACHERS[currentTeacher].witnesses = TEACHERS[currentTeacher].witnesses.filter(w => w.id !== id);
+  renderWitnesses(); updateStats(); scheduleSave(); showToast('🗑️ تم الحذف');
+}
+function renderWitnesses() {
+  const witnesses = TEACHERS[currentTeacher].witnesses || [];
+  const c = document.getElementById('witnesses-list');
+  if (!witnesses.length) { c.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div style="font-size:0.85rem">لا توجد شواهد بعد</div></div>'; return; }
+  const wSortHint = witnesses.length > 1 ? '<div class="sort-hint">☰ اسحب الكارد لإعادة الترتيب</div>' : '';
+  c.innerHTML = wSortHint + witnesses.map((w, widx) => {
+    const imgs = (w.files || []).filter(f => f.dataUrl && f.dataUrl.startsWith('data:image'));
+    const others = (w.files || []).filter(f => !f.dataUrl || !f.dataUrl.startsWith('data:image'));
+    let greg = '', hij = '';
+    if (w.dateMode === 'hijri') {
+      hij = w.dateHijri || '';
+    } else {
+      greg = w.date ? new Date(w.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '';
+      hij = w.date ? toHijri(w.date) : '';
+    }
+    const imgsHtml = imgs.map(f => '<img src="' + escHtml(f.dataUrl) + '" class="img-thumb" data-src="' + escHtml(f.dataUrl) + '" onclick="openLightboxFromEl(this)">').join('');
+    const filesHtml = others.map(f => '<a href="' + escHtml(f.dataUrl) + '" target="_blank" class="attach-chip" style="background:#fff3e0;border-color:#f59040;color:#7a2800;text-decoration:none">📎 ' + escHtml(f.name.length > 20 ? f.name.slice(0,18) + '…' : f.name) + '</a>').join('');
+    return '<div class="witness-card" draggable="true"' +
+      ' ondragstart="onDragStart(event,' + widx + ',\'witnesses\')"' +
+      ' ondragend="onDragEnd(event)"' +
+      ' ondragover="onDragOver(event,' + widx + ')"' +
+      ' ondragleave="onDragLeave(event)"' +
+      ' ondrop="onDrop(event,' + widx + ',\'witnesses\')">' +
+      '<div class="entry-head">' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<span class="drag-handle" title="اسحب لإعادة الترتيب">☰</span>' +
+          '<div>' +
+            '<div class="witness-title">📋 ' + escHtml(w.title) + '</div>' +
+            '<div class="witness-meta">' + (W_TYPES[w.type] || w.type) + (greg ? ' — 📅 ' + greg : '') + (hij ? ' 🌙 ' + hij : '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:6px;flex-shrink:0">' +
+          '<button class="btn-edit-witness" onclick="editWitness(' + w.id + ')">✏️ تعديل</button>' +
+          '<button class="btn-print-sm" onclick="printWitness(' + w.id + ')">🖨️ طباعة</button>' +
+          '<button class="btn-danger" onclick="deleteWitness(' + w.id + ')">🗑️</button>' +
+        '</div>' +
+      '</div>' +
+      (w.desc ? '<div class="witness-desc">' + escHtml(w.desc) + '</div>' : '') +
+      (imgs.length ? '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">' + imgsHtml + '</div>' : '') +
+      (others.length ? '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">' + filesHtml + '</div>' : '') +
+    '</div>';
+  }).join('');
+}
+
+
+function printEntry(id) {
+  const e = (TEACHERS[currentTeacher].entries || []).find(x => x.id === id); if (!e) return;
+  const t = TEACHERS[currentTeacher]; const p = t.profile;
+  const imgs = (e.attachments || []).filter(f => f.dataUrl && f.dataUrl.startsWith('data:image'));
+  const others = (e.attachments || []).filter(f => !f.dataUrl || !f.dataUrl.startsWith('data:image'));
+  const greg = e.date ? new Date(e.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '—';
+  const hij = e.date ? toHijri(e.date) : '';
+  const todayG = new Date().toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'});
+  const todayH = new Date().toLocaleDateString('ar-SA-u-ca-islamic',{year:'numeric',month:'long',day:'numeric'});
+  const TL = {achievement:'🏆 إنجاز مهني',training:'📚 دورة تدريبية',activity:'🎯 نشاط وفعالية',award:'🥇 شهادة وتكريم',other:'📌 أخرى'};
+  const photoEl = p.photo ? '<img src="' + p.photo + '" style="width:52px;height:52px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.3)">' :
+    '<div style="width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900">' + t.avatar + '</div>';
+  const win = window.open('', '_blank');
+  const hdrColor = PROGRAM === 'dumaj' ? 'linear-gradient(135deg,#7a2800,#c25a00)' : 'linear-gradient(135deg,#1a3a5c,#2563a8)';
+  win.document.write('<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>إنجاز</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;800;900&display=swap" rel="stylesheet">' +
+    '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Cairo",sans-serif;background:#fff;color:#1a1a2e;padding:28px;direction:rtl;font-size:13px}' +
+    '.hdr{background:' + hdrColor + ';color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:14px}' +
+    'h1{font-family:"Tajawal",sans-serif;font-size:1.1rem;font-weight:900}.sub{font-size:0.76rem;opacity:0.75;margin-top:2px}' +
+    '.sec{background:#f8faff;border:1px solid #e0e8f0;border-radius:10px;padding:14px 16px;margin-bottom:16px}' +
+    '.sec-t{border-right:4px solid #c8973a;padding-right:10px;font-weight:800;font-size:0.85rem;color:#1a3a5c;margin-bottom:10px}' +
+    '.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field{background:#fafafa;border:1px solid #e0d8c8;border-radius:6px;padding:7px 10px}' +
+    '.lbl{font-size:0.65rem;color:#5a6478;font-weight:700;margin-bottom:1px}.val{font-size:0.82rem;font-weight:700}' +
+    '.tag{display:inline-block;padding:3px 12px;border-radius:10px;font-size:0.75rem;font-weight:700;background:#fff3e0;color:#c25a00;border:1px solid #f59040}' +
+    '.imgs{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}.imgs img{max-width:180px;max-height:160px;object-fit:cover;border-radius:8px;border:1px solid #e0e8f0}' +
+    '.ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:10px}' +
+    '@media print{body{padding:12px}}</style></head><body>' +
+    '<div class="hdr">' + photoEl + '<div><h1>' + escHtml(e.title) + '</h1>' +
+    '<div class="sub">' + (TL[e.type]||e.type) + ' — ' + escHtml(p.name||t.avatar) + '</div>' +
+    '<div class="sub">📅 ' + greg + (hij?' 🌙 '+hij:'') + '</div></div></div>' +
+    '<div class="sec"><div class="sec-t">معلومات المعلم</div><div class="grid2">' +
+    '<div class="field"><div class="lbl">الاسم</div><div class="val">' + escHtml(p.name||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">التخصص</div><div class="val">' + escHtml(p.major||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">الدرجة</div><div class="val">' + escHtml(p.degree||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">الخبرة</div><div class="val">' + escHtml(p.exp||'—') + ' سنوات</div></div>' +
+    '</div></div>' +
+    '<div class="sec"><div class="sec-t">تفاصيل الإنجاز</div>' +
+    '<div style="margin-bottom:10px"><span class="tag">' + (TL[e.type]||e.type) + '</span></div>' +
+    '<div class="grid2">' +
+    '<div class="field"><div class="lbl">التاريخ الميلادي</div><div class="val">' + greg + '</div></div>' +
+    '<div class="field"><div class="lbl">التاريخ الهجري</div><div class="val">' + (hij||'—') + '</div></div>' +
+    (e.org ? '<div class="field"><div class="lbl">الجهة</div><div class="val">' + escHtml(e.org) + '</div></div>' : '') +
+    (e.duration ? '<div class="field"><div class="lbl">المدة</div><div class="val">' + escHtml(e.duration) + '</div></div>' : '') +
+    '</div>' +
+    (e.desc ? '<div style="font-size:0.82rem;line-height:1.8;margin-top:10px;color:#374151">' + escHtml(e.desc) + '</div>' : '') +
+    (e.skills ? '<div style="font-size:0.78rem;color:#5a6478;margin-top:8px">✦ المهارات: ' + escHtml(e.skills) + '</div>' : '') +
+    '</div>' +
+    (imgs.length ? '<div class="sec"><div class="sec-t">المرفقات</div><div class="imgs">' + imgs.map(f => '<img src="' + f.dataUrl + '" alt="">').join('') + '</div></div>' : '') +
+    (others.length ? '<div class="sec"><div class="sec-t">ملفات مرفقة</div>' + others.map(f => '<div style="font-size:0.82rem;padding:4px 0">📎 ' + escHtml(f.name) + '</div>').join('') + '</div>' : '') +
+    '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>' +
+    '<script>window.onload=()=>window.print();<\/script></body></html>');
+  win.document.close();
+}
+
+function printWitness(id) {
+  const w = (TEACHERS[currentTeacher].witnesses || []).find(x => x.id === id); if (!w) return;
+  const t = TEACHERS[currentTeacher]; const p = t.profile;
+  const imgs = (w.files || []).filter(f => f.dataUrl && f.dataUrl.startsWith('data:image'));
+  const others = (w.files || []).filter(f => !f.dataUrl || !f.dataUrl.startsWith('data:image'));
+  const greg = w.date ? new Date(w.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '—';
+  const hij = w.date ? toHijri(w.date) : '';
+  const todayG = new Date().toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'});
+  const todayH = new Date().toLocaleDateString('ar-SA-u-ca-islamic',{year:'numeric',month:'long',day:'numeric'});
+  const photoEl = p.photo ? '<img src="' + p.photo + '" style="width:52px;height:52px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.3)">' :
+    '<div style="width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:900">' + t.avatar + '</div>';
+  const win = window.open('', '_blank');
+  win.document.write('<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>شاهد</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;800;900&display=swap" rel="stylesheet">' +
+    '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Cairo",sans-serif;background:#fff;color:#1a1a2e;padding:28px;direction:rtl;font-size:13px}' +
+    '.hdr{background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:14px}' +
+    'h1{font-family:"Tajawal",sans-serif;font-size:1.1rem;font-weight:900}.sub{font-size:0.76rem;opacity:0.75;margin-top:2px}' +
+    '.sec{background:#fff8f3;border:1px solid #f0d0a0;border-radius:10px;padding:14px 16px;margin-bottom:16px}' +
+    '.sec-t{border-right:4px solid #c25a00;padding-right:10px;font-weight:800;font-size:0.85rem;color:#7a2800;margin-bottom:10px}' +
+    '.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field{background:#fafafa;border:1px solid #e0d8c8;border-radius:6px;padding:7px 10px}' +
+    '.lbl{font-size:0.65rem;color:#5a6478;font-weight:700;margin-bottom:1px}.val{font-size:0.82rem;font-weight:700}' +
+    '.imgs{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}.imgs img{max-width:180px;max-height:160px;object-fit:cover;border-radius:8px;border:1px solid #f0d0a0}' +
+    '.ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:10px}' +
+    '@media print{body{padding:12px}}</style></head><body>' +
+    '<div class="hdr">' + photoEl + '<div><h1>📋 ' + escHtml(w.title) + '</h1><div class="sub">' + (W_TYPES[w.type]||w.type) + ' — ' + escHtml(p.name||currentTeacher) + '</div><div class="sub">📅 ' + greg + (hij?' 🌙 '+hij:'') + '</div></div></div>' +
+    '<div class="sec"><div class="sec-t">معلومات المعلم</div><div class="grid2">' +
+    '<div class="field"><div class="lbl">الاسم</div><div class="val">' + escHtml(p.name||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">التخصص</div><div class="val">' + escHtml(p.major||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">الدرجة</div><div class="val">' + escHtml(p.degree||'—') + '</div></div>' +
+    '<div class="field"><div class="lbl">سنوات الخبرة</div><div class="val">' + escHtml(p.exp||'—') + ' سنوات</div></div>' +
+    '</div></div>' +
+    '<div class="sec"><div class="sec-t">تفاصيل الشاهد</div><div class="grid2">' +
+    '<div class="field"><div class="lbl">التاريخ الميلادي</div><div class="val">' + greg + '</div></div>' +
+    '<div class="field"><div class="lbl">التاريخ الهجري</div><div class="val">' + (hij||'—') + '</div></div>' +
+    '</div>' + (w.desc ? '<div style="font-size:0.82rem;line-height:1.8;margin-top:8px;color:#374151">' + escHtml(w.desc) + '</div>' : '') + '</div>' +
+    (imgs.length ? '<div class="sec"><div class="sec-t">الصور المرفقة</div><div class="imgs">' + imgs.map(f => '<img src="' + f.dataUrl + '" alt="">').join('') + '</div></div>' : '') +
+    (others.length ? '<div class="sec"><div class="sec-t">الملفات المرفقة</div>' + others.map(f => '<div style="font-size:0.82rem;padding:4px 0">📎 ' + escHtml(f.name) + '</div>').join('') + '</div>' : '') +
+    '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>' +
+    '<script>window.onload=()=>window.print();<\/script></body></html>');
+  win.document.close();
+}
+
+// ============================================================
+// STATS + TABS
+// ============================================================
+function updateStats() {
+  const e = TEACHERS[currentTeacher].entries || [];
+  const w = TEACHERS[currentTeacher].witnesses || [];
+  document.getElementById('stat-total').textContent = e.length;
+  document.getElementById('stat-training').textContent = e.filter(x => x.type === 'training').length;
+  document.getElementById('stat-activity').textContent = e.filter(x => x.type === 'activity').length;
+  document.getElementById('stat-award').textContent = e.filter(x => x.type === 'award').length;
+  document.getElementById('stat-witness').textContent = w.length;
+  document.getElementById('t-entries-badge').textContent = e.length + ' إنجاز';
+}
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ============================================================
+// FILES
+// ============================================================
+function handleFiles(files, type) {
+  const arr = type === 'witness' ? pendingWitnessAttach : pendingAttach;
+  const pid = type === 'witness' ? 'w-attach-preview' : 'attach-preview';
+  Array.from(files).forEach(file => {
+    if (file.size > 8 * 1024 * 1024) { showToast('⚠️ الملف أكبر من 8MB'); return; }
+    const r = new FileReader();
+    r.onload = ev => { arr.push({ name: file.name, dataUrl: ev.target.result }); renderPreview(pid, arr); };
+    r.readAsDataURL(file);
+  });
+}
+function handleDrop(e, type) { e.preventDefault(); handleFiles(e.dataTransfer.files, type); }
+function renderPreview(pid, arr) {
+  const el = document.getElementById(pid); if (!el) return;
+  el.innerHTML = arr.map((a, i) => {
+    const isImg = a.dataUrl && a.dataUrl.startsWith('data:image');
+    return '<div class="attach-chip">' +
+      (isImg ? '<img src="' + escHtml(a.dataUrl) + '" style="width:26px;height:26px;object-fit:cover;border-radius:4px;cursor:pointer" data-src="' + escHtml(a.dataUrl) + '" onclick="openLightboxFromEl(this)">' : '📎 ') +
+      '<a href="' + escHtml(a.dataUrl) + '" target="_blank">' + escHtml(a.name.length > 18 ? a.name.slice(0,16) + '…' : a.name) + '</a>' +
+      '<button onclick="removeAttach(' + i + ',\'' + pid + '\')">✕</button>' +
+    '</div>';
+  }).join('');
+}
+function removeAttach(i, pid) {
+  const arr = pid === 'w-attach-preview' ? pendingWitnessAttach : pendingAttach;
+  arr.splice(i, 1); renderPreview(pid, arr);
+}
+
+// ============================================================
+// LIGHTBOX (use data-src to avoid quote issues)
+// ============================================================
+function openLightboxFromEl(el) {
+  const src = el.getAttribute('data-src') || el.src;
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+
+// ============================================================
+// MODAL
+// ============================================================
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.getElementById('witness-modal').addEventListener('click', function(e) { if (e.target === this) closeModal('witness-modal'); });
+document.getElementById('edit-modal').addEventListener('click', function(e) { if (e.target === this) closeModal('edit-modal'); });
+
+// ============================================================
+// PRINT FULL
+// ============================================================
+function printProfile() {
+  if (!currentTeacher) return;
+  const t = TEACHERS[currentTeacher]; const p = t.profile;
+  const entries = t.entries || []; const witnesses = t.witnesses || [];
+  const TL = {achievement:'🏆 إنجاز مهني',training:'📚 دورة تدريبية',activity:'🎯 نشاط وفعالية',award:'🥇 شهادة وتكريم',other:'📌 أخرى'};
+  const todayG = new Date().toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'});
+  const todayH = new Date().toLocaleDateString('ar-SA-u-ca-islamic',{year:'numeric',month:'long',day:'numeric'});
+  const photoEl = p.photo ? '<img src="' + p.photo + '" style="width:56px;height:56px;border-radius:12px;object-fit:cover;border:2px solid rgba(255,255,255,0.3)">' :
+    '<div style="width:56px;height:56px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900">' + t.avatar + '</div>';
+  const win = window.open('', '_blank');
+  let html = '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>ملف إنجاز</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;800;900&display=swap" rel="stylesheet">' +
+    '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Cairo",sans-serif;background:#fff;color:#1a1a2e;padding:28px;direction:rtl;font-size:13px}' +
+    '.hdr{background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:16px}' +
+    'h1{font-family:"Tajawal",sans-serif;font-size:1.2rem;font-weight:900}.sub{font-size:0.76rem;opacity:0.75;margin-top:2px}' +
+    '.sec{margin-bottom:18px}.sec-t{background:#f5f2eb;border-right:4px solid #c8973a;padding:7px 12px;font-weight:800;font-size:0.85rem;color:#1a3a5c;margin-bottom:10px;border-radius:0 6px 6px 0}' +
+    '.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f{background:#fafafa;border:1px solid #e0d8c8;border-radius:7px;padding:8px 12px}' +
+    '.lbl{font-size:0.66rem;color:#5a6478;font-weight:700;margin-bottom:2px}.val{font-size:0.83rem;font-weight:700}' +
+    '.bio{background:#fff8f0;border:1px solid #f0d898;border-radius:8px;padding:12px;font-size:0.8rem;line-height:1.8;grid-column:1/-1}' +
+    '.entry{background:#fafafa;border:1px solid #e0d8c8;border-radius:8px;padding:12px;margin-bottom:10px;break-inside:avoid}' +
+    '.e-t{font-weight:800;font-size:0.86rem;color:#1a3a5c;margin-bottom:4px}' +
+    '.e-m{font-size:0.7rem;color:#5a6478;margin-bottom:5px}.hij{display:inline-block;font-size:0.65rem;color:#065f46;background:#d1fae5;padding:1px 7px;border-radius:5px}' +
+    '.tag{display:inline-block;background:#fff3e0;color:#c25a00;padding:2px 9px;border-radius:7px;font-size:0.7rem;font-weight:700;margin-left:5px}' +
+    '.wc{background:#fff8f3;border:1px solid #f0d0a0;border-radius:8px;padding:12px;margin-bottom:10px;break-inside:avoid}' +
+    '.w-t{font-weight:800;font-size:0.86rem;color:#7a2800}.w-imgs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}' +
+    '.w-imgs img{max-width:150px;max-height:130px;object-fit:cover;border-radius:6px;border:1px solid #f0d0a0}' +
+    '.ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px}' +
+    '@media print{body{padding:12px}}</style></head><body>';
+  html += '<div class="hdr">' + photoEl + '<div><h1>' + escHtml(currentTeacher) + '</h1><div class="sub">' + escHtml(t.role) + '</div><div class="sub">📅 ' + todayG + ' | 🌙 ' + todayH + '</div></div></div>';
+  html += '<div class="sec"><div class="sec-t">📋 البيانات الشخصية والوظيفية</div><div class="g2">' +
+    '<div class="f"><div class="lbl">الاسم</div><div class="val">' + escHtml(p.name||'—') + '</div></div>' +
+    '<div class="f"><div class="lbl">التخصص</div><div class="val">' + escHtml(p.major||'—') + '</div></div>' +
+    '<div class="f"><div class="lbl">الدرجة</div><div class="val">' + escHtml(p.degree||'—') + '</div></div>' +
+    '<div class="f"><div class="lbl">الخبرة</div><div class="val">' + escHtml(p.exp||'—') + ' سنوات</div></div>' +
+    '<div class="f"><div class="lbl">البريد</div><div class="val">' + escHtml(p.email||'—') + '</div></div>' +
+    '<div class="f"><div class="lbl">الجوال</div><div class="val">' + escHtml(p.phone||'—') + '</div></div>' +
+    '<div class="f"><div class="lbl">الطلاب</div><div class="val">' + escHtml(p.students||'—') + '</div></div>' +
+    '<div class="f"><div class="lbl">المواد</div><div class="val">' + escHtml(p.subjects||'—') + '</div></div>' +
+    (p.bio ? '<div class="bio">' + escHtml(p.bio) + '</div>' : '') +
+    '</div></div>';
+  html += '<div class="sec"><div class="sec-t">🏆 ملف الإنجازات (' + entries.length + ')</div>';
+  if (entries.length) {
+    entries.forEach(e => {
+      const g = e.date ? new Date(e.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '—';
+      const h = e.date ? toHijri(e.date) : '';
+      html += '<div class="entry"><div class="e-t">' + escHtml(e.title) + ' <span class="tag">' + (TL[e.type]||e.type) + '</span></div>' +
+        '<div class="e-m">📅 ' + g + (h ? ' <span class="hij">🌙 ' + h + '</span>' : '') + (e.org ? ' — 🏛️ ' + escHtml(e.org) : '') + (e.duration ? ' — ⏱️ ' + escHtml(e.duration) : '') + '</div>' +
+        (e.desc ? '<div style="font-size:0.78rem;line-height:1.7;color:#374151">' + escHtml(e.desc) + '</div>' : '') +
+        (e.skills ? '<div style="font-size:0.73rem;color:#5a6478;margin-top:3px">✦ ' + escHtml(e.skills) + '</div>' : '') +
+        '</div>';
+    });
+  } else html += '<div style="text-align:center;color:#9ca3af;padding:16px">لا توجد إنجازات</div>';
+  html += '</div>';
+  if (witnesses.length) {
+    html += '<div class="sec"><div class="sec-t">📋 الشواهد والأعمال المدرسية (' + witnesses.length + ')</div>';
+    witnesses.forEach(w => {
+      const imgs = (w.files || []).filter(f => f.dataUrl && f.dataUrl.startsWith('data:image'));
+      const g = w.date ? new Date(w.date).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'}) : '';
+      const h = w.date ? toHijri(w.date) : '';
+      html += '<div class="wc"><div class="w-t">📋 ' + escHtml(w.title) + ' <span style="font-size:0.76rem;color:#c25a00">' + (W_TYPES[w.type]||w.type) + '</span></div>' +
+        '<div style="font-size:0.7rem;color:#5a6478">' + (g ? '📅 '+g : '') + (h ? ' 🌙 '+h : '') + '</div>' +
+        (w.desc ? '<div style="font-size:0.8rem;margin-top:5px;line-height:1.7">' + escHtml(w.desc) + '</div>' : '') +
+        (imgs.length ? '<div class="w-imgs">' + imgs.map(f => '<img src="' + f.dataUrl + '" alt="">').join('') + '</div>' : '') +
+        '</div>';
+    });
+    html += '</div>';
+  }
+  html += '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>';
+  html += '<script>window.onload=()=>window.print();<\/script></body></html>';
+  win.document.write(html); win.document.close();
+}
+
+
+// ============================================================
+// DRAG & DROP SORTING
+// ============================================================
+let dragSrcIdx = null, dragList = null, isDragging = false;
+
+function onDragStart(e, idx, listType) {
+  // فقط إذا النقر على الـ drag handle
+  const handle = e.target.closest('.drag-handle');
+  if (!handle) { e.preventDefault(); return; }
+  isDragging = true;
+  dragSrcIdx = idx; dragList = listType;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => e.currentTarget.classList.add('dragging'), 0);
+}
+function onDragEnd(e) {
+  isDragging = false; dragSrcIdx = null; dragList = null;
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+}
+function onDragOver(e, idx) {
+  if (!isDragging) return;
+  e.preventDefault();
+  e.stopPropagation();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drag-over');
+}
+function onDragLeave(e) {
+  // تجنب إزالة drag-over عند الانتقال لـ child element
+  if (e.currentTarget.contains(e.relatedTarget)) return;
+  e.currentTarget.classList.remove('drag-over');
+}
+function onDrop(e, toIdx, listType) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('drag-over');
+  if (!isDragging || dragSrcIdx === null || dragSrcIdx === toIdx || dragList !== listType) {
+    isDragging = false; dragSrcIdx = null; return;
+  }
+  const from = dragSrcIdx;
+  isDragging = false; dragSrcIdx = null;
+  const arr = listType === 'entries'
+    ? TEACHERS[currentTeacher].entries
+    : TEACHERS[currentTeacher].witnesses;
+  const moved = arr.splice(from, 1)[0];
+  arr.splice(toIdx, 0, moved);
+  if (listType === 'entries') renderEntries();
+  else renderWitnesses();
+  scheduleSave();
+  showToast('✅ تم إعادة الترتيب');
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ============================================================
+// DUAL DATE SYSTEM
+// ============================================================
+var dateModes = {}; // prefix -> 'greg' | 'hijri'
+
+function initHijriSelects() {
+  var prefixes = ['w','e','edit'];
+  prefixes.forEach(function(p) {
+    var dayEl = document.getElementById(p+'-hijri-day');
+    if (dayEl && dayEl.options.length <= 1) {
+      for (var d = 1; d <= 30; d++) {
+        var opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        dayEl.appendChild(opt);
+      }
+    }
+    var yrEl = document.getElementById(p+'-hijri-year');
+    if (yrEl && yrEl.options.length <= 1) {
+      for (var y = 1420; y <= 1460; y++) {
+        var opt = document.createElement('option');
+        opt.value = y; opt.textContent = y + ' هـ';
+        if (y === 1446) opt.selected = true;
+        yrEl.appendChild(opt);
+      }
+    }
+  });
+}
+
+function switchDateMode(prefix, mode) {
+  dateModes[prefix] = mode;
+  var gBtn = document.getElementById(prefix+'-date-tog-g');
+  var hBtn = document.getElementById(prefix+'-date-tog-h');
+  var gWrap = document.getElementById(prefix+'-date-greg-wrap');
+  var hWrap = document.getElementById(prefix+'-date-hijri-wrap');
+  if (!gBtn) return;
+  if (mode === 'greg') {
+    gBtn.classList.add('active'); hBtn.classList.remove('active');
+    if (gWrap) gWrap.style.display = '';
+    if (hWrap) hWrap.style.display = 'none';
+  } else {
+    hBtn.classList.add('active'); gBtn.classList.remove('active');
+    if (gWrap) gWrap.style.display = 'none';
+    if (hWrap) hWrap.style.display = 'flex';
+    initHijriSelects();
+  }
+  updateDualDate(prefix);
+}
+
+
+function getDateData(prefix) {
+  var mode = dateModes[prefix] || 'greg';
+  var resultEl = document.getElementById(prefix+'-date-result');
+  var dateVal = mode === 'greg' ? ((document.getElementById(prefix+'-date')||{}).value||'') : '';
+  return { date: dateVal, dateHijri: resultEl ? (resultEl.dataset.hijri||'') : '', dateMode: mode };
+}
+function setDateData(prefix, data) {
+  var mode = data.dateMode || 'greg'; switchDateMode(prefix, mode);
+  if (mode === 'greg' && data.date) { var inp = document.getElementById(prefix+'-date'); if (inp) { inp.value = data.date; updateDualDate(prefix); } }
+  else if (mode === 'hijri' && data.dateHijri) { var r = document.getElementById(prefix+'-date-result'); if (r) { r.textContent = '\uD83C\uDF19 ' + data.dateHijri; r.dataset.hijri = data.dateHijri; r.classList.add('show'); } }
+}
+function resetDateField(prefix) {
+  switchDateMode(prefix, 'greg');
+  var inp = document.getElementById(prefix+'-date'); if (inp) inp.value = '';
+  var r = document.getElementById(prefix+'-date-result'); if (r) { r.textContent = ''; r.dataset.hijri = ''; r.dataset.greg = ''; r.classList.remove('show'); }
+}
+
+function updateDualDate(prefix) {
+  var mode = dateModes[prefix] || 'greg';
+  var resultEl = document.getElementById(prefix+'-date-result');
+  if (!resultEl) return;
+  if (mode === 'greg') {
+    var inp = document.getElementById(prefix+'-date');
+    if (inp && inp.value) {
+      var greg = new Date(inp.value).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'});
+      var hij = toHijri(inp.value);
+      resultEl.textContent = '📅 ' + greg + (hij ? ' — 🌙 ' + hij : '');
+      resultEl.dataset.hijri = hij;
+    } else {
+      resultEl.textContent = '';
+      resultEl.dataset.hijri = '';
+    }
+  } else {
+    var d = document.getElementById(prefix+'-hijri-day') ? document.getElementById(prefix+'-hijri-day').value : '';
+    var m = document.getElementById(prefix+'-hijri-month') ? document.getElementById(prefix+'-hijri-month').value : '';
+    var y = document.getElementById(prefix+'-hijri-year') ? document.getElementById(prefix+'-hijri-year').value : '';
+    if (d && m && y) {
+      var months = ['','محرم','صفر','ربيع الأول','ربيع الثاني','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+      var label = d + ' ' + months[parseInt(m)] + ' ' + y + ' هـ';
+      resultEl.textContent = '🌙 ' + label;
+      resultEl.dataset.hijri = label;
+    } else {
+      resultEl.textContent = '';
+      resultEl.dataset.hijri = '';
+    }
+  }
+}
+
+// Initialize hijri selects on load
+document.addEventListener('DOMContentLoaded', function() {
+  initHijriSelects();
+});
+
+</script>
+</body>
+</html>
