@@ -1759,7 +1759,7 @@ async function syncFromSupabase() {
 
 async function loadStudentDataFromStorage(pin) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json`);
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${pin}.json?t=${Date.now()}`);
     if (!res.ok) return; // لا يوجد ملف محفوظ بعد
     const data = await res.json();
     if (data && STUDENTS[pin]) {
@@ -1767,9 +1767,25 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].grade    = data.grade    || STUDENTS[pin].grade;
       STUDENTS[pin].id_full  = data.id_full  || STUDENTS[pin].id_full;
       STUDENTS[pin].phone    = data.phone    || STUDENTS[pin].phone || '';
-      STUDENTS[pin].plan     = data.plan     || STUDENTS[pin].plan     || [];
-      STUDENTS[pin].followup = data.followup || STUDENTS[pin].followup || [];
-      if (data.iep) STUDENTS[pin].iep = data.iep;
+      STUDENTS[pin].plan           = data.plan           || STUDENTS[pin].plan     || [];
+      STUDENTS[pin].followup       = data.followup       || STUDENTS[pin].followup || [];
+      STUDENTS[pin].iep            = data.iep            || STUDENTS[pin].iep      || {};
+      STUDENTS[pin].birthdate      = data.birthdate      || STUDENTS[pin].birthdate      || '';
+      STUDENTS[pin].nationality    = data.nationality    || STUDENTS[pin].nationality    || '';
+      STUDENTS[pin].age            = data.age            || STUDENTS[pin].age            || '';
+      STUDENTS[pin].address        = data.address        || STUDENTS[pin].address        || '';
+      STUDENTS[pin].iq             = data.iq             || STUDENTS[pin].iq             || '';
+      STUDENTS[pin].sibling_order  = data.sibling_order  || STUDENTS[pin].sibling_order  || '';
+      STUDENTS[pin].economic_level = data.economic_level || STUDENTS[pin].economic_level || '';
+      STUDENTS[pin].father_edu     = data.father_edu     || STUDENTS[pin].father_edu     || '';
+      STUDENTS[pin].mother_edu     = data.mother_edu     || STUDENTS[pin].mother_edu     || '';
+      STUDENTS[pin].status_psych   = data.status_psych   || STUDENTS[pin].status_psych   || '';
+      STUDENTS[pin].status_social  = data.status_social  || STUDENTS[pin].status_social  || '';
+      STUDENTS[pin].status_health  = data.status_health  || STUDENTS[pin].status_health  || '';
+      STUDENTS[pin].diagnosis      = data.diagnosis      || STUDENTS[pin].diagnosis      || '';
+      STUDENTS[pin].program_place  = data.program_place  || STUDENTS[pin].program_place  || '';
+      STUDENTS[pin].program_start  = data.program_start  || STUDENTS[pin].program_start  || '';
+      STUDENTS[pin].program_end    = data.program_end    || STUDENTS[pin].program_end    || '';
     }
   } catch(e) { /* ملف غير موجود */ }
 }
@@ -1781,17 +1797,33 @@ async function loadStudentWithSync(pin) {
 
 async function upsertToSupabase(pin, studentData) {
   try {
-    const jsonStr = JSON.stringify({
+    const payload = {
       pin,
-      name:     studentData.name,
-      id_full:  studentData.id_full,
-      grade:    studentData.grade,
-      phone:    studentData.phone || '',
-      plan:     studentData.plan     || [],
-      followup: studentData.followup || [],
-      iep:      studentData.iep      || {}
-    });
-    const blob = new Blob([jsonStr], {type: 'application/json'});
+      name:           studentData.name,
+      id_full:        studentData.id_full,
+      grade:          studentData.grade,
+      phone:          studentData.phone          || '',
+      plan:           studentData.plan           || [],
+      followup:       studentData.followup       || [],
+      iep:            studentData.iep            || {},
+      birthdate:      studentData.birthdate      || '',
+      nationality:    studentData.nationality    || '',
+      age:            studentData.age            || '',
+      address:        studentData.address        || '',
+      iq:             studentData.iq             || '',
+      sibling_order:  studentData.sibling_order  || '',
+      economic_level: studentData.economic_level || '',
+      father_edu:     studentData.father_edu     || '',
+      mother_edu:     studentData.mother_edu     || '',
+      status_psych:   studentData.status_psych   || '',
+      status_social:  studentData.status_social  || '',
+      status_health:  studentData.status_health  || '',
+      diagnosis:      studentData.diagnosis      || '',
+      program_place:  studentData.program_place  || '',
+      program_start:  studentData.program_start  || '',
+      program_end:    studentData.program_end    || '',
+    };
+    const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
     const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
       method: 'POST',
       headers: {
@@ -1807,11 +1839,11 @@ async function upsertToSupabase(pin, studentData) {
     } else {
       const err = await res.text();
       console.error('Storage error:', err);
-      showToast('❌ خطأ: ' + err.slice(0,60));
+      showToast('❌ خطأ في الحفظ: ' + err.slice(0,80));
     }
   } catch(e) {
     console.error('خطأ:', e);
-    showToast('❌ تعذّر الاتصال');
+    showToast('❌ تعذّر الاتصال بالسيرفر');
   }
 }
 
@@ -1992,8 +2024,7 @@ function saveStudentEdits() {
   // الأهداف محفوظة في IEP عبر collectIEPFromEditor
   closeModal();
   renderStudentCards();
-  showToast('⏳ جاري الحفظ...');
-  upsertToSupabase(editingPin, sEdit).then(() => showToast('✅ تم حفظ بيانات ' + sEdit.name));
+  saveOneStudent(editingPin);
 }
 
 function deleteStudent() {
