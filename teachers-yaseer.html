@@ -255,7 +255,11 @@ footer strong{color:var(--accent-light);}
     <div class="tab-pane active" id="tab-achievements">
       <div class="section-header">
         <div class="section-title">ملف الإنجازات</div>
-        <button class="btn-print" onclick="printProfile()">🖨️ طباعة الملف الكامل</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button id="btn-undo" onclick="undo()" disabled title="تراجع (Ctrl+Z)" style="background:#f3f4f6;color:#6b7280;border:1.5px solid #d1d5db;border-radius:8px;padding:7px 13px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.79rem;cursor:pointer;">↩️ تراجع</button>
+          <button id="btn-redo" onclick="redo()" disabled title="إعادة (Ctrl+Y)" style="background:#f3f4f6;color:#6b7280;border:1.5px solid #d1d5db;border-radius:8px;padding:7px 13px;font-family:Tajawal,sans-serif;font-weight:700;font-size:0.79rem;cursor:pointer;">↪️ إعادة</button>
+          class="btn-print" onclick="printProfile()">🖨️ طباعة الملف الكامل</button>
+        </div>
       </div>
       <div id="entries-list"><div class="empty"><div class="empty-icon">📂</div><div style="font-size:0.85rem">لا توجد إنجازات مضافة بعد</div></div></div>
     </div>
@@ -414,7 +418,9 @@ footer strong{color:var(--accent-light);}
       </div>
       <div class="form-group full"><label>الوصف</label><textarea class="form-textarea" id="w-desc"></textarea></div>
       <div class="form-group full">
-        <label>📎 رفع صور وملفات</label>
+        <label>📎 المرفقات الحالية</label>
+        <div class="attach-list" id="w-current-files" style="min-height:32px;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px;"></div>
+        <label>➕ إضافة صور وملفات جديدة</label>
         <div class="attach-zone" ondrop="handleDrop(event,'witness')" ondragover="event.preventDefault()">
           <input type="file" id="w-attach-input" multiple accept="image/*,.pdf,.doc,.docx" onchange="handleFiles(this.files,'witness')">
           <label for="w-attach-input">📷 اضغط لرفع صور أو ملفات<br><span style="font-size:0.7rem;opacity:0.6">يدعم: صور، PDF، Word</span></label>
@@ -583,7 +589,8 @@ const TEACHERS = {
 };
 
 let currentTeacher = null, nextId = 200, nextWitnessId = 300, editingWitnessId = null;
-let pendingAttach = [], pendingWitnessAttach = [];
+let pendingAttach = [], pendingWitnessAttach = [], pendingEditAttach = [];
+let undoStack = [], redoStack = [];
 let saveTimeout = null;
 
 // ============================================================
@@ -842,6 +849,7 @@ function saveProfile() {
 function addEntry() {
   const title = document.getElementById('e-title').value.trim();
   if (!title) { showToast('⚠️ أدخل عنوان الإنجاز أولاً'); return; }
+  pushUndo();
   const entry = {
     id: nextId++, title,
     type: document.getElementById('e-type').value,
@@ -861,6 +869,7 @@ function addEntry() {
   showToast('✅ تم إضافة الإنجاز');
 }
 function deleteEntry(id) {
+  pushUndo();
   if (!confirm('حذف هذا الإنجاز؟')) return;
   TEACHERS[currentTeacher].entries = TEACHERS[currentTeacher].entries.filter(e => e.id !== id);
   renderEntries(); updateStats(); scheduleSave(); showToast('🗑️ تم الحذف');
@@ -876,11 +885,57 @@ function openEditModal(id) {
   document.getElementById('edit-desc').value = e.desc || '';
   document.getElementById('edit-skills').value = e.skills || '';
   if (e.date) updateHijri('edit-date', 'edit-hijri');
+  pendingEditAttach = [];
+  window._editCurrentAttachments = JSON.parse(JSON.stringify(e.attachments || []));
+  renderEditCurrentAttachments();
+  renderPreview('edit-attach-preview', pendingEditAttach);
   document.getElementById('edit-modal').classList.add('open');
+}
+
+function renderEditCurrentAttachments() {
+  const el = document.getElementById('edit-attach-current'); if (!el) return;
+  const arr = window._editCurrentAttachments || [];
+  if (arr.length === 0) { el.innerHTML = '<span style="color:#aaa;font-size:0.78rem;">لا توجد مرفقات</span>'; return; }
+  el.innerHTML = arr.map((a, i) => {
+    const isImg = a.dataUrl && a.dataUrl.startsWith('data:image');
+    return '<div class="attach-chip">' +
+      (isImg ? '<img src="' + escHtml(a.dataUrl) + '" style="width:26px;height:26px;object-fit:cover;border-radius:4px;cursor:pointer" data-src="' + escHtml(a.dataUrl) + '" onclick="openLightboxFromEl(this)">' : '<span>📎 </span>') +
+      '<a href="' + escHtml(a.dataUrl) + '" target="_blank">' + escHtml(a.name.length > 18 ? a.name.slice(0,16) + '…' : a.name) + '</a>' +
+      '<button onclick="removeCurrentAttach(' + i + ')" title="حذف المرفق" style="background:#fee2e2;color:#dc2626;border:none;border-radius:4px;padding:2px 7px;cursor:pointer;font-weight:700;">✕</button>' +
+    '</div>';
+  }).join('');
+}
+
+function removeCurrentAttach(i) {
+  if (!window._editCurrentAttachments) return;
+  window._editCurrentAttachments.splice(i, 1);
+  renderEditCurrentAttachments();
+}
+
+function renderWitnessCurrentFiles() {
+  const el = document.getElementById('w-current-files'); if (!el) return;
+  const arr = window._witnessCurrentFiles || [];
+  if (arr.length === 0) { el.innerHTML = '<span style="color:#aaa;font-size:0.78rem;">لا توجد مرفقات سابقة</span>'; return; }
+  el.innerHTML = arr.map((a, i) => {
+    const isImg = a.dataUrl && a.dataUrl.startsWith('data:image');
+    return '<div class="attach-chip">' +
+      (isImg ? '<img src="' + escHtml(a.dataUrl) + '" style="width:26px;height:26px;object-fit:cover;border-radius:4px;cursor:pointer" data-src="' + escHtml(a.dataUrl) + '" onclick="openLightboxFromEl(this)">' : '<span>📎 </span>') +
+      '<a href="' + escHtml(a.dataUrl) + '" target="_blank">' + escHtml(a.name.length > 18 ? a.name.slice(0,16) + '…' : a.name) + '</a>' +
+      '<button onclick="removeWitnessCurrentFile(' + i + ')" title="حذف المرفق" style="background:#fee2e2;color:#dc2626;border:none;border-radius:4px;padding:2px 7px;cursor:pointer;font-weight:700;">✕</button>' +
+    '</div>';
+  }).join('');
+}
+
+function removeWitnessCurrentFile(i) {
+  if (!window._witnessCurrentFiles) return;
+  window._witnessCurrentFiles.splice(i, 1);
+  renderWitnessCurrentFiles();
 }
 function saveEditEntry() {
   const id = parseInt(document.getElementById('edit-entry-id').value);
   const idx = TEACHERS[currentTeacher].entries.findIndex(x => x.id === id); if (idx === -1) return;
+  pushUndo();
+  const mergedAttachments = [...(window._editCurrentAttachments || []), ...pendingEditAttach];
   TEACHERS[currentTeacher].entries[idx] = { ...TEACHERS[currentTeacher].entries[idx],
     title: document.getElementById('edit-title').value,
     type: document.getElementById('edit-type').value,
@@ -889,10 +944,11 @@ function saveEditEntry() {
     duration: document.getElementById('edit-duration').value,
     desc: document.getElementById('edit-desc').value,
     skills: document.getElementById('edit-skills').value,
+    attachments: mergedAttachments,
   };
+  pendingEditAttach = [];
   closeModal('edit-modal'); renderEntries(); scheduleSave(); showToast('✅ تم حفظ التعديلات');
 }
-
 const TYPE_LBL = {
   achievement:['🏆 إنجاز مهني','tag-achievement'], training:['📚 دورة تدريبية','tag-training'],
   activity:['🎯 نشاط وفعالية','tag-activity'], award:['🥇 شهادة وتكريم','tag-award'], other:['📌 أخرى','tag-other']
@@ -963,7 +1019,10 @@ function openWitnessModal() {
   switchDateMode('w','greg');
   ['w-title','w-date','w-desc'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('w-type').value = 'school_work';
-  pendingWitnessAttach = []; renderPreview('w-attach-preview', pendingWitnessAttach);
+  window._witnessCurrentFiles = [];
+  pendingWitnessAttach = [];
+  renderWitnessCurrentFiles();
+  renderPreview('w-attach-preview', pendingWitnessAttach);
   initHijriSelects();
   document.getElementById('witness-modal').classList.add('open');
 }
@@ -983,7 +1042,7 @@ function saveWitness() {
         ...existing, title, type: document.getElementById('w-type').value,
         date: dateVal, dateHijri, dateMode,
         desc: document.getElementById('w-desc').value,
-        files: pendingWitnessAttach.length > 0 ? [...pendingWitnessAttach] : existing.files
+        files: [...(window._witnessCurrentFiles || existing.files || []), ...pendingWitnessAttach]
       };
     }
     editingWitnessId = null;
@@ -1020,7 +1079,10 @@ function editWitness(id) {
     document.getElementById('w-date-result').textContent = w.dateHijri;
     document.getElementById('w-date-result').dataset.hijri = w.dateHijri;
   }
-  pendingWitnessAttach = []; renderPreview('w-attach-preview', pendingWitnessAttach);
+  window._witnessCurrentFiles = JSON.parse(JSON.stringify(w.files || []));
+  pendingWitnessAttach = [];
+  renderWitnessCurrentFiles();
+  renderPreview('w-attach-preview', pendingWitnessAttach);
   document.getElementById('witness-modal').classList.add('open');
 }
 function deleteWitness(id) {
@@ -1193,8 +1255,8 @@ function switchTab(id, btn) {
 // FILES
 // ============================================================
 function handleFiles(files, type) {
-  const arr = type === 'witness' ? pendingWitnessAttach : pendingAttach;
-  const pid = type === 'witness' ? 'w-attach-preview' : 'attach-preview';
+  const arr = type === 'witness' ? pendingWitnessAttach : type === 'edit' ? pendingEditAttach : pendingAttach;
+  const pid = type === 'witness' ? 'w-attach-preview' : type === 'edit' ? 'edit-attach-preview' : 'attach-preview';
   Array.from(files).forEach(file => {
     if (file.size > 8 * 1024 * 1024) { showToast('⚠️ الملف أكبر من 8MB'); return; }
     const r = new FileReader();
@@ -1214,8 +1276,43 @@ function renderPreview(pid, arr) {
     '</div>';
   }).join('');
 }
+
+// ============================================================
+// UNDO / REDO SYSTEM
+// ============================================================
+const MAX_UNDO = 20;
+function pushUndo() {
+  const snapshot = JSON.parse(JSON.stringify(TEACHERS[currentTeacher].entries));
+  undoStack.push(snapshot);
+  if (undoStack.length > MAX_UNDO) undoStack.shift();
+  redoStack = [];
+  updateUndoButtons();
+}
+function undo() {
+  if (!undoStack.length) { showToast('⚠️ لا يوجد شيء للتراجع عنه'); return; }
+  redoStack.push(JSON.parse(JSON.stringify(TEACHERS[currentTeacher].entries)));
+  TEACHERS[currentTeacher].entries = undoStack.pop();
+  renderEntries(); updateStats(); scheduleSave(); updateUndoButtons();
+  showToast('↩️ تم التراجع');
+}
+function redo() {
+  if (!redoStack.length) { showToast('⚠️ لا يوجد شيء لإعادته'); return; }
+  undoStack.push(JSON.parse(JSON.stringify(TEACHERS[currentTeacher].entries)));
+  TEACHERS[currentTeacher].entries = redoStack.pop();
+  renderEntries(); updateStats(); scheduleSave(); updateUndoButtons();
+  showToast('↪️ تم الإعادة');
+}
+function updateUndoButtons() {
+  const u = document.getElementById('btn-undo'), r = document.getElementById('btn-redo');
+  if (u) u.disabled = !undoStack.length;
+  if (r) r.disabled = !redoStack.length;
+}
+
 function removeAttach(i, pid) {
-  const arr = pid === 'w-attach-preview' ? pendingWitnessAttach : pendingAttach;
+  let arr;
+  if (pid === 'w-attach-preview') arr = pendingWitnessAttach;
+  else if (pid === 'edit-attach-preview') arr = pendingEditAttach;
+  else arr = pendingAttach;
   arr.splice(i, 1); renderPreview(pid, arr);
 }
 
@@ -1477,6 +1574,8 @@ document.addEventListener('DOMContentLoaded', function() {
   initHijriSelects();
 });
 
+
+document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='z'&&!e.shiftKey){e.preventDefault();if(typeof undo!=='undefined')undo();}if((e.ctrlKey||e.metaKey)&&(e.key==='y'||(e.key==='z'&&e.shiftKey))){e.preventDefault();if(typeof redo!=='undefined')redo();}});
 </script>
 </body>
 </html>
