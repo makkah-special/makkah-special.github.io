@@ -372,7 +372,11 @@ footer strong{color:var(--accent-light);}
     <div class="tab-pane" id="tab-witnesses">
       <div class="section-header">
         <div class="section-title">الشواهد والأعمال المدرسية</div>
-        <button class="btn-witness" onclick="openWitnessModal()">📋 إضافة شاهد جديد</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button id="btn-undo-witness" onclick="undoWitness()" disabled title="تراجع" style="background:#f3f4f6;color:#6b7280;border:1.5px solid #d1d5db;border-radius:8px;padding:6px 12px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.79rem;cursor:pointer;">↩️ تراجع</button>
+          <button id="btn-redo-witness" onclick="redoWitness()" disabled title="إعادة" style="background:#f3f4f6;color:#6b7280;border:1.5px solid #d1d5db;border-radius:8px;padding:6px 12px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.79rem;cursor:pointer;">↪️ إعادة</button>
+          <button class="btn-witness" onclick="openWitnessModal()">📋 إضافة شاهد جديد</button>
+        </div>
       </div>
       <div id="witnesses-list"><div class="empty"><div class="empty-icon">📋</div><div style="font-size:0.85rem">لا توجد شواهد مضافة بعد</div></div></div>
     </div>
@@ -634,6 +638,7 @@ const TEACHERS = {
 let currentTeacher = null, nextId = 200, nextWitnessId = 300, editingWitnessId = null;
 let pendingAttach = [], pendingWitnessAttach = [], pendingEditAttach = [];
 let undoStack = [], redoStack = []; // Undo/Redo history
+let undoWitnessStack = [], redoWitnessStack = []; // Witness Undo/Redo
 let saveTimeout = null;
 
 // ============================================================
@@ -708,6 +713,8 @@ async function openPortal(t) {
   document.getElementById('t-exp').textContent = (t.profile.exp||'0') + ' سنوات خبرة';
   loadProfileForm(t.profile);
   renderEntries(); renderWitnesses(); updateStats();
+  undoStack = []; redoStack = []; updateUndoButtons();
+  undoWitnessStack = []; redoWitnessStack = []; updateWitnessUndoButtons();
   hideSyncBar();
   // Avatar click
   document.getElementById('avatar-wrap').onclick = () => document.getElementById('avatar-file').click();
@@ -1080,6 +1087,7 @@ function openWitnessModal() {
 function saveWitness() {
   const title = document.getElementById('w-title').value.trim();
   if (!title) { showToast('⚠️ أدخل عنوان الشاهد'); return; }
+  pushUndoWitness();
   const dateVal = document.getElementById('w-date') ? document.getElementById('w-date').value : '';
   const dateHijri = document.getElementById('w-date-result') ? document.getElementById('w-date-result').dataset.hijri || '' : '';
   const dateMode = document.getElementById('w-date-tog-h') && document.getElementById('w-date-tog-h').classList.contains('active') ? 'hijri' : 'greg';
@@ -1137,6 +1145,7 @@ function editWitness(id) {
   document.getElementById('witness-modal').classList.add('open');
 }
 function deleteWitness(id) {
+  pushUndoWitness();
   if (!confirm('حذف هذا الشاهد؟')) return;
   TEACHERS[currentTeacher].witnesses = TEACHERS[currentTeacher].witnesses.filter(w => w.id !== id);
   renderWitnesses(); updateStats(); scheduleSave(); showToast('🗑️ تم الحذف');
@@ -1365,6 +1374,41 @@ function updateUndoButtons() {
   const btnRedo = document.getElementById('btn-redo');
   if (btnUndo) btnUndo.disabled = undoStack.length === 0;
   if (btnRedo) btnRedo.disabled = redoStack.length === 0;
+}
+
+// ============================================================
+// WITNESS UNDO / REDO
+// ============================================================
+function pushUndoWitness() {
+  const snapshot = JSON.parse(JSON.stringify(TEACHERS[currentTeacher].witnesses || []));
+  undoWitnessStack.push(snapshot);
+  if (undoWitnessStack.length > MAX_UNDO) undoWitnessStack.shift();
+  redoWitnessStack = [];
+  updateWitnessUndoButtons();
+}
+function undoWitness() {
+  if (undoWitnessStack.length === 0) { showToast('⚠️ لا يوجد شيء للتراجع عنه'); return; }
+  const current = JSON.parse(JSON.stringify(TEACHERS[currentTeacher].witnesses || []));
+  redoWitnessStack.push(current);
+  TEACHERS[currentTeacher].witnesses = undoWitnessStack.pop();
+  renderWitnesses(); updateStats(); scheduleSave();
+  updateWitnessUndoButtons();
+  showToast('↩️ تم التراجع');
+}
+function redoWitness() {
+  if (redoWitnessStack.length === 0) { showToast('⚠️ لا يوجد شيء لإعادته'); return; }
+  const current = JSON.parse(JSON.stringify(TEACHERS[currentTeacher].witnesses || []));
+  undoWitnessStack.push(current);
+  TEACHERS[currentTeacher].witnesses = redoWitnessStack.pop();
+  renderWitnesses(); updateStats(); scheduleSave();
+  updateWitnessUndoButtons();
+  showToast('↪️ تم الإعادة');
+}
+function updateWitnessUndoButtons() {
+  const u = document.getElementById('btn-undo-witness');
+  const r = document.getElementById('btn-redo-witness');
+  if (u) u.disabled = undoWitnessStack.length === 0;
+  if (r) r.disabled = redoWitnessStack.length === 0;
 }
 
 
