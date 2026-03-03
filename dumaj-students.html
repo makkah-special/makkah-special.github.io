@@ -861,8 +861,7 @@
       <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
       <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
-      <button class="tab-btn" onclick="openTab('skills',this)">📊 مهارات</button>
-      <button class="tab-btn" onclick="openTab('iep',this)">🎯 الخطة التربوية</button>
+      <button class="tab-btn" onclick="openTab('iep',this)">🎯 تقييم الأهداف</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
     </div>
 
@@ -891,80 +890,27 @@
     </div>
 
 
-    <!-- SKILLS -->
-    <div class="tab-pane" id="tab-skills">
-      <div class="s-card">
-        <div class="s-card-head">📊 تقييم المهارات</div>
-        <div style="padding:20px;" id="skills-content">
-          <div id="skills-loading" style="text-align:center;padding:40px;color:#9ca3af;">
-            <div style="font-size:2rem;margin-bottom:10px;">⏳</div>
-            <div style="font-size:0.9rem;font-weight:700;">جاري تحميل تقييم المهارات...</div>
-          </div>
-          <div id="skills-table-wrap" style="display:none;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
-              <div style="font-size:0.85rem;font-weight:700;color:#c25a00;">📋 جدول متابعة مهارات الطالب</div>
-              <button onclick="downloadSkillsExcel()" class="btn-pdf btn-pdf-primary" style="font-size:0.8rem;padding:8px 14px;">📥 تحميل Excel</button>
-            </div>
-            <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);">
-              <table id="skills-tbl" style="width:100%;border-collapse:collapse;font-size:0.82rem;min-width:580px;">
-                <thead>
-                  <tr style="background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;">
-                    <th style="padding:11px 14px;text-align:right;font-weight:700;min-width:160px;">المهارة</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">المحور</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م١</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٢</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٣</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٤</th>
-                    <th style="padding:11px 14px;text-align:center;font-weight:700;">م٥</th>
-                    <th style="padding:11px 14px;text-align:right;font-weight:700;">الملاحظات</th>
-                  </tr>
-                </thead>
-                <tbody id="skills-tbody"></tbody>
-              </table>
-            </div>
-            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
-              <span style="font-size:0.75rem;background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:6px;font-weight:700;">✓ تحقق</span>
-              <span style="font-size:0.75rem;background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:6px;font-weight:700;">~ جزئياً</span>
-              <span style="font-size:0.75rem;background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:6px;font-weight:700;">✗ لم يتحقق</span>
-              <span style="font-size:0.75rem;background:#f3f4f6;color:#6b7280;padding:3px 10px;border-radius:6px;font-weight:700;">— لم يُقيَّم</span>
-            </div>
-          </div>
-          <div id="no-skills-msg" style="display:none;text-align:center;padding:40px;color:#9ca3af;">
-            <div style="font-size:2.5rem;margin-bottom:12px;">📊</div>
-            <div style="font-weight:700;font-size:0.95rem;">لم يتم رفع تقييم المهارات بعد</div>
-            <div style="font-size:0.8rem;margin-top:6px;">سيتم إضافته من المشرف</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
-    <!-- الخطة التربوية الفردية -->
+    <!-- IEP GOALS - تقييم الأهداف -->
     <div class="tab-pane" id="tab-iep">
       <div class="s-card">
         <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>🎯 الخطة التربوية الفردية</span>
-          <button onclick="printIEP()" class="btn-pdf btn-pdf-secondary" style="font-size:0.8rem;padding:7px 14px;">🖨️ طباعة الخطة</button>
+          <span>🎯 تقييم الأهداف التربوية</span>
+          <button onclick="savePlanAsPDF(currentStudent&&currentStudent.pin)" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة الخطة</button>
         </div>
         <div style="padding:20px;">
           <div id="iep-view-content">
-            <div style="text-align:center;padding:40px;color:#9ca3af;">
-              <div style="font-size:2rem;margin-bottom:10px;">🎯</div>
-              <div style="font-size:0.9rem;font-weight:700;">جاري تحميل الخطة...</div>
+            <div style="text-align:center;padding:50px 20px;color:#9ca3af;">
+              <div style="font-size:3rem;margin-bottom:12px;">🎯</div>
+              <div style="font-weight:800;font-size:0.95rem;margin-bottom:6px;">لم تُضف أهداف الخطة بعد</div>
+              <div style="font-size:0.82rem;">يمكن للمشرف إضافة الأهداف من لوحة التحكم</div>
             </div>
           </div>
-          <div id="iep-charts-section" style="display:none;">
-            <div style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;color:#c25a00;margin:20px 0 12px;border-right:4px solid #e07020;padding-right:10px;">📊 تحليل النتائج</div>
-            <div class="iep-charts-wrap">
-              <div class="iep-chart-card">
-                <div class="iep-chart-title">📊 نسبة الأهداف لكل مادة</div>
-                <canvas id="iep-bar-chart" height="220"></canvas>
-              </div>
-              <div class="iep-chart-card">
-                <div class="iep-chart-title">🕸️ مستوى الأداء الشامل</div>
-                <canvas id="iep-radar-chart" height="220"></canvas>
-              </div>
-            </div>
+          <div id="iep-charts-section" style="display:none;padding-top:16px;">
+            <div style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:10px;border-right:4px solid var(--accent);padding-right:10px;">📊 تحليل النتائج</div>
+            <div id="iep-stats-summary"></div>
+            <canvas id="iep-student-chart" height="180"></canvas>
           </div>
         </div>
       </div>
@@ -1504,13 +1450,13 @@ function loadStudent(pin) {
   initCanvas();
 
   // SHOW PORTAL
-  // Reset to first tab (info)
   document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
   document.querySelectorAll('.tab-pane').forEach((p,i) => p.classList.toggle('active', i===0));
-
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('student-portal').style.display = 'block';
   window.scrollTo(0, 0);
+  // تطبيق وتهيئة IEP
+  ensureIEP(pin);
 }
 
 function logout() {
@@ -1528,14 +1474,15 @@ function logout() {
 function openTab(id, btn) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  if (id === 'iep' && currentStudent) {
-    const pin = currentStudent.pin || Object.keys(STUDENTS).find(k => STUDENTS[k] === currentStudent);
-    if (pin) renderIEPView(pin);
-  }
-  if (id === 'skills' && currentStudent) loadStudentSkills(currentStudent.pin);
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
-  // Init canvas when iqrar tab is opened
+  if (id === 'iep' && currentStudent) {
+    const pin = currentStudent.pin;
+    if (pin) {
+      ensureIEP(pin);
+      renderIEPStudentView(pin);
+    }
+  }
   if (id === 'iqrar') setTimeout(initCanvas, 100);
 }
 
@@ -1739,6 +1686,7 @@ async function loadAdminPanel() {
   document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
   window.scrollTo(0, 0);
   await syncFromSupabase();
+  applyDefaultIEPAll();
   renderStudentCards();
 }
 
@@ -1769,7 +1717,21 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].phone    = data.phone    || STUDENTS[pin].phone || '';
       STUDENTS[pin].plan           = data.plan           || STUDENTS[pin].plan     || [];
       STUDENTS[pin].followup       = data.followup       || STUDENTS[pin].followup || [];
-      STUDENTS[pin].iep            = data.iep            || STUDENTS[pin].iep      || {};
+      // دمج ذكي لـ IEP: نأخذ من السيرفر فقط إذا كان يحتوي أهداف فعلية
+      if (data.iep && typeof data.iep === 'object') {
+        const hasStoredGoals = Object.keys(data.iep).some(k => {
+          if (k === '_custom') return false;
+          return data.iep[k] && data.iep[k].goals && data.iep[k].goals.length > 0;
+        });
+        if (hasStoredGoals) {
+          STUDENTS[pin].iep = data.iep;
+        }
+        // دمج المواد المخصصة دائماً
+        if (data.iep._custom && Object.keys(data.iep._custom).length > 0) {
+          if (!STUDENTS[pin].iep) STUDENTS[pin].iep = {};
+          STUDENTS[pin].iep._custom = data.iep._custom;
+        }
+      }
       STUDENTS[pin].birthdate      = data.birthdate      || STUDENTS[pin].birthdate      || '';
       STUDENTS[pin].nationality    = data.nationality    || STUDENTS[pin].nationality    || '';
       STUDENTS[pin].age            = data.age            || STUDENTS[pin].age            || '';
@@ -1792,6 +1754,7 @@ async function loadStudentDataFromStorage(pin) {
 
 async function loadStudentWithSync(pin) {
   await loadStudentDataFromStorage(pin);
+  applyDefaultIEP(pin);
   loadStudent(pin);
 }
 
@@ -2069,30 +2032,15 @@ function addNewStudent() {
 
 // ===== حفظ جميع الطلاب =====
 async function saveAllStudents() {
+  applyDefaultIEPAll();
   const btn = document.getElementById('btn-save-all');
   const pins = Object.keys(STUDENTS);
-  if (btn) { btn.textContent = '⏳ جاري الحفظ...'; btn.disabled = true; btn.style.opacity = '0.7'; }
+  if (btn) { btn.innerHTML = '⏳ جاري الحفظ...'; btn.disabled = true; btn.style.opacity = '0.7'; }
   let success = 0, failed = 0;
   for (const pin of pins) {
     try {
-      const s = STUDENTS[pin];
-      const blob = new Blob([JSON.stringify({
-        pin, name: s.name, id_full: s.id_full, grade: s.grade, phone: s.phone || '',
-        plan: s.plan || [], followup: s.followup || [], iep: s.iep || {},
-        birthdate: s.birthdate || '', nationality: s.nationality || '', age: s.age || '',
-        address: s.address || '', iq: s.iq || '', sibling_order: s.sibling_order || '',
-        economic_level: s.economic_level || '', father_edu: s.father_edu || '',
-        mother_edu: s.mother_edu || '', status_psych: s.status_psych || '',
-        status_social: s.status_social || '', status_health: s.status_health || '',
-        diagnosis: s.diagnosis || '', program_place: s.program_place || '',
-        program_start: s.program_start || '', program_end: s.program_end || '',
-      })], {type: 'application/json'});
-      const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
-        method: 'POST',
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
-        body: blob
-      });
-      if (res.ok) success++; else failed++;
+      await saveOneSilent(pin);
+      success++;
     } catch(e) { failed++; }
   }
   if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = '💾 حفظ جميع البيانات'; }
@@ -2100,7 +2048,33 @@ async function saveAllStudents() {
 }
 
 // ===== حفظ طالب واحد =====
+// حفظ صامت بدون toast (للاستخدام الداخلي)
+async function saveOneSilent(pin) {
+  applyDefaultIEP(pin);
+  const s = STUDENTS[pin];
+  const payload = {
+    pin, name: s.name, id_full: s.id_full, grade: s.grade, phone: s.phone || '',
+    plan: s.plan || [], followup: s.followup || [], iep: s.iep || {},
+    birthdate: s.birthdate || '', nationality: s.nationality || '', age: s.age || '',
+    address: s.address || '', iq: s.iq || '', sibling_order: s.sibling_order || '',
+    economic_level: s.economic_level || '', father_edu: s.father_edu || '',
+    mother_edu: s.mother_edu || '', status_psych: s.status_psych || '',
+    status_social: s.status_social || '', status_health: s.status_health || '',
+    diagnosis: s.diagnosis || '', program_place: s.program_place || '',
+    program_start: s.program_start || '', program_end: s.program_end || '',
+  };
+  const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
+  const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+    body: blob
+  });
+  if (!res.ok) throw new Error('Save failed for ' + pin);
+}
+
 async function saveOneStudent(pin) {
+  // تطبيق الأهداف الافتراضية إذا كانت مواد فارغة
+  applyDefaultIEP(pin);
   const s = STUDENTS[pin];
   const blob = new Blob([JSON.stringify({
     pin, name: s.name, id_full: s.id_full, grade: s.grade, phone: s.phone || '',
@@ -2214,6 +2188,138 @@ let iepChartBar = null, iepChartRadar = null;
 
 // ---- تهيئة IEP في STUDENTS إذا لم تكن موجودة ----
 // ---- عرض الخطة في بوابة الطالب ----
+// ==========================================
+// عرض IEP في بوابة الطالب (النظام الجديد)
+// يقرأ: iep[key] = { name, icon, goals: [{text, level}] }
+// ==========================================
+function renderIEPStudentView(pin) {
+  ensureIEP(pin);
+  const s = STUDENTS[pin];
+  const container = document.getElementById('iep-view-content');
+  if (!container) return;
+
+  const LEVEL_MAP = {
+    excellent: { label: 'متفوق',     color: '#059669', bg: '#d1fae5', icon: '🌟' },
+    advanced:  { label: 'متقدم',     color: '#2563eb', bg: '#dbeafe', icon: '✅' },
+    capable:   { label: 'متمكن',     color: '#d97706', bg: '#fef3c7', icon: '🔵' },
+    failed:    { label: 'غير مجتاز', color: '#dc2626', bg: '#fee2e2', icon: '❌' },
+    none:      { label: '—',         color: '#9ca3af', bg: '#f3f4f6', icon: '○' },
+  };
+
+  // جمع جميع المواد (أساسية + مخصصة)
+  const coreKeys = CORE_SUBJECTS.map(cs => cs.key);
+  const allSubjects = [
+    ...CORE_SUBJECTS.map(cs => ({ key: cs.key, data: s.iep[cs.key] })),
+    ...Object.entries(s.iep._custom || {}).map(([k,d]) => ({ key: k, data: d }))
+  ].filter(sub => sub.data && sub.data.goals && sub.data.goals.length > 0);
+
+  if (allSubjects.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:50px 20px;color:#9ca3af;">
+        <div style="font-size:3rem;margin-bottom:12px;">🎯</div>
+        <div style="font-weight:800;font-size:0.95rem;margin-bottom:6px;">لم تُضف أهداف الخطة بعد</div>
+        <div style="font-size:0.82rem;">يمكن للمشرف إضافة الأهداف من لوحة التحكم</div>
+      </div>`;
+    const cs = document.getElementById('iep-charts-section');
+    if (cs) cs.style.display = 'none';
+    return;
+  }
+
+  // إحصاء الأهداف
+  let totalGoals = 0, totalExcellent = 0, totalAdvanced = 0, totalCapable = 0, totalFailed = 0;
+  allSubjects.forEach(({data}) => {
+    data.goals.forEach(g => {
+      totalGoals++;
+      const lv = g.level || 'none';
+      if (lv === 'excellent') totalExcellent++;
+      else if (lv === 'advanced') totalAdvanced++;
+      else if (lv === 'capable') totalCapable++;
+      else if (lv === 'failed') totalFailed++;
+    });
+  });
+
+  // رسم المواد والأهداف
+  container.innerHTML = allSubjects.map(({data}) => {
+    const goals = data.goals || [];
+    const ex = goals.filter(g => g.level === 'excellent').length;
+    const ad = goals.filter(g => g.level === 'advanced').length;
+    const ca = goals.filter(g => g.level === 'capable').length;
+    const fa = goals.filter(g => g.level === 'failed').length;
+    const pct = goals.length ? Math.round((ex*4 + ad*3 + ca*2 + fa*1) / (goals.length*4) * 100) : 0;
+
+    return `
+    <div class="iep-subject-block" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border-radius:10px 10px 0 0;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:0.9rem;">${data.icon||'📚'} ${data.name}</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:10px;font-size:0.75rem;">${goals.length} هدف</span>
+          <span style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:10px;font-size:0.75rem;">الأداء: ${pct}%</span>
+        </div>
+      </div>
+      <div style="border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+        ${goals.map((g, i) => {
+          const lv = LEVEL_MAP[g.level||'none'] || LEVEL_MAP.none;
+          return `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);background:${i%2===0?'#fff':'#fafafa'};">
+            <div style="font-size:0.84rem;color:var(--text);flex:1;">${i+1}. ${escHtml(g.text||'')}</div>
+            <span style="background:${lv.bg};color:${lv.color};font-size:0.76rem;font-weight:700;padding:3px 10px;border-radius:8px;white-space:nowrap;margin-right:10px;">${lv.icon} ${lv.label}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  // إظهار التحليل
+  const cs = document.getElementById('iep-charts-section');
+  if (cs) {
+    cs.style.display = 'block';
+    // رسم الشارت
+    setTimeout(() => renderIEPStudentCharts(pin, allSubjects, {
+      excellent: totalExcellent, advanced: totalAdvanced,
+      capable: totalCapable, failed: totalFailed, total: totalGoals
+    }), 100);
+  }
+}
+
+function renderIEPStudentCharts(pin, allSubjects, stats) {
+  // بطاقات الإحصاء
+  const statsEl = document.getElementById('iep-stats-summary');
+  if (statsEl) {
+    const pct = (n) => stats.total ? Math.round(n/stats.total*100) : 0;
+    statsEl.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;">
+        <div style="background:#d1fae5;border:1px solid #10b981;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:1.4rem;font-weight:900;color:#059669;">${stats.excellent}</div><div style="font-size:0.7rem;font-weight:700;color:#059669;">متفوق</div><div style="font-size:0.72rem;color:#059669;">${pct(stats.excellent)}%</div></div>
+        <div style="background:#dbeafe;border:1px solid #3b82f6;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:1.4rem;font-weight:900;color:#2563eb;">${stats.advanced}</div><div style="font-size:0.7rem;font-weight:700;color:#2563eb;">متقدم</div><div style="font-size:0.72rem;color:#2563eb;">${pct(stats.advanced)}%</div></div>
+        <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:1.4rem;font-weight:900;color:#d97706;">${stats.capable}</div><div style="font-size:0.7rem;font-weight:700;color:#d97706;">متمكن</div><div style="font-size:0.72rem;color:#d97706;">${pct(stats.capable)}%</div></div>
+        <div style="background:#fee2e2;border:1px solid #ef4444;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:1.4rem;font-weight:900;color:#dc2626;">${stats.failed}</div><div style="font-size:0.7rem;font-weight:700;color:#dc2626;">غير مجتاز</div><div style="font-size:0.72rem;color:#dc2626;">${pct(stats.failed)}%</div></div>
+      </div>`;
+  }
+
+  // رسم البياني
+  const canvasEl = document.getElementById('iep-student-chart');
+  if (canvasEl && window.Chart) {
+    // تدمير الشارت القديم
+    const existing = Chart.getChart(canvasEl);
+    if (existing) existing.destroy();
+
+    new Chart(canvasEl, {
+      type: 'doughnut',
+      data: {
+        labels: ['متفوق','متقدم','متمكن','غير مجتاز'],
+        datasets: [{
+          data: [stats.excellent, stats.advanced, stats.capable, stats.failed],
+          backgroundColor: ['#10b981','#3b82f6','#f59e0b','#ef4444'],
+          borderWidth: 2, borderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true, cutout: '60%',
+        plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 10 }, boxWidth: 12 } } }
+      }
+    });
+  }
+}
+
 function renderIEPView(pin) {
   ensureIEP(pin);
   const s = STUDENTS[pin];
@@ -2587,9 +2693,42 @@ const CORE_SUBJECTS = [
   { key: 'life',     name: 'المهارات الحياتية',        icon: '🌱', core: true },
 ];
 
+
+// ===== الأهداف الافتراضية لكل صف =====
+const DEFAULT_IEP_BY_GRADE = {
+  "الأول المتوسط / ١": {"arabic": {"name": "اللغة العربية (لغتي)", "icon": "📖", "core": true, "goals": [{"text": "يقرأ نصاً قصيراً بطلاقة مناسبة", "level": "none"}, {"text": "يكتب جملاً مفيدة بخط واضح", "level": "none"}, {"text": "يجيب عن أسئلة الاستيعاب القرائي", "level": "none"}, {"text": "يتعرف على أنواع الجملة الاسمية والفعلية", "level": "none"}, {"text": "يستخدم علامات الترقيم الأساسية", "level": "none"}]}, "math": {"name": "الرياضيات", "icon": "🔢", "core": true, "goals": [{"text": "يجري عمليات الجمع والطرح على الأعداد حتى 1000", "level": "none"}, {"text": "يتعرف على المضاعفات والقواسم", "level": "none"}, {"text": "يحل مسائل رياضية بسيطة من الحياة اليومية", "level": "none"}, {"text": "يتعرف على الكسور العادية البسيطة", "level": "none"}, {"text": "يقيس الأطوال باستخدام وحدات القياس المناسبة", "level": "none"}]}, "islamic": {"name": "التربية الإسلامية", "icon": "🕌", "core": true, "goals": [{"text": "يحفظ سوراً قصيرة من القرآن الكريم", "level": "none"}, {"text": "يعرف أركان الإسلام وشروطها", "level": "none"}, {"text": "يؤدي الصلوات الخمس في أوقاتها", "level": "none"}, {"text": "يتعرف على السيرة النبوية الشريفة", "level": "none"}, {"text": "يطبق آداب الإسلام في تعاملاته", "level": "none"}]}, "science": {"name": "العلوم", "icon": "🔬", "core": true, "goals": [{"text": "يتعرف على خصائص المادة وحالاتها الثلاث", "level": "none"}, {"text": "يميز بين الكائنات الحية وغير الحية", "level": "none"}, {"text": "يتعرف على النظام الشمسي والكواكب", "level": "none"}, {"text": "يفهم دورة الماء في الطبيعة", "level": "none"}, {"text": "يطبق قواعد السلامة في التجارب العلمية", "level": "none"}]}, "life": {"name": "المهارات الحياتية", "icon": "🌱", "core": true, "goals": [{"text": "يعتني بنظافته الشخصية يومياً", "level": "none"}, {"text": "يستخدم وسائل النقل بأمان", "level": "none"}, {"text": "يدير وقته وينظم جدوله اليومي", "level": "none"}, {"text": "يتعامل مع الأموال البسيطة في التسوق", "level": "none"}, {"text": "يتواصل مع الآخرين باحترام", "level": "none"}]}, "_custom": {}},
+  "الثاني المتوسط / ١": {"arabic": {"name": "اللغة العربية (لغتي)", "icon": "📖", "core": true, "goals": [{"text": "يحلل النصوص القرائية ويستخرج الأفكار الرئيسية", "level": "none"}, {"text": "يكتب موضوعاً إنشائياً قصيراً", "level": "none"}, {"text": "يتعرف على قواعد الإملاء الأساسية", "level": "none"}, {"text": "يميز بين الفعل المعلوم والمجهول", "level": "none"}, {"text": "يستخرج المبتدأ والخبر من الجملة الاسمية", "level": "none"}]}, "math": {"name": "الرياضيات", "icon": "🔢", "core": true, "goals": [{"text": "يتعامل مع الأعداد الصحيحة الموجبة والسالبة", "level": "none"}, {"text": "يحل المعادلات الخطية البسيطة", "level": "none"}, {"text": "يحسب مساحات الأشكال الهندسية البسيطة", "level": "none"}, {"text": "يتعامل مع النسب والتناسب", "level": "none"}, {"text": "يفهم مفهوم الاحتمالات البسيطة", "level": "none"}]}, "islamic": {"name": "التربية الإسلامية", "icon": "🕌", "core": true, "goals": [{"text": "يتعرف على أحكام التلاوة الأساسية", "level": "none"}, {"text": "يفهم معاني الأسماء الحسنى", "level": "none"}, {"text": "يتعرف على عبادات الإسلام وحكمتها", "level": "none"}, {"text": "يطبق آداب الاستئذان والسلام", "level": "none"}, {"text": "يتعرف على الغيبة والنميمة وحكمهما", "level": "none"}]}, "science": {"name": "العلوم", "icon": "🔬", "core": true, "goals": [{"text": "يتعرف على الخلية وأجزاؤها الأساسية", "level": "none"}, {"text": "يفهم عملية التمثيل الضوئي", "level": "none"}, {"text": "يتعرف على الطاقة وأشكالها المختلفة", "level": "none"}, {"text": "يفهم مفهوم الدورة الدموية", "level": "none"}, {"text": "يتعرف على مصادر التلوث البيئي", "level": "none"}]}, "life": {"name": "المهارات الحياتية", "icon": "🌱", "core": true, "goals": [{"text": "يتعامل مع الأجهزة الإلكترونية باستخدام آمن", "level": "none"}, {"text": "يتقدم لطلب الخدمات الحكومية البسيطة", "level": "none"}, {"text": "يخطط لميزانية شخصية بسيطة", "level": "none"}, {"text": "يتعامل مع مواقف الطوارئ الأساسية", "level": "none"}, {"text": "يمارس هواية مفيدة في وقت الفراغ", "level": "none"}]}, "_custom": {}},
+  "الثالث المتوسط / ١": {"arabic": {"name": "اللغة العربية (لغتي)", "icon": "📖", "core": true, "goals": [{"text": "يتقن قواعد الكتابة الإملائية", "level": "none"}, {"text": "يكتب مقالاً قصيراً ذا فقرات منظمة", "level": "none"}, {"text": "يحلل الشعر ويفهم معانيه", "level": "none"}, {"text": "يستخدم المعجم اللغوي للبحث عن المعاني", "level": "none"}, {"text": "يميز الأساليب البلاغية البسيطة", "level": "none"}]}, "math": {"name": "الرياضيات", "icon": "🔢", "core": true, "goals": [{"text": "يحل نظام المعادلتين بطريقة الحذف", "level": "none"}, {"text": "يتعامل مع الجذور والأسس", "level": "none"}, {"text": "يحسب الاحتمالات البسيطة", "level": "none"}, {"text": "يفهم مفهوم الدوال الخطية ورسمها", "level": "none"}, {"text": "يحل مسائل الهندسة التحليلية البسيطة", "level": "none"}]}, "islamic": {"name": "التربية الإسلامية", "icon": "🕌", "core": true, "goals": [{"text": "يتعرف على أحكام الطهارة والصلاة", "level": "none"}, {"text": "يفهم أحكام الزكاة والصيام", "level": "none"}, {"text": "يتعرف على قصص الأنبياء واستخلاص الدروس", "level": "none"}, {"text": "يحفظ أحاديث نبوية ويطبق مضامينها", "level": "none"}, {"text": "يتعرف على مفهوم الجهاد وأنواعه", "level": "none"}]}, "science": {"name": "العلوم", "icon": "🔬", "core": true, "goals": [{"text": "يتعرف على الوراثة والجينات بشكل مبسط", "level": "none"}, {"text": "يفهم التفاعلات الكيميائية البسيطة", "level": "none"}, {"text": "يتعرف على الأجهزة الجسمية ووظائفها", "level": "none"}, {"text": "يفهم قوانين الحركة البسيطة", "level": "none"}, {"text": "يتعرف على مصادر الطاقة المتجددة", "level": "none"}]}, "life": {"name": "المهارات الحياتية", "icon": "🌱", "core": true, "goals": [{"text": "يُعد السيرة الذاتية البسيطة", "level": "none"}, {"text": "يتقدم لمقابلة عمل تجريبية", "level": "none"}, {"text": "يتعامل مع المستندات والأوراق الرسمية", "level": "none"}, {"text": "يخطط للمستقبل ويضع أهدافاً شخصية", "level": "none"}, {"text": "يستخدم وسائل التواصل الاجتماعي بمسؤولية", "level": "none"}]}, "_custom": {}},
+};
+
+function applyDefaultIEP(pin) {
+  const s = STUDENTS[pin];
+  if (!s) return;
+  // فقط إذا لم يكن IEP محفوظاً أو كان فارغاً
+  const grade = s.grade;
+  const defaultIEP = DEFAULT_IEP_BY_GRADE[grade];
+  if (!defaultIEP) return;
+  if (!s.iep) s.iep = {};
+  // تطبيق الأهداف الافتراضية لكل مادة فقط إذا كانت فارغة
+  Object.keys(defaultIEP).forEach(key => {
+    if (key === '_custom') { if (!s.iep._custom) s.iep._custom = {}; return; }
+    if (!s.iep[key] || !s.iep[key].goals || s.iep[key].goals.length === 0) {
+      s.iep[key] = JSON.parse(JSON.stringify(defaultIEP[key]));
+    }
+  });
+}
+
+function applyDefaultIEPAll() {
+  Object.keys(STUDENTS).forEach(pin => applyDefaultIEP(pin));
+}
+
+
 function ensureIEP(pin) {
   const s = STUDENTS[pin];
   if (!s.iep) s.iep = {};
+  // تطبيق الأهداف الافتراضية إذا كانت فارغة
+  if (typeof applyDefaultIEP === 'function') applyDefaultIEP(pin);
+  // ضمان وجود كل المواد الأساسية
   CORE_SUBJECTS.forEach(sub => {
     if (!s.iep[sub.key]) s.iep[sub.key] = { name: sub.name, icon: sub.icon, core: true, goals: [] };
   });
