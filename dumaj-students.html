@@ -3083,6 +3083,7 @@ function exportAnalysisPDF(pin) {
   const stats = { excellent: 0, advanced: 0, capable: 0, failed: 0, none: 0 };
   let total = 0;
   const subjectRows = [];
+  const subjectStats = [];
 
   const allSubjects = [
     ...CORE_SUBJECTS.map(cs => ({ key: cs.key, data: s.iep[cs.key] })),
@@ -3090,66 +3091,250 @@ function exportAnalysisPDF(pin) {
   ];
 
   allSubjects.forEach(({ data }) => {
-    if (!data || !data.goals) return;
+    if (!data || !data.goals || data.goals.length === 0) return;
+    const sub = { name: data.name, icon: data.icon||'📚', ex:0, ad:0, ca:0, fa:0, total:0 };
     data.goals.forEach(g => {
       const lv = g.level || 'none';
       if (stats[lv] !== undefined) stats[lv]++;
-      total++;
+      if (lv==='excellent') sub.ex++;
+      else if (lv==='advanced') sub.ad++;
+      else if (lv==='capable') sub.ca++;
+      else if (lv==='failed') sub.fa++;
+      sub.total++; total++;
     });
-    if (data.goals.length > 0) {
-      subjectRows.push(`
-        <tr>
-          <td style="padding:8px 12px;font-weight:700;">${data.icon||'📚'} ${data.name}</td>
-          <td style="text-align:center;background:#d1fae5;color:#059669;font-weight:800;">${data.goals.filter(g=>g.level==='excellent').length}</td>
-          <td style="text-align:center;background:#dbeafe;color:#2563eb;font-weight:800;">${data.goals.filter(g=>g.level==='advanced').length}</td>
-          <td style="text-align:center;background:#fef3c7;color:#d97706;font-weight:800;">${data.goals.filter(g=>g.level==='capable').length}</td>
-          <td style="text-align:center;background:#fee2e2;color:#dc2626;font-weight:800;">${data.goals.filter(g=>g.level==='failed').length}</td>
-          <td style="text-align:center;font-weight:800;">${data.goals.length}</td>
-        </tr>
-      `);
-    }
+    subjectStats.push(sub);
+    subjectRows.push(`
+      <tr>
+        <td style="padding:8px 12px;font-weight:700;">${data.icon||'📚'} ${data.name}</td>
+        <td style="text-align:center;background:#d1fae5;color:#059669;font-weight:800;">${sub.ex}</td>
+        <td style="text-align:center;background:#dbeafe;color:#2563eb;font-weight:800;">${sub.ad}</td>
+        <td style="text-align:center;background:#fef3c7;color:#d97706;font-weight:800;">${sub.ca}</td>
+        <td style="text-align:center;background:#fee2e2;color:#dc2626;font-weight:800;">${sub.fa}</td>
+        <td style="text-align:center;font-weight:800;">${sub.total}</td>
+      </tr>
+    `);
   });
 
-  const win = window.open('', '_blank');
-  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    <meta charset="UTF-8"><title>تحليل النتائج — ${s.name}</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
-      *{margin:0;padding:0;box-sizing:border-box;}
-      body{font-family:'Cairo',sans-serif;padding:30px;direction:rtl;color:#1a1a2e;}
-      h1{font-size:1.3rem;font-weight:800;color:#c25a00;margin-bottom:4px;}
-      .header{text-align:center;margin-bottom:24px;border-bottom:3px solid #c25a00;padding-bottom:16px;}
-      .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0;}
-      .stat{padding:12px;text-align:center;border-radius:8px;border:1px solid;}
-      .st-num{font-size:1.6rem;font-weight:900;}
-      .st-lbl{font-size:0.78rem;font-weight:700;}
-      table{width:100%;border-collapse:collapse;margin-top:16px;}
-      th{background:#c25a00;color:#fff;padding:9px 12px;font-size:0.82rem;}
-      td{padding:8px 12px;border:1px solid #e0d8c8;font-size:0.83rem;}
-      .footer{margin-top:24px;text-align:center;font-size:0.72rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
-      @media print{body{padding:15px;}}
-    </style>
-  </head><body>
-    <div class="header">
-      <div style="background:#c25a00;color:#fff;display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;">برنامج الدمج الفكري</div>
-      <h1>تحليل نتائج الأهداف التربوية</h1>
-      <p style="font-size:0.83rem;color:#5a6478;margin-top:4px;">${s.name} — ${s.grade} — الفصل الثاني 1447هـ</p>
-    </div>
-    <div class="stats">
-      <div class="stat" style="background:#d1fae5;border-color:#10b981;"><div class="st-num" style="color:#059669;">${stats.excellent}</div><div class="st-lbl" style="color:#059669;">متفوق</div></div>
-      <div class="stat" style="background:#dbeafe;border-color:#3b82f6;"><div class="st-num" style="color:#2563eb;">${stats.advanced}</div><div class="st-lbl" style="color:#2563eb;">متقدم</div></div>
-      <div class="stat" style="background:#fef3c7;border-color:#f59e0b;"><div class="st-num" style="color:#d97706;">${stats.capable}</div><div class="st-lbl" style="color:#d97706;">متمكن</div></div>
-      <div class="stat" style="background:#fee2e2;border-color:#ef4444;"><div class="st-num" style="color:#dc2626;">${stats.failed}</div><div class="st-lbl" style="color:#dc2626;">غير مجتاز</div></div>
-    </div>
-    <table>
-      <thead><tr><th>المادة</th><th style="background:#059669;">متفوق</th><th style="background:#2563eb;">متقدم</th><th style="background:#d97706;">متمكن</th><th style="background:#dc2626;">غير مجتاز</th><th>الإجمالي</th></tr></thead>
-      <tbody>${subjectRows.join('')}</tbody>
-      <tfoot><tr style="font-weight:800;background:#fff8f3;"><td>المجموع</td><td style="text-align:center;">${stats.excellent}</td><td style="text-align:center;">${stats.advanced}</td><td style="text-align:center;">${stats.capable}</td><td style="text-align:center;">${stats.failed}</td><td style="text-align:center;">${total}</td></tr></tfoot>
-    </table>
-    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
-    <script>window.onload=()=>window.print();<\/script>
-  </body></html>`);
-  win.document.close();
+  // رسم الشارتات على canvas مؤقت ثم تحويلها لـ base64
+  function buildCharts(callback) {
+    const container = document.createElement('div');
+    container.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:800px;background:#fff;';
+    document.body.appendChild(container);
+
+    // Canvas للشارت الشريطي
+    const barCanvas = document.createElement('canvas');
+    barCanvas.width = 760; barCanvas.height = 280;
+    container.appendChild(barCanvas);
+
+    // Canvas للشارت الدائري
+    const pieCanvas = document.createElement('canvas');
+    pieCanvas.width = 320; pieCanvas.height = 280;
+    container.appendChild(pieCanvas);
+
+    const labels = subjectStats.map(s => s.name.length > 9 ? s.name.slice(0,9)+'…' : s.name);
+
+    const barChart = new Chart(barCanvas, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'متفوق',     data: subjectStats.map(s=>s.ex), backgroundColor: '#10b981' },
+          { label: 'متقدم',     data: subjectStats.map(s=>s.ad), backgroundColor: '#3b82f6' },
+          { label: 'متمكن',     data: subjectStats.map(s=>s.ca), backgroundColor: '#f59e0b' },
+          { label: 'غير مجتاز', data: subjectStats.map(s=>s.fa), backgroundColor: '#ef4444' },
+        ]
+      },
+      options: {
+        animation: false,
+        responsive: false,
+        plugins: {
+          legend: { position:'top', labels:{ font:{family:'Cairo',size:13}, boxWidth:16, padding:14 } },
+          title: { display:true, text:'📊 توزيع مستويات الأداء لكل مادة', font:{family:'Cairo',size:15,weight:'bold'}, padding:{bottom:12} }
+        },
+        scales: {
+          x: { stacked:true, ticks:{ font:{family:'Cairo',size:12} }, grid:{display:false} },
+          y: { stacked:true, ticks:{ stepSize:1, font:{family:'Cairo',size:12} }, grid:{color:'#f0f0f0'} }
+        }
+      }
+    });
+
+    const pieChart = new Chart(pieCanvas, {
+      type: 'doughnut',
+      data: {
+        labels: ['متفوق','متقدم','متمكن','غير مجتاز'],
+        datasets: [{
+          data: [stats.excellent, stats.advanced, stats.capable, stats.failed],
+          backgroundColor: ['#10b981','#3b82f6','#f59e0b','#ef4444'],
+          borderWidth: 3, borderColor:'#fff'
+        }]
+      },
+      options: {
+        animation: false,
+        responsive: false,
+        cutout: '58%',
+        plugins: {
+          legend: { position:'bottom', labels:{ font:{family:'Cairo',size:12}, boxWidth:14, padding:10 } },
+          title: { display:true, text:'🎯 التوزيع الإجمالي', font:{family:'Cairo',size:14,weight:'bold'}, padding:{bottom:8} }
+        }
+      }
+    });
+
+    // انتظر frame واحد لإتمام الرسم
+    setTimeout(() => {
+      const barImg = barCanvas.toDataURL('image/png');
+      const pieImg = pieCanvas.toDataURL('image/png');
+
+      // بناء summary chart (شرائط الألوان)
+      const summaryCanvas = document.createElement('canvas');
+      summaryCanvas.width = 400; summaryCanvas.height = subjectStats.length * 52 + 40;
+      const ctx = summaryCanvas.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0,0,400,summaryCanvas.height);
+      ctx.font = 'bold 13px Cairo';
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fillText('📋 ملخص بالمواد', 390, 20);
+
+      subjectStats.forEach((sub, i) => {
+        const y = 40 + i*52;
+        const barW = 260; const barX = 20;
+        // اسم المادة
+        ctx.font = 'bold 12px Cairo'; ctx.fillStyle = '#1a1a2e'; ctx.textAlign = 'right';
+        ctx.fillText(`${sub.icon} ${sub.name}`, 390, y+10);
+        // عدد الأهداف
+        ctx.font = '11px Cairo'; ctx.fillStyle = '#9ca3af'; ctx.textAlign = 'left';
+        ctx.fillText(`${sub.total} هدف`, barX, y+10);
+        // شريط الألوان
+        const bh = 10; const by = y+26;
+        ctx.fillStyle = '#f3f4f6'; ctx.fillRect(barX, by, barW, bh);
+        let bx = barX;
+        [[sub.ex,'#10b981'],[sub.ad,'#3b82f6'],[sub.ca,'#f59e0b'],[sub.fa,'#ef4444']].forEach(([n,clr])=>{
+          if (!n) return;
+          const w = sub.total ? (n/sub.total)*barW : 0;
+          ctx.fillStyle = clr; ctx.fillRect(bx, by, w, bh);
+          bx += w;
+        });
+      });
+
+      const summaryImg = summaryCanvas.toDataURL('image/png');
+
+      barChart.destroy(); pieChart.destroy();
+      document.body.removeChild(container);
+      callback(barImg, pieImg, summaryImg);
+    }, 200);
+  }
+
+  buildCharts((barImg, pieImg, summaryImg) => {
+    const win = window.open('', '_blank');
+    win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+      <meta charset="UTF-8">
+      <title>تحليل النتائج — ${s.name}</title>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap');
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Cairo',sans-serif;padding:28px 32px;direction:rtl;color:#1a1a2e;background:#fff;}
+        .header{text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:3px solid #c25a00;}
+        .badge{background:#c25a00;color:#fff;display:inline-block;padding:4px 18px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;}
+        h1{font-size:1.25rem;font-weight:900;color:#c25a00;margin-bottom:4px;}
+        .sub{font-size:0.82rem;color:#5a6478;}
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0;}
+        .stat{padding:12px 8px;text-align:center;border-radius:10px;border:1.5px solid;}
+        .stat-num{font-size:2rem;font-weight:900;line-height:1;}
+        .stat-lbl{font-size:0.76rem;font-weight:700;margin-top:4px;}
+        .stat-pct{font-size:0.72rem;margin-top:2px;opacity:0.8;}
+        .section-title{font-size:0.95rem;font-weight:800;color:#1a3a5c;margin:18px 0 10px;padding-right:10px;border-right:4px solid #c25a00;}
+        .charts-row{display:grid;grid-template-columns:1fr 360px;gap:16px;margin-bottom:18px;align-items:start;}
+        .chart-box{background:#fafafa;border:1px solid #e8e0d4;border-radius:12px;padding:14px;text-align:center;}
+        img.chart{width:100%;height:auto;display:block;}
+        table{width:100%;border-collapse:collapse;font-size:0.83rem;}
+        thead th{background:#1a3a5c;color:#fff;padding:9px 12px;font-size:0.82rem;}
+        thead th:first-child{text-align:right;}
+        tbody td{padding:8px 12px;border:1px solid #e0d8c8;}
+        tbody tr:nth-child(even){background:#fafafa;}
+        tfoot td{padding:9px 12px;font-weight:900;background:#fff3e0;border-top:2px solid #c25a00;}
+        .footer{margin-top:20px;text-align:center;font-size:0.7rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
+        @media print{
+          body{padding:15px 18px;}
+          @page{margin:15mm;}
+        }
+      </style>
+    </head><body>
+      <div class="header">
+        <div class="badge">برنامج الدمج الفكري</div>
+        <h1>تحليل نتائج الأهداف التربوية</h1>
+        <p class="sub">${s.name} — ${s.grade} — الفصل الثاني 1447هـ</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat" style="background:#d1fae5;border-color:#10b981;">
+          <div class="stat-num" style="color:#059669;">${stats.excellent}</div>
+          <div class="stat-lbl" style="color:#059669;">متفوق</div>
+          <div class="stat-pct" style="color:#059669;">${total?Math.round(stats.excellent/total*100):0}%</div>
+        </div>
+        <div class="stat" style="background:#dbeafe;border-color:#3b82f6;">
+          <div class="stat-num" style="color:#2563eb;">${stats.advanced}</div>
+          <div class="stat-lbl" style="color:#2563eb;">متقدم</div>
+          <div class="stat-pct" style="color:#2563eb;">${total?Math.round(stats.advanced/total*100):0}%</div>
+        </div>
+        <div class="stat" style="background:#fef3c7;border-color:#f59e0b;">
+          <div class="stat-num" style="color:#d97706;">${stats.capable}</div>
+          <div class="stat-lbl" style="color:#d97706;">متمكن</div>
+          <div class="stat-pct" style="color:#d97706;">${total?Math.round(stats.capable/total*100):0}%</div>
+        </div>
+        <div class="stat" style="background:#fee2e2;border-color:#ef4444;">
+          <div class="stat-num" style="color:#dc2626;">${stats.failed}</div>
+          <div class="stat-lbl" style="color:#dc2626;">غير مجتاز</div>
+          <div class="stat-pct" style="color:#dc2626;">${total?Math.round(stats.failed/total*100):0}%</div>
+        </div>
+      </div>
+
+      <div class="section-title">📊 الرسوم البيانية</div>
+      <div class="charts-row">
+        <div class="chart-box">
+          <img class="chart" src="${barImg}" alt="توزيع الأداء">
+        </div>
+        <div>
+          <div class="chart-box" style="margin-bottom:12px;">
+            <img class="chart" src="${pieImg}" alt="التوزيع الإجمالي">
+          </div>
+          <div class="chart-box">
+            <img class="chart" src="${summaryImg}" alt="ملخص المواد">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">📋 جدول النتائج التفصيلية</div>
+      <table>
+        <thead>
+          <tr>
+            <th>المادة</th>
+            <th style="background:#059669;min-width:60px;">متفوق</th>
+            <th style="background:#2563eb;min-width:60px;">متقدم</th>
+            <th style="background:#d97706;min-width:60px;">متمكن</th>
+            <th style="background:#dc2626;min-width:60px;">غير مجتاز</th>
+            <th style="min-width:60px;">الإجمالي</th>
+          </tr>
+        </thead>
+        <tbody>${subjectRows.join('')}</tbody>
+        <tfoot>
+          <tr>
+            <td>المجموع</td>
+            <td style="text-align:center;color:#059669;">${stats.excellent}</td>
+            <td style="text-align:center;color:#2563eb;">${stats.advanced}</td>
+            <td style="text-align:center;color:#d97706;">${stats.capable}</td>
+            <td style="text-align:center;color:#dc2626;">${stats.failed}</td>
+            <td style="text-align:center;">${total}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
+      <script>
+        // طباعة تلقائية بعد تحميل الصور
+        window.onload = () => setTimeout(() => window.print(), 400);
+      <\/script>
+    </body></html>`);
+    win.document.close();
+  });
 }
 
 function savePlanAsPDF(pin) {
