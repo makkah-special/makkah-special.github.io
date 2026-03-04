@@ -2873,27 +2873,35 @@ function saveStudentEdits() {
   if (!editingPin) return;
   const sEdit = STUDENTS[editingPin];
 
-  sEdit.name    = document.getElementById('edit-name').value.trim() || sEdit.name;
-  sEdit.grade   = document.getElementById('edit-grade').value.trim() || sEdit.grade;
-  sEdit.id_full = document.getElementById('edit-id').value.trim() || sEdit.id_full;
-  sEdit.phone   = document.getElementById('edit-phone').value.trim();
-  // البيانات التفصيلية
-  sEdit.birthdate = document.getElementById('edit-birthdate').value.trim();
-  sEdit.nationality = document.getElementById('edit-nationality').value.trim();
-  sEdit.age = document.getElementById('edit-age').value.trim();
-  sEdit.address = document.getElementById('edit-address').value.trim();
-  sEdit.iq = document.getElementById('edit-iq').value.trim();
-  sEdit.sibling_order = document.getElementById('edit-sibling-order').value.trim();
-  sEdit.economic_level = document.getElementById('edit-economic-level').value.trim();
-  sEdit.father_edu = document.getElementById('edit-father-edu').value.trim();
-  sEdit.mother_edu = document.getElementById('edit-mother-edu').value.trim();
-  sEdit.status_psych = document.getElementById('edit-status-psych').value.trim();
-  sEdit.status_social = document.getElementById('edit-status-social').value.trim();
-  sEdit.status_health = document.getElementById('edit-status-health').value.trim();
-  sEdit.diagnosis = document.getElementById('edit-diagnosis').value.trim();
-  sEdit.program_place = document.getElementById('edit-program-place').value.trim();
-  sEdit.program_start = document.getElementById('edit-program-start').value.trim();
-  sEdit.program_end = document.getElementById('edit-program-end').value.trim();
+  // دالة مساعدة: تحتفظ بالقيمة القديمة إذا كان الحقل فارغاً (التاب مخفي)
+  const getVal = (id, fallback) => {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    const v = el.value.trim();
+    return v !== '' ? v : fallback;
+  };
+
+  sEdit.name    = getVal('edit-name',  sEdit.name)  || sEdit.name;
+  sEdit.grade   = getVal('edit-grade', sEdit.grade) || sEdit.grade;
+  sEdit.id_full = getVal('edit-id',    sEdit.id_full) || sEdit.id_full;
+  sEdit.phone   = getVal('edit-phone', sEdit.phone);
+  // البيانات التفصيلية — لا تُمسح إذا كان التاب مخفياً
+  sEdit.birthdate      = getVal('edit-birthdate',      sEdit.birthdate);
+  sEdit.nationality    = getVal('edit-nationality',    sEdit.nationality);
+  sEdit.age            = getVal('edit-age',            sEdit.age);
+  sEdit.address        = getVal('edit-address',        sEdit.address);
+  sEdit.iq             = getVal('edit-iq',             sEdit.iq);
+  sEdit.sibling_order  = getVal('edit-sibling-order',  sEdit.sibling_order);
+  sEdit.economic_level = getVal('edit-economic-level', sEdit.economic_level);
+  sEdit.father_edu     = getVal('edit-father-edu',     sEdit.father_edu);
+  sEdit.mother_edu     = getVal('edit-mother-edu',     sEdit.mother_edu);
+  sEdit.status_psych   = getVal('edit-status-psych',   sEdit.status_psych);
+  sEdit.status_social  = getVal('edit-status-social',  sEdit.status_social);
+  sEdit.status_health  = getVal('edit-status-health',  sEdit.status_health);
+  sEdit.diagnosis      = getVal('edit-diagnosis',      sEdit.diagnosis);
+  sEdit.program_place  = getVal('edit-program-place',  sEdit.program_place);
+  sEdit.program_start  = getVal('edit-program-start',  sEdit.program_start);
+  sEdit.program_end    = getVal('edit-program-end',    sEdit.program_end);
 
   const goalTitles = document.querySelectorAll('[data-goal-title]');
   const goalDescs  = document.querySelectorAll('[data-goal-desc]');
