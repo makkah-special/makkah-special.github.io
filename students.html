@@ -2489,25 +2489,26 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].name     = data.name     || STUDENTS[pin].name;
       STUDENTS[pin].grade    = data.grade    || STUDENTS[pin].grade;
       STUDENTS[pin].id_full  = data.id_full  || STUDENTS[pin].id_full;
-      STUDENTS[pin].phone    = data.phone    || STUDENTS[pin].phone || '';
+      STUDENTS[pin].phone    = (data.phone !== undefined && data.phone !== null) ? data.phone : (STUDENTS[pin].phone || '');
       STUDENTS[pin].plan     = data.plan     || STUDENTS[pin].plan     || [];
       STUDENTS[pin].followup = data.followup || STUDENTS[pin].followup || [];
-      STUDENTS[pin].birthdate = data.birthdate || '';
-      STUDENTS[pin].nationality = data.nationality || '';
-      STUDENTS[pin].age = data.age || '';
-      STUDENTS[pin].address = data.address || '';
-      STUDENTS[pin].iq = data.iq || '';
-      STUDENTS[pin].sibling_order = data.sibling_order || '';
-      STUDENTS[pin].economic_level = data.economic_level || '';
-      STUDENTS[pin].father_edu = data.father_edu || '';
-      STUDENTS[pin].mother_edu = data.mother_edu || '';
-      STUDENTS[pin].status_psych = data.status_psych || '';
-      STUDENTS[pin].status_social = data.status_social || '';
-      STUDENTS[pin].status_health = data.status_health || '';
-      STUDENTS[pin].diagnosis = data.diagnosis || '';
-      STUDENTS[pin].program_place = data.program_place || '';
-      STUDENTS[pin].program_start = data.program_start || '';
-      STUDENTS[pin].program_end = data.program_end || '';
+      const sd = (key) => (data[key] !== undefined && data[key] !== null) ? data[key] : (STUDENTS[pin][key] || '');
+      STUDENTS[pin].birthdate      = sd('birthdate');
+      STUDENTS[pin].nationality    = sd('nationality');
+      STUDENTS[pin].age            = sd('age');
+      STUDENTS[pin].address        = sd('address');
+      STUDENTS[pin].iq             = sd('iq');
+      STUDENTS[pin].sibling_order  = sd('sibling_order');
+      STUDENTS[pin].economic_level = sd('economic_level');
+      STUDENTS[pin].father_edu     = sd('father_edu');
+      STUDENTS[pin].mother_edu     = sd('mother_edu');
+      STUDENTS[pin].status_psych   = sd('status_psych');
+      STUDENTS[pin].status_social  = sd('status_social');
+      STUDENTS[pin].status_health  = sd('status_health');
+      STUDENTS[pin].diagnosis      = sd('diagnosis');
+      STUDENTS[pin].program_place  = sd('program_place');
+      STUDENTS[pin].program_start  = sd('program_start');
+      STUDENTS[pin].program_end    = sd('program_end');
     }
   } catch(e) { /* ملف غير موجود */ }
 }
