@@ -1996,9 +1996,10 @@ function saveStudentEdits() {
   // حفظ الخطة التربوية الفردية
   if (editingPin) collectIEPFromEditor(editingPin);
   // الأهداف محفوظة في IEP عبر collectIEPFromEditor
+  const pinToSave = editingPin; // نحفظ الـ pin قبل closeModal تُصفّره
   closeModal();
   renderStudentCards();
-  saveOneStudent(editingPin);
+  saveOneStudent(pinToSave);
 }
 
 function deleteStudent() {
@@ -2084,6 +2085,7 @@ async function saveOneSilent(pin) {
 }
 
 async function saveOneStudent(pin) {
+  if (!pin || !STUDENTS[pin]) { showToast('❌ خطأ: الطالب غير موجود'); return; }
   // تطبيق الأهداف الافتراضية إذا كانت مواد فارغة
   applyDefaultIEP(pin);
   const s = STUDENTS[pin];
