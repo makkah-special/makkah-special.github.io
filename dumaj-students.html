@@ -2903,6 +2903,8 @@ function collectIEPFromEditor(pin) {
   CORE_SUBJECTS.forEach(cs => {
     if (!s.iep[cs.key]) return;
     const goalInputs = document.querySelectorAll(`[data-iep-goal^="${cs.key}:"]`);
+    // إذا لم يكن تاب الخطة مفتوحاً لا توجد عناصر — لا نمسح الأهداف
+    if (goalInputs.length === 0) return;
     const levelSelects = document.querySelectorAll(`[data-iep-level^="${cs.key}:"]`);
     const goals = [];
     goalInputs.forEach((inp, i) => {
@@ -2915,6 +2917,8 @@ function collectIEPFromEditor(pin) {
   // جمع الأهداف من المواد المخصصة
   Object.keys(s.iep._custom || {}).forEach(k => {
     const goalInputs = document.querySelectorAll(`[data-iep-goal^="${k}:"]`);
+    // إذا لم يكن تاب الخطة مفتوحاً لا توجد عناصر — لا نمسح الأهداف
+    if (goalInputs.length === 0) return;
     const levelSelects = document.querySelectorAll(`[data-iep-level^="${k}:"]`);
     const goals = [];
     goalInputs.forEach((inp, i) => {
