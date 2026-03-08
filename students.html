@@ -2759,101 +2759,262 @@ async function renderSchedule() {
         .admin-tabs, .no-print { display: none !important; }
         #admin-tab-list, #admin-tab-add { display: none !important; }
         #admin-tab-schedule { display: block !important; }
-        .print-header { display: block !important; }
+        .sched-print-header { display: flex !important; }
         #schedule-container { padding: 0 !important; }
-        .timetable-wrap { box-shadow: none !important; border: 1px solid #ccc !important; }
-        td, th { font-size: 10pt !important; }
+        .timetable-card { box-shadow: none !important; border: 1px solid #d0d8e8 !important; border-radius: 8px !important; }
+        .sched-cell { min-height: 50px !important; }
       }
-      .print-header { display: none; }
-      .cell-badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px; font-weight: 700; }
-      .subject-ar  { background: #fef3c7; color: #92400e; }
-      .subject-math{ background: #dbeafe; color: #1e40af; }
-      .conflict-cell { background: #fff1f1 !important; outline: 2px solid #ef4444; }
+      .sched-print-header { display: none; }
+
+      .sched-wrap { font-family: 'Cairo', sans-serif; direction: rtl; }
+
+      /* Header bar */
+      .sched-topbar {
+        background: linear-gradient(135deg, #0f2440 0%, #1a3a5c 50%, #1e4976 100%);
+        border-radius: 16px; padding: 18px 22px;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 12px; margin-bottom: 20px;
+        box-shadow: 0 4px 24px rgba(15,36,64,0.25);
+        position: relative; overflow: hidden;
+      }
+      .sched-topbar::before {
+        content: ''; position: absolute; top: -40px; left: -40px;
+        width: 180px; height: 180px; border-radius: 50%;
+        background: rgba(255,255,255,0.04); pointer-events: none;
+      }
+      .sched-topbar::after {
+        content: ''; position: absolute; bottom: -60px; right: 10%;
+        width: 240px; height: 240px; border-radius: 50%;
+        background: rgba(200,151,58,0.08); pointer-events: none;
+      }
+      .sched-title { color: #fff; font-size: 1.05rem; font-weight: 800; margin: 0; }
+      .sched-sub   { color: rgba(255,255,255,0.55); font-size: 0.72rem; margin-top: 3px; }
+
+      /* Season toggle */
+      .season-toggle {
+        display: flex; border-radius: 10px; overflow: hidden;
+        border: 1.5px solid rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.07);
+      }
+      .season-btn {
+        padding: 7px 16px; border: none; cursor: pointer;
+        font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700;
+        transition: all 0.22s; background: transparent; color: rgba(255,255,255,0.55);
+      }
+      .season-btn.active { background: rgba(255,255,255,0.18); color: #fff; }
+      .season-btn.active-gold { background: rgba(200,151,58,0.7); color: #fff; }
+
+      /* Action buttons */
+      .sched-btn {
+        display: flex; align-items: center; gap: 5px;
+        padding: 8px 16px; border: none; border-radius: 9px;
+        font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700;
+        cursor: pointer; transition: all 0.18s; white-space: nowrap;
+      }
+      .sched-btn:hover { transform: translateY(-1px); }
+      .sched-btn-print { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+      .sched-btn-save  { background: #c8973a; color: #fff; box-shadow: 0 2px 10px rgba(200,151,58,0.4); }
+      .sched-btn-reset { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
+
+      /* Teacher stat cards */
+      .sched-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+      .stat-card {
+        border-radius: 14px; padding: 14px 18px;
+        display: flex; align-items: center; gap: 14px;
+        border: 1.5px solid transparent; transition: transform 0.2s;
+      }
+      .stat-card:hover { transform: translateY(-2px); }
+      .stat-avatar {
+        width: 44px; height: 44px; border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.3rem; flex-shrink: 0;
+      }
+      .stat-info { flex: 1; }
+      .stat-name  { font-size: 0.85rem; font-weight: 800; }
+      .stat-count { font-size: 0.72rem; margin-top: 2px; }
+      .stat-num   { font-size: 1.6rem; font-weight: 900; }
+
+      /* Legend */
+      .sched-legend { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+      .legend-pill {
+        display: flex; align-items: center; gap: 5px;
+        padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+        border: 1px solid transparent;
+      }
+      .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+      /* Table */
+      .timetable-card {
+        border-radius: 16px; overflow: hidden;
+        box-shadow: 0 4px 30px rgba(15,36,64,0.1);
+        border: 1px solid #e2e8f0;
+      }
+      .sched-table { width: 100%; border-collapse: collapse; min-width: 680px; background: #fff; }
+      .sched-th-day {
+        background: linear-gradient(180deg, #0f2440 0%, #1a3a5c 100%);
+        color: #fff; padding: 14px 10px; text-align: center;
+        font-size: 0.8rem; font-weight: 800; width: 76px;
+        border-left: 1px solid rgba(255,255,255,0.08);
+      }
+      .sched-th-period {
+        background: linear-gradient(180deg, #0f2440 0%, #1a3a5c 100%);
+        color: #fff; padding: 11px 8px; text-align: center;
+        font-size: 0.76rem; border-left: 1px solid rgba(255,255,255,0.08);
+      }
+      .sched-th-period .p-num  { font-weight: 800; font-size: 0.8rem; }
+      .sched-th-period .p-time { font-size: 0.63rem; color: #7fa8cc; margin-top: 3px; }
+
+      .sched-td-day {
+        padding: 10px 8px; text-align: center; font-weight: 800; font-size: 0.84rem;
+        color: #1a3a5c; border-left: 2px solid #e8eef6;
+        background: linear-gradient(180deg, #f4f7fb 0%, #eaf0f8 100%);
+        vertical-align: middle; white-space: nowrap;
+      }
+      .sched-td-cell {
+        padding: 6px 5px; vertical-align: top;
+        border-left: 1px solid #eef1f6; cursor: pointer;
+        transition: background 0.15s; min-width: 108px; min-height: 64px;
+      }
+      .sched-td-cell:hover { background: #f0f6ff !important; }
+      .sched-row-even { background: #fff; }
+      .sched-row-odd  { background: #fafbfd; }
+
+      .sched-cell { min-height: 60px; }
+      .cell-teacher-label {
+        font-size: 0.6rem; font-weight: 800; letter-spacing: 0.02em;
+        text-transform: uppercase; margin-bottom: 4px; opacity: 0.75;
+      }
+      .cell-student-row {
+        display: flex; align-items: center; gap: 4px;
+        margin-bottom: 3px; flex-wrap: wrap;
+      }
+      .cell-stu-name {
+        font-size: 0.74rem; font-weight: 700; line-height: 1.2;
+      }
+      .subj-pill {
+        font-size: 0.6rem; font-weight: 800; padding: 1px 6px;
+        border-radius: 10px; white-space: nowrap; flex-shrink: 0;
+      }
+      .subj-ar   { background: #fef3c7; color: #92400e; }
+      .subj-math { background: #dbeafe; color: #1e40af; }
+      .cell-empty-icon { color: #d4dbe8; font-size: 1rem; text-align: center; padding-top: 18px; }
+      .cell-inner-saad   { background: linear-gradient(135deg, #e8f0fa, #dde8f5); border: 1px solid #b8cfe8; border-radius: 9px; padding: 6px 8px; }
+      .cell-inner-husain { background: linear-gradient(135deg, #e6f5ee, #daf0e6); border: 1px solid #b0dfc4; border-radius: 9px; padding: 6px 8px; }
     </style>
 
     <!-- رأس الطباعة -->
-    <div class="print-header" style="text-align:center; margin-bottom: 18px;">
-      <div style="font-weight:900; font-size:1.1rem; color:#1a3a5c;">جدول الحصص الأسبوعي — برنامج يسير التعليمي</div>
-      <div style="font-size:0.82rem; color:#555; margin-top:4px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة</div>
-    </div>
-
-    <!-- شريط الأدوات -->
-    <div class="no-print" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+    <div class="sched-print-header" style="align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #1a3a5c;">
       <div>
-        <h2 style="font-size:1.05rem;font-weight:800;color:#1a3a5c;margin:0;">📅 الجدول الأسبوعي — برنامج يسير التعليمي</h2>
-        <p style="font-size:0.73rem;color:#888;margin:4px 0 0;">القاعة مشتركة — لا يمكن توزيع المعلمين في نفس الحصة</p>
+        <div style="font-weight:900;font-size:1.1rem;color:#1a3a5c;">جدول الحصص الأسبوعي — برنامج يسير التعليمي</div>
+        <div style="font-size:0.8rem;color:#666;margin-top:3px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة</div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <div style="display:flex;border:1.5px solid #e2e2e2;border-radius:9px;overflow:hidden;background:#fff;">
-          <button id="btn-winter" onclick="setSeasonMode(false)" style="padding:7px 14px;border:none;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;background:${!isSummer?'#1a3a5c':'#fff'};color:${!isSummer?'#fff':'#888'};transition:all 0.2s;">❄️ شتوي</button>
-          <button id="btn-summer" onclick="setSeasonMode(true)"  style="padding:7px 14px;border:none;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;background:${isSummer?'#c8973a':'#fff'};color:${isSummer?'#fff':'#888'};transition:all 0.2s;">☀️ صيفي</button>
+      <div style="font-size:0.75rem;color:#888;">أ. سعد الزهراني &nbsp;|&nbsp; أ. حسين الكبيشي</div>
+    </div>
+
+    <div class="sched-wrap">
+
+      <!-- Top bar -->
+      <div class="sched-topbar no-print">
+        <div>
+          <div class="sched-title">📅 الجدول الأسبوعي — برنامج يسير التعليمي</div>
+          <div class="sched-sub">القاعة مشتركة · الفصل الدراسي الثاني 1447هـ</div>
         </div>
-        <button onclick="printTimetable()" style="background:#1a3a5c;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة</button>
-        <button onclick="saveTimetableBtn()" style="background:#1a6b4a;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
-        <button onclick="resetTimetable()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;padding:7px 14px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;color:#888;cursor:pointer;">🔄 إعادة تعيين</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:relative;z-index:1;">
+          <div class="season-toggle">
+            <button class="season-btn ${!isSummer ? 'active' : ''}" onclick="setSeasonMode(false)">❄️ شتوي</button>
+            <button class="season-btn ${isSummer ? 'active-gold' : ''}" onclick="setSeasonMode(true)">☀️ صيفي</button>
+          </div>
+          <button class="sched-btn sched-btn-print" onclick="printTimetable()">🖨️ طباعة</button>
+          <button class="sched-btn sched-btn-save"  onclick="saveTimetableBtn()">💾 حفظ</button>
+          <button class="sched-btn sched-btn-reset" onclick="resetTimetable()">↺ إعادة</button>
+        </div>
       </div>
-    </div>
 
-    <!-- مفتاح الألوان -->
-    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;">
-      ${TEACHERS_TBL.map(t => `
-        <div style="display:flex;align-items:center;gap:6px;background:${t.light};border:1.5px solid ${t.color}44;padding:5px 12px;border-radius:8px;">
-          <div style="width:10px;height:10px;border-radius:2px;background:${t.color};"></div>
-          <span style="font-size:0.78rem;font-weight:700;color:${t.color};">أ. ${t.name.split(' ')[0]} — ${totals[t.key]} حصة</span>
-        </div>`).join('')}
-      <div style="background:#fef3c7;border:1px solid #f59e0b44;padding:5px 12px;border-radius:8px;"><span class="cell-badge subject-ar">لغة عربية</span></div>
-      <div style="background:#dbeafe;border:1px solid #3b82f644;padding:5px 12px;border-radius:8px;"><span class="cell-badge subject-math">رياضيات</span></div>
-      <div style="font-size:0.72rem;color:#888;">اضغط على أي خلية للتعديل</div>
-    </div>
+      <!-- Stat cards -->
+      <div class="sched-stats no-print">
+        ${TEACHERS_TBL.map(t => `
+          <div class="stat-card" style="background:${t.light};border-color:${t.color}22;">
+            <div class="stat-avatar" style="background:${t.color}18;">${t.key === 'saad' ? '👨‍🏫' : '👨‍💼'}</div>
+            <div class="stat-info">
+              <div class="stat-name" style="color:${t.color};">أ. ${t.name}</div>
+              <div class="stat-count" style="color:${t.accent};">إجمالي الحصص الأسبوعية</div>
+            </div>
+            <div class="stat-num" style="color:${t.color};">${totals[t.key]}</div>
+          </div>`).join('')}
+      </div>
 
-    <!-- الجدول -->
-    <div class="timetable-wrap" style="overflow-x:auto;border-radius:14px;box-shadow:0 2px 20px rgba(0,0,0,0.07);border:1.5px solid #e8e8e8;">
-      <table id="main-timetable" style="width:100%;border-collapse:collapse;min-width:680px;background:#fff;">
-        <thead>
-          <tr>
-            <th style="background:#0f2440;color:#fff;padding:11px 12px;text-align:center;font-size:0.8rem;width:74px;border-left:1px solid #ffffff22;">اليوم</th>
-            ${PERIODS.map(p => `
-              <th style="background:#0f2440;color:#fff;padding:9px 6px;text-align:center;font-size:0.76rem;border-left:1px solid #ffffff22;">
-                <div style="font-weight:800;">${p.label}</div>
-                <div style="font-size:0.65rem;color:#90adc0;margin-top:2px;">${isSummer ? p.timeS : p.timeW}</div>
-              </th>`).join('')}
-          </tr>
-        </thead>
-        <tbody>
-          ${DAYS.map((day, di) => `
-            <tr style="border-bottom:1px solid #f0f0f0;">
-              <td style="padding:8px 10px;text-align:center;font-weight:800;font-size:0.82rem;color:#1a3a5c;background:linear-gradient(135deg,#f0f4fa,#e8f0fa);border-left:2px solid #e0e8f4;">${day}</td>
-              ${PERIODS.map(p => {
-                const cell = timetableData[day]?.[p.num] || { teacher: '', students: [] };
-                const t = TEACHERS_TBL.find(x => x.key === cell.teacher);
-                const hasData = cell.teacher && cell.students?.length > 0;
-                return `
-                  <td onclick="openCellEditor('${day}',${p.num})"
-                      style="padding:5px;vertical-align:top;border-left:1px solid #f0f0f0;cursor:pointer;min-width:110px;transition:background 0.15s;${di%2===1?'background:#fafafa':''}"
-                      onmouseenter="this.style.background='#f0f7ff'" onmouseleave="this.style.background='${di%2===1?'#fafafa':'transparent'}'">
-                    <div style="min-height:54px;">
-                      ${hasData ? `
-                        <div style="background:${t.light};border:1px solid ${t.color}33;border-radius:7px;padding:4px 6px;">
-                          <div style="font-size:0.62rem;color:${t.accent};font-weight:800;margin-bottom:3px;">أ. ${t.name.split(' ')[0]}</div>
-                          ${cell.students.map(s => `
-                            <div style="font-size:0.71rem;color:${t.color};font-weight:600;">${s.name.split(' ').slice(1,3).join(' ')}</div>
-                            <span class="cell-badge ${s.subject === 'رياضيات' ? 'subject-math' : 'subject-ar'}">${s.subject}</span>
-                          `).join('')}
-                        </div>` : `<div style="color:#ddd;font-size:0.72rem;text-align:center;padding-top:16px;">—</div>`}
-                    </div>
-                  </td>`;
-              }).join('')}
-            </tr>`).join('')}
-        </tbody>
-      </table>
+      <!-- Legend -->
+      <div class="sched-legend no-print">
+        ${TEACHERS_TBL.map(t => `
+          <div class="legend-pill" style="background:${t.light};border-color:${t.color}33;">
+            <div class="legend-dot" style="background:${t.color};"></div>
+            <span style="color:${t.color};">أ. ${t.name.split(' ')[0]}</span>
+          </div>`).join('')}
+        <div class="legend-pill subj-ar" style="border-color:#f59e0b44;">📚 لغة عربية</div>
+        <div class="legend-pill subj-math" style="border-color:#3b82f644;">🔢 رياضيات</div>
+        <div style="font-size:0.71rem;color:#aaa;margin-right:4px;">• اضغط على أي خلية للتعديل</div>
+      </div>
+
+      <!-- Table -->
+      <div class="timetable-card" style="overflow-x:auto;">
+        <table class="sched-table">
+          <thead>
+            <tr>
+              <th class="sched-th-day">اليوم</th>
+              ${PERIODS.map(p => `
+                <th class="sched-th-period">
+                  <div class="p-num">الحصة ${p.label}</div>
+                  <div class="p-time">${isSummer ? p.timeS : p.timeW}</div>
+                </th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${DAYS.map((day, di) => `
+              <tr class="${di % 2 === 0 ? 'sched-row-even' : 'sched-row-odd'}">
+                <td class="sched-td-day">${day}</td>
+                ${PERIODS.map(p => {
+                  const cell = timetableData[day]?.[p.num] || { teacher: '', students: [] };
+                  const t = TEACHERS_TBL.find(x => x.key === cell.teacher);
+                  const hasData = cell.teacher && cell.students?.length > 0;
+                  const rowBg = di % 2 === 0 ? '#fff' : '#fafbfd';
+                  return `
+                    <td class="sched-td-cell ${di%2===0?'sched-row-even':'sched-row-odd'}"
+                        onclick="openCellEditor('${day}',${p.num})"
+                        onmouseleave="this.style.background='${rowBg}'">
+                      <div class="sched-cell">
+                        ${hasData ? `
+                          <div class="cell-inner-${t.key}">
+                            <div class="cell-teacher-label" style="color:${t.accent};">أ. ${t.name.split(' ')[0]}</div>
+                            ${cell.students.map(s => {
+                              const parts = s.name.trim().split(' ');
+                              const shortName = parts.length >= 2 ? parts[0] + ' ' + parts[parts.length - 1] : s.name;
+                              return `
+                                <div class="cell-student-row">
+                                  <span class="cell-stu-name" style="color:${t.color};">${shortName}</span>
+                                  <span class="subj-pill ${s.subject === 'رياضيات' ? 'subj-math' : 'subj-ar'}">${s.subject === 'رياضيات' ? '🔢' : '📚'}</span>
+                                </div>`;
+                            }).join('')}
+                          </div>` : `<div class="cell-empty-icon">·</div>`}
+                      </div>
+                    </td>`;
+                }).join('')}
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+
     </div>
 
     <!-- مودال التعديل -->
-    <div id="cell-overlay" onclick="closeCellEditor()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9000;"></div>
-    <div id="cell-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:18px;padding:24px 22px;width:min(520px,96vw);max-height:88vh;overflow-y:auto;z-index:9001;box-shadow:0 8px 40px rgba(0,0,0,0.22);">
+    <div id="cell-overlay" onclick="closeCellEditor()" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.6);z-index:9000;backdrop-filter:blur(3px);"></div>
+    <div id="cell-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:0;width:min(540px,96vw);max-height:88vh;overflow-y:auto;z-index:9001;box-shadow:0 12px 50px rgba(10,20,40,0.25);">
       <div id="cell-content"></div>
     </div>
   `;
+  document.getElementById('cell-content').innerHTML = html;
+  document.getElementById('cell-overlay').style.display = 'block';
+  document.getElementById('cell-box').style.display = 'block';
+  checkConflict();
 }
 
 function openCellEditor(day, period) {
@@ -2862,70 +3023,84 @@ function openCellEditor(day, period) {
   const periodInfo = PERIODS.find(p => p.num === period);
   const allPins = Object.keys(STUDENTS);
 
-  // اكتشاف التعارضات: أي حصص شغلها المعلم الآخر في نفس اليوم/الحصة
-  const otherTeacher = (key) => key === 'saad' ? 'husain' : 'saad';
-
-  let html = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <div>
-        <div style="font-weight:800;font-size:1rem;color:#1a3a5c;">✏️ تعديل الخلية</div>
-        <div style="font-size:0.78rem;color:#888;margin-top:2px;">${day} — الحصة ${periodInfo?.label}</div>
-      </div>
-      <button onclick="closeCellEditor()" style="background:#f0f0f0;border:none;border-radius:50%;width:30px;height:30px;font-size:1rem;cursor:pointer;">✕</button>
-    </div>
-
-    <!-- اختيار المعلم -->
-    <div style="margin-bottom:16px;">
-      <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:8px;">👨‍🏫 المعلم المسؤول عن هذه الحصة:</div>
-      <div style="display:flex;gap:8px;">
-        ${TEACHERS_TBL.map(t => {
-          const isSelected = cell.teacher === t.key;
-          return `
-            <label style="flex:1;display:flex;align-items:center;gap:8px;background:${isSelected ? t.light : '#f8f8f8'};border:2px solid ${isSelected ? t.color : '#e0e0e0'};border-radius:10px;padding:10px 14px;cursor:pointer;transition:all 0.15s;">
-              <input type="radio" name="cell-teacher" value="${t.key}" ${isSelected ? 'checked' : ''} style="accent-color:${t.color};width:15px;height:15px;" onchange="updateTeacherSelection()">
-              <span style="font-weight:700;font-size:0.85rem;color:${t.color};">أ. ${t.name}</span>
-            </label>`;
-        }).join('')}
-        <label style="display:flex;align-items:center;gap:6px;background:${!cell.teacher ? '#f8f8f8' : '#f8f8f8'};border:2px solid ${!cell.teacher ? '#888' : '#e0e0e0'};border-radius:10px;padding:10px 12px;cursor:pointer;">
-          <input type="radio" name="cell-teacher" value="" ${!cell.teacher ? 'checked' : ''} style="width:15px;height:15px;" onchange="updateTeacherSelection()">
-          <span style="font-size:0.82rem;color:#888;font-weight:600;">فارغة</span>
-        </label>
+  const html = `
+    <div style="background:linear-gradient(135deg,#0f2440,#1a3a5c);padding:18px 22px;border-radius:20px 20px 0 0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="color:#fff;font-weight:800;font-size:0.95rem;">✏️ تعديل الحصة</div>
+          <div style="color:rgba(255,255,255,0.5);font-size:0.72rem;margin-top:2px;">${day} — الحصة ${periodInfo?.label}</div>
+        </div>
+        <button onclick="closeCellEditor()" style="background:rgba(255,255,255,0.12);border:none;border-radius:50%;width:30px;height:30px;color:#fff;font-size:1rem;cursor:pointer;line-height:30px;text-align:center;">✕</button>
       </div>
     </div>
+    <div style="padding:20px 22px;">
 
-    <!-- تحذير التعارض -->
-    <div id="conflict-warning" style="display:none;background:#fff1f1;border:1.5px solid #ef4444;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:0.8rem;color:#b91c1c;font-weight:700;">
-      ⚠️ تعارض: المعلم الآخر لديه حصة في نفس الوقت!
-    </div>
-
-    <!-- الطلاب -->
-    <div id="students-selector">
-      <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:8px;">👨‍🎓 الطلاب في هذه الحصة:</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;" id="students-checkboxes">
-        ${allPins.map(pin => {
-          const s = STUDENTS[pin];
-          const entry = cell.students?.find(x => x.name === s.name || s.name.includes(x.name?.split(' ')[1]||'__'));
-          const checked = !!entry;
-          const subj = entry?.subject || 'لغة عربية';
-          return `
-            <div id="stu-wrap-${pin}" style="background:#f8f8f8;border:1.5px solid ${checked ? '#1a3a5c' : '#e0e0e0'};border-radius:9px;padding:6px 10px;transition:all 0.15s;">
-              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
-                <input type="checkbox" data-pin="${pin}" ${checked ? 'checked' : ''} style="width:14px;height:14px;" onchange="toggleStudentInCell(this,'${pin}')">
-                <span style="font-size:0.78rem;font-weight:700;color:#1a3a5c;">${s.name.split(' ').slice(1,3).join(' ')}</span>
-              </label>
-              <div id="subj-row-${pin}" style="display:${checked ? 'flex' : 'none'};gap:5px;margin-top:5px;">
-                ${SUBJECTS_LIST.map(subj2 => `
-                  <label style="display:flex;align-items:center;gap:3px;font-size:0.72rem;cursor:pointer;">
-                    <input type="radio" name="subj-${pin}" value="${subj2}" ${subj === subj2 ? 'checked' : ''} style="width:12px;height:12px;">
-                    <span class="cell-badge ${subj2 === 'رياضيات' ? 'subject-math' : 'subject-ar'}">${subj2}</span>
-                  </label>`).join('')}
-              </div>
-            </div>`;
-        }).join('')}
+      <!-- اختيار المعلم -->
+      <div style="margin-bottom:18px;">
+        <div style="font-size:0.78rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="background:#1a3a5c;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">١</span>
+          المعلم المسؤول عن هذه الحصة
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;">
+          ${TEACHERS_TBL.map(t => {
+            const isSelected = cell.teacher === t.key;
+            return `
+              <label style="display:flex;align-items:center;gap:8px;background:${isSelected ? t.light : '#f8f9fc'};border:2px solid ${isSelected ? t.color : '#e8ecf2'};border-radius:12px;padding:10px 14px;cursor:pointer;transition:all 0.15s;">
+                <input type="radio" name="cell-teacher" value="${t.key}" ${isSelected ? 'checked' : ''} style="accent-color:${t.color};width:14px;height:14px;" onchange="updateTeacherSelection()">
+                <div>
+                  <div style="font-size:0.82rem;font-weight:800;color:${t.color};">${t.name.split(' ')[0]}</div>
+                  <div style="font-size:0.68rem;color:#aaa;">${t.name.split(' ')[1] || ''}</div>
+                </div>
+              </label>`;
+          }).join('')}
+          <label style="display:flex;align-items:center;gap:6px;background:${!cell.teacher ? '#f0f0f0' : '#f8f9fc'};border:2px solid ${!cell.teacher ? '#999' : '#e8ecf2'};border-radius:12px;padding:10px 12px;cursor:pointer;">
+            <input type="radio" name="cell-teacher" value="" ${!cell.teacher ? 'checked' : ''} style="width:14px;height:14px;" onchange="updateTeacherSelection()">
+            <span style="font-size:0.78rem;color:#888;font-weight:600;">فارغة</span>
+          </label>
+        </div>
       </div>
-    </div>
 
-    <button onclick="saveCellEdit()" style="width:100%;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:10px;padding:12px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;margin-top:16px;">💾 حفظ</button>
+      <!-- تحذير التعارض -->
+      <div id="conflict-warning" style="display:none;background:#fff1f1;border:1.5px solid #fca5a5;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:0.78rem;color:#b91c1c;font-weight:700;display:flex;align-items:center;gap:6px;">
+        ⚠️ تعارض: المعلم الآخر لديه حصة في نفس الوقت!
+      </div>
+
+      <!-- الطلاب -->
+      <div style="margin-bottom:18px;">
+        <div style="font-size:0.78rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="background:#1a3a5c;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٢</span>
+          الطلاب في هذه الحصة
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          ${allPins.map(pin => {
+            const s = STUDENTS[pin];
+            const parts = s.name.trim().split(' ');
+            const shortName = parts.length >= 2 ? parts[0] + ' ' + parts[parts.length - 1] : s.name;
+            const entry = cell.students?.find(x => x.name === s.name);
+            const checked = !!entry;
+            const subj = entry?.subject || 'لغة عربية';
+            return `
+              <div id="stu-wrap-${pin}" style="background:${checked ? '#f0f4fa' : '#f8f9fc'};border:1.5px solid ${checked ? '#1a3a5c' : '#e8ecf2'};border-radius:10px;padding:7px 10px;transition:all 0.15s;min-width:90px;">
+                <label style="display:flex;align-items:center;gap:5px;cursor:pointer;margin-bottom:${checked ? '6px' : '0'};">
+                  <input type="checkbox" data-pin="${pin}" ${checked ? 'checked' : ''} style="accent-color:#1a3a5c;width:13px;height:13px;" onchange="toggleStudentInCell(this,'${pin}')">
+                  <span style="font-size:0.77rem;font-weight:700;color:#1a3a5c;">${shortName}</span>
+                </label>
+                <div id="subj-row-${pin}" style="display:${checked ? 'flex' : 'none'};gap:4px;flex-wrap:wrap;">
+                  ${SUBJECTS_LIST.map(subj2 => `
+                    <label style="display:flex;align-items:center;gap:3px;cursor:pointer;">
+                      <input type="radio" name="subj-${pin}" value="${subj2}" ${subj === subj2 ? 'checked' : ''} style="width:11px;height:11px;accent-color:${subj2 === 'رياضيات' ? '#1e40af' : '#92400e'};">
+                      <span style="font-size:0.65rem;font-weight:700;padding:1px 6px;border-radius:8px;" class="${subj2 === 'رياضيات' ? 'subj-math' : 'subj-ar'}">${subj2}</span>
+                    </label>`).join('')}
+                </div>
+              </div>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <button onclick="saveCellEdit()" style="width:100%;background:linear-gradient(135deg,#0f2440,#2563a8);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(15,36,64,0.3);transition:transform 0.15s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='none'">
+        💾 حفظ التعديلات
+      </button>
+    </div>
   `;
 
   document.getElementById('cell-content').innerHTML = html;
@@ -2933,6 +3108,7 @@ function openCellEditor(day, period) {
   document.getElementById('cell-box').style.display = 'block';
   checkConflict();
 }
+
 
 function updateTeacherSelection() { checkConflict(); }
 
@@ -2995,9 +3171,9 @@ async function saveTimetableBtn() {
 }
 
 function printTimetable() {
-  document.querySelector('.print-header').style.display = 'block';
+  document.querySelector('.sched-print-header').style.display = 'flex';
   window.print();
-  setTimeout(() => { document.querySelector('.print-header').style.display = 'none'; }, 1000);
+  setTimeout(() => { document.querySelector('.sched-print-header').style.display = 'none'; }, 1200);
 }
 
 async function resetTimetable() {
