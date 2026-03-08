@@ -987,6 +987,7 @@
     <div class="admin-tabs">
       <button class="admin-tab-btn active" onclick="openAdminTab('list',this)">👨‍🎓 قائمة الطلاب</button>
       <button class="admin-tab-btn" onclick="openAdminTab('add',this)">➕ إضافة طالب</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('schedule',this)">📅 توزيع الحصص</button>
     </div>
 
     <!-- قائمة الطلاب -->
@@ -1027,6 +1028,11 @@
           <button class="btn-save" onclick="addNewStudent()" style="margin-top:8px;">✅ إضافة الطالب</button>
         </div>
       </div>
+    </div>
+
+    <!-- توزيع الحصص -->
+    <div class="admin-tab-pane" id="admin-tab-schedule">
+      <div id="schedule-container"></div>
     </div>
 
   </div>
@@ -2632,6 +2638,372 @@ function openAdminTab(id, btn) {
   document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('admin-tab-' + id).classList.add('active');
   btn.classList.add('active');
+  if (id === 'schedule') renderSchedule();
+}
+
+// =====================================================
+// الجدول الأسبوعي — برنامج يسير
+// =====================================================
+
+const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+const PERIODS = [
+  { num: 1, label: 'الأولى',  timeS: '7:00–7:45',    timeW: '7:30–8:15'   },
+  { num: 2, label: 'الثانية', timeS: '7:45–8:30',    timeW: '8:15–9:00'   },
+  { num: 3, label: 'الثالثة', timeS: '8:30–9:15',    timeW: '9:00–9:45'   },
+  { num: 4, label: 'الرابعة', timeS: '9:35–10:20',   timeW: '10:05–10:50' },
+  { num: 5, label: 'الخامسة', timeS: '10:20–11:05',  timeW: '10:50–11:35' },
+];
+const TEACHERS_TBL = [
+  { key: 'saad',   name: 'سعد الزهراني',  color: '#1a3a5c', accent: '#2563a8', light: '#e8f0fa' },
+  { key: 'husain', name: 'حسين الكبيشي', color: '#1a6b4a', accent: '#15803d', light: '#e8f7f1' },
+];
+const SUBJECTS_LIST = ['لغة عربية', 'رياضيات'];
+const TIMETABLE_KEY = 'yaseer_timetable_v4'; // للـ cache المحلي فقط
+const SB_TIMETABLE_KEY = 'yaseer_timetable_main'; // المفتاح في Supabase
+
+// ---- تحميل من Supabase (مع fallback للـ localStorage) ----
+async function loadTimetable() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/teacher_portfolios?teacher_key=eq.${SB_TIMETABLE_KEY}&select=data`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      if (rows?.length > 0 && rows[0].data) {
+        localStorage.setItem(TIMETABLE_KEY, JSON.stringify(rows[0].data));
+        return rows[0].data;
+      }
+    }
+  } catch(e) {}
+  // fallback: localStorage
+  try { const r = localStorage.getItem(TIMETABLE_KEY); return r ? JSON.parse(r) : null; }
+  catch(e) { return null; }
+}
+
+// ---- حفظ في Supabase ----
+async function saveTimetable(d) {
+  // حفظ محلي فوري
+  try { localStorage.setItem(TIMETABLE_KEY, JSON.stringify(d)); } catch(e) {}
+  // حفظ في Supabase
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/teacher_portfolios`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({ teacher_key: SB_TIMETABLE_KEY, data: d })
+    });
+  } catch(e) {}
+}
+
+// هيكل الخلية: { teacher: 'saad'|'husain'|'', students: [{name, subject}] }
+function getEmptyTimetable() {
+  const t = {};
+  DAYS.forEach(d => { t[d] = {}; PERIODS.forEach(p => { t[d][p.num] = { teacher: '', students: [] }; }); });
+  return t;
+}
+
+function getDefaultTimetable() {
+  const t = getEmptyTimetable();
+  const fill = (day, period, teacher, students) => {
+    t[day][period] = { teacher, students };
+  };
+  // أ. سعد الزهراني
+  fill('الأحد',    2, 'saad',   [{name:'أمجد المحوري',        subject:'لغة عربية'}]);
+  fill('الأحد',    3, 'saad',   [{name:'فارس القحطاني',       subject:'لغة عربية'}, {name:'عبدالمجيد الهلالي', subject:'لغة عربية'}]);
+  fill('الأحد',    4, 'saad',   [{name:'مسفر القحطاني',       subject:'رياضيات'}]);
+  fill('الاثنين',  3, 'saad',   [{name:'مسفر القحطاني',       subject:'رياضيات'}]);
+  fill('الثلاثاء', 3, 'saad',   [{name:'فارس القحطاني',       subject:'لغة عربية'}, {name:'عبدالمجيد الهلالي', subject:'لغة عربية'}]);
+  fill('الأربعاء', 3, 'saad',   [{name:'فارس القحطاني',       subject:'رياضيات'}]);
+  fill('الأربعاء', 4, 'saad',   [{name:'مسفر القحطاني',       subject:'رياضيات'}]);
+  fill('الخميس',   3, 'saad',   [{name:'مسفر القحطاني',       subject:'لغة عربية'}]);
+  fill('الخميس',   4, 'saad',   [{name:'طلال العصماني',       subject:'لغة عربية'}, {name:'عبدالله الزهراني',  subject:'لغة عربية'}]);
+  // أ. حسين الكبيشي
+  fill('الأحد',    5, 'husain', [{name:'محمد الشمراني',       subject:'لغة عربية'}, {name:'وسام السهيمي',      subject:'لغة عربية'}]);
+  fill('الاثنين',  2, 'husain', [{name:'حسن الزهراني',        subject:'لغة عربية'}]);
+  fill('الاثنين',  5, 'husain', [{name:'محمد الشمراني',       subject:'رياضيات'},   {name:'وسام السهيمي',      subject:'رياضيات'}]);
+  fill('الثلاثاء', 2, 'husain', [{name:'بسام المالكي',        subject:'لغة عربية'}]);
+  fill('الثلاثاء', 4, 'husain', [{name:'مراد المنتشري',       subject:'رياضيات'},   {name:'فيصل الغامدي',      subject:'رياضيات'}]);
+  fill('الثلاثاء', 5, 'husain', [{name:'عبدالرحمن مقري',     subject:'لغة عربية'}, {name:'محمد الغامدي',      subject:'لغة عربية'}]);
+  fill('الأربعاء', 2, 'husain', [{name:'بسام المالكي',        subject:'رياضيات'}]);
+  fill('الأربعاء', 5, 'husain', [{name:'محمد الغامدي',        subject:'رياضيات'}]);
+  fill('الخميس',   2, 'husain', [{name:'حسن الزهراني',        subject:'رياضيات'}]);
+  return t;
+}
+
+let timetableData = null;
+let editingCell = null;
+
+let isSummerMode = false; // حالة الوضع صيفي/شتوي
+
+async function renderSchedule() {
+  timetableData = await loadTimetable() || getDefaultTimetable();
+  const isSummer = isSummerMode;
+  const container = document.getElementById('schedule-container');
+
+  // حساب الإجماليات
+  const totals = { saad: 0, husain: 0 };
+  DAYS.forEach(d => PERIODS.forEach(p => {
+    const cell = timetableData[d]?.[p.num];
+    if (cell?.teacher && cell.students?.length > 0) totals[cell.teacher]++;
+  }));
+
+  container.innerHTML = `
+    <style>
+      @media print {
+        body > *:not(#admin-portal) { display: none !important; }
+        #admin-portal > *:not(.admin-body) { display: none !important; }
+        .admin-tabs, .no-print { display: none !important; }
+        #admin-tab-list, #admin-tab-add { display: none !important; }
+        #admin-tab-schedule { display: block !important; }
+        .print-header { display: block !important; }
+        #schedule-container { padding: 0 !important; }
+        .timetable-wrap { box-shadow: none !important; border: 1px solid #ccc !important; }
+        td, th { font-size: 10pt !important; }
+      }
+      .print-header { display: none; }
+      .cell-badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px; font-weight: 700; }
+      .subject-ar  { background: #fef3c7; color: #92400e; }
+      .subject-math{ background: #dbeafe; color: #1e40af; }
+      .conflict-cell { background: #fff1f1 !important; outline: 2px solid #ef4444; }
+    </style>
+
+    <!-- رأس الطباعة -->
+    <div class="print-header" style="text-align:center; margin-bottom: 18px;">
+      <div style="font-weight:900; font-size:1.1rem; color:#1a3a5c;">جدول الحصص الأسبوعي — برنامج يسير التعليمي</div>
+      <div style="font-size:0.82rem; color:#555; margin-top:4px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة</div>
+    </div>
+
+    <!-- شريط الأدوات -->
+    <div class="no-print" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+      <div>
+        <h2 style="font-size:1.05rem;font-weight:800;color:#1a3a5c;margin:0;">📅 الجدول الأسبوعي — برنامج يسير التعليمي</h2>
+        <p style="font-size:0.73rem;color:#888;margin:4px 0 0;">القاعة مشتركة — لا يمكن توزيع المعلمين في نفس الحصة</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <div style="display:flex;border:1.5px solid #e2e2e2;border-radius:9px;overflow:hidden;background:#fff;">
+          <button id="btn-winter" onclick="setSeasonMode(false)" style="padding:7px 14px;border:none;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;background:${!isSummer?'#1a3a5c':'#fff'};color:${!isSummer?'#fff':'#888'};transition:all 0.2s;">❄️ شتوي</button>
+          <button id="btn-summer" onclick="setSeasonMode(true)"  style="padding:7px 14px;border:none;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;background:${isSummer?'#c8973a':'#fff'};color:${isSummer?'#fff':'#888'};transition:all 0.2s;">☀️ صيفي</button>
+        </div>
+        <button onclick="printTimetable()" style="background:#1a3a5c;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة</button>
+        <button onclick="saveTimetableBtn()" style="background:#1a6b4a;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
+        <button onclick="resetTimetable()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;padding:7px 14px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;color:#888;cursor:pointer;">🔄 إعادة تعيين</button>
+      </div>
+    </div>
+
+    <!-- مفتاح الألوان -->
+    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;">
+      ${TEACHERS_TBL.map(t => `
+        <div style="display:flex;align-items:center;gap:6px;background:${t.light};border:1.5px solid ${t.color}44;padding:5px 12px;border-radius:8px;">
+          <div style="width:10px;height:10px;border-radius:2px;background:${t.color};"></div>
+          <span style="font-size:0.78rem;font-weight:700;color:${t.color};">أ. ${t.name.split(' ')[0]} — ${totals[t.key]} حصة</span>
+        </div>`).join('')}
+      <div style="background:#fef3c7;border:1px solid #f59e0b44;padding:5px 12px;border-radius:8px;"><span class="cell-badge subject-ar">لغة عربية</span></div>
+      <div style="background:#dbeafe;border:1px solid #3b82f644;padding:5px 12px;border-radius:8px;"><span class="cell-badge subject-math">رياضيات</span></div>
+      <div style="font-size:0.72rem;color:#888;">اضغط على أي خلية للتعديل</div>
+    </div>
+
+    <!-- الجدول -->
+    <div class="timetable-wrap" style="overflow-x:auto;border-radius:14px;box-shadow:0 2px 20px rgba(0,0,0,0.07);border:1.5px solid #e8e8e8;">
+      <table id="main-timetable" style="width:100%;border-collapse:collapse;min-width:680px;background:#fff;">
+        <thead>
+          <tr>
+            <th style="background:#0f2440;color:#fff;padding:11px 12px;text-align:center;font-size:0.8rem;width:74px;border-left:1px solid #ffffff22;">اليوم</th>
+            ${PERIODS.map(p => `
+              <th style="background:#0f2440;color:#fff;padding:9px 6px;text-align:center;font-size:0.76rem;border-left:1px solid #ffffff22;">
+                <div style="font-weight:800;">${p.label}</div>
+                <div style="font-size:0.65rem;color:#90adc0;margin-top:2px;">${isSummer ? p.timeS : p.timeW}</div>
+              </th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${DAYS.map((day, di) => `
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:8px 10px;text-align:center;font-weight:800;font-size:0.82rem;color:#1a3a5c;background:linear-gradient(135deg,#f0f4fa,#e8f0fa);border-left:2px solid #e0e8f4;">${day}</td>
+              ${PERIODS.map(p => {
+                const cell = timetableData[day]?.[p.num] || { teacher: '', students: [] };
+                const t = TEACHERS_TBL.find(x => x.key === cell.teacher);
+                const hasData = cell.teacher && cell.students?.length > 0;
+                return `
+                  <td onclick="openCellEditor('${day}',${p.num})"
+                      style="padding:5px;vertical-align:top;border-left:1px solid #f0f0f0;cursor:pointer;min-width:110px;transition:background 0.15s;${di%2===1?'background:#fafafa':''}"
+                      onmouseenter="this.style.background='#f0f7ff'" onmouseleave="this.style.background='${di%2===1?'#fafafa':'transparent'}'">
+                    <div style="min-height:54px;">
+                      ${hasData ? `
+                        <div style="background:${t.light};border:1px solid ${t.color}33;border-radius:7px;padding:4px 6px;">
+                          <div style="font-size:0.62rem;color:${t.accent};font-weight:800;margin-bottom:3px;">أ. ${t.name.split(' ')[0]}</div>
+                          ${cell.students.map(s => `
+                            <div style="font-size:0.71rem;color:${t.color};font-weight:600;">${s.name.split(' ').slice(1,3).join(' ')}</div>
+                            <span class="cell-badge ${s.subject === 'رياضيات' ? 'subject-math' : 'subject-ar'}">${s.subject}</span>
+                          `).join('')}
+                        </div>` : `<div style="color:#ddd;font-size:0.72rem;text-align:center;padding-top:16px;">—</div>`}
+                    </div>
+                  </td>`;
+              }).join('')}
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- مودال التعديل -->
+    <div id="cell-overlay" onclick="closeCellEditor()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9000;"></div>
+    <div id="cell-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:18px;padding:24px 22px;width:min(520px,96vw);max-height:88vh;overflow-y:auto;z-index:9001;box-shadow:0 8px 40px rgba(0,0,0,0.22);">
+      <div id="cell-content"></div>
+    </div>
+  `;
+}
+
+function openCellEditor(day, period) {
+  editingCell = { day, period };
+  const cell = timetableData[day]?.[period] || { teacher: '', students: [] };
+  const periodInfo = PERIODS.find(p => p.num === period);
+  const allPins = Object.keys(STUDENTS);
+
+  // اكتشاف التعارضات: أي حصص شغلها المعلم الآخر في نفس اليوم/الحصة
+  const otherTeacher = (key) => key === 'saad' ? 'husain' : 'saad';
+
+  let html = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div>
+        <div style="font-weight:800;font-size:1rem;color:#1a3a5c;">✏️ تعديل الخلية</div>
+        <div style="font-size:0.78rem;color:#888;margin-top:2px;">${day} — الحصة ${periodInfo?.label}</div>
+      </div>
+      <button onclick="closeCellEditor()" style="background:#f0f0f0;border:none;border-radius:50%;width:30px;height:30px;font-size:1rem;cursor:pointer;">✕</button>
+    </div>
+
+    <!-- اختيار المعلم -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:8px;">👨‍🏫 المعلم المسؤول عن هذه الحصة:</div>
+      <div style="display:flex;gap:8px;">
+        ${TEACHERS_TBL.map(t => {
+          const isSelected = cell.teacher === t.key;
+          return `
+            <label style="flex:1;display:flex;align-items:center;gap:8px;background:${isSelected ? t.light : '#f8f8f8'};border:2px solid ${isSelected ? t.color : '#e0e0e0'};border-radius:10px;padding:10px 14px;cursor:pointer;transition:all 0.15s;">
+              <input type="radio" name="cell-teacher" value="${t.key}" ${isSelected ? 'checked' : ''} style="accent-color:${t.color};width:15px;height:15px;" onchange="updateTeacherSelection()">
+              <span style="font-weight:700;font-size:0.85rem;color:${t.color};">أ. ${t.name}</span>
+            </label>`;
+        }).join('')}
+        <label style="display:flex;align-items:center;gap:6px;background:${!cell.teacher ? '#f8f8f8' : '#f8f8f8'};border:2px solid ${!cell.teacher ? '#888' : '#e0e0e0'};border-radius:10px;padding:10px 12px;cursor:pointer;">
+          <input type="radio" name="cell-teacher" value="" ${!cell.teacher ? 'checked' : ''} style="width:15px;height:15px;" onchange="updateTeacherSelection()">
+          <span style="font-size:0.82rem;color:#888;font-weight:600;">فارغة</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- تحذير التعارض -->
+    <div id="conflict-warning" style="display:none;background:#fff1f1;border:1.5px solid #ef4444;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:0.8rem;color:#b91c1c;font-weight:700;">
+      ⚠️ تعارض: المعلم الآخر لديه حصة في نفس الوقت!
+    </div>
+
+    <!-- الطلاب -->
+    <div id="students-selector">
+      <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:8px;">👨‍🎓 الطلاب في هذه الحصة:</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;" id="students-checkboxes">
+        ${allPins.map(pin => {
+          const s = STUDENTS[pin];
+          const entry = cell.students?.find(x => x.name === s.name || s.name.includes(x.name?.split(' ')[1]||'__'));
+          const checked = !!entry;
+          const subj = entry?.subject || 'لغة عربية';
+          return `
+            <div id="stu-wrap-${pin}" style="background:#f8f8f8;border:1.5px solid ${checked ? '#1a3a5c' : '#e0e0e0'};border-radius:9px;padding:6px 10px;transition:all 0.15s;">
+              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
+                <input type="checkbox" data-pin="${pin}" ${checked ? 'checked' : ''} style="width:14px;height:14px;" onchange="toggleStudentInCell(this,'${pin}')">
+                <span style="font-size:0.78rem;font-weight:700;color:#1a3a5c;">${s.name.split(' ').slice(1,3).join(' ')}</span>
+              </label>
+              <div id="subj-row-${pin}" style="display:${checked ? 'flex' : 'none'};gap:5px;margin-top:5px;">
+                ${SUBJECTS_LIST.map(subj2 => `
+                  <label style="display:flex;align-items:center;gap:3px;font-size:0.72rem;cursor:pointer;">
+                    <input type="radio" name="subj-${pin}" value="${subj2}" ${subj === subj2 ? 'checked' : ''} style="width:12px;height:12px;">
+                    <span class="cell-badge ${subj2 === 'رياضيات' ? 'subject-math' : 'subject-ar'}">${subj2}</span>
+                  </label>`).join('')}
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <button onclick="saveCellEdit()" style="width:100%;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:10px;padding:12px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;margin-top:16px;">💾 حفظ</button>
+  `;
+
+  document.getElementById('cell-content').innerHTML = html;
+  document.getElementById('cell-overlay').style.display = 'block';
+  document.getElementById('cell-box').style.display = 'block';
+  checkConflict();
+}
+
+function updateTeacherSelection() { checkConflict(); }
+
+function checkConflict() {
+  const { day, period } = editingCell;
+  const selectedTeacher = document.querySelector('input[name="cell-teacher"]:checked')?.value;
+  if (!selectedTeacher) { document.getElementById('conflict-warning').style.display = 'none'; return; }
+  const otherKey = selectedTeacher === 'saad' ? 'husain' : 'saad';
+  const otherCell = timetableData[day]?.[period];
+  const hasConflict = otherCell?.teacher === otherKey && otherCell.students?.length > 0;
+  document.getElementById('conflict-warning').style.display = hasConflict ? 'block' : 'none';
+}
+
+function toggleStudentInCell(cb, pin) {
+  const wrap = document.getElementById('stu-wrap-' + pin);
+  const subjRow = document.getElementById('subj-row-' + pin);
+  if (cb.checked) {
+    wrap.style.borderColor = '#1a3a5c';
+    subjRow.style.display = 'flex';
+  } else {
+    wrap.style.borderColor = '#e0e0e0';
+    subjRow.style.display = 'none';
+  }
+}
+
+function closeCellEditor() {
+  document.getElementById('cell-overlay').style.display = 'none';
+  document.getElementById('cell-box').style.display = 'none';
+  editingCell = null;
+}
+
+async function saveCellEdit() {
+  if (!editingCell) return;
+  const { day, period } = editingCell;
+  const teacher = document.querySelector('input[name="cell-teacher"]:checked')?.value || '';
+  const allPins = Object.keys(STUDENTS);
+  const students = [];
+  allPins.forEach(pin => {
+    const cb = document.querySelector(`input[data-pin="${pin}"]`);
+    if (cb?.checked) {
+      const subject = document.querySelector(`input[name="subj-${pin}"]:checked`)?.value || 'لغة عربية';
+      students.push({ name: STUDENTS[pin].name, subject });
+    }
+  });
+  if (!timetableData[day]) timetableData[day] = {};
+  timetableData[day][period] = { teacher, students };
+  await saveTimetable(timetableData);
+  closeCellEditor();
+  renderSchedule();
+}
+
+function setSeasonMode(summer) {
+  isSummerMode = summer;
+  renderSchedule();
+}
+
+async function saveTimetableBtn() {
+  await saveTimetable(timetableData);
+  showToast('✅ تم حفظ الجدول في Supabase');
+}
+
+function printTimetable() {
+  document.querySelector('.print-header').style.display = 'block';
+  window.print();
+  setTimeout(() => { document.querySelector('.print-header').style.display = 'none'; }, 1000);
+}
+
+async function resetTimetable() {
+  if (!confirm('إعادة تعيين الجدول للبيانات الأصلية؟')) return;
+  await saveTimetable(getDefaultTimetable());
+  renderSchedule();
 }
 
 function renderStudentCards() {
