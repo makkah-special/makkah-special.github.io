@@ -1588,7 +1588,7 @@ async function submitIqrar() {
 function saveIqrarPDF() {
   const sPDF = currentStudent;
   let signImgPDF = document.querySelector('#sign-area img');
-  const signSrc = signImgPDF ? signImg.src : '';
+  const signSrc = signImgPDF ? signImgPDF.src : '';
   let todayPDF = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
 
   const win = window.open('', '_blank');
