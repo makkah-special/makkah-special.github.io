@@ -376,7 +376,10 @@ footer strong{color:var(--accent-light);}
 <div class="modal-bg" id="stu-modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
     <div class="modal-head">
-      <div><div class="modal-title" id="m-name">—</div><div class="modal-sub" id="m-info">—</div></div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="modal-avatar" style="width:60px;height:60px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">👤</div>
+        <div><div class="modal-title" id="m-name">—</div><div class="modal-sub" id="m-info">—</div></div>
+      </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body" id="m-body"><div class="loading">⏳ جاري التحميل...</div></div>
@@ -434,6 +437,29 @@ const YT=[
 ];
 const DG=['أول متوسط','ثاني متوسط','ثالث متوسط'];
 
+const DS=[
+  {pin:'7405',name:'اياد موسى حولي القرني',grade:'الأول المتوسط / ١'},
+  {pin:'4526',name:'عبدالله صالح أحمد المشجري',grade:'الأول المتوسط / ١'},
+  {pin:'9050',name:'علي محمد مطر السهيمي',grade:'الأول المتوسط / ١'},
+  {pin:'4612',name:'محمد علي محمد المنتشري',grade:'الأول المتوسط / ١'},
+  {pin:'0977',name:'مشاري فيحان سميح البقمي',grade:'الأول المتوسط / ١'},
+  {pin:'6630',name:'يزن محمد مصلح سلامي',grade:'الأول المتوسط / ١'},
+  {pin:'7543',name:'احمد عبدالله معطي الجدعاني',grade:'الثاني المتوسط / ١'},
+  {pin:'4218',name:'راكان سمير فقيهي اليماني',grade:'الثاني المتوسط / ١'},
+  {pin:'7892',name:'عبدالرحمن حسن سعد القحطاني',grade:'الثاني المتوسط / ١'},
+  {pin:'4304',name:'فهد علي حسين الصومالي',grade:'الثاني المتوسط / ١'},
+  {pin:'4511',name:'حسن خالد حسن صغير',grade:'الثالث المتوسط / ١'},
+  {pin:'6984',name:'خالد ابراهيم منصور العامري',grade:'الثالث المتوسط / ١'},
+  {pin:'5210',name:'سامي اقبال أحمد أحمد',grade:'الثالث المتوسط / ١'},
+  {pin:'4447',name:'عبدالله احمد بن ابراهيم الزهراني',grade:'الثالث المتوسط / ١'},
+  {pin:'5460',name:'ماجد نادر أحمد عيسى',grade:'الثالث المتوسط / ١'},
+  {pin:'7907',name:'محمد سليمان ابراهيم طواشي',grade:'الثالث المتوسط / ١'},
+  {pin:'8315',name:'مشاري خليل ابراهيم الزهراني',grade:'الثالث المتوسط / ١'},
+  {pin:'2407',name:'مهند محمد عبدالله الشهري',grade:'الثالث المتوسط / ١'},
+  {pin:'9867',name:'مؤيد مشعل علي العمري',grade:'الثالث المتوسط / ١'},
+  {pin:'2335',name:'مؤيد نعيم ابراهيم بدير',grade:'الثالث المتوسط / ١'},
+  {pin:'9258',name:'وليد عبدالله يحي الشهري',grade:'الثالث المتوسط / ١'},
+];
 let attWk=getSun(new Date()), attProg='yaseer', studProg='yaseer', ttProg='yaseer', portProg='yaseer', ttGrade='أول متوسط';
 
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
@@ -497,7 +523,7 @@ async function loadOverview(){
   let totP=0,totA=0,tot=0;
   function cnt(data,pins){if(!data?.data)return;pins.forEach(p=>{const r=data.data[p]||{};for(let i=0;i<5;i++){tot++;const v=r['d'+i]||'p';if(v==='p')totP++;else if(v==='a')totA++;}});}
   cnt(yD,YS.map(s=>s.pin));
-  if(dD?.data)cnt(dD,Object.keys(dD.data));
+  if(dD?.data)cnt(dD,DS.map(s=>s.pin));
   document.getElementById('kpi-att').textContent=tot?Math.round(totP/tot*100)+'%':'—';
   document.getElementById('kpi-abs').textContent=totA||'—';
 
@@ -510,12 +536,11 @@ async function loadOverview(){
     const cls=tp>=90?'pct-h':tp>=70?'pct-m':'pct-l';
     return `<div class="prog-row"><div class="prog-label">${label}</div>${chips}<div class="pct ${cls}">${tp}%</div></div>`;
   }
-  document.getElementById('ov-body').innerHTML=buildRow('🧠 يسير',yD,YS)+buildRow('🔗 دمج',dD,[]);
+  document.getElementById('ov-body').innerHTML=buildRow('🧠 يسير',yD,YS)+buildRow('🔗 دمج',dD,DS);
 }
 async function loadDumajCount(){
-  const r=await sbGet('/rest/v1/yaseer_students?select=pin&limit=200');
-  document.getElementById('kpi-dumaj').textContent=r?.length||'—';
-  document.getElementById('kpi-total').textContent=20+(r?.length||0);
+  document.getElementById('kpi-dumaj').textContent=DS.length;
+  document.getElementById('kpi-total').textContent=YS.length+DS.length;
 }
 
 // ATTENDANCE
@@ -536,7 +561,7 @@ async function loadAttView(){
   let data=await sbPub(`reports/${attProg}/attendance/attendance-${k}.json`);
   if(!data){const r=await sbGet(`/rest/v1/teacher_portfolios?teacher_key=eq.att_${attProg}_${k}&select=data`);if(r?.length)data=r[0].data;}
   if(!data?.data){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد بيانات محفوظة لهذا الأسبوع</div>';return;}
-  const students=attProg==='yaseer'?YS:Object.keys(data.data).map(p=>({pin:p,name:p}));
+  const students=attProg==='yaseer'?YS:DS;
   const dayHds=DAYS.map((_,i)=>{const d=new Date(attWk);d.setDate(d.getDate()+i);return d.toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric'});});
   const rows=students.map((s,idx)=>{
     const rec=data.data[s.pin]||{};
@@ -552,7 +577,7 @@ function switchStudProg(p,btn){studProg=p;document.querySelectorAll('#tab-studen
 function filterStu(){renderStu();}
 function renderStu(){
   const q=document.getElementById('stu-q').value.toLowerCase();
-  const students=studProg==='yaseer'?YS:[];
+  const students=studProg==='yaseer'?YS:DS;
   const fl=students.filter(s=>!q||s.name.includes(q)||s.grade?.includes(q));
   const grid=document.getElementById('stu-grid');
   if(!fl.length){grid.innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div>لا توجد نتائج</div>';return;}
@@ -572,18 +597,32 @@ function renderStu(){
   fl.forEach(s=>loadPhoto(s.pin,studProg));
 }
 async function loadPhoto(pin,prog){
-  const el=document.getElementById('av-'+pin);if(!el)return;
-  for(const ext of ['jpg','jpeg','png','webp']){
-    try{const r=await fetch(`${SB_URL}/storage/v1/object/public/reports/${prog}/photos/photo-${pin}.${ext}`,{method:'HEAD'});if(r.ok){el.innerHTML=`<img src="${SB_URL}/storage/v1/object/public/reports/${prog}/photos/photo-${pin}.${ext}" alt="">`;return;}}catch(e){}
-  }
+  // الصور تُحمَّل فقط عند فتح ملف الطالب لتجنب أخطاء 400
+  const el=document.getElementById('av-'+pin);
+  if(!el) return;
+  // جرّب امتداداً واحداً فقط باستخدام onerror بدل HEAD requests
+  const baseUrl=`${SB_URL}/storage/v1/object/public/reports/${prog}/photos/photo-${pin}`;
+  const img=new Image();
+  img.onload=()=>{ el.innerHTML=`<img src="${img.src}" alt="">`; };
+  // لا نضع onerror لتجنب تسلسل المحاولات — نجرب jpg فقط
+  img.src=baseUrl+'.jpg';
 }
 async function openStuModal(pin,prog){
   document.getElementById('stu-modal').classList.add('open');
-  const s=YS.find(x=>x.pin===pin)||{name:'—',grade:'—',pin};
+  const s=(studProg==='yaseer'?YS:DS).find(x=>x.pin===pin)||YS.find(x=>x.pin===pin)||DS.find(x=>x.pin===pin)||{name:'—',grade:'—',pin};
   document.getElementById('m-name').textContent=s.name;
   document.getElementById('m-info').textContent=`${s.grade} — رمز: ${pin} — ${prog==='yaseer'?'برنامج يسير':'برنامج الدمج'}`;
   const body=document.getElementById('m-body');
   body.innerHTML='<div class="loading">⏳ جاري التحميل...</div>';
+  // تحميل صورة الطالب في المودال
+  const modalAv = document.getElementById('m-name');
+  const baseUrl=`${SB_URL}/storage/v1/object/public/reports/${prog}/photos/photo-${pin}`;
+  const mImg=new Image();
+  mImg.onload=()=>{
+    const avEl=document.getElementById('modal-avatar');
+    if(avEl) avEl.innerHTML=`<img src="${mImg.src}" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">`;
+  };
+  mImg.src=baseUrl+'.jpg';
   let data=await sbPub(`reports/${prog}/data/student-${pin}.json`);
   if(!data){body.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد بيانات محفوظة لهذا الطالب بعد</div>';return;}
   const fields=[['التشخيص',data.diagnosis],['نوع الإعاقة',data.disabilityType],['المستوى',data.level],['المعلم',data.teacher],['اسم ولي الأمر',data.parentName],['الهاتف',data.phone],['تاريخ الخطة',data.planDate],['الفصل',data.semester]].filter(([,v])=>v);
@@ -644,17 +683,23 @@ function switchPortProg(p,btn){portProg=p;document.querySelectorAll('#tab-portfo
 async function loadPort(){
   const grid=document.getElementById('port-grid');
   grid.innerHTML='<div class="loading">⏳ جاري التحميل...</div>';
-  const sigs=await sbGet(`/rest/v1/signatures?select=*&order=created_at.desc&limit=40`);
-  const fl=(sigs||[]).filter(s=>!s.program||s.program===portProg);
-  if(!fl.length){grid.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد توقيعات محفوظة</div>';return;}
+  const sigs=await sbGet(`/rest/v1/signatures?program=eq.${portProg}&order=signed_at.desc&limit=60`);
+  const fl=sigs||[];
+  if(!fl.length){
+    grid.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div>
+      لا توجد توقيعات محفوظة لبرنامج ${portProg==='yaseer'?'يسير':'الدمج'}
+      <div style="font-size:0.78rem;margin-top:8px;color:var(--muted);">تُضاف التوقيعات عند موافقة أولياء الأمور من بوابة الطالب</div>
+    </div>`;
+    return;
+  }
   grid.innerHTML=fl.map(s=>{
-    const dt=s.created_at?new Date(s.created_at).toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'long',year:'numeric'}):'—';
+    const dt=(s.signed_at||s.created_at)?new Date(s.signed_at||s.created_at).toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'long',year:'numeric'}):'—';
     const thumb=s.signature_data?`<div class="sig-thumb"><img src="${s.signature_data}" alt="توقيع"></div>`:'';
     return `<div class="port-card">
       <div class="port-head"><div class="port-icon" style="background:#e8f0ff;">✍️</div><div><div class="port-name">${s.student_name||'—'}</div><div class="port-sub">${s.program||portProg} — ${s.semester||''}</div></div></div>
       <div class="port-body">
-        <div class="port-row"><span class="port-key">نوع التوقيع</span><span class="port-val">${s.signature_type||'—'}</span></div>
-        <div class="port-row"><span class="port-key">التاريخ</span><span class="port-val">${dt}</span></div>
+        <div class="port-row"><span class="port-key">الصف</span><span class="port-val">${s.grade||'—'}</span></div>
+        <div class="port-row"><span class="port-key">تاريخ التوقيع</span><span class="port-val">${dt}</span></div>
         ${s.teacher_name?`<div class="port-row"><span class="port-key">المعلم</span><span class="port-val">${s.teacher_name}</span></div>`:''}
       </div>${thumb}</div>`;
   }).join('');
