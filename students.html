@@ -1038,6 +1038,12 @@
   </div>
 </div>
 
+<!-- CELL EDITOR MODAL (جدول الحصص) -->
+<div id="cell-overlay" onclick="closeCellEditor()" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.6);z-index:9000;backdrop-filter:blur(3px);"></div>
+<div id="cell-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:0;width:min(540px,96vw);max-height:88vh;overflow-y:auto;z-index:9001;box-shadow:0 12px 50px rgba(10,20,40,0.25);">
+  <div id="cell-content"></div>
+</div>
+
 <!-- EDIT MODAL -->
 <div class="modal-overlay" id="edit-modal">
   <div class="modal-box">
@@ -3037,11 +3043,6 @@ async function renderSchedule() {
 
     </div>
 
-    <!-- مودال التعديل -->
-    <div id="cell-overlay" onclick="closeCellEditor()" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.6);z-index:9000;backdrop-filter:blur(3px);"></div>
-    <div id="cell-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:0;width:min(540px,96vw);max-height:88vh;overflow-y:auto;z-index:9001;box-shadow:0 12px 50px rgba(10,20,40,0.25);">
-      <div id="cell-content"></div>
-    </div>
   `;
 }
 
