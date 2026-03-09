@@ -1155,10 +1155,9 @@ function renderBulkRow() {
 function markDay(di, val) {
   const wk = weekKey(currentWeekStart);
   if (!attendanceData[wk]) attendanceData[wk] = {};
-  const pins = Object.keys(STUDENTS);
-  pins.forEach(pin => {
-    if (!attendanceData[wk][pin]) attendanceData[wk][pin] = {};
-    attendanceData[wk][pin][`d${di}`] = val;
+  STUDENTS.forEach(stu => {
+    if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
+    attendanceData[wk][stu.pin][`d${di}`] = val;
   });
   renderTable();
   updateStats();
