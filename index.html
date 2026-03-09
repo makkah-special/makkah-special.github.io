@@ -1113,6 +1113,17 @@
     <a href="teachers-dumaj.html" style="color:rgba(255,255,255,0.38);font-size:0.68rem;text-decoration:none;margin:0 6px;padding:2px 10px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onmouseover="this.style.color='rgba(255,255,255,0.75)'" onmouseout="this.style.color='rgba(255,255,255,0.38)'">👨‍🏫 معلمو الدمج</a>
     <a href="teachers-yaseer.html" style="color:rgba(255,255,255,0.38);font-size:0.68rem;text-decoration:none;margin:0 6px;padding:2px 10px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onmouseover="this.style.color='rgba(255,255,255,0.75)'" onmouseout="this.style.color='rgba(255,255,255,0.38)'">📘 معلمو يسير</a>
   </div>
+  <!-- بوابة الإدارة -->
+  <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.05);">
+    <a href="principal-dashboard.html"
+       style="color:rgba(255,255,255,0.22);font-size:0.65rem;text-decoration:none;
+              padding:2px 12px;border:1px solid rgba(255,255,255,0.08);border-radius:6px;
+              letter-spacing:0.5px;transition:all 0.3s;"
+       onmouseover="this.style.color='rgba(200,151,58,0.7)';this.style.borderColor='rgba(200,151,58,0.25)'"
+       onmouseout="this.style.color='rgba(255,255,255,0.22)';this.style.borderColor='rgba(255,255,255,0.08)'">
+      🏫 الإدارة
+    </a>
+  </div>
 </footer>
 
 <script>
@@ -1142,7 +1153,7 @@
   });
 
   // إخفاء تلقائي بعد رمضان (نهاية مارس 2026)
-  const ramadanEnd = new Date('2026-03-30');
+  const ramadanEnd = new Date('2026-03-9');
   if (new Date() > ramadanEnd) {
     document.querySelectorAll('.ramadan-banner,.ramadan-overlay,.lantern-wrap,.crescent-wrap').forEach(el => el.remove());
   }
