@@ -737,10 +737,9 @@ function clearSign(id, phId) {
 // ===== SAVE / LOAD =====
 async function saveAttendance() {
   showToast('⏳ جاري الحفظ...');
-  const wk   = weekKey(currentWeekStart);
-  const sem  = document.getElementById('semesterSelect').value;
+  const wk  = weekKey(currentWeekStart);
+  const sem = document.getElementById('semesterSelect').value;
 
-  const supervisorSign = null;
   const teacherSign = canvases['teacherCanvas']?.hasContent
     ? document.getElementById('teacherCanvas').toDataURL() : null;
 
@@ -754,41 +753,103 @@ async function saveAttendance() {
     savedAt:    new Date().toISOString(),
   };
 
-  const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+  // حفظ محلي دائماً كـ backup
+  try { localStorage.setItem('att_' + PROGRAM + '_' + wk, JSON.stringify(payload)); } catch(e){}
+
+  const url = `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`;
+  const hdrs = {
+    'apikey':        SB_KEY,
+    'Authorization': 'Bearer ' + SB_KEY,
+    'Content-Type':  'application/json',
+    'x-upsert':      'true',
+    'cache-control': '3600',
+  };
+  const body = JSON.stringify(payload);
+
   try {
-    const res = await fetch(
-      `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`,
-      {
-        method:'POST',
-        headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
-        body: blob
-      }
-    );
-    if (res.ok) showToast('✅ تم الحفظ بنجاح في السحابة');
-    else        showToast('❌ خطأ في الحفظ: ' + await res.text());
+    // جرّب PUT أولاً (تحديث ملف موجود)
+    let res = await fetch(url, { method:'PUT', headers:hdrs, body });
+
+    // إن فشل PUT جرّب POST (ملف جديد)
+    if (!res.ok) {
+      res = await fetch(url, { method:'POST', headers:hdrs, body });
+    }
+
+    if (res.ok) {
+      showToast('✅ تم الحفظ في السحابة');
+    } else {
+      const errText = await res.text();
+      // محاولة أخيرة: upsert عبر REST API (teacher_portfolios)
+      const saved = await saveViaRest(wk, payload);
+      if (saved) showToast('✅ تم الحفظ');
+      else showToast('⚠️ خطأ: ' + errText.slice(0,80));
+    }
   } catch(e) {
-    showToast('❌ تعذّر الاتصال');
+    // محاولة عبر REST
+    const saved = await saveViaRest(wk, payload);
+    showToast(saved ? '✅ تم الحفظ (REST)' : '❌ تعذّر الاتصال بالسحابة — تم الحفظ محلياً');
   }
 }
 
-async function loadAttendance(wk) {
+async function saveViaRest(wk, payload) {
+  // حفظ بديل عبر جدول teacher_portfolios كـ fallback
   try {
-    const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/${PROGRAM}/attendance/attendance-${wk}.json`
-    );
-    if (!res.ok) return;
-    const payload = await res.json();
-    if (payload.data) {
-      attendanceData[wk] = payload.data;
-      // استعادة أسماء الموقّعين
-      // supervisor removed
-      if (payload.teacher)    document.getElementById('teacherName').value    = payload.teacher;
-    }
-    renderTable();
-    updateStats();
-  } catch(e) {}
+    const res = await fetch(`${SB_URL}/rest/v1/teacher_portfolios`, {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({ teacher_key: 'att_' + PROGRAM + '_' + wk, data: payload })
+    });
+    return res.ok;
+  } catch(e) { return false; }
 }
 
+async function loadAttendance(wk) {
+  let payload = null;
+
+  // 1) Supabase Storage
+  try {
+    const res = await fetch(
+      `${SB_URL}/storage/v1/object/public/reports/${PROGRAM}/attendance/attendance-${wk}.json`,
+      { cache: 'no-store' }
+    );
+    if (res.ok) payload = await res.json();
+  } catch(e) {}
+
+  // 2) teacher_portfolios REST fallback
+  if (!payload) {
+    try {
+      const res = await fetch(
+        `${SB_URL}/rest/v1/teacher_portfolios?teacher_key=eq.att_${PROGRAM}_${wk}&select=data`,
+        { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
+      );
+      if (res.ok) {
+        const rows = await res.json();
+        if (rows?.length > 0) payload = rows[0].data;
+      }
+    } catch(e) {}
+  }
+
+  // 3) localStorage fallback
+  if (!payload) {
+    try {
+      const local = localStorage.getItem('att_' + PROGRAM + '_' + wk);
+      if (local) payload = JSON.parse(local);
+    } catch(e) {}
+  }
+
+  if (payload?.data) {
+    attendanceData[wk] = payload.data;
+    if (payload.teacher) {
+      const el = document.getElementById('teacherName');
+      if (el) el.value = payload.teacher;
+    }
+  }
+  renderTable();
+  updateStats();
+}
 // ===== PRINT =====
 function printAttendance() {
   const wk   = weekKey(currentWeekStart);
