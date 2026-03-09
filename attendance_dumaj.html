@@ -252,9 +252,19 @@ tbody tr:last-child { border-bottom:none; }
 
 <!-- TOOLBAR -->
 <div class="toolbar">
-  <div class="toolbar-group">
-    <label>📅 الأسبوع:</label>
-    <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)">
+  <div class="toolbar-group" style="flex-direction:column;align-items:flex-start;gap:3px;">
+    <label style="margin-bottom:0;">📅 الأسبوع:</label>
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+      <div style="display:flex;flex-direction:column;gap:3px;">
+        <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)"
+          title="التاريخ الميلادي"
+          style="min-width:145px;">
+        <input type="text" id="weekStartHijri" readonly placeholder="التاريخ الهجري"
+          title="التاريخ الهجري (للعرض فقط)"
+          style="min-width:145px;background:#fffaf6;color:#b07050;font-size:0.78rem;
+                 cursor:default;border-color:#fde8d0;text-align:center;">
+      </div>
+    </div>
   </div>
   <div class="toolbar-group">
     <label>📚 الفصل:</label>
@@ -277,10 +287,61 @@ tbody tr:last-child { border-bottom:none; }
     <div class="week-dates" id="weekDates">—</div>
   </div>
   <div class="week-nav">
-    <button class="week-nav-btn" onclick="changeWeek(-1)">→ الأسبوع السابق</button>
-    <button class="week-nav-btn" onclick="changeWeek(1)">← الأسبوع التالي</button>
+    <button class="week-nav-btn" onclick="changeWeek(-1)">→ السابق</button>
+    <button class="week-nav-btn" onclick="changeWeek(1)">التالي ←</button>
+    <button class="week-nav-btn" onclick="openWeekEditor()"
+      style="background:#fff;color:#c25a00;border:1.5px solid #fde8d0;">⚙️ تعديل</button>
   </div>
 </div>
+
+
+<!-- نافذة تعديل الأسابيع -->
+<div id="week-editor-overlay" onclick="if(event.target===this)closeWeekEditor()"
+  style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.55);z-index:9000;
+         align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:18px;width:min(600px,96vw);max-height:90vh;
+              overflow:hidden;box-shadow:0 12px 50px rgba(0,0,0,0.25);display:flex;flex-direction:column;">
+    <!-- رأس النافذة -->
+    <div style="background:linear-gradient(135deg,#7c2d00,#c25a00);padding:16px 20px;
+                display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <div style="color:#fff;font-weight:800;font-size:0.95rem;">📅 تعديل أرقام الأسابيع</div>
+        <div style="color:rgba(255,255,255,0.6);font-size:0.72rem;margin-top:2px;">عدّل رقم الأسبوع لكل تاريخ يدوياً</div>
+      </div>
+      <button onclick="closeWeekEditor()"
+        style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:30px;height:30px;
+               color:#fff;font-size:1rem;cursor:pointer;">✕</button>
+    </div>
+    <!-- الجدول -->
+    <div style="overflow-y:auto;flex:1;">
+      <table style="width:100%;border-collapse:collapse;font-family:'Cairo',sans-serif;direction:rtl;">
+        <thead style="position:sticky;top:0;background:#fdf4ee;z-index:1;">
+          <tr>
+            <th style="padding:9px 10px;font-size:0.75rem;color:#c25a00;font-weight:800;text-align:right;border-bottom:2px solid #fde8d0;">التاريخ الميلادي</th>
+            <th style="padding:9px 10px;font-size:0.75rem;color:#555;font-weight:700;text-align:right;border-bottom:2px solid #fde8d0;">التاريخ الهجري</th>
+            <th style="padding:9px 10px;font-size:0.75rem;color:#555;font-weight:700;text-align:center;border-bottom:2px solid #fde8d0;">النوع</th>
+            <th style="padding:9px 10px;font-size:0.75rem;color:#555;font-weight:700;text-align:center;border-bottom:2px solid #fde8d0;">رقم الأسبوع</th>
+          </tr>
+        </thead>
+        <tbody id="week-editor-body"></tbody>
+      </table>
+    </div>
+    <!-- أزرار -->
+    <div style="padding:14px 20px;border-top:1px solid #f0f0f0;display:flex;gap:8px;flex-shrink:0;">
+      <button onclick="saveWeekEditor()"
+        style="flex:1;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;
+               border-radius:11px;padding:11px;font-family:'Cairo',sans-serif;font-size:0.88rem;
+               font-weight:800;cursor:pointer;">💾 حفظ</button>
+      <button onclick="resetWeekMap()"
+        style="background:#f5f5f5;color:#888;border:1.5px solid #e0e0e0;border-radius:11px;
+               padding:11px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">↺ افتراضي</button>
+      <button onclick="closeWeekEditor()"
+        style="background:#fff;color:#c25a00;border:1.5px solid #fde8d0;border-radius:11px;
+               padding:11px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">إغلاق</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- STATS -->
 <div class="stats-row" id="statsRow">
@@ -422,18 +483,34 @@ function renderAll() {
   updateStats();
   // تحديث input التاريخ
   document.getElementById('weekStart').value = weekKey(currentWeekStart);
+  // تحديث عرض التاريخ الهجري في الـ toolbar
+  try {
+    const hijriVal = currentWeekStart.toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {
+      day:'numeric', month:'long', year:'numeric'
+    });
+    const el = document.getElementById('weekStartHijri');
+    if (el) el.value = hijriVal;
+  } catch(e) {}
 }
 
 function updateWeekHeader() {
   const days = getWeekDays();
-  // رقم الأسبوع من بداية الفصل الدراسي (11 يناير 2026)
-  const semesterStart = new Date(Date.UTC(2026, 0, 11)); // 11 يناير 2026 بتوقيت UTC
-  const startUTC = Date.UTC(currentWeekStart.getFullYear(), currentWeekStart.getMonth(), currentWeekStart.getDate());
-  const wk = Math.floor((startUTC - semesterStart) / 604800000) + 1;
-  const wkLabel = wk >= 1 ? `الأسبوع ${wk}` : 'قبل الفصل';
+  const wkNum = getWeekNumFromMap(currentWeekStart);
+  let wkLabel;
+  if (isHolidayWeek(currentWeekStart)) {
+    wkLabel = '🌙 إجازة';
+  } else if (wkNum) {
+    wkLabel = 'الأسبوع ' + wkNum;
+  } else {
+    wkLabel = 'خارج الفصل';
+  }
   document.getElementById('weekLabel').textContent = wkLabel;
-  document.getElementById('weekDates').textContent =
-    `${days[0].dateStr} — ${days[4].dateStr}`;
+  // التاريخ الميلادي + الهجري
+  const hijriRange = toHijriRange(days[0].date, days[4].date);
+  const miladiRange = days[0].dateStr + ' — ' + days[4].dateStr;
+  document.getElementById('weekDates').innerHTML =
+    `<span>${miladiRange}</span>` +
+    (hijriRange ? `<span style="display:block;font-size:0.72rem;color:#b07050;margin-top:1px;">${hijriRange}</span>` : '');
 }
 
 function renderTable() {
@@ -766,6 +843,92 @@ window.addEventListener('load', () => {
 window.addEventListener('resize', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
 });
+// ============================================================
+// خريطة الأسابيع + تحويل هجري + تعديل يدوي
+// ============================================================
+const DEFAULT_WEEK_MAP = {
+  "2026-01-18":1,"2026-01-25":2,"2026-02-01":3,"2026-02-08":4,
+  "2026-02-15":5,"2026-02-22":6,"2026-03-01":7,"2026-03-29":8,
+  "2026-04-05":9,"2026-04-12":10,"2026-04-19":11,"2026-04-26":12,
+  "2026-05-03":13,"2026-05-10":14,"2026-05-31":15,"2026-06-07":16,
+  "2026-06-14":17,"2026-06-21":18,"2026-06-28":19,
+};
+const HOLIDAY_WEEKS = new Set([
+  "2026-03-08","2026-03-15","2026-03-22",
+  "2026-05-17","2026-05-24",
+]);
+const WEEK_MAP_KEY = 'att_week_map_v2';
+function getWeekMap() {
+  try { const s=localStorage.getItem(WEEK_MAP_KEY); if(s) return JSON.parse(s); } catch(e){}
+  return {...DEFAULT_WEEK_MAP};
+}
+function saveWeekMap(map) {
+  try { localStorage.setItem(WEEK_MAP_KEY, JSON.stringify(map)); } catch(e){}
+}
+function getWeekNumFromMap(d) {
+  const map=getWeekMap(), key=weekKey(d);
+  if(map[key]!==undefined) return map[key];
+  const entries=Object.entries(map).sort();
+  for(let i=entries.length-1;i>=0;i--){ if(entries[i][0]<=key) return entries[i][1]; }
+  return null;
+}
+function isHolidayWeek(d){ return HOLIDAY_WEEKS.has(weekKey(d)); }
+
+function toHijriShort(date) {
+  try {
+    return date.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
+      {day:'numeric',month:'numeric',year:'numeric'});
+  } catch(e){ return ''; }
+}
+function toHijriRange(d1, d2) {
+  try {
+    const h1 = d1.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long'});
+    const h2 = d2.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});
+    return h1 + ' — ' + h2;
+  } catch(e){ return ''; }
+}
+
+function openWeekEditor() {
+  const map=getWeekMap();
+  const entries=Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0]));
+  const rows=entries.map(([ds,wkNum])=>{
+    const d=new Date(ds+'T00:00:00');
+    const dEnd=new Date(d); dEnd.setDate(dEnd.getDate()+4);
+    const hijri=toHijriShort(d);
+    const isHol=HOLIDAY_WEEKS.has(ds)?'🌙 إجازة':'📚';
+    return `<tr>
+      <td style="padding:7px 10px;font-size:0.78rem;color:#555;direction:ltr;">${ds}</td>
+      <td style="padding:7px 10px;font-size:0.75rem;color:#888;">${hijri}</td>
+      <td style="padding:7px 10px;font-size:0.78rem;">${isHol}</td>
+      <td style="padding:7px 10px;text-align:center;">
+        <input type="number" min="1" max="25" value="${wkNum}" id="wm-${ds}"
+          style="width:56px;border:1.5px solid #ddd;border-radius:7px;padding:4px 6px;
+                 font-family:'Cairo',sans-serif;font-size:0.88rem;text-align:center;">
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('week-editor-body').innerHTML=rows;
+  document.getElementById('week-editor-overlay').style.display='flex';
+}
+function closeWeekEditor(){ document.getElementById('week-editor-overlay').style.display='none'; }
+function saveWeekEditor() {
+  const map=getWeekMap();
+  Object.keys(map).forEach(ds=>{
+    const inp=document.getElementById('wm-'+ds);
+    if(inp){ const v=parseInt(inp.value); if(!isNaN(v)&&v>=1) map[ds]=v; }
+  });
+  saveWeekMap(map);
+  closeWeekEditor();
+  renderAll();
+}
+function resetWeekMap() {
+  if(!confirm('إعادة الأسابيع للإعدادات الافتراضية؟')) return;
+  localStorage.removeItem(WEEK_MAP_KEY);
+  closeWeekEditor();
+  renderAll();
+}
+
 </script>
 </body>
 </html>
