@@ -256,12 +256,20 @@ tbody tr:last-child { border-bottom:none; }
     <label>📅 الأسبوع:</label>
     <div style="position:relative;display:inline-block;">
       <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)"
-        style="opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;z-index:2;border:none;padding:0;">
+        style="opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;z-index:2;border:none;padding:0;margin:0;">
       <div id="dual-date-display"
         style="border:1px solid var(--border);border-radius:8px;padding:5px 12px;
-               background:#fff;cursor:pointer;min-width:170px;pointer-events:none;">
-        <div id="dual-miladi" style="font-size:0.82rem;font-weight:700;color:var(--text);text-align:center;">—</div>
-        <div id="dual-hijri"  style="font-size:0.7rem;color:#b07050;text-align:center;margin-top:1px;">—</div>
+               background:#fff;cursor:pointer;min-width:180px;pointer-events:none;">
+        <div id="dual-miladi" style="font-size:0.82rem;font-weight:700;color:var(--text);text-align:center;line-height:1.4;">—</div>
+        <div id="dual-hijri"  style="font-size:0.7rem;color:#b07050;text-align:center;margin-top:1px;line-height:1.4;">—</div>
+        <div style="display:flex;justify-content:center;margin-top:4px;gap:4px;pointer-events:auto;">
+          <button onclick="event.stopPropagation();setCalMode('miladi')" id="cal-btn-m"
+            style="font-size:0.62rem;padding:2px 7px;border-radius:5px;border:1px solid var(--border);
+                   background:var(--accent);color:#fff;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;">م</button>
+          <button onclick="event.stopPropagation();setCalMode('hijri')" id="cal-btn-h"
+            style="font-size:0.62rem;padding:2px 7px;border-radius:5px;border:1px solid var(--border);
+                   background:#fff;color:#b07050;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;">هـ</button>
+        </div>
       </div>
     </div>
   </div>
@@ -443,23 +451,28 @@ let attendanceData   = {}; // {weekKey: {pin: {day0..4: 'p'|'a'|'l'|'e', note:''
 
 // ===== WEEK UTILS =====
 function getThisSunday() {
-  const d = new Date();
-  const day = d.getDay(); // 0=Sun
-  d.setDate(d.getDate() - day);
-  d.setHours(0,0,0,0);
+  const now = new Date();
+  // استخدام التوقيت المحلي بدل UTC لتجنب مشكلة الـ timezone
+  const day = now.getDay();
+  const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - day);
   return d;
 }
 function weekKey(d) {
-  return d.toISOString().slice(0,10);
+  // استخدام التاريخ المحلي وليس UTC
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
 }
 function formatDate(d) {
   return d.toLocaleDateString('ar-SA-u-nu-latn', {day:'numeric',month:'numeric'});
 }
 function setWeekFromDate(val) {
-  const d = new Date(val);
-  const day = d.getDay();
-  d.setDate(d.getDate() - day);
-  d.setHours(0,0,0,0);
+  // val = "YYYY-MM-DD" — نحوّلها محلياً
+  const [y,m,dd] = val.split('-').map(Number);
+  const d = new Date(y, m-1, dd);
+  const dow = d.getDay();
+  d.setDate(d.getDate() - dow);
   currentWeekStart = d;
   renderAll();
 }
@@ -942,6 +955,101 @@ function updateDualDateDisplay(d) {
     if(dm) dm.textContent = m1 + ' — ' + m2;
     if(dh) dh.textContent = h1 + ' — ' + h2;
   } catch(e){}
+}
+
+let calMode = 'miladi'; // 'miladi' | 'hijri'
+function setCalMode(mode) {
+  calMode = mode;
+  const bm = document.getElementById('cal-btn-m');
+  const bh = document.getElementById('cal-btn-h');
+  if (!bm || !bh) return;
+  if (mode === 'miladi') {
+    bm.style.background = 'var(--accent)'; bm.style.color = '#fff';
+    bh.style.background = '#fff';          bh.style.color = '#b07050';
+    // فتح input date الأصلي
+    document.getElementById('weekStart').click();
+  } else {
+    bh.style.background = '#b07050'; bh.style.color = '#fff';
+    bm.style.background = '#fff';    bm.style.color = 'var(--accent)';
+    // فتح منتقي هجري
+    openHijriPicker();
+  }
+}
+
+function openHijriPicker() {
+  // نعرض popup بسيط — المستخدم يدخل تاريخ هجري
+  const cur = currentWeekStart;
+  const hijriNow = cur.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
+    {year:'numeric',month:'2-digit',day:'2-digit'});
+
+  const overlay = document.createElement('div');
+  overlay.id = 'hijri-picker-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:16px;padding:22px;width:300px;font-family:'Cairo',sans-serif;direction:rtl;box-shadow:0 8px 40px rgba(0,0,0,0.2);">
+      <div style="font-weight:800;color:#c25a00;margin-bottom:14px;font-size:0.95rem;">📅 اختر أسبوعاً بالتاريخ الهجري</div>
+      <div style="font-size:0.78rem;color:#888;margin-bottom:8px;">التاريخ الهجري الحالي: <b style="color:#b07050;">${hijriNow}</b></div>
+      <label style="font-size:0.8rem;font-weight:700;color:#555;display:block;margin-bottom:4px;">أدخل تاريخ هجري (مثال: 1447/08/10)</label>
+      <input type="text" id="hijri-input" placeholder="١٤٤٧/٠٨/١٠" dir="ltr"
+        style="width:100%;border:1.5px solid #e0e0e0;border-radius:9px;padding:8px 12px;
+               font-family:'Cairo',sans-serif;font-size:0.9rem;box-sizing:border-box;text-align:center;">
+      <div style="font-size:0.68rem;color:#aaa;margin-top:4px;text-align:center;">صيغة: YYYY/MM/DD</div>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <button onclick="applyHijriInput()"
+          style="flex:1;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;
+                 border-radius:9px;padding:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;">
+          ✔ تطبيق
+        </button>
+        <button onclick="document.getElementById('hijri-picker-overlay').remove()"
+          style="background:#f5f5f5;color:#888;border:1px solid #e0e0e0;border-radius:9px;
+                 padding:10px 14px;font-family:'Cairo',sans-serif;font-size:0.82rem;cursor:pointer;">
+          إلغاء
+        </button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  setTimeout(()=>document.getElementById('hijri-input')?.focus(), 100);
+}
+
+function applyHijriInput() {
+  const val = document.getElementById('hijri-input')?.value?.trim();
+  if (!val) return;
+  // تحويل الأرقام العربية إلى غربية
+  const normalized = val.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+                        .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+  // تحويل هجري → ميلادي باستخدام Intl
+  try {
+    const parts = normalized.split(/[\/\-]/);
+    if (parts.length !== 3) { alert('صيغة غير صحيحة. مثال: 1447/08/10'); return; }
+    const [hy, hm, hd] = parts.map(Number);
+    // Intl لا تدعم التحويل المعاكس مباشرة — نبحث عن التاريخ بالتكرار
+    const miladi = hijriToMiladi(hy, hm, hd);
+    if (!miladi) { alert('تعذّر تحويل التاريخ. تأكد من الصيغة.'); return; }
+    // نضبط على أحد الأسبوع
+    const dow = miladi.getDay();
+    miladi.setDate(miladi.getDate() - dow);
+    currentWeekStart = miladi;
+    document.getElementById('weekStart').value = weekKey(miladi);
+    document.getElementById('hijri-picker-overlay').remove();
+    renderAll();
+  } catch(e) { alert('خطأ في التحويل: ' + e.message); }
+}
+
+function hijriToMiladi(hy, hm, hd) {
+  // خوارزمية تقريبية — نبحث في نطاق ±400 يوم حول تقدير أولي
+  // التقدير: كل سنة هجرية ≈ 354.37 يوم
+  const approxDays = (hy - 1) * 354.37 + (hm - 1) * 29.5 + hd;
+  const hijriEpoch = new Date(622, 6, 16); // تقريبي
+  const est = new Date(hijriEpoch.getTime() + approxDays * 86400000);
+  // نبحث ±30 يوم حول التقدير
+  for (let delta = -30; delta <= 30; delta++) {
+    const d = new Date(est); d.setDate(d.getDate() + delta);
+    const h = d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
+      {year:'numeric',month:'2-digit',day:'2-digit'});
+    const [cy,cm,cd] = h.split('/').map(Number);
+    if (cy===hy && cm===hm && cd===hd) return d;
+  }
+  return null;
 }
 
 </script>
