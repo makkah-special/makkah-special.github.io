@@ -157,6 +157,28 @@ tbody tr:last-child { border-bottom:none; }
 .status-btn.active-excuse  { background:#7c3aed; color:#fff; }
 
 /* DROPDOWN STATUS */
+.day-bulk-row td {
+  padding: 4px 6px;
+  background: #f8f4f0;
+  border-bottom: 2px solid #e8d8cc;
+}
+.day-bulk-select {
+  width: 100%;
+  padding: 5px 4px;
+  border: 1.5px solid #e8d8cc;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: #fff;
+  color: #c25a00;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.day-bulk-select:hover { border-color: #c25a00; }
+.day-bulk-select:focus { border-color: #c25a00; box-shadow: 0 0 0 2px rgba(194,90,0,0.12); }
+
 .status-select {
   width:100%; padding:6px 4px; border-radius:8px;
   border:1.5px solid var(--border); font-family:'Cairo',sans-serif;
@@ -374,6 +396,17 @@ tbody tr:last-child { border-bottom:none; }
         <th>ملاحظات</th>
         <th>غياب</th>
       </tr>
+      <tr class="day-bulk-row" id="day-bulk-row">
+        <td colspan="2" style="text-align:center;font-size:0.72rem;font-weight:800;color:#c25a00;">
+          تحكم يومي ↓
+        </td>
+        <td id="bulk-td-0"></td>
+        <td id="bulk-td-1"></td>
+        <td id="bulk-td-2"></td>
+        <td id="bulk-td-3"></td>
+        <td id="bulk-td-4"></td>
+        <td colspan="2"></td>
+      </tr>
     </thead>
     <tbody id="tableBody"></tbody>
   </table>
@@ -531,6 +564,8 @@ function renderTable() {
   ths.forEach((th, i) => {
     th.innerHTML = `${days[i].name}<br><small style="font-weight:400;opacity:0.8;">${days[i].dateStr}</small>`;
   });
+  // تحديث صف التحكم اليومي
+  renderBulkRow();
 
   tbody.innerHTML = STUDENTS.map((stu, idx) => {
     const rec  = (attendanceData[wk]?.[stu.pin]) || {};
@@ -1049,6 +1084,40 @@ function hijriToMiladi(hy, hm, hd) {
     if (cy===hy && cm===hm && cd===hd) return d;
   }
   return null;
+}
+
+// ===== تحكم يومي =====
+const BULK_OPTS = [
+  {val:'p', label:'✅ حاضر الكل',    cls:'val-p'},
+  {val:'a', label:'❌ غائب الكل',    cls:'val-a'},
+  {val:'h', label:'🏖️ إجازة الكل',  cls:'val-h'},
+  {val:'s', label:'🚫 تعليق الكل',  cls:'val-s'},
+];
+
+function renderBulkRow() {
+  for (let di = 0; di < 5; di++) {
+    const td = document.getElementById('bulk-td-' + di);
+    if (!td) continue;
+    const opts = [
+      `<option value="" disabled selected>— تطبيق على الكل —</option>`,
+      ...BULK_OPTS.map(o => `<option value="${o.val}">${o.label}</option>`)
+    ].join('');
+    td.innerHTML = `<select class="day-bulk-select" onchange="markDay(${di},this.value);this.selectedIndex=0;">${opts}</select>`;
+  }
+}
+
+function markDay(di, val) {
+  const wk = weekKey(currentWeekStart);
+  if (!attendanceData[wk]) attendanceData[wk] = {};
+  STUDENTS.forEach(stu => {
+    if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
+    attendanceData[wk][stu.pin][`d${di}`] = val;
+  });
+  renderTable();
+  updateStats();
+  const dayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+  const labels = {p:'حاضر',a:'غائب',h:'إجازة',s:'تعليق دراسة'};
+  showToast(`✅ ${dayNames[di]}: تم تسجيل ${labels[val]||val} لجميع الطلاب`);
 }
 
 </script>
