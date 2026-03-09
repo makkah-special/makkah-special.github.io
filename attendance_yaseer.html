@@ -252,17 +252,16 @@ tbody tr:last-child { border-bottom:none; }
 
 <!-- TOOLBAR -->
 <div class="toolbar">
-  <div class="toolbar-group" style="flex-direction:column;align-items:flex-start;gap:3px;">
-    <label style="margin-bottom:0;">📅 الأسبوع:</label>
-    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-      <div style="display:flex;flex-direction:column;gap:3px;">
-        <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)"
-          title="التاريخ الميلادي"
-          style="min-width:145px;">
-        <input type="text" id="weekStartHijri" readonly placeholder="التاريخ الهجري"
-          title="التاريخ الهجري (للعرض فقط)"
-          style="min-width:145px;background:#fffaf6;color:#b07050;font-size:0.78rem;
-                 cursor:default;border-color:#fde8d0;text-align:center;">
+  <div class="toolbar-group">
+    <label>📅 الأسبوع:</label>
+    <div style="position:relative;display:inline-block;">
+      <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)"
+        style="opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;z-index:2;border:none;padding:0;">
+      <div id="dual-date-display"
+        style="border:1px solid var(--border);border-radius:8px;padding:5px 12px;
+               background:#fff;cursor:pointer;min-width:170px;pointer-events:none;">
+        <div id="dual-miladi" style="font-size:0.82rem;font-weight:700;color:var(--text);text-align:center;">—</div>
+        <div id="dual-hijri"  style="font-size:0.7rem;color:#b07050;text-align:center;margin-top:1px;">—</div>
       </div>
     </div>
   </div>
@@ -478,18 +477,15 @@ function getWeekDays() {
 // ===== RENDER =====
 function renderAll() {
   updateWeekHeader();
+  if (!isHolidayWeek(currentWeekStart)) {
+    loadAttendance(weekKey(currentWeekStart));
+  }
   renderTable();
   updateStats();
   // تحديث input التاريخ
   document.getElementById('weekStart').value = weekKey(currentWeekStart);
-  // تحديث عرض التاريخ الهجري في الـ toolbar
-  try {
-    const hijriVal = currentWeekStart.toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {
-      day:'numeric', month:'long', year:'numeric'
-    });
-    const el = document.getElementById('weekStartHijri');
-    if (el) el.value = hijriVal;
-  } catch(e) {}
+  // تحديث العرض المزدوج
+  updateDualDateDisplay(currentWeekStart);
 }
 
 function updateWeekHeader() {
@@ -837,7 +833,10 @@ window.addEventListener('load', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
   renderAll();
   // حمّل بيانات الأسبوع الحالي من السحابة
-  loadAttendance(weekKey(currentWeekStart));
+  // لا نحمّل بيانات أسابيع الإجازة
+  if (!isHolidayWeek(currentWeekStart)) {
+    loadAttendance(weekKey(currentWeekStart));
+  }
 });
 window.addEventListener('resize', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
@@ -926,6 +925,22 @@ function resetWeekMap() {
   localStorage.removeItem(WEEK_MAP_KEY);
   closeWeekEditor();
   renderAll();
+}
+
+function updateDualDateDisplay(d) {
+  try {
+    const days = [0,1,2,3,4].map(i=>{ const dd=new Date(d); dd.setDate(dd.getDate()+i); return dd; });
+    // ميلادي: أحد — خميس
+    const m1 = d.toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric'});
+    const m2 = days[4].toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric',year:'numeric'});
+    // هجري
+    const h1 = d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long'});
+    const h2 = days[4].toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});
+    const dm = document.getElementById('dual-miladi');
+    const dh = document.getElementById('dual-hijri');
+    if(dm) dm.textContent = m1 + ' — ' + m2;
+    if(dh) dh.textContent = h1 + ' — ' + h2;
+  } catch(e){}
 }
 
 </script>
