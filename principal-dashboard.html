@@ -268,8 +268,8 @@ footer strong{color:var(--accent-light);}
   <div class="tab-pane active" id="tab-overview">
     <div class="kpi-grid">
       <div class="kpi-card c-blue"><div class="kpi-icon">👨‍🎓</div><div class="kpi-val" id="kpi-total">—</div><div class="kpi-label">إجمالي الطلاب</div></div>
-      <div class="kpi-card c-orange"><div class="kpi-icon">🧠</div><div class="kpi-val">20</div><div class="kpi-label">طلاب برنامج يسير</div></div>
-      <div class="kpi-card c-green"><div class="kpi-icon">🔗</div><div class="kpi-val" id="kpi-dumaj">—</div><div class="kpi-label">طلاب برنامج الدمج</div></div>
+      <div class="kpi-card c-orange"><div class="kpi-icon">📘</div><div class="kpi-val">20</div><div class="kpi-label">طلاب برنامج يسير</div></div>
+      <div class="kpi-card c-green"><div class="kpi-icon">🧑‍🏫</div><div class="kpi-val" id="kpi-dumaj">—</div><div class="kpi-label">طلاب برنامج الدمج</div></div>
       <div class="kpi-card c-gold"><div class="kpi-icon">✅</div><div class="kpi-val" id="kpi-att">—</div><div class="kpi-label">نسبة الحضور</div></div>
       <div class="kpi-card c-red"><div class="kpi-icon">❌</div><div class="kpi-val" id="kpi-abs">—</div><div class="kpi-label">غيابات هذا الأسبوع</div></div>
       <div class="kpi-card c-purple"><div class="kpi-icon">📅</div><div class="kpi-val" id="kpi-week">—</div><div class="kpi-label">الأسبوع الحالي</div></div>
@@ -285,8 +285,8 @@ footer strong{color:var(--accent-light);}
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div class="sec-title" style="border:none;margin:0;padding:0;">📋 كشف الحضور والغياب</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchAttProg('yaseer',this)">🧠 يسير</button>
-        <button class="prog-btn" onclick="switchAttProg('dumaj',this)">🔗 دمج</button>
+        <button class="prog-btn active" onclick="switchAttProg('yaseer',this)">📘 يسير</button>
+        <button class="prog-btn" onclick="switchAttProg('dumaj',this)">🧑‍🏫 دمج</button>
       </div>
     </div>
     <div class="week-nav">
@@ -309,8 +309,8 @@ footer strong{color:var(--accent-light);}
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div class="sec-title" style="border:none;margin:0;padding:0;">👨‍🎓 ملفات الطلاب</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchStudProg('yaseer',this)">🧠 يسير</button>
-        <button class="prog-btn" onclick="switchStudProg('dumaj',this)">🔗 دمج</button>
+        <button class="prog-btn active" onclick="switchStudProg('yaseer',this)">📘 يسير</button>
+        <button class="prog-btn" onclick="switchStudProg('dumaj',this)">🧑‍🏫 دمج</button>
       </div>
     </div>
     <input type="text" class="stu-search" id="stu-q" placeholder="🔍 ابحث باسم الطالب..." oninput="filterStu()">
@@ -322,8 +322,8 @@ footer strong{color:var(--accent-light);}
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div class="sec-title" style="border:none;margin:0;padding:0;">📅 جداول الحصص</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchTTProg('yaseer',this)">🧠 يسير</button>
-        <button class="prog-btn" onclick="switchTTProg('dumaj',this)">🔗 دمج</button>
+        <button class="prog-btn active" onclick="switchTTProg('yaseer',this)">📘 يسير</button>
+        <button class="prog-btn" onclick="switchTTProg('dumaj',this)">🧑‍🏫 دمج</button>
       </div>
     </div>
     <div class="grade-tabs" id="grade-tabs"></div>
@@ -335,8 +335,8 @@ footer strong{color:var(--accent-light);}
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div class="sec-title" style="border:none;margin:0;padding:0;">📁 البورتفوليو والتوقيعات</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchPortProg('yaseer',this)">🧠 يسير</button>
-        <button class="prog-btn" onclick="switchPortProg('dumaj',this)">🔗 دمج</button>
+        <button class="prog-btn active" onclick="switchPortProg('yaseer',this)">📘 يسير</button>
+        <button class="prog-btn" onclick="switchPortProg('dumaj',this)">🧑‍🏫 دمج</button>
       </div>
     </div>
     <div class="port-grid" id="port-grid"><div class="loading">⏳ جاري التحميل...</div></div>
@@ -558,7 +558,7 @@ async function loadOverview(){
     document.getElementById('ov-body').innerHTML=`<div style="padding:24px 20px;text-align:center;color:var(--muted);"><div style="font-size:2rem;margin-bottom:8px;">📭</div><div style="font-weight:700;">لا توجد بيانات حضور للأسبوع الحالي</div><div style="font-size:0.75rem;margin-top:6px;">سيظهر الملخص بعد حفظ الحضور من صفحة المعلم</div></div>`;
     return;
   }
-  document.getElementById('ov-body').innerHTML=buildRow('🧠 يسير',yD,YS)+buildRow('🔗 دمج',dD,DS);
+  document.getElementById('ov-body').innerHTML=buildRow('📘 يسير',yD,YS)+buildRow('🧑‍🏫 دمج',dD,DS);
 }
 async function loadDumajCount(){
   document.getElementById('kpi-dumaj').textContent=DS.length;
@@ -611,7 +611,7 @@ function renderStu(){
       </div>
       <div class="stu-foot">
         <span class="stu-tag">رمز: ${s.pin}</span>
-        <span class="stu-tag">${studProg==='yaseer'?'🧠 يسير':'🔗 دمج'}</span>
+        <span class="stu-tag">${studProg==='yaseer'?'📘 يسير':'🧑‍🏫 دمج'}</span>
       </div>
     </div>`;
   }).join('');
@@ -650,9 +650,40 @@ async function openStuModal(pin,prog){
   if(stuR?.length) data=stuR[0].data;
   if(!data) data=await sbPub(`reports/${prog}/data/student-${pin}.json`);
   if(!data){body.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد بيانات محفوظة لهذا الطالب بعد</div>';return;}
-  const fields=[['التشخيص',data.diagnosis],['نوع الإعاقة',data.disabilityType],['المستوى',data.level],['المعلم',data.teacher],['اسم ولي الأمر',data.parentName],['الهاتف',data.phone],['تاريخ الخطة',data.planDate],['الفصل',data.semester]].filter(([,v])=>v);
+  // بناء بطاقة الطالب الكاملة
+  const SECTIONS = [
+    { title:'🪪 البيانات الشخصية', color:'#1a3a5c', fields:[
+        ['رقم الهوية / الإقامة', data.id_full || data.id],
+        ['تاريخ الميلاد', data.birthdate],
+        ['العمر', data.age ? data.age+' سنوات' : null],
+        ['الجنسية', data.nationality],
+        ['العنوان', data.address],
+    ]},
+    { title:'👨‍👩‍👦 بيانات ولي الأمر', color:'#1a6b3a', fields:[
+        ['اسم ولي الأمر', data.parentName],
+        ['الهاتف', data.phone],
+        ['المستوى الاقتصادي', data.economic_level],
+    ]},
+    { title:'📋 البيانات التعليمية', color:'#7a2800', fields:[
+        ['التشخيص', data.diagnosis],
+        ['نوع الإعاقة', data.disabilityType],
+        ['مستوى الأداء', data.level],
+        ['المعلم المسؤول', data.teacher],
+        ['الفصل الدراسي', data.semester],
+        ['تاريخ الخطة التعليمية', data.planDate],
+    ]},
+  ];
+  let sectionsHTML = '';
+  SECTIONS.forEach(sec=>{
+    const rows=sec.fields.filter(([,v])=>v);
+    if(!rows.length) return;
+    sectionsHTML+=`<div style="margin-bottom:14px;">
+      <div style="font-size:0.78rem;font-weight:800;color:${sec.color};margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid ${sec.color}33;">${sec.title}</div>
+      <div class="detail-grid">${rows.map(([k,v])=>`<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v}</div></div>`).join('')}</div>
+    </div>`;
+  });
   const goals=data.goals?`<div style="margin-top:16px;background:#f5f7fb;border-radius:10px;padding:14px;"><div style="font-weight:800;color:var(--primary);font-size:0.85rem;margin-bottom:10px;">🎯 الأهداف التعليمية</div>${Object.entries(data.goals).map(([subj,gs])=>`<div style="margin-bottom:10px;"><div style="font-size:0.73rem;font-weight:700;color:var(--muted);margin-bottom:4px;">${subj}</div>${(Array.isArray(gs)?gs:[]).map(g=>`<div style="font-size:0.75rem;background:#fff;border:1px solid var(--border);border-radius:6px;padding:4px 10px;margin-bottom:4px;">${g}</div>`).join('')}</div>`).join('')}</div>`:'';
-  body.innerHTML=`<div class="detail-grid">${fields.map(([k,v])=>`<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v}</div></div>`).join('')}</div>${goals}`;
+  body.innerHTML=sectionsHTML+goals;
 }
 function closeModal(){document.getElementById('stu-modal').classList.remove('open');}
 
