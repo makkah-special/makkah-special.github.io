@@ -948,6 +948,7 @@
     <div class="admin-tabs">
       <button class="admin-tab-btn active" onclick="openAdminTab('list',this)">👨‍🎓 قائمة الطلاب</button>
       <button class="admin-tab-btn" onclick="openAdminTab('add',this)">➕ إضافة طالب</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('schedule',this)">📅 جدول الحصص</button>
     </div>
     <div class="admin-tab-pane active" id="admin-tab-list">
       <div style="margin-bottom:14px;">
@@ -985,9 +986,21 @@
         </div>
       </div>
     </div>
+
+
+    <!-- جدول الحصص -->
+    <div class="admin-tab-pane" id="admin-tab-schedule">
+      <div id="dumaj-schedule-container"></div>
+    </div>
+
   </div>
 </div>
 
+<!-- DUMAJ CELL EDITOR MODAL -->
+<div id="dumaj-cell-overlay" onclick="closeDumajCellEditor()" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.6);z-index:9000;backdrop-filter:blur(3px);"></div>
+<div id="dumaj-cell-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:0;width:min(560px,96vw);max-height:90vh;overflow-y:auto;z-index:9001;box-shadow:0 12px 50px rgba(10,20,40,0.25);">
+  <div id="dumaj-cell-content"></div>
+</div>
 
 <!-- EDIT MODAL -->
 <div class="modal-overlay" id="edit-modal">
@@ -1825,6 +1838,7 @@ function openAdminTab(id, btn) {
   document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('admin-tab-' + id).classList.add('active');
   btn.classList.add('active');
+  if (id === 'schedule') renderDumajSchedule();
 }
 
 function renderStudentCards() {
@@ -3416,6 +3430,572 @@ function savePlanAsPDF(pin) {
     <script>window.onload=()=>window.print();<\/script>
   </body></html>`);
   win.document.close();
+}
+
+// =====================================================
+// جدول الحصص — برنامج الدمج الفكري
+// =====================================================
+
+const DUMAJ_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+const DUMAJ_PERIODS = [
+  { num:1, label:'الأولى',   timeW:'7:30–8:15',    timeS:'7:00–7:45'    },
+  { num:2, label:'الثانية',  timeW:'8:15–9:00',    timeS:'7:45–8:30'    },
+  { num:3, label:'الثالثة',  timeW:'9:00–9:45',    timeS:'8:30–9:15'    },
+  { num:4, label:'الرابعة',  timeW:'10:05–10:50',  timeS:'9:35–10:20'   },
+  { num:5, label:'الخامسة',  timeW:'10:50–11:35',  timeS:'10:20–11:05'  },
+  { num:6, label:'السادسة',  timeW:'11:35–12:20',  timeS:'11:05–11:50'  },
+  { num:7, label:'السابعة',  timeW:'12:20–13:05',  timeS:'11:50–12:35'  },
+];
+// أنواع الخلايا الخاصة
+const DUMAJ_CELL_TYPES = [
+  { value:'lesson',    label:'حصة دراسية',        icon:'📚' },
+  { value:'break_sup', label:'فسحة',              icon:'☕' },
+  { value:'end_sup',   label:'مشرف نهاية الدوام', icon:'🏫' },
+  { value:'empty',     label:'فارغة',             icon:'—'  },
+];
+const DUMAJ_GRADES = ['أول متوسط','ثاني متوسط','ثالث متوسط'];
+const DUMAJ_TEACHERS = [
+  { key:'suhaimy',   name:'محمد أحمد السهيمي',       color:'#1a3a5c', light:'#e8f0fa' },
+  { key:'alzahrani', name:'علي محمد الزهراني',        color:'#1a6b4a', light:'#e6f5ee' },
+  { key:'alghamdi',  name:'علي سعيد الغامدي',         color:'#7c3aed', light:'#f3eeff' },
+  { key:'almalki',   name:'علي محمد المالكي',         color:'#b45309', light:'#fef3c7' },
+  { key:'alyani',    name:'حسن علي العلياني',         color:'#be185d', light:'#fce7f3' },
+  { key:'alqarni',   name:'زين العابدين سعد القرني',  color:'#0f766e', light:'#e6fafa' },
+];
+const DUMAJ_SUBJECTS = [
+  'القرآن الكريم والدراسات الإسلامية',
+  'الرياضيات',
+  'اللغة العربية',
+  'العلوم',
+  'التربية الفنية',
+  'التربية البدنية والدفاع عن النفس',
+  'الدراسات الاجتماعية',
+  'المهارات الرقمية',
+  'اللغة الإنجليزية',
+  'المهارات الحياتية والأسرية',
+];
+const DUMAJ_TIMETABLE_KEY = 'dumaj_timetable_v1';
+const DUMAJ_SB_KEY_PREFIX  = 'dumaj_timetable_';
+
+let dumajTimetableData = {}; // { 'أول متوسط': { day: { period: {type,teacher,subject} } } }
+let dumajCurrentGrade  = 'أول متوسط';
+let dumajIsSummer      = false;
+let dumajEditingCell   = null;
+let dumajCustomPeriods = null;
+const DUMAJ_PERIODS_KEY = 'dumaj_periods_v1';
+
+function getDumajPeriods() {
+  if (dumajCustomPeriods) return dumajCustomPeriods;
+  try {
+    const r = localStorage.getItem(DUMAJ_PERIODS_KEY);
+    if (r) { dumajCustomPeriods = JSON.parse(r); return dumajCustomPeriods; }
+  } catch(e) {}
+  // Return deep copy of default
+  return DUMAJ_PERIODS.map(p => ({...p}));
+}
+
+function saveDumajPeriods(periods) {
+  dumajCustomPeriods = periods;
+  try { localStorage.setItem(DUMAJ_PERIODS_KEY, JSON.stringify(periods)); } catch(e) {}
+}
+
+function getDumajEmptyGrade() {
+  const t = {};
+  DUMAJ_DAYS.forEach(d => { t[d] = {}; DUMAJ_PERIODS.forEach(p => { t[d][p.num] = { type:'empty', teacher:'', subject:'' }; }); });
+  return t;
+}
+
+async function loadDumajTimetable(grade) {
+  const sbKey = DUMAJ_SB_KEY_PREFIX + grade;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/teacher_portfolios?teacher_key=eq.${encodeURIComponent(sbKey)}&select=data`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      if (rows?.length > 0 && rows[0].data) return rows[0].data;
+    }
+  } catch(e) {}
+  try {
+    const r = localStorage.getItem(DUMAJ_TIMETABLE_KEY + '_' + grade);
+    return r ? JSON.parse(r) : getDumajEmptyGrade();
+  } catch(e) { return getDumajEmptyGrade(); }
+}
+
+async function saveDumajTimetable(grade, data) {
+  const sbKey = DUMAJ_SB_KEY_PREFIX + grade;
+  try { localStorage.setItem(DUMAJ_TIMETABLE_KEY + '_' + grade, JSON.stringify(data)); } catch(e) {}
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/teacher_portfolios`, {
+      method:'POST',
+      headers:{ 'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates' },
+      body: JSON.stringify({ teacher_key: sbKey, data })
+    });
+  } catch(e) {}
+}
+
+async function renderDumajSchedule() {
+  const container = document.getElementById('dumaj-schedule-container');
+  container.innerHTML = `<div style="text-align:center;padding:40px;color:#aaa;font-family:'Cairo',sans-serif;">⏳ جارٍ التحميل...</div>`;
+
+  if (!dumajTimetableData[dumajCurrentGrade]) {
+    dumajTimetableData[dumajCurrentGrade] = await loadDumajTimetable(dumajCurrentGrade);
+  }
+  const gridData = dumajTimetableData[dumajCurrentGrade];
+
+  // Count per teacher
+  const totals = {};
+  DUMAJ_TEACHERS.forEach(t => totals[t.key] = 0);
+  DUMAJ_DAYS.forEach(d => getDumajPeriods().forEach(p => {
+    const cell = gridData[d]?.[p.num];
+    const ct = cell?.type || (cell?.teacher ? 'lesson' : 'empty');
+    if (cell?.teacher && ['lesson','break_sup','end_sup'].includes(ct)) {
+      totals[cell.teacher] = (totals[cell.teacher]||0)+1;
+    }
+  }));
+
+  container.innerHTML = `
+    <style>
+      @media print {
+        body > *:not(#admin-portal){display:none!important}
+        #admin-portal > *:not(.admin-body){display:none!important}
+        .admin-tabs,.no-print{display:none!important}
+        #admin-tab-list,#admin-tab-add{display:none!important}
+        #admin-tab-schedule{display:block!important}
+        .dumaj-print-hdr{display:flex!important}
+        #dumaj-schedule-container{padding:0!important}
+        @page{size:A4 landscape;margin:10mm}
+        *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+        .dumaj-tbl-wrap{box-shadow:none!important;border:1.5px solid #c25a00!important}
+        .dumaj-td-cell{padding:4px 3px!important}
+        .dumaj-th{padding:7px 4px!important;font-size:7.5pt!important}
+        .dumaj-td-day{font-size:7.5pt!important}
+        .dumaj-cell-inner{padding:3px 5px!important;border-radius:4px!important}
+        .dumaj-cell-teacher{font-size:6pt!important}
+        .dumaj-cell-subj{font-size:6.5pt!important}
+      }
+      .dumaj-print-hdr{display:none}
+      .dumaj-topbar{
+        background:linear-gradient(135deg,#7c2d00 0%,#c25a00 60%,#e07020 100%);
+        border-radius:16px;padding:18px 22px;
+        display:flex;align-items:center;justify-content:space-between;
+        flex-wrap:wrap;gap:12px;margin-bottom:20px;
+        box-shadow:0 4px 24px rgba(194,90,0,0.3);position:relative;overflow:hidden;
+      }
+      .dumaj-topbar::before{content:'';position:absolute;top:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.05);pointer-events:none}
+      .dumaj-grade-tabs{display:flex;border-radius:10px;overflow:hidden;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08)}
+      .dumaj-grade-btn{padding:8px 16px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;transition:all 0.2s;background:transparent;color:rgba(255,255,255,0.6)}
+      .dumaj-grade-btn.active{background:rgba(255,255,255,0.22);color:#fff}
+      .dumaj-action-btn{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.18s;white-space:nowrap}
+      .dumaj-action-btn:hover{transform:translateY(-1px)}
+      .dumaj-btn-season{background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.2)}
+      .dumaj-btn-save{background:#fff;color:#c25a00;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+      .dumaj-btn-print{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2)}
+      .dumaj-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+      .dumaj-stat-card{border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;border:1.5px solid transparent;transition:transform 0.2s;cursor:default}
+      .dumaj-stat-card:hover{transform:translateY(-2px)}
+      .dumaj-tbl-wrap{border-radius:16px;overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow-x:auto}
+      .dumaj-table{width:100%;border-collapse:collapse;min-width:760px;background:#fff}
+      .dumaj-th{background:linear-gradient(180deg,#7c2d00,#c25a00);color:#fff;padding:11px 8px;text-align:center;font-size:0.76rem;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
+      .dumaj-th-day{background:linear-gradient(180deg,#7c2d00,#c25a00);color:#fff;padding:14px 10px;text-align:center;font-size:0.8rem;font-weight:800;width:76px;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
+      .dumaj-td-day{padding:10px 8px;text-align:center;font-weight:800;font-size:0.84rem;color:#7c2d00;border-left:2px solid #fde8d0;background:linear-gradient(180deg,#fff8f4,#fef0e8);vertical-align:middle;white-space:nowrap;font-family:'Cairo',sans-serif}
+      .dumaj-td-cell{padding:5px 4px;vertical-align:top;border-left:1px solid #f5e8e0;cursor:pointer;transition:background 0.15s;min-width:105px}
+      .dumaj-td-cell:hover{background:#fff5ef!important}
+      .dumaj-cell-inner{border-radius:8px;padding:5px 7px}
+      .dumaj-cell-teacher{font-size:0.6rem;font-weight:800;opacity:0.75;margin-bottom:3px;font-family:'Cairo',sans-serif}
+      .dumaj-cell-subj{font-size:0.7rem;font-weight:700;line-height:1.3;font-family:'Cairo',sans-serif}
+    </style>
+
+    <!-- Print Header -->
+    <div class="dumaj-print-hdr" style="align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 18px;background:linear-gradient(135deg,#7c2d00,#c25a00);border-radius:8px;">
+      <div>
+        <div style="font-weight:900;font-size:13pt;color:#fff;">جدول الحصص الأسبوعي — برنامج الدمج الفكري</div>
+        <div style="font-size:8.5pt;color:rgba(255,255,255,0.75);margin-top:3px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة — فصل: ${dumajCurrentGrade}</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.8);font-size:8.5pt;font-weight:700;">قسم ذوي الإعاقة — دمج فكري</div>
+    </div>
+
+    <div style="font-family:'Cairo',sans-serif;direction:rtl;">
+
+      <!-- Top Bar -->
+      <div class="dumaj-topbar no-print">
+        <div>
+          <div style="color:#fff;font-size:1.05rem;font-weight:800;">📅 جدول الحصص — برنامج الدمج الفكري</div>
+          <div style="color:rgba(255,255,255,0.55);font-size:0.72rem;margin-top:3px;">اضغط على أي خلية لتعديلها · الفصل الدراسي الثاني 1447هـ</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:relative;z-index:1;">
+          <!-- Grade Tabs -->
+          <div class="dumaj-grade-tabs">
+            ${DUMAJ_GRADES.map(g => `<button class="dumaj-grade-btn ${g===dumajCurrentGrade?'active':''}" onclick="switchDumajGrade('${g}')">${g}</button>`).join('')}
+          </div>
+          <!-- Season -->
+          <button class="dumaj-action-btn dumaj-btn-season" onclick="toggleDumajSeason()">
+            ${dumajIsSummer ? '☀️ صيفي' : '❄️ شتوي'}
+          </button>
+          <button class="dumaj-action-btn dumaj-btn-print" onclick="printDumajTimetable()">🖨️ طباعة</button>
+          <button class="dumaj-action-btn dumaj-btn-save" onclick="saveDumajBtn()">💾 حفظ</button>
+          <button class="dumaj-action-btn" onclick="openDumajPeriodSettings()" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);">⚙️ الحصص</button>
+        </div>
+      </div>
+
+      <!-- Teacher Stats -->
+      <div class="dumaj-stats no-print">
+        ${DUMAJ_TEACHERS.map(t => `
+          <div class="dumaj-stat-card" style="background:${t.light};border-color:${t.color}22;">
+            <div style="width:36px;height:36px;border-radius:10px;background:${t.color}18;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">👨‍🏫</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.78rem;font-weight:800;color:${t.color};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">أ. ${t.name.split(' ').slice(-1)[0]}</div>
+              <div style="font-size:0.65rem;color:#aaa;margin-top:1px;">حصص الفصل</div>
+            </div>
+            <div style="font-size:1.5rem;font-weight:900;color:${t.color};">${totals[t.key]||0}</div>
+          </div>`).join('')}
+      </div>
+
+      <!-- Table -->
+      <div class="dumaj-tbl-wrap">
+        <table class="dumaj-table">
+          <thead>
+            <tr>
+              <th class="dumaj-th-day">اليوم</th>
+              ${getDumajPeriods().map(p => `
+                <th class="dumaj-th">
+                  <div style="font-weight:800;">الحصة ${p.label}</div>
+                  <div style="font-size:0.62rem;color:rgba(255,255,255,0.65);margin-top:2px;">${dumajIsSummer?p.timeS:p.timeW}</div>
+                </th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${DUMAJ_DAYS.map((day,di) => `
+              <tr style="border-bottom:1px solid #f5ede8;">
+                <td class="dumaj-td-day">${day}</td>
+                ${getDumajPeriods().map(p => {
+                  const cell = gridData[day]?.[p.num] || { type:'empty', teacher:'', subject:'' };
+                  const cellType = cell.type || (cell.teacher ? 'lesson' : 'empty');
+                  const t = DUMAJ_TEACHERS.find(x => x.key === cell.teacher);
+                  const rowBg = di%2===0 ? '#fff' : '#fffaf8';
+
+                  let cellContent = '';
+                  if (cellType === 'lesson' && cell.teacher && cell.subject) {
+                    cellContent = `<div class="dumaj-cell-inner" style="background:${t.light};border:1px solid ${t.color}33;">
+                      <div class="dumaj-cell-teacher" style="color:${t.color};">أ. ${t.name.split(' ').slice(-1)[0]}</div>
+                      <div class="dumaj-cell-subj" style="color:${t.color};">${cell.subject}</div>
+                    </div>`;
+                  } else if (cellType === 'break' || cellType === 'break_sup') {
+                    const bsT = DUMAJ_TEACHERS.find(x => x.key === cell.teacher);
+                    cellContent = `<div class="dumaj-cell-inner" style="background:#fef9c3;border:1px solid #f59e0b55;text-align:center;">
+                      <div style="font-size:1rem;">☕</div>
+                      <div style="font-size:0.72rem;font-weight:800;color:#92400e;">فسحة</div>
+                      ${bsT ? `<div style="font-size:0.64rem;color:#b45309;font-weight:700;margin-top:2px;">أ. ${bsT.name.split(' ').slice(-1)[0]}</div>` : ''}
+                    </div>`;
+                  } else if (cellType === 'end_sup') {
+                    const esT = DUMAJ_TEACHERS.find(x => x.key === cell.teacher);
+                    cellContent = `<div class="dumaj-cell-inner" style="background:#e0f2fe;border:1px solid #0ea5e944;text-align:center;">
+                      <div style="font-size:1rem;">🏫</div>
+                      <div style="font-size:0.68rem;font-weight:800;color:#0369a1;">مشرف نهاية الدوام</div>
+                      ${esT ? `<div style="font-size:0.62rem;color:#0369a1;margin-top:2px;">أ. ${esT.name.split(' ').slice(-1)[0]}</div>` : ''}
+                    </div>`;
+                  } else {
+                    cellContent = `<div style="color:#e0d0c8;text-align:center;padding-top:16px;font-size:1rem;">·</div>`;
+                  }
+
+                  return `
+                    <td class="dumaj-td-cell" style="background:${rowBg};"
+                        onclick="openDumajCellEditor('${day}',${p.num})"
+                        onmouseleave="this.style.background='${rowBg}'">
+                      <div style="min-height:52px;">${cellContent}</div>
+                    </td>`;
+                }).join('')}
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+async function switchDumajGrade(grade) {
+  dumajCurrentGrade = grade;
+  if (!dumajTimetableData[grade]) {
+    dumajTimetableData[grade] = await loadDumajTimetable(grade);
+  }
+  renderDumajSchedule();
+}
+
+function toggleDumajSeason() {
+  dumajIsSummer = !dumajIsSummer;
+  renderDumajSchedule();
+}
+
+function printDumajTimetable() {
+  document.querySelector('.dumaj-print-hdr').style.display = 'flex';
+  window.print();
+  setTimeout(() => { document.querySelector('.dumaj-print-hdr').style.display = 'none'; }, 1200);
+}
+
+async function saveDumajBtn() {
+  await saveDumajTimetable(dumajCurrentGrade, dumajTimetableData[dumajCurrentGrade]);
+  // Show toast if available
+  if (typeof showToast === 'function') showToast('✅ تم حفظ جدول ' + dumajCurrentGrade);
+}
+
+function openDumajCellEditor(day, period) {
+  dumajEditingCell = { day, period };
+  const gridData = dumajTimetableData[dumajCurrentGrade] || {};
+  const cell = gridData[day]?.[period] || { type:'empty', teacher:'', subject:'' };
+  const cellType = cell.type || (cell.teacher ? 'lesson' : 'empty');
+  const periodInfo = DUMAJ_PERIODS.find(p => p.num === period);
+
+  const html = `
+    <div style="background:linear-gradient(135deg,#7c2d00,#c25a00);padding:18px 22px;border-radius:20px 20px 0 0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="color:#fff;font-weight:800;font-size:0.95rem;">✏️ تعديل الحصة</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:0.72rem;margin-top:2px;">${day} — الحصة ${periodInfo?.label} — ${dumajCurrentGrade}</div>
+        </div>
+        <button onclick="closeDumajCellEditor()" style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:30px;height:30px;color:#fff;font-size:1rem;cursor:pointer;">✕</button>
+      </div>
+    </div>
+    <div style="padding:20px 22px;font-family:'Cairo',sans-serif;direction:rtl;">
+
+      <!-- نوع الخلية -->
+      <div style="margin-bottom:18px;">
+        <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="background:#c25a00;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">١</span>
+          نوع الحصة
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;" id="dumaj-type-group">
+          ${DUMAJ_CELL_TYPES.map(ct => {
+            const isSel = cellType === ct.value;
+            const colors = {lesson:'#c25a00', break:'#b45309', break_sup:'#be185d', end_sup:'#0369a1', empty:'#888'};
+            const bgs    = {lesson:'#fef3c7', break:'#fef3c7', break_sup:'#fce7f3', end_sup:'#e0f2fe', empty:'#f0f0f0'};
+            const c = colors[ct.value], bg = bgs[ct.value];
+            return `
+              <label id="type-label-${ct.value}" style="display:flex;align-items:center;gap:6px;background:${isSel?bg:'#f8f9fc'};border:2px solid ${isSel?c:'#e8ecf2'};border-radius:10px;padding:8px 14px;cursor:pointer;font-size:0.78rem;font-weight:700;color:${isSel?c:'#666'};transition:all 0.15s;">
+                <input type="radio" name="dumaj-type" value="${ct.value}" ${isSel?'checked':''} style="display:none;" onchange="onDumajTypeChange()">
+                ${ct.icon} ${ct.label}
+              </label>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- قسم المعلم (يظهر حسب النوع) -->
+      <div id="dumaj-teacher-section" style="margin-bottom:18px;display:${['lesson','break_sup','end_sup'].includes(cellType)?'block':'none'};">
+        <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="background:#c25a00;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٢</span>
+          <span id="dumaj-teacher-label">اختر المعلم</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          ${DUMAJ_TEACHERS.map(t => {
+            const isSel = cell.teacher === t.key;
+            return `
+              <label style="display:flex;align-items:center;gap:8px;background:${isSel?t.light:'#f8f9fc'};border:2px solid ${isSel?t.color:'#e8ecf2'};border-radius:11px;padding:9px 12px;cursor:pointer;transition:all 0.15s;"
+                     onclick="selectDumajTeacher(this,'${t.key}')">
+                <input type="radio" name="dumaj-teacher" value="${t.key}" ${isSel?'checked':''} style="accent-color:${t.color};width:14px;height:14px;">
+                <span style="font-size:0.78rem;font-weight:800;color:${t.color};">أ. ${t.name.split(' ').slice(-1)[0]}</span>
+              </label>`;
+          }).join('')}
+          <label style="display:flex;align-items:center;gap:8px;background:${!cell.teacher?'#f0f0f0':'#f8f9fc'};border:2px solid ${!cell.teacher?'#999':'#e8ecf2'};border-radius:11px;padding:9px 12px;cursor:pointer;"
+                 onclick="selectDumajTeacher(this,'')">
+            <input type="radio" name="dumaj-teacher" value="" ${!cell.teacher?'checked':''} style="width:14px;height:14px;">
+            <span style="font-size:0.78rem;color:#888;font-weight:600;">بدون معلم</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- قسم المادة (يظهر فقط لحصة دراسية) -->
+      <div id="dumaj-subject-section" style="margin-bottom:18px;display:${cellType==='lesson'?'block':'none'};">
+        <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="background:#c25a00;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٣</span>
+          اختر المادة
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          ${DUMAJ_SUBJECTS.map(subj => {
+            const isSel = cell.subject === subj;
+            return `
+              <label class="dumaj-subj-label" style="display:flex;align-items:center;gap:5px;background:${isSel?'#fef3c7':'#f8f9fc'};border:1.5px solid ${isSel?'#c25a00':'#e8ecf2'};border-radius:20px;padding:5px 12px;cursor:pointer;font-size:0.75rem;font-weight:700;color:${isSel?'#92400e':'#555'};transition:all 0.15s;">
+                <input type="radio" name="dumaj-subject" value="${subj}" ${isSel?'checked':''} style="display:none;">
+                ${subj}
+              </label>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <button onclick="saveDumajCellEdit()" style="width:100%;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(194,90,0,0.3);">
+        💾 حفظ التعديلات
+      </button>
+    </div>
+  `;
+
+  const box = document.getElementById('dumaj-cell-content');
+  box.innerHTML = html;
+
+  // Subject pill click
+  box.querySelectorAll('.dumaj-subj-label').forEach(lbl => {
+    lbl.onclick = () => {
+      lbl.querySelector('input').checked = true;
+      box.querySelectorAll('.dumaj-subj-label').forEach(l => {
+        const sel = l.querySelector('input').checked;
+        l.style.background   = sel ? '#fef3c7' : '#f8f9fc';
+        l.style.borderColor  = sel ? '#c25a00' : '#e8ecf2';
+        l.style.color        = sel ? '#92400e' : '#555';
+      });
+    };
+  });
+
+  // Type pill click
+  box.querySelectorAll('input[name="dumaj-type"]').forEach(inp => {
+    inp.closest('label').onclick = () => { inp.checked = true; onDumajTypeChange(); };
+  });
+
+  document.getElementById('dumaj-cell-overlay').style.display = 'block';
+  document.getElementById('dumaj-cell-box').style.display = 'block';
+}
+
+function onDumajTypeChange() {
+  const type = document.querySelector('input[name="dumaj-type"]:checked')?.value || 'empty';
+  const colors = {lesson:'#c25a00', break:'#b45309', break_sup:'#be185d', end_sup:'#0369a1', empty:'#888'};
+  const bgs    = {lesson:'#fef3c7', break:'#fef3c7', break_sup:'#fce7f3', end_sup:'#e0f2fe', empty:'#f0f0f0'};
+
+  // Update type pill styles
+  document.querySelectorAll('input[name="dumaj-type"]').forEach(inp => {
+    const lbl = inp.closest('label');
+    const v = inp.value;
+    const sel = v === type;
+    lbl.style.background  = sel ? bgs[v]    : '#f8f9fc';
+    lbl.style.borderColor = sel ? colors[v] : '#e8ecf2';
+    lbl.style.color       = sel ? colors[v] : '#666';
+  });
+
+  // Show/hide teacher section
+  const showTeacher = ['lesson','break_sup','end_sup'].includes(type);
+  document.getElementById('dumaj-teacher-section').style.display = showTeacher ? 'block' : 'none';
+
+  // Update teacher label
+  const labelMap = { lesson:'اختر المعلم', break_sup:'مشرف الفسحة', end_sup:'مشرف نهاية الدوام' };
+  const lbl = document.getElementById('dumaj-teacher-label');
+  if (lbl) lbl.textContent = labelMap[type] || 'اختر المعلم';
+
+  // Show/hide subject section
+  document.getElementById('dumaj-subject-section').style.display = type === 'lesson' ? 'block' : 'none';
+}
+
+function selectDumajTeacher(lbl, key) {
+  lbl.querySelector('input').checked = true;
+  document.querySelectorAll('#dumaj-cell-content input[name="dumaj-teacher"]').forEach(inp => {
+    const parent = inp.closest('label');
+    const isSel  = inp.value === key;
+    // Find teacher color
+    const t = DUMAJ_TEACHERS.find(x => x.key === inp.value);
+    parent.style.borderColor = isSel ? (t?.color || '#999') : '#e8ecf2';
+    parent.style.background  = isSel ? (t?.light || '#f0f0f0') : '#f8f9fc';
+  });
+}
+
+function closeDumajCellEditor() {
+  document.getElementById('dumaj-cell-overlay').style.display = 'none';
+  document.getElementById('dumaj-cell-box').style.display = 'none';
+  dumajEditingCell = null;
+}
+
+async function saveDumajCellEdit() {
+  if (!dumajEditingCell) return;
+  const { day, period } = dumajEditingCell;
+  const type    = document.querySelector('input[name="dumaj-type"]:checked')?.value || 'empty';
+  const teacher = document.querySelector('input[name="dumaj-teacher"]:checked')?.value || '';
+  const subject = document.querySelector('input[name="dumaj-subject"]:checked')?.value || '';
+
+  if (!dumajTimetableData[dumajCurrentGrade]) {
+    dumajTimetableData[dumajCurrentGrade] = getDumajEmptyGrade();
+  }
+  if (!dumajTimetableData[dumajCurrentGrade][day]) {
+    dumajTimetableData[dumajCurrentGrade][day] = {};
+  }
+  dumajTimetableData[dumajCurrentGrade][day][period] = { type, teacher, subject };
+  await saveDumajTimetable(dumajCurrentGrade, dumajTimetableData[dumajCurrentGrade]);
+  closeDumajCellEditor();
+  renderDumajSchedule();
+}
+
+function openDumajPeriodSettings() {
+  const periods = getDumajPeriods();
+  const overlay = document.getElementById('dumaj-cell-overlay');
+  const box = document.getElementById('dumaj-cell-box');
+  const contentEl = document.getElementById('dumaj-cell-content');
+
+  const rows = periods.map((p,i) => `
+    <tr style="border-bottom:1px solid #f0f0f0;">
+      <td style="padding:8px 10px;font-weight:700;color:#c25a00;font-size:0.82rem;text-align:center;width:30px;">${i+1}</td>
+      <td style="padding:6px 8px;">
+        <input type="text" id="p-label-${i}" value="${p.label}"
+          style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.82rem;text-align:center;">
+      </td>
+      <td style="padding:6px 8px;">
+        <input type="text" id="p-timeW-${i}" value="${p.timeW}"
+          style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.78rem;text-align:center;" placeholder="7:30–8:15">
+      </td>
+      <td style="padding:6px 8px;">
+        <input type="text" id="p-timeS-${i}" value="${p.timeS}"
+          style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.78rem;text-align:center;" placeholder="7:00–7:45">
+      </td>
+    </tr>`).join('');
+
+  contentEl.innerHTML = `
+    <div style="background:linear-gradient(135deg,#7c2d00,#c25a00);padding:18px 22px;border-radius:20px 20px 0 0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="color:#fff;font-weight:800;font-size:0.95rem;">⚙️ إعدادات الحصص</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:0.72rem;margin-top:2px;">تعديل أسماء وأوقات الحصص</div>
+        </div>
+        <button onclick="closeDumajCellEditor()" style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:30px;height:30px;color:#fff;font-size:1rem;cursor:pointer;">✕</button>
+      </div>
+    </div>
+    <div style="padding:20px 22px;font-family:'Cairo',sans-serif;direction:rtl;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead>
+          <tr style="background:#fdf4ee;">
+            <th style="padding:8px;font-size:0.75rem;color:#c25a00;font-weight:800;text-align:center;">#</th>
+            <th style="padding:8px;font-size:0.75rem;color:#555;font-weight:700;text-align:center;">اسم الحصة</th>
+            <th style="padding:8px;font-size:0.75rem;color:#1a3a5c;font-weight:700;text-align:center;">❄️ شتوي</th>
+            <th style="padding:8px;font-size:0.75rem;color:#c8973a;font-weight:700;text-align:center;">☀️ صيفي</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <button onclick="saveDumajPeriodSettings()" style="flex:1;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;border-radius:12px;padding:12px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;">
+          💾 حفظ الإعدادات
+        </button>
+        <button onclick="resetDumajPeriods()" style="background:#f5f5f5;color:#888;border:1.5px solid #e0e0e0;border-radius:12px;padding:12px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">
+          ↺ افتراضي
+        </button>
+      </div>
+    </div>
+  `;
+
+  overlay.style.display = 'block';
+  box.style.display = 'block';
+}
+
+function saveDumajPeriodSettings() {
+  const periods = getDumajPeriods();
+  const updated = periods.map((p, i) => ({
+    num:   p.num,
+    label: document.getElementById(`p-label-${i}`)?.value?.trim() || p.label,
+    timeW: document.getElementById(`p-timeW-${i}`)?.value?.trim() || p.timeW,
+    timeS: document.getElementById(`p-timeS-${i}`)?.value?.trim() || p.timeS,
+  }));
+  saveDumajPeriods(updated);
+  closeDumajCellEditor();
+  renderDumajSchedule();
+  if (typeof showToast === 'function') showToast('✅ تم حفظ إعدادات الحصص');
+}
+
+function resetDumajPeriods() {
+  if (!confirm('إعادة الحصص للإعدادات الافتراضية؟')) return;
+  localStorage.removeItem(DUMAJ_PERIODS_KEY);
+  dumajCustomPeriods = null;
+  closeDumajCellEditor();
+  renderDumajSchedule();
 }
 
 </script>
