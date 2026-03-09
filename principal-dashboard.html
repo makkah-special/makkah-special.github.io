@@ -464,7 +464,12 @@ let attWk=getSun(new Date()), attProg='yaseer', studProg='yaseer', ttProg='yasee
 
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 function getSun(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate()-d.getDay());}
-function wk(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function wk(d){
+  // نستخدم نفس منطق ملفات الحضور: UTC date من toISOString
+  // لكن نحسب الأحد محلياً ثم نحوّل لـ ISO
+  const utc=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  return utc.toISOString().slice(0,10);
+}
 function dr(d){const e=new Date(d);e.setDate(e.getDate()+4);const f=x=>x.toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric'});return `${f(d)} — ${f(e)}`;}
 function hijri(d){try{return d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});}catch(e){return '';}}
 function getWN(d){const k=wk(d);if(WEEK_MAP[k])return WEEK_MAP[k];const e=Object.entries(WEEK_MAP).sort();for(let i=e.length-1;i>=0;i--)if(e[i][0]<=k)return e[i][1];return null;}
@@ -472,7 +477,18 @@ function isHol(d){return HOLIDAYS.has(wk(d));}
 function sl(v){return {p:'حاضر',a:'غائب',l:'متأخر',e:'بعذر',h:'إجازة',s:'تعليق',n:'انتساب'}[v]||v;}
 function sc(v){return {p:'sp-p',a:'sp-a',l:'sp-l',e:'sp-e',h:'sp-h',s:'sp-s',n:'sp-s'}[v]||'';}
 async function sbGet(path){try{const r=await fetch(`${SB_URL}${path}`,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},cache:'no-store'});return r.ok?r.json():null;}catch(e){return null;}}
-async function sbPub(path){try{const r=await fetch(`${SB_URL}/storage/v1/object/public/${path}`,{cache:'no-store'});return r.ok?r.json():null;}catch(e){return null;}}
+async function sbPub(path){
+  // Supabase Storage public — 400 يعني الملف غير موجود (طبيعي)
+  try{
+    const r=await fetch(`${SB_URL}/storage/v1/object/public/${path}`,{cache:'no-store'});
+    if(r.ok) return r.json();
+  }catch(e){}
+  return null;
+}
+// تحميل بيانات الحضور من Storage (يُخزَّن هناك فقط)
+async function loadAttData(prog,wk){
+  return await sbPub(`reports/${prog}/attendance/attendance-${wk}.json`);
+}
 
 // AUTH
 function getPin(){return localStorage.getItem(PIN_KEY)||DEFAULT_PIN;}
@@ -515,10 +531,7 @@ async function loadOverview(){
   document.getElementById('kpi-week').textContent=wn?'الأسبوع '+wn:'—';
   let yD=null,dD=null;
   if(!isHol(attWk)){
-    [yD,dD]=await Promise.all([
-      (async()=>{let d=await sbPub(`reports/yaseer/attendance/attendance-${k}.json`);if(!d){const r=await sbGet(`/rest/v1/teacher_portfolios?teacher_key=eq.att_yaseer_${k}&select=data`);if(r?.length)d=r[0].data;}return d;})(),
-      (async()=>{let d=await sbPub(`reports/dumaj/attendance/attendance-${k}.json`);if(!d){const r=await sbGet(`/rest/v1/teacher_portfolios?teacher_key=eq.att_dumaj_${k}&select=data`);if(r?.length)d=r[0].data;}return d;})(),
-    ]);
+    [yD,dD]=await Promise.all([loadAttData('yaseer',k),loadAttData('dumaj',k)]);
   }
   let totP=0,totA=0,tot=0;
   function cnt(data,pins){if(!data?.data)return;pins.forEach(p=>{const r=data.data[p]||{};for(let i=0;i<5;i++){tot++;const v=r['d'+i]||'p';if(v==='p')totP++;else if(v==='a')totA++;}});}
@@ -558,8 +571,7 @@ async function loadAttView(){
   const k=wk(attWk),wrap=document.getElementById('att-wrap');
   if(isHol(attWk)){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">🌙</div>هذا الأسبوع إجازة</div>';return;}
   wrap.innerHTML='<div class="loading">⏳ جاري التحميل...</div>';
-  let data=await sbPub(`reports/${attProg}/attendance/attendance-${k}.json`);
-  if(!data){const r=await sbGet(`/rest/v1/teacher_portfolios?teacher_key=eq.att_${attProg}_${k}&select=data`);if(r?.length)data=r[0].data;}
+  let data=await loadAttData(attProg,k);
   if(!data?.data){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد بيانات محفوظة لهذا الأسبوع</div>';return;}
   const students=attProg==='yaseer'?YS:DS;
   const dayHds=DAYS.map((_,i)=>{const d=new Date(attWk);d.setDate(d.getDate()+i);return d.toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric'});});
@@ -623,7 +635,11 @@ async function openStuModal(pin,prog){
     if(avEl) avEl.innerHTML=`<img src="${mImg.src}" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">`;
   };
   mImg.src=baseUrl+'.jpg';
-  let data=await sbPub(`reports/${prog}/data/student-${pin}.json`);
+  // حاول REST أولاً ثم Storage
+  let data=null;
+  const stuR=await sbGet(`/rest/v1/teacher_portfolios?teacher_key=eq.student_${prog}_${pin}&select=data`);
+  if(stuR?.length) data=stuR[0].data;
+  if(!data) data=await sbPub(`reports/${prog}/data/student-${pin}.json`);
   if(!data){body.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد بيانات محفوظة لهذا الطالب بعد</div>';return;}
   const fields=[['التشخيص',data.diagnosis],['نوع الإعاقة',data.disabilityType],['المستوى',data.level],['المعلم',data.teacher],['اسم ولي الأمر',data.parentName],['الهاتف',data.phone],['تاريخ الخطة',data.planDate],['الفصل',data.semester]].filter(([,v])=>v);
   const goals=data.goals?`<div style="margin-top:16px;background:#f5f7fb;border-radius:10px;padding:14px;"><div style="font-weight:800;color:var(--primary);font-size:0.85rem;margin-bottom:10px;">🎯 الأهداف التعليمية</div>${Object.entries(data.goals).map(([subj,gs])=>`<div style="margin-bottom:10px;"><div style="font-size:0.73rem;font-weight:700;color:var(--muted);margin-bottom:4px;">${subj}</div>${(Array.isArray(gs)?gs:[]).map(g=>`<div style="font-size:0.75rem;background:#fff;border:1px solid var(--border);border-radius:6px;padding:4px 10px;margin-bottom:4px;">${g}</div>`).join('')}</div>`).join('')}</div>`:'';
