@@ -157,28 +157,6 @@ tbody tr:last-child { border-bottom:none; }
 .status-btn.active-excuse  { background:#7c3aed; color:#fff; }
 
 /* DROPDOWN STATUS */
-.day-bulk-row td {
-  padding: 4px 6px;
-  background: #f8f4f0;
-  border-bottom: 2px solid #e8d8cc;
-}
-.day-bulk-select {
-  width: 100%;
-  padding: 5px 4px;
-  border: 1.5px solid #e8d8cc;
-  border-radius: 8px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  cursor: pointer;
-  background: #fff;
-  color: #c25a00;
-  outline: none;
-  transition: border-color 0.15s;
-}
-.day-bulk-select:hover { border-color: #c25a00; }
-.day-bulk-select:focus { border-color: #c25a00; box-shadow: 0 0 0 2px rgba(194,90,0,0.12); }
-
 .status-select {
   width:100%; padding:6px 4px; border-radius:8px;
   border:1.5px solid var(--border); font-family:'Cairo',sans-serif;
@@ -259,6 +237,160 @@ tbody tr:last-child { border-bottom:none; }
   .pdf-btn-row { margin:0 12px 16px; }
   .sign-section { margin:0 12px 16px; }
 }
+
+/* ===== HIJRI CALENDAR TOGGLE ===== */
+.date-picker-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cal-toggle-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+.cal-toggle-btn {
+  flex: 1;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1.5px solid #d1d5db;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #f9fafb;
+  color: #6b7280;
+  transition: all 0.15s;
+}
+.cal-toggle-btn.active {
+  background: var(--primary, #7a2800);
+  color: #fff;
+  border-color: var(--primary, #7a2800);
+}
+
+/* Hijri popup */
+.hijri-popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 18px 20px;
+  min-width: 280px;
+  border: 1px solid #e5e7eb;
+  animation: popIn 0.18s ease;
+}
+@keyframes popIn {
+  from { opacity:0; transform:translateY(-8px) scale(0.97); }
+  to   { opacity:1; transform:none; }
+}
+.hijri-popup.open { display: block; }
+.hijri-popup-title {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--primary, #7a2800);
+  margin-bottom: 12px;
+  text-align: center;
+}
+.hijri-inputs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.hijri-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+.hijri-field label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #6b7280;
+}
+.hijri-field input, .hijri-field select {
+  padding: 7px 8px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  width: 100%;
+}
+.hijri-field input:focus, .hijri-field select:focus {
+  border-color: var(--primary, #7a2800);
+}
+.hijri-popup-btns {
+  display: flex;
+  gap: 8px;
+}
+.hijri-popup-btns button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 9px;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-hijri-apply {
+  background: var(--primary, #7a2800);
+  color: #fff;
+}
+.btn-hijri-cancel {
+  background: #f3f4f6;
+  color: #374151;
+}
+.hijri-display {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent, #e07020);
+  text-align: center;
+  min-height: 16px;
+  margin-top: 2px;
+}
+.hijri-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+}
+.hijri-overlay.open { display: block; }
+
+
+/* حقل هجري مدمج */
+.hijri-inline {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.hijri-sel {
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #374151;
+  background: #fff;
+  outline: none;
+  padding: 5px 6px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.hijri-sel:focus { border-color: var(--primary, #7a2800); }
+#hDay   { width: 60px; text-align: center; }
+#hMonth { width: 110px; }
+#hYear  { width: 72px; text-align: center; -moz-appearance: textfield; }
+#hYear::-webkit-outer-spin-button,
+#hYear::-webkit-inner-spin-button { -webkit-appearance: none; }
+.cal-field-wrap { display: flex; align-items: center; }
+
 </style>
 </head>
 <body>
@@ -276,24 +408,37 @@ tbody tr:last-child { border-bottom:none; }
 <div class="toolbar">
   <div class="toolbar-group">
     <label>📅 الأسبوع:</label>
-    <div style="position:relative;display:inline-block;">
-      <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)"
-        style="opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;z-index:2;border:none;padding:0;margin:0;">
-      <div id="dual-date-display"
-        style="border:1px solid var(--border);border-radius:8px;padding:5px 12px;
-               background:#fff;cursor:pointer;min-width:180px;pointer-events:none;">
-        <div id="dual-miladi" style="font-size:0.82rem;font-weight:700;color:var(--text);text-align:center;line-height:1.4;">—</div>
-        <div id="dual-hijri"  style="font-size:0.7rem;color:#b07050;text-align:center;margin-top:1px;line-height:1.4;">—</div>
-        <div style="display:flex;justify-content:center;margin-top:4px;gap:4px;pointer-events:auto;">
-          <button onclick="event.stopPropagation();setCalMode('miladi')" id="cal-btn-m"
-            style="font-size:0.62rem;padding:2px 7px;border-radius:5px;border:1px solid var(--border);
-                   background:var(--accent);color:#fff;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;">م</button>
-          <button onclick="event.stopPropagation();setCalMode('hijri')" id="cal-btn-h"
-            style="font-size:0.62rem;padding:2px 7px;border-radius:5px;border:1px solid var(--border);
-                   background:#fff;color:#b07050;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;">هـ</button>
+    <div class="date-picker-wrap">
+        <!-- حقل ميلادي -->
+        <div class="cal-field-wrap" id="miladiWrap">
+          <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)">
         </div>
+        <!-- حقل هجري بنفس شكل الميلادي -->
+        <div class="cal-field-wrap hijri-wrap" id="hijriWrap" style="display:none;">
+          <div class="hijri-inline">
+            <select class="hijri-sel" id="hDay" onchange="applyHijriInline()">
+              <option value="">يوم</option>
+            </select>
+            <select class="hijri-sel" id="hMonth" onchange="applyHijriInline()">
+              <option value="">شهر</option>
+              <option value="1">محرم</option><option value="2">صفر</option>
+              <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
+              <option value="5">جمادى الأولى</option><option value="6">جمادى الثانية</option>
+              <option value="7">رجب</option><option value="8">شعبان</option>
+              <option value="9">رمضان</option><option value="10">شوال</option>
+              <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+            </select>
+            <input class="hijri-sel" id="hYear" type="number" min="1400" max="1500"
+              placeholder="السنة" oninput="applyHijriInline()">
+          </div>
+        </div>
+        <!-- زرا التبديل -->
+        <div class="cal-toggle-row">
+          <button class="cal-toggle-btn active" data-mode="miladi" onclick="setCalMode('miladi')">📅 ميلادي</button>
+          <button class="cal-toggle-btn" data-mode="hijri" onclick="setCalMode('hijri')">🌙 هجري</button>
+        </div>
+        <div class="hijri-display" id="hijriDisplay"></div>
       </div>
-    </div>
   </div>
   <div class="toolbar-group">
     <label>📚 الفصل:</label>
@@ -316,61 +461,10 @@ tbody tr:last-child { border-bottom:none; }
     <div class="week-dates" id="weekDates">—</div>
   </div>
   <div class="week-nav">
-    <button class="week-nav-btn" onclick="changeWeek(-1)">→ السابق</button>
-    <button class="week-nav-btn" onclick="changeWeek(1)">التالي ←</button>
-    <button class="week-nav-btn" onclick="openWeekEditor()"
-      style="background:#fff;color:#c25a00;border:1.5px solid #fde8d0;">⚙️ تعديل</button>
+    <button class="week-nav-btn" onclick="changeWeek(-1)">→ الأسبوع السابق</button>
+    <button class="week-nav-btn" onclick="changeWeek(1)">← الأسبوع التالي</button>
   </div>
 </div>
-
-
-<!-- نافذة تعديل الأسابيع -->
-<div id="week-editor-overlay" onclick="if(event.target===this)closeWeekEditor()"
-  style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.55);z-index:9000;
-         align-items:center;justify-content:center;backdrop-filter:blur(3px);">
-  <div style="background:#fff;border-radius:18px;width:min(600px,96vw);max-height:90vh;
-              overflow:hidden;box-shadow:0 12px 50px rgba(0,0,0,0.25);display:flex;flex-direction:column;">
-    <!-- رأس النافذة -->
-    <div style="background:linear-gradient(135deg,#7c2d00,#c25a00);padding:16px 20px;
-                display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-      <div>
-        <div style="color:#fff;font-weight:800;font-size:0.95rem;">📅 تعديل أرقام الأسابيع</div>
-        <div style="color:rgba(255,255,255,0.6);font-size:0.72rem;margin-top:2px;">عدّل رقم الأسبوع لكل تاريخ يدوياً</div>
-      </div>
-      <button onclick="closeWeekEditor()"
-        style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:30px;height:30px;
-               color:#fff;font-size:1rem;cursor:pointer;">✕</button>
-    </div>
-    <!-- الجدول -->
-    <div style="overflow-y:auto;flex:1;">
-      <table style="width:100%;border-collapse:collapse;font-family:'Cairo',sans-serif;direction:rtl;">
-        <thead style="position:sticky;top:0;background:#fdf4ee;z-index:1;">
-          <tr>
-            <th style="padding:9px 10px;font-size:0.75rem;color:#c25a00;font-weight:800;text-align:right;border-bottom:2px solid #fde8d0;">التاريخ الميلادي</th>
-            <th style="padding:9px 10px;font-size:0.75rem;color:#555;font-weight:700;text-align:right;border-bottom:2px solid #fde8d0;">التاريخ الهجري</th>
-            <th style="padding:9px 10px;font-size:0.75rem;color:#555;font-weight:700;text-align:center;border-bottom:2px solid #fde8d0;">النوع</th>
-            <th style="padding:9px 10px;font-size:0.75rem;color:#555;font-weight:700;text-align:center;border-bottom:2px solid #fde8d0;">رقم الأسبوع</th>
-          </tr>
-        </thead>
-        <tbody id="week-editor-body"></tbody>
-      </table>
-    </div>
-    <!-- أزرار -->
-    <div style="padding:14px 20px;border-top:1px solid #f0f0f0;display:flex;gap:8px;flex-shrink:0;">
-      <button onclick="saveWeekEditor()"
-        style="flex:1;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;
-               border-radius:11px;padding:11px;font-family:'Cairo',sans-serif;font-size:0.88rem;
-               font-weight:800;cursor:pointer;">💾 حفظ</button>
-      <button onclick="resetWeekMap()"
-        style="background:#f5f5f5;color:#888;border:1.5px solid #e0e0e0;border-radius:11px;
-               padding:11px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">↺ افتراضي</button>
-      <button onclick="closeWeekEditor()"
-        style="background:#fff;color:#c25a00;border:1.5px solid #fde8d0;border-radius:11px;
-               padding:11px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">إغلاق</button>
-    </div>
-  </div>
-</div>
-
 
 <!-- STATS -->
 <div class="stats-row" id="statsRow">
@@ -395,17 +489,6 @@ tbody tr:last-child { border-bottom:none; }
         <th class="day-col">الخميس</th>
         <th>ملاحظات</th>
         <th>غياب</th>
-      </tr>
-      <tr class="day-bulk-row" id="day-bulk-row">
-        <td colspan="2" style="text-align:center;font-size:0.72rem;font-weight:800;color:#c25a00;">
-          تحكم يومي ↓
-        </td>
-        <td id="bulk-td-0"></td>
-        <td id="bulk-td-1"></td>
-        <td id="bulk-td-2"></td>
-        <td id="bulk-td-3"></td>
-        <td id="bulk-td-4"></td>
-        <td colspan="2"></td>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -483,28 +566,23 @@ let attendanceData   = {}; // {weekKey: {pin: {day0..4: 'p'|'a'|'l'|'e', note:''
 
 // ===== WEEK UTILS =====
 function getThisSunday() {
-  const now = new Date();
-  // استخدام التوقيت المحلي بدل UTC لتجنب مشكلة الـ timezone
-  const day = now.getDay();
-  const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - day);
+  const d = new Date();
+  const day = d.getDay(); // 0=Sun
+  d.setDate(d.getDate() - day);
+  d.setHours(0,0,0,0);
   return d;
 }
 function weekKey(d) {
-  // استخدام التاريخ المحلي وليس UTC
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const day = String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${day}`;
+  return d.toISOString().slice(0,10);
 }
 function formatDate(d) {
   return d.toLocaleDateString('ar-SA-u-nu-latn', {day:'numeric',month:'numeric'});
 }
 function setWeekFromDate(val) {
-  // val = "YYYY-MM-DD" — نحوّلها محلياً
-  const [y,m,dd] = val.split('-').map(Number);
-  const d = new Date(y, m-1, dd);
-  const dow = d.getDay();
-  d.setDate(d.getDate() - dow);
+  const d = new Date(val);
+  const day = d.getDay();
+  d.setDate(d.getDate() - day);
+  d.setHours(0,0,0,0);
   currentWeekStart = d;
   renderAll();
 }
@@ -523,35 +601,23 @@ function getWeekDays() {
 // ===== RENDER =====
 function renderAll() {
   updateWeekHeader();
-  if (!isHolidayWeek(currentWeekStart)) {
-    loadAttendance(weekKey(currentWeekStart));
-  }
   renderTable();
   updateStats();
   // تحديث input التاريخ
   document.getElementById('weekStart').value = weekKey(currentWeekStart);
-  // تحديث العرض المزدوج
-  updateDualDateDisplay(currentWeekStart);
+  updateHijriDisplay();
 }
 
 function updateWeekHeader() {
   const days = getWeekDays();
-  const wkNum = getWeekNumFromMap(currentWeekStart);
-  let wkLabel;
-  if (isHolidayWeek(currentWeekStart)) {
-    wkLabel = '🌙 إجازة';
-  } else if (wkNum) {
-    wkLabel = 'الأسبوع ' + wkNum;
-  } else {
-    wkLabel = 'خارج الفصل';
-  }
+  // رقم الأسبوع من بداية الفصل الدراسي (11 يناير 2026)
+  const semesterStart = new Date(Date.UTC(2026, 0, 11)); // 11 يناير 2026 بتوقيت UTC
+  const startUTC = Date.UTC(currentWeekStart.getFullYear(), currentWeekStart.getMonth(), currentWeekStart.getDate());
+  const wk = Math.floor((startUTC - semesterStart) / 604800000) + 1;
+  const wkLabel = wk >= 1 ? `الأسبوع ${wk}` : 'قبل الفصل';
   document.getElementById('weekLabel').textContent = wkLabel;
-  // التاريخ الميلادي + الهجري
-  const hijriRange = toHijriRange(days[0].date, days[4].date);
-  const miladiRange = days[0].dateStr + ' — ' + days[4].dateStr;
-  document.getElementById('weekDates').innerHTML =
-    `<span>${miladiRange}</span>` +
-    (hijriRange ? `<span style="display:block;font-size:0.72rem;color:#b07050;margin-top:1px;">${hijriRange}</span>` : '');
+  document.getElementById('weekDates').textContent =
+    `${days[0].dateStr} — ${days[4].dateStr}`;
 }
 
 function renderTable() {
@@ -564,8 +630,6 @@ function renderTable() {
   ths.forEach((th, i) => {
     th.innerHTML = `${days[i].name}<br><small style="font-weight:400;opacity:0.8;">${days[i].dateStr}</small>`;
   });
-  // تحديث صف التحكم اليومي
-  renderBulkRow();
 
   tbody.innerHTML = STUDENTS.map((stu, idx) => {
     const rec  = (attendanceData[wk]?.[stu.pin]) || {};
@@ -737,8 +801,8 @@ function clearSign(id, phId) {
 // ===== SAVE / LOAD =====
 async function saveAttendance() {
   showToast('⏳ جاري الحفظ...');
-  const wk  = weekKey(currentWeekStart);
-  const sem = document.getElementById('semesterSelect').value;
+  const wk   = weekKey(currentWeekStart);
+  const sem  = document.getElementById('semesterSelect').value;
 
   const teacherSign = canvases['teacherCanvas']?.hasContent
     ? document.getElementById('teacherCanvas').toDataURL() : null;
@@ -753,103 +817,50 @@ async function saveAttendance() {
     savedAt:    new Date().toISOString(),
   };
 
-  // حفظ محلي دائماً كـ backup
-  try { localStorage.setItem('att_' + PROGRAM + '_' + wk, JSON.stringify(payload)); } catch(e){}
-
-  const url = `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`;
-  const hdrs = {
-    'apikey':        SB_KEY,
-    'Authorization': 'Bearer ' + SB_KEY,
-    'Content-Type':  'application/json',
-    'x-upsert':      'true',
-    'cache-control': '3600',
-  };
-  const body = JSON.stringify(payload);
+  const blob    = new Blob([JSON.stringify(payload)], {type:'application/json'});
+  const path    = `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`;
+  const headers = {'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
 
   try {
-    // جرّب PUT أولاً (تحديث ملف موجود)
-    let res = await fetch(url, { method:'PUT', headers:hdrs, body });
+    // حاول PUT (تحديث ملف موجود)
+    let res = await fetch(path, {method:'PUT', headers, body: blob});
 
-    // إن فشل PUT جرّب POST (ملف جديد)
+    // إن فشل PUT جرّب POST (إنشاء ملف جديد)
     if (!res.ok) {
-      res = await fetch(url, { method:'POST', headers:hdrs, body });
+      res = await fetch(path, {method:'POST', headers:{...headers,'x-upsert':'true'}, body: blob});
     }
 
     if (res.ok) {
-      showToast('✅ تم الحفظ في السحابة');
+      showToast('✅ تم الحفظ بنجاح');
     } else {
-      const errText = await res.text();
-      // محاولة أخيرة: upsert عبر REST API (teacher_portfolios)
-      const saved = await saveViaRest(wk, payload);
-      if (saved) showToast('✅ تم الحفظ');
-      else showToast('⚠️ خطأ: ' + errText.slice(0,80));
+      const err = await res.text();
+      showToast('❌ فشل الحفظ: ' + err.slice(0,80));
+      console.error('Save error:', err);
     }
   } catch(e) {
-    // محاولة عبر REST
-    const saved = await saveViaRest(wk, payload);
-    showToast(saved ? '✅ تم الحفظ (REST)' : '❌ تعذّر الاتصال بالسحابة — تم الحفظ محلياً');
+    showToast('❌ تعذّر الاتصال بالخادم');
+    console.error(e);
   }
-}
-
-async function saveViaRest(wk, payload) {
-  // حفظ بديل عبر جدول teacher_portfolios كـ fallback
-  try {
-    const res = await fetch(`${SB_URL}/rest/v1/teacher_portfolios`, {
-      method: 'POST',
-      headers: {
-        'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY,
-        'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify({ teacher_key: 'att_' + PROGRAM + '_' + wk, data: payload })
-    });
-    return res.ok;
-  } catch(e) { return false; }
 }
 
 async function loadAttendance(wk) {
-  let payload = null;
-
-  // 1) Supabase Storage
   try {
     const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/${PROGRAM}/attendance/attendance-${wk}.json`,
-      { cache: 'no-store' }
+      `${SB_URL}/storage/v1/object/public/reports/${PROGRAM}/attendance/attendance-${wk}.json`
     );
-    if (res.ok) payload = await res.json();
-  } catch(e) {}
-
-  // 2) teacher_portfolios REST fallback
-  if (!payload) {
-    try {
-      const res = await fetch(
-        `${SB_URL}/rest/v1/teacher_portfolios?teacher_key=eq.att_${PROGRAM}_${wk}&select=data`,
-        { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
-      );
-      if (res.ok) {
-        const rows = await res.json();
-        if (rows?.length > 0) payload = rows[0].data;
-      }
-    } catch(e) {}
-  }
-
-  // 3) localStorage fallback
-  if (!payload) {
-    try {
-      const local = localStorage.getItem('att_' + PROGRAM + '_' + wk);
-      if (local) payload = JSON.parse(local);
-    } catch(e) {}
-  }
-
-  if (payload?.data) {
-    attendanceData[wk] = payload.data;
-    if (payload.teacher) {
-      const el = document.getElementById('teacherName');
-      if (el) el.value = payload.teacher;
+    if (!res.ok) return;
+    const payload = await res.json();
+    if (payload.data) {
+      attendanceData[wk] = payload.data;
+      // استعادة أسماء الموقّعين
+      // supervisor removed
+      if (payload.teacher)    document.getElementById('teacherName').value    = payload.teacher;
     }
-  }
-  renderTable();
-  updateStats();
+    renderTable();
+    updateStats();
+  } catch(e) {}
 }
+
 // ===== PRINT =====
 function printAttendance() {
   const wk   = weekKey(currentWeekStart);
@@ -925,7 +936,40 @@ function printAttendance() {
       </div>
     </div>
     <script>window.onload=()=>{setTimeout(()=>window.print(),400);}<\/script>
-  </body></html>`);
+    <div class="hijri-inputs">
+    <div class="hijri-field">
+      <label>اليوم</label>
+      <input type="number" id="hijriDay" min="1" max="30" value="1" placeholder="يوم">
+    </div>
+    <div class="hijri-field">
+      <label>الشهر</label>
+      <select id="hijriMonth">
+        <option value="1">محرم</option>
+        <option value="2">صفر</option>
+        <option value="3">ربيع الأول</option>
+        <option value="4">ربيع الثاني</option>
+        <option value="5">جمادى الأولى</option>
+        <option value="6">جمادى الثانية</option>
+        <option value="7">رجب</option>
+        <option value="8">شعبان</option>
+        <option value="9">رمضان</option>
+        <option value="10">شوال</option>
+        <option value="11">ذو القعدة</option>
+        <option value="12">ذو الحجة</option>
+      </select>
+    </div>
+    <div class="hijri-field">
+      <label>السنة</label>
+      <input type="number" id="hijriYear" min="1400" max="1500" value="1447" placeholder="سنة">
+    </div>
+  </div>
+  <div class="hijri-popup-btns">
+    <button class="btn-hijri-apply" onclick="applyHijriDate()">✅ تطبيق</button>
+    <button class="btn-hijri-cancel" onclick="closeHijriPicker()">إلغاء</button>
+  </div>
+</div>
+
+</body></html>`);
   win.document.close();
 }
 
@@ -942,243 +986,113 @@ window.addEventListener('load', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
   renderAll();
   // حمّل بيانات الأسبوع الحالي من السحابة
-  // لا نحمّل بيانات أسابيع الإجازة
-  if (!isHolidayWeek(currentWeekStart)) {
-    loadAttendance(weekKey(currentWeekStart));
-  }
+  loadAttendance(weekKey(currentWeekStart));
 });
 window.addEventListener('resize', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
 });
-// ============================================================
-// خريطة الأسابيع + تحويل هجري + تعديل يدوي
-// ============================================================
-const DEFAULT_WEEK_MAP = {
-  "2026-01-18":1,"2026-01-25":2,"2026-02-01":3,"2026-02-08":4,
-  "2026-02-15":5,"2026-02-22":6,"2026-03-01":7,"2026-03-29":8,
-  "2026-04-05":9,"2026-04-12":10,"2026-04-19":11,"2026-04-26":12,
-  "2026-05-03":13,"2026-05-10":14,"2026-05-31":15,"2026-06-07":16,
-  "2026-06-14":17,"2026-06-21":18,"2026-06-28":19,
-};
-const HOLIDAY_WEEKS = new Set([
-  "2026-03-08","2026-03-15","2026-03-22",
-  "2026-05-17","2026-05-24",
-]);
-const WEEK_MAP_KEY = 'att_week_map_v2';
-function getWeekMap() {
-  try { const s=localStorage.getItem(WEEK_MAP_KEY); if(s) return JSON.parse(s); } catch(e){}
-  return {...DEFAULT_WEEK_MAP};
-}
-function saveWeekMap(map) {
-  try { localStorage.setItem(WEEK_MAP_KEY, JSON.stringify(map)); } catch(e){}
-}
-function getWeekNumFromMap(d) {
-  const map=getWeekMap(), key=weekKey(d);
-  if(map[key]!==undefined) return map[key];
-  const entries=Object.entries(map).sort();
-  for(let i=entries.length-1;i>=0;i--){ if(entries[i][0]<=key) return entries[i][1]; }
-  return null;
-}
-function isHolidayWeek(d){ return HOLIDAY_WEEKS.has(weekKey(d)); }
 
-function toHijriShort(date) {
+// ===== HIJRI CALENDAR =====
+let _calMode = 'miladi';
+
+function getHijriParts(d) {
   try {
-    return date.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
-      {day:'numeric',month:'numeric',year:'numeric'});
-  } catch(e){ return ''; }
+    const s = d.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
+      {day:'numeric', month:'numeric', year:'numeric'});
+    const p = s.split('/'); // M/D/Y
+    return {m: parseInt(p[0]), d: parseInt(p[1]), y: parseInt(p[2])};
+  } catch(e) { return {m:9, d:1, y:1447}; }
 }
-function toHijriRange(d1, d2) {
+
+function getHijriLabel(d) {
   try {
-    const h1 = d1.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long'});
-    const h2 = d2.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});
-    return h1 + ' — ' + h2;
-  } catch(e){ return ''; }
+    return '🌙 ' + d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
+      {day:'numeric', month:'long', year:'numeric'});
+  } catch(e) { return ''; }
 }
 
-function openWeekEditor() {
-  const map=getWeekMap();
-  const entries=Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0]));
-  const rows=entries.map(([ds,wkNum])=>{
-    const d=new Date(ds+'T00:00:00');
-    const dEnd=new Date(d); dEnd.setDate(dEnd.getDate()+4);
-    const hijri=toHijriShort(d);
-    const isHol=HOLIDAY_WEEKS.has(ds)?'🌙 إجازة':'📚';
-    return `<tr>
-      <td style="padding:7px 10px;font-size:0.78rem;color:#555;direction:ltr;">${ds}</td>
-      <td style="padding:7px 10px;font-size:0.75rem;color:#888;">${hijri}</td>
-      <td style="padding:7px 10px;font-size:0.78rem;">${isHol}</td>
-      <td style="padding:7px 10px;text-align:center;">
-        <input type="number" min="1" max="25" value="${wkNum}" id="wm-${ds}"
-          style="width:56px;border:1.5px solid #ddd;border-radius:7px;padding:4px 6px;
-                 font-family:'Cairo',sans-serif;font-size:0.88rem;text-align:center;">
-      </td>
-    </tr>`;
-  }).join('');
-
-  document.getElementById('week-editor-body').innerHTML=rows;
-  document.getElementById('week-editor-overlay').style.display='flex';
-}
-function closeWeekEditor(){ document.getElementById('week-editor-overlay').style.display='none'; }
-function saveWeekEditor() {
-  const map=getWeekMap();
-  Object.keys(map).forEach(ds=>{
-    const inp=document.getElementById('wm-'+ds);
-    if(inp){ const v=parseInt(inp.value); if(!isNaN(v)&&v>=1) map[ds]=v; }
-  });
-  saveWeekMap(map);
-  closeWeekEditor();
-  renderAll();
-}
-function resetWeekMap() {
-  if(!confirm('إعادة الأسابيع للإعدادات الافتراضية؟')) return;
-  localStorage.removeItem(WEEK_MAP_KEY);
-  closeWeekEditor();
-  renderAll();
+function fillHijriDays(month, year, selectedDay) {
+  const sel = document.getElementById('hDay');
+  if (!sel) return;
+  // أقصى أيام الشهر الهجري 29 أو 30
+  const maxDay = 30;
+  const cur = selectedDay || parseInt(sel.value) || 1;
+  sel.innerHTML = '<option value="">يوم</option>' +
+    Array.from({length: maxDay}, (_, i) => i+1)
+      .map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`)
+      .join('');
 }
 
-function updateDualDateDisplay(d) {
-  try {
-    const days = [0,1,2,3,4].map(i=>{ const dd=new Date(d); dd.setDate(dd.getDate()+i); return dd; });
-    // ميلادي: أحد — خميس
-    const m1 = d.toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric'});
-    const m2 = days[4].toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric',year:'numeric'});
-    // هجري
-    const h1 = d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long'});
-    const h2 = days[4].toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});
-    const dm = document.getElementById('dual-miladi');
-    const dh = document.getElementById('dual-hijri');
-    if(dm) dm.textContent = m1 + ' — ' + m2;
-    if(dh) dh.textContent = h1 + ' — ' + h2;
-  } catch(e){}
-}
-
-let calMode = 'miladi'; // 'miladi' | 'hijri'
 function setCalMode(mode) {
-  calMode = mode;
-  const bm = document.getElementById('cal-btn-m');
-  const bh = document.getElementById('cal-btn-h');
-  if (!bm || !bh) return;
+  _calMode = mode;
+  document.querySelectorAll('.cal-toggle-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.mode === mode));
+
+  const miladiWrap = document.getElementById('miladiWrap');
+  const hijriWrap  = document.getElementById('hijriWrap');
+
   if (mode === 'miladi') {
-    bm.style.background = 'var(--accent)'; bm.style.color = '#fff';
-    bh.style.background = '#fff';          bh.style.color = '#b07050';
-    // فتح input date الأصلي
-    document.getElementById('weekStart').click();
+    miladiWrap.style.display = '';
+    hijriWrap.style.display  = 'none';
   } else {
-    bh.style.background = '#b07050'; bh.style.color = '#fff';
-    bm.style.background = '#fff';    bm.style.color = 'var(--accent)';
-    // فتح منتقي هجري
-    openHijriPicker();
+    miladiWrap.style.display = 'none';
+    hijriWrap.style.display  = '';
+    // ملء القيم الحالية
+    const p = getHijriParts(currentWeekStart);
+    document.getElementById('hMonth').value = p.m;
+    document.getElementById('hYear').value  = p.y;
+    fillHijriDays(p.m, p.y, p.d);
   }
+  updateHijriDisplay();
 }
 
-function openHijriPicker() {
-  // نعرض popup بسيط — المستخدم يدخل تاريخ هجري
-  const cur = currentWeekStart;
-  const hijriNow = cur.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
-    {year:'numeric',month:'2-digit',day:'2-digit'});
+function applyHijriInline() {
+  const d = parseInt(document.getElementById('hDay').value);
+  const m = parseInt(document.getElementById('hMonth').value);
+  const y = parseInt(document.getElementById('hYear').value);
+  if (!d || !m || !y || y < 1400 || y > 1500) return;
 
-  const overlay = document.createElement('div');
-  overlay.id = 'hijri-picker-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;display:flex;align-items:center;justify-content:center;';
-  overlay.innerHTML = `
-    <div style="background:#fff;border-radius:16px;padding:22px;width:300px;font-family:'Cairo',sans-serif;direction:rtl;box-shadow:0 8px 40px rgba(0,0,0,0.2);">
-      <div style="font-weight:800;color:#c25a00;margin-bottom:14px;font-size:0.95rem;">📅 اختر أسبوعاً بالتاريخ الهجري</div>
-      <div style="font-size:0.78rem;color:#888;margin-bottom:8px;">التاريخ الهجري الحالي: <b style="color:#b07050;">${hijriNow}</b></div>
-      <label style="font-size:0.8rem;font-weight:700;color:#555;display:block;margin-bottom:4px;">أدخل تاريخ هجري (مثال: 1447/08/10)</label>
-      <input type="text" id="hijri-input" placeholder="١٤٤٧/٠٨/١٠" dir="ltr"
-        style="width:100%;border:1.5px solid #e0e0e0;border-radius:9px;padding:8px 12px;
-               font-family:'Cairo',sans-serif;font-size:0.9rem;box-sizing:border-box;text-align:center;">
-      <div style="font-size:0.68rem;color:#aaa;margin-top:4px;text-align:center;">صيغة: YYYY/MM/DD</div>
-      <div style="display:flex;gap:8px;margin-top:14px;">
-        <button onclick="applyHijriInput()"
-          style="flex:1;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;
-                 border-radius:9px;padding:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;">
-          ✔ تطبيق
-        </button>
-        <button onclick="document.getElementById('hijri-picker-overlay').remove()"
-          style="background:#f5f5f5;color:#888;border:1px solid #e0e0e0;border-radius:9px;
-                 padding:10px 14px;font-family:'Cairo',sans-serif;font-size:0.82rem;cursor:pointer;">
-          إلغاء
-        </button>
-      </div>
-    </div>`;
-  document.body.appendChild(overlay);
-  setTimeout(()=>document.getElementById('hijri-input')?.focus(), 100);
+  const miladi = hijriToMiladi(y, m, d);
+  if (!miladi) return;
+
+  // اضبط على الأحد
+  miladi.setHours(0,0,0,0);
+  miladi.setDate(miladi.getDate() - miladi.getDay());
+  currentWeekStart = miladi;
+  document.getElementById('weekStart').value = weekKey(currentWeekStart);
+  renderAll();
 }
 
-function applyHijriInput() {
-  const val = document.getElementById('hijri-input')?.value?.trim();
-  if (!val) return;
-  // تحويل الأرقام العربية إلى غربية
-  const normalized = val.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
-                        .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
-  // تحويل هجري → ميلادي باستخدام Intl
-  try {
-    const parts = normalized.split(/[\/\-]/);
-    if (parts.length !== 3) { alert('صيغة غير صحيحة. مثال: 1447/08/10'); return; }
-    const [hy, hm, hd] = parts.map(Number);
-    // Intl لا تدعم التحويل المعاكس مباشرة — نبحث عن التاريخ بالتكرار
-    const miladi = hijriToMiladi(hy, hm, hd);
-    if (!miladi) { alert('تعذّر تحويل التاريخ. تأكد من الصيغة.'); return; }
-    // نضبط على أحد الأسبوع
-    const dow = miladi.getDay();
-    miladi.setDate(miladi.getDate() - dow);
-    currentWeekStart = miladi;
-    document.getElementById('weekStart').value = weekKey(miladi);
-    document.getElementById('hijri-picker-overlay').remove();
-    renderAll();
-  } catch(e) { alert('خطأ في التحويل: ' + e.message); }
+function updateHijriDisplay() {
+  const el = document.getElementById('hijriDisplay');
+  if (el) el.textContent = getHijriLabel(currentWeekStart);
 }
 
 function hijriToMiladi(hy, hm, hd) {
-  // خوارزمية تقريبية — نبحث في نطاق ±400 يوم حول تقدير أولي
-  // التقدير: كل سنة هجرية ≈ 354.37 يوم
-  const approxDays = (hy - 1) * 354.37 + (hm - 1) * 29.5 + hd;
-  const hijriEpoch = new Date(622, 6, 16); // تقريبي
-  const est = new Date(hijriEpoch.getTime() + approxDays * 86400000);
-  // نبحث ±30 يوم حول التقدير
-  for (let delta = -30; delta <= 30; delta++) {
-    const d = new Date(est); d.setDate(d.getDate() + delta);
-    const h = d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
-      {year:'numeric',month:'2-digit',day:'2-digit'});
-    const [cy,cm,cd] = h.split('/').map(Number);
-    if (cy===hy && cm===hm && cd===hd) return d;
+  const approxJD = Math.floor((11*hy+3)/30) + 354*hy + 30*hm
+    - Math.floor((hm-1)/2) + hd + 1948440 - 385;
+  const approx = julianToDate(approxJD);
+  for (let offset = -45; offset <= 45; offset++) {
+    const test = new Date(approx);
+    test.setDate(test.getDate() + offset);
+    try {
+      const p = test.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
+        {day:'numeric', month:'numeric', year:'numeric'}).split('/');
+      if (parseInt(p[2])===hy && parseInt(p[0])===hm && parseInt(p[1])===hd)
+        return test;
+    } catch(e) {}
   }
-  return null;
+  return approx;
 }
 
-// ===== تحكم يومي =====
-const BULK_OPTS = [
-  {val:'p', label:'✅ حاضر الكل',    cls:'val-p'},
-  {val:'a', label:'❌ غائب الكل',    cls:'val-a'},
-  {val:'h', label:'🏖️ إجازة الكل',  cls:'val-h'},
-  {val:'s', label:'🚫 تعليق الكل',  cls:'val-s'},
-];
-
-function renderBulkRow() {
-  for (let di = 0; di < 5; di++) {
-    const td = document.getElementById('bulk-td-' + di);
-    if (!td) continue;
-    const opts = [
-      `<option value="" disabled selected>— تطبيق على الكل —</option>`,
-      ...BULK_OPTS.map(o => `<option value="${o.val}">${o.label}</option>`)
-    ].join('');
-    td.innerHTML = `<select class="day-bulk-select" onchange="markDay(${di},this.value);this.selectedIndex=0;">${opts}</select>`;
-  }
-}
-
-function markDay(di, val) {
-  const wk = weekKey(currentWeekStart);
-  if (!attendanceData[wk]) attendanceData[wk] = {};
-  STUDENTS.forEach(stu => {
-    if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
-    attendanceData[wk][stu.pin][`d${di}`] = val;
-  });
-  renderTable();
-  updateStats();
-  const dayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
-  const labels = {p:'حاضر',a:'غائب',h:'إجازة',s:'تعليق دراسة'};
-  showToast(`✅ ${dayNames[di]}: تم تسجيل ${labels[val]||val} لجميع الطلاب`);
+function julianToDate(jd) {
+  let l=jd+68569, n=Math.floor(4*l/146097);
+  l=l-Math.floor((146097*n+3)/4);
+  const i=Math.floor(4000*(l+1)/1461001);
+  l=l-Math.floor(1461*i/4)+31;
+  const j=Math.floor(80*l/2447), d=l-Math.floor(2447*j/80);
+  l=Math.floor(j/11);
+  return new Date(100*(n-49)+i+l, j+2-12*l-1, d);
 }
 
 </script>
