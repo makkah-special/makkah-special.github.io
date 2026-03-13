@@ -988,6 +988,7 @@
       <button class="admin-tab-btn active" onclick="openAdminTab('list',this)">👨‍🎓 قائمة الطلاب</button>
       <button class="admin-tab-btn" onclick="openAdminTab('add',this)">➕ إضافة طالب</button>
       <button class="admin-tab-btn" onclick="openAdminTab('schedule',this)">📅 توزيع الحصص</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('settings',this);renderStudentPinList()">⚙️ الإعدادات</button>
     </div>
 
     <!-- قائمة الطلاب -->
@@ -1034,6 +1035,36 @@
     <div class="admin-tab-pane" id="admin-tab-schedule">
       <div id="schedule-container"></div>
     </div>
+    <div class="admin-tab-pane" id="admin-tab-settings">
+      <div style="max-width:560px;margin:0 auto;padding:8px 0">
+        <!-- رمز المشرف -->
+        <div style="background:#fff;border:1px solid var(--border,#e0d8c8);border-radius:14px;padding:20px 22px;margin-bottom:18px">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px">🔐 رمز دخول المشرف</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px">تغيير رمز دخول لوحة التحكم</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div>
+              <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:4px">الرمز الحالي</div>
+              <input type="password" id="cur-admin-pin" maxlength="8" placeholder="أدخل الرمز الحالي"
+                style="width:100%;border:1.5px solid #ddd;border-radius:8px;padding:9px 12px;font-family:Cairo,sans-serif;font-size:0.9rem;direction:rtl">
+            </div>
+            <div>
+              <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:4px">الرمز الجديد</div>
+              <input type="password" id="new-admin-pin" maxlength="8" placeholder="الرمز الجديد"
+                style="width:100%;border:1.5px solid #ddd;border-radius:8px;padding:9px 12px;font-family:Cairo,sans-serif;font-size:0.9rem;direction:rtl">
+            </div>
+          </div>
+          <div id="admin-pin-msg" style="font-size:0.78rem;margin-bottom:10px;min-height:18px"></div>
+          <button onclick="changeAdminPin()" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-family:Cairo,sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer">💾 تحديث رمز المشرف</button>
+        </div>
+        <!-- رموز الطلاب -->
+        <div style="background:#fff;border:1px solid var(--border,#e0d8c8);border-radius:14px;padding:20px 22px">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px">🎓 رموز دخول الطلاب</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px">تعديل رمز دخول أي طالب من القائمة</div>
+          <div id="students-pin-list" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 </div>
@@ -1202,7 +1233,7 @@
 // Supabase Config
 // =====================================================
 const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const ADMIN_PIN = "1129"; // رمز المشرف
+let ADMIN_PIN = "1129"; // رمز المشرف
 const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
 
 async function sbSaveSignature(pin, name, grade, signData) {
@@ -2447,6 +2478,53 @@ function saveIqrarPDF() {
 // =====================================================
 let editingPin = null;
 
+
+// ══ SETTINGS: change PINs ══════════════════════════════════════
+function renderStudentPinList() {
+  const container = document.getElementById("students-pin-list");
+  if (!container) return;
+  container.innerHTML = "";
+  Object.keys(STUDENTS).forEach(pin => {
+    const s = STUDENTS[pin];
+    const row = document.createElement("div");
+    row.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f9f9f9;border:1px solid #eee;border-radius:10px";
+    row.innerHTML = '<span style="flex:1;font-size:0.85rem;font-weight:700">' + (s.name||pin) + '</span>'
+      + '<input type="text" data-oldpin="' + pin + '" value="' + pin + '" maxlength="8"'
+      + ' style="width:100px;border:1.5px solid #ddd;border-radius:7px;padding:7px 10px;font-family:Cairo,sans-serif;font-size:0.85rem;text-align:center">'
+      + '<button onclick="saveStudentPin(this)" style="background:#1a3a5c;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-family:Cairo,sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer">حفظ</button>';
+    container.appendChild(row);
+  });
+}
+function saveStudentPin(btn) {
+  const input = btn.previousElementSibling;
+  const oldPin = input.dataset.oldpin;
+  const newPin = input.value.trim();
+  if (!newPin) { alert("الرمز لا يمكن أن يكون فارغاً"); return; }
+  if (newPin === oldPin) { showPinMsg(btn, "لم يتغير الرمز", "#888"); return; }
+  if (STUDENTS[newPin] && newPin !== oldPin) { showPinMsg(btn, "❌ الرمز مستخدم بالفعل", "#dc2626"); return; }
+  STUDENTS[newPin] = STUDENTS[oldPin];
+  delete STUDENTS[oldPin];
+  input.dataset.oldpin = newPin;
+  showPinMsg(btn, "✅ تم التحديث", "#16a34a");
+}
+function changeAdminPin() {
+  const cur = document.getElementById("cur-admin-pin").value.trim();
+  const nw  = document.getElementById("new-admin-pin").value.trim();
+  const msg = document.getElementById("admin-pin-msg");
+  if (cur !== ADMIN_PIN) { msg.textContent = "❌ الرمز الحالي غير صحيح"; msg.style.color="#dc2626"; return; }
+  if (!nw) { msg.textContent = "❌ أدخل الرمز الجديد"; msg.style.color="#dc2626"; return; }
+  ADMIN_PIN = nw;
+  msg.textContent = "✅ تم تحديث رمز المشرف بنجاح";
+  msg.style.color = "#16a34a";
+  document.getElementById("cur-admin-pin").value = "";
+  document.getElementById("new-admin-pin").value = "";
+}
+function showPinMsg(btn, txt, color) {
+  const old = btn.textContent;
+  btn.textContent = txt;
+  btn.style.background = color;
+  setTimeout(() => { btn.textContent = "حفظ"; btn.style.background = "#1a3a5c"; }, 2000);
+}
 function checkPin() {
   const enteredPin = document.getElementById('pin-input').value.trim();
   const errMsg = document.getElementById('error-msg');
