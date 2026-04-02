@@ -848,7 +848,7 @@
 </header>
 
 <!-- PIN SCREEN -->
-<div id="pin-screen" style="display:flex;align-items:center;justify-content:center;min-height:80vh;padding:20px;">
+<div id="pin-screen" style="display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;background:var(--bg);">
   <div style="background:#fff;border-radius:20px;padding:40px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
     <div style="font-size:2.6rem;margin-bottom:14px;">🔐</div>
     <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:var(--primary);margin-bottom:6px;">لوحة مشرف الدمج</div>
@@ -864,7 +864,7 @@
 
 <!-- ADMIN PORTAL -->
 <!-- ============ ADMIN PORTAL ============ -->
-<div id="admin-portal">
+<div id="admin-portal" style="display:none;">
   <div class="admin-banner">
     <div style="display:flex;align-items:center;gap:14px;">
       <div style="width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔧</div>
