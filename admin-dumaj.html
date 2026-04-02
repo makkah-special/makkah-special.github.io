@@ -1759,14 +1759,22 @@ function checkPin() {
 }
 
 async function loadAdminPanel() {
-  // login-screen not used in admin-only page
-  // student-portal not in admin page
+  // إظهار اللوحة فوراً بدون انتظار Supabase
+  document.getElementById('pin-screen').style.display = 'none';
   document.getElementById('admin-portal').style.display = 'block';
   document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
   window.scrollTo(0, 0);
-  await syncFromSupabase();
+  // تحميل البيانات في الخلفية
   applyDefaultIEPAll();
   renderStudentCards();
+  // ثم جلب البيانات من Supabase بشكل غير متزامن
+  try {
+    await syncFromSupabase();
+    applyDefaultIEPAll();
+    renderStudentCards();
+  } catch(e) {
+    showToast('⚠️ تعذر تحميل البيانات من السيرفر، تم عرض البيانات المحلية');
+  }
 }
 
 // ===== SUPABASE SYNC =====
