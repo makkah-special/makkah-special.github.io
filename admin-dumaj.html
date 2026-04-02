@@ -1912,6 +1912,7 @@ function openAdminTab(id, btn) {
   document.getElementById('admin-tab-' + id).classList.add('active');
   btn.classList.add('active');
   if (id === 'schedule') renderDumajSchedule();
+  if (id === 'upload') populateUploadStudentSelect();
 }
 
 function renderStudentCards() {
