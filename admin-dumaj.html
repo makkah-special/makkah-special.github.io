@@ -857,7 +857,7 @@
       class="pin-input"
       onkeydown="if(event.key==='Enter') checkPin()"
       oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <div class="pin-error" id="pin-error" style="display:none;color:#dc2626;font-size:0.8rem;font-weight:700;margin-bottom:10px;background:#fee2e2;padding:7px 12px;border-radius:8px;">❌ الرمز غير صحيح</div>
+    <div id="pin-error" style="display:none;color:#dc2626;font-size:0.8rem;font-weight:700;margin-bottom:10px;background:#fee2e2;padding:7px 12px;border-radius:8px;">❌ الرمز غير صحيح</div>
     <button onclick="checkPin()" style="width:100%;padding:13px;background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;margin-top:10px;">✅ دخول</button>
   </div>
 </div>
@@ -1484,7 +1484,7 @@ function loadStudent(pin) {
   // SHOW PORTAL
   document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
   document.querySelectorAll('.tab-pane').forEach((p,i) => p.classList.toggle('active', i===0));
-  document.getElementById('login-screen').style.display = 'none';
+  // login-screen not used in admin-only page
   document.getElementById('student-portal').style.display = 'block';
   window.scrollTo(0, 0);
   // تطبيق وتهيئة IEP
@@ -1493,9 +1493,9 @@ function loadStudent(pin) {
 
 function logout() {
   currentStudent = null;
-  document.getElementById('pin-input').value = '';
+  document.getElementById('admin-pin').value = '';
   document.getElementById('student-portal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pin-screen').style.display = 'flex';
   // Reset tabs
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-plan').classList.add('active');
@@ -1742,24 +1742,24 @@ function showPinMsg(btn, txt, color) {
   setTimeout(() => { btn.textContent = "حفظ"; btn.style.background = "#1a3a5c"; }, 2000);
 }
 function checkPin() {
-  const enteredPin = document.getElementById('pin-input').value.trim();
-  const errMsg = document.getElementById('error-msg');
-  const pinInput = document.getElementById('pin-input');
+  const enteredPin = document.getElementById('admin-pin').value.trim();
+  const errMsg = document.getElementById('pin-error');
+  const pinInput = document.getElementById('admin-pin');
   if (enteredPin === ADMIN_PIN) {
-    errMsg.classList.remove('show'); pinInput.classList.remove('error');
+    errMsg.style.display='none'; pinInput.classList.remove('error');
     loadAdminPanel();
   } else if (STUDENTS[enteredPin]) {
     errMsg.classList.remove('show'); pinInput.classList.remove('error');
     loadStudentWithSync(enteredPin);
   } else {
-    errMsg.classList.add('show'); pinInput.classList.add('error');
+    errMsg.style.display='block'; pinInput.classList.add('error');
     pinInput.value = '';
     setTimeout(() => pinInput.classList.remove('error'), 500);
   }
 }
 
 async function loadAdminPanel() {
-  document.getElementById('login-screen').style.display = 'none';
+  // login-screen not used in admin-only page
   document.getElementById('student-portal').style.display = 'none';
   document.getElementById('admin-portal').style.display = 'block';
   document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
@@ -1893,9 +1893,9 @@ async function upsertToSupabase(pin, studentData) {
 
 
 function adminLogout() {
-  document.getElementById('pin-input').value = '';
+  document.getElementById('admin-pin').value = '';
   document.getElementById('admin-portal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pin-screen').style.display = 'flex';
 }
 
 function openAdminTab(id, btn) {
