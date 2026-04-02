@@ -1485,7 +1485,7 @@ function loadStudent(pin) {
   document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
   document.querySelectorAll('.tab-pane').forEach((p,i) => p.classList.toggle('active', i===0));
   // login-screen not used in admin-only page
-  document.getElementById('student-portal').style.display = 'block';
+  // student-portal not in admin page
   window.scrollTo(0, 0);
   // تطبيق وتهيئة IEP
   ensureIEP(pin);
@@ -1494,7 +1494,7 @@ function loadStudent(pin) {
 function logout() {
   currentStudent = null;
   document.getElementById('admin-pin').value = '';
-  document.getElementById('student-portal').style.display = 'none';
+  // student-portal not in admin page
   document.getElementById('pin-screen').style.display = 'flex';
   // Reset tabs
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
@@ -1760,7 +1760,7 @@ function checkPin() {
 
 async function loadAdminPanel() {
   // login-screen not used in admin-only page
-  document.getElementById('student-portal').style.display = 'none';
+  // student-portal not in admin page
   document.getElementById('admin-portal').style.display = 'block';
   document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
   window.scrollTo(0, 0);
