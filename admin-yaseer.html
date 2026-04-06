@@ -2562,12 +2562,10 @@ async function loadAdminPanel() {
   document.getElementById('admin-portal').style.display = 'block';
   document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
   window.scrollTo(0, 0);
-  applyDefaultIEPAll();
   renderStudentCards();
   try {
     await syncFromSupabase();
-    applyDefaultIEPAll();
-    renderStudentCards();
+      renderStudentCards();
   } catch(e) {
     showToast('⚠️ تعذر تحميل البيانات، تم عرض البيانات المحلية');
   }
