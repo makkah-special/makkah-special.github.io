@@ -262,14 +262,14 @@ footer strong { color:var(--accent-light); }
     <!-- STATS -->
     <div class="stats-row" id="stats-row">
       <div class="stat-card">
-        <div class="stat-num" id="stat-total-ys">0</div>
-        <div class="stat-label">طلاب يسير</div>
-        <div class="stat-badge badge-ys">برنامج يسير</div>
-      </div>
-      <div class="stat-card">
         <div class="stat-num" id="stat-total-dj">0</div>
         <div class="stat-label">طلاب الدمج</div>
         <div class="stat-badge badge-dj">برنامج الدمج</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-total-ys">0</div>
+        <div class="stat-label">طلاب يسير</div>
+        <div class="stat-badge badge-ys">برنامج يسير</div>
       </div>
       <div class="stat-card">
         <div class="stat-num" id="stat-approved">0</div>
@@ -301,8 +301,8 @@ footer strong { color:var(--accent-light); }
     <div class="main-tab-pane active" id="tab-students">
       <div class="filter-bar">
         <button class="filter-chip active" onclick="setFilter('all',this)">الكل</button>
-        <button class="filter-chip" onclick="setFilter('yaseer',this)">🔵 يسير</button>
         <button class="filter-chip" onclick="setFilter('dumaj',this)">🟠 الدمج</button>
+        <button class="filter-chip" onclick="setFilter('yaseer',this)">🔵 يسير</button>
         <button class="filter-chip" onclick="setFilter('approved',this)">✅ معتمد</button>
         <button class="filter-chip" onclick="setFilter('pending',this)">⏳ انتظار</button>
       </div>
@@ -317,8 +317,8 @@ footer strong { color:var(--accent-light); }
     <div class="main-tab-pane" id="tab-plans">
       <div class="filter-bar">
         <button class="filter-chip active" onclick="setPlansFilter('all',this)">الكل</button>
-        <button class="filter-chip" onclick="setPlansFilter('yaseer',this)">🔵 يسير</button>
         <button class="filter-chip" onclick="setPlansFilter('dumaj',this)">🟠 الدمج</button>
+        <button class="filter-chip" onclick="setPlansFilter('yaseer',this)">🔵 يسير</button>
         <button class="filter-chip" onclick="setPlansFilter('pending',this)">⏳ بانتظار الاعتماد</button>
       </div>
       <div id="plans-grid" class="students-grid"></div>
