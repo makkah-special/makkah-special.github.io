@@ -533,7 +533,7 @@ const DJ_STUDENTS = {
 };
 
 // Merge all students
-const ALL_STUDENTS = { ...YS_STUDENTS, ...DJ_STUDENTS };
+const ALL_STUDENTS = { ...DJ_STUDENTS, ...YS_STUDENTS };
 
 // State
 let currentFilter = 'all';
@@ -659,6 +659,9 @@ function renderStudents() {
 
   if (search) entries = entries.filter(([pin, s]) => s.name.includes(search) || s.grade.includes(search) || pin.includes(search));
 
+  // الدمج أولاً ثم يسير
+  entries.sort((a, b) => { if (a[1].program !== b[1].program) return a[1].program === 'dumaj' ? -1 : 1; return 0; });
+
   if (!entries.length) {
     grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>لا توجد نتائج</p></div>';
     return;
@@ -681,7 +684,7 @@ function renderStudents() {
         <div class="stu-info-row">
           <div class="stu-info-item">الرمز: <span>${pin}</span></div>
           <div class="stu-info-item">الصف: <span>${s.grade}</span></div>
-          ${s.diagnosis ? `<div class="stu-info-item" style="grid-column:1/-1;">التشخيص: <span>${s.diagnosis}</span></div>` : ''}
+          ${s.diagnosis ? `<div class="stu-info-item" style="grid-column:1/-1;">التشخيص: <span style="color:#7a1a2e;font-weight:800;">${s.diagnosis}</span></div>` : ''}
         </div>
       </div>
       <div class="stu-card-foot">
