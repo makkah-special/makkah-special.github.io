@@ -787,7 +787,7 @@ function renderModalInfo(pin) {
     ['الحالة النفسية', s.status_psych || '—'],
     ['الحالة الصحية', s.status_health || '—'],
     ['الحالة الاجتماعية', s.status_social || '—'],
-  ].filter(([,v]) => v && v !== '—' || ['الاسم الكامل','الصف الدراسي','البرنامج','رمز الدخول'].includes(_));
+  ].filter(([k,v]) => v && v !== '—' || ['الاسم الكامل','الصف الدراسي','البرنامج','رمز الدخول'].includes(k));
 
   document.getElementById('modal-tab-info').innerHTML = `
     <table class="info-table">
