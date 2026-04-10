@@ -877,6 +877,7 @@
       <div class="admin-badge" id="admin-student-count">— طالب</div>
       <button onclick="saveAllStudents()" id="btn-save-all" style="background:linear-gradient(135deg,#e07020,#f59040);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(224,112,32,0.4);display:flex;align-items:center;gap:6px;">💾 حفظ جميع البيانات</button>
       <button class="logout-btn" onclick="adminLogout()">🚪 خروج</button>
+      <div id="revision-alert" style="display:none;background:#fef3c7;border:1px solid #f59e0b;color:#92400e;border-radius:10px;padding:8px 14px;font-size:0.82rem;font-weight:700;cursor:pointer;" onclick="showRevisionRequests()">🔄 <span id="revision-count">0</span> خطة تنتظر تعديل</div>
       <button onclick="window.open('attendance_dumaj.html','_blank')" style="background:linear-gradient(135deg,#1a6b4a,#2d9e6b);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">📋 كشف الحضور</button>
     </div>
   </div>
@@ -995,6 +996,30 @@
           </div>
           <div id="dumaj-admin-pin-msg" style="font-size:0.78rem;margin-bottom:10px;min-height:18px"></div>
           <button onclick="changeAdminPin()" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-family:Cairo,sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer">💾 تحديث رمز المشرف</button>
+        </div>
+        <!-- إسناد المعلمين للصفوف -->
+        <div style="background:#fff;border:1px solid var(--border,#e0d8c8);border-radius:14px;padding:20px 22px;margin-bottom:18px">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px">👨‍🏫 إسناد المعلمين للصفوف</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px">حدد المعلم المسؤول عن خطط كل صف دراسي</div>
+          <div style="display:flex;flex-direction:column;gap:12px;" id="grade-teachers-list">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#f9f9f9;border-radius:10px;padding:12px 14px;">
+              <div style="font-size:0.85rem;font-weight:800;color:var(--primary);">الأول المتوسط / ١</div>
+              <input type="text" id="teacher-grade-1" class="form-input" placeholder="اسم المعلم" style="padding:9px 12px;font-size:0.85rem;"
+                value="" oninput="previewTeacherSave()">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#f9f9f9;border-radius:10px;padding:12px 14px;">
+              <div style="font-size:0.85rem;font-weight:800;color:var(--primary);">الثاني المتوسط / ١</div>
+              <input type="text" id="teacher-grade-2" class="form-input" placeholder="اسم المعلم" style="padding:9px 12px;font-size:0.85rem;"
+                value="" oninput="previewTeacherSave()">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#f9f9f9;border-radius:10px;padding:12px 14px;">
+              <div style="font-size:0.85rem;font-weight:800;color:var(--primary);">الثالث المتوسط / ١</div>
+              <input type="text" id="teacher-grade-3" class="form-input" placeholder="اسم المعلم" style="padding:9px 12px;font-size:0.85rem;"
+                value="" oninput="previewTeacherSave()">
+            </div>
+          </div>
+          <div id="teacher-save-msg" style="font-size:0.78rem;min-height:18px;margin:10px 0;"></div>
+          <button onclick="saveGradeTeachers()" style="background:linear-gradient(135deg,#1a6b4a,#2d9e6b);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-family:Cairo,sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;">💾 حفظ المعلمين</button>
         </div>
         <!-- رموز الطلاب -->
         <div style="background:#fff;border:1px solid var(--border,#e0d8c8);border-radius:14px;padding:20px 22px">
@@ -1873,6 +1898,7 @@ async function upsertToSupabase(pin, studentData) {
       program_place:  studentData.program_place  || '',
       program_start:  studentData.program_start  || '',
       program_end:    studentData.program_end    || '',
+      teacher_name:   studentData.teacher_name  || '',
     };
     const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
     const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
@@ -2163,6 +2189,7 @@ async function saveOneSilent(pin) {
     status_social: s.status_social || '', status_health: s.status_health || '',
     diagnosis: s.diagnosis || '', program_place: s.program_place || '',
     program_start: s.program_start || '', program_end: s.program_end || '',
+    teacher_name: s.teacher_name || '',
   };
   const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
   const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
@@ -4510,6 +4537,131 @@ function downloadPDF(idx) {
     </html>
   `);
   win.document.close();
+}
+
+
+// =====================================================
+// GRADE TEACHERS & REVISION SYSTEM
+// =====================================================
+const GRADE_TEACHER_KEY = 'dumaj_grade_teachers_v1';
+
+const GRADE_MAP = {
+  'الأول المتوسط / ١':  'teacher-grade-1',
+  'الثاني المتوسط / ١': 'teacher-grade-2',
+  'الثالث المتوسط / ١': 'teacher-grade-3',
+};
+
+function loadGradeTeachers() {
+  try {
+    const saved = localStorage.getItem(GRADE_TEACHER_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      Object.entries(GRADE_MAP).forEach(([grade, inputId]) => {
+        const el = document.getElementById(inputId);
+        if (el && data[grade]) el.value = data[grade];
+      });
+    }
+  } catch(e) {}
+}
+
+function getTeacherForGrade(grade) {
+  try {
+    const saved = localStorage.getItem(GRADE_TEACHER_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      return data[grade] || '';
+    }
+  } catch(e) {}
+  return '';
+}
+
+function saveGradeTeachers() {
+  const data = {};
+  Object.entries(GRADE_MAP).forEach(([grade, inputId]) => {
+    const el = document.getElementById(inputId);
+    if (el) data[grade] = el.value.trim();
+  });
+  try {
+    localStorage.setItem(GRADE_TEACHER_KEY, JSON.stringify(data));
+    // تحديث teacher_name في جميع الطلاب
+    Object.entries(STUDENTS).forEach(([pin, s]) => {
+      const teacher = data[s.grade] || '';
+      STUDENTS[pin].teacher_name = teacher;
+    });
+    const msg = document.getElementById('teacher-save-msg');
+    if (msg) { msg.style.color = '#065f46'; msg.textContent = '✅ تم حفظ المعلمين وتحديث بيانات الطلاب'; }
+    setTimeout(() => { if (msg) msg.textContent = ''; }, 3000);
+    showToast('✅ تم حفظ المعلمين للصفوف');
+  } catch(e) {}
+}
+
+function previewTeacherSave() {
+  const msg = document.getElementById('teacher-save-msg');
+  if (msg) { msg.style.color = '#92400e'; msg.textContent = '⚠️ لا تنسَ الضغط على "حفظ المعلمين"'; }
+}
+
+// نظام الخطط المعلقة
+const REVISION_KEY = 'dumaj_revision_requests_v1';
+let revisionRequests = {}; // pin -> { notes, requestedAt }
+
+function loadRevisionRequests() {
+  try {
+    const saved = localStorage.getItem(REVISION_KEY);
+    if (saved) revisionRequests = JSON.parse(saved);
+    updateRevisionAlert();
+  } catch(e) {}
+}
+
+function updateRevisionAlert() {
+  const pins = Object.keys(revisionRequests);
+  const alert = document.getElementById('revision-alert');
+  const count = document.getElementById('revision-count');
+  if (alert && count) {
+    if (pins.length > 0) {
+      alert.style.display = 'flex';
+      alert.style.alignItems = 'center';
+      alert.style.gap = '6px';
+      count.textContent = pins.length;
+    } else {
+      alert.style.display = 'none';
+    }
+  }
+}
+
+function showRevisionRequests() {
+  const pins = Object.keys(revisionRequests);
+  if (!pins.length) return;
+
+  let html = '<div style="padding:20px;">';
+  html += '<div style="font-family:Tajawal,sans-serif;font-size:1.1rem;font-weight:900;color:#1a3a5c;margin-bottom:16px;border-bottom:2px solid #e0d8c8;padding-bottom:12px;">🔄 خطط تنتظر التعديل</div>';
+
+  pins.forEach(pin => {
+    const s = STUDENTS[pin];
+    const req = revisionRequests[pin];
+    if (!s) return;
+    html += `
+      <div style="background:#fffbf0;border:1px solid #f0d898;border-right:4px solid #f59e0b;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
+        <div style="font-weight:800;font-size:0.9rem;color:#1a3a5c;margin-bottom:6px;">👤 ${s.name} — ${s.grade}</div>
+        <div style="font-size:0.78rem;font-weight:700;color:#92400e;margin-bottom:6px;">📝 ملاحظات المشرف:</div>
+        <div style="font-size:0.83rem;color:#1a1a2e;line-height:1.8;margin-bottom:10px;">${req.notes}</div>
+        <div style="font-size:0.72rem;color:#9ca3af;">📅 ${new Date(req.requestedAt).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'})}</div>
+        <button onclick="markRevisionDone('${pin}')" style="margin-top:10px;background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:8px;padding:7px 14px;font-family:Cairo,sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">✅ تم التعديل</button>
+      </div>`;
+  });
+
+  html += '</div>';
+  document.getElementById('dumaj-cell-content').innerHTML = html;
+  document.getElementById('dumaj-cell-box').style.display = 'block';
+  document.getElementById('dumaj-cell-overlay').style.display = 'block';
+}
+
+function markRevisionDone(pin) {
+  delete revisionRequests[pin];
+  try { localStorage.setItem(REVISION_KEY, JSON.stringify(revisionRequests)); } catch(e) {}
+  updateRevisionAlert();
+  showRevisionRequests();
+  showToast('✅ تم تعليم الخطة كمُعدَّلة');
+  if (!Object.keys(revisionRequests).length) closeDumajCellEditor();
 }
 
 </script>
