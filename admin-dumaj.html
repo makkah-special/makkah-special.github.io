@@ -4634,7 +4634,9 @@ async function loadRevisionRequests() {
       // جلب محتوى كل ملف
       const fetches = revFiles.map(async f => {
         try {
-          const r = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/revisions/${f.name}?t=${Date.now()}`);
+          const r = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/revisions/${f.name}`, {
+            headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+          });
           if (r.ok) {
             const data = await r.json();
             if (data && data.pin && data.status === 'pending') {
