@@ -281,6 +281,11 @@ footer strong { color:var(--accent-light); }
         <div class="stat-label">بانتظار الاعتماد</div>
         <div class="stat-badge" style="background:#fef3c7;color:#92400e;">⏳ معلق</div>
       </div>
+      <div class="stat-card" style="cursor:pointer;" onclick="openTab('students',document.querySelector('.main-tab-btn'));setFilter('revision',document.querySelector('[onclick*=\'revision\']'))">
+        <div class="stat-num" id="stat-revision" style="color:#92400e;">0</div>
+        <div class="stat-label">انتظار تعديل</div>
+        <div class="stat-badge" style="background:#fef3c7;color:#92400e;">🔄 تعديل</div>
+      </div>
       <div class="stat-card">
         <div class="stat-num" id="stat-visits">0</div>
         <div class="stat-label">تقارير الزيارة</div>
@@ -614,14 +619,18 @@ function updateStats() {
   const ysCount = Object.keys(YS_STUDENTS).length;
   const djCount = Object.keys(DJ_STUDENTS).length;
   const approvedCount = Object.keys(approvals).length;
+  const revisionCount = Object.keys(revisionPending).length;
   const totalStudents = ysCount + djCount;
-  const pendingCount = totalStudents - approvedCount;
+  // الانتظار = لم يُعتمد ولم يُطلب تعديله
+  const pendingCount = totalStudents - approvedCount - revisionCount;
 
   document.getElementById('stat-total-ys').textContent = ysCount;
   document.getElementById('stat-total-dj').textContent = djCount;
   document.getElementById('stat-approved').textContent = approvedCount;
   document.getElementById('stat-pending').textContent = Math.max(0, pendingCount);
   document.getElementById('stat-visits').textContent = visitReports.length;
+  const revEl = document.getElementById('stat-revision');
+  if (revEl) revEl.textContent = revisionCount;
 }
 
 // =====================================================
@@ -1009,11 +1018,22 @@ async function saveRevisionRequest(pin, notes) {
   const folder = s.program === 'dumaj' ? 'dumaj/revisions' : 'yaseer/revisions';
   try {
     const blob = new Blob([JSON.stringify(reqData)], {type:'application/json'});
-    await fetch(`${SUPABASE_URL}/storage/v1/object/reports/${folder}/revision-${pin}.json`, {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/reports/${folder}/revision-${pin}.json`, {
       method: 'POST',
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'x-upsert': 'true'
+      },
       body: blob
     });
+    if (res.ok) {
+      console.log('✅ Revision saved to Supabase for pin:', pin);
+    } else {
+      const err = await res.text();
+      console.warn('❌ Failed to save revision:', err);
+    }
   } catch(e) { console.warn('Could not save revision:', e); }
   try {
     const adminKey = s.program === 'dumaj' ? 'dumaj_revision_requests_v1' : 'yaseer_revision_requests_v1';
@@ -1084,7 +1104,10 @@ function requestRevision(pin) {
         <div style="font-size:0.72rem;font-weight:700;color:#92400e;margin-bottom:4px;">📝 الملاحظات المرسلة:</div>
         <div style="font-size:0.84rem;line-height:1.8;">${notes}</div>
       </div>
-      <button onclick="clearRevision('${pin}')" style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:8px;padding:8px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;">✕ إلغاء الطلب</button>
+      <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
+        <button onclick="clearRevision('${pin}')" style="background:#fef3c7;color:#92400e;border:1px solid #f59e0b;border-radius:8px;padding:8px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;">⏳ تحويل لانتظار</button>
+        <button onclick="closeModal()" style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:8px;padding:8px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;">✕ إغلاق</button>
+      </div>
     </div>`;
 
   renderStudents();
@@ -1105,13 +1128,25 @@ function loadRevisionPending() {
   } catch(e) {}
 }
 
-function clearRevision(pin) {
+async function clearRevision(pin) {
   delete revisionPending[pin];
   saveRevisionPending();
+  // حذف من Supabase
+  const s = ALL_STUDENTS[pin];
+  if (s) {
+    const folder = s.program === 'dumaj' ? 'dumaj/revisions' : 'yaseer/revisions';
+    try {
+      await fetch(`${SUPABASE_URL}/storage/v1/object/reports/${folder}/revision-${pin}.json`, {
+        method: 'DELETE',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+      });
+    } catch(e) {}
+  }
+  updateStats();
   renderModalApprove(pin);
   renderStudents();
   renderPlans();
-  showToast('✅ تم إلغاء طلب التعديل');
+  showToast('✅ تم إلغاء طلب التعديل — الخطة عادت لحالة انتظار');
 }
 
 function editTeacherName(pin) {
