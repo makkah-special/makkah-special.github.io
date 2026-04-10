@@ -888,7 +888,7 @@
       <button class="admin-tab-btn" onclick="openAdminTab('upload',this)">📤 رفع التقارير</button>
       <button class="admin-tab-btn" onclick="openAdminTab('sigs',this);loadSignatures()">✍️ التوقيعات</button>
       <button class="admin-tab-btn" onclick="openAdminTab('schedule',this)">📅 جدول الحصص</button>
-      <button class="admin-tab-btn" onclick="openAdminTab('settings',this);renderStudentPinList()">⚙️ الإعدادات</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('settings',this);renderStudentPinList();loadGradeTeachers()">⚙️ الإعدادات</button>
     </div>
     <div class="admin-tab-pane active" id="admin-tab-list">
       <div style="margin-bottom:14px;">
@@ -1939,6 +1939,7 @@ function openAdminTab(id, btn) {
   btn.classList.add('active');
   if (id === 'schedule') renderDumajSchedule();
   if (id === 'upload') populateUploadStudentSelect();
+  if (id === 'settings') { loadGradeTeachers(); renderStudentPinList(); }
 }
 
 function renderStudentCards() {
