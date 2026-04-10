@@ -4609,36 +4609,63 @@ function previewTeacherSave() {
 const REVISION_KEY = 'dumaj_revision_requests_v1';
 let revisionRequests = {}; // pin -> { notes, requestedAt }
 
-function loadRevisionRequests() {
+async function loadRevisionRequests() {
+  // أولاً: تحميل من localStorage كـ fallback
   try {
     const saved = localStorage.getItem(REVISION_KEY);
     if (saved) revisionRequests = JSON.parse(saved);
-    updateRevisionAlert();
   } catch(e) {}
+
+  // ثانياً: جلب من Supabase (المصدر الحقيقي)
+  try {
+    // جلب قائمة الملفات من مجلد dumaj/revisions
+    const res = await fetch(`${SB_URL}/storage/v1/object/list/reports/dumaj/revisions`, {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ limit: 100, offset: 0, prefix: '' })
+    });
+    if (res.ok) {
+      const files = await res.json();
+      const revFiles = files.filter(f => f.name && f.name.startsWith('revision-'));
+      // جلب محتوى كل ملف
+      const fetches = revFiles.map(async f => {
+        try {
+          const r = await fetch(`${SB_URL}/storage/v1/object/public/reports/dumaj/revisions/${f.name}?t=${Date.now()}`);
+          if (r.ok) {
+            const data = await r.json();
+            if (data && data.pin && data.status === 'pending') {
+              revisionRequests[data.pin] = data;
+            }
+          }
+        } catch(e) {}
+      });
+      await Promise.all(fetches);
+      // حفظ في localStorage
+      localStorage.setItem(REVISION_KEY, JSON.stringify(revisionRequests));
+    }
+  } catch(e) { console.warn('Could not load revisions from Supabase:', e); }
+
+  updateRevisionAlert();
 }
 
 // فحص دوري كل 20 ثانية لطلبات التعديل الجديدة
 function startRevisionPolling() {
-  setInterval(() => {
-    try {
-      const saved = localStorage.getItem(REVISION_KEY);
-      const newReqs = saved ? JSON.parse(saved) : {};
-      const oldCount = Object.keys(revisionRequests).length;
-      const newCount = Object.keys(newReqs).length;
-      revisionRequests = newReqs;
-      updateRevisionAlert();
-      // إذا وصل طلب جديد أثناء عمل المعلم
-      if (newCount > oldCount) {
-        const diff = newCount - oldCount;
-        showToast(`🔄 ${diff} خطة جديدة تنتظر التعديل من المشرف`);
-        // اهتزاز مرئي للإشعار
-        const alert = document.getElementById('revision-alert');
-        if (alert) {
-          alert.style.animation = 'revisionPulse 0.6s ease 3';
-        }
-      }
-    } catch(e) {}
-  }, 20000);
+  setInterval(async () => {
+    const oldCount = Object.keys(revisionRequests).length;
+    await loadRevisionRequests();
+    const newCount = Object.keys(revisionRequests).length;
+    if (newCount > oldCount) {
+      const diff = newCount - oldCount;
+      showToast(`🔄 ${diff} خطة جديدة تنتظر التعديل من المشرف التربوي`);
+      const alertEl = document.getElementById('revision-alert');
+      if (alertEl) alertEl.style.animation = 'revisionPulse 0.6s ease 3';
+      setTimeout(showRevisionRequests, 500);
+    }
+  }, 30000);
 }
 
 function updateRevisionAlert() {
@@ -4692,9 +4719,16 @@ function showRevisionRequests() {
   document.getElementById('dumaj-cell-overlay').style.display = 'block';
 }
 
-function markRevisionDone(pin) {
+async function markRevisionDone(pin) {
   delete revisionRequests[pin];
   try { localStorage.setItem(REVISION_KEY, JSON.stringify(revisionRequests)); } catch(e) {}
+  // حذف الملف من Supabase
+  try {
+    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/revisions/revision-${pin}.json`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+  } catch(e) {}
   updateRevisionAlert();
   showRevisionRequests();
   showToast('✅ تم تعليم الخطة كمُعدَّلة');
