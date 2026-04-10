@@ -305,6 +305,7 @@ footer strong { color:var(--accent-light); }
         <button class="filter-chip" onclick="setFilter('yaseer',this)">🔵 يسير</button>
         <button class="filter-chip" onclick="setFilter('approved',this)">✅ معتمد</button>
         <button class="filter-chip" onclick="setFilter('pending',this)">⏳ انتظار</button>
+        <button class="filter-chip" onclick="setFilter('revision',this)">🔄 تعديل</button>
       </div>
       <div class="search-bar">
         <span class="search-icon">🔍</span>
@@ -320,6 +321,7 @@ footer strong { color:var(--accent-light); }
         <button class="filter-chip" onclick="setPlansFilter('dumaj',this)">🟠 الدمج</button>
         <button class="filter-chip" onclick="setPlansFilter('yaseer',this)">🔵 يسير</button>
         <button class="filter-chip" onclick="setPlansFilter('pending',this)">⏳ بانتظار الاعتماد</button>
+        <button class="filter-chip" onclick="setPlansFilter('revision',this)">🔄 تعديل</button>
       </div>
       <div id="plans-grid" class="students-grid"></div>
     </div>
@@ -658,7 +660,8 @@ function renderStudents() {
   if (currentFilter === 'yaseer') entries = entries.filter(([,s]) => s.program === 'yaseer');
   else if (currentFilter === 'dumaj') entries = entries.filter(([,s]) => s.program === 'dumaj');
   else if (currentFilter === 'approved') entries = entries.filter(([pin]) => approvals[pin]);
-  else if (currentFilter === 'pending') entries = entries.filter(([pin]) => !approvals[pin]);
+  else if (currentFilter === 'pending') entries = entries.filter(([pin]) => !approvals[pin] && !revisionPending[pin]);
+  else if (currentFilter === 'revision') entries = entries.filter(([pin]) => revisionPending[pin]);
 
   if (search) entries = entries.filter(([pin, s]) => s.name.includes(search) || s.grade.includes(search) || pin.includes(search));
 
@@ -707,7 +710,8 @@ function renderPlans() {
 
   if (currentPlansFilter === 'yaseer') entries = entries.filter(([,s]) => s.program === 'yaseer');
   else if (currentPlansFilter === 'dumaj') entries = entries.filter(([,s]) => s.program === 'dumaj');
-  else if (currentPlansFilter === 'pending') entries = entries.filter(([pin]) => !approvals[pin]);
+  else if (currentPlansFilter === 'pending') entries = entries.filter(([pin]) => !approvals[pin] && !revisionPending[pin]);
+  else if (currentPlansFilter === 'revision') entries = entries.filter(([pin]) => revisionPending[pin]);
 
   grid.innerHTML = entries.map(([pin, s]) => {
     const isYS = s.program === 'yaseer';
