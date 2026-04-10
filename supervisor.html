@@ -538,7 +538,7 @@ const ALL_STUDENTS = { ...DJ_STUDENTS, ...YS_STUDENTS };
 // State
 let currentFilter = 'all';
 let currentPlansFilter = 'all';
-let approvals = {}; // pin -> { signData, signedAt, type }
+let approvals = {}; // pin -> { signData, signedAt, type, supervisorNotes, teacherName }
 let visitReports = [];
 let currentStudentPin = null;
 let currentSignType = 'draw';
@@ -570,6 +570,7 @@ function checkPin() {
 // =====================================================
 async function initPortal() {
   loadApprovals();
+  loadRevisionPending();
   loadVisitReports();
   updateStats();
   renderStudents();
@@ -598,6 +599,8 @@ async function loadStudentData(pin) {
     const data = await res.json();
     if (data) {
       ALL_STUDENTS[pin] = { ...ALL_STUDENTS[pin], ...data, program: ALL_STUDENTS[pin].program };
+      // teacher_name محفوظ في بيانات الطالب
+      if (data.teacher_name) ALL_STUDENTS[pin].teacher_name = data.teacher_name;
     }
   } catch(e) {}
 }
@@ -678,7 +681,7 @@ function renderStudents() {
           <div class="stu-name">${s.name}</div>
           <div class="stu-meta">${s.grade} • <span style="color:${isYS ? '#1e40af' : '#c25a00'};font-weight:700;">${isYS ? 'يسير' : 'الدمج'}</span></div>
         </div>
-        ${isApproved ? '<span class="approved-badge">✅ معتمد</span>' : '<span class="pending-badge">⏳ انتظار</span>'}
+        ${isApproved ? '<span class="approved-badge">✅ معتمد</span>' : revisionPending[pin] ? '<span style=\"background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:10px;font-size:0.72rem;font-weight:700;\">🔄 تعديل</span>' : '<span class=\"pending-badge\">⏳ انتظار</span>'}
       </div>
       <div class="stu-card-body">
         <div class="stu-info-row">
@@ -719,7 +722,7 @@ function renderPlans() {
           <div class="stu-name">${s.name}</div>
           <div class="stu-meta">${s.grade}</div>
         </div>
-        ${isApproved ? '<span class="approved-badge">✅ معتمد</span>' : '<span class="pending-badge">⏳ انتظار</span>'}
+        ${isApproved ? '<span class="approved-badge">✅ معتمد</span>' : revisionPending[pin] ? '<span style=\"background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:10px;font-size:0.72rem;font-weight:700;\">🔄 تعديل</span>' : '<span class=\"pending-badge\">⏳ انتظار</span>'}
       </div>
       <div class="stu-card-body" style="padding:14px 18px;">
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -897,6 +900,8 @@ async function renderModalFiles(pin) {
 function renderModalApprove(pin) {
   const s = ALL_STUDENTS[pin];
   const approval = approvals[pin];
+  const isYS = s.program === 'yaseer';
+  const teacherName = s.teacher_name || s.plan_teacher || (isYS ? 'معلم برنامج يسير' : 'معلم برنامج الدمج الفكري');
 
   let html = '';
 
@@ -912,13 +917,46 @@ function renderModalApprove(pin) {
           ${SUPERVISOR_NAME}<br>${SUPERVISOR_TITLE}<br>
           📅 ${new Date(approval.signedAt).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})}
         </div>
+        ${approval.supervisorNotes ? `
+        <div style="margin-top:14px;background:#f0f7ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;text-align:right;">
+          <div style="font-size:0.75rem;font-weight:700;color:#1e40af;margin-bottom:6px;">📝 ملاحظات المشرف</div>
+          <div style="font-size:0.84rem;color:#1a3a5c;line-height:1.8;">${approval.supervisorNotes}</div>
+        </div>` : ''}
         <button onclick="revokeApproval('${pin}')" style="margin-top:14px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:8px;padding:8px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;">🗑️ إلغاء الاعتماد</button>
       </div>`;
   } else {
     html = `
-      <div style="background:#fffbf0;border:1px solid #f0d898;border-right:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:0.85rem;line-height:1.8;">
-        اعتماد الخطة التربوية الفردية للطالب <strong>${s.name}</strong> للفصل الدراسي الثاني 1447هـ
+      <!-- اسم المعلم المعد للخطة -->
+      <div style="background:linear-gradient(135deg,#f0f7ff,#e8f0ff);border:1.5px solid #bfdbfe;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+        <div style="width:42px;height:42px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">👨‍🏫</div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:2px;">المعلم المعد للخطة</div>
+          <div style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:900;color:var(--primary);" id="plan-teacher-name">${teacherName}</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${isYS ? '📘 برنامج يسير' : '📙 برنامج الدمج الفكري'}</div>
+        </div>
+        <button onclick="editTeacherName('${pin}')" style="margin-right:auto;background:rgba(26,58,92,0.08);border:1px solid #bfdbfe;border-radius:8px;padding:5px 10px;font-family:'Cairo',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;color:var(--primary);">✏️ تعديل</button>
       </div>
+
+      <!-- نص الاعتماد -->
+      <div style="background:#fffbf0;border:1px solid #f0d898;border-right:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:0.85rem;line-height:1.8;">
+        اعتماد الخطة التربوية الفردية للطالب <strong>${s.name}</strong> للفصل الدراسي الثاني 1447هـ
+        — إعداد: <strong>${teacherName}</strong>
+      </div>
+
+      <!-- ملاحظات المشرف -->
+      <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:16px;">
+        <div style="font-size:0.85rem;font-weight:800;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          📝 ملاحظات المشرف على الخطة
+          <span style="font-size:0.7rem;color:var(--muted);font-weight:600;">(اختياري)</span>
+        </div>
+        <textarea id="supervisor-notes-input"
+          style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;color:var(--text);outline:none;resize:vertical;min-height:90px;background:#fafafa;transition:border-color 0.2s;"
+          placeholder="أدخل ملاحظاتك على الخطة التربوية..."
+          onfocus="this.style.borderColor='var(--primary)'"
+          onblur="this.style.borderColor='var(--border)'"
+        ></textarea>
+      </div>
+
       <div class="approval-box">
         <div class="approval-title">✍️ توقيع المشرف</div>
         <div class="sign-tabs">
@@ -933,7 +971,10 @@ function renderModalApprove(pin) {
         </div>
         <div class="sign-actions">
           <button class="btn-clear-sign" onclick="clearSign()">🗑️ مسح</button>
-          <button class="btn-approve" onclick="approveStudent('${pin}')">✅ اعتماد الخطة</button>
+          <div style="display:flex;gap:8px;margin-top:0;">
+            <button class="btn-clear-sign" onclick="requestRevision('${pin}')" style="flex:1;background:#fef3c7;color:#92400e;border:1px solid #f59e0b;">🔄 انتظار تعديل</button>
+            <button class="btn-approve" style="flex:2;" onclick="approveStudent('${pin}')">✅ اعتماد الخطة</button>
+          </div>
         </div>
       </div>`;
   }
@@ -950,6 +991,34 @@ function renderModalApprove(pin) {
 // =====================================================
 // SIGN CANVAS
 // =====================================================
+
+// =====================================================
+// REVISION REQUESTS (supervisor → admin)
+// =====================================================
+async function saveRevisionRequest(pin, notes) {
+  const s = ALL_STUDENTS[pin];
+  const reqData = {
+    pin, studentName: s.name, grade: s.grade, program: s.program,
+    teacherName: s.teacher_name || '', notes,
+    requestedAt: new Date().toISOString(), status: 'pending'
+  };
+  const folder = s.program === 'dumaj' ? 'dumaj/revisions' : 'yaseer/revisions';
+  try {
+    const blob = new Blob([JSON.stringify(reqData)], {type:'application/json'});
+    await fetch(`${SUPABASE_URL}/storage/v1/object/reports/${folder}/revision-${pin}.json`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: blob
+    });
+  } catch(e) { console.warn('Could not save revision:', e); }
+  try {
+    const adminKey = s.program === 'dumaj' ? 'dumaj_revision_requests_v1' : 'yaseer_revision_requests_v1';
+    const adminLocal = JSON.parse(localStorage.getItem(adminKey) || '{}');
+    adminLocal[pin] = reqData;
+    localStorage.setItem(adminKey, JSON.stringify(adminLocal));
+  } catch(e) {}
+}
+
 function initSignCanvas(canvas) {
   signCanvas = canvas;
   signCtx = canvas.getContext('2d');
@@ -990,6 +1059,68 @@ function setSignType(type, btn) {
 // =====================================================
 // APPROVAL
 // =====================================================
+function requestRevision(pin) {
+  const notesEl = document.getElementById('supervisor-notes-input');
+  const notes = notesEl ? notesEl.value.trim() : '';
+  if (!notes) { showToast('⚠️ الرجاء كتابة ملاحظاتك أولاً في حقل الملاحظات'); return; }
+
+  const s = ALL_STUDENTS[pin];
+  // حفظ حالة "انتظار تعديل"
+  revisionPending[pin] = { notes, requestedAt: new Date().toISOString() };
+  saveRevisionPending();
+  saveRevisionRequest(pin, notes);
+
+  // تحديث الواجهة
+  document.getElementById('modal-tab-approve').innerHTML = `
+    <div style="background:#fffbf0;border:2px solid #f59e0b;border-radius:14px;padding:22px;text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:10px;">🔄</div>
+      <div style="font-family:'Tajawal',sans-serif;font-size:1.05rem;font-weight:900;color:#92400e;margin-bottom:8px;">في انتظار تعديل الخطة</div>
+      <div style="font-size:0.82rem;color:#92400e;margin-bottom:14px;">تم إرسال الملاحظات للمعلم المسؤول</div>
+      <div style="background:#fff;border:1px solid #f0d898;border-radius:10px;padding:12px 16px;text-align:right;margin-bottom:14px;">
+        <div style="font-size:0.72rem;font-weight:700;color:#92400e;margin-bottom:4px;">📝 الملاحظات المرسلة:</div>
+        <div style="font-size:0.84rem;line-height:1.8;">${notes}</div>
+      </div>
+      <button onclick="clearRevision('${pin}')" style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:8px;padding:8px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;">✕ إلغاء الطلب</button>
+    </div>`;
+
+  renderStudents();
+  renderPlans();
+  showToast('🔄 تم إرسال طلب التعديل للمعلم');
+}
+
+let revisionPending = {};
+
+function saveRevisionPending() {
+  try { localStorage.setItem('supervisor_revisions', JSON.stringify(revisionPending)); } catch(e) {}
+}
+
+function loadRevisionPending() {
+  try {
+    const saved = localStorage.getItem('supervisor_revisions');
+    if (saved) revisionPending = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function clearRevision(pin) {
+  delete revisionPending[pin];
+  saveRevisionPending();
+  renderModalApprove(pin);
+  renderStudents();
+  renderPlans();
+  showToast('✅ تم إلغاء طلب التعديل');
+}
+
+function editTeacherName(pin) {
+  const el = document.getElementById('plan-teacher-name');
+  if (!el) return;
+  const current = el.textContent;
+  const newName = prompt('اسم المعلم المعد للخطة:', current);
+  if (newName && newName.trim()) {
+    el.textContent = newName.trim();
+    ALL_STUDENTS[pin].teacher_name = newName.trim();
+  }
+}
+
 function approveStudent(pin) {
   let signData = null;
   let signText = null;
@@ -1006,7 +1137,10 @@ function approveStudent(pin) {
     signText = document.getElementById('sign-name-input')?.value?.trim() || SUPERVISOR_NAME;
   }
 
-  approvals[pin] = { signData, signText, type: currentSignType, signedAt: new Date().toISOString() };
+  const supervisorNotes = document.getElementById('supervisor-notes-input')?.value?.trim() || '';
+  const teacherNameEl = document.getElementById('plan-teacher-name');
+  const teacherName = teacherNameEl ? teacherNameEl.textContent : '';
+  approvals[pin] = { signData, signText, type: currentSignType, signedAt: new Date().toISOString(), supervisorNotes, teacherName };
   saveApprovals();
   updateStats();
   renderModalApprove(pin);
