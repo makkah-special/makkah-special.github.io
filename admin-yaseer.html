@@ -910,11 +910,12 @@
       <div class="header-sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
     </div>
   </div>
-  <a href="index.html" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);padding:7px 16px;border-radius:8px;text-decoration:none;font-size:0.82rem;font-weight:600;">← الرئيسية</a>
+  <a href="index.html" style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);color:#fff;padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
 </header>
 
 <!-- PIN SCREEN -->
 <div id="pin-screen" style="display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;background:var(--bg);">
+  <a href="index.html" style="position:absolute;top:20px;right:20px;background:rgba(26,58,92,0.08);border:1.5px solid rgba(26,58,92,0.2);color:var(--primary,#1a3a5c);padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
   <div style="background:#fff;border-radius:20px;padding:40px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
     <div style="font-size:2.6rem;margin-bottom:14px;">🔐</div>
     <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:var(--primary);margin-bottom:6px;">لوحة مشرف يسير</div>
@@ -2483,7 +2484,10 @@ function saveIqrarPDF() {
         © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
       </div>
       <scr' + 'ipt>window.onload=()=>window.print();</scr' + 'ipt>
-    </body>
+    
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+</body>
     </html>
   `);
   win.document.close();
@@ -3430,7 +3434,10 @@ function printStudentCard(pin) {
     </table>
     <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
     <script>window.onload=()=>window.print();<\/script>
-  </body></html>`);
+  
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+</body></html>`);
   win.document.close();
 }
 
@@ -4099,12 +4106,18 @@ function downloadPDF(idx) {
       </div>
       <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني</div>
       <script>window.onload=()=>window.print();<\/script>
-    </body>
+    
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+</body>
     </html>
   `);
   win.document.close();
 }
 
 </script>
+
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
 </body>
 </html>
