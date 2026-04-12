@@ -237,11 +237,12 @@ footer strong { color:var(--accent-light); }
       <div class="header-sub">الإدارة العامة للتعليم — مدرسة مكة المكرمة المتوسطة</div>
     </div>
   </div>
-  <a href="index.html" class="back-link">← الرئيسية</a>
+  <a href="index.html" class="back-link" style="display:flex;align-items:center;gap:6px;font-weight:700;">🏠 الرئيسية</a>
 </header>
 
 <!-- PIN SCREEN -->
 <div id="pin-screen">
+  <a href="index.html" style="position:absolute;top:20px;right:20px;background:rgba(26,58,92,0.08);border:1.5px solid rgba(26,58,92,0.2);color:var(--primary,#1a3a5c);padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
   <div class="pin-box">
     <div class="pin-icon">🏛️</div>
     <div class="pin-title">بوابة المشرف</div>
@@ -1370,5 +1371,8 @@ document.getElementById('student-modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 </script>
+
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#0f2440,#1a3a5c);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(15,36,64,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
 </body>
 </html>
