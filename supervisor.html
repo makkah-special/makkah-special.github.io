@@ -300,6 +300,7 @@ footer strong { color:var(--accent-light); }
       <button class="main-tab-btn" onclick="openTab('plans',this)">📋 الخطط التربوية</button>
       <button class="main-tab-btn" onclick="openTab('reports',this)">📊 التقارير والنتائج</button>
       <button class="main-tab-btn" onclick="openTab('visits',this)">🏫 تقارير الزيارة</button>
+      <button class="main-tab-btn" onclick="openTab('meeting',this)">📹 استدعاء اجتماع</button>
       <button class="main-tab-btn" onclick="openTab('settings',this)">⚙️ الإعدادات</button>
     </div>
 
@@ -409,6 +410,51 @@ footer strong { color:var(--accent-light); }
         <div class="s-card-head">📋 سجل تقارير الزيارة</div>
         <div style="padding:22px;">
           <div id="visits-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: استدعاء اجتماع -->
+    <div class="main-tab-pane" id="tab-meeting">
+      <div class="s-card" style="margin-bottom:18px;">
+        <div class="s-card-head">📹 إرسال استدعاء اجتماع عن بعد</div>
+        <div style="padding:22px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+            <div class="form-group">
+              <label class="form-label">البرنامج المستدعى</label>
+              <select class="form-input" id="meeting-program">
+                <option value="dumaj">مشرف الدمج الفكري</option>
+                <option value="yaseer">مشرف يسير</option>
+                <option value="both">الاثنين معاً</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">تاريخ ووقت الاجتماع</label>
+              <input type="datetime-local" class="form-input" id="meeting-datetime">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">رابط Zoom / Meet</label>
+            <input type="url" class="form-input" id="meeting-link" placeholder="https://zoom.us/j/...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">موضوع الاجتماع</label>
+            <input type="text" class="form-input" id="meeting-subject" placeholder="مثال: مناقشة الخطط التربوية الفصلية">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ملاحظات إضافية</label>
+            <textarea class="form-input form-textarea" id="meeting-notes" placeholder="أي تفاصيل إضافية للاجتماع..."></textarea>
+          </div>
+          <button onclick="sendMeetingInvite()" style="width:100%;padding:13px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;border:none;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(3,105,161,0.35);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+            📹 إرسال الاستدعاء
+          </button>
+        </div>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-head">📋 سجل الاستدعاءات السابقة</div>
+        <div style="padding:22px;">
+          <div id="meetings-list"><div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد استدعاءات بعد</p></div></div>
         </div>
       </div>
     </div>
@@ -580,6 +626,7 @@ async function initPortal() {
   loadApprovals();
   loadRevisionPending();
   loadVisitReports();
+  loadMeetingInvites();
   updateStats();
   renderStudents();
   renderPlans();
@@ -1370,6 +1417,92 @@ function showToast(msg) {
 document.getElementById('student-modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+
+// =====================================================
+// MEETING INVITES
+// =====================================================
+let meetingInvites = [];
+
+function loadMeetingInvites() {
+  try {
+    const saved = localStorage.getItem('supervisor_meetings');
+    if (saved) meetingInvites = JSON.parse(saved);
+    renderMeetingsList();
+  } catch(e) {}
+  try {
+    const dt = new Date(Date.now() + 3600000);
+    const local = new Date(dt.getTime() - dt.getTimezoneOffset()*60000).toISOString().slice(0,16);
+    const el = document.getElementById('meeting-datetime');
+    if (el) el.value = local;
+  } catch(e) {}
+}
+
+async function sendMeetingInvite() {
+  const program  = document.getElementById('meeting-program').value;
+  const datetime = document.getElementById('meeting-datetime').value;
+  const link     = document.getElementById('meeting-link').value.trim();
+  const subject  = document.getElementById('meeting-subject').value.trim();
+  const notes    = document.getElementById('meeting-notes').value.trim();
+
+  if (!link || !subject || !datetime) { showToast('⚠️ الرجاء إكمال البيانات المطلوبة'); return; }
+  if (!link.startsWith('http')) { showToast('⚠️ الرابط غير صحيح'); return; }
+
+  const invite = {
+    id: Date.now(), program, datetime, link, subject, notes,
+    sentAt: new Date().toISOString(), supervisorName: SUPERVISOR_NAME, status: 'pending'
+  };
+
+  const targets = program === 'both' ? ['dumaj', 'yaseer'] : [program];
+  let saved = false;
+  for (const target of targets) {
+    try {
+      const blob = new Blob([JSON.stringify(invite)], {type:'application/json'});
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/reports/${target}/meeting-invite.json`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+        body: blob
+      });
+      if (res.ok) saved = true;
+    } catch(e) {}
+  }
+
+  meetingInvites.unshift(invite);
+  try { localStorage.setItem('supervisor_meetings', JSON.stringify(meetingInvites)); } catch(e) {}
+  renderMeetingsList();
+  document.getElementById('meeting-link').value = '';
+  document.getElementById('meeting-subject').value = '';
+  document.getElementById('meeting-notes').value = '';
+  showToast(saved ? '✅ تم إرسال الاستدعاء بنجاح' : '⚠️ تم الحفظ محلياً فقط');
+}
+
+function renderMeetingsList() {
+  const el = document.getElementById('meetings-list');
+  if (!el) return;
+  if (!meetingInvites.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد استدعاءات بعد</p></div>';
+    return;
+  }
+  const progLabel = { dumaj:'مشرف الدمج', yaseer:'مشرف يسير', both:'الاثنين' };
+  el.innerHTML = meetingInvites.map((m,i) => {
+    const dt = new Date(m.datetime).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    return `<div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px 18px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div style="font-weight:800;font-size:0.9rem;color:var(--primary);">📹 ${m.subject}</div>
+        <button onclick="deleteMeetingInvite(${i})" style="background:#fee2e2;color:#dc2626;border:none;border-radius:8px;padding:4px 10px;font-size:0.75rem;font-weight:700;cursor:pointer;">🗑️</button>
+      </div>
+      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:6px;">👥 ${progLabel[m.program]||m.program} • 📅 ${dt}</div>
+      <a href="${m.link}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#0369a1;color:#fff;padding:6px 14px;border-radius:8px;font-size:0.8rem;font-weight:700;text-decoration:none;">🔗 فتح رابط الاجتماع</a>
+      ${m.notes ? `<div style="margin-top:8px;font-size:0.78rem;color:var(--muted);">${m.notes}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+async function deleteMeetingInvite(i) {
+  meetingInvites.splice(i, 1);
+  try { localStorage.setItem('supervisor_meetings', JSON.stringify(meetingInvites)); } catch(e) {}
+  renderMeetingsList();
+}
+
 </script>
 
 <!-- زر الرئيسية الثابت -->
