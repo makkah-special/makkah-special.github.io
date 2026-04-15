@@ -836,6 +836,14 @@
   .progress-fill { height:100%; background:linear-gradient(90deg,#1a6b4a,#2d9e6b); border-radius:2px; transition:width 0.3s; width:0%; }
   .btn-delete-file { width:100%; padding:9px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:6px; }
 
+
+  /* ===== MEETING INVITE ALERT ===== */
+  .meeting-alert-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9998; backdrop-filter:blur(4px); }
+  .meeting-alert-box { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:9999; background:#fff; border-radius:20px; padding:32px; width:min(480px,92vw); box-shadow:0 24px 64px rgba(0,0,0,0.3); animation:meetingPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275); text-align:center; }
+  @keyframes meetingPop { from{opacity:0;transform:translate(-50%,-50%) scale(0.8)} to{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+  .meeting-alert-icon { font-size:3.5rem; margin-bottom:12px; animation:ring 1s ease infinite; }
+  @keyframes ring { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} 60%{transform:rotate(-10deg)} 80%{transform:rotate(10deg)} }
+
 </style>
 </head>
 <body>
@@ -1714,6 +1722,29 @@ function saveIqrarPDF() {
     
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#5a6478;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#0f2440;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#0f2440;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#0f2440;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body>
     </html>
   `);
@@ -2284,6 +2315,29 @@ function printStudentCard(pin) {
   
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#5a6478;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#0f2440;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#0f2440;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#0f2440;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body></html>`);
   win.document.close();
 }
@@ -2722,6 +2776,29 @@ function printIEP() {
     <script>window.onload=()=>window.print();<\/script>
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#5a6478;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#0f2440;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#0f2440;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#0f2440;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body></html>`);
   win.document.close();
 }
@@ -3483,6 +3560,29 @@ function exportAnalysisPDF(pin) {
     
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#5a6478;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#0f2440;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#0f2440;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#0f2440;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body></html>`);
     win.document.close();
   });
@@ -3550,6 +3650,29 @@ function savePlanAsPDF(pin) {
   
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#5a6478;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#0f2440;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#0f2440;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#0f2440;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body></html>`);
   win.document.close();
 }
@@ -4557,6 +4680,29 @@ function downloadPDF(idx) {
     
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#5a6478;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#0f2440;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#0f2440;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#0f2440;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body>
     </html>
   `);
@@ -4756,9 +4902,66 @@ async function markRevisionDone(pin) {
   if (!Object.keys(revisionRequests).length) closeDumajCellEditor();
 }
 
+
+// =====================================================
+// MEETING INVITE CHECK
+// =====================================================
+async function checkMeetingInvite() {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/meeting-invite.json`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (!res.ok) return;
+    const invite = await res.json();
+    if (!invite || !invite.link) return;
+    const shownKey = 'shown_meeting_' + invite.id;
+    if (localStorage.getItem(shownKey)) return;
+    document.getElementById('meeting-subject-label').textContent = invite.subject || '—';
+    const dt = invite.datetime ? new Date(invite.datetime).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+    document.getElementById('meeting-datetime-label').textContent = dt;
+    document.getElementById('meeting-join-btn').href = invite.link;
+    if (invite.supervisorName) document.getElementById('meeting-from-label').textContent = 'من: ' + invite.supervisorName;
+    if (invite.notes) {
+      document.getElementById('meeting-notes-label').textContent = invite.notes;
+      document.getElementById('meeting-notes-wrap').style.display = 'block';
+    }
+    document.getElementById('meeting-overlay').style.display = 'block';
+    document.getElementById('meeting-alert-box').style.display = 'block';
+    localStorage.setItem(shownKey, '1');
+  } catch(e) { console.warn('Meeting check failed:', e); }
+}
+
+function closeMeetingAlert() {
+  document.getElementById('meeting-overlay').style.display = 'none';
+  document.getElementById('meeting-alert-box').style.display = 'none';
+}
+
 </script>
 
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(26,58,92,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#5a6478;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#0f2440;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#0f2440;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#5a6478;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#0f2440;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body>
 </html>
