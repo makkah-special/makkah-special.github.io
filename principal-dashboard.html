@@ -492,7 +492,7 @@ async function sbPub(path){
 }
 // تحميل بيانات الحضور من Storage (يُخزَّن هناك فقط)
 async function loadAttData(prog,wk){
-  return await sbPub(`reports/${prog}/attendance/attendance-${wk}.json`);
+  return await sbGet(`/storage/v1/object/reports/${prog}/attendance/attendance-${wk}.json`);
 }
 
 // AUTH
