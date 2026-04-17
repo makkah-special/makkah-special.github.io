@@ -901,6 +901,7 @@
       <button class="admin-tab-btn" onclick="openAdminTab('upload',this)">📤 رفع التقارير</button>
       <button class="admin-tab-btn" onclick="openAdminTab('sigs',this);loadSignatures()">✍️ التوقيعات</button>
       <button class="admin-tab-btn" onclick="openAdminTab('schedule',this)">📅 جدول الحصص</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('meetings',this);loadMeetingTab()">📹 الاستدعاءات</button>
       <button class="admin-tab-btn" onclick="openAdminTab('settings',this);renderStudentPinList();loadGradeTeachers()">⚙️ الإعدادات</button>
     </div>
     <div class="admin-tab-pane active" id="admin-tab-list">
@@ -989,6 +990,18 @@
     <div class="admin-tab-pane" id="admin-tab-schedule">
       <div id="dumaj-schedule-container"></div>
     </div>
+    <div class="admin-tab-pane" id="admin-tab-meetings">
+      <div style="max-width:560px;margin:0 auto;padding:8px 0;">
+        <div style="background:#fff;border:1px solid var(--border,#e0d8c8);border-radius:14px;padding:20px 22px;margin-bottom:18px;">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px;">📹 استدعاءات الاجتماع</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:16px;">الاستدعاءات الواردة من المشرف التربوي</div>
+          <div id="meetings-tab-content">
+            <div style="text-align:center;padding:30px;color:#999;">⏳ جاري التحميل...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="admin-tab-pane" id="admin-tab-settings">
       <div style="max-width:560px;margin:0 auto;padding:8px 0">
         <!-- رمز المشرف -->
@@ -2016,6 +2029,7 @@ function openAdminTab(id, btn) {
   if (id === 'schedule') renderDumajSchedule();
   if (id === 'upload') populateUploadStudentSelect();
   if (id === 'settings') { loadGradeTeachers(); renderStudentPinList(); }
+  if (id === 'meetings') loadMeetingTab();
 }
 
 function renderStudentCards() {
@@ -4906,6 +4920,64 @@ function showAuditLog() {
   </div>`;
   overlay.style.display = 'block';
   box.style.display = 'block';
+}
+
+
+// ===== MEETING TAB =====
+let _lastMeetingInvite = null;
+
+async function loadMeetingTab() {
+  const el = document.getElementById('meetings-tab-content');
+  if (!el) return;
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/meeting-invite.json`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (!res.ok) {
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات حالياً</div>';
+      return;
+    }
+    const invite = await res.json();
+    if (!invite || !invite.link) {
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات حالياً</div>';
+      return;
+    }
+    _lastMeetingInvite = invite;
+    const dt = invite.datetime
+      ? new Date(invite.datetime).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})
+      : '—';
+    const shownKey = 'shown_meeting_' + invite.id;
+    const isNew = !localStorage.getItem(shownKey);
+    el.innerHTML = `
+      <div style="background:${isNew?'#fffbf0':'#f8f9fc'};border:2px solid ${isNew?'#f59e0b':'#e0d8c8'};border-radius:12px;padding:18px 20px;">
+        ${isNew?'<div style="background:#f59e0b;color:#fff;font-size:0.72rem;font-weight:800;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;">🆕 جديد</div>':''}
+        <div style="font-size:0.78rem;font-weight:700;color:#888;margin-bottom:4px;">من المشرف التربوي</div>
+        <div style="font-weight:900;font-size:1rem;color:#1a3a5c;margin-bottom:12px;">${invite.supervisorName || 'أحمد سعيد الزهراني'}</div>
+        <div style="background:#fff;border:1px solid #e0d8c8;border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+          <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:3px;">📌 الموضوع</div>
+          <div style="font-size:0.92rem;font-weight:800;color:#1a3a5c;">${invite.subject || '—'}</div>
+          <div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📅 الموعد</div>
+          <div style="font-size:0.88rem;font-weight:700;color:#1a3a5c;">${dt}</div>
+          ${invite.notes ? `<div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📝 ملاحظات</div><div style="font-size:0.84rem;color:#333;">${invite.notes}</div>` : ''}
+        </div>
+        <a href="${invite.link}" target="_blank"
+           style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.92rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.3);"
+           onclick="localStorage.setItem('shown_meeting_${invite.id}','1');this.closest('[id^=admin-tab]') && setTimeout(()=>loadMeetingTab(),500)">
+          🔗 انضم للاجتماع الآن
+        </a>
+        <button onclick="dismissMeeting('${invite.id}')" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;">
+          ✓ تم الاطلاع
+        </button>
+      </div>`;
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات</div>';
+  }
+}
+
+function dismissMeeting(id) {
+  localStorage.setItem('shown_meeting_' + id, '1');
+  loadMeetingTab();
+  showToast('✅ تم تعليم الاستدعاء كمقروء');
 }
 
 </script>
