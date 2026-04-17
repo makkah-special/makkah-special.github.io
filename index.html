@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -9,8 +10,21 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="منصة مَعَاك">
+<meta name="apple-mobile-web-app-title" content="منصة معاك">
 <meta name="theme-color" content="#080f1e">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://makkah-special.github.io">
+<meta property="og:title" content="منصة مَعَاك | مدرسة مكة المكرمة المتوسطة">
+<meta property="og:description" content="بوابة رقمية متكاملة لقسم ذوي الإعاقة — برامج الدمج الفكري ويسير التعليمي">
+<meta property="og:image" content="https://makkah-special.github.io/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="منصة مَعَاك">
+<meta property="og:locale" content="ar_SA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="منصة مَعَاك | مدرسة مكة المكرمة المتوسطة">
+<meta name="twitter:description" content="بوابة رقمية متكاملة لقسم ذوي الإعاقة">
+<meta name="twitter:image" content="https://makkah-special.github.io/icon-512.png">
 <title>منصة مَعَاك | مدرسة مكة المكرمة المتوسطة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -29,559 +43,559 @@
   --border:  rgba(255,255,255,0.08);
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+- { margin:0; padding:0; box-sizing:border-box; }
 
 body {
-  font-family: 'Cairo', sans-serif;
-  background: var(--navy);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
+font-family: ‘Cairo’, sans-serif;
+background: var(–navy);
+color: var(–text);
+min-height: 100vh;
+overflow-x: hidden;
 }
 
 /* ── BACKGROUND ── */
 .bg-grid {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(200,151,58,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,151,58,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+position: fixed; inset: 0; z-index: 0; pointer-events: none;
+background-image:
+linear-gradient(rgba(200,151,58,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(200,151,58,0.03) 1px, transparent 1px);
+background-size: 60px 60px;
 }
 .bg-glow {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(26,58,92,0.6) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(200,151,58,0.08) 0%, transparent 50%);
+position: fixed; inset: 0; z-index: 0; pointer-events: none;
+background:
+radial-gradient(ellipse 80% 50% at 20% 10%, rgba(26,58,92,0.6) 0%, transparent 60%),
+radial-gradient(ellipse 60% 40% at 80% 80%, rgba(200,151,58,0.08) 0%, transparent 50%);
 }
 
 /* ── HEADER ── */
 header {
-  position: relative; z-index: 10;
-  background: linear-gradient(180deg, rgba(8,15,30,0.98) 0%, rgba(8,15,30,0.95) 100%);
-  border-bottom: 1px solid rgba(200,151,58,0.2);
-  backdrop-filter: blur(20px);
+position: relative; z-index: 10;
+background: linear-gradient(180deg, rgba(8,15,30,0.98) 0%, rgba(8,15,30,0.95) 100%);
+border-bottom: 1px solid rgba(200,151,58,0.2);
+backdrop-filter: blur(20px);
 }
 
 .header-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+max-width: 1100px;
+margin: 0 auto;
+padding: 16px 24px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 16px;
 }
 
 .header-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+display: flex;
+align-items: center;
+gap: 14px;
 }
 
 .header-logo img {
-  height: 56px;
-  width: auto;
-  object-fit: contain;
-  filter: brightness(1.1);
+height: 56px;
+width: auto;
+object-fit: contain;
+filter: brightness(1.1);
 }
 
 .header-info { line-height: 1.5; }
 .header-info .school-name {
-  font-family: 'Tajawal', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--text);
+font-family: ‘Tajawal’, sans-serif;
+font-size: 0.95rem;
+font-weight: 800;
+color: var(–text);
 }
 .header-info .school-sub {
-  font-size: 0.72rem;
-  color: var(--muted);
+font-size: 0.72rem;
+color: var(–muted);
 }
 
 .header-badge {
-  background: linear-gradient(135deg, rgba(200,151,58,0.12), rgba(200,151,58,0.06));
-  border: 1px solid rgba(200,151,58,0.25);
-  color: var(--gold2);
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  white-space: nowrap;
+background: linear-gradient(135deg, rgba(200,151,58,0.12), rgba(200,151,58,0.06));
+border: 1px solid rgba(200,151,58,0.25);
+color: var(–gold2);
+padding: 6px 16px;
+border-radius: 20px;
+font-size: 0.75rem;
+font-weight: 700;
+white-space: nowrap;
 }
 
 /* ── HERO ── */
 .hero {
-  position: relative; z-index: 5;
-  text-align: center;
-  padding: 80px 24px 100px;
-  overflow: hidden;
+position: relative; z-index: 5;
+text-align: center;
+padding: 80px 24px 100px;
+overflow: hidden;
 }
 
 .hero::before {
-  content: '';
-  position: absolute;
-  top: -100px; left: 50%;
-  transform: translateX(-50%);
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(200,151,58,0.06) 0%, transparent 70%);
-  pointer-events: none;
+content: ‘’;
+position: absolute;
+top: -100px; left: 50%;
+transform: translateX(-50%);
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(200,151,58,0.06) 0%, transparent 70%);
+pointer-events: none;
 }
 
 .hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(200,151,58,0.08);
-  border: 1px solid rgba(200,151,58,0.2);
-  color: var(--gold2);
-  padding: 6px 18px;
-  border-radius: 30px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  margin-bottom: 28px;
-  animation: fadeUp 0.6s ease both;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(200,151,58,0.08);
+border: 1px solid rgba(200,151,58,0.2);
+color: var(–gold2);
+padding: 6px 18px;
+border-radius: 30px;
+font-size: 0.78rem;
+font-weight: 700;
+margin-bottom: 28px;
+animation: fadeUp 0.6s ease both;
 }
 
 .hero h1 {
-  font-family: 'Tajawal', sans-serif;
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 10px;
-  animation: fadeUp 0.7s ease both;
-  letter-spacing: -1px;
+font-family: ‘Tajawal’, sans-serif;
+font-size: clamp(3rem, 8vw, 5.5rem);
+font-weight: 900;
+line-height: 1.1;
+margin-bottom: 10px;
+animation: fadeUp 0.7s ease both;
+letter-spacing: -1px;
 }
 
 .hero h1 .brand {
-  background: linear-gradient(135deg, var(--gold2), var(--gold3));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+background: linear-gradient(135deg, var(–gold2), var(–gold3));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
 }
 
 .hero h1 .platform {
-  color: rgba(255,255,255,0.85);
-  font-size: 0.5em;
-  display: block;
-  font-weight: 400;
-  letter-spacing: 0;
-  margin-bottom: 4px;
+color: rgba(255,255,255,0.85);
+font-size: 0.5em;
+display: block;
+font-weight: 400;
+letter-spacing: 0;
+margin-bottom: 4px;
 }
 
 .hero-slogan {
-  margin: 24px auto 16px;
-  max-width: 700px;
-  animation: fadeUp 0.8s ease both;
+margin: 24px auto 16px;
+max-width: 700px;
+animation: fadeUp 0.8s ease both;
 }
 
 .hero-slogan-item {
-  display: inline-block;
-  margin: 4px 8px;
-  font-size: clamp(0.82rem, 2vw, 0.96rem);
-  color: rgba(255,255,255,0.65);
-  font-weight: 500;
+display: inline-block;
+margin: 4px 8px;
+font-size: clamp(0.82rem, 2vw, 0.96rem);
+color: rgba(255,255,255,0.65);
+font-weight: 500;
 }
 
 .hero-slogan-item strong {
-  color: var(--gold2);
-  font-weight: 800;
+color: var(–gold2);
+font-weight: 800;
 }
 
 .hero-sub {
-  color: var(--muted);
-  font-size: 0.88rem;
-  margin: 12px auto 40px;
-  animation: fadeUp 0.9s ease both;
+color: var(–muted);
+font-size: 0.88rem;
+margin: 12px auto 40px;
+animation: fadeUp 0.9s ease both;
 }
 
 .hero-btns {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  animation: fadeUp 1s ease both;
+display: flex;
+gap: 12px;
+justify-content: center;
+flex-wrap: wrap;
+animation: fadeUp 1s ease both;
 }
 
 .btn-gold {
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: var(--navy);
-  padding: 13px 28px;
-  border-radius: 14px;
-  font-weight: 800;
-  font-size: 0.9rem;
-  text-decoration: none;
-  transition: all 0.25s;
-  box-shadow: 0 4px 20px rgba(200,151,58,0.3);
+background: linear-gradient(135deg, var(–gold), var(–gold2));
+color: var(–navy);
+padding: 13px 28px;
+border-radius: 14px;
+font-weight: 800;
+font-size: 0.9rem;
+text-decoration: none;
+transition: all 0.25s;
+box-shadow: 0 4px 20px rgba(200,151,58,0.3);
 }
 .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,151,58,0.45); }
 
 .btn-glass {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.8);
-  padding: 13px 22px;
-  border-radius: 14px;
-  font-weight: 700;
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: all 0.25s;
+background: rgba(255,255,255,0.06);
+border: 1px solid rgba(255,255,255,0.14);
+color: rgba(255,255,255,0.8);
+padding: 13px 22px;
+border-radius: 14px;
+font-weight: 700;
+font-size: 0.88rem;
+text-decoration: none;
+transition: all 0.25s;
 }
 .btn-glass:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); color: #fff; }
 
 /* ── STATS BAR ── */
 .stats-bar {
-  position: relative; z-index: 5;
-  background: rgba(255,255,255,0.03);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 24px;
+position: relative; z-index: 5;
+background: rgba(255,255,255,0.03);
+border-top: 1px solid var(–border);
+border-bottom: 1px solid var(–border);
+padding: 20px 24px;
 }
 
 .stats-inner {
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  gap: 0;
-  justify-content: center;
+max-width: 800px;
+margin: 0 auto;
+display: flex;
+gap: 0;
+justify-content: center;
 }
 
 .stat-item {
-  flex: 1;
-  text-align: center;
-  padding: 8px 16px;
-  border-left: 1px solid var(--border);
+flex: 1;
+text-align: center;
+padding: 8px 16px;
+border-left: 1px solid var(–border);
 }
 .stat-item:last-child { border-left: none; }
 
 .stat-num {
-  display: block;
-  font-family: 'Tajawal', sans-serif;
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--gold2);
-  line-height: 1;
-  margin-bottom: 4px;
+display: block;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 2rem;
+font-weight: 900;
+color: var(–gold2);
+line-height: 1;
+margin-bottom: 4px;
 }
 .stat-label {
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-weight: 600;
+font-size: 0.72rem;
+color: var(–muted);
+font-weight: 600;
 }
 
 /* ── MAIN ── */
 main {
-  position: relative; z-index: 5;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 60px 24px 80px;
+position: relative; z-index: 5;
+max-width: 1100px;
+margin: 0 auto;
+padding: 60px 24px 80px;
 }
 
 /* ── SECTION HEADER ── */
 .sec-head {
-  margin-bottom: 32px;
-  text-align: center;
+margin-bottom: 32px;
+text-align: center;
 }
 .sec-label {
-  display: inline-block;
-  background: rgba(200,151,58,0.08);
-  border: 1px solid rgba(200,151,58,0.18);
-  color: var(--gold2);
-  padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
+display: inline-block;
+background: rgba(200,151,58,0.08);
+border: 1px solid rgba(200,151,58,0.18);
+color: var(–gold2);
+padding: 4px 14px;
+border-radius: 20px;
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 1px;
+margin-bottom: 10px;
+text-transform: uppercase;
 }
 .sec-title {
-  font-family: 'Tajawal', sans-serif;
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: var(--text);
-  margin-bottom: 6px;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 1.6rem;
+font-weight: 900;
+color: var(–text);
+margin-bottom: 6px;
 }
 .sec-sub {
-  color: var(--muted);
-  font-size: 0.88rem;
+color: var(–muted);
+font-size: 0.88rem;
 }
 
 /* ── PROGRAM CARDS ── */
 .programs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
-  gap: 20px;
-  margin-bottom: 70px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+gap: 20px;
+margin-bottom: 70px;
 }
 
 .prog-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.3s;
-  position: relative;
+background: rgba(255,255,255,0.03);
+border: 1px solid var(–border);
+border-radius: 20px;
+overflow: hidden;
+transition: all 0.3s;
+position: relative;
 }
 .prog-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
 
 .prog-card-stripe {
-  height: 4px;
-  width: 100%;
+height: 4px;
+width: 100%;
 }
 
 .prog-card-body { padding: 24px 22px; }
 
 .prog-icon {
-  font-size: 2.4rem;
-  margin-bottom: 14px;
-  display: block;
+font-size: 2.4rem;
+margin-bottom: 14px;
+display: block;
 }
 
 .prog-title {
-  font-family: 'Tajawal', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 900;
-  margin-bottom: 8px;
-  color: var(--text);
+font-family: ‘Tajawal’, sans-serif;
+font-size: 1.2rem;
+font-weight: 900;
+margin-bottom: 8px;
+color: var(–text);
 }
 
 .prog-desc {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 20px;
+font-size: 0.84rem;
+color: var(–muted);
+line-height: 1.8;
+margin-bottom: 20px;
 }
 
 .prog-stats {
-  display: flex;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 20px;
+display: flex;
+gap: 0;
+border: 1px solid var(–border);
+border-radius: 12px;
+overflow: hidden;
+margin-bottom: 20px;
 }
 .prog-stat {
-  flex: 1;
-  text-align: center;
-  padding: 10px 8px;
-  border-left: 1px solid var(--border);
+flex: 1;
+text-align: center;
+padding: 10px 8px;
+border-left: 1px solid var(–border);
 }
 .prog-stat:last-child { border-left: none; }
 .prog-stat-num {
-  display: block;
-  font-family: 'Tajawal', sans-serif;
-  font-size: 1.3rem;
-  font-weight: 900;
+display: block;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 1.3rem;
+font-weight: 900;
 }
 .prog-stat-lbl {
-  font-size: 0.68rem;
-  color: var(--muted);
+font-size: 0.68rem;
+color: var(–muted);
 }
 
 .prog-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: all 0.25s;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+width: 100%;
+padding: 12px;
+border-radius: 12px;
+font-weight: 800;
+font-size: 0.88rem;
+text-decoration: none;
+transition: all 0.25s;
 }
 
 /* ── PORTALS SECTION ── */
 .portals-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-  gap: 20px;
-  margin-bottom: 70px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+gap: 20px;
+margin-bottom: 70px;
 }
 
 .portal-card {
-  border-radius: 20px;
-  padding: 28px 24px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s;
+border-radius: 20px;
+padding: 28px 24px;
+position: relative;
+overflow: hidden;
+transition: all 0.3s;
 }
 .portal-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
 .portal-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: rgba(0,0,0,0.15);
-  pointer-events: none;
+content: ‘’;
+position: absolute; inset: 0;
+background: rgba(0,0,0,0.15);
+pointer-events: none;
 }
 
 .portal-card-inner { position: relative; z-index: 1; }
 
 .portal-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-.portal-title { font-family: 'Tajawal', sans-serif; font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 8px; }
+.portal-title { font-family: ‘Tajawal’, sans-serif; font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 8px; }
 .portal-desc { font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 16px; }
 
 .portal-features { margin-bottom: 20px; display: flex; flex-direction: column; gap: 6px; }
 .portal-feature {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 0.8rem; color: rgba(255,255,255,0.75);
+display: flex; align-items: center; gap: 8px;
+font-size: 0.8rem; color: rgba(255,255,255,0.75);
 }
 .portal-dot {
-  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
 }
 
 .portal-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: all 0.25s;
-  background: rgba(255,255,255,0.95);
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+width: 100%;
+padding: 12px;
+border-radius: 12px;
+font-weight: 800;
+font-size: 0.88rem;
+text-decoration: none;
+transition: all 0.25s;
+background: rgba(255,255,255,0.95);
 }
 .portal-btn:hover { background: #fff; transform: translateY(-1px); }
 
 /* ── ABOUT ── */
 .about-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-  gap: 20px;
-  margin-bottom: 70px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+gap: 20px;
+margin-bottom: 70px;
 }
 
 .about-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px 22px;
-  transition: border-color 0.3s;
+background: rgba(255,255,255,0.03);
+border: 1px solid var(–border);
+border-radius: 18px;
+padding: 24px 22px;
+transition: border-color 0.3s;
 }
 .about-card:hover { border-color: rgba(200,151,58,0.2); }
 .about-card h3 {
-  font-family: 'Tajawal', sans-serif;
-  font-size: 1rem;
-  font-weight: 900;
-  margin-bottom: 14px;
-  color: var(--gold2);
+font-family: ‘Tajawal’, sans-serif;
+font-size: 1rem;
+font-weight: 900;
+margin-bottom: 14px;
+color: var(–gold2);
 }
 .about-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .about-list li {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.7;
-  padding-right: 14px;
-  position: relative;
+font-size: 0.84rem;
+color: var(–muted);
+line-height: 1.7;
+padding-right: 14px;
+position: relative;
 }
 .about-list li::before {
-  content: '◈';
-  position: absolute; right: 0;
-  color: var(--gold);
-  font-size: 0.6rem;
-  top: 5px;
+content: ‘◈’;
+position: absolute; right: 0;
+color: var(–gold);
+font-size: 0.6rem;
+top: 5px;
 }
 
 /* ── STAFF ── */
 .staff-section {
-  background: rgba(200,151,58,0.04);
-  border: 1px solid rgba(200,151,58,0.12);
-  border-radius: 18px;
-  padding: 24px 22px;
-  margin-bottom: 70px;
-  text-align: center;
+background: rgba(200,151,58,0.04);
+border: 1px solid rgba(200,151,58,0.12);
+border-radius: 18px;
+padding: 24px 22px;
+margin-bottom: 70px;
+text-align: center;
 }
 .staff-title {
-  font-family: 'Tajawal', sans-serif;
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--gold2);
-  margin-bottom: 16px;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 1rem;
+font-weight: 800;
+color: var(–gold2);
+margin-bottom: 16px;
 }
 .staff-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .staff-tag {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.6);
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 600;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.1);
+color: rgba(255,255,255,0.6);
+padding: 5px 14px;
+border-radius: 20px;
+font-size: 0.78rem;
+font-weight: 600;
 }
 
 /* ── FOOTER ── */
 footer {
-  position: relative; z-index: 5;
-  background: rgba(8,15,30,0.98);
-  border-top: 1px solid rgba(200,151,58,0.15);
-  padding: 40px 24px;
-  text-align: center;
+position: relative; z-index: 5;
+background: rgba(8,15,30,0.98);
+border-top: 1px solid rgba(200,151,58,0.15);
+padding: 40px 24px;
+text-align: center;
 }
 
 .footer-inner { max-width: 700px; margin: 0 auto; }
 
 .footer-logo-text {
-  font-family: 'Tajawal', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--gold2);
-  margin-bottom: 4px;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 1.4rem;
+font-weight: 900;
+color: var(–gold2);
+margin-bottom: 4px;
 }
 .footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
-.footer-credit { font-size: 0.78rem; color: var(--gold); font-weight: 700; margin-bottom: 28px; }
+.footer-credit { font-size: 0.78rem; color: var(–gold); font-weight: 700; margin-bottom: 28px; }
 
 .footer-divider {
-  border: none;
-  border-top: 1px solid rgba(255,255,255,0.07);
-  margin-bottom: 20px;
+border: none;
+border-top: 1px solid rgba(255,255,255,0.07);
+margin-bottom: 20px;
 }
 
 .footer-section { margin-bottom: 16px; }
 .footer-sec-label {
-  font-size: 0.62rem;
-  color: rgba(255,255,255,0.2);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
+font-size: 0.62rem;
+color: rgba(255,255,255,0.2);
+letter-spacing: 2px;
+text-transform: uppercase;
+margin-bottom: 10px;
 }
 .footer-links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 
 .fl-gold {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(200,151,58,0.1);
-  border: 1px solid rgba(200,151,58,0.25);
-  color: rgba(200,151,58,0.85);
-  padding: 8px 20px; border-radius: 22px;
-  font-size: 0.8rem; font-weight: 700;
-  text-decoration: none; transition: all 0.2s;
+display: inline-flex; align-items: center; gap: 6px;
+background: rgba(200,151,58,0.1);
+border: 1px solid rgba(200,151,58,0.25);
+color: rgba(200,151,58,0.85);
+padding: 8px 20px; border-radius: 22px;
+font-size: 0.8rem; font-weight: 700;
+text-decoration: none; transition: all 0.2s;
 }
-.fl-gold:hover { background: rgba(200,151,58,0.2); color: var(--gold2); }
+.fl-gold:hover { background: rgba(200,151,58,0.2); color: var(–gold2); }
 
 .fl-white {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.55);
-  padding: 7px 16px; border-radius: 20px;
-  font-size: 0.78rem; font-weight: 600;
-  text-decoration: none; transition: all 0.2s;
+display: inline-flex; align-items: center; gap: 6px;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.12);
+color: rgba(255,255,255,0.55);
+padding: 7px 16px; border-radius: 20px;
+font-size: 0.78rem; font-weight: 600;
+text-decoration: none; transition: all 0.2s;
 }
 .fl-white:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
 .fl-dim {
-  color: rgba(255,255,255,0.3);
-  font-size: 0.7rem; text-decoration: none;
-  padding: 3px 12px; border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 8px; transition: all 0.2s;
+color: rgba(255,255,255,0.3);
+font-size: 0.7rem; text-decoration: none;
+padding: 3px 12px; border: 1px solid rgba(255,255,255,0.07);
+border-radius: 8px; transition: all 0.2s;
 }
 .fl-dim:hover { color: rgba(200,151,58,0.7); border-color: rgba(200,151,58,0.2); }
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+from { opacity: 0; transform: translateY(24px); }
+to   { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.7s ease; }
@@ -589,62 +603,63 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  /* Header */
-  .header-inner { padding: 12px 16px; gap: 10px; }
-  .header-logo img { height: 44px; }
-  .header-info .school-name { font-size: 0.82rem; }
-  .header-info .school-sub { font-size: 0.65rem; }
-  .header-badge { font-size: 0.68rem; padding: 5px 10px; }
+/* Header */
+.header-inner { padding: 12px 16px; gap: 10px; }
+.header-logo img { height: 44px; }
+.header-info .school-name { font-size: 0.82rem; }
+.header-info .school-sub { font-size: 0.65rem; }
+.header-badge { font-size: 0.68rem; padding: 5px 10px; }
 
-  /* Hero */
-  .hero { padding: 44px 16px 56px; }
-  .hero h1 { font-size: 3rem; letter-spacing: -0.5px; }
-  .hero h1 .platform { font-size: 0.45em; }
-  .hero-eyebrow { font-size: 0.72rem; padding: 5px 14px; }
-  .hero-slogan { margin: 18px auto 14px; }
-  .hero-slogan-item { font-size: 0.76rem; margin: 3px 5px; }
-  .hero-sub { font-size: 0.82rem; }
-  .hero-btns { gap: 8px; }
-  .btn-gold { padding: 11px 20px; font-size: 0.84rem; }
-  .btn-glass { padding: 11px 16px; font-size: 0.82rem; }
+/* Hero */
+.hero { padding: 44px 16px 56px; }
+.hero h1 { font-size: 3rem; letter-spacing: -0.5px; }
+.hero h1 .platform { font-size: 0.45em; }
+.hero-eyebrow { font-size: 0.72rem; padding: 5px 14px; }
+.hero-slogan { margin: 18px auto 14px; }
+.hero-slogan-item { font-size: 0.76rem; margin: 3px 5px; }
+.hero-sub { font-size: 0.82rem; }
+.hero-btns { gap: 8px; }
+.btn-gold { padding: 11px 20px; font-size: 0.84rem; }
+.btn-glass { padding: 11px 16px; font-size: 0.82rem; }
 
-  /* Stats */
-  .stats-inner { gap: 0; }
-  .stat-num { font-size: 1.5rem; }
-  .stat-label { font-size: 0.64rem; }
-  .stat-item { padding: 8px 8px; }
+/* Stats */
+.stats-inner { gap: 0; }
+.stat-num { font-size: 1.5rem; }
+.stat-label { font-size: 0.64rem; }
+.stat-item { padding: 8px 8px; }
 
-  /* Main */
-  main { padding: 36px 16px 56px; }
+/* Main */
+main { padding: 36px 16px 56px; }
 
-  /* Sections */
-  .sec-title { font-size: 1.3rem; }
-  .programs-grid { grid-template-columns: 1fr; gap: 14px; }
-  .portals-grid { grid-template-columns: 1fr; gap: 14px; }
-  .about-grid { grid-template-columns: 1fr; gap: 14px; }
+/* Sections */
+.sec-title { font-size: 1.3rem; }
+.programs-grid { grid-template-columns: 1fr; gap: 14px; }
+.portals-grid { grid-template-columns: 1fr; gap: 14px; }
+.about-grid { grid-template-columns: 1fr; gap: 14px; }
 
-  /* Cards */
-  .prog-card-body { padding: 18px 16px; }
-  .portal-card { padding: 22px 18px; }
-  .about-card { padding: 18px 16px; }
+/* Cards */
+.prog-card-body { padding: 18px 16px; }
+.portal-card { padding: 22px 18px; }
+.about-card { padding: 18px 16px; }
 
-  /* Footer */
-  footer { padding: 28px 16px; }
-  .footer-logo-text { font-size: 1.2rem; }
-  .fl-gold { font-size: 0.76rem; padding: 7px 14px; }
-  .fl-white { font-size: 0.74rem; padding: 6px 12px; }
+/* Footer */
+footer { padding: 28px 16px; }
+.footer-logo-text { font-size: 1.2rem; }
+.fl-gold { font-size: 0.76rem; padding: 7px 14px; }
+.fl-white { font-size: 0.74rem; padding: 6px 12px; }
 }
 
 @media (max-width: 400px) {
-  .hero h1 { font-size: 2.4rem; }
-  .hero-btns { flex-direction: column; align-items: center; }
-  .btn-gold, .btn-glass { width: 100%; max-width: 280px; justify-content: center; }
-  .stats-inner { flex-wrap: wrap; }
-  .stat-item { width: 50%; border-left: none; border-bottom: 1px solid var(--border); }
-  .stat-item:nth-child(odd) { border-left: 1px solid var(--border); }
-  .footer-links { gap: 6px; }
+.hero h1 { font-size: 2.4rem; }
+.hero-btns { flex-direction: column; align-items: center; }
+.btn-gold, .btn-glass { width: 100%; max-width: 280px; justify-content: center; }
+.stats-inner { flex-wrap: wrap; }
+.stat-item { width: 50%; border-left: none; border-bottom: 1px solid var(–border); }
+.stat-item:nth-child(odd) { border-left: 1px solid var(–border); }
+.footer-links { gap: 6px; }
 }
 </style>
+
 </head>
 <body>
 
@@ -652,6 +667,7 @@ footer {
 <div class="bg-glow"></div>
 
 <!-- HEADER -->
+
 <header>
   <div class="header-inner">
     <div class="header-brand">
@@ -661,7 +677,8 @@ footer {
         </a>
       </div>
       <div class="header-info">
-        <div class="school-sub">الإدارة العامة للتعليم بمحافظة جدة — قسم ذوي الإعاقة</div>
+        <div class="school-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="school-sub">الإدارة العامة للتعليم بمكة المكرمة — قسم ذوي الإعاقة</div>
       </div>
     </div>
     <div class="header-badge">✦ البوابة الرقمية 1447هـ</div>
@@ -669,8 +686,9 @@ footer {
 </header>
 
 <!-- HERO -->
+
 <div class="hero">
-  <div class="hero-eyebrow">🏫 مدرسة مكة المكرمة المتوسطة</div>
+  <div class="hero-eyebrow">🏫 منصة رقمية متكاملة</div>
   <h1>
     <span class="platform">بوابة</span>
     <span class="brand">مَعَاك</span>
@@ -688,13 +706,14 @@ footer {
 
   <div class="hero-btns">
     <a href="#programs" class="btn-gold">🔍 استعراض البرامج</a>
-    <a href="dumaj-students.html" class="btn-glass">🧑🏻‍🏫 بوابة الدمج الفكري</a>
     <a href="students.html" class="btn-glass">📘 بوابة يسير</a>
+    <a href="dumaj-students.html" class="btn-glass">🧑🏻‍🏫 بوابة الدمج</a>
     <a href="contact.html" class="btn-glass">📩 تواصل معنا</a>
   </div>
 </div>
 
 <!-- STATS -->
+
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat-item">
@@ -717,9 +736,11 @@ footer {
 </div>
 
 <!-- MAIN -->
+
 <main>
 
   <!-- البرامج -->
+
   <div class="fade-in" id="programs">
     <div class="sec-head">
       <div class="sec-label">البرامج</div>
@@ -727,64 +748,68 @@ footer {
       <div class="sec-sub">اختر البرنامج للدخول للصفحة التفصيلية</div>
     </div>
 
-    <div class="programs-grid">
+```
+<div class="programs-grid">
 
-      <div class="prog-card">
-        <div class="prog-card-stripe" style="background:linear-gradient(90deg,#2563a8,#3b82f6);"></div>
-        <div class="prog-card-body">
-          <span class="prog-icon">🧑🏻‍🏫</span>
-          <div class="prog-title">برنامج الدمج الفكري</div>
-          <div class="prog-desc">يقدم خدمات تربوية وتعليمية لطلاب الإعاقة الفكرية ضمن بيئة دراسية دامجة مع أقرانهم</div>
-          <div class="prog-stats">
-            <div class="prog-stat">
-              <span class="prog-stat-num" style="color:#3b82f6;" id="dis-count">21</span>
-              <span class="prog-stat-lbl">طالب مقيد</span>
-            </div>
-            <div class="prog-stat">
-              <span class="prog-stat-num" style="color:#3b82f6;">6</span>
-              <span class="prog-stat-lbl">معلمين</span>
-            </div>
-            <div class="prog-stat">
-              <span class="prog-stat-num" style="color:#3b82f6;">✅</span>
-              <span class="prog-stat-lbl">خطط فردية</span>
-            </div>
-          </div>
-          <a href="Intellectualdisability.html" class="prog-btn" style="background:rgba(37,99,168,0.12);border:1px solid rgba(37,99,168,0.3);color:#60a5fa;">
-            دخول الصفحة ←
-          </a>
+  <div class="prog-card">
+    <div class="prog-card-stripe" style="background:linear-gradient(90deg,#2563a8,#3b82f6);"></div>
+    <div class="prog-card-body">
+      <span class="prog-icon">🧑🏻‍🏫</span>
+      <div class="prog-title">برنامج الدمج الفكري</div>
+      <div class="prog-desc">يقدم خدمات تربوية وتعليمية لطلاب الإعاقة الفكرية ضمن بيئة دراسية دامجة مع أقرانهم</div>
+      <div class="prog-stats">
+        <div class="prog-stat">
+          <span class="prog-stat-num" style="color:#3b82f6;" id="dis-count">21</span>
+          <span class="prog-stat-lbl">طالب مقيد</span>
+        </div>
+        <div class="prog-stat">
+          <span class="prog-stat-num" style="color:#3b82f6;">6</span>
+          <span class="prog-stat-lbl">معلمين</span>
+        </div>
+        <div class="prog-stat">
+          <span class="prog-stat-num" style="color:#3b82f6;">✅</span>
+          <span class="prog-stat-lbl">خطط فردية</span>
         </div>
       </div>
-
-      <div class="prog-card">
-        <div class="prog-card-stripe" style="background:linear-gradient(90deg,#1a6b4a,#2d9e6b);"></div>
-        <div class="prog-card-body">
-          <span class="prog-icon">📘</span>
-          <div class="prog-title">برنامج يسير التعليمي</div>
-          <div class="prog-desc">يدعم الطلاب ذوي بطء التعلم بخطط تدخل مناسبة وأدوات تعليمية فعّالة</div>
-          <div class="prog-stats">
-            <div class="prog-stat">
-              <span class="prog-stat-num" style="color:#2d9e6b;" id="slow-count">20</span>
-              <span class="prog-stat-lbl">طالب مقيد</span>
-            </div>
-            <div class="prog-stat">
-              <span class="prog-stat-num" style="color:#2d9e6b;">2</span>
-              <span class="prog-stat-lbl">معلمين</span>
-            </div>
-            <div class="prog-stat">
-              <span class="prog-stat-num" style="color:#2d9e6b;">📊</span>
-              <span class="prog-stat-lbl">لوحات متابعة</span>
-            </div>
-          </div>
-          <a href="Slowlearning.html" class="prog-btn" style="background:rgba(26,107,74,0.12);border:1px solid rgba(26,107,74,0.3);color:#4ade80;">
-            دخول الصفحة ←
-          </a>
-        </div>
-      </div>
-
+      <a href="Intellectualdisability.html" class="prog-btn" style="background:rgba(37,99,168,0.12);border:1px solid rgba(37,99,168,0.3);color:#60a5fa;">
+        دخول الصفحة ←
+      </a>
     </div>
   </div>
 
+  <div class="prog-card">
+    <div class="prog-card-stripe" style="background:linear-gradient(90deg,#1a6b4a,#2d9e6b);"></div>
+    <div class="prog-card-body">
+      <span class="prog-icon">📘</span>
+      <div class="prog-title">برنامج يسير التعليمي</div>
+      <div class="prog-desc">يدعم الطلاب ذوي بطء التعلم بخطط تدخل مناسبة وأدوات تعليمية فعّالة</div>
+      <div class="prog-stats">
+        <div class="prog-stat">
+          <span class="prog-stat-num" style="color:#2d9e6b;" id="slow-count">20</span>
+          <span class="prog-stat-lbl">طالب مقيد</span>
+        </div>
+        <div class="prog-stat">
+          <span class="prog-stat-num" style="color:#2d9e6b;">2</span>
+          <span class="prog-stat-lbl">معلمين</span>
+        </div>
+        <div class="prog-stat">
+          <span class="prog-stat-num" style="color:#2d9e6b;">📊</span>
+          <span class="prog-stat-lbl">لوحات متابعة</span>
+        </div>
+      </div>
+      <a href="Slowlearning.html" class="prog-btn" style="background:rgba(26,107,74,0.12);border:1px solid rgba(26,107,74,0.3);color:#4ade80;">
+        دخول الصفحة ←
+      </a>
+    </div>
+  </div>
+
+</div>
+```
+
+  </div>
+
   <!-- بوابات الطلاب -->
+
   <div class="fade-in">
     <div class="sec-head">
       <div class="sec-label">الطلاب وأولياء الأمور</div>
@@ -792,40 +817,44 @@ footer {
       <div class="sec-sub">بوابة خاصة لكل برنامج — الدخول برمز سري خاص بكل طالب</div>
     </div>
 
-    <div class="portals-grid">
+```
+<div class="portals-grid">
 
-      <div class="portal-card" style="background:linear-gradient(135deg,#7a2800,#c25a00);">
-        <div class="portal-card-inner">
-          <span class="portal-icon">🧑🏻‍🏫</span>
-          <div class="portal-title">بوابة طلاب الدمج الفكري</div>
-          <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</div>
-          <div class="portal-features">
-            <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> الخطة التعليمية الفردية</div>
-            <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> التقارير الفصلية</div>
-            <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> إقرار ولي الأمر</div>
-          </div>
-          <a href="dumaj-students.html" class="portal-btn" style="color:#c25a00;">🔐 دخول البوابة</a>
-        </div>
+  <div class="portal-card" style="background:linear-gradient(135deg,#7a2800,#c25a00);">
+    <div class="portal-card-inner">
+      <span class="portal-icon">🧑🏻‍🏫</span>
+      <div class="portal-title">بوابة طلاب الدمج الفكري</div>
+      <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</div>
+      <div class="portal-features">
+        <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> الخطة التعليمية الفردية</div>
+        <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> التقارير الفصلية</div>
+        <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> إقرار ولي الأمر</div>
       </div>
-
-      <div class="portal-card" style="background:linear-gradient(135deg,#0d3320,#1a6b4a);">
-        <div class="portal-card-inner">
-          <span class="portal-icon">📘</span>
-          <div class="portal-title">بوابة طلاب يسير</div>
-          <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج يسير التعليمي</div>
-          <div class="portal-features">
-            <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> الخطة التعليمية الفردية</div>
-            <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> التقارير الفصلية</div>
-            <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> إقرار ولي الأمر</div>
-          </div>
-          <a href="students.html" class="portal-btn" style="color:#1a6b4a;">🔐 دخول البوابة</a>
-        </div>
-      </div>
-
+      <a href="dumaj-students.html" class="portal-btn" style="color:#c25a00;">🔐 دخول البوابة</a>
     </div>
   </div>
 
+  <div class="portal-card" style="background:linear-gradient(135deg,#0d3320,#1a6b4a);">
+    <div class="portal-card-inner">
+      <span class="portal-icon">📘</span>
+      <div class="portal-title">بوابة طلاب يسير</div>
+      <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج يسير التعليمي</div>
+      <div class="portal-features">
+        <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> الخطة التعليمية الفردية</div>
+        <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> التقارير الفصلية</div>
+        <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> إقرار ولي الأمر</div>
+      </div>
+      <a href="students.html" class="portal-btn" style="color:#1a6b4a;">🔐 دخول البوابة</a>
+    </div>
+  </div>
+
+</div>
+```
+
+  </div>
+
   <!-- عن القسم -->
+
   <div class="fade-in">
     <div class="sec-head">
       <div class="sec-label">عن القسم</div>
@@ -833,32 +862,36 @@ footer {
       <div class="sec-sub">محاور عمل قسم ذوي الإعاقة</div>
     </div>
 
-    <div class="about-grid">
-      <div class="about-card">
-        <h3>🎯 رسالتنا</h3>
-        <ul class="about-list">
-          <li>متابعة البرامج والخطط الفردية والتعليمية لكل طالب</li>
-          <li>التعاون والتواصل الدائم مع أولياء الأمور</li>
-          <li>التوعية والإرشاد داخل المدرسة للمعلمين والطلاب</li>
-          <li>تطبيق أحدث الأساليب التربوية في مجال التربية الخاصة</li>
-        </ul>
-      </div>
-      <div class="about-card">
-        <h3>📩 تواصل رسمي</h3>
-        <ul class="about-list">
-          <li>للاستفسارات والملاحظات يمكن التواصل عبر صفحة التواصل</li>
-          <li>نضمن الرد في أقرب وقت ممكن خلال أيام الدراسة</li>
-          <li>يمكن لولي الأمر التوقيع إلكترونياً على الخطة الفردية</li>
-          <li>جميع البيانات سرية ومحمية لضمان خصوصية الطلاب</li>
-        </ul>
-        <div style="margin-top:18px;">
-          <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:10px 22px;">فتح صفحة التواصل ←</a>
-        </div>
-      </div>
+```
+<div class="about-grid">
+  <div class="about-card">
+    <h3>🎯 رسالتنا</h3>
+    <ul class="about-list">
+      <li>متابعة البرامج والخطط الفردية والتعليمية لكل طالب</li>
+      <li>التعاون والتواصل الدائم مع أولياء الأمور</li>
+      <li>التوعية والإرشاد داخل المدرسة للمعلمين والطلاب</li>
+      <li>تطبيق أحدث الأساليب التربوية في مجال التربية الخاصة</li>
+    </ul>
+  </div>
+  <div class="about-card">
+    <h3>📩 تواصل رسمي</h3>
+    <ul class="about-list">
+      <li>للاستفسارات والملاحظات يمكن التواصل عبر صفحة التواصل</li>
+      <li>نضمن الرد في أقرب وقت ممكن خلال أيام الدراسة</li>
+      <li>يمكن لولي الأمر التوقيع إلكترونياً على الخطة الفردية</li>
+      <li>جميع البيانات سرية ومحمية لضمان خصوصية الطلاب</li>
+    </ul>
+    <div style="margin-top:18px;">
+      <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:10px 22px;">فتح صفحة التواصل ←</a>
     </div>
+  </div>
+</div>
+```
+
   </div>
 
   <!-- الكادر التعليمي -->
+
   <div class="staff-section fade-in">
     <div class="staff-title">👨‍🏫 الكادر التعليمي</div>
     <div class="staff-tags">
@@ -867,7 +900,6 @@ footer {
       <span class="staff-tag">معلم تربية فنية</span>
       <span class="staff-tag">معلم تربية بدنية</span>
       <span class="staff-tag">موجه طلابي</span>
-      <span class="staff-tag">رائد النشاط</span>
       <span class="staff-tag">إداري تربية خاصة</span>
       <span class="staff-tag">مدير المدرسة</span>
       <span class="staff-tag">وكيل المدرسة</span>
@@ -877,41 +909,45 @@ footer {
 </main>
 
 <!-- FOOTER -->
+
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo-text">منصة مَعَاك</div>
+    <div class="footer-logo-text">منصة معاك</div>
     <div class="footer-copy">© 2026 مدرسة مكة المكرمة المتوسطة</div>
     <div class="footer-credit">إعداد وتنفيذ: أ. سعد سالم الزهراني</div>
     <hr class="footer-divider">
 
-    <div class="footer-section">
-      <div class="footer-sec-label">الإشراف التربوي</div>
-      <div class="footer-links">
-        <a href="supervisor.html" class="fl-gold">🏛️ مشرف ذوي الإعاقة — الإدارة العامة</a>
-      </div>
-    </div>
+```
+<div class="footer-section">
+  <div class="footer-sec-label">الإشراف التربوي</div>
+  <div class="footer-links">
+    <a href="supervisor.html" class="fl-gold">🏛️ مشرف ذوي الإعاقة — الإدارة العامة</a>
+  </div>
+</div>
 
-    <div class="footer-section">
-      <div class="footer-sec-label">مشرفو البرامج</div>
-      <div class="footer-links">
-        <a href="admin-dumaj.html" class="fl-white">🔐 مشرف الدمج الفكري</a>
-        <a href="admin-yaseer.html" class="fl-white">🔐 مشرف يسير التعليمي</a>
-      </div>
-    </div>
+<div class="footer-section">
+  <div class="footer-sec-label">مشرفو البرامج</div>
+  <div class="footer-links">
+    <a href="admin-dumaj.html" class="fl-white">🔐 مشرف الدمج الفكري</a>
+    <a href="admin-yaseer.html" class="fl-white">🔐 مشرف يسير التعليمي</a>
+  </div>
+</div>
 
-    <div class="footer-section">
-      <div class="footer-sec-label">بوابة المعلمين</div>
-      <div class="footer-links">
-        <a href="teachers-dumaj.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">👨‍🏫 معلمو الدمج</a>
-        <a href="teachers-yaseer.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">📘 معلمو يسير</a>
-      </div>
-    </div>
+<div class="footer-section">
+  <div class="footer-sec-label">بوابة المعلمين</div>
+  <div class="footer-links">
+    <a href="teachers-dumaj.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">👨‍🏫 معلمو الدمج</a>
+    <a href="teachers-yaseer.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">📘 معلمو يسير</a>
+  </div>
+</div>
 
-    <div class="footer-section" style="margin-bottom:0;">
-      <div class="footer-links">
-        <a href="principal-dashboard.html" class="fl-dim">🏫 إدارة المدرسة</a>
-      </div>
-    </div>
+<div class="footer-section" style="margin-bottom:0;">
+  <div class="footer-links">
+    <a href="principal-dashboard.html" class="fl-dim">🏫 إدارة المدرسة</a>
+  </div>
+</div>
+```
+
   </div>
 </footer>
 
@@ -942,5 +978,6 @@ footer {
     animateCount(document.getElementById('cnt3'), 8);
   }, 400);
 </script>
+
 </body>
 </html>
