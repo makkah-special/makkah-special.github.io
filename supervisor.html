@@ -531,6 +531,42 @@ footer strong { color:var(--accent-light); }
 const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
 const SB_URL       = SUPABASE_URL;
+
+// ===== AUDIT SYSTEM =====
+const AUDIT_USER    = "أحمد سعيد الزهراني";
+const AUDIT_PROGRAM = "مشرف ذوي الإعاقة";
+const AUDIT_FILE    = 'reports/audit/audit-log.json';
+let auditLog = [];
+
+async function loadAuditLog() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${AUDIT_FILE}`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (res.ok) { const data = await res.json(); auditLog = Array.isArray(data) ? data : []; }
+  } catch(e) { auditLog = []; }
+}
+
+async function saveAuditLog() {
+  try {
+    const blob = new Blob([JSON.stringify(auditLog)], { type: 'application/json' });
+    await fetch(`${SUPABASE_URL}/storage/v1/object/${AUDIT_FILE}`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+                 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: blob
+    });
+  } catch(e) {}
+}
+
+async function logAudit(action, details = {}) {
+  const entry = { id: Date.now(), timestamp: new Date().toISOString(),
+    user: AUDIT_USER, program: AUDIT_PROGRAM, action, details };
+  auditLog.unshift(entry);
+  if (auditLog.length > 500) auditLog = auditLog.slice(0, 500);
+  saveAuditLog();
+}
+
 const SB_KEY       = SUPABASE_KEY;
 let SUPERVISOR_PIN = "7441";
 const SUPERVISOR_NAME  = "أحمد سعيد الزهراني";
@@ -611,6 +647,8 @@ function checkPin() {
     document.getElementById('pin-screen').style.display = 'none';
     document.getElementById('portal').style.display = 'block';
     initPortal();
+    loadAuditLog();
+    logAudit('دخول لوحة الإشراف', {});
   } else {
     err.style.display = 'block';
     inp.classList.add('error');
@@ -1161,6 +1199,7 @@ function requestRevision(pin) {
   renderStudents();
   renderPlans();
   showToast('🔄 تم إرسال طلب التعديل للمعلم');
+  logAudit('طلب تعديل خطة', { studentName: ALL_STUDENTS[pin]?.name, pin, notes: notes.slice(0,50) });
 }
 
 let revisionPending = {};
