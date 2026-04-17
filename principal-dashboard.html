@@ -260,7 +260,7 @@ footer strong{color:var(--accent-light);}
     <button class="tab-btn" onclick="switchTab('attendance',this)">📋 الحضور</button>
     <button class="tab-btn" onclick="switchTab('students',this)">👨‍🎓 الطلاب</button>
     <button class="tab-btn" onclick="switchTab('timetable',this)">📅 الجداول</button>
-    <button class="tab-btn" onclick="switchTab('portfolio',this)">📁 البورتفوليو</button>
+    <button class="tab-btn" onclick="switchTab('portfolio',this)">📁 الاقرارات</button>
     <button class="tab-btn" onclick="switchTab('settings',this)">⚙️ الإعدادات</button>
   </div>
 
@@ -285,8 +285,8 @@ footer strong{color:var(--accent-light);}
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div class="sec-title" style="border:none;margin:0;padding:0;">📋 كشف الحضور والغياب</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchAttProg('yaseer',this)">📘 يسير</button>
-        <button class="prog-btn" onclick="switchAttProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn active" onclick="switchAttProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchAttProg('yaseer',this)">📘 يسير</button>
       </div>
     </div>
     <div class="week-nav">
@@ -309,8 +309,8 @@ footer strong{color:var(--accent-light);}
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div class="sec-title" style="border:none;margin:0;padding:0;">👨‍🎓 ملفات الطلاب</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchStudProg('yaseer',this)">📘 يسير</button>
-        <button class="prog-btn" onclick="switchStudProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn active" onclick="switchStudProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchStudProg('yaseer',this)">📘 يسير</button>
       </div>
     </div>
     <input type="text" class="stu-search" id="stu-q" placeholder="🔍 ابحث باسم الطالب..." oninput="filterStu()">
@@ -322,8 +322,8 @@ footer strong{color:var(--accent-light);}
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div class="sec-title" style="border:none;margin:0;padding:0;">📅 جداول الحصص</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchTTProg('yaseer',this)">📘 يسير</button>
-        <button class="prog-btn" onclick="switchTTProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn active" onclick="switchTTProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchTTProg('yaseer',this)">📘 يسير</button>
       </div>
     </div>
     <div class="grade-tabs" id="grade-tabs"></div>
@@ -333,10 +333,10 @@ footer strong{color:var(--accent-light);}
   <!-- PORTFOLIO -->
   <div class="tab-pane" id="tab-portfolio">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-      <div class="sec-title" style="border:none;margin:0;padding:0;">📁 البورتفوليو والتوقيعات</div>
+      <div class="sec-title" style="border:none;margin:0;padding:0;">📁 الاقرارات</div>
       <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchPortProg('yaseer',this)">📘 يسير</button>
-        <button class="prog-btn" onclick="switchPortProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn active" onclick="switchPortProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchPortProg('yaseer',this)">📘 يسير</button>
       </div>
     </div>
     <div class="port-grid" id="port-grid"><div class="loading">⏳ جاري التحميل...</div></div>
@@ -460,7 +460,7 @@ const DS=[
   {pin:'2335',name:'مؤيد نعيم ابراهيم بدير',grade:'الثالث المتوسط / ١'},
   {pin:'9258',name:'وليد عبدالله يحي الشهري',grade:'الثالث المتوسط / ١'},
 ];
-let attWk=getSun(new Date()), attProg='yaseer', studProg='yaseer', ttProg='yaseer', portProg='yaseer', ttGrade='أول متوسط';
+let attWk=getSun(new Date()), attProg='dumaj', studProg='dumaj', ttProg='dumaj', portProg='dumaj', ttGrade='أول متوسط';
 
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 function getSun(d){
