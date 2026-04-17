@@ -882,7 +882,8 @@ async function saveAttendance() {
 async function loadAttendance(wk) {
   try {
     const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/${PROGRAM}/attendance/attendance-${wk}.json`
+      `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`,
+      { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
     );
     if (!res.ok) return;
     const payload = await res.json();
