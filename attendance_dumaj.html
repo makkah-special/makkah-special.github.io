@@ -885,7 +885,8 @@ async function loadAttendance(wk) {
       `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`,
       { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
     );
-    if (!res.ok) return;
+    // 400/404 = الملف غير موجود بعد — ابدأ بكشف فارغ
+    if (!res.ok) { renderTable(); updateStats(); return; }
     const payload = await res.json();
     if (payload.data) {
       attendanceData[wk] = payload.data;
