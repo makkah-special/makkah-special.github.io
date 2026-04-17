@@ -435,6 +435,7 @@ tbody tr:last-child { border-bottom:none; }
         <!-- حقل ميلادي -->
         <div class="cal-field-wrap" id="miladiWrap">
           <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)">
+          <button onclick="goToCurrentWeek()" style="background:#1a3a5c;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">📅 الأسبوع الحالي</button>
         </div>
         <!-- حقل هجري بنفس شكل الميلادي -->
         <div class="cal-field-wrap hijri-wrap" id="hijriWrap" style="display:none;">
@@ -1043,11 +1044,21 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+
+function goToCurrentWeek() {
+  currentWeekStart = getThisSunday();
+  document.getElementById('weekStart').value = weekKey(currentWeekStart);
+  renderAll();
+  loadAttendance(weekKey(currentWeekStart));
+}
+
 // ===== INIT =====
 window.addEventListener('load', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
+  // تعيين التاريخ في الـ input تلقائياً
+  currentWeekStart = getThisSunday();
+  document.getElementById('weekStart').value = weekKey(currentWeekStart);
   renderAll();
-  // حمّل بيانات الأسبوع الحالي من السحابة
   loadAttendance(weekKey(currentWeekStart));
 });
 window.addEventListener('resize', () => {
