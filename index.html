@@ -9,936 +9,643 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="مدرسة مكة">
-<meta name="theme-color" content="#1a3a34">
+<meta name="apple-mobile-web-app-title" content="منصة معاك">
+<meta name="theme-color" content="#080f1e">
 <title>منصة معاك | مدرسة مكة المكرمة المتوسطة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #1a3a5c;
-    --primary-light: #2563a8;
-    --accent: #c8973a;
-    --accent-light: #f0b84a;
-    --green: #1a6b4a;
-    --green-light: #22a06b;
-    --bg: #f5f2eb;
-    --bg-card: #ffffff;
-    --text: #1a1a2e;
-    --text-muted: #5a6478;
-    --border: #e0d8c8;
-    --shadow: 0 8px 40px rgba(26,58,92,0.12);
-  }
-
-  /* ===== DARK MODE ===== */
-  body.dark {
-    --bg: #0d1117;
-    --bg-card: #161b22;
-    --text: #e6edf3;
-    --text-muted: #8b949e;
-    --border: #30363d;
-    --shadow: 0 8px 40px rgba(0,0,0,0.4);
-    --primary: #1f4068;
-  }
-  body.dark .about-card,
-  body.dark .prog-card,
-  body.dark .portal-card { background: var(--bg-card); border-color: var(--border); color: var(--text); }
-  body.dark .about-list li { color: var(--text-muted); }
-  body.dark main { background: var(--bg); }
-  body.dark .staff-bar { background: #161b22; border-color: #30363d; }
-  body.dark .staff-tag { background: #21262d; color: #8b949e; border-color: #30363d; }
-  body.dark .alert-bar { background: #1c2128; border-color: #30363d; color: #8b949e; }
-  body.dark .stats-bar { background: #0d1117; }
-  body.dark .section-title { color: var(--text); }
-  body.dark .section-sub { color: var(--text-muted); }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
-  }
-  /* ========= RAMADAN DECORATION ========= */
-  .ramadan-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 9999;
-    overflow: hidden;
-  }
-
-  /* نجوم متلألئة */
-  .ramadan-star {
-    position: absolute;
-    color: #f0b84a;
-    animation: twinkle var(--dur, 3s) ease-in-out infinite;
-    animation-delay: var(--delay, 0s);
-    font-size: var(--size, 14px);
-    opacity: 0;
-  }
-
-  @keyframes twinkle {
-    0%, 100% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 0.9; transform: scale(1.2); }
-  }
-
-  /* الفوانيس المتدلية */
-  .lantern-wrap {
-    position: fixed;
-    top: 0;
-    pointer-events: none;
-    z-index: 9998;
-    animation: swing var(--sw, 4s) ease-in-out infinite alternate;
-    transform-origin: top center;
-  }
-
-  @keyframes swing {
-    from { transform: rotate(-6deg); }
-    to   { transform: rotate(6deg); }
-  }
-
-  .lantern {
-    width: var(--lw, 28px);
-    filter: drop-shadow(0 4px 12px rgba(200,151,58,0.6));
-  }
-
-  /* الهلال في الأعلى */
-  .crescent-wrap {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9997;
-    pointer-events: none;
-    animation: floatCrescent 6s ease-in-out infinite;
-  }
-
-  @keyframes floatCrescent {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50%       { transform: translateX(-50%) translateY(-8px); }
-  }
-
-  .crescent-svg {
-    filter: drop-shadow(0 0 18px rgba(240,184,74,0.8));
-  }
-
-  /* شريط رمضاني */
-  .ramadan-banner {
-    background: linear-gradient(135deg, #7a4a00, #c8973a, #7a4a00);
-    color: #fff8e7;
-    text-align: center;
-    padding: 8px 16px;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 2px solid #f0b84a;
-  }
-
-  .ramadan-banner::before {
-    content: '🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙 ✨ 🌙';
-    position: absolute;
-    top: 0; left: -100%;
-    white-space: nowrap;
-    font-size: 0.7rem;
-    opacity: 0.25;
-    animation: scrollBanner 20s linear infinite;
-    line-height: 36px;
-  }
-
-  @keyframes scrollBanner {
-    from { left: -100%; }
-    to   { left: 100%; }
-  }
-
-  /* ========= HEADER ========= */
-  header {
-    background: linear-gradient(135deg, var(--primary) 0%, #0f2440 60%, #1a3a5c 100%);
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -20%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(200,151,58,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
-  }
-
-  .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    flex-wrap: nowrap;
-    gap: 10px;
-    overflow: hidden;
-  }
-
-  .header-logos {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
-    flex: 1;
-  }
-
-  .header-text { min-width: 0; overflow: hidden; }
-
-  .logo-placeholder {
-    width: 58px; height: 58px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.12);
-    border: 2px solid rgba(200,151,58,0.4);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-  }
-
-  .header-title-top {
-    color: rgba(255,255,255,0.9);
-    font-size: 0.83rem;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .header-badge {
-    background: rgba(200,151,58,0.2);
-    border: 1px solid rgba(200,151,58,0.4);
-    color: var(--accent-light);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.78rem;
-    font-weight: 600;
-  }
-
-  .hero {
-    padding: 60px 40px 70px;
-    text-align: center;
-    position: relative;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    background: rgba(200,151,58,0.15);
-    border: 1px solid rgba(200,151,58,0.35);
-    color: var(--accent-light);
-    padding: 6px 20px;
-    border-radius: 30px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    margin-bottom: 22px;
-    animation: fadeDown 0.6s ease;
-  }
-
-  .hero h1 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: clamp(2.4rem, 6vw, 4rem);
-    font-weight: 900;
-    color: #ffffff;
-    line-height: 1.3;
-    margin-bottom: 14px;
-    animation: fadeDown 0.7s ease;
-  }
-
-  .hero h1 span {
-    color: var(--accent-light);
-  }
-
-  .hero p {
-    color: rgba(255,255,255,0.68);
-    font-size: 1rem;
-    max-width: 560px;
-    margin: 0 auto 36px;
-    line-height: 1.8;
-    animation: fadeDown 0.8s ease;
-  }
-
-  .hero-btns {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeDown 0.9s ease;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    color: var(--primary);
-    padding: 13px 30px;
-    border-radius: 10px;
-    font-weight: 800;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(200,151,58,0.35);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(200,151,58,0.5);
-  }
-
-  .btn-secondary {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.9);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 13px 30px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(255,255,255,0.14);
-    transform: translateY(-2px);
-  }
-
-  /* ========= STATS BAR ========= */
-  .stats-bar {
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border);
-    padding: 0 40px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  }
-
-  .stats-inner {
-    display: flex;
-    justify-content: center;
-    gap: 0;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .stat-item {
-    flex: 1;
-    text-align: center;
-    padding: 22px 20px;
-    border-left: 1px solid var(--border);
-    position: relative;
-  }
-
-  .stat-item:last-child { border-left: none; }
-
-  .stat-num {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--primary-light);
-    display: block;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .stat-label {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  /* ========= ALERT ========= */
-  .alert-bar {
-    background: linear-gradient(135deg, #fff8e7, #fffbf0);
-    border: 1px solid #f0d080;
-    border-right: 4px solid var(--accent);
-    margin: 28px 40px;
-    border-radius: 10px;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.88rem;
-    color: #7a5a00;
-  }
-
-  .alert-icon { font-size: 1.3rem; flex-shrink: 0; }
-
-  /* ========= MAIN CONTENT ========= */
-  main { padding: 0 40px 60px; }
-
-  .section-title {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-  }
-
-  .section-sub {
-    color: var(--text-muted);
-    font-size: 0.88rem;
-    margin-bottom: 24px;
-    margin-right: 4px;
-  }
-
-  /* ========= QUICK ACCESS ========= */
-  .quick-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    margin-bottom: 48px;
-  }
-
-  .quick-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px 20px;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .quick-card::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; left: 0;
-    height: 3px;
-    background: var(--card-color, var(--primary-light));
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
-
-  .quick-card:hover::before { transform: scaleX(1); }
-
-  .quick-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-    border-color: var(--card-color, var(--primary-light));
-  }
-
-  .quick-icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    background: var(--card-bg, #e8f0ff);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-  }
-
-  .quick-card h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--primary);
-  }
-
-  .quick-card p {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .quick-arrow {
-    margin-top: auto;
-    font-size: 0.8rem;
-    color: var(--card-color, var(--primary-light));
-    font-weight: 700;
-  }
-
-  /* ========= PROGRAMS ========= */
-  .programs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 48px;
-  }
-
-  .program-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-    transition: all 0.3s ease;
-  }
-
-  .program-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-  }
-
-  .program-header {
-    padding: 28px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .program-icon-big {
-    width: 64px; height: 64px;
-    border-radius: 16px;
-    background: var(--prog-bg);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem;
-    flex-shrink: 0;
-  }
-
-  .program-header h2 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 6px;
-  }
-
-  .program-header p {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .program-stats {
-    display: flex;
-    border-top: 1px solid var(--border);
-  }
-
-  .prog-stat {
-    flex: 1;
-    text-align: center;
-    padding: 16px;
-    border-left: 1px solid var(--border);
-  }
-
-  .prog-stat:last-child { border-left: none; }
-
-  .prog-stat-num {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    display: block;
-    color: var(--prog-color);
-  }
-
-  .prog-stat-label {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .program-footer {
-    padding: 16px 28px;
-    border-top: 1px solid var(--border);
-    background: #fafafa;
-  }
-
-  .program-footer a {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--prog-color);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.88rem;
-    transition: gap 0.2s;
-  }
-
-  .program-footer a:hover { gap: 14px; }
-
-  /* ========= STUDENT PORTAL SECTION ========= */
-  .student-portal-section {
-    background: linear-gradient(135deg, var(--primary) 0%, #0f2440 100%);
-    border-radius: 20px;
-    padding: 40px;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
-  }
-
-  .student-portal-section::before {
-    content: '🎓';
-    position: absolute;
-    left: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 120px;
-    opacity: 0.06;
-  }
-
-  .portal-text h2 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 900;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-
-  .portal-text p {
-    color: rgba(255,255,255,0.68);
-    font-size: 0.9rem;
-    line-height: 1.7;
-    max-width: 420px;
-  }
-
-  .portal-features {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 16px;
-  }
-
-  .portal-feature {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.82rem;
-    color: rgba(255,255,255,0.8);
-  }
-
-  .portal-feature-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent-light);
-    flex-shrink: 0;
-  }
-
-  .portal-btn {
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    color: var(--primary);
-    padding: 16px 36px;
-    border-radius: 12px;
-    font-weight: 900;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 24px rgba(200,151,58,0.4);
-    white-space: nowrap;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .portal-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 32px rgba(200,151,58,0.55);
-  }
-
-  /* ========= ABOUT ========= */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 48px;
-  }
-
-  .about-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-
-  .about-card h3 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .about-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .about-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .about-list li::before {
-    content: '✓';
-    color: var(--green-light);
-    font-weight: 900;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  /* ========= STAFF SECTION ========= */
-  .staff-bar {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 28px;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-
-  .staff-bar-title {
-    font-weight: 800;
-    color: var(--primary);
-    font-size: 0.95rem;
-    flex-shrink: 0;
-  }
-
-  .staff-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-
-  .staff-tag {
-    background: #f0f4ff;
-    border: 1px solid #c8d8f8;
-    color: var(--primary-light);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.78rem;
-    font-weight: 600;
-  }
-
-  /* ========= FOOTER ========= */
-  footer {
-    background: var(--primary);
-    color: rgba(255,255,255,0.7);
-    text-align: center;
-    padding: 24px 40px;
-    font-size: 0.82rem;
-    border-top: 3px solid var(--accent);
-  }
-
-  footer strong { color: var(--accent-light); }
-
-  /* ========= ANIMATIONS ========= */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s ease;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ========= RESPONSIVE ========= */
-  @media (max-width: 768px) {
-    .header-top { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
-    .header-logos { gap: 10px; }
-    .header-logos img { height: 44px !important; }
-    .header-title-top { font-size: 0.75rem; }
-    .header-badge { font-size: 0.7rem; padding: 5px 10px; }
-    .hero { padding: 28px 16px 36px; }
-    .hero h1 { font-size: 1.6rem; }
-    .hero p { font-size: 0.88rem; }
-    .hero-btns { flex-direction: column; align-items: center; }
-    .btn-primary, .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
-    main { padding: 0 14px 40px; }
-    .alert-bar { margin: 16px 14px; font-size: 0.82rem; }
-    .stats-inner { flex-wrap: wrap; }
-    .stat-item { border-left: none; border-bottom: 1px solid var(--border); min-width: 50%; }
-    .quick-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .quick-card { padding: 16px 12px; }
-    .quick-icon { font-size: 1.6rem; }
-    .quick-card h3 { font-size: 0.88rem; }
-    .quick-card p { display: none; }
-    .programs-grid, .about-grid { grid-template-columns: 1fr; }
-    .student-portal-section { flex-direction: column; text-align: center; padding: 24px 16px; }
-    .portal-btn { width: 100%; justify-content: center; }
-    .portal-features { justify-content: center; }
-    .staff-tags { gap: 6px; }
-    .staff-tag { font-size: 0.75rem; padding: 5px 10px; }
-    .section-title { font-size: 1.2rem; }
-  }
-
-  @media (max-width: 400px) {
-    .quick-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 1.4rem; }
-    .stat-num { font-size: 1.5rem; }
-  }
+:root {
+  --navy:    #080f1e;
+  --navy2:   #0f1f3d;
+  --navy3:   #1a3a5c;
+  --gold:    #c8973a;
+  --gold2:   #e6b85a;
+  --gold3:   #f5d080;
+  --orange:  #c25a00;
+  --green:   #1a6b4a;
+  --text:    #e8edf5;
+  --muted:   rgba(200,215,235,0.55);
+  --border:  rgba(255,255,255,0.08);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── BACKGROUND ── */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(200,151,58,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,151,58,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.bg-glow {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(26,58,92,0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(200,151,58,0.08) 0%, transparent 50%);
+}
+
+/* ── HEADER ── */
+header {
+  position: relative; z-index: 10;
+  background: linear-gradient(180deg, rgba(8,15,30,0.98) 0%, rgba(8,15,30,0.95) 100%);
+  border-bottom: 1px solid rgba(200,151,58,0.2);
+  backdrop-filter: blur(20px);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-logo img {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(1.1);
+}
+
+.header-info { line-height: 1.5; }
+.header-info .school-name {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.header-info .school-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.header-badge {
+  background: linear-gradient(135deg, rgba(200,151,58,0.12), rgba(200,151,58,0.06));
+  border: 1px solid rgba(200,151,58,0.25);
+  color: var(--gold2);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 5;
+  text-align: center;
+  padding: 80px 24px 100px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,151,58,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(200,151,58,0.08);
+  border: 1px solid rgba(200,151,58,0.2);
+  color: var(--gold2);
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero h1 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  animation: fadeUp 0.7s ease both;
+  letter-spacing: -1px;
+}
+
+.hero h1 .brand {
+  background: linear-gradient(135deg, var(--gold2), var(--gold3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero h1 .platform {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.5em;
+  display: block;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-bottom: 4px;
+}
+
+.hero-slogan {
+  margin: 24px auto 16px;
+  max-width: 700px;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-slogan-item {
+  display: inline-block;
+  margin: 4px 8px;
+  font-size: clamp(0.82rem, 2vw, 0.96rem);
+  color: rgba(255,255,255,0.65);
+  font-weight: 500;
+}
+
+.hero-slogan-item strong {
+  color: var(--gold2);
+  font-weight: 800;
+}
+
+.hero-sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 12px auto 40px;
+  animation: fadeUp 0.9s ease both;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 1s ease both;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--navy);
+  padding: 13px 28px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.25s;
+  box-shadow: 0 4px 20px rgba(200,151,58,0.3);
+}
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,151,58,0.45); }
+
+.btn-glass {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.8);
+  padding: 13px 22px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-glass:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); color: #fff; }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  position: relative; z-index: 5;
+  background: rgba(255,255,255,0.03);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
+}
+
+.stats-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  justify-content: center;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 8px 16px;
+  border-left: 1px solid var(--border);
+}
+.stat-item:last-child { border-left: none; }
+
+.stat-num {
+  display: block;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--gold2);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ── MAIN ── */
+main {
+  position: relative; z-index: 5;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+}
+
+/* ── SECTION HEADER ── */
+.sec-head {
+  margin-bottom: 32px;
+  text-align: center;
+}
+.sec-label {
+  display: inline-block;
+  background: rgba(200,151,58,0.08);
+  border: 1px solid rgba(200,151,58,0.18);
+  color: var(--gold2);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.sec-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.sec-sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+/* ── PROGRAM CARDS ── */
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+  gap: 20px;
+  margin-bottom: 70px;
+}
+
+.prog-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
+}
+.prog-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+
+.prog-card-stripe {
+  height: 4px;
+  width: 100%;
+}
+
+.prog-card-body { padding: 24px 22px; }
+
+.prog-icon {
+  font-size: 2.4rem;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.prog-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.prog-desc {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.prog-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.prog-stat {
+  flex: 1;
+  text-align: center;
+  padding: 10px 8px;
+  border-left: 1px solid var(--border);
+}
+.prog-stat:last-child { border-left: none; }
+.prog-stat-num {
+  display: block;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+.prog-stat-lbl {
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.prog-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+/* ── PORTALS SECTION ── */
+.portals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap: 20px;
+  margin-bottom: 70px;
+}
+
+.portal-card {
+  border-radius: 20px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.portal-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.portal-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.15);
+  pointer-events: none;
+}
+
+.portal-card-inner { position: relative; z-index: 1; }
+
+.portal-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+.portal-title { font-family: 'Tajawal', sans-serif; font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 8px; }
+.portal-desc { font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 16px; }
+
+.portal-features { margin-bottom: 20px; display: flex; flex-direction: column; gap: 6px; }
+.portal-feature {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: rgba(255,255,255,0.75);
+}
+.portal-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+
+.portal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: all 0.25s;
+  background: rgba(255,255,255,0.95);
+}
+.portal-btn:hover { background: #fff; transform: translateY(-1px); }
+
+/* ── ABOUT ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 20px;
+  margin-bottom: 70px;
+}
+
+.about-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px 22px;
+  transition: border-color 0.3s;
+}
+.about-card:hover { border-color: rgba(200,151,58,0.2); }
+.about-card h3 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  margin-bottom: 14px;
+  color: var(--gold2);
+}
+.about-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.about-list li {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.7;
+  padding-right: 14px;
+  position: relative;
+}
+.about-list li::before {
+  content: '◈';
+  position: absolute; right: 0;
+  color: var(--gold);
+  font-size: 0.6rem;
+  top: 5px;
+}
+
+/* ── STAFF ── */
+.staff-section {
+  background: rgba(200,151,58,0.04);
+  border: 1px solid rgba(200,151,58,0.12);
+  border-radius: 18px;
+  padding: 24px 22px;
+  margin-bottom: 70px;
+  text-align: center;
+}
+.staff-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--gold2);
+  margin-bottom: 16px;
+}
+.staff-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.staff-tag {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 5;
+  background: rgba(8,15,30,0.98);
+  border-top: 1px solid rgba(200,151,58,0.15);
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.footer-inner { max-width: 700px; margin: 0 auto; }
+
+.footer-logo-text {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--gold2);
+  margin-bottom: 4px;
+}
+.footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+.footer-credit { font-size: 0.78rem; color: var(--gold); font-weight: 700; margin-bottom: 28px; }
+
+.footer-divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 20px;
+}
+
+.footer-section { margin-bottom: 16px; }
+.footer-sec-label {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.footer-links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+.fl-gold {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(200,151,58,0.1);
+  border: 1px solid rgba(200,151,58,0.25);
+  color: rgba(200,151,58,0.85);
+  padding: 8px 20px; border-radius: 22px;
+  font-size: 0.8rem; font-weight: 700;
+  text-decoration: none; transition: all 0.2s;
+}
+.fl-gold:hover { background: rgba(200,151,58,0.2); color: var(--gold2); }
+
+.fl-white {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.fl-white:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+.fl-dim {
+  color: rgba(255,255,255,0.3);
+  font-size: 0.7rem; text-decoration: none;
+  padding: 3px 12px; border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px; transition: all 0.2s;
+}
+.fl-dim:hover { color: rgba(200,151,58,0.7); border-color: rgba(200,151,58,0.2); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { opacity: 0; transform: translateY(20px); transition: all 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .hero { padding: 50px 16px 60px; }
+  .hero h1 { font-size: 2.6rem; }
+  main { padding: 40px 16px 60px; }
+  .stat-item { padding: 8px 10px; }
+  .stat-num { font-size: 1.5rem; }
+  .hero-slogan-item { font-size: 0.78rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- RAMADAN DECORATION -->
-<div class="ramadan-banner">
-  رمضان كريم 🌙 — تقبّل الله منا ومنكم صالح الأعمال ✨
-</div>
-
-<!-- فوانيس متدلية -->
-<div class="lantern-wrap" style="left:3%; --sw:3.5s;">
-  <svg class="lantern" style="--lw:32px;" viewBox="0 0 40 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
-    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
-    <rect x="10" y="13" width="20" height="38" rx="4" fill="#c25a00" opacity="0.9"/>
-    <rect x="10" y="13" width="20" height="38" rx="4" fill="url(#lg1)" opacity="0.7"/>
-    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
-    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
-    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
-    <defs>
-      <linearGradient id="lg1" x1="10" y1="13" x2="30" y2="51" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#f0b84a" stop-opacity="0.4"/>
-        <stop offset="50%" stop-color="#ff8c00" stop-opacity="0.2"/>
-        <stop offset="100%" stop-color="#f0b84a" stop-opacity="0.4"/>
-      </linearGradient>
-    </defs>
-  </svg>
-</div>
-
-<div class="lantern-wrap" style="right:4%; --sw:4.2s; animation-delay:0.8s;">
-  <svg class="lantern" style="--lw:26px;" viewBox="0 0 40 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
-    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
-    <rect x="10" y="13" width="20" height="38" rx="4" fill="#1a3a5c" opacity="0.9"/>
-    <rect x="10" y="13" width="20" height="38" rx="4" fill="url(#lg2)" opacity="0.7"/>
-    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
-    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
-    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
-    <defs>
-      <linearGradient id="lg2" x1="10" y1="13" x2="30" y2="51" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#4a90d9" stop-opacity="0.4"/>
-        <stop offset="50%" stop-color="#f0b84a" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#4a90d9" stop-opacity="0.4"/>
-      </linearGradient>
-    </defs>
-  </svg>
-</div>
-
-<div class="lantern-wrap" style="left:12%; --sw:5s; animation-delay:1.5s;">
-  <svg class="lantern" style="--lw:20px;" viewBox="0 0 40 70" fill="none">
-    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
-    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
-    <rect x="10" y="13" width="20" height="38" rx="4" fill="#1a6b4a" opacity="0.9"/>
-    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
-    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
-    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
-  </svg>
-</div>
-
-<div class="lantern-wrap" style="right:14%; --sw:3.8s; animation-delay:2s;">
-  <svg class="lantern" style="--lw:22px;" viewBox="0 0 40 70" fill="none">
-    <line x1="20" y1="0" x2="20" y2="8" stroke="#c8973a" stroke-width="2"/>
-    <ellipse cx="20" cy="10" rx="8" ry="3" fill="#c8973a"/>
-    <rect x="10" y="13" width="20" height="38" rx="4" fill="#7a2800" opacity="0.9"/>
-    <line x1="10" y1="24" x2="30" y2="24" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="34" x2="30" y2="34" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <line x1="10" y1="44" x2="30" y2="44" stroke="#f0b84a" stroke-width="1" opacity="0.5"/>
-    <ellipse cx="20" cy="51" rx="8" ry="3" fill="#c8973a"/>
-    <line x1="20" y1="54" x2="20" y2="62" stroke="#c8973a" stroke-width="1.5"/>
-    <ellipse cx="20" cy="63" rx="3" ry="1.5" fill="#f0b84a" opacity="0.8"/>
-  </svg>
-</div>
-
-<!-- هلال رمضان -->
-<div class="crescent-wrap">
-  <svg class="crescent-svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
-    <circle cx="30" cy="30" r="22" fill="#f0b84a" opacity="0.95"/>
-    <circle cx="40" cy="22" r="18" fill="#0f2440"/>
-    <circle cx="48" cy="14" r="3" fill="#f0b84a" opacity="0.9"/>
-    <circle cx="42" cy="10" r="1.8" fill="#f0b84a" opacity="0.7"/>
-    <circle cx="54" cy="20" r="1.4" fill="#f0b84a" opacity="0.6"/>
-  </svg>
-</div>
-
-<!-- نجوم -->
-<div class="ramadan-overlay" id="starsLayer"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
 
 <!-- HEADER -->
 <header>
-  <div class="header-top">
-    <div class="header-logos">
-      <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener" style="display:flex; align-items:center; flex-shrink:0;">
-        <img src="moe-logo.png" alt="شعار وزارة التعليم" style="height:70px; width:auto; object-fit:contain;">
-      </a>
-      <div class="header-text">
-        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">الإدارة العامة للتعليم بمحافظة جدة</div>
-        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">قسم ذوي الإعاقة</div>
-        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">مدرسة مكة المكرمة المتوسطة</div>
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="شعار وزارة التعليم">
+        </a>
+      </div>
+      <div class="header-info">
+        <div class="school-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="school-sub">الإدارة العامة للتعليم بمكة المكرمة — قسم ذوي الإعاقة</div>
       </div>
     </div>
-    <div class="header-badge">✨ البوابة الرقمية 2026</div>
-  </div>
-
-  <div class="hero">
-    <div class="hero-tag">🏫 مدرسة مكة المكرمة المتوسطة</div>
-    <h1>بوابة <span>معاك</span></h1>
-    <p style="color:rgba(255,255,255,0.85);font-size:1.05rem;max-width:640px;margin:0 auto 10px;line-height:2;font-family:'Tajawal',sans-serif;font-weight:700;">
-      لا تفرض على المعلم بل تعمل <span style="color:var(--accent-light);">معه</span>
-      &nbsp;•&nbsp;
-      لا تُعقِّد على ولي الأمر بل تُيسِّر <span style="color:var(--accent-light);">له</span>
-      &nbsp;•&nbsp;
-      لا تُثقِل على الطالب بل تدعمه <span style="color:var(--accent-light);">دائماً</span>
-    </p>
-    <p style="color:rgba(255,255,255,0.55);font-size:0.88rem;margin:0 auto 30px;">منصة رقمية متكاملة لقسم ذوي الإعاقة — برامج الدمج الفكري ويسير التعليمي</p>
-    <div class="hero-btns">
-      <a href="#programs" class="btn-primary">🔍 استعراض البرامج</a>
-      <a href="students.html" class="btn-secondary">📘 بوابة ملفات يسير</a>
-      <a href="dumaj-students.html" class="btn-secondary">🧑🏻‍🏫 بوابة ملفات الدمج الفكري</a>
-      <a href="contact.html" class="btn-secondary">📩 تواصل معنا</a>
-    </div>
+    <div class="header-badge">✦ البوابة الرقمية 1447هـ</div>
   </div>
 </header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">🏫 منصة رقمية متكاملة</div>
+  <h1>
+    <span class="platform">بوابة</span>
+    <span class="brand">معاك</span>
+  </h1>
+
+  <div class="hero-slogan">
+    <span class="hero-slogan-item">لا تفرض على المعلم بل تعمل <strong>معه</strong></span>
+    <span class="hero-slogan-item" style="color:rgba(200,151,58,0.3);">•</span>
+    <span class="hero-slogan-item">لا تُعقِّد على ولي الأمر بل تُيسِّر <strong>له</strong></span>
+    <span class="hero-slogan-item" style="color:rgba(200,151,58,0.3);">•</span>
+    <span class="hero-slogan-item">لا تُثقِل على الطالب بل تدعمه <strong>دائماً</strong></span>
+  </div>
+
+  <p class="hero-sub">برامج الدمج الفكري ويسير التعليمي — مدرسة مكة المكرمة المتوسطة</p>
+
+  <div class="hero-btns">
+    <a href="#programs" class="btn-gold">🔍 استعراض البرامج</a>
+    <a href="students.html" class="btn-glass">📘 بوابة يسير</a>
+    <a href="dumaj-students.html" class="btn-glass">🧑🏻‍🏫 بوابة الدمج</a>
+    <a href="contact.html" class="btn-glass">📩 تواصل معنا</a>
+  </div>
+</div>
 
 <!-- STATS -->
 <div class="stats-bar">
@@ -962,117 +669,123 @@
   </div>
 </div>
 
-<!-- ALERT -->
-<div class="alert-bar">
-  <span class="alert-icon">💡</span>
-  <span>تنبيه لأولياء الأمور: يرجى الاطلاع على الخطة الفردية المحدثة لأبنائكم والتوقيع إلكترونياً عبر قسم الإقرارات. نسعد بتواصلكم الدائم.</span>
-</div>
-
+<!-- MAIN -->
 <main>
 
-
-  <!-- PROGRAMS -->
+  <!-- البرامج -->
   <div class="fade-in" id="programs">
-    <div class="section-title">📚 البرامج المتاحة</div>
-    <div class="section-sub">اختر البرنامج للدخول للصفحة التفصيلية</div>
+    <div class="sec-head">
+      <div class="sec-label">البرامج</div>
+      <div class="sec-title">📚 البرامج المتاحة</div>
+      <div class="sec-sub">اختر البرنامج للدخول للصفحة التفصيلية</div>
+    </div>
+
     <div class="programs-grid">
 
-      <div class="program-card" style="--prog-color:#2563a8; --prog-bg:#e8f0ff;">
-        <div class="program-header">
-          <div class="program-icon-big">🧑🏻‍🏫</div>
-          <div>
-            <h2>برنامج الدمج الفكري</h2>
-            <p>يقدم خدمات تربوية وتعليمية لطلاب الإعاقة الفكرية ضمن بيئة دراسية دامجة مع أقرانهم</p>
+      <div class="prog-card">
+        <div class="prog-card-stripe" style="background:linear-gradient(90deg,#2563a8,#3b82f6);"></div>
+        <div class="prog-card-body">
+          <span class="prog-icon">🧑🏻‍🏫</span>
+          <div class="prog-title">برنامج الدمج الفكري</div>
+          <div class="prog-desc">يقدم خدمات تربوية وتعليمية لطلاب الإعاقة الفكرية ضمن بيئة دراسية دامجة مع أقرانهم</div>
+          <div class="prog-stats">
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:#3b82f6;" id="dis-count">21</span>
+              <span class="prog-stat-lbl">طالب مقيد</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:#3b82f6;">6</span>
+              <span class="prog-stat-lbl">معلمين</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:#3b82f6;">✅</span>
+              <span class="prog-stat-lbl">خطط فردية</span>
+            </div>
           </div>
-        </div>
-        <div class="program-stats">
-          <div class="prog-stat">
-            <span class="prog-stat-num" id="dis-count">+15</span>
-            <span class="prog-stat-label">طالب مقيد</span>
-          </div>
-          <div class="prog-stat">
-            <span class="prog-stat-num">6</span>
-            <span class="prog-stat-label">معلمين</span>
-          </div>
-          <div class="prog-stat">
-            <span class="prog-stat-num">✅</span>
-            <span class="prog-stat-label">خطط فردية</span>
-          </div>
-        </div>
-        <div class="program-footer" style="--prog-color:#2563a8;">
-          <a href="Intellectualdisability.html">دخول الصفحة ←</a>
-        </div>
-      </div>
-
-      <div class="program-card" style="--prog-color:#1a6b4a; --prog-bg:#e6f4ef;">
-        <div class="program-header">
-          <div class="program-icon-big">📘</div>
-          <div>
-            <h2>برنامج يسير التعليمي</h2>
-            <p>يدعم الطلاب ذوي بطء التعلم بخطط تدخل مناسبة وأدوات تعليمية فعّالة</p>
-          </div>
-        </div>
-        <div class="program-stats">
-          <div class="prog-stat">
-            <span class="prog-stat-num" id="slow-count">+15</span>
-            <span class="prog-stat-label">طالب مقيد</span>
-          </div>
-          <div class="prog-stat">
-            <span class="prog-stat-num">2</span>
-            <span class="prog-stat-label">معلمين</span>
-          </div>
-          <div class="prog-stat">
-            <span class="prog-stat-num">📊</span>
-            <span class="prog-stat-label">لوحات متابعة</span>
-          </div>
-        </div>
-        <div class="program-footer" style="--prog-color:#1a6b4a;">
-          <a href="Slowlearning.html">دخول الصفحة ←</a>
+          <a href="Intellectualdisability.html" class="prog-btn" style="background:rgba(37,99,168,0.12);border:1px solid rgba(37,99,168,0.3);color:#60a5fa;">
+            دخول الصفحة ←
+          </a>
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- STUDENT PORTALS CTA -->
-  <div class="fade-in" style="margin-bottom:28px;">
-    <div class="section-title">🔐 بوابات الطلاب</div>
-    <div class="section-sub">بوابة خاصة لكل برنامج — الدخول برمز سري خاص بكل طالب</div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:18px;">
-
-      <div class="student-portal-section fade-in" style="background:linear-gradient(135deg,#7a2800,#c25a00); margin-bottom:0;">
-        <div class="portal-text">
-          <h2>🧑🏻‍🏫 بوابة طلاب الدمج الفكري</h2>
-          <p>نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</p>
-          <div class="portal-features">
-            <div class="portal-feature"><div class="portal-feature-dot" style="background:#f59040;"></div> الخطة التعليمية الفردية</div>
-            <div class="portal-feature"><div class="portal-feature-dot" style="background:#f59040;"></div> التقارير الفصلية</div>
-            <div class="portal-feature"><div class="portal-feature-dot" style="background:#f59040;"></div> إقرار ولي الأمر</div>
+      <div class="prog-card">
+        <div class="prog-card-stripe" style="background:linear-gradient(90deg,#1a6b4a,#2d9e6b);"></div>
+        <div class="prog-card-body">
+          <span class="prog-icon">📘</span>
+          <div class="prog-title">برنامج يسير التعليمي</div>
+          <div class="prog-desc">يدعم الطلاب ذوي بطء التعلم بخطط تدخل مناسبة وأدوات تعليمية فعّالة</div>
+          <div class="prog-stats">
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:#2d9e6b;" id="slow-count">20</span>
+              <span class="prog-stat-lbl">طالب مقيد</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:#2d9e6b;">2</span>
+              <span class="prog-stat-lbl">معلمين</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:#2d9e6b;">📊</span>
+              <span class="prog-stat-lbl">لوحات متابعة</span>
+            </div>
           </div>
+          <a href="Slowlearning.html" class="prog-btn" style="background:rgba(26,107,74,0.12);border:1px solid rgba(26,107,74,0.3);color:#4ade80;">
+            دخول الصفحة ←
+          </a>
         </div>
-        <a href="dumaj-students.html" class="portal-btn" style="background:#fff; color:#c25a00;">🔐 دخول البوابة</a>
-      </div>
-
-      <div class="student-portal-section fade-in" style="background:linear-gradient(135deg,#0d3320,#1a6b4a); margin-bottom:0;">
-        <div class="portal-text">
-          <h2>📘 بوابة طلاب يسير</h2>
-          <p>نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج يسير التعليمي</p>
-          <div class="portal-features">
-            <div class="portal-feature"><div class="portal-feature-dot"></div> الخطة التعليمية الفردية</div>
-            <div class="portal-feature"><div class="portal-feature-dot"></div> التقارير الفصلية</div>
-            <div class="portal-feature"><div class="portal-feature-dot"></div> إقرار ولي الأمر</div>
-          </div>
-        </div>
-        <a href="students.html" class="portal-btn" style="background:#fff; color:#1a6b4a;">🔐 دخول البوابة</a>
       </div>
 
     </div>
   </div>
 
-  <!-- ABOUT -->
+  <!-- بوابات الطلاب -->
   <div class="fade-in">
-    <div class="section-title">🏫 عن القسم</div>
-    <div class="section-sub">رسالتنا ومحاور عملنا</div>
+    <div class="sec-head">
+      <div class="sec-label">الطلاب وأولياء الأمور</div>
+      <div class="sec-title">🔐 بوابات الطلاب</div>
+      <div class="sec-sub">بوابة خاصة لكل برنامج — الدخول برمز سري خاص بكل طالب</div>
+    </div>
+
+    <div class="portals-grid">
+
+      <div class="portal-card" style="background:linear-gradient(135deg,#7a2800,#c25a00);">
+        <div class="portal-card-inner">
+          <span class="portal-icon">🧑🏻‍🏫</span>
+          <div class="portal-title">بوابة طلاب الدمج الفكري</div>
+          <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</div>
+          <div class="portal-features">
+            <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> الخطة التعليمية الفردية</div>
+            <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> التقارير الفصلية</div>
+            <div class="portal-feature"><div class="portal-dot" style="background:#f59040;"></div> إقرار ولي الأمر</div>
+          </div>
+          <a href="dumaj-students.html" class="portal-btn" style="color:#c25a00;">🔐 دخول البوابة</a>
+        </div>
+      </div>
+
+      <div class="portal-card" style="background:linear-gradient(135deg,#0d3320,#1a6b4a);">
+        <div class="portal-card-inner">
+          <span class="portal-icon">📘</span>
+          <div class="portal-title">بوابة طلاب يسير</div>
+          <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج يسير التعليمي</div>
+          <div class="portal-features">
+            <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> الخطة التعليمية الفردية</div>
+            <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> التقارير الفصلية</div>
+            <div class="portal-feature"><div class="portal-dot" style="background:#4ade80;"></div> إقرار ولي الأمر</div>
+          </div>
+          <a href="students.html" class="portal-btn" style="color:#1a6b4a;">🔐 دخول البوابة</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- عن القسم -->
+  <div class="fade-in">
+    <div class="sec-head">
+      <div class="sec-label">عن القسم</div>
+      <div class="sec-title">🏫 رسالتنا</div>
+      <div class="sec-sub">محاور عمل قسم ذوي الإعاقة</div>
+    </div>
+
     <div class="about-grid">
       <div class="about-card">
         <h3>🎯 رسالتنا</h3>
@@ -1089,18 +802,18 @@
           <li>للاستفسارات والملاحظات يمكن التواصل عبر صفحة التواصل</li>
           <li>نضمن الرد في أقرب وقت ممكن خلال أيام الدراسة</li>
           <li>يمكن لولي الأمر التوقيع إلكترونياً على الخطة الفردية</li>
-          <li>جميع البيانات سرية ومحمية خصوصية الطلاب</li>
+          <li>جميع البيانات سرية ومحمية لضمان خصوصية الطلاب</li>
         </ul>
         <div style="margin-top:18px;">
-          <a href="contact.html" class="btn-primary" style="font-size:0.88rem; padding:10px 22px;">فتح صفحة التواصل ←</a>
+          <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:10px 22px;">فتح صفحة التواصل ←</a>
         </div>
       </div>
     </div>
   </div>
 
-    <!-- STAFF -->
-  <div class="staff-bar fade-in">
-    <div class="staff-bar-title">👨‍🏫 الكادر التعليمي</div>
+  <!-- الكادر التعليمي -->
+  <div class="staff-section fade-in">
+    <div class="staff-title">👨‍🏫 الكادر التعليمي</div>
     <div class="staff-tags">
       <span class="staff-tag">معلمو الدمج الفكري</span>
       <span class="staff-tag">معلمو برنامج يسير</span>
@@ -1115,145 +828,71 @@
 
 </main>
 
+<!-- FOOTER -->
 <footer>
-  <div style="max-width:700px;margin:0 auto;">
+  <div class="footer-inner">
+    <div class="footer-logo-text">منصة معاك</div>
+    <div class="footer-copy">© 2026 مدرسة مكة المكرمة المتوسطة</div>
+    <div class="footer-credit">إعداد وتنفيذ: أ. سعد سالم الزهراني</div>
+    <hr class="footer-divider">
 
-    <!-- حقوق النشر والإعداد -->
-    <div style="margin-bottom:18px;">
-      <div style="font-size:0.82rem;color:rgba(255,255,255,0.45);margin-bottom:4px;">© 2026 منصة معاك — مدرسة مكة المكرمة المتوسطة</div>
-      <div style="font-size:0.85rem;font-weight:700;color:rgba(200,151,58,0.85);">إعداد وتنفيذ: أ. سعد سالم الزهراني</div>
+    <div class="footer-section">
+      <div class="footer-sec-label">الإشراف التربوي</div>
+      <div class="footer-links">
+        <a href="supervisor.html" class="fl-gold">🏛️ مشرف ذوي الإعاقة — الإدارة العامة</a>
+      </div>
     </div>
 
-    <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;display:flex;flex-direction:column;gap:12px;">
-
-      <!-- المشرف التربوي -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <div style="font-size:0.68rem;color:rgba(255,255,255,0.28);letter-spacing:1px;text-transform:uppercase;">الإشراف التربوي</div>
-        <a href="supervisor.html"
-           style="display:inline-flex;align-items:center;gap:8px;background:rgba(200,151,58,0.12);border:1px solid rgba(200,151,58,0.3);color:rgba(200,151,58,0.85);padding:8px 24px;border-radius:22px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;font-family:'Cairo',sans-serif;"
-           onmouseover="this.style.background='rgba(200,151,58,0.22)';this.style.color='rgba(200,151,58,1)'"
-           onmouseout="this.style.background='rgba(200,151,58,0.12)';this.style.color='rgba(200,151,58,0.85)'">
-          🏛️ مشرف ذوي الإعاقة — الإدارة العامة
-        </a>
+    <div class="footer-section">
+      <div class="footer-sec-label">مشرفو البرامج</div>
+      <div class="footer-links">
+        <a href="admin-dumaj.html" class="fl-white">🔐 مشرف الدمج الفكري</a>
+        <a href="admin-yaseer.html" class="fl-white">🔐 مشرف يسير التعليمي</a>
       </div>
+    </div>
 
-      <!--  مشرفو البرامج داخل المدرسة -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <div style="font-size:0.68rem;color:rgba(255,255,255,0.28);letter-spacing:1px;">مشرفو البرامج داخل المدرسة</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-          <a href="admin-dumaj.html"
-             style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.6);padding:7px 18px;border-radius:20px;font-size:0.78rem;font-weight:600;text-decoration:none;transition:all 0.2s;font-family:'Cairo',sans-serif;"
-             onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.color='#fff'"
-             onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.6)'">
-            🔐 مشرف الدمج الفكري
-          </a>
-          <a href="admin-yaseer.html"
-             style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.6);padding:7px 18px;border-radius:20px;font-size:0.78rem;font-weight:600;text-decoration:none;transition:all 0.2s;font-family:'Cairo',sans-serif;"
-             onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.color='#fff'"
-             onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.6)'">
-            🔐 مشرف يسير التعليمي
-          </a>
-        </div>
+    <div class="footer-section">
+      <div class="footer-sec-label">بوابة المعلمين</div>
+      <div class="footer-links">
+        <a href="teachers-dumaj.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">👨‍🏫 معلمو الدمج</a>
+        <a href="teachers-yaseer.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">📘 معلمو يسير</a>
       </div>
+    </div>
 
-      <!-- بوابة المعلمين -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <div style="font-size:0.68rem;color:rgba(255,255,255,0.28);letter-spacing:1px;">بوابة المعلمين</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-          <a href="teachers-dumaj.html"
-             style="color:rgba(255,255,255,0.4);font-size:0.72rem;text-decoration:none;padding:4px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:10px;transition:all 0.2s;font-family:'Cairo',sans-serif;"
-             onmouseover="this.style.color='rgba(255,255,255,0.8)';this.style.borderColor='rgba(255,255,255,0.25)'"
-             onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.borderColor='rgba(255,255,255,0.1)'">
-            👨‍🏫 معلمو الدمج
-          </a>
-          <a href="teachers-yaseer.html"
-             style="color:rgba(255,255,255,0.4);font-size:0.72rem;text-decoration:none;padding:4px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:10px;transition:all 0.2s;font-family:'Cairo',sans-serif;"
-             onmouseover="this.style.color='rgba(255,255,255,0.8)';this.style.borderColor='rgba(255,255,255,0.25)'"
-             onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.borderColor='rgba(255,255,255,0.1)'">
-            📘 معلمو يسير
-          </a>
-        </div>
+    <div class="footer-section" style="margin-bottom:0;">
+      <div class="footer-links">
+        <a href="principal-dashboard.html" class="fl-dim">🏫 إدارة المدرسة</a>
       </div>
-
-      <!-- إدارة المدرسة -->
-      <div style="display:flex;justify-content:center;padding-top:4px;">
-        <a href="principal-dashboard.html"
-           style="color:rgba(255,255,255,0.2);font-size:0.65rem;text-decoration:none;padding:3px 14px;border:1px solid rgba(255,255,255,0.07);border-radius:8px;transition:all 0.3s;font-family:'Cairo',sans-serif;"
-           onmouseover="this.style.color='rgba(200,151,58,0.7)';this.style.borderColor='rgba(200,151,58,0.2)'"
-           onmouseout="this.style.color='rgba(255,255,255,0.2)';this.style.borderColor='rgba(255,255,255,0.07)'">
-          🏫 إدارة المدرسة
-        </a>
-      </div>
-
     </div>
   </div>
 </footer>
 
 <script>
-
-  // ===== RAMADAN STARS =====
-  const starsLayer = document.getElementById('starsLayer');
-  const starPositions = [
-    {top:'8%',left:'5%',size:'12px',dur:'2.5s',delay:'0s'},
-    {top:'5%',left:'15%',size:'8px',dur:'3.2s',delay:'0.4s'},
-    {top:'12%',left:'25%',size:'10px',dur:'2.8s',delay:'0.8s'},
-    {top:'6%',left:'38%',size:'7px',dur:'3.5s',delay:'1.2s'},
-    {top:'9%',left:'55%',size:'11px',dur:'2.3s',delay:'0.6s'},
-    {top:'4%',left:'68%',size:'8px',dur:'3.8s',delay:'1.5s'},
-    {top:'11%',left:'78%',size:'9px',dur:'2.6s',delay:'0.3s'},
-    {top:'7%',left:'88%',size:'13px',dur:'3s',delay:'1s'},
-    {top:'15%',left:'92%',size:'7px',dur:'2.9s',delay:'1.8s'},
-    {top:'3%',left:'45%',size:'15px',dur:'4s',delay:'0.2s'},
-    {top:'18%',left:'8%',size:'8px',dur:'3.3s',delay:'2s'},
-    {top:'16%',left:'60%',size:'9px',dur:'2.7s',delay:'1.3s'},
-  ];
-  starPositions.forEach(s => {
-    const el = document.createElement('div');
-    el.className = 'ramadan-star';
-    el.textContent = '✦';
-    el.style.cssText = `top:${s.top};left:${s.left};font-size:${s.size};--dur:${s.dur};--delay:${s.delay};`;
-    starsLayer.appendChild(el);
-  });
-
-  // إخفاء تلقائي بعد رمضان (نهاية مارس 2026)
-  const ramadanEnd = new Date('2026-03-9');
-  if (new Date() > ramadanEnd) {
-    document.querySelectorAll('.ramadan-banner,.ramadan-overlay,.lantern-wrap,.crescent-wrap').forEach(el => el.remove());
-  }
-  // استعادة الوضع المحفوظ
-  if (localStorage.getItem('darkMode') === '1') {
-    document.body.classList.add('dark');
-    document.getElementById('darkToggle').textContent = '☀️';
-  }
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   // Animate counters
-  function animateCount(el, target, suffix='') {
+  function animateCount(el, target) {
+    if (!el) return;
     let cur = 0;
     const step = Math.ceil(target / 40);
     const interval = setInterval(() => {
       cur = Math.min(cur + step, target);
-      el.textContent = cur + suffix;
+      el.textContent = cur;
       if (cur >= target) clearInterval(interval);
     }, 40);
   }
 
-  // Intersection Observer for fade-in
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // Start counters
   setTimeout(() => {
     animateCount(document.getElementById('cnt1'), 21);
     animateCount(document.getElementById('cnt2'), 20);
     animateCount(document.getElementById('cnt3'), 8);
-  }, 300);
+  }, 400);
 </script>
 </body>
 </html>
