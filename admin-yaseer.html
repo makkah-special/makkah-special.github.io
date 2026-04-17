@@ -4283,6 +4283,41 @@ function closeMeetingAlert() {
   document.getElementById('meeting-alert-box').style.display = 'none';
 }
 
+
+// ===== SHOW AUDIT LOG =====
+function showAuditLog() {
+  if (!auditLog || !auditLog.length) { showToast('لا توجد سجلات بعد'); return; }
+  const actionIcons = {
+    'دخول لوحة التحكم':'🔑','تعديل بيانات طالب':'✏️','حفظ جميع البيانات':'💾',
+    'رفع ملف':'📤','تغيير رمز طالب':'🔐','اعتماد خطة تربوية':'✅','طلب تعديل خطة':'🔄','دخول لوحة الإشراف':'🔑'
+  };
+  const rows = auditLog.slice(0,100).map(e => {
+    const dt = new Date(e.timestamp).toLocaleString('ar-SA-u-nu-latn',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    const icon = actionIcons[e.action] || '📋';
+    const details = Object.entries(e.details||{}).map(([k,v])=>`<span style="color:#888;font-size:0.72rem;">${k}: <b style="color:#1a3a5c;">${v}</b></span>`).join(' • ');
+    return `<div style="border-bottom:1px solid #f0ede6;padding:10px 0;display:flex;gap:10px;align-items:flex-start;">
+      <div style="font-size:1.2rem;flex-shrink:0;">${icon}</div>
+      <div style="flex:1;">
+        <div style="font-weight:800;font-size:0.88rem;color:#1a3a5c;">${e.action}</div>
+        <div style="font-size:0.75rem;color:#888;margin-top:2px;">👤 ${e.user||'—'} • 📅 ${dt} • 🏷️ ${e.program||'—'}</div>
+        ${details?`<div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:6px;">${details}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  const overlay = document.getElementById('dumaj-cell-overlay');
+  const box = document.getElementById('dumaj-cell-box');
+  const contentEl = document.getElementById('dumaj-cell-content');
+  if (!box || !contentEl) { showToast('تعذّر عرض السجل'); return; }
+  contentEl.innerHTML = `<div style="padding:20px;">
+    <div style="font-family:Tajawal,sans-serif;font-size:1.1rem;font-weight:900;color:#1a3a5c;margin-bottom:12px;border-bottom:2px solid #e0d8c8;padding-bottom:10px;display:flex;justify-content:space-between;">
+      <span>🔍 سجل التدقيق</span><span style="font-size:0.75rem;color:#888;">${auditLog.length} سجل</span>
+    </div>
+    <div style="max-height:65vh;overflow-y:auto;">${rows}</div>
+  </div>`;
+  overlay.style.display = 'block';
+  box.style.display = 'block';
+}
+
 </script>
 
 <!-- زر الرئيسية الثابت -->
