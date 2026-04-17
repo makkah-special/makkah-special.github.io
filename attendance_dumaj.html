@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -27,125 +26,125 @@ body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); 
 
 /* HEADER */
 .page-header {
-background: linear-gradient(135deg, #1a3a5c 0%, #c25a00 100%);
-color:#fff; padding:18px 24px;
-display:flex; align-items:center; justify-content:space-between; gap:12px;
-flex-wrap:wrap;
+  background: linear-gradient(135deg, #1a3a5c 0%, #c25a00 100%);
+  color:#fff; padding:18px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  flex-wrap:wrap;
 }
 .page-header h1 { font-size:1.2rem; font-weight:800; }
 .page-header p  { font-size:0.78rem; opacity:0.85; margin-top:2px; }
 .back-btn {
-background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
-padding:8px 16px; border-radius:20px; font-size:0.82rem; font-weight:700;
-text-decoration:none; transition:all 0.2s;
+  background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
+  padding:8px 16px; border-radius:20px; font-size:0.82rem; font-weight:700;
+  text-decoration:none; transition:all 0.2s;
 }
 .back-btn:hover { background:rgba(255,255,255,0.25); }
 
 /* TOOLBAR */
 .toolbar {
-background:#fff; border-bottom:2px solid var(–border);
-padding:14px 20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;
-position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  background:#fff; border-bottom:2px solid var(--border);
+  padding:14px 20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+  position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.06);
 }
 .toolbar-group { display:flex; align-items:center; gap:8px; }
-.toolbar label { font-size:0.82rem; font-weight:700; color:var(–muted); white-space:nowrap; }
-select, input[type=“date”], input[type=“text”] {
-border:1px solid var(–border); border-radius:8px;
-padding:7px 12px; font-family:‘Cairo’,sans-serif; font-size:0.84rem;
-color:var(–text); background:#fff; outline:none;
-transition: border-color 0.2s;
+.toolbar label { font-size:0.82rem; font-weight:700; color:var(--muted); white-space:nowrap; }
+select, input[type="date"], input[type="text"] {
+  border:1px solid var(--border); border-radius:8px;
+  padding:7px 12px; font-family:'Cairo',sans-serif; font-size:0.84rem;
+  color:var(--text); background:#fff; outline:none;
+  transition: border-color 0.2s;
 }
-select:focus, input:focus { border-color:var(–accent); }
+select:focus, input:focus { border-color:var(--accent); }
 .btn {
-padding:8px 16px; border-radius:10px; border:none; cursor:pointer;
-font-family:‘Cairo’,sans-serif; font-size:0.82rem; font-weight:700;
-transition:all 0.2s; display:flex; align-items:center; gap:6px;
+  padding:8px 16px; border-radius:10px; border:none; cursor:pointer;
+  font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700;
+  transition:all 0.2s; display:flex; align-items:center; gap:6px;
 }
-.btn-primary   { background:var(–accent); color:#fff; }
-.btn-primary:hover { background:var(–accent2); transform:translateY(-1px); }
+.btn-primary   { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); transform:translateY(-1px); }
 .btn-success   { background:#16a34a; color:#fff; }
 .btn-success:hover { background:#15803d; }
-.btn-outline   { background:#fff; color:var(–accent); border:1.5px solid var(–accent); }
+.btn-outline   { background:#fff; color:var(--accent); border:1.5px solid var(--accent); }
 .btn-outline:hover { background:#fff7f0; }
-.btn-dark      { background:var(–primary); color:#fff; }
+.btn-dark      { background:var(--primary); color:#fff; }
 .btn-dark:hover { background:#0f2440; }
 
 /* WEEK SELECTOR */
 .week-info {
-background: linear-gradient(135deg, #fff7f0, #fff);
-border:1.5px solid var(–border); border-radius:var(–radius);
-padding:12px 20px; margin:16px 20px;
-display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  background: linear-gradient(135deg, #fff7f0, #fff);
+  border:1.5px solid var(--border); border-radius:var(--radius);
+  padding:12px 20px; margin:16px 20px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
 }
-.week-info .week-label { font-size:0.9rem; font-weight:800; color:var(–accent); }
-.week-info .week-dates { font-size:0.78rem; color:var(–muted); }
+.week-info .week-label { font-size:0.9rem; font-weight:800; color:var(--accent); }
+.week-info .week-dates { font-size:0.78rem; color:var(--muted); }
 .week-nav { display:flex; gap:8px; }
 .week-nav-btn {
-background:var(–accent); color:#fff; border:none; border-radius:8px;
-padding:6px 14px; cursor:pointer; font-size:0.82rem; font-weight:700;
-font-family:‘Cairo’,sans-serif; transition:all 0.2s;
+  background:var(--accent); color:#fff; border:none; border-radius:8px;
+  padding:6px 14px; cursor:pointer; font-size:0.82rem; font-weight:700;
+  font-family:'Cairo',sans-serif; transition:all 0.2s;
 }
-.week-nav-btn:hover { background:var(–accent2); }
+.week-nav-btn:hover { background:var(--accent2); }
 
 /* STATS */
 .stats-row {
-display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:12px; margin:0 20px 16px;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px; margin:0 20px 16px;
 }
 .stat-box {
-background:#fff; border:1px solid var(–border); border-radius:var(–radius);
-padding:14px 16px; text-align:center; box-shadow:var(–shadow);
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  padding:14px 16px; text-align:center; box-shadow:var(--shadow);
 }
 .stat-box .stat-n { font-size:1.6rem; font-weight:900; }
-.stat-box .stat-l { font-size:0.72rem; color:var(–muted); margin-top:2px; }
-.stat-green .stat-n { color:var(–green); }
-.stat-red   .stat-n { color:var(–red); }
-.stat-yellow .stat-n{ color:var(–yellow); }
-.stat-blue  .stat-n { color:var(–primary); }
+.stat-box .stat-l { font-size:0.72rem; color:var(--muted); margin-top:2px; }
+.stat-green .stat-n { color:var(--green); }
+.stat-red   .stat-n { color:var(--red); }
+.stat-yellow .stat-n{ color:var(--yellow); }
+.stat-blue  .stat-n { color:var(--primary); }
 
 /* TABLE */
 .table-wrap {
-margin:0 20px 20px; border-radius:var(–radius);
-overflow:auto; box-shadow:var(–shadow);
-border:1px solid var(–border);
+  margin:0 20px 20px; border-radius:var(--radius);
+  overflow:auto; box-shadow:var(--shadow);
+  border:1px solid var(--border);
 }
 table { border-collapse:collapse; width:100%; min-width:900px; background:#fff; }
 thead tr { background:linear-gradient(135deg, #1a3a5c, #c25a00); color:#fff; }
 thead th {
-padding:12px 10px; font-size:0.78rem; font-weight:700;
-text-align:center; white-space:nowrap;
-border-left:1px solid rgba(255,255,255,0.15);
+  padding:12px 10px; font-size:0.78rem; font-weight:700;
+  text-align:center; white-space:nowrap;
+  border-left:1px solid rgba(255,255,255,0.15);
 }
 thead th:first-child { text-align:right; padding-right:16px; min-width:180px; }
 thead th.day-col { min-width:90px; }
 
-tbody tr { border-bottom:1px solid var(–border); transition:background 0.15s; }
+tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
 tbody tr:hover { background:#fff7f0; }
 tbody tr:last-child { border-bottom:none; }
 
 .student-cell {
-padding:10px 16px 10px 10px;
-display:flex; align-items:center; gap:10px;
+  padding:10px 16px 10px 10px;
+  display:flex; align-items:center; gap:10px;
 }
 .student-num {
-background:var(–accent); color:#fff;
-width:22px; height:22px; border-radius:50%;
-font-size:0.68rem; font-weight:800;
-display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  background:var(--accent); color:#fff;
+  width:22px; height:22px; border-radius:50%;
+  font-size:0.68rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
 }
 .student-name { font-size:0.82rem; font-weight:700; }
 .student-absent-count {
-font-size:0.68rem; color:var(–red); font-weight:700;
-background:#fee2e2; padding:1px 7px; border-radius:20px; margin-top:1px;
+  font-size:0.68rem; color:var(--red); font-weight:700;
+  background:#fee2e2; padding:1px 7px; border-radius:20px; margin-top:1px;
 }
 
 /* STATUS BUTTONS */
 .status-cell { padding:8px; text-align:center; }
 .status-btn {
-width:100%; padding:6px 4px; border-radius:8px; border:none;
-cursor:pointer; font-size:0.78rem; font-weight:700;
-font-family:‘Cairo’,sans-serif; transition:all 0.2s;
-min-width:70px;
+  width:100%; padding:6px 4px; border-radius:8px; border:none;
+  cursor:pointer; font-size:0.78rem; font-weight:700;
+  font-family:'Cairo',sans-serif; transition:all 0.2s;
+  min-width:70px;
 }
 .status-present { background:#dcfce7; color:#16a34a; }
 .status-absent  { background:#fee2e2; color:#dc2626; }
@@ -159,10 +158,10 @@ min-width:70px;
 
 /* DROPDOWN STATUS */
 .status-select {
-width:100%; padding:6px 4px; border-radius:8px;
-border:1.5px solid var(–border); font-family:‘Cairo’,sans-serif;
-font-size:0.78rem; font-weight:700; cursor:pointer;
-outline:none; text-align:center;
+  width:100%; padding:6px 4px; border-radius:8px;
+  border:1.5px solid var(--border); font-family:'Cairo',sans-serif;
+  font-size:0.78rem; font-weight:700; cursor:pointer;
+  outline:none; text-align:center;
 }
 .status-select.val-p { background:#dcfce7; color:#16a34a; border-color:#86efac; }
 .status-select.val-a { background:#fee2e2; color:#dc2626; border-color:#fca5a5; }
@@ -174,54 +173,54 @@ outline:none; text-align:center;
 
 .note-cell { padding:8px 6px; }
 .note-input {
-width:100%; padding:5px 8px; border-radius:6px;
-border:1px solid var(–border); font-family:‘Cairo’,sans-serif;
-font-size:0.75rem; resize:none; min-width:80px; max-width:140px;
+  width:100%; padding:5px 8px; border-radius:6px;
+  border:1px solid var(--border); font-family:'Cairo',sans-serif;
+  font-size:0.75rem; resize:none; min-width:80px; max-width:140px;
 }
-.note-input:focus { border-color:var(–accent); outline:none; }
+.note-input:focus { border-color:var(--accent); outline:none; }
 
 .total-cell {
-padding:8px; text-align:center;
-font-weight:800; font-size:0.85rem;
+  padding:8px; text-align:center;
+  font-weight:800; font-size:0.85rem;
 }
 
 /* SIGNATURE SECTION */
 .sign-section {
-background:#fff; border:1.5px solid var(–border);
-border-radius:var(–radius); margin:0 20px 20px;
-padding:20px; box-shadow:var(–shadow);
+  background:#fff; border:1.5px solid var(--border);
+  border-radius:var(--radius); margin:0 20px 20px;
+  padding:20px; box-shadow:var(--shadow);
 }
-.sign-section h3 { font-size:0.95rem; font-weight:800; color:var(–primary); margin-bottom:16px; }
+.sign-section h3 { font-size:0.95rem; font-weight:800; color:var(--primary); margin-bottom:16px; }
 .sign-grid { display:grid; grid-template-columns:1fr; gap:20px; max-width:400px; }
 .sign-box-wrap { display:flex; flex-direction:column; gap:8px; }
-.sign-label { font-size:0.82rem; font-weight:700; color:var(–muted); }
+.sign-label { font-size:0.82rem; font-weight:700; color:var(--muted); }
 .sign-name-input {
-border:1px solid var(–border); border-radius:8px;
-padding:8px 12px; font-family:‘Cairo’,sans-serif; font-size:0.84rem; width:100%;
+  border:1px solid var(--border); border-radius:8px;
+  padding:8px 12px; font-family:'Cairo',sans-serif; font-size:0.84rem; width:100%;
 }
 .sign-canvas-wrap {
-border:2px dashed var(–border); border-radius:10px;
-height:100px; position:relative; overflow:hidden; background:#fafafa;
-cursor:crosshair;
+  border:2px dashed var(--border); border-radius:10px;
+  height:100px; position:relative; overflow:hidden; background:#fafafa;
+  cursor:crosshair;
 }
 .sign-canvas-wrap canvas { width:100%; height:100%; display:block; }
 .sign-canvas-wrap .sign-placeholder {
-position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-color:var(–muted); font-size:0.8rem; pointer-events:none;
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  color:var(--muted); font-size:0.8rem; pointer-events:none;
 }
 .sign-actions { display:flex; gap:8px; margin-top:4px; }
-.btn-sm { padding:5px 12px; font-size:0.75rem; border-radius:8px; border:none; cursor:pointer; font-family:‘Cairo’,sans-serif; font-weight:700; transition:all 0.2s; }
+.btn-sm { padding:5px 12px; font-size:0.75rem; border-radius:8px; border:none; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; transition:all 0.2s; }
 .btn-sm-clear { background:#fee2e2; color:#dc2626; }
 .btn-sm-clear:hover { background:#fca5a5; }
 
 /* SAVE STATUS TOAST */
 .toast {
-position:fixed; bottom:24px; right:24px; z-index:9999;
-background:var(–primary); color:#fff; padding:12px 20px;
-border-radius:12px; font-size:0.85rem; font-weight:700;
-box-shadow:0 8px 24px rgba(0,0,0,0.2);
-transform:translateY(80px); opacity:0;
-transition:all 0.3s; pointer-events:none;
+  position:fixed; bottom:24px; right:24px; z-index:9999;
+  background:var(--primary); color:#fff; padding:12px 20px;
+  border-radius:12px; font-size:0.85rem; font-weight:700;
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
+  transform:translateY(80px); opacity:0;
+  transition:all 0.3s; pointer-events:none;
 }
 .toast.show { transform:translateY(0); opacity:1; }
 
@@ -230,160 +229,161 @@ transition:all 0.3s; pointer-events:none;
 
 /* RESPONSIVE */
 @media(max-width:768px) {
-.toolbar { padding:10px 12px; }
-.sign-grid { grid-template-columns:1fr; }
-.stats-row { grid-template-columns:repeat(2,1fr); }
-.week-info { margin:12px; }
-.table-wrap { margin:0 12px 16px; }
-.pdf-btn-row { margin:0 12px 16px; }
-.sign-section { margin:0 12px 16px; }
+  .toolbar { padding:10px 12px; }
+  .sign-grid { grid-template-columns:1fr; }
+  .stats-row { grid-template-columns:repeat(2,1fr); }
+  .week-info { margin:12px; }
+  .table-wrap { margin:0 12px 16px; }
+  .pdf-btn-row { margin:0 12px 16px; }
+  .sign-section { margin:0 12px 16px; }
 }
 
 /* ===== HIJRI CALENDAR TOGGLE ===== */
 .date-picker-wrap {
-display: flex;
-flex-direction: column;
-gap: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .cal-toggle-row {
-display: flex;
-gap: 4px;
-justify-content: center;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
 }
 .cal-toggle-btn {
-flex: 1;
-padding: 3px 8px;
-border-radius: 6px;
-border: 1.5px solid #d1d5db;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.68rem;
-font-weight: 700;
-cursor: pointer;
-background: #f9fafb;
-color: #6b7280;
-transition: all 0.15s;
+  flex: 1;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1.5px solid #d1d5db;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #f9fafb;
+  color: #6b7280;
+  transition: all 0.15s;
 }
 .cal-toggle-btn.active {
-background: var(–primary, #7a2800);
-color: #fff;
-border-color: var(–primary, #7a2800);
+  background: var(--primary, #7a2800);
+  color: #fff;
+  border-color: var(--primary, #7a2800);
 }
 
 /* Hijri popup */
 .hijri-popup {
-display: none;
-position: fixed;
-z-index: 9999;
-background: #fff;
-border-radius: 14px;
-box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-padding: 18px 20px;
-min-width: 280px;
-border: 1px solid #e5e7eb;
-animation: popIn 0.18s ease;
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 18px 20px;
+  min-width: 280px;
+  border: 1px solid #e5e7eb;
+  animation: popIn 0.18s ease;
 }
 @keyframes popIn {
-from { opacity:0; transform:translateY(-8px) scale(0.97); }
-to   { opacity:1; transform:none; }
+  from { opacity:0; transform:translateY(-8px) scale(0.97); }
+  to   { opacity:1; transform:none; }
 }
 .hijri-popup.open { display: block; }
 .hijri-popup-title {
-font-weight: 800;
-font-size: 0.88rem;
-color: var(–primary, #7a2800);
-margin-bottom: 12px;
-text-align: center;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--primary, #7a2800);
+  margin-bottom: 12px;
+  text-align: center;
 }
 .hijri-inputs {
-display: flex;
-gap: 8px;
-margin-bottom: 12px;
-align-items: center;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
 }
 .hijri-field {
-display: flex;
-flex-direction: column;
-gap: 3px;
-flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
 }
 .hijri-field label {
-font-size: 0.65rem;
-font-weight: 700;
-color: #6b7280;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #6b7280;
 }
 .hijri-field input, .hijri-field select {
-padding: 7px 8px;
-border: 1.5px solid #d1d5db;
-border-radius: 8px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.82rem;
-font-weight: 700;
-text-align: center;
-outline: none;
-width: 100%;
+  padding: 7px 8px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  width: 100%;
 }
 .hijri-field input:focus, .hijri-field select:focus {
-border-color: var(–primary, #7a2800);
+  border-color: var(--primary, #7a2800);
 }
 .hijri-popup-btns {
-display: flex;
-gap: 8px;
+  display: flex;
+  gap: 8px;
 }
 .hijri-popup-btns button {
-flex: 1;
-padding: 8px;
-border-radius: 9px;
-border: none;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.78rem;
-font-weight: 800;
-cursor: pointer;
-transition: all 0.15s;
+  flex: 1;
+  padding: 8px;
+  border-radius: 9px;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
 }
 .btn-hijri-apply {
-background: var(–primary, #7a2800);
-color: #fff;
+  background: var(--primary, #7a2800);
+  color: #fff;
 }
 .btn-hijri-cancel {
-background: #f3f4f6;
-color: #374151;
+  background: #f3f4f6;
+  color: #374151;
 }
 .hijri-display {
-font-size: 0.7rem;
-font-weight: 700;
-color: var(–accent, #e07020);
-text-align: center;
-min-height: 16px;
-margin-top: 2px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent, #e07020);
+  text-align: center;
+  min-height: 16px;
+  margin-top: 2px;
 }
 .hijri-overlay {
-display: none;
-position: fixed;
-inset: 0;
-z-index: 9998;
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
 }
 .hijri-overlay.open { display: block; }
 
+
 /* حقل هجري مدمج */
 .hijri-inline {
-display: flex;
-gap: 4px;
-align-items: center;
+  display: flex;
+  gap: 4px;
+  align-items: center;
 }
 .hijri-sel {
-border: 1.5px solid #d1d5db;
-border-radius: 8px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.78rem;
-font-weight: 700;
-color: #374151;
-background: #fff;
-outline: none;
-padding: 5px 6px;
-cursor: pointer;
-transition: border-color 0.15s;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #374151;
+  background: #fff;
+  outline: none;
+  padding: 5px 6px;
+  cursor: pointer;
+  transition: border-color 0.15s;
 }
-.hijri-sel:focus { border-color: var(–primary, #7a2800); }
+.hijri-sel:focus { border-color: var(--primary, #7a2800); }
 #hDay   { width: 60px; text-align: center; }
 #hMonth { width: 110px; }
 #hYear  { width: 72px; text-align: center; -moz-appearance: textfield; }
@@ -391,24 +391,25 @@ transition: border-color 0.15s;
 #hYear::-webkit-inner-spin-button { -webkit-appearance: none; }
 .cal-field-wrap { display: flex; align-items: center; }
 
+
 .day-bulk-row td {
-padding: 4px 6px;
-background: #f8f4f0;
-border-bottom: 2px solid #e8d8cc;
+  padding: 4px 6px;
+  background: #f8f4f0;
+  border-bottom: 2px solid #e8d8cc;
 }
 .day-bulk-select {
-width: 100%;
-padding: 5px 4px;
-border: 1.5px solid #e8d8cc;
-border-radius: 8px;
-font-family: ‘Cairo’, sans-serif;
-font-size: 0.72rem;
-font-weight: 800;
-cursor: pointer;
-background: #fff;
-color: #c25a00;
-outline: none;
-transition: border-color 0.15s;
+  width: 100%;
+  padding: 5px 4px;
+  border: 1.5px solid #e8d8cc;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: #fff;
+  color: #c25a00;
+  outline: none;
+  transition: border-color 0.15s;
 }
 .day-bulk-select:hover { border-color: #c25a00; }
 .day-bulk-select:focus { border-color: #c25a00; box-shadow: 0 0 0 2px rgba(194,90,0,0.12); }
@@ -418,7 +419,6 @@ transition: border-color 0.15s;
 <body>
 
 <!-- HEADER -->
-
 <div class="page-header">
   <div>
     <h1>🧠 كشف حضور — برنامج الدمج الفكري</h1>
@@ -428,7 +428,6 @@ transition: border-color 0.15s;
 </div>
 
 <!-- TOOLBAR -->
-
 <div class="toolbar">
   <div class="toolbar-group">
     <label>📅 الأسبوع:</label>
@@ -479,7 +478,6 @@ transition: border-color 0.15s;
 </div>
 
 <!-- WEEK INFO -->
-
 <div class="week-info">
   <div>
     <div class="week-label" id="weekLabel">الأسبوع الحالي</div>
@@ -492,7 +490,6 @@ transition: border-color 0.15s;
 </div>
 
 <!-- STATS -->
-
 <div class="stats-row" id="statsRow">
   <div class="stat-box stat-green"><div class="stat-n" id="statP">0</div><div class="stat-l">✅ حاضر</div></div>
   <div class="stat-box stat-red">  <div class="stat-n" id="statA">0</div><div class="stat-l">❌ غائب</div></div>
@@ -502,7 +499,6 @@ transition: border-color 0.15s;
 </div>
 
 <!-- TABLE -->
-
 <div class="table-wrap">
   <table id="attendanceTable">
     <thead>
@@ -534,7 +530,6 @@ transition: border-color 0.15s;
 </div>
 
 <!-- SIGNATURE SECTION -->
-
 <div class="sign-section">
   <h3>✍️ التوقيعات</h3>
   <div class="sign-grid">
@@ -553,7 +548,6 @@ transition: border-color 0.15s;
 </div>
 
 <!-- BUTTONS -->
-
 <div class="pdf-btn-row">
   <button class="btn btn-success" onclick="saveAttendance()">💾 حفظ في السحابة</button>
   <button class="btn btn-dark" onclick="printAttendance()">🖨️ طباعة / تصدير PDF</button>
@@ -981,7 +975,6 @@ function printAttendance() {
       .sign-img{max-height:70px;border:1px dashed #ccc;border-radius:6px;}
       @media print{body{padding:10px;}}
     </style>
-
   </head><body>
     <h2>🧑🏻‍🏫 كشف حضور — برنامج الدمج الفكري</h2>
     <div class="meta">
@@ -1044,158 +1037,159 @@ function printAttendance() {
 
 // ===== TOAST =====
 function showToast(msg) {
-const t = document.getElementById(‘toast’);
-t.textContent = msg;
-t.classList.add(‘show’);
-setTimeout(() => t.classList.remove(‘show’), 3000);
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
 // ===== INIT =====
-window.addEventListener(‘load’, () => {
-initCanvas(‘teacherCanvas’,‘teacherWrap’,‘tchPlaceholder’);
-renderAll();
-// حمّل بيانات الأسبوع الحالي من السحابة
-loadAttendance(weekKey(currentWeekStart));
+window.addEventListener('load', () => {
+  initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
+  renderAll();
+  // حمّل بيانات الأسبوع الحالي من السحابة
+  loadAttendance(weekKey(currentWeekStart));
 });
-window.addEventListener(‘resize’, () => {
-initCanvas(‘teacherCanvas’,‘teacherWrap’,‘tchPlaceholder’);
+window.addEventListener('resize', () => {
+  initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
 });
 
 // ===== HIJRI CALENDAR =====
-let _calMode = ‘miladi’;
+let _calMode = 'miladi';
 
 function getHijriParts(d) {
-try {
-const s = d.toLocaleDateString(‘en-SA-u-ca-islamic-umalqura’,
-{day:‘numeric’, month:‘numeric’, year:‘numeric’});
-const p = s.split(’/’); // M/D/Y
-return {m: parseInt(p[0]), d: parseInt(p[1]), y: parseInt(p[2])};
-} catch(e) { return {m:9, d:1, y:1447}; }
+  try {
+    const s = d.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
+      {day:'numeric', month:'numeric', year:'numeric'});
+    const p = s.split('/'); // M/D/Y
+    return {m: parseInt(p[0]), d: parseInt(p[1]), y: parseInt(p[2])};
+  } catch(e) { return {m:9, d:1, y:1447}; }
 }
 
 function getHijriLabel(d) {
-try {
-return ’🌙 ’ + d.toLocaleDateString(‘ar-SA-u-ca-islamic-umalqura-nu-latn’,
-{day:‘numeric’, month:‘long’, year:‘numeric’});
-} catch(e) { return ‘’; }
+  try {
+    return '🌙 ' + d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
+      {day:'numeric', month:'long', year:'numeric'});
+  } catch(e) { return ''; }
 }
 
 function fillHijriDays(month, year, selectedDay) {
-const sel = document.getElementById(‘hDay’);
-if (!sel) return;
-// أقصى أيام الشهر الهجري 29 أو 30
-const maxDay = 30;
-const cur = selectedDay || parseInt(sel.value) || 1;
-sel.innerHTML = ‘<option value="">يوم</option>’ +
-Array.from({length: maxDay}, (_, i) => i+1)
-.map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`)
-.join(’’);
+  const sel = document.getElementById('hDay');
+  if (!sel) return;
+  // أقصى أيام الشهر الهجري 29 أو 30
+  const maxDay = 30;
+  const cur = selectedDay || parseInt(sel.value) || 1;
+  sel.innerHTML = '<option value="">يوم</option>' +
+    Array.from({length: maxDay}, (_, i) => i+1)
+      .map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`)
+      .join('');
 }
 
 function setCalMode(mode) {
-_calMode = mode;
-document.querySelectorAll(’.cal-toggle-btn’).forEach(b =>
-b.classList.toggle(‘active’, b.dataset.mode === mode));
+  _calMode = mode;
+  document.querySelectorAll('.cal-toggle-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.mode === mode));
 
-const miladiWrap = document.getElementById(‘miladiWrap’);
-const hijriWrap  = document.getElementById(‘hijriWrap’);
+  const miladiWrap = document.getElementById('miladiWrap');
+  const hijriWrap  = document.getElementById('hijriWrap');
 
-if (mode === ‘miladi’) {
-miladiWrap.style.display = ‘’;
-hijriWrap.style.display  = ‘none’;
-} else {
-miladiWrap.style.display = ‘none’;
-hijriWrap.style.display  = ‘’;
-// ملء القيم الحالية
-const p = getHijriParts(currentWeekStart);
-document.getElementById(‘hMonth’).value = p.m;
-document.getElementById(‘hYear’).value  = p.y;
-fillHijriDays(p.m, p.y, p.d);
-}
-updateHijriDisplay();
+  if (mode === 'miladi') {
+    miladiWrap.style.display = '';
+    hijriWrap.style.display  = 'none';
+  } else {
+    miladiWrap.style.display = 'none';
+    hijriWrap.style.display  = '';
+    // ملء القيم الحالية
+    const p = getHijriParts(currentWeekStart);
+    document.getElementById('hMonth').value = p.m;
+    document.getElementById('hYear').value  = p.y;
+    fillHijriDays(p.m, p.y, p.d);
+  }
+  updateHijriDisplay();
 }
 
 function applyHijriInline() {
-const d = parseInt(document.getElementById(‘hDay’).value);
-const m = parseInt(document.getElementById(‘hMonth’).value);
-const y = parseInt(document.getElementById(‘hYear’).value);
-if (!d || !m || !y || y < 1400 || y > 1500) return;
+  const d = parseInt(document.getElementById('hDay').value);
+  const m = parseInt(document.getElementById('hMonth').value);
+  const y = parseInt(document.getElementById('hYear').value);
+  if (!d || !m || !y || y < 1400 || y > 1500) return;
 
-const miladi = hijriToMiladi(y, m, d);
-if (!miladi) return;
+  const miladi = hijriToMiladi(y, m, d);
+  if (!miladi) return;
 
-// اضبط على الأحد
-miladi.setHours(0,0,0,0);
-miladi.setDate(miladi.getDate() - miladi.getDay());
-currentWeekStart = miladi;
-document.getElementById(‘weekStart’).value = weekKey(currentWeekStart);
-renderAll();
+  // اضبط على الأحد
+  miladi.setHours(0,0,0,0);
+  miladi.setDate(miladi.getDate() - miladi.getDay());
+  currentWeekStart = miladi;
+  document.getElementById('weekStart').value = weekKey(currentWeekStart);
+  renderAll();
 }
 
 function updateHijriDisplay() {
-const el = document.getElementById(‘hijriDisplay’);
-if (el) el.textContent = getHijriLabel(currentWeekStart);
+  const el = document.getElementById('hijriDisplay');
+  if (el) el.textContent = getHijriLabel(currentWeekStart);
 }
 
 function hijriToMiladi(hy, hm, hd) {
-const approxJD = Math.floor((11*hy+3)/30) + 354*hy + 30*hm
-- Math.floor((hm-1)/2) + hd + 1948440 - 385;
-const approx = julianToDate(approxJD);
-for (let offset = -45; offset <= 45; offset++) {
-const test = new Date(approx);
-test.setDate(test.getDate() + offset);
-try {
-const p = test.toLocaleDateString(‘en-SA-u-ca-islamic-umalqura’,
-{day:‘numeric’, month:‘numeric’, year:‘numeric’}).split(’/’);
-if (parseInt(p[2])===hy && parseInt(p[0])===hm && parseInt(p[1])===hd)
-return test;
-} catch(e) {}
-}
-return approx;
+  const approxJD = Math.floor((11*hy+3)/30) + 354*hy + 30*hm
+    - Math.floor((hm-1)/2) + hd + 1948440 - 385;
+  const approx = julianToDate(approxJD);
+  for (let offset = -45; offset <= 45; offset++) {
+    const test = new Date(approx);
+    test.setDate(test.getDate() + offset);
+    try {
+      const p = test.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
+        {day:'numeric', month:'numeric', year:'numeric'}).split('/');
+      if (parseInt(p[2])===hy && parseInt(p[0])===hm && parseInt(p[1])===hd)
+        return test;
+    } catch(e) {}
+  }
+  return approx;
 }
 
 function julianToDate(jd) {
-let l=jd+68569, n=Math.floor(4*l/146097);
-l=l-Math.floor((146097*n+3)/4);
-const i=Math.floor(4000*(l+1)/1461001);
-l=l-Math.floor(1461*i/4)+31;
-const j=Math.floor(80*l/2447), d=l-Math.floor(2447*j/80);
-l=Math.floor(j/11);
-return new Date(100*(n-49)+i+l, j+2-12*l-1, d);
+  let l=jd+68569, n=Math.floor(4*l/146097);
+  l=l-Math.floor((146097*n+3)/4);
+  const i=Math.floor(4000*(l+1)/1461001);
+  l=l-Math.floor(1461*i/4)+31;
+  const j=Math.floor(80*l/2447), d=l-Math.floor(2447*j/80);
+  l=Math.floor(j/11);
+  return new Date(100*(n-49)+i+l, j+2-12*l-1, d);
 }
+
 
 // ===== تحكم يومي =====
 const BULK_OPTS = [
-{val:‘p’, label:‘✅ حاضر الكل’},
-{val:‘a’, label:‘❌ غائب الكل’},
-{val:‘h’, label:‘🏖️ إجازة الكل’},
-{val:‘s’, label:‘🚫 تعليق الكل’},
+  {val:'p', label:'✅ حاضر الكل'},
+  {val:'a', label:'❌ غائب الكل'},
+  {val:'h', label:'🏖️ إجازة الكل'},
+  {val:'s', label:'🚫 تعليق الكل'},
 ];
 
 function renderBulkRow() {
-for (let di = 0; di < 5; di++) {
-const td = document.getElementById(‘bulk-td-’ + di);
-if (!td) continue;
-const opts = [
-`<option value="" disabled selected>— تطبيق على الكل —</option>`,
-…BULK_OPTS.map(o => `<option value="${o.val}">${o.label}</option>`)
-].join(’’);
-td.innerHTML = `<select class="day-bulk-select" onchange="markDay(${di},this.value);this.selectedIndex=0;">${opts}</select>`;
-}
+  for (let di = 0; di < 5; di++) {
+    const td = document.getElementById('bulk-td-' + di);
+    if (!td) continue;
+    const opts = [
+      `<option value="" disabled selected>— تطبيق على الكل —</option>`,
+      ...BULK_OPTS.map(o => `<option value="${o.val}">${o.label}</option>`)
+    ].join('');
+    td.innerHTML = `<select class="day-bulk-select" onchange="markDay(${di},this.value);this.selectedIndex=0;">${opts}</select>`;
+  }
 }
 
 function markDay(di, val) {
-const wk = weekKey(currentWeekStart);
-if (!attendanceData[wk]) attendanceData[wk] = {};
-STUDENTS.forEach(stu => {
-if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
-attendanceData[wk][stu.pin][`d${di}`] = val;
-});
-renderTable();
-updateStats();
-const dayNames = [‘الأحد’,‘الاثنين’,‘الثلاثاء’,‘الأربعاء’,‘الخميس’];
-const labels = {p:‘حاضر’,a:‘غائب’,h:‘إجازة’,s:‘تعليق’};
-showToast(`✅ ${dayNames[di]}: تم تسجيل ${labels[val]||val} لجميع الطلاب`);
+  const wk = weekKey(currentWeekStart);
+  if (!attendanceData[wk]) attendanceData[wk] = {};
+  STUDENTS.forEach(stu => {
+    if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
+    attendanceData[wk][stu.pin][`d${di}`] = val;
+  });
+  renderTable();
+  updateStats();
+  const dayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+  const labels = {p:'حاضر',a:'غائب',h:'إجازة',s:'تعليق'};
+  showToast(`✅ ${dayNames[di]}: تم تسجيل ${labels[val]||val} لجميع الطلاب`);
 }
 
 </script>
