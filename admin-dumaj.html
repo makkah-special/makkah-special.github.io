@@ -1040,6 +1040,13 @@
           <div style="font-size:0.78rem;color:#666;margin-bottom:14px">تعديل رمز دخول أي طالب من القائمة</div>
           <div id="dumaj-students-pin-list" style="display:flex;flex-direction:column;gap:8px"></div>
         </div>
+
+        <!-- سجل التدقيق -->
+        <div style="background:#fff;border:1px solid var(--border,#e0d8c8);border-radius:14px;padding:20px 22px;margin-top:18px;">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px;">🔍 سجل التدقيق</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px;">جميع التعديلات والعمليات المسجّلة</div>
+          <button onclick="showAuditLog()" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:9px;padding:10px 20px;font-family:Cairo,sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;">🔍 عرض السجل</button>
+        </div>
       </div>
     </div>
 
@@ -1279,6 +1286,51 @@ let currentStudent = null;
 const SB_PHOTOS = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/dumaj/photos/";
 const SB_URL    = "https://pyrxwqgapwjwhiskowhk.supabase.co";
 const SB_KEY    = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+
+// ===== AUDIT SYSTEM =====
+const AUDIT_USER    = "مشرف الدمج الفكري";
+const AUDIT_PROGRAM = "الدمج الفكري";
+const AUDIT_FILE    = 'reports/audit/audit-log.json';
+let auditLog = [];
+
+async function loadAuditLog() {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/${AUDIT_FILE}`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      auditLog = Array.isArray(data) ? data : [];
+    }
+  } catch(e) { auditLog = []; }
+}
+
+async function saveAuditLog() {
+  try {
+    const blob = new Blob([JSON.stringify(auditLog)], { type: 'application/json' });
+    await fetch(`${SB_URL}/storage/v1/object/${AUDIT_FILE}`, {
+      method: 'POST',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY,
+                 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: blob
+    });
+  } catch(e) { console.warn('Audit save:', e); }
+}
+
+async function logAudit(action, details = {}) {
+  const entry = {
+    id:        Date.now(),
+    timestamp: new Date().toISOString(),
+    user:      AUDIT_USER,
+    program:   AUDIT_PROGRAM,
+    action,
+    details,
+  };
+  auditLog.unshift(entry);
+  if (auditLog.length > 500) auditLog = auditLog.slice(0, 500);
+  saveAuditLog();
+}
+
 
 async function loadStudentPhoto(pin) {
   const exts = ['jpg','jpeg','png','webp'];
@@ -1826,6 +1878,8 @@ async function loadAdminPanel() {
   // إظهار اللوحة فوراً بدون انتظار Supabase
   document.getElementById('pin-screen').style.display = 'none';
   document.getElementById('admin-portal').style.display = 'block';
+  logAudit('دخول لوحة التحكم', {});
+  loadAuditLog();
   document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
   window.scrollTo(0, 0);
   // تحميل البيانات في الخلفية
@@ -1952,6 +2006,7 @@ async function upsertToSupabase(pin, studentData) {
     });
     if (res.ok) {
       showToast('✅ تم حفظ بيانات ' + studentData.name);
+      logAudit('تعديل بيانات طالب', { studentName: studentData.name, pin, grade: studentData.grade });
     } else {
       const err = await res.text();
       console.error('Storage error:', err);
