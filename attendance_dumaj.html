@@ -602,14 +602,18 @@ let attendanceData   = {}; // {weekKey: {pin: {day0..4: 'p'|'a'|'l'|'e', note:''
 
 // ===== WEEK UTILS =====
 function getThisSunday() {
-  const d = new Date();
-  const day = d.getDay(); // 0=Sun
-  d.setDate(d.getDate() - day);
-  d.setHours(0,0,0,0);
-  return d;
+  const now = new Date();
+  // استخدم التاريخ المحلي لتجنب مشكلة timezone
+  const localDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const day = localDate.getDay(); // 0=Sun
+  localDate.setDate(localDate.getDate() - day);
+  return localDate;
 }
 function weekKey(d) {
-  return d.toISOString().slice(0,10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 function formatDate(d) {
   return d.toLocaleDateString('ar-SA-u-nu-latn', {day:'numeric',month:'numeric'});
@@ -644,37 +648,47 @@ function renderAll() {
   updateHijriDisplay();
 }
 
-function updateWeekHeader() {
-  const days = getWeekDays();
-  // رقم الأسبوع من التقويم الرسمي للفصل الثاني 1447هـ
-  const WEEK_STARTS = {
-    1:  "2026-01-26",
-    2:  "2026-02-02",
-    3:  "2026-02-09",
-    4:  "2026-02-16",
-    5:  "2026-02-23",
-    6:  "2026-03-02",
-    7:  "2026-03-09",
-    // إجازة عيد الفطر
-    8:  "2026-04-13",
-    9:  "2026-04-20",
-    10: "2026-04-27",
-    11: "2026-05-04",
-    12: "2026-05-11",
-    13: "2026-05-18",
-    14: "2026-05-25",
-    // إجازة عيد الأضحى
-    15: "2026-06-15",
-    16: "2026-06-22",
-  };
-  const currentKey = weekKey(currentWeekStart);
-  let wkLabel = 'قبل الفصل / إجازة';
-  for (const [num, startDate] of Object.entries(WEEK_STARTS)) {
-    if (currentKey === startDate) {
-      wkLabel = `الأسبوع ${num}`;
-      break;
+// جدول الأسابيع الدراسية — الفصل الثاني 1447هـ
+const WEEK_STARTS_1447 = [
+  { num: 1,  date: "2026-01-18" },  // 1447/07/29هـ
+  { num: 2,  date: "2026-01-25" },  // 1447/08/06هـ
+  { num: 3,  date: "2026-02-01" },  // 1447/08/13هـ
+  { num: 4,  date: "2026-02-08" },  // 1447/08/20هـ
+  { num: 5,  date: "2026-02-15" },  // 1447/08/27هـ
+  { num: 6,  date: "2026-02-23" },  // 1447/09/06هـ
+  { num: 7,  date: "2026-03-02" },  // 1447/09/13هـ
+  // إجازة عيد الفطر
+  { num: 8,  date: "2026-03-29" },  // 1447/10/10هـ
+  { num: 9,  date: "2026-04-05" },  // 1447/10/17هـ
+  { num: 10, date: "2026-04-12" },  // 1447/10/24هـ
+  { num: 11, date: "2026-04-19" },  // 1447/11/02هـ
+  { num: 12, date: "2026-04-26" },  // 1447/11/09هـ
+  { num: 13, date: "2026-05-03" },  // 1447/11/16هـ
+  { num: 14, date: "2026-05-10" },  // 1447/11/23هـ
+  // إجازة عيد الأضحى
+  { num: 15, date: "2026-06-02" },  // 1447/12/16هـ
+  { num: 16, date: "2026-06-09" },  // 1447/12/23هـ
+];
+
+function getWeekNumber(dateStr) {
+  // ابحث عن الأسبوع الذي يقع فيه التاريخ (بين بدايته ونهايته)
+  for (let i = 0; i < WEEK_STARTS_1447.length; i++) {
+    const wkStart = WEEK_STARTS_1447[i].date;
+    const wkEnd   = WEEK_STARTS_1447[i+1]
+      ? WEEK_STARTS_1447[i+1].date
+      : "2026-07-01";
+    if (dateStr >= wkStart && dateStr < wkEnd) {
+      return WEEK_STARTS_1447[i].num;
     }
   }
+  return null;
+}
+
+function updateWeekHeader() {
+  const days = getWeekDays();
+  const currentKey = weekKey(currentWeekStart);
+  const wkNum = getWeekNumber(currentKey);
+  const wkLabel = wkNum ? `الأسبوع ${wkNum}` : 'إجازة / خارج الفصل';
   document.getElementById('weekLabel').textContent = wkLabel;
   document.getElementById('weekDates').textContent =
     `${days[0].dateStr} — ${days[4].dateStr}`;
