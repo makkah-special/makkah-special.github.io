@@ -568,7 +568,7 @@ async function logAudit(action, details = {}) {
 }
 
 const SB_KEY       = SUPABASE_KEY;
-let SUPERVISOR_PIN = "7441";
+let SUPERVISOR_PIN = null; // لا يُخزن في الكود — يُتحقق منه عبر Supabase
 const SUPERVISOR_NAME  = "أحمد سعيد الزهراني";
 const SUPERVISOR_TITLE = "مشرف ذوي الإعاقة — الإدارة العامة للتعليم";
 
@@ -637,23 +637,45 @@ let signCanvas, signCtx, isDrawing = false;
 // =====================================================
 // PIN
 // =====================================================
-function checkPin() {
-  const val = document.getElementById('sup-pin').value;
+async function checkPin() {
+  const val = document.getElementById('sup-pin').value.trim();
   const err = document.getElementById('pin-error');
   const inp = document.getElementById('sup-pin');
-  if (val === SUPERVISOR_PIN) {
-    err.style.display = 'none';
-    inp.classList.remove('error');
-    document.getElementById('pin-screen').style.display = 'none';
-    document.getElementById('portal').style.display = 'block';
-    initPortal();
-    loadAuditLog();
-    logAudit('دخول لوحة الإشراف', {});
-  } else {
+  const btn = document.querySelector('.btn-enter');
+
+  if (!val) return;
+
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ جارٍ التحقق...'; }
+  err.style.display = 'none';
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/storage/v1/object/public/reports/supervisor-config.json?t=${Date.now()}`
+    );
+    if (res.ok) {
+      const config = await res.json();
+      if (config && config.pin && val === config.pin) {
+        SUPERVISOR_PIN = config.pin; // نخزنه مؤقتاً في الذاكرة فقط
+        err.style.display = 'none';
+        inp.classList.remove('error');
+        document.getElementById('pin-screen').style.display = 'none';
+        document.getElementById('portal').style.display = 'block';
+        initPortal();
+        loadAuditLog();
+        logAudit('دخول لوحة الإشراف', {});
+        return;
+      }
+    }
+    // PIN خاطئ
     err.style.display = 'block';
     inp.classList.add('error');
     inp.value = '';
     setTimeout(() => inp.classList.remove('error'), 500);
+  } catch(e) {
+    err.textContent = '❌ تعذّر الاتصال، تحقق من الإنترنت';
+    err.style.display = 'block';
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '✅ دخول'; }
   }
 }
 
@@ -1434,13 +1456,29 @@ function changeSupervisorPin() {
   if (cur !== SUPERVISOR_PIN) { msg.style.color='#dc2626'; msg.textContent='❌ الرمز الحالي غير صحيح'; return; }
   if (nw.length < 4) { msg.style.color='#dc2626'; msg.textContent='❌ الرمز الجديد يجب أن يكون 4 أرقام على الأقل'; return; }
 
-  SUPERVISOR_PIN = nw;
-  msg.style.color = '#065f46';
-  msg.textContent = '✅ تم تحديث الرمز بنجاح';
+  // حفظ الرمز الجديد في Supabase
+  try {
+    const body = JSON.stringify({ pin: nw });
+    await fetch(`${SUPABASE_URL}/storage/v1/object/reports/supervisor-config.json`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'x-upsert': 'true'
+      },
+      body
+    });
+    SUPERVISOR_PIN = nw;
+    msg.style.color = '#065f46';
+    msg.textContent = '✅ تم تحديث الرمز بنجاح';
+  } catch(e) {
+    msg.style.color = '#dc2626';
+    msg.textContent = '❌ فشل الحفظ، حاول مجدداً';
+  }
   document.getElementById('cur-pin').value = '';
   document.getElementById('new-pin').value = '';
   setTimeout(() => { msg.textContent = ''; }, 3000);
-}
 
 // =====================================================
 // UTILITIES
