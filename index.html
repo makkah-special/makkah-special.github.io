@@ -549,6 +549,36 @@ footer {
 }
 
 .footer-section { margin-bottom: 16px; }
+.footer-nav-grid {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 16px;
+}
+.footer-row-top {
+  grid-template-columns: repeat(2, 1fr);
+}
+.footer-row-bottom {
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 0;
+}
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+.footer-nav-col .fl-gold,
+.footer-nav-col .fl-white {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+.fl-sm {
+  font-size: 0.65rem !important;
+  padding: 4px 10px !important;
+}
 .footer-sec-label {
   font-size: 0.62rem;
   color: rgba(255,255,255,0.2);
@@ -641,8 +671,9 @@ footer {
   /* Footer */
   footer { padding: 28px 16px; }
   .footer-logo-text { font-size: 1.2rem; }
-  .fl-gold { font-size: 0.76rem; padding: 7px 14px; }
-  .fl-white { font-size: 0.74rem; padding: 6px 12px; }
+  .fl-gold { font-size: 0.72rem; padding: 6px 12px; }
+  .fl-white { font-size: 0.7rem; padding: 5px 10px; }
+  .footer-row-top, .footer-row-bottom { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
 
 @media (max-width: 400px) {
@@ -894,33 +925,36 @@ footer {
     <div class="footer-credit">إعداد وتنفيذ: أ. سعد سالم الزهراني</div>
     <hr class="footer-divider">
 
-    <div class="footer-section">
-      <div class="footer-sec-label">الإشراف التربوي</div>
-      <div class="footer-links">
-        <a href="supervisor.html" class="fl-gold">🏛️ مشرف ذوي الإعاقة — الإدارة العامة</a>
+    <!-- الصف الأول: مشرفو البرامج + بوابة المعلمين -->
+    <div class="footer-nav-grid footer-row-top">
+
+      <div class="footer-nav-col">
+        <div class="footer-sec-label">مشرفو البرامج</div>
+        <a href="admin-dumaj.html" class="fl-white fl-sm">🔐 مشرف الدمج الفكري</a>
+        <a href="admin-yaseer.html" class="fl-white fl-sm">🔐 مشرف يسير التعليمي</a>
       </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-sec-label">بوابة المعلمين</div>
+        <a href="teachers-dumaj.html" class="fl-white fl-sm">👨‍🏫 معلمو الدمج</a>
+        <a href="teachers-yaseer.html" class="fl-white fl-sm">📘 معلمو يسير</a>
+      </div>
+
     </div>
 
-    <div class="footer-section">
-      <div class="footer-sec-label">مشرفو البرامج داخل المدرسة</div>
-      <div class="footer-links">
-        <a href="admin-dumaj.html" class="fl-white">🔐 مشرف الدمج الفكري</a>
-        <a href="admin-yaseer.html" class="fl-white">🔐 مشرف يسير التعليمي</a>
-      </div>
-    </div>
+    <!-- الصف الثاني: الإشراف + إدارة المدرسة -->
+    <div class="footer-nav-grid footer-row-bottom">
 
-    <div class="footer-section">
-      <div class="footer-sec-label">بوابة المعلمين</div>
-      <div class="footer-links">
-        <a href="teachers-dumaj.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">👨‍🏫 معلمو الدمج</a>
-        <a href="teachers-yaseer.html" class="fl-white" style="font-size:0.72rem;padding:5px 14px;">📘 معلمو يسير</a>
+      <div class="footer-nav-col">
+        <div class="footer-sec-label">الإشراف التربوي</div>
+        <a href="supervisor.html" class="fl-gold fl-sm">🏛️ مشرف ذوي الإعاقة — الإدارة العامة</a>
       </div>
-    </div>
 
-    <div class="footer-section" style="margin-bottom:0;">
-      <div class="footer-links">
-        <a href="principal-dashboard.html" class="fl-dim">🏫 إدارة المدرسة</a>
+      <div class="footer-nav-col">
+        <div class="footer-sec-label">إدارة المدرسة</div>
+        <a href="principal-dashboard.html" class="fl-white fl-sm">🏫 إدارة المدرسة</a>
       </div>
+
     </div>
   </div>
 </footer>
