@@ -727,6 +727,30 @@
   .fu-edit-row input, .fu-edit-row select { padding:8px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; outline:none; width:100%; }
   .success-toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#c25a00; color:#fff; padding:12px 28px; border-radius:12px; font-weight:700; font-size:0.88rem; z-index:9999; box-shadow:0 8px 24px rgba(194,90,0,0.4); display:none; animation:fadeIn 0.3s ease; }
 
+  /* SCHEDULE TABLE */
+  .sch-table { width:100%; border-collapse:collapse; font-size:0.78rem; }
+  .sch-table th {
+    background: linear-gradient(135deg,#1a3a5c,#0f2440);
+    color:#fff; padding:8px 6px; text-align:center;
+    font-family:'Tajawal',sans-serif; font-weight:800; font-size:0.75rem;
+  }
+  .sch-table td {
+    border:1px solid #e0d8c8; padding:7px 6px; text-align:center;
+    vertical-align:middle; min-height:36px;
+  }
+  .sch-period-label { background:#f5f2eb; font-weight:800; color:#1a3a5c; font-size:0.72rem; }
+  .sch-cell-lesson { background:#fff; }
+  .sch-cell-break { background:#fef9ee; color:#92400e; font-weight:700; }
+  .sch-cell-end { background:#f0faf5; color:#065f46; font-weight:700; }
+  .sch-cell-empty { background:#fafafa; color:#ccc; }
+  .sch-subject { font-weight:700; color:#1a3a5c; display:block; }
+  .sch-teacher { font-size:0.65rem; color:#888; display:block; margin-top:2px; }
+  .sch-no-data { text-align:center; padding:40px 20px; color:#9ca3af; }
+  @media (max-width:600px) {
+    .sch-table { font-size:0.65rem; }
+    .sch-table th, .sch-table td { padding:5px 3px; }
+  }
+
   /* RESPONSIVE */
   @media (max-width: 640px) {
     header { padding: 12px 18px; }
@@ -862,6 +886,7 @@
       <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
       <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
       <button class="tab-btn" onclick="openTab('iep',this)">🎯 تقييم الأهداف</button>
+      <button class="tab-btn" onclick="openTab('schedule',this)">📅 الجدول الدراسي</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
     </div>
 
@@ -911,6 +936,19 @@
             <div style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:10px;border-right:4px solid var(--accent);padding-right:10px;">📊 تحليل النتائج</div>
             <div id="iep-stats-summary"></div>
             <canvas id="iep-student-chart" height="180"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="tab-pane" id="tab-schedule">
+      <div class="s-card">
+        <div class="s-card-head">📅 الجدول الدراسي الأسبوعي</div>
+        <div style="padding:16px;" id="schedule-content">
+          <div style="text-align:center;padding:40px;color:#9ca3af;">
+            <div style="font-size:2.5rem;margin-bottom:10px;">📅</div>
+            <div style="font-weight:800;">جارٍ تحميل الجدول...</div>
           </div>
         </div>
       </div>
@@ -1286,7 +1324,97 @@ function openTab(id, btn) {
       renderIEPStudentView(pin);
     }
   }
+  if (id === 'schedule') renderStudentSchedule();
   if (id === 'iqrar') setTimeout(initCanvas, 100);
+}
+
+// ===== SCHEDULE TAB =====
+function renderStudentSchedule() {
+  const el = document.getElementById('schedule-content');
+  if (!el || !currentStudent) return;
+
+  // استخراج الصف من بيانات الطالب (مثال: "الأول المتوسط / ١" → "أول متوسط")
+  const gradeRaw = (currentStudent.grade || '').trim();
+  let gradeKey = '';
+  if (gradeRaw.includes('الأول'))   gradeKey = 'أول متوسط';
+  else if (gradeRaw.includes('الثاني')) gradeKey = 'ثاني متوسط';
+  else if (gradeRaw.includes('الثالث')) gradeKey = 'ثالث متوسط';
+
+  if (!gradeKey) {
+    el.innerHTML = '<div class="sch-no-data">⚠️ لم يتم تحديد صف الطالب</div>';
+    return;
+  }
+
+  // تحميل الجدول من localStorage (نفس مفتاح admin-dumaj)
+  let timetable = {};
+  try {
+    const raw = localStorage.getItem('dumaj_timetable_v1_' + gradeKey);
+    if (raw) timetable = JSON.parse(raw);
+  } catch(e) {}
+
+  const days    = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+  const periods = [
+    { num:1, label:'الأولى',   time:'7:30–8:15'   },
+    { num:2, label:'الثانية',  time:'8:15–9:00'   },
+    { num:3, label:'الثالثة',  time:'9:00–9:45'   },
+    { num:4, label:'الرابعة',  time:'10:05–10:50' },
+    { num:5, label:'الخامسة',  time:'10:50–11:35' },
+    { num:6, label:'السادسة',  time:'11:35–12:20' },
+    { num:7, label:'السابعة',  time:'12:20–13:05' },
+  ];
+
+  const hasData = Object.keys(timetable).length > 0;
+  if (!hasData) {
+    el.innerHTML = `<div class="sch-no-data">
+      <div style="font-size:2.5rem;margin-bottom:12px;">📅</div>
+      <div style="font-weight:800;color:#1a3a5c;margin-bottom:6px;">لم يُعدّ الجدول بعد</div>
+      <div style="font-size:0.82rem;">يمكن للمشرف إعداد جدول ${gradeKey} من لوحة التحكم</div>
+    </div>`;
+    return;
+  }
+
+  let html = `
+    <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+      <div style="background:linear-gradient(135deg,#1a3a5c,#0f2440);color:#fff;padding:6px 16px;border-radius:20px;font-family:'Tajawal',sans-serif;font-weight:800;font-size:0.85rem;">
+        📚 ${gradeKey}
+      </div>
+      <div style="font-size:0.78rem;color:#888;">الجدول الأسبوعي — الفصل الثاني 1447هـ</div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="sch-table">
+      <thead>
+        <tr>
+          <th>الحصة</th>
+          <th>الوقت</th>
+          ${days.map(d => `<th>${d}</th>`).join('')}
+        </tr>
+      </thead>
+      <tbody>`;
+
+  periods.forEach(p => {
+    html += `<tr>
+      <td class="sch-period-label">${p.label}</td>
+      <td class="sch-period-label" style="font-size:0.65rem;color:#888;font-weight:600;">${p.time}</td>`;
+    days.forEach(day => {
+      const cell = (timetable[day] || {})[p.num] || { type:'empty' };
+      if (cell.type === 'lesson') {
+        html += `<td class="sch-cell-lesson">
+          <span class="sch-subject">${cell.subject || '—'}</span>
+          ${cell.teacher ? `<span class="sch-teacher">👤 ${cell.teacher}</span>` : ''}
+        </td>`;
+      } else if (cell.type === 'break_sup') {
+        html += `<td class="sch-cell-break">☕ فسحة</td>`;
+      } else if (cell.type === 'end_sup') {
+        html += `<td class="sch-cell-end">🏫 نهاية</td>`;
+      } else {
+        html += `<td class="sch-cell-empty">—</td>`;
+      }
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  el.innerHTML = html;
 }
 
 // Legend
