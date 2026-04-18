@@ -405,55 +405,91 @@ main {
 .portals-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-  gap: 20px;
+  gap: 24px;
   margin-bottom: 70px;
 }
 
 .portal-card {
-  border-radius: 20px;
-  padding: 28px 24px;
+  border-radius: 24px;
+  padding: 0;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s;
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
-.portal-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-.portal-card::before {
+.portal-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(0,0,0,0.5); }
+
+/* خط علوي مضيء */
+.portal-card::after {
   content: '';
-  position: absolute; inset: 0;
-  background: rgba(0,0,0,0.15);
-  pointer-events: none;
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
 }
 
-.portal-card-inner { position: relative; z-index: 1; }
+.portal-card-inner {
+  position: relative; z-index: 1;
+  padding: 36px 28px 28px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
 
-.portal-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-.portal-title { font-family: 'Tajawal', sans-serif; font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 8px; }
-.portal-desc { font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 16px; }
+/* أيقونة كبيرة وسط */
+.portal-icon {
+  font-size: 3.8rem;
+  margin-bottom: 6px;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  line-height: 1;
+}
 
-.portal-features { margin-bottom: 20px; display: flex; flex-direction: column; gap: 6px; }
+/* دائرة خلف الأيقونة */
+.portal-icon-wrap {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.portal-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.25rem; font-weight: 900;
+  color: #fff; margin-bottom: 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.portal-desc {
+  font-size: 0.82rem; color: rgba(255,255,255,0.72);
+  line-height: 1.8; margin-bottom: 20px;
+}
+
+.portal-features {
+  margin-bottom: 24px;
+  display: flex; flex-direction: column; gap: 7px;
+  width: 100%; text-align: right;
+}
 .portal-feature {
   display: flex; align-items: center; gap: 8px;
-  font-size: 0.8rem; color: rgba(255,255,255,0.75);
+  font-size: 0.8rem; color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 7px 12px;
 }
-.portal-dot {
-  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-}
+.portal-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 
 .portal-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: all 0.25s;
-  background: rgba(255,255,255,0.95);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; width: 100%;
+  padding: 13px;
+  border-radius: 14px;
+  font-weight: 800; font-size: 0.9rem;
+  text-decoration: none; transition: all 0.25s;
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
-.portal-btn:hover { background: #fff; transform: translateY(-1px); }
+.portal-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 
 /* ── ABOUT ── */
 .about-grid {
@@ -835,9 +871,11 @@ footer {
 
     <div class="portals-grid">
 
-      <div class="portal-card" style="background:linear-gradient(135deg,#7a2800,#c25a00);">
+      <div class="portal-card" style="background:linear-gradient(160deg,#7a2800 0%,#c25a00 60%,#a84800 100%);">
         <div class="portal-card-inner">
-          <span class="portal-icon">🧑🏻‍🏫</span>
+          <div class="portal-icon-wrap">
+            <span class="portal-icon">🧑🏻‍🏫</span>
+          </div>
           <div class="portal-title">بوابة طلاب الدمج الفكري</div>
           <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</div>
           <div class="portal-features">
@@ -849,9 +887,11 @@ footer {
         </div>
       </div>
 
-      <div class="portal-card" style="background:linear-gradient(135deg,#0d3320,#1a6b4a);">
+      <div class="portal-card" style="background:linear-gradient(160deg,#0d3320 0%,#1a6b4a 60%,#155c3e 100%);">
         <div class="portal-card-inner">
-          <span class="portal-icon">📘</span>
+          <div class="portal-icon-wrap">
+            <span class="portal-icon">📘</span>
+          </div>
           <div class="portal-title">بوابة طلاب يسير التعليمي</div>
           <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج يسير التعليمي</div>
           <div class="portal-features">
