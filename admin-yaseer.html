@@ -1916,6 +1916,20 @@ const SB_HEADERS = {
 };
 
 async function syncFromSupabase() {
+  // جلب قائمة الطلاب من config ثم تحميل بياناتهم
+  try {
+    const cfgRes = await fetch(`${SB_URL}/storage/v1/object/public/reports/admin-yaseer-config.json?t=${Date.now()}`);
+    if (cfgRes.ok) {
+      const cfg = await cfgRes.json();
+      if (cfg && cfg.students && Array.isArray(cfg.students)) {
+        cfg.students.forEach(s => {
+          if (!STUDENTS[s.pin]) {
+            STUDENTS[s.pin] = { name: s.name||'', id_full: s.id_full||'', grade: s.grade||'', phone: s.phone||'', plan:[], reports:[], followup:[] };
+          }
+        });
+      }
+    }
+  } catch(e) {}
   // جلب بيانات جميع الطلاب من Storage
   const pins = Object.keys(STUDENTS);
   await Promise.all(pins.map(pin => loadStudentDataFromStorage(pin)));
