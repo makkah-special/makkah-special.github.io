@@ -259,6 +259,7 @@ footer strong{color:var(--accent-light);}
     <button class="tab-btn active" onclick="switchTab('overview',this)">📊 نظرة عامة</button>
     <button class="tab-btn" onclick="switchTab('attendance',this)">📋 الحضور</button>
     <button class="tab-btn" onclick="switchTab('students',this)">👨‍🎓 الطلاب</button>
+    <button class="tab-btn" onclick="switchTab('iep',this)">📋 الخطط الفردية</button>
     <button class="tab-btn" onclick="switchTab('timetable',this)">📅 الجداول</button>
     <button class="tab-btn" onclick="switchTab('portfolio',this)">📁 الاقرارات</button>
     <button class="tab-btn" onclick="switchTab('settings',this)">⚙️ الإعدادات</button>
@@ -340,6 +341,33 @@ footer strong{color:var(--accent-light);}
       </div>
     </div>
     <div class="port-grid" id="port-grid"><div class="loading">⏳ جاري التحميل...</div></div>
+  </div>
+
+  <!-- IEP PLANS -->
+  <div class="tab-pane" id="tab-iep">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div class="sec-title" style="border:none;margin:0;padding:0;">📋 الخطط التعليمية الفردية</div>
+      <div class="prog-switch">
+        <button class="prog-btn active" id="iep-prog-dumaj" onclick="switchIepProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" id="iep-prog-yaseer" onclick="switchIepProg('yaseer',this)">📘 يسير</button>
+      </div>
+    </div>
+    <!-- بحث -->
+    <div style="position:relative;margin-bottom:20px;">
+      <input type="text" id="iep-search" placeholder="🔍 ابحث باسم الطالب..." oninput="filterIepStudents()"
+        style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;background:#fff;transition:all 0.2s;"
+        onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+    <!-- قائمة الطلاب -->
+    <div id="iep-students-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:20px;"></div>
+    <!-- عرض الخطة -->
+    <div id="iep-plan-view" style="display:none;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <button onclick="closeIepView()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">← رجوع</button>
+        <div id="iep-plan-title" style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:900;color:var(--primary);"></div>
+      </div>
+      <div id="iep-plan-content" style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;min-height:200px;"></div>
+    </div>
   </div>
 
   <!-- SETTINGS -->
@@ -521,6 +549,7 @@ function switchTab(id,btn){
   if(id==='students')renderStu();
   if(id==='timetable')loadTT();
   if(id==='portfolio')loadPort();
+  if(id==='iep')renderIepStudents();
 }
 
 // INIT
@@ -793,6 +822,95 @@ async function loadPort(){
 }
 
 document.getElementById('admin-pin').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+// ===== IEP PLANS =====
+let iepProg = 'dumaj';
+
+function switchIepProg(prog, btn) {
+  iepProg = prog;
+  document.querySelectorAll('#tab-iep .prog-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('iep-search').value = '';
+  closeIepView();
+  renderIepStudents();
+}
+
+function renderIepStudents() {
+  const list = iepProg === 'dumaj' ? DS : YS;
+  const q = (document.getElementById('iep-search').value || '').trim().toLowerCase();
+  const filtered = q ? list.filter(s => s.name.toLowerCase().includes(q)) : list;
+  const el = document.getElementById('iep-students-list');
+  if (!filtered.length) {
+    el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#9ca3af;">لا توجد نتائج</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(s => `
+    <div onclick="openIepPlan('${s.pin}','${s.name.replace(/'/g,"\\'")}','${iepProg}')"
+      style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all 0.2s;"
+      onmouseover="this.style.borderColor='var(--primary)';this.style.boxShadow='0 4px 12px rgba(26,58,92,0.1)'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+      <div style="font-weight:800;font-size:0.88rem;color:var(--primary);margin-bottom:4px;">${s.name}</div>
+      <div style="font-size:0.75rem;color:var(--muted);">${s.grade || '—'}</div>
+      <div style="margin-top:8px;font-size:0.72rem;background:${iepProg==='dumaj'?'#fff3e0':'#e8f5e9'};color:${iepProg==='dumaj'?'#c25a00':'#1a6b4a'};padding:3px 8px;border-radius:6px;display:inline-block;font-weight:700;">
+        ${iepProg==='dumaj'?'🧑‍🏫 دمج فكري':'📘 يسير'}
+      </div>
+    </div>`).join('');
+}
+
+function filterIepStudents() {
+  closeIepView();
+  renderIepStudents();
+}
+
+async function openIepPlan(pin, name, prog) {
+  document.getElementById('iep-students-list').style.display = 'none';
+  document.getElementById('iep-search').style.display = 'none';
+  const view = document.getElementById('iep-plan-view');
+  const content = document.getElementById('iep-plan-content');
+  document.getElementById('iep-plan-title').textContent = '📋 ' + name;
+  view.style.display = 'block';
+  content.innerHTML = '<div style="text-align:center;padding:30px;color:#9ca3af;">⏳ جارٍ تحميل الخطة...</div>';
+
+  try {
+    const folder = prog === 'dumaj' ? 'dumaj' : 'yaseer';
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/${folder}/data/student-${pin}.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('not found');
+    const data = await res.json();
+    const iep = data.iep || {};
+    const subjects = Object.keys(iep).filter(k => k !== '_custom');
+
+    if (!subjects.length) {
+      content.innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af;"><div style="font-size:2rem;margin-bottom:10px;">📋</div><div style="font-weight:700;">لم تُضف أهداف الخطة بعد</div></div>';
+      return;
+    }
+
+    content.innerHTML = subjects.map(subj => {
+      const s = iep[subj];
+      if (!s || !s.goals || !s.goals.length) return '';
+      const levels = { mastered:'✅ متقن', inprogress:'🔄 قيد التنفيذ', notstarted:'⭕ لم يبدأ', none:'—' };
+      const goalsHtml = s.goals.map(g => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fafafa;border-radius:8px;margin-bottom:6px;border:1px solid #f0ede6;">
+          <div style="font-size:0.83rem;color:#1a1a2e;flex:1;">${g.text}</div>
+          <div style="font-size:0.75rem;font-weight:700;color:#5a6478;white-space:nowrap;margin-right:8px;">${levels[g.level]||'—'}</div>
+        </div>`).join('');
+      return `
+        <div style="margin-bottom:20px;">
+          <div style="background:linear-gradient(135deg,var(--primary),#2563a8);color:#fff;padding:10px 16px;border-radius:10px 10px 0 0;font-family:'Tajawal',sans-serif;font-weight:800;font-size:0.95rem;">
+            ${s.icon||'📚'} ${s.name||subj}
+          </div>
+          <div style="border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:12px;">${goalsHtml}</div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    content.innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af;"><div style="font-size:2rem;margin-bottom:10px;">📭</div><div style="font-weight:700;">لا توجد خطة محفوظة لهذا الطالب</div></div>';
+  }
+}
+
+function closeIepView() {
+  document.getElementById('iep-plan-view').style.display = 'none';
+  document.getElementById('iep-students-list').style.display = 'grid';
+  document.getElementById('iep-search').style.display = 'block';
+}
 </script>
 </body>
 </html>
