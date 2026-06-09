@@ -39,6 +39,188 @@
   --border:  rgba(255,255,255,0.08);
 }
 
+/* ── LAVENDER / VIOLET THEME (الخزامى الحكومي) ── */
+body.light-theme {
+  --navy:   #f5f3fa;
+  --navy2:  #ede8f7;
+  --navy3:  #6B4C9A;
+  --gold:   #6B4C9A;
+  --gold2:  #8B6ABF;
+  --gold3:  #A98BDA;
+  --text:   #1e1033;
+  --muted:  rgba(60,30,100,0.55);
+  --border: rgba(107,76,154,0.12);
+}
+
+body.light-theme .bg-grid {
+  background-image:
+    linear-gradient(rgba(107,76,154,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(107,76,154,0.05) 1px, transparent 1px);
+}
+body.light-theme .bg-glow {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(107,76,154,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(169,139,218,0.1) 0%, transparent 50%);
+}
+body.light-theme header {
+  background: linear-gradient(180deg, rgba(245,243,250,0.98) 0%, rgba(245,243,250,0.95) 100%);
+  border-bottom: 1px solid rgba(107,76,154,0.2);
+}
+body.light-theme .header-badge {
+  background: linear-gradient(135deg, rgba(107,76,154,0.12), rgba(107,76,154,0.06));
+  border: 1px solid rgba(107,76,154,0.3);
+  color: #5a3d87;
+}
+body.light-theme .hero::before {
+  background: radial-gradient(circle, rgba(107,76,154,0.1) 0%, transparent 70%);
+}
+body.light-theme .hero-eyebrow {
+  background: rgba(107,76,154,0.09);
+  border: 1px solid rgba(107,76,154,0.25);
+  color: #5a3d87;
+}
+body.light-theme .hero h1 .platform { color: rgba(30,16,51,0.65); }
+body.light-theme .hero h1 .brand {
+  background: linear-gradient(135deg, #6B4C9A, #A98BDA);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+body.light-theme .hero-slogan-item { color: rgba(30,16,51,0.6); }
+body.light-theme .hero-slogan-item strong { color: #7a5aaa; }
+body.light-theme .hero-sub { color: rgba(60,30,100,0.55); }
+
+body.light-theme .btn-gold {
+  background: linear-gradient(135deg, #6B4C9A, #8B6ABF);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(107,76,154,0.35);
+}
+body.light-theme .btn-gold:hover { box-shadow: 0 8px 28px rgba(107,76,154,0.5); }
+body.light-theme .btn-glass {
+  background: rgba(107,76,154,0.07);
+  border: 1px solid rgba(107,76,154,0.18);
+  color: #3d2070;
+}
+body.light-theme .btn-glass:hover { background: rgba(107,76,154,0.14); color: #1e1033; }
+
+body.light-theme .stats-bar {
+  background: rgba(107,76,154,0.04);
+  border-top: 1px solid rgba(107,76,154,0.1);
+  border-bottom: 1px solid rgba(107,76,154,0.1);
+}
+body.light-theme .stat-num { color: #6B4C9A; }
+body.light-theme .stat-label { color: rgba(60,30,100,0.55); }
+body.light-theme .stat-item { border-left: 1px solid rgba(107,76,154,0.1); }
+
+body.light-theme .sec-label {
+  background: rgba(107,76,154,0.08);
+  border: 1px solid rgba(107,76,154,0.2);
+  color: #5a3d87;
+}
+body.light-theme .sec-title { color: #1e1033; }
+body.light-theme .sec-sub { color: rgba(60,30,100,0.55); }
+
+body.light-theme .prog-card {
+  background: #ffffff;
+  border: 1px solid rgba(107,76,154,0.12);
+  box-shadow: 0 4px 20px rgba(107,76,154,0.07);
+}
+body.light-theme .prog-card:hover {
+  border-color: rgba(107,76,154,0.35);
+  box-shadow: 0 20px 50px rgba(107,76,154,0.15);
+}
+body.light-theme .prog-title { color: #1e1033; }
+body.light-theme .prog-desc { color: rgba(60,30,100,0.6); }
+body.light-theme .prog-stats { border: 1px solid rgba(107,76,154,0.1); }
+body.light-theme .prog-stat { border-left: 1px solid rgba(107,76,154,0.1); }
+body.light-theme .prog-stat-lbl { color: rgba(60,30,100,0.55); }
+
+body.light-theme .about-card {
+  background: #ffffff;
+  border: 1px solid rgba(107,76,154,0.12);
+  box-shadow: 0 2px 12px rgba(107,76,154,0.06);
+}
+body.light-theme .about-card:hover { border-color: rgba(107,76,154,0.3); }
+body.light-theme .about-card h3 { color: #5a3d87; }
+body.light-theme .about-list li { color: rgba(60,30,100,0.65); }
+body.light-theme .about-list li::before { color: #8B6ABF; }
+
+body.light-theme .staff-section {
+  background: rgba(107,76,154,0.05);
+  border: 1px solid rgba(107,76,154,0.15);
+}
+body.light-theme .staff-title { color: #5a3d87; }
+body.light-theme .staff-tag {
+  background: rgba(107,76,154,0.06);
+  border: 1px solid rgba(107,76,154,0.14);
+  color: rgba(60,30,100,0.7);
+}
+
+body.light-theme footer {
+  background: #ede8f7;
+  border-top: 1px solid rgba(107,76,154,0.2);
+}
+body.light-theme .footer-logo-text { color: #5a3d87; }
+body.light-theme .footer-copy { color: rgba(30,16,51,0.4); }
+body.light-theme .footer-credit { color: #6B4C9A; }
+body.light-theme .footer-divider { border-top: 1px solid rgba(107,76,154,0.12); }
+body.light-theme .footer-sec-label { color: rgba(30,16,51,0.3); }
+body.light-theme .fl-gold {
+  background: rgba(107,76,154,0.1);
+  border: 1px solid rgba(107,76,154,0.25);
+  color: #5a3d87;
+}
+body.light-theme .fl-gold:hover { background: rgba(107,76,154,0.18); color: #3d2070; }
+body.light-theme .fl-white {
+  background: rgba(107,76,154,0.06);
+  border: 1px solid rgba(107,76,154,0.14);
+  color: rgba(30,16,51,0.6);
+}
+body.light-theme .fl-white:hover { background: rgba(107,76,154,0.12); color: #1e1033; }
+
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+.theme-toggle.dark-mode {
+  background: linear-gradient(135deg, #1a2f50, #0f1f3d);
+  border: 1px solid rgba(200,151,58,0.3);
+  color: var(--gold2);
+}
+.theme-toggle.light-mode {
+  background: linear-gradient(135deg, #ede8f7, #f5f3fa);
+  border: 1px solid rgba(107,76,154,0.4);
+  color: #5a3d87;
+  box-shadow: 0 4px 20px rgba(107,76,154,0.2);
+}
+.theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+.theme-toggle .toggle-tooltip {
+  position: absolute;
+  right: 58px;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  font-family: 'Cairo', sans-serif;
+}
+body.light-theme .theme-toggle .toggle-tooltip { background: rgba(15,31,61,0.85); }
+.theme-toggle:hover .toggle-tooltip { opacity: 1; }
+
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body {
@@ -728,6 +910,12 @@ footer {
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
 
+<!-- زر تبديل المظهر -->
+<button class="theme-toggle dark-mode" id="theme-toggle" onclick="toggleTheme()" title="تبديل المظهر">
+  <span id="theme-icon">🪻</span>
+  <span class="toggle-tooltip" id="theme-tooltip">مظهر الخزامى</span>
+</button>
+
 <!-- HEADER -->
 <header>
   <div class="header-inner">
@@ -1000,6 +1188,42 @@ footer {
 </footer>
 
 <script>
+  // ── THEME TOGGLE ──
+  const THEME_KEY = 'maak-theme';
+
+  function applyTheme(theme) {
+    const body   = document.body;
+    const btn    = document.getElementById('theme-toggle');
+    const icon   = document.getElementById('theme-icon');
+    const tip    = document.getElementById('theme-tooltip');
+    if (theme === 'light') {
+      body.classList.add('light-theme');
+      btn.classList.remove('dark-mode');
+      btn.classList.add('light-mode');
+      icon.textContent = '🌙';
+      tip.textContent  = 'المظهر الداكن';
+    } else {
+      body.classList.remove('light-theme');
+      btn.classList.remove('light-mode');
+      btn.classList.add('dark-mode');
+      icon.textContent = '🪻';
+      tip.textContent  = 'مظهر الخزامى';
+    }
+  }
+
+  function toggleTheme() {
+    const isLight = document.body.classList.contains('light-theme');
+    const newTheme = isLight ? 'dark' : 'light';
+    localStorage.setItem(THEME_KEY, newTheme);
+    applyTheme(newTheme);
+  }
+
+  // تطبيق الثيم المحفوظ عند التحميل
+  (function() {
+    const saved = localStorage.getItem(THEME_KEY) || 'dark';
+    applyTheme(saved);
+  })();
+
   // Intersection Observer for fade-in
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
