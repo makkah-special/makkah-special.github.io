@@ -822,6 +822,102 @@
 .iep-subject-colors.subj-islamic { background:linear-gradient(135deg,#065f46,#10b981); }
 .iep-subject-colors.subj-science { background:linear-gradient(135deg,#5b21b6,#8b5cf6); }
 .iep-subject-colors.subj-life    { background:linear-gradient(135deg,#92400e,#d97706); }
+
+/* ===== قياس مستوى الأداء ===== */
+.perf-subject-block {
+  background:#fff;border:1.5px solid var(--border);border-radius:14px;
+  margin-bottom:16px;overflow:hidden;
+}
+.perf-subject-head {
+  display:flex;align-items:center;gap:10px;
+  padding:12px 18px;
+  background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;
+  font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:800;
+}
+.perf-skills-table { width:100%;border-collapse:collapse; }
+.perf-skills-table th {
+  padding:10px 14px;background:#fdf4ee;
+  font-size:0.8rem;font-weight:700;color:#c25a00;text-align:right;
+  border-bottom:1px solid var(--border);
+}
+.perf-skills-table td {
+  padding:10px 14px;border-bottom:1px solid #f5f5f5;
+  font-size:0.84rem;color:var(--text);vertical-align:middle;
+}
+.perf-skills-table tr:last-child td { border-bottom:none; }
+.perf-level-select {
+  border:1.5px solid var(--border);border-radius:8px;
+  padding:5px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;
+  font-weight:700;outline:none;cursor:pointer;
+  transition:border-color 0.2s;background:#fff;
+}
+.perf-level-select:focus { border-color:#e07020; }
+.perf-notes-input {
+  width:100%;border:1.5px solid var(--border);border-radius:8px;
+  padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;
+  outline:none;resize:vertical;min-height:32px;
+}
+.perf-notes-input:focus { border-color:#e07020; }
+.perf-legend {
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:12px 16px;
+  background:#fffbf0;border:1px solid #f0d898;border-radius:10px;
+}
+.perf-legend-item {
+  display:flex;align-items:center;gap:5px;
+  font-size:0.76rem;font-weight:700;
+}
+
+/* ===== جوانب القوة والاحتياج ===== */
+.sw-block {
+  background:#fff;border:1.5px solid var(--border);border-radius:14px;
+  margin-bottom:16px;overflow:hidden;
+}
+.sw-subject-head {
+  display:flex;align-items:center;gap:10px;
+  padding:12px 18px;
+  background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;
+  font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:800;
+}
+.sw-body { display:grid;grid-template-columns:1fr 1fr;gap:0; }
+@media(max-width:640px){ .sw-body{grid-template-columns:1fr;} }
+.sw-side {
+  padding:14px 16px;
+}
+.sw-side:first-child { border-left:1px solid var(--border); }
+.sw-side-title {
+  font-size:0.82rem;font-weight:800;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;padding-bottom:8px;
+  border-bottom:2px solid;
+}
+.sw-strength-title { color:#065f46;border-color:#10b981; }
+.sw-need-title { color:#92400e;border-color:#e07020; }
+.sw-item-list { display:flex;flex-direction:column;gap:6px;margin-bottom:8px; }
+.sw-item {
+  display:flex;align-items:flex-start;gap:8px;
+  background:#f9fafb;border:1px solid var(--border);border-radius:8px;
+  padding:7px 10px;font-size:0.82rem;
+}
+.sw-item-dot-green { width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:4px; }
+.sw-item-dot-orange { width:8px;height:8px;border-radius:50%;background:#e07020;flex-shrink:0;margin-top:4px; }
+.sw-add-input {
+  display:flex;gap:6px;margin-top:6px;
+}
+.sw-add-input input {
+  flex:1;border:1.5px solid var(--border);border-radius:8px;
+  padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;outline:none;
+}
+.sw-add-input input:focus { border-color:#10b981; }
+.sw-add-btn {
+  background:#d1fae5;color:#065f46;border:1.5px solid #10b981;
+  border-radius:8px;padding:6px 12px;font-family:'Cairo',sans-serif;
+  font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;
+}
+.sw-add-btn.need { background:#fff3e0;color:#92400e;border-color:#e07020; }
+.sw-del-btn {
+  background:none;border:none;color:#ccc;cursor:pointer;font-size:0.8rem;
+  margin-right:auto;flex-shrink:0;
+}
+.sw-del-btn:hover { color:#ef4444; }
 </style>
 </head>
 <body>
@@ -884,6 +980,8 @@
     <div class="tabs">
       <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
+      <button class="tab-btn" onclick="openTab('performance',this)">📏 قياس مستوى الأداء</button>
+      <button class="tab-btn" onclick="openTab('strengths',this)">💪 جوانب القوة والضعف</button>
       <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
       <button class="tab-btn" onclick="openTab('iep',this)">🎯 تقييم الأهداف</button>
       <button class="tab-btn" onclick="openTab('schedule',this)">📅 الجدول الدراسي</button>
@@ -903,6 +1001,38 @@
       <div class="s-card">
         <div class="s-card-head">📊 التقارير والوثائق</div>
         <div id="reports-list"></div>
+      </div>
+    </div>
+
+    <!-- PERFORMANCE LEVEL -->
+    <div class="tab-pane" id="tab-performance">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>📏 استمارة قياس مستوى الأداء الحالي</span>
+          <button onclick="savePerformance()" style="background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ التقييم</button>
+        </div>
+        <div style="padding:20px;" id="performance-content">
+          <div style="text-align:center;padding:40px 20px;color:#9ca3af;">
+            <div style="font-size:3rem;margin-bottom:12px;">📏</div>
+            <div style="font-weight:800;font-size:0.95rem;">جارٍ تحميل الاستمارة...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STRENGTHS & WEAKNESSES -->
+    <div class="tab-pane" id="tab-strengths">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>💪 جوانب القوة والاحتياج</span>
+          <button onclick="saveStrengths()" style="background:linear-gradient(135deg,#065f46,#10b981);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
+        </div>
+        <div style="padding:20px;" id="strengths-content">
+          <div style="text-align:center;padding:40px 20px;color:#9ca3af;">
+            <div style="font-size:3rem;margin-bottom:12px;">💪</div>
+            <div style="font-weight:800;font-size:0.95rem;">جارٍ تحميل البيانات...</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1301,6 +1431,8 @@ function openTab(id, btn) {
     }
   }
   if (id === 'schedule') renderStudentSchedule();
+  if (id === 'performance') renderPerformanceTab();
+  if (id === 'strengths') renderStrengthsTab();
   if (id === 'iqrar') setTimeout(initCanvas, 100);
 }
 
@@ -1689,6 +1821,8 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].program_place  = sd('program_place');
       STUDENTS[pin].program_start  = sd('program_start');
       STUDENTS[pin].program_end    = sd('program_end');
+      if (data.performance) STUDENTS[pin].performance = data.performance;
+      if (data.strengths)   STUDENTS[pin].strengths   = data.strengths;
     }
   } catch(e) { /* ملف غير موجود */ }
 }
@@ -1726,6 +1860,8 @@ async function upsertToSupabase(pin, studentData) {
       program_place:  studentData.program_place  || '',
       program_start:  studentData.program_start  || '',
       program_end:    studentData.program_end    || '',
+      performance:    studentData.performance    || {},
+      strengths:      studentData.strengths      || {},
     };
     const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
     const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
@@ -3593,6 +3729,245 @@ function resetDumajPeriods() {
   renderDumajSchedule();
 }
 
+// =====================================================
+// قياس مستوى الأداء الحالي
+// =====================================================
+
+const PERF_SUBJECTS = [
+  {
+    key: 'arabic', name: 'اللغة العربية (لغتي)', icon: '📖',
+    skills: ['القراءة الجهرية','الكتابة والإملاء','الفهم والاستيعاب','التعبير الشفوي','القواعد النحوية']
+  },
+  {
+    key: 'math', name: 'الرياضيات', icon: '🔢',
+    skills: ['العمليات الحسابية الأساسية','الأعداد والتسلسل','الأشكال الهندسية','القياس والوحدات','حل المسائل']
+  },
+  {
+    key: 'islamic', name: 'التربية الإسلامية', icon: '🕌',
+    skills: ['الحفظ والتلاوة','العقيدة والأركان','الفقه والعبادات','السيرة والأخلاق','التطبيق العملي']
+  },
+  {
+    key: 'science', name: 'العلوم', icon: '🔬',
+    skills: ['الفهم والاستيعاب','التجارب العلمية','حفظ المعلومات','التطبيق والاستنتاج','المفاهيم البيئية']
+  },
+  {
+    key: 'life', name: 'المهارات الحياتية', icon: '🌱',
+    skills: ['العناية الشخصية','التواصل الاجتماعي','المهارات العملية','الاستقلالية','التنظيم وإدارة الوقت']
+  },
+];
+
+const PERF_LEVELS = [
+  { value: 'mastered',  label: 'متقن',       color: '#059669', bg: '#d1fae5' },
+  { value: 'developing',label: 'في التطور',  color: '#2563eb', bg: '#dbeafe' },
+  { value: 'emerging',  label: 'بدايات',     color: '#d97706', bg: '#fef3c7' },
+  { value: 'not_yet',   label: 'لم يصل بعد', color: '#dc2626', bg: '#fee2e2' },
+  { value: 'na',        label: 'غير مقيَّم', color: '#9ca3af', bg: '#f3f4f6' },
+];
+
+function renderPerformanceTab() {
+  const container = document.getElementById('performance-content');
+  if (!container || !currentStudent) return;
+  const pin = currentStudent.pin;
+  const saved = (currentStudent.performance) || {};
+
+  let html = `
+    <div class="perf-legend">
+      ${PERF_LEVELS.map(l => `
+        <div class="perf-legend-item">
+          <span style="background:${l.bg};color:${l.color};padding:2px 8px;border-radius:6px;font-size:0.73rem;font-weight:700;">${l.label}</span>
+        </div>`).join('')}
+    </div>`;
+
+  PERF_SUBJECTS.forEach(subj => {
+    const subjData = saved[subj.key] || {};
+    html += `
+      <div class="perf-subject-block">
+        <div class="perf-subject-head">${subj.icon} ${subj.name}</div>
+        <table class="perf-skills-table">
+          <thead>
+            <tr>
+              <th style="width:40%;">المهارة</th>
+              <th style="width:20%;text-align:center;">مستوى الأداء</th>
+              <th>ملاحظات</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${subj.skills.map((skill, si) => {
+              const skillData = subjData[si] || {};
+              const level = skillData.level || 'na';
+              const note  = skillData.note  || '';
+              const lv    = PERF_LEVELS.find(l => l.value === level) || PERF_LEVELS[4];
+              return `
+                <tr>
+                  <td style="font-weight:600;">${skill}</td>
+                  <td style="text-align:center;">
+                    <select class="perf-level-select" data-subj="${subj.key}" data-si="${si}" style="color:${lv.color};background:${lv.bg};"
+                      onchange="onPerfLevelChange(this)">
+                      ${PERF_LEVELS.map(l => `<option value="${l.value}" ${level===l.value?'selected':''}>${l.label}</option>`).join('')}
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="perf-notes-input" data-subj="${subj.key}" data-si="${si}" data-field="note"
+                      value="${escHtml(note)}" placeholder="ملاحظة اختيارية...">
+                  </td>
+                </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function onPerfLevelChange(sel) {
+  const level = sel.value;
+  const lv = PERF_LEVELS.find(l => l.value === level) || PERF_LEVELS[4];
+  sel.style.color = lv.color;
+  sel.style.background = lv.bg;
+}
+
+function savePerformance() {
+  if (!currentStudent) return;
+  const performance = {};
+  PERF_SUBJECTS.forEach(subj => {
+    performance[subj.key] = {};
+    subj.skills.forEach((_, si) => {
+      const sel  = document.querySelector(`.perf-level-select[data-subj="${subj.key}"][data-si="${si}"]`);
+      const note = document.querySelector(`.perf-notes-input[data-subj="${subj.key}"][data-si="${si}"]`);
+      performance[subj.key][si] = {
+        level: sel  ? sel.value  : 'na',
+        note:  note ? note.value : ''
+      };
+    });
+  });
+  currentStudent.performance = performance;
+  STUDENTS[currentStudent.pin].performance = performance;
+  upsertPerformanceToSupabase(currentStudent.pin, performance);
+  showToast('✅ تم حفظ قياس مستوى الأداء');
+}
+
+async function upsertPerformanceToSupabase(pin, performance) {
+  try {
+    const existing = STUDENTS[pin] || {};
+    const payload = Object.assign({}, existing, { performance });
+    const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
+      body: blob
+    });
+  } catch(e) { console.error('خطأ حفظ الأداء:', e); }
+}
+
+// =====================================================
+// جوانب القوة والاحتياج
+// =====================================================
+
+function renderStrengthsTab() {
+  const container = document.getElementById('strengths-content');
+  if (!container || !currentStudent) return;
+  const pin = currentStudent.pin;
+  const saved = (currentStudent.strengths) || {};
+
+  let html = `
+    <div style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;padding:10px 14px;background:#f8f9fc;border-radius:10px;border-right:3px solid var(--accent);">
+      📝 يُعبأ هذا القسم بناءً على تقييم الطالب في المواد الدراسية — يمكن إضافة وحذف العناصر بحرية
+    </div>`;
+
+  PERF_SUBJECTS.forEach(subj => {
+    const subjData = saved[subj.key] || { strengths: [], needs: [] };
+    const strengths = subjData.strengths || [];
+    const needs     = subjData.needs     || [];
+
+    html += `
+      <div class="sw-block">
+        <div class="sw-subject-head">${subj.icon} ${subj.name}</div>
+        <div class="sw-body">
+          <!-- جوانب القوة -->
+          <div class="sw-side">
+            <div class="sw-side-title sw-strength-title">✅ جوانب القوة</div>
+            <div class="sw-item-list" id="sw-strengths-${subj.key}">
+              ${strengths.map((item, idx) => `
+                <div class="sw-item" id="sw-s-item-${subj.key}-${idx}">
+                  <div class="sw-item-dot-green"></div>
+                  <span style="flex:1;">${escHtml(item)}</span>
+                  <button class="sw-del-btn" onclick="delSwItem('${subj.key}','strength',${idx})">✕</button>
+                </div>`).join('')}
+            </div>
+            <div class="sw-add-input">
+              <input type="text" id="sw-s-input-${subj.key}" placeholder="أضف جانب قوة...">
+              <button class="sw-add-btn" onclick="addSwItem('${subj.key}','strength')">+ إضافة</button>
+            </div>
+          </div>
+          <!-- جوانب الاحتياج -->
+          <div class="sw-side">
+            <div class="sw-side-title sw-need-title">🎯 جوانب الاحتياج</div>
+            <div class="sw-item-list" id="sw-needs-${subj.key}">
+              ${needs.map((item, idx) => `
+                <div class="sw-item" id="sw-n-item-${subj.key}-${idx}">
+                  <div class="sw-item-dot-orange"></div>
+                  <span style="flex:1;">${escHtml(item)}</span>
+                  <button class="sw-del-btn" onclick="delSwItem('${subj.key}','need',${idx})">✕</button>
+                </div>`).join('')}
+            </div>
+            <div class="sw-add-input">
+              <input type="text" id="sw-n-input-${subj.key}" placeholder="أضف جانب احتياج...">
+              <button class="sw-add-btn need" onclick="addSwItem('${subj.key}','need')">+ إضافة</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function getSwData() {
+  if (!currentStudent) return {};
+  return currentStudent.strengths || {};
+}
+
+function addSwItem(subjKey, type) {
+  const inputId = type === 'strength' ? `sw-s-input-${subjKey}` : `sw-n-input-${subjKey}`;
+  const input = document.getElementById(inputId);
+  const text  = input?.value.trim();
+  if (!text) return;
+
+  if (!currentStudent.strengths) currentStudent.strengths = {};
+  if (!currentStudent.strengths[subjKey]) currentStudent.strengths[subjKey] = { strengths: [], needs: [] };
+  const arr = type === 'strength' ? currentStudent.strengths[subjKey].strengths : currentStudent.strengths[subjKey].needs;
+  arr.push(text);
+  input.value = '';
+  STUDENTS[currentStudent.pin].strengths = currentStudent.strengths;
+  renderStrengthsTab();
+}
+
+function delSwItem(subjKey, type, idx) {
+  if (!currentStudent.strengths?.[subjKey]) return;
+  const arr = type === 'strength' ? currentStudent.strengths[subjKey].strengths : currentStudent.strengths[subjKey].needs;
+  arr.splice(idx, 1);
+  STUDENTS[currentStudent.pin].strengths = currentStudent.strengths;
+  renderStrengthsTab();
+}
+
+function saveStrengths() {
+  if (!currentStudent) return;
+  upsertStrengthsToSupabase(currentStudent.pin, currentStudent.strengths || {});
+  showToast('✅ تم حفظ جوانب القوة والاحتياج');
+}
+
+async function upsertStrengthsToSupabase(pin, strengths) {
+  try {
+    const existing = STUDENTS[pin] || {};
+    const payload = Object.assign({}, existing, { strengths });
+    const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
+      body: blob
+    });
+  } catch(e) { console.error('خطأ حفظ جوانب القوة:', e); }
+}
+
 </script>
-</body>
-</html>
