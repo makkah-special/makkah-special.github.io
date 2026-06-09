@@ -66,10 +66,21 @@ header {
 
 /* STATS ROW */
 .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:22px; }
-.stat-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:20px 16px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-.stat-num { font-family:'Tajawal',sans-serif; font-size:2.2rem; font-weight:900; color:var(--primary); }
-.stat-label { font-size:0.75rem; color:var(--muted); font-weight:600; margin-top:4px; }
-.stat-badge { display:inline-block; padding:2px 10px; border-radius:10px; font-size:0.7rem; font-weight:700; margin-top:6px; }
+.stat-card {
+  background:#fff; border:1px solid var(--border); border-radius:16px;
+  padding:20px 16px; text-align:center;
+  box-shadow:0 2px 12px rgba(0,0,0,0.05);
+  transition:all 0.2s; cursor:default;
+  position:relative; overflow:hidden;
+}
+.stat-card::before {
+  content:''; position:absolute; top:0; right:0; left:0;
+  height:3px; background:var(--accent);
+}
+.stat-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+.stat-num { font-family:'Tajawal',sans-serif; font-size:2.4rem; font-weight:900; color:var(--primary); line-height:1; }
+.stat-label { font-size:0.76rem; color:var(--muted); font-weight:700; margin-top:6px; }
+.stat-badge { display:inline-block; padding:3px 12px; border-radius:12px; font-size:0.7rem; font-weight:700; margin-top:8px; }
 .badge-ys { background:#dbeafe; color:#1e40af; }
 .badge-dj { background:#fff3e0; color:#c25a00; }
 
@@ -80,7 +91,7 @@ header {
 .prog-btn.active-dj { border-color:#c25a00; background:#fff3e0; color:#c25a00; }
 
 /* STUDENT CARDS */
-.students-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+.students-grid { display:block; }
 .stu-card { background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.05); transition:all 0.2s; cursor:pointer; }
 .stu-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.1); }
 .stu-card-head { padding:16px 18px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); }
@@ -219,11 +230,57 @@ footer strong { color:var(--accent-light); }
 .s-card { background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
 .s-card-head { padding:14px 18px; font-family:'Tajawal',sans-serif; font-weight:800; font-size:0.95rem; color:#fff; background:linear-gradient(135deg,var(--primary),#2563a8); display:flex; align-items:center; gap:8px; }
 
+/* RESPONSIVE */
 @media(max-width:640px) {
   header { padding:12px 16px; }
   .portal-main { padding:16px 14px 40px; }
   .form-grid { grid-template-columns:1fr; }
   .main-tab-btn { font-size:0.74rem; padding:9px 5px; }
+}
+
+/* GRADE SECTION HEADER */
+.grade-section-header {
+  display:flex; align-items:center; gap:14px;
+  padding:16px 22px; border-radius:14px;
+  margin-bottom:16px; margin-top:10px;
+}
+.dj-header {
+  background:linear-gradient(135deg,#fff3e0,#ffe0b2);
+  border:2px solid #fb923c;
+}
+.ys-header {
+  background:linear-gradient(135deg,#eff6ff,#dbeafe);
+  border:2px solid #60a5fa;
+}
+.grade-section-icon { font-size:2rem; }
+.grade-section-title {
+  font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:900; color:var(--primary);
+}
+.grade-section-count { font-size:0.78rem; color:var(--muted); font-weight:600; margin-top:2px; }
+
+/* INNER GRID */
+.students-grid-inner {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px;
+}
+
+/* REVISION BADGE */
+.revision-badge {
+  background:#fef3c7; color:#92400e;
+  padding:3px 10px; border-radius:10px;
+  font-size:0.72rem; font-weight:700;
+}
+
+/* STUDENT CARD — تحسين */
+.stu-card {
+  background:#fff; border:1px solid var(--border);
+  border-radius:14px; overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  transition:all 0.2s; cursor:pointer;
+}
+.stu-card:hover {
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(0,0,0,0.12);
+  border-color:#c8973a;
 }
 </style>
 </head>
@@ -262,33 +319,33 @@ footer strong { color:var(--accent-light); }
 
     <!-- STATS -->
     <div class="stats-row" id="stats-row">
-      <div class="stat-card">
-        <div class="stat-num" id="stat-total-dj">0</div>
+      <div class="stat-card" style="--accent:#c25a00;" onclick="setFilter('dumaj',document.querySelector('[onclick*=\'dumaj\']'));openTab('students',document.querySelector('.main-tab-btn'))">
+        <div class="stat-num" style="color:#c25a00;" id="stat-total-dj">0</div>
         <div class="stat-label">طلاب الدمج</div>
-        <div class="stat-badge badge-dj">برنامج الدمج</div>
+        <div class="stat-badge" style="background:#fff3e0;color:#c25a00;">📙 برنامج الدمج</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-total-ys">0</div>
+      <div class="stat-card" style="--accent:#1e40af;" onclick="setFilter('yaseer',document.querySelector('[onclick*=\'yaseer\']'));openTab('students',document.querySelector('.main-tab-btn'))">
+        <div class="stat-num" style="color:#1e40af;" id="stat-total-ys">0</div>
         <div class="stat-label">طلاب يسير</div>
-        <div class="stat-badge badge-ys">برنامج يسير</div>
+        <div class="stat-badge badge-ys">📘 برنامج يسير</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-approved">0</div>
+      <div class="stat-card" style="--accent:#059669;">
+        <div class="stat-num" style="color:#059669;" id="stat-approved">0</div>
         <div class="stat-label">خطط معتمدة</div>
         <div class="stat-badge" style="background:#d1fae5;color:#065f46;">✅ معتمد</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-pending">0</div>
+      <div class="stat-card" style="--accent:#f59e0b;">
+        <div class="stat-num" style="color:#d97706;" id="stat-pending">0</div>
         <div class="stat-label">بانتظار الاعتماد</div>
         <div class="stat-badge" style="background:#fef3c7;color:#92400e;">⏳ معلق</div>
       </div>
-      <div class="stat-card" style="cursor:pointer;" onclick="openTab('students',document.querySelector('.main-tab-btn'));setFilter('revision',document.querySelector('[onclick*=\'revision\']'))">
+      <div class="stat-card" style="--accent:#92400e;cursor:pointer;" onclick="openTab('students',document.querySelector('.main-tab-btn'));setFilter('revision',document.querySelector('[onclick*=\'revision\']'))">
         <div class="stat-num" id="stat-revision" style="color:#92400e;">0</div>
         <div class="stat-label">انتظار تعديل</div>
         <div class="stat-badge" style="background:#fef3c7;color:#92400e;">🔄 تعديل</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-visits">0</div>
+      <div class="stat-card" style="--accent:#5b21b6;">
+        <div class="stat-num" style="color:#5b21b6;" id="stat-visits">0</div>
         <div class="stat-label">تقارير الزيارة</div>
         <div class="stat-badge" style="background:#ede9fe;color:#5b21b6;">📋 زيارة</div>
       </div>
@@ -307,18 +364,18 @@ footer strong { color:var(--accent-light); }
     <!-- TAB: ملفات الطلاب -->
     <div class="main-tab-pane active" id="tab-students">
       <div class="filter-bar">
-        <button class="filter-chip active" onclick="setFilter('all',this)">الكل</button>
-        <button class="filter-chip" onclick="setFilter('dumaj',this)">🟠 الدمج</button>
-        <button class="filter-chip" onclick="setFilter('yaseer',this)">🔵 يسير</button>
-        <button class="filter-chip" onclick="setFilter('approved',this)">✅ معتمد</button>
-        <button class="filter-chip" onclick="setFilter('pending',this)">⏳ انتظار</button>
-        <button class="filter-chip" onclick="setFilter('revision',this)">🔄 تعديل</button>
+        <button class="filter-chip active" onclick="setFilter('all',this)">🗂 الكل</button>
+        <button class="filter-chip" style="border-color:#fb923c;color:#c2410c;" onclick="setFilter('dumaj',this)">📙 الدمج الفكري</button>
+        <button class="filter-chip" style="border-color:#60a5fa;color:#1e40af;" onclick="setFilter('yaseer',this)">📘 يسير</button>
+        <button class="filter-chip" style="border-color:#4ade80;color:#166534;" onclick="setFilter('approved',this)">✅ معتمد</button>
+        <button class="filter-chip" style="border-color:#facc15;color:#a16207;" onclick="setFilter('pending',this)">⏳ انتظار</button>
+        <button class="filter-chip" style="border-color:#fbbf24;color:#92400e;" onclick="setFilter('revision',this)">🔄 تعديل</button>
       </div>
       <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="student-search" placeholder="ابحث باسم الطالب أو الصف..." oninput="renderStudents()">
+        <input type="text" class="search-input" id="student-search" placeholder="ابحث باسم الطالب أو الصف أو الرمز..." oninput="renderStudents()">
       </div>
-      <div class="students-grid" id="students-grid"></div>
+      <div id="students-grid"></div>
     </div>
 
     <!-- TAB: الخطط التربوية -->
@@ -753,7 +810,11 @@ function openTab(id, btn) {
 
 function setFilter(f, btn) {
   currentFilter = f;
-  document.querySelectorAll('#tab-students .filter-chip').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#tab-students .filter-chip').forEach(b => {
+    b.classList.remove('active');
+    b.style.background = '';
+    b.style.color = b.getAttribute('data-orig-color') || '';
+  });
   btn.classList.add('active');
   renderStudents();
 }
@@ -766,56 +827,185 @@ function setPlansFilter(f, btn) {
 }
 
 // =====================================================
-// RENDER STUDENTS
+// RENDER STUDENTS — مجمّعة حسب البرنامج ثم الصف
 // =====================================================
 function renderStudents() {
   const search = (document.getElementById('student-search')?.value || '').toLowerCase();
-  const grid = document.getElementById('students-grid');
+  const grid   = document.getElementById('students-grid');
 
   let entries = Object.entries(ALL_STUDENTS);
 
-  if (currentFilter === 'yaseer') entries = entries.filter(([,s]) => s.program === 'yaseer');
-  else if (currentFilter === 'dumaj') entries = entries.filter(([,s]) => s.program === 'dumaj');
+  if (currentFilter === 'yaseer')   entries = entries.filter(([,s]) => s.program === 'yaseer');
+  else if (currentFilter === 'dumaj')    entries = entries.filter(([,s]) => s.program === 'dumaj');
   else if (currentFilter === 'approved') entries = entries.filter(([pin]) => approvals[pin]);
-  else if (currentFilter === 'pending') entries = entries.filter(([pin]) => !approvals[pin] && !revisionPending[pin]);
+  else if (currentFilter === 'pending')  entries = entries.filter(([pin]) => !approvals[pin] && !revisionPending[pin]);
   else if (currentFilter === 'revision') entries = entries.filter(([pin]) => revisionPending[pin]);
 
   if (search) entries = entries.filter(([pin, s]) => s.name.includes(search) || s.grade.includes(search) || pin.includes(search));
-
-  // الدمج أولاً ثم يسير
-  entries.sort((a, b) => { if (a[1].program !== b[1].program) return a[1].program === 'dumaj' ? -1 : 1; return 0; });
 
   if (!entries.length) {
     grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>لا توجد نتائج</p></div>';
     return;
   }
 
-  grid.innerHTML = entries.map(([pin, s]) => {
-    const isYS = s.program === 'yaseer';
-    const isApproved = approvals[pin];
-    return `
-    <div class="stu-card" onclick="openStudentModal('${pin}')">
-      <div class="stu-card-head">
-        <div class="stu-avatar ${isYS ? 'stu-avatar-ys' : 'stu-avatar-dj'}">${isYS ? '📘' : '📙'}</div>
-        <div style="flex:1;">
-          <div class="stu-name">${s.name}</div>
-          <div class="stu-meta">${s.grade} • <span style="color:${isYS ? '#1e40af' : '#c25a00'};font-weight:700;">${isYS ? 'يسير' : 'الدمج'}</span></div>
+  // ترتيب الصفوف
+  const GRADE_ORDER_DJ = ['الأول المتوسط / ١','الثاني المتوسط / ١','الثالث المتوسط / ١'];
+  function getDJGradeOrder(grade) {
+    const i = GRADE_ORDER_DJ.findIndex(g => grade.includes('الأول') ? g.includes('الأول') : grade.includes('الثاني') ? g.includes('الثاني') : g.includes('الثالث'));
+    return i === -1 ? 99 : i;
+  }
+
+  // --- برنامج الدمج ---
+  const djEntries = entries.filter(([,s]) => s.program === 'dumaj');
+  // --- برنامج يسير ---
+  const ysEntries = entries.filter(([,s]) => s.program === 'yaseer');
+
+  let html = '';
+
+  // ======== الدمج الفكري — مجمّع بالصف ========
+  if (djEntries.length) {
+    // استخراج الصفوف الموجودة مرتبة
+    const djGrades = [];
+    const gradeMap = {};
+    djEntries.forEach(([pin, s]) => {
+      let gKey = 'أخرى';
+      if (s.grade.includes('الأول'))   gKey = 'الأول المتوسط';
+      else if (s.grade.includes('الثاني')) gKey = 'الثاني المتوسط';
+      else if (s.grade.includes('الثالث')) gKey = 'الثالث المتوسط';
+      if (!gradeMap[gKey]) { gradeMap[gKey] = []; djGrades.push(gKey); }
+      gradeMap[gKey].push([pin, s]);
+    });
+    // ترتيب الصفوف
+    const gradeOrder = ['الأول المتوسط','الثاني المتوسط','الثالث المتوسط','أخرى'];
+    const sortedGrades = [...new Set(djGrades)].sort((a,b) => gradeOrder.indexOf(a) - gradeOrder.indexOf(b));
+
+    html += `
+      <div class="grade-section-header dj-header">
+        <div class="grade-section-icon">📙</div>
+        <div>
+          <div class="grade-section-title">برنامج الدمج الفكري</div>
+          <div class="grade-section-count">${djEntries.length} طالب</div>
         </div>
-        ${isApproved ? '<span class="approved-badge">✅ معتمد</span>' : revisionPending[pin] ? '<span style=\"background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:10px;font-size:0.72rem;font-weight:700;\">🔄 تعديل</span>' : '<span class=\"pending-badge\">⏳ انتظار</span>'}
-      </div>
-      <div class="stu-card-body">
-        <div class="stu-info-row">
-          <div class="stu-info-item">الرمز: <span>${pin}</span></div>
-          <div class="stu-info-item">الصف: <span>${s.grade}</span></div>
-          ${s.diagnosis ? `<div class="stu-info-item" style="grid-column:1/-1;">التشخيص: <span style="color:#7a1a2e;font-weight:800;">${s.diagnosis}</span></div>` : ''}
+      </div>`;
+
+    sortedGrades.forEach(gKey => {
+      const studs = gradeMap[gKey];
+      // أيقونة وألوان حسب الصف
+      const gradeColors = {
+        'الأول المتوسط':  { bg:'#fff7ed', border:'#fb923c', accent:'#c2410c', badge:'#fff3e0', badgeText:'#c2410c', icon:'🥇' },
+        'الثاني المتوسط': { bg:'#fefce8', border:'#facc15', accent:'#a16207', badge:'#fef9c3', badgeText:'#a16207', icon:'🥈' },
+        'الثالث المتوسط': { bg:'#f0fdf4', border:'#4ade80', accent:'#166534', badge:'#dcfce7', badgeText:'#166534', icon:'🥉' },
+        'أخرى':           { bg:'#f8fafc', border:'#94a3b8', accent:'#475569', badge:'#f1f5f9', badgeText:'#475569', icon:'📚' },
+      };
+      const gc = gradeColors[gKey] || gradeColors['أخرى'];
+
+      html += `
+        <div class="grade-group" style="background:${gc.bg};border:2px solid ${gc.border};border-radius:16px;margin-bottom:22px;overflow:hidden;">
+          <div class="grade-group-head" style="background:linear-gradient(135deg,${gc.border}22,${gc.border}44);border-bottom:1.5px solid ${gc.border};padding:13px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-size:1.4rem;">${gc.icon}</span>
+              <div>
+                <div style="font-family:'Tajawal',sans-serif;font-weight:900;font-size:1rem;color:${gc.accent};">الصف ${gKey}</div>
+                <div style="font-size:0.74rem;color:${gc.accent};opacity:0.7;margin-top:1px;">برنامج الدمج الفكري</div>
+              </div>
+            </div>
+            <span style="background:${gc.badge};color:${gc.badgeText};border:1px solid ${gc.border};padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;">${studs.length} طالب</span>
+          </div>
+          <div style="padding:16px 18px;">
+            <div class="students-grid-inner">
+              ${studs.map(([pin, s]) => buildStudentCard(pin, s)).join('')}
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  // ======== يسير — مجمّع بالصف ========
+  if (ysEntries.length) {
+    // تجميع يسير حسب الصف (أرقام الصفوف)
+    const ysGradeMap = {};
+    ysEntries.forEach(([pin, s]) => {
+      const gKey = s.grade || 'أخرى';
+      if (!ysGradeMap[gKey]) ysGradeMap[gKey] = [];
+      ysGradeMap[gKey].push([pin, s]);
+    });
+    const ysGrades = Object.keys(ysGradeMap).sort();
+
+    html += `
+      <div class="grade-section-header ys-header">
+        <div class="grade-section-icon">📘</div>
+        <div>
+          <div class="grade-section-title">برنامج يسير</div>
+          <div class="grade-section-count">${ysEntries.length} طالب</div>
         </div>
+      </div>`;
+
+    // إذا كان الفلتر يُظهر الجميع أو يسير فقط، نجمّع بالصف
+    // وإلا نعرضهم بدون تجميع (للاعتماد/الانتظار إلخ)
+    if (currentFilter === 'all' || currentFilter === 'yaseer') {
+      ysGrades.forEach(gKey => {
+        const studs = ysGradeMap[gKey];
+        html += `
+          <div class="grade-group" style="background:#eff6ff;border:2px solid #93c5fd;border-radius:16px;margin-bottom:22px;overflow:hidden;">
+            <div class="grade-group-head" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-bottom:1.5px solid #93c5fd;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:1.3rem;">📘</span>
+                <div>
+                  <div style="font-family:'Tajawal',sans-serif;font-weight:900;font-size:0.95rem;color:#1e40af;">${gKey}</div>
+                  <div style="font-size:0.74rem;color:#1e40af;opacity:0.7;margin-top:1px;">برنامج يسير</div>
+                </div>
+              </div>
+              <span style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;">${studs.length} طالب</span>
+            </div>
+            <div style="padding:16px 18px;">
+              <div class="students-grid-inner">
+                ${studs.map(([pin, s]) => buildStudentCard(pin, s)).join('')}
+              </div>
+            </div>
+          </div>`;
+      });
+    } else {
+      html += `<div class="students-grid-inner" style="margin-bottom:22px;">
+        ${ysEntries.map(([pin, s]) => buildStudentCard(pin, s)).join('')}
+      </div>`;
+    }
+  }
+
+  grid.innerHTML = html;
+}
+
+function buildStudentCard(pin, s) {
+  const isYS = s.program === 'yaseer';
+  const isApproved   = approvals[pin];
+  const isRevision   = revisionPending[pin];
+  const statusBadge  = isApproved
+    ? '<span class="approved-badge">✅ معتمد</span>'
+    : isRevision
+      ? '<span class="revision-badge">🔄 تعديل</span>'
+      : '<span class="pending-badge">⏳ انتظار</span>';
+
+  return `
+  <div class="stu-card" onclick="openStudentModal('${pin}')">
+    <div class="stu-card-head">
+      <div class="stu-avatar ${isYS ? 'stu-avatar-ys' : 'stu-avatar-dj'}">${isYS ? '📘' : '📙'}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="stu-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.name}</div>
+        <div class="stu-meta">${s.grade}</div>
       </div>
-      <div class="stu-card-foot">
-        <button class="btn-view btn-view-plan" onclick="event.stopPropagation();openStudentModal('${pin}','plan')">📋 الخطة</button>
-        <button class="btn-view btn-view-approve" onclick="event.stopPropagation();openStudentModal('${pin}','approve')">${isApproved ? '✅ معتمد' : '🖊️ اعتماد'}</button>
+      ${statusBadge}
+    </div>
+    <div class="stu-card-body">
+      <div class="stu-info-row">
+        <div class="stu-info-item">الرمز: <span>${pin}</span></div>
+        <div class="stu-info-item">الصف: <span>${s.grade}</span></div>
+        ${s.diagnosis ? `<div class="stu-info-item" style="grid-column:1/-1;margin-top:4px;">التشخيص: <span style="color:#7a1a2e;font-weight:800;font-size:0.75rem;">${s.diagnosis}</span></div>` : ''}
       </div>
-    </div>`;
-  }).join('');
+    </div>
+    <div class="stu-card-foot">
+      <button class="btn-view btn-view-plan" onclick="event.stopPropagation();openStudentModal('${pin}','plan')">📋 الخطة</button>
+      <button class="btn-view btn-view-approve" onclick="event.stopPropagation();openStudentModal('${pin}','approve')">${isApproved ? '✅ معتمد' : '🖊️ اعتماد'}</button>
+    </div>
+  </div>`;
 }
 
 // =====================================================
