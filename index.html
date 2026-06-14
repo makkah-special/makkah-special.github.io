@@ -96,7 +96,9 @@ body{
   font-size:.78rem;
 }
 .topbar-gov{ display:flex; align-items:center; gap:10px; }
-.topbar-gov img{ height:20px; width:auto; opacity:.95; flex-shrink:0; }
+.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; transition:opacity .2s; }
+.topbar-gov a{ display:flex; align-items:center; }
+.topbar-gov a:hover img{ opacity:1; }
 .topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
 .topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
 .topbar-dept{
@@ -485,7 +487,9 @@ footer{
   <div class="topbar-inner">
     <div class="topbar-row">
       <div class="topbar-gov">
-        <img src="moe-logo.png" alt="وزارة التعليم">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="وزارة التعليم">
+        </a>
         <span>المملكة العربية السعودية — وزارة التعليم</span>
       </div>
       <b class="topbar-year">1447هـ</b>
@@ -509,7 +513,7 @@ footer{
       <a href="#programs" class="nav-link">البرامج</a>
       <a href="#portals" class="nav-link">البوابات</a>
       <a href="#about" class="nav-link">عن القسم</a>
-      <a href="contact.html" class="nav-link">خدمة المستفيد</a>
+      <a href="contact.html" class="nav-link">تواصل معنا</a>
     </nav>
     <a href="#portals" class="nav-cta">🔐 بوابة الطلاب</a>
   </div>
@@ -684,7 +688,7 @@ footer{
         </ul>
       </div>
       <div class="about-card">
-        <h3>📩 خدمة المستفيد</h3>
+        <h3>📩 تواصل رسمي</h3>
         <ul class="about-list">
           <li>للاستفسارات والملاحظات يمكن التواصل عبر صفحة التواصل</li>
           <li>نضمن الرد في أقرب وقت ممكن خلال أيام الدراسة</li>
