@@ -88,26 +88,27 @@ body{
 }
 .topbar-inner{
   max-width:1180px; margin:0 auto;
-  display:flex; align-items:center; justify-content:space-between;
-  flex-wrap:wrap; gap:6px 14px;
-  padding:7px 24px;
-  font-size:.76rem; font-weight:600;
+  padding:8px 24px;
+  font-weight:600;
+}
+.topbar-row{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  font-size:.78rem;
 }
 .topbar-gov{ display:flex; align-items:center; gap:10px; }
 .topbar-gov img{ height:20px; width:auto; opacity:.95; flex-shrink:0; }
-.topbar-gov span{ color:rgba(255,255,255,.6); }
-.topbar-meta{ display:flex; align-items:center; gap:16px; color:rgba(255,255,255,.7); flex-wrap:wrap; }
-.topbar-meta b{ color:#fff; font-weight:800; flex-shrink:0; }
-.topbar-dept{ display:block; width:100%; order:3; }
-.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.35); margin:0 4px; }
-@media (min-width:860px){
-  .topbar-inner{ flex-wrap:nowrap; }
-  .topbar-dept{ width:auto; order:initial; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+.topbar-dept{
+  margin-top:3px; padding-right:30px;
+  font-size:.68rem; font-weight:600;
+  color:rgba(255,255,255,.45);
 }
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
 @media (max-width:640px){
-  .topbar-gov span:last-child{ display:none; }
-  .topbar-dept{ font-size:.66rem; line-height:1.7; }
-  .topbar-inner{ font-size:.68rem; padding:6px 14px; }
+  .topbar-row{ font-size:.7rem; }
+  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+  .topbar-inner{ padding:7px 14px; }
 }
 
 /* ============================================================
@@ -480,14 +481,14 @@ footer{
 <!-- الشريط العلوي الرسمي -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="topbar-gov">
-      <img src="moe-logo.png" alt="وزارة التعليم">
-      <span>المملكة العربية السعودية — وزارة التعليم</span>
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <img src="moe-logo.png" alt="وزارة التعليم">
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      <b class="topbar-year">1447هـ</b>
     </div>
-    <div class="topbar-meta">
-      <span class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>•</i> الشؤون التعليمية <i>•</i> إدارة تنمية القدرات <i>•</i> قسم ذوي الإعاقة</span>
-      <b>1447هـ</b>
-    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
   </div>
 </div>
 
