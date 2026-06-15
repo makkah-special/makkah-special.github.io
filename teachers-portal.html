@@ -1405,8 +1405,8 @@ async function renderAssignTable() {
   const filtered = list.filter(s => !q || (s.name||'').toLowerCase().includes(q) || (s.pin||'').includes(q));
 
   const teacherOptions = Object.entries(TEACHERS)
-    .filter(([uname, t]) => !t.isSupervisor && t.program === program)
-    .map(([uname, t]) => ({ uname, name: t.name }));
+    .filter(([uname, t]) => t.program === program && (!t.isSupervisor || uname === currentTeacher.username))
+    .map(([uname, t]) => ({ uname, name: t.name + (t.isSupervisor ? ' (أنا - المشرف)' : '') }));
 
   const tbody = document.getElementById('assign-tbody');
 
