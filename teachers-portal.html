@@ -360,6 +360,15 @@ header.portal-header{
 .my-sched-grade{ font-size:.7rem; color:var(--muted); margin-top:2px; }
 .my-sched-cell-empty{ color:#c9c2da; font-size:.78rem; }
 
+/* توزيع المنهج */
+.curr-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
+.curr-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
+.curr-table td{ padding:6px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.curr-table tr:last-child td{ border-bottom:none; }
+.curr-week-num{ font-weight:800; color:var(--lav-700); white-space:nowrap; font-size:.78rem; }
+.curr-input{ width:100%; padding:7px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:.82rem; outline:none; }
+.curr-input:focus{ border-color:var(--lav-500); }
+
 /* عام */
 textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-size:.88rem; }
 .success-toast{
@@ -455,6 +464,7 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
     <div class="tabs" id="main-tabs">
       <button class="tab-btn active" onclick="openMainTab('students',this)">👥 طلابي</button>
       <button class="tab-btn" onclick="openMainTab('schedule',this)">📅 جدولي</button>
+      <button class="tab-btn" onclick="openMainTab('curriculum',this)">📘 توزيع المنهج</button>
       <button class="tab-btn" id="assign-tab-btn" style="display:none;" onclick="openMainTab('assign',this)">📋 إسناد الطلاب</button>
     </div>
 
@@ -476,6 +486,22 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
           <button class="btn-sm btn-sm-outline" onclick="printMySchedule()">🖨️ طباعة</button>
         </div>
         <div class="s-card-body" id="schedule-content" style="overflow-x:auto;">
+          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== توزيع المنهج ===== -->
+    <div class="tab-pane" id="main-tab-curriculum">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>📘 توزيع المنهج الفصلي</span>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-sm btn-sm-outline" onclick="printCurriculum()">🖨️ طباعة</button>
+            <button class="btn-sm btn-sm-primary" onclick="saveCurriculum()">💾 حفظ</button>
+          </div>
+        </div>
+        <div class="s-card-body" id="curriculum-content">
           <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
         </div>
       </div>
@@ -891,8 +917,10 @@ function openMainTab(name, btn) {
   btn.classList.add('active');
   document.getElementById('main-tab-students').classList.toggle('active', name === 'students');
   document.getElementById('main-tab-schedule').classList.toggle('active', name === 'schedule');
+  document.getElementById('main-tab-curriculum').classList.toggle('active', name === 'curriculum');
   document.getElementById('main-tab-assign').classList.toggle('active', name === 'assign');
   if (name === 'schedule') renderMySchedule();
+  if (name === 'curriculum') renderCurriculumTab();
 }
 
 function openDetailTab(name, btn) {
@@ -1741,6 +1769,171 @@ function dismissMeetingBanner() {
   const el = document.getElementById('meeting-banner');
   el.style.display = 'none';
   el.innerHTML = '';
+}
+</script>
+
+<script>
+// ===================================================
+// توزيع المنهج الفصلي
+// ===================================================
+const CURRICULUM_WEEKS = 16;
+
+function emptyCurriculumWeeks() {
+  return Array.from({ length: CURRICULUM_WEEKS }, () => ({ topic: '', notes: '' }));
+}
+
+function defaultCurriculum() {
+  return {
+    activeSubjects: ['arabic', 'math'],
+    subjects: {
+      arabic: { name: 'لغتي (اللغة العربية)', weeks: emptyCurriculumWeeks() },
+      math:   { name: 'الرياضيات',            weeks: emptyCurriculumWeeks() },
+    },
+    meta: null
+  };
+}
+
+let myCurriculum = null;
+
+function curriculumPath() {
+  return `curriculum/${currentTeacher.program}/${currentTeacher.username}.json`;
+}
+
+async function renderCurriculumTab() {
+  const container = document.getElementById('curriculum-content');
+  container.innerHTML = `<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>`;
+
+  if (!myCurriculum) {
+    const data = await sbGetJSON(`reports/${curriculumPath()}`);
+    myCurriculum = data || defaultCurriculum();
+  }
+  if (!Array.isArray(myCurriculum.activeSubjects) || myCurriculum.activeSubjects.length === 0) {
+    myCurriculum.activeSubjects = ['arabic', 'math'];
+  }
+  myCurriculum.activeSubjects.forEach(key => {
+    if (!myCurriculum.subjects[key]) {
+      myCurriculum.subjects[key] = { name: key, weeks: emptyCurriculumWeeks() };
+    }
+  });
+
+  let html = `<div style="font-size:.84rem;color:var(--muted);margin-bottom:16px;padding:10px 14px;background:var(--surface2);border-radius:10px;border-right:3px solid var(--gold);">
+    📝 وزّع محتوى المنهج على أسابيع الفصل الدراسي. يمكن لطاقم الإدارة (مشرف الإدارة العامة، مدير المدرسة، رئيس قسم ذوي الإعاقة) الاطلاع على هذا التوزيع بعد حفظه.
+  </div>`;
+
+  myCurriculum.activeSubjects.forEach(key => {
+    const subj = myCurriculum.subjects[key];
+    html += `<div class="s-card">
+      <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+        <span>📘 ${escHtml(subj.name)}</span>
+        <button class="btn-sm btn-sm-danger" onclick="removeCurriculumSubject('${key}')">🗑️ إزالة المادة</button>
+      </div>
+      <div class="s-card-body" style="padding:0;overflow-x:auto;">
+        <table class="curr-table">
+          <thead><tr><th style="width:90px;">الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
+          <tbody>
+            ${subj.weeks.map((w, i) => `
+              <tr>
+                <td class="curr-week-num">الأسبوع ${i+1}</td>
+                <td><input type="text" class="curr-input" data-subj="${key}" data-week="${i}" data-field="topic" value="${escHtml(w.topic || '')}" placeholder="موضوع/درس هذا الأسبوع..."></td>
+                <td><input type="text" class="curr-input" data-subj="${key}" data-week="${i}" data-field="notes" value="${escHtml(w.notes || '')}" placeholder="ملاحظات..."></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  });
+
+  html += `<div class="upload-row">
+    <input type="text" id="new-curr-subject" placeholder="اسم مادة جديدة (مثال: العلوم)">
+    <button class="btn-sm btn-sm-outline" onclick="addCurriculumSubject()">+ إضافة مادة</button>
+  </div>`;
+
+  if (myCurriculum.meta) {
+    html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:10px;">آخر حفظ: ${escHtml(toHijriLike(myCurriculum.meta.date))} — بواسطة ${escHtml(myCurriculum.meta.teacher)}</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function collectCurriculumInputs() {
+  document.querySelectorAll('.curr-input').forEach(inp => {
+    const subj  = inp.dataset.subj;
+    const week  = +inp.dataset.week;
+    const field = inp.dataset.field;
+    if (myCurriculum.subjects[subj] && myCurriculum.subjects[subj].weeks[week]) {
+      myCurriculum.subjects[subj].weeks[week][field] = inp.value;
+    }
+  });
+}
+
+function addCurriculumSubject() {
+  const input = document.getElementById('new-curr-subject');
+  const name = (input.value || '').trim();
+  if (!name) return;
+  collectCurriculumInputs();
+  const key = 'custom_' + Date.now();
+  myCurriculum.subjects[key] = { name, weeks: emptyCurriculumWeeks() };
+  myCurriculum.activeSubjects.push(key);
+  input.value = '';
+  renderCurriculumTab();
+}
+
+function removeCurriculumSubject(key) {
+  if (!confirm('سيتم حذف توزيع هذه المادة بالكامل. متابعة؟')) return;
+  collectCurriculumInputs();
+  myCurriculum.activeSubjects = myCurriculum.activeSubjects.filter(k => k !== key);
+  delete myCurriculum.subjects[key];
+  if (myCurriculum.activeSubjects.length === 0) myCurriculum.activeSubjects = ['arabic','math'];
+  renderCurriculumTab();
+}
+
+async function saveCurriculum() {
+  collectCurriculumInputs();
+  myCurriculum.meta = { date: new Date().toISOString(), teacher: currentTeacher.name };
+  const ok = await sbSetJSON(`reports/${curriculumPath()}`, myCurriculum);
+  if (ok) { showToast('✅ تم حفظ توزيع المنهج'); renderCurriculumTab(); }
+  else showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
+}
+
+function printCurriculum() {
+  collectCurriculumInputs();
+  const win = window.open('', '_blank');
+  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
+
+  const subjectsHtml = myCurriculum.activeSubjects.map(key => {
+    const subj = myCurriculum.subjects[key];
+    return `
+      <h2>📘 ${escHtml(subj.name)}</h2>
+      <table>
+        <thead><tr><th style="width:90px;">الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
+        <tbody>
+          ${subj.weeks.map((w,i) => `<tr><td class="wk">الأسبوع ${i+1}</td><td>${escHtml(w.topic||'')}</td><td>${escHtml(w.notes||'')}</td></tr>`).join('')}
+        </tbody>
+      </table>`;
+  }).join('');
+
+  win.document.write(`
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<title>توزيع المنهج — ${escHtml(currentTeacher.name)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;color:#221335;}
+  h1{font-family:'Tajawal',sans-serif;color:#2E2148;font-size:1.5rem;margin-bottom:4px;}
+  .sub{color:#6E5F82;margin-bottom:18px;font-size:.9rem;}
+  h2{font-family:'Tajawal',sans-serif;color:#6B4C9A;font-size:1.05rem;margin:22px 0 8px;}
+  table{ width:100%; border-collapse:collapse; font-size:.85rem; margin-bottom:10px; }
+  th{ background:#EAE1F7; color:#6B4C9A; padding:8px 10px; text-align:right; font-weight:800; border:1px solid #DCD2EE; }
+  td{ padding:7px 10px; border:1px solid #DCD2EE; }
+  .wk{ font-weight:800; color:#6B4C9A; white-space:nowrap; }
+  @media print{ @page{ size:A4; margin:14mm; } }
+</style></head><body>
+  <h1>📘 توزيع المنهج الفصلي</h1>
+  <div class="sub">${escHtml(currentTeacher.name)} — ${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
+  ${subjectsHtml}
+  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
+</body></html>`);
+  win.document.close();
 }
 </script>
 
