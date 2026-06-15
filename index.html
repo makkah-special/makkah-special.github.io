@@ -475,12 +475,38 @@ footer{
   .hero h1{ font-size:2.15rem; }
   .hero-btns{ flex-direction:column; align-items:stretch; }
   .btn-primary, .btn-outline{ justify-content:center; }
+/* شريط الإشعارات العام */
+#announcement-bar{
+  display:none; background:linear-gradient(120deg, var(--gold), #E8C27A);
+  color:#5c3d0c; padding:10px 24px; text-align:center; position:relative;
+}
+#announcement-bar .ann-inner{
+  max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:center;
+  gap:12px; flex-wrap:wrap; font-size:.85rem; font-weight:700;
+}
+#announcement-bar a.ann-link{ color:#5c3d0c; text-decoration:underline; font-weight:800; }
+#announcement-bar .ann-close{
+  position:absolute; left:14px; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.08); border:none; border-radius:6px; width:24px; height:24px;
+  cursor:pointer; font-size:.8rem; color:#5c3d0c;
+}
+@media (max-width:640px){
+  #announcement-bar{ padding:10px 40px 10px 36px; }
+  #announcement-bar .ann-inner{ font-size:.78rem; }
 }
 </style>
 </head>
 <body>
 
 <div class="dot-field"></div>
+
+<!-- شريط الإشعارات -->
+<div id="announcement-bar">
+  <div class="ann-inner">
+    <span id="announcement-text"></span>
+  </div>
+  <button class="ann-close" onclick="closeAnnouncementBar()" title="إغلاق">✕</button>
+</div>
 
 <!-- الشريط العلوي الرسمي -->
 <div class="topbar">
@@ -813,6 +839,33 @@ footer{
     animateCount(document.getElementById('cnt2'), 20);
     animateCount(document.getElementById('cnt3'), 8);
   }, 400);
+
+// ===================================================
+// شريط الإشعارات العام
+// ===================================================
+(async function loadAnnouncementBar() {
+  try {
+    if (sessionStorage.getItem('announcement_dismissed')) return;
+    const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/site-announcement.json?t=${Date.now()}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data || !data.enabled || !data.message) return;
+
+    const bar = document.getElementById('announcement-bar');
+    const textEl = document.getElementById('announcement-text');
+    textEl.innerHTML = '📢 ' + data.message.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    if (data.link) {
+      textEl.innerHTML += ` — <a class="ann-link" href="${data.link}" target="_blank" rel="noopener">المزيد</a>`;
+    }
+    bar.style.display = 'block';
+  } catch(e) {}
+})();
+
+function closeAnnouncementBar() {
+  document.getElementById('announcement-bar').style.display = 'none';
+  try { sessionStorage.setItem('announcement_dismissed', '1'); } catch(e) {}
+}
 </script>
 </body>
 </html>
