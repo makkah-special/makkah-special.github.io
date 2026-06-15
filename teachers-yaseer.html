@@ -170,7 +170,9 @@ footer strong{color:var(--accent-light);}
 .entry-card.drag-over,.witness-card.drag-over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);transform:scale(1.01);}
 .entry-card,.witness-card{transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;}
 .sort-hint{font-size:0.72rem;color:var(--muted);margin-bottom:8px;text-align:left;display:flex;align-items:center;gap:5px;}
-.drag-handle{-webkit-user-drag:element;}
+.drag-handle{-webkit-user-drag:element;}body.embed-mode header{ display:none !important; }
+body.embed-mode .login-screen{ min-height:auto !important; padding-top:20px !important; }
+body.embed-mode .portal{ padding-top:10px !important; }
 </style>
 </head>
 <body>
@@ -1656,6 +1658,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='z'&&!e.shiftKey){e.preventDefault();if(typeof undo!=='undefined')undo();}if((e.ctrlKey||e.metaKey)&&(e.key==='y'||(e.key==='z'&&e.shiftKey))){e.preventDefault();if(typeof redo!=='undefined')redo();}});
+
+// ===================================================
+// تسجيل دخول تلقائي عند العرض داخل بوابة المعلمين
+// (?t=الاسم الكامل&p=الرمز السري&embed=1)
+// ===================================================
+(function autoLoginFromURL() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('embed') === '1') document.body.classList.add('embed-mode');
+    const t = params.get('t');
+    const p = params.get('p');
+    if (t && p && TEACHERS[t] && TEACHERS[t].pin === p) {
+      document.getElementById('teacher-select').value = t;
+      document.getElementById('pin-input').value = p;
+      currentTeacher = t;
+      openPortal(TEACHERS[t]);
+    }
+  } catch(e) {}
+})();
 </script>
 </body>
 </html>
