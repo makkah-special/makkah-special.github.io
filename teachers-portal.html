@@ -1406,7 +1406,7 @@ async function renderAssignTable() {
 
   const teacherOptions = Object.entries(TEACHERS)
     .filter(([uname, t]) => t.program === program && (!t.isSupervisor || uname === currentTeacher.username))
-    .map(([uname, t]) => ({ uname, name: t.name + (t.isSupervisor ? ' (أنا - المشرف)' : '') }));
+    .map(([uname, t]) => ({ uname, name: t.name }));
 
   const tbody = document.getElementById('assign-tbody');
 
