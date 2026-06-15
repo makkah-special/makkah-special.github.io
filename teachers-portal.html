@@ -336,6 +336,30 @@ header.portal-header{
 .reinforce-meta{ font-size:.74rem; color:var(--ink-faint); margin-top:2px; }
 .reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
 
+/* بانر استدعاء الاجتماع */
+.meeting-banner-inner{
+  display:flex; align-items:center; gap:14px; background:linear-gradient(135deg, var(--gold-soft), #fff);
+  border:1.5px solid var(--gold); border-right:5px solid var(--gold); border-radius:14px;
+  padding:14px 20px; margin-bottom:18px; flex-wrap:wrap;
+}
+.meeting-banner-icon{ font-size:1.8rem; flex-shrink:0; }
+.meeting-banner-title{ font-weight:800; font-size:.92rem; color:var(--lav-800); }
+.meeting-banner-meta{ font-size:.8rem; color:var(--muted); margin-top:3px; }
+.meeting-banner-close{
+  background:rgba(0,0,0,.05); border:none; border-radius:6px; width:26px; height:26px; cursor:pointer;
+  font-size:.8rem; color:var(--muted); flex-shrink:0;
+}
+
+/* جدول المعلم الأسبوعي */
+.my-sched-table{ width:100%; border-collapse:collapse; font-size:.8rem; min-width:640px; }
+.my-sched-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 8px; text-align:center; font-weight:800; font-size:.76rem; border:1px solid var(--border); }
+.my-sched-table td{ padding:8px; border:1px solid var(--border); text-align:center; vertical-align:middle; }
+.my-sched-period-col{ background:var(--surface2); font-weight:800; color:var(--lav-700); font-size:.74rem; white-space:nowrap; }
+.my-sched-cell-fill{ background:var(--lav-100); border-radius:8px; padding:6px; }
+.my-sched-subj{ font-weight:800; color:var(--lav-800); font-size:.78rem; }
+.my-sched-grade{ font-size:.7rem; color:var(--muted); margin-top:2px; }
+.my-sched-cell-empty{ color:#c9c2da; font-size:.78rem; }
+
 /* عام */
 textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-size:.88rem; }
 .success-toast{
@@ -424,9 +448,13 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
 
   <div class="portal-body">
 
+    <!-- بانر استدعاء الاجتماع -->
+    <div id="meeting-banner" style="display:none;"></div>
+
     <!-- التبويبات الرئيسية -->
     <div class="tabs" id="main-tabs">
       <button class="tab-btn active" onclick="openMainTab('students',this)">👥 طلابي</button>
+      <button class="tab-btn" onclick="openMainTab('schedule',this)">📅 جدولي</button>
       <button class="tab-btn" id="assign-tab-btn" style="display:none;" onclick="openMainTab('assign',this)">📋 إسناد الطلاب</button>
     </div>
 
@@ -437,6 +465,19 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
       </div>
       <div class="students-grid" id="students-grid">
         <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+      </div>
+    </div>
+
+    <!-- ===== جدولي ===== -->
+    <div class="tab-pane" id="main-tab-schedule">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>📅 جدولي الأسبوعي</span>
+          <button class="btn-sm btn-sm-outline" onclick="printMySchedule()">🖨️ طباعة</button>
+        </div>
+        <div class="s-card-body" id="schedule-content" style="overflow-x:auto;">
+          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+        </div>
       </div>
     </div>
 
@@ -762,6 +803,7 @@ async function openPortal() {
   await loadAssignments();
   await renderMyStudents();
   if (currentTeacher.isSupervisor) await renderAssignTable();
+  loadMeetingInvite();
 }
 
 // ===================================================
@@ -848,7 +890,9 @@ function openMainTab(name, btn) {
   document.querySelectorAll('#main-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('main-tab-students').classList.toggle('active', name === 'students');
+  document.getElementById('main-tab-schedule').classList.toggle('active', name === 'schedule');
   document.getElementById('main-tab-assign').classList.toggle('active', name === 'assign');
+  if (name === 'schedule') renderMySchedule();
 }
 
 function openDetailTab(name, btn) {
@@ -1500,6 +1544,206 @@ async function assignTeacher(pin, uname) {
   else showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
 }
 </script>
+<script>
+// ===================================================
+// جدول المعلم الأسبوعي (المعتمد من مشرف البرنامج)
+// ===================================================
+const SCHEDULE_KEY_MAP = {
+  'm.suhayymi': { program:'dumaj',  key:'suhaimy'   },
+  'z.qarni':    { program:'dumaj',  key:'alqarni'   },
+  'a.ghamdi':   { program:'dumaj',  key:'alghamdi'  },
+  'a.malki':    { program:'dumaj',  key:'almalki'   },
+  'h.ulyani':   { program:'dumaj',  key:'alyani'    },
+  'a.zahrani':  { program:'dumaj',  key:'alzahrani' },
+  'h.kubaishi': { program:'yaseer', key:'husain'    },
+  'saad.z':     { program:'yaseer', key:'saad'      },
+};
+
+const SCHED_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+
+const DUMAJ_SCHED_PERIODS = [
+  { num:1, label:'الأولى',  time:'7:30–8:15'   },
+  { num:2, label:'الثانية', time:'8:15–9:00'   },
+  { num:3, label:'الثالثة', time:'9:00–9:45'   },
+  { num:4, label:'الرابعة', time:'10:05–10:50' },
+  { num:5, label:'الخامسة', time:'10:50–11:35' },
+  { num:6, label:'السادسة', time:'11:35–12:20' },
+  { num:7, label:'السابعة', time:'12:20–13:05' },
+];
+const DUMAJ_SCHED_GRADES = ['أول متوسط','ثاني متوسط','ثالث متوسط'];
+const DUMAJ_CELL_LABELS = { lesson:'📚', break_sup:'☕ فسحة', end_sup:'🏫 نهاية الدوام' };
+
+const YASEER_SCHED_PERIODS = [
+  { num:1, label:'الأولى',  time:'7:00–7:45'   },
+  { num:2, label:'الثانية', time:'7:45–8:30'   },
+  { num:3, label:'الثالثة', time:'8:30–9:15'   },
+  { num:4, label:'الرابعة', time:'9:35–10:20'  },
+  { num:5, label:'الخامسة', time:'10:20–11:05' },
+];
+
+let lastScheduleHTML = '';
+
+async function fetchTimetableData(key) {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/teacher_portfolios?teacher_key=eq.${encodeURIComponent(key)}&select=data`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      if (rows?.length > 0 && rows[0].data) return rows[0].data;
+    }
+  } catch(e) {}
+  return null;
+}
+
+async function renderMySchedule() {
+  const container = document.getElementById('schedule-content');
+  container.innerHTML = `<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ تحميل الجدول...</div></div>`;
+
+  const map = SCHEDULE_KEY_MAP[currentTeacher.username];
+  if (!map) {
+    container.innerHTML = `<div class="empty-state"><div class="es-icon">📅</div><div class="es-title">لا تتوفر بيانات جدول لهذا الحساب</div></div>`;
+    return;
+  }
+
+  if (map.program === 'dumaj') {
+    const grids = {};
+    for (const grade of DUMAJ_SCHED_GRADES) {
+      grids[grade] = await fetchTimetableData('dumaj_timetable_' + grade);
+    }
+    renderDumajMySchedule(grids, map.key, container);
+  } else {
+    const grid = await fetchTimetableData('yaseer_timetable_main');
+    renderYaseerMySchedule(grid, map.key, container);
+  }
+}
+
+function renderDumajMySchedule(grids, myKey, container) {
+  let hasAny = false;
+  let html = `<table class="my-sched-table"><thead><tr><th>الحصة</th>${SCHED_DAYS.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>`;
+  DUMAJ_SCHED_PERIODS.forEach(p => {
+    html += `<tr><td class="my-sched-period-col">${p.label}<br><span style="font-weight:400;">${p.time}</span></td>`;
+    SCHED_DAYS.forEach(day => {
+      let found = null, foundGrade = null;
+      DUMAJ_SCHED_GRADES.forEach(grade => {
+        const grid = grids[grade];
+        const cell = grid?.[day]?.[p.num];
+        if (cell && cell.teacher === myKey && cell.type && cell.type !== 'empty') { found = cell; foundGrade = grade; }
+      });
+      if (found) {
+        hasAny = true;
+        const typeLabel = found.type === 'lesson' ? (found.subject || 'حصة') : (DUMAJ_CELL_LABELS[found.type] || found.subject || '');
+        html += `<td><div class="my-sched-cell-fill"><div class="my-sched-subj">${escHtml(typeLabel)}</div>${found.type==='lesson' ? `<div class="my-sched-grade">${escHtml(foundGrade)}</div>` : ''}</div></td>`;
+      } else {
+        html += `<td class="my-sched-cell-empty">—</td>`;
+      }
+    });
+    html += `</tr>`;
+  });
+  html += `</tbody></table>`;
+
+  if (!hasAny) {
+    html = `<div class="empty-state"><div class="es-icon">📅</div><div class="es-title">لم يتم تحديد حصص لك في الجدول حتى الآن</div><div class="es-sub">يقوم مشرف البرنامج باعتماد الجدول من لوحة التحكم الخاصة به</div></div>` + html;
+  }
+  lastScheduleHTML = html;
+  container.innerHTML = html;
+}
+
+function renderYaseerMySchedule(grid, myKey, container) {
+  let hasAny = false;
+  let html = `<table class="my-sched-table"><thead><tr><th>الحصة</th>${SCHED_DAYS.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>`;
+  YASEER_SCHED_PERIODS.forEach(p => {
+    html += `<tr><td class="my-sched-period-col">${p.label}<br><span style="font-weight:400;">${p.time}</span></td>`;
+    SCHED_DAYS.forEach(day => {
+      const cell = grid?.[day]?.[p.num];
+      if (cell && cell.teacher === myKey && cell.students && cell.students.length) {
+        hasAny = true;
+        const items = cell.students.map(s => `<div class="my-sched-subj">${escHtml(s.name)}</div><div class="my-sched-grade">${escHtml(s.subject)}</div>`).join('<hr style="border:none;border-top:1px dashed var(--border);margin:4px 0;">');
+        html += `<td><div class="my-sched-cell-fill">${items}</div></td>`;
+      } else {
+        html += `<td class="my-sched-cell-empty">—</td>`;
+      }
+    });
+    html += `</tr>`;
+  });
+  html += `</tbody></table>`;
+
+  if (!hasAny) {
+    html = `<div class="empty-state"><div class="es-icon">📅</div><div class="es-title">لم يتم تحديد حصص لك في الجدول حتى الآن</div><div class="es-sub">يقوم مشرف البرنامج باعتماد الجدول من لوحة التحكم الخاصة به</div></div>` + html;
+  }
+  lastScheduleHTML = html;
+  container.innerHTML = html;
+}
+
+function printMySchedule() {
+  const win = window.open('', '_blank');
+  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
+  win.document.write(`
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<title>جدولي الأسبوعي — ${escHtml(currentTeacher.name)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;}
+  h1{font-family:'Tajawal',sans-serif;color:#2E2148;}
+  .my-sched-table{ width:100%; border-collapse:collapse; font-size:.85rem; }
+  .my-sched-table th{ background:#EAE1F7; color:#6B4C9A; padding:9px 8px; text-align:center; font-weight:800; border:1px solid #DCD2EE; }
+  .my-sched-table td{ padding:8px; border:1px solid #DCD2EE; text-align:center; }
+  .my-sched-period-col{ background:#FBFAFE; font-weight:800; color:#6B4C9A; }
+  .my-sched-cell-fill{ background:#EAE1F7; border-radius:8px; padding:6px; }
+  .my-sched-subj{ font-weight:800; color:#3F2E63; }
+  .my-sched-grade{ font-size:.78rem; color:#6E5F82; margin-top:2px; }
+  .my-sched-cell-empty{ color:#c9c2da; }
+  .empty-state{ text-align:center; padding:30px; color:#9ca3af; }
+</style></head><body>
+  <h1>📅 جدولي الأسبوعي — ${escHtml(currentTeacher.name)}</h1>
+  <div style="color:#6E5F82;margin-bottom:14px;">${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
+  ${lastScheduleHTML}
+  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
+</body></html>`);
+  win.document.close();
+}
+
+// ===================================================
+// بانر استدعاء الاجتماع (من مشرف الإدارة العامة)
+// ===================================================
+async function loadMeetingInvite() {
+  const invite = await sbGetJSON(`reports/${currentTeacher.program}/meeting-invite.json`);
+  renderMeetingBanner(invite);
+}
+
+function renderMeetingBanner(invite) {
+  const el = document.getElementById('meeting-banner');
+  if (!invite || invite.status === 'dismissed' || !invite.link) {
+    el.style.display = 'none';
+    el.innerHTML = '';
+    return;
+  }
+  let dtLabel = invite.datetime;
+  try {
+    dtLabel = new Date(invite.datetime).toLocaleDateString('ar-SA', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+  } catch(e) {}
+
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div class="meeting-banner-inner">
+      <div class="meeting-banner-icon">📹</div>
+      <div style="flex:1;">
+        <div class="meeting-banner-title">استدعاء اجتماع: ${escHtml(invite.subject || '')}</div>
+        <div class="meeting-banner-meta">📅 ${escHtml(dtLabel)}${invite.notes ? ' — ' + escHtml(invite.notes) : ''}</div>
+      </div>
+      <a href="${invite.link}" target="_blank" class="btn-sm btn-sm-gold">🔗 الانضمام للاجتماع</a>
+      <button class="meeting-banner-close" onclick="dismissMeetingBanner()" title="إغلاق">✕</button>
+    </div>`;
+}
+
+function dismissMeetingBanner() {
+  const el = document.getElementById('meeting-banner');
+  el.style.display = 'none';
+  el.innerHTML = '';
+}
+</script>
+
 <script>
 // ===================================================
 // التهيئة
