@@ -271,9 +271,9 @@ footer strong{color:var(--accent-light);}
     <a href="index.html" class="back-link">← الرئيسية</a>
   </div>
   <div class="hero">
- 
-    <h1>لوحة <span>المتابعة =</span></h1>
-    <p>مؤشرات الأداء والبيانات الإحصائية للبرامج التعليمية</p>
+   
+    <h1>لوحة <span>المتابعة </span></h1>
+    <p>مؤشرات الأداء والبيانات الإحصائية للبرامج التعليمية </p>
   </div>
 </header>
 
@@ -429,6 +429,19 @@ footer strong{color:var(--accent-light);}
         </div>
       </div>
     </div>
+
+    <div style="margin-top:24px;padding:18px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
+      <div class="set-label" style="margin-bottom:10px;">📢 شريط الإشعارات (أعلى الصفحة الرئيسية)</div>
+      <div class="set-sub" style="margin-bottom:12px;">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه</div>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:10px;">
+        <input type="checkbox" id="announce-enabled" style="width:18px;height:18px;">
+        تفعيل عرض الشريط
+      </label>
+      <input type="text" class="set-inp" id="announce-message" placeholder="نص الإشعار..." style="width:100%;margin-bottom:8px;">
+      <input type="url" class="set-inp" id="announce-link" placeholder="رابط إضافي (اختياري)" style="width:100%;margin-bottom:10px;">
+      <button class="btn-save" onclick="saveAnnouncementP()">📢 حفظ ونشر الإشعار</button>
+    </div>
+
     <div style="margin-top:24px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:0.78rem;color:var(--muted);line-height:2.2;">
       🏫 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
       📚 برنامج يسير + برنامج الدمج الفكري<br>
@@ -590,6 +603,33 @@ function switchTab(id,btn){
   if(id==='timetable')loadTT();
   if(id==='portfolio')loadPort();
   if(id==='iep')renderIepStudents();
+  if(id==='settings')loadAnnouncementSettingsP();
+}
+
+// شريط الإشعارات العام
+async function loadAnnouncementSettingsP(){
+  const data = await sbPub('reports/site-announcement.json');
+  if(data){
+    document.getElementById('announce-enabled').checked = !!data.enabled;
+    document.getElementById('announce-message').value = data.message || '';
+    document.getElementById('announce-link').value = data.link || '';
+  }
+}
+async function saveAnnouncementP(){
+  const enabled = document.getElementById('announce-enabled').checked;
+  const message = document.getElementById('announce-message').value.trim();
+  const link = document.getElementById('announce-link').value.trim();
+  if(enabled && !message){ toast('⚠️ يرجى كتابة نص الإشعار قبل التفعيل'); return; }
+  const payload = { enabled, message, link, updatedAt:new Date().toISOString(), updatedBy: localStorage.getItem('principal_name')||'مدير المدرسة' };
+  try{
+    const blob = new Blob([JSON.stringify(payload)],{type:'application/json'});
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/site-announcement.json`,{
+      method:'POST',
+      headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
+      body: blob
+    });
+    toast(res.ok ? '✅ تم حفظ ونشر الإشعار' : '⚠️ تعذر الحفظ');
+  }catch(e){ toast('⚠️ تعذر الحفظ، تحقق من الاتصال'); }
 }
 
 // INIT
