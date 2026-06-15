@@ -1067,22 +1067,34 @@ async function saveTeacherPerformance() {
 // ===================================================
 // جوانب القوة والاحتياج
 // ===================================================
+const SW_DEFAULT_SUBJECTS = ['arabic', 'math'];
+
 function renderStrengthsEditor() {
   const container = document.getElementById('strengths-content');
   if (!currentDetail.data.strengths) currentDetail.data.strengths = {};
   const saved = currentDetail.data.strengths;
 
+  if (!Array.isArray(saved._activeSubjects) || saved._activeSubjects.length === 0) {
+    saved._activeSubjects = SW_DEFAULT_SUBJECTS.slice();
+  }
+  const active = saved._activeSubjects;
+
   let html = `<div style="font-size:.82rem;color:var(--muted);margin-bottom:16px;padding:10px 14px;background:var(--surface2);border-radius:10px;border-right:3px solid var(--gold);">
-    📝 أضف أو احذف جوانب القوة والاحتياج لكل مادة بناءً على ملاحظتك للطالب. يُحفظ التحديث عند الضغط على «حفظ».
+    📝 أضف أو احذف جوانب القوة والاحتياج. تظهر مادتا اللغة العربية والرياضيات افتراضياً، ويمكنك إضافة مواد أخرى من القائمة أدناه. يُحفظ التحديث عند الضغط على «حفظ».
   </div>`;
 
-  PERF_SUBJECTS.forEach(subj => {
-    if (!saved[subj.key]) saved[subj.key] = { strengths: [], needs: [] };
-    const strengths = saved[subj.key].strengths || [];
-    const needs     = saved[subj.key].needs || [];
+  active.forEach(subjKey => {
+    const subj = PERF_SUBJECTS.find(s => s.key === subjKey);
+    if (!subj) return;
+    if (!saved[subjKey]) saved[subjKey] = { strengths: [], needs: [] };
+    const strengths = saved[subjKey].strengths || [];
+    const needs     = saved[subjKey].needs || [];
 
     html += `<div class="sw-block">
-      <div class="sw-subject-head"><span>${subj.icon}</span> ${escHtml(subj.name)}</div>
+      <div class="sw-subject-head" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <span><span>${subj.icon}</span> ${escHtml(subj.name)}</span>
+        <button class="sw-del-btn" style="background:rgba(220,38,38,.08);color:#dc2626;border-radius:6px;width:24px;height:24px;" onclick="removeSwSubject('${subj.key}')" title="إزالة هذه المادة من القائمة">✕</button>
+      </div>
       <div class="sw-body">
         <div>
           <div class="sw-side-title sw-strength-title">✅ جوانب القوة</div>
@@ -1118,12 +1130,41 @@ function renderStrengthsEditor() {
     </div>`;
   });
 
+  // إضافة مادة جديدة
+  const remaining = PERF_SUBJECTS.filter(s => !active.includes(s.key));
+  if (remaining.length) {
+    html += `<div class="sw-add-input" style="margin-top:6px;">
+      <select id="sw-add-subject-select" class="assign-select" style="flex:1;">
+        ${remaining.map(s => `<option value="${s.key}">${s.icon} ${escHtml(s.name)}</option>`).join('')}
+      </select>
+      <button class="btn-sm btn-sm-outline" onclick="addSwSubject()">+ إضافة مادة</button>
+    </div>`;
+  }
+
   const meta = currentDetail.data.strengthsMeta;
   if (meta) {
-    html += `<div style="font-size:.78rem;color:var(--ink-faint);">آخر تحديث: ${escHtml(toHijriLike(meta.date))} — بواسطة ${escHtml(meta.teacher)}</div>`;
+    html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:10px;">آخر تحديث: ${escHtml(toHijriLike(meta.date))} — بواسطة ${escHtml(meta.teacher)}</div>`;
   }
 
   container.innerHTML = html;
+}
+
+function addSwSubject() {
+  const sel = document.getElementById('sw-add-subject-select');
+  if (!sel || !sel.value) return;
+  const key = sel.value;
+  const saved = currentDetail.data.strengths;
+  if (!saved._activeSubjects.includes(key)) saved._activeSubjects.push(key);
+  if (!saved[key]) saved[key] = { strengths: [], needs: [] };
+  renderStrengthsEditor();
+}
+
+function removeSwSubject(subjKey) {
+  if (!confirm('سيتم إخفاء هذه المادة من قائمة القوة والاحتياج (تبقى بياناتها المحفوظة سابقاً). متابعة؟')) return;
+  const saved = currentDetail.data.strengths;
+  saved._activeSubjects = saved._activeSubjects.filter(k => k !== subjKey);
+  if (saved._activeSubjects.length === 0) saved._activeSubjects = SW_DEFAULT_SUBJECTS.slice();
+  renderStrengthsEditor();
 }
 
 function addSwItem(subjKey, type) {
@@ -1319,8 +1360,24 @@ function renderReinforceTab() {
         <div class="reinforce-meta">📅 ${escHtml(item.dateLabel)} — ✍️ ${escHtml(item.teacher)}</div>
         ${item.message ? `<div class="reinforce-msg">${escHtml(item.message)}</div>` : ''}
       </div>
-      <button class="btn-sm btn-sm-outline" onclick="printCertificate('${item.id}')">🖨️ طباعة</button>
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        <button class="btn-sm btn-sm-outline" onclick="printCertificate('${item.id}')">🖨️ طباعة</button>
+        <button class="btn-sm btn-sm-danger" onclick="deleteCertificate('${item.id}')">🗑️ حذف</button>
+      </div>
     </div>`).join('');
+}
+
+async function deleteCertificate(id) {
+  if (!confirm('هل تريد حذف هذه الشهادة من ملف الطالب؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+  const reinforcements = (currentDetail.data.reinforcements || []).filter(r => r.id !== id);
+  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { reinforcements });
+  if (saved) {
+    currentDetail.data = saved;
+    showToast('🗑️ تم حذف الشهادة');
+    renderReinforceTab();
+  } else {
+    showToast('⚠️ تعذر الحذف، تحقق من الاتصال');
+  }
 }
 
 async function sendCertificate() {
