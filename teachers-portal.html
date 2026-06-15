@@ -465,6 +465,7 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
       <button class="tab-btn active" onclick="openMainTab('students',this)">👥 طلابي</button>
       <button class="tab-btn" onclick="openMainTab('schedule',this)">📅 جدولي</button>
       <button class="tab-btn" onclick="openMainTab('curriculum',this)">📘 توزيع المنهج</button>
+      <button class="tab-btn" onclick="openMainTab('portfolio',this)">📁 ملف الإنجاز</button>
       <button class="tab-btn" id="assign-tab-btn" style="display:none;" onclick="openMainTab('assign',this)">📋 إسناد الطلاب</button>
     </div>
 
@@ -503,6 +504,16 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
         </div>
         <div class="s-card-body" id="curriculum-content">
           <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ملف الإنجاز ===== -->
+    <div class="tab-pane" id="main-tab-portfolio">
+      <div class="s-card" style="margin-bottom:0;">
+        <div class="s-card-head"><span>📁 ملف إنجاز المعلم</span></div>
+        <div class="s-card-body" style="padding:0;">
+          <iframe id="portfolio-iframe" src="" style="width:100%;height:80vh;border:none;display:block;background:var(--surface2);"></iframe>
         </div>
       </div>
     </div>
@@ -803,6 +814,8 @@ function doLogin() {
 function doLogout() {
   currentTeacher = null;
   currentDetail = null;
+  portfolioLoaded = false;
+  document.getElementById('portfolio-iframe').src = '';
   document.getElementById('teacher-portal').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('username-input').value = '';
@@ -918,9 +931,11 @@ function openMainTab(name, btn) {
   document.getElementById('main-tab-students').classList.toggle('active', name === 'students');
   document.getElementById('main-tab-schedule').classList.toggle('active', name === 'schedule');
   document.getElementById('main-tab-curriculum').classList.toggle('active', name === 'curriculum');
+  document.getElementById('main-tab-portfolio').classList.toggle('active', name === 'portfolio');
   document.getElementById('main-tab-assign').classList.toggle('active', name === 'assign');
   if (name === 'schedule') renderMySchedule();
   if (name === 'curriculum') renderCurriculumTab();
+  if (name === 'portfolio') loadPortfolioIframe();
 }
 
 function openDetailTab(name, btn) {
@@ -1586,6 +1601,30 @@ const SCHEDULE_KEY_MAP = {
   'h.kubaishi': { program:'yaseer', key:'husain'    },
   'saad.z':     { program:'yaseer', key:'saad'      },
 };
+
+// ===================================================
+// ملف الإنجاز (مضمَّن من ملفات إنجاز المعلمين)
+// ===================================================
+const PORTFOLIO_MAP = {
+  'm.suhayymi': { file:'teachers-dumaj.html',  name:'محمد أحمد السهيمي'   },
+  'z.qarni':    { file:'teachers-dumaj.html',  name:'زين العابدين سعد القرني' },
+  'a.ghamdi':   { file:'teachers-dumaj.html',  name:'علي سعيد الغامدي'    },
+  'a.malki':    { file:'teachers-dumaj.html',  name:'علي محمد المالكي'    },
+  'h.ulyani':   { file:'teachers-dumaj.html',  name:'حسن علي العلياني'    },
+  'a.zahrani':  { file:'teachers-dumaj.html',  name:'علي محمد الزهراني'   },
+  'h.kubaishi': { file:'teachers-yaseer.html', name:'حسين منصور الكبيشي'  },
+  'saad.z':     { file:'teachers-yaseer.html', name:'سعد سالم الزهراني'   },
+};
+
+let portfolioLoaded = false;
+function loadPortfolioIframe() {
+  if (portfolioLoaded) return;
+  const map = PORTFOLIO_MAP[currentTeacher.username];
+  if (!map) return;
+  const url = `${map.file}?t=${encodeURIComponent(map.name)}&p=${encodeURIComponent(currentTeacher.pin)}&embed=1`;
+  document.getElementById('portfolio-iframe').src = url;
+  portfolioLoaded = true;
+}
 
 const SCHED_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
 
