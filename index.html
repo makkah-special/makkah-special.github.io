@@ -477,22 +477,45 @@ footer{
   .btn-primary, .btn-outline{ justify-content:center; }
 /* شريط الإشعارات العام */
 #announcement-bar{
-  display:none; background:linear-gradient(120deg, var(--gold), #E8C27A);
-  color:#5c3d0c; padding:10px 24px; text-align:center; position:relative;
+  display:none; position:relative; overflow:hidden;
+  background:linear-gradient(120deg, #8a6116, var(--gold) 45%, #E8C27A 75%, var(--gold));
+  background-size:200% 100%;
+  animation:annShift 6s ease-in-out infinite;
+  color:#fff; padding:13px 24px; text-align:center;
+  box-shadow:0 2px 16px rgba(215,162,74,.45);
+  border-bottom:2px solid #8a6116;
+}
+@keyframes annShift{
+  0%,100%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
 }
 #announcement-bar .ann-inner{
   max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:center;
-  gap:12px; flex-wrap:wrap; font-size:.85rem; font-weight:700;
+  gap:12px; flex-wrap:wrap; font-size:.92rem; font-weight:800;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
 }
-#announcement-bar a.ann-link{ color:#5c3d0c; text-decoration:underline; font-weight:800; }
+#announcement-bar .ann-icon{
+  font-size:1.25rem; flex-shrink:0; display:inline-block;
+  animation:annPulse 1.6s ease-in-out infinite;
+}
+@keyframes annPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.18); }
+}
+#announcement-bar a.ann-link{
+  color:#fff; text-decoration:none; font-weight:900; background:rgba(0,0,0,.18);
+  padding:3px 14px; border-radius:20px; white-space:nowrap; transition:background .2s;
+}
+#announcement-bar a.ann-link:hover{ background:rgba(0,0,0,.3); }
 #announcement-bar .ann-close{
   position:absolute; left:14px; top:50%; transform:translateY(-50%);
-  background:rgba(0,0,0,.08); border:none; border-radius:6px; width:24px; height:24px;
-  cursor:pointer; font-size:.8rem; color:#5c3d0c;
+  background:rgba(0,0,0,.15); border:none; border-radius:6px; width:26px; height:26px;
+  cursor:pointer; font-size:.8rem; color:#fff; transition:background .2s;
 }
+#announcement-bar .ann-close:hover{ background:rgba(0,0,0,.3); }
 @media (max-width:640px){
-  #announcement-bar{ padding:10px 40px 10px 36px; }
-  #announcement-bar .ann-inner{ font-size:.78rem; }
+  #announcement-bar{ padding:11px 40px 11px 36px; }
+  #announcement-bar .ann-inner{ font-size:.8rem; }
 }
 </style>
 </head>
@@ -854,7 +877,7 @@ footer{
 
     const bar = document.getElementById('announcement-bar');
     const textEl = document.getElementById('announcement-text');
-    textEl.innerHTML = '📢 ' + data.message.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    textEl.innerHTML = '<span class="ann-icon">📢</span> ' + data.message.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     if (data.link) {
       textEl.innerHTML += ` — <a class="ann-link" href="${data.link}" target="_blank" rel="noopener">المزيد</a>`;
     }
