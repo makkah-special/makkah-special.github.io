@@ -945,6 +945,25 @@
   margin-right:auto;flex-shrink:0;
 }
 .sw-del-btn:hover { color:#ef4444; }
+
+/* لوحة التعزيز */
+.empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
+.empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
+.empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
+.empty-state .es-sub{ font-size:.82rem; }
+.reinforce-item{
+  display:flex; align-items:flex-start; gap:12px; background:#FBFAFE; border:1px solid var(--border);
+  border-right:4px solid #D7A24A; border-radius:10px; padding:12px 16px; margin-bottom:10px;
+}
+.reinforce-icon{ font-size:1.4rem; flex-shrink:0; }
+.reinforce-title{ font-weight:800; font-size:.86rem; color:var(--primary); }
+.reinforce-meta{ font-size:.74rem; color:rgba(34,19,53,.42); margin-top:2px; }
+.reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
+.btn-print-cert{
+  background:#fff; color:var(--purple); border:1px solid var(--border); border-radius:8px;
+  padding:7px 14px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s;
+}
+.btn-print-cert:hover{ border-color:var(--purple); background:var(--bg); }
 </style>
 </head>
 <body>
@@ -1029,6 +1048,7 @@
       <button class="tab-btn" onclick="openTab('iep',this)">🎯 تقييم الأهداف</button>
       <button class="tab-btn" onclick="openTab('schedule',this)">📅 الجدول الدراسي</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
+      <button class="tab-btn" onclick="openTab('reinforce',this)">🏆 لوحة التعزيز</button>
     </div>
 
     <!-- INFO -->
@@ -1052,7 +1072,7 @@
       <div class="s-card">
         <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
           <span>📏 استمارة قياس مستوى الأداء الحالي</span>
-          <button onclick="savePerformance()" style="background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ التقييم</button>
+          <span style="background:var(--lav-100);color:var(--lav-700);border-radius:8px;padding:5px 14px;font-size:0.78rem;font-weight:700;">👁️ للاطلاع فقط — يقوم المعلم بالتحديث</span>
         </div>
         <div style="padding:20px;" id="performance-content">
           <div style="text-align:center;padding:40px 20px;color:#9ca3af;">
@@ -1068,7 +1088,7 @@
       <div class="s-card">
         <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
           <span>💪 جوانب القوة والاحتياج</span>
-          <button onclick="saveStrengths()" style="background:linear-gradient(135deg,#065f46,#10b981);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
+          <span style="background:var(--lav-100);color:var(--lav-700);border-radius:8px;padding:5px 14px;font-size:0.78rem;font-weight:700;">👁️ للاطلاع فقط — يقوم المعلم بالتحديث</span>
         </div>
         <div style="padding:20px;" id="strengths-content">
           <div style="text-align:center;padding:40px 20px;color:#9ca3af;">
@@ -1132,6 +1152,14 @@
       <div class="s-card">
         <div class="s-card-head">✍️ إقرار اطلاع ولي الأمر على الخطة الفردية</div>
         <div style="padding:24px;" id="iqrar-content"></div>
+      </div>
+    </div>
+
+    <!-- REINFORCEMENT BOARD -->
+    <div class="tab-pane" id="tab-reinforce">
+      <div class="s-card">
+        <div class="s-card-head">🏆 لوحة التعزيز — شهادات الشكر والتقدير</div>
+        <div style="padding:20px;" id="reinforce-content"></div>
       </div>
     </div>
 
@@ -1476,6 +1504,7 @@ function openTab(id, btn) {
   if (id === 'schedule') renderStudentSchedule();
   if (id === 'performance') renderPerformanceTab();
   if (id === 'strengths') renderStrengthsTab();
+  if (id === 'reinforce') renderReinforceTab();
   if (id === 'iqrar') setTimeout(initCanvas, 100);
 }
 
@@ -3810,8 +3839,8 @@ const PERF_LEVELS = [
 function renderPerformanceTab() {
   const container = document.getElementById('performance-content');
   if (!container || !currentStudent) return;
-  const pin = currentStudent.pin;
   const saved = (currentStudent.performance) || {};
+  const hasData = Object.keys(saved).length > 0;
 
   let html = `
     <div class="perf-legend">
@@ -3821,6 +3850,17 @@ function renderPerformanceTab() {
         </div>`).join('')}
     </div>`;
 
+  if (!hasData) {
+    html += `
+      <div class="empty-state">
+        <div class="es-icon">📏</div>
+        <div class="es-title">لم يتم تقييم مستوى الأداء بعد</div>
+        <div class="es-sub">يقوم المعلم المسؤول بتعبئة هذه الاستمارة من بوابة المعلمين</div>
+      </div>`;
+    container.innerHTML = html;
+    return;
+  }
+
   PERF_SUBJECTS.forEach(subj => {
     const subjData = saved[subj.key] || {};
     html += `
@@ -3829,8 +3869,8 @@ function renderPerformanceTab() {
         <table class="perf-skills-table">
           <thead>
             <tr>
-              <th style="width:40%;">المهارة</th>
-              <th style="width:20%;text-align:center;">مستوى الأداء</th>
+              <th style="width:46%;">المهارة</th>
+              <th style="width:24%;text-align:center;">مستوى الأداء</th>
               <th>ملاحظات</th>
             </tr>
           </thead>
@@ -3844,15 +3884,9 @@ function renderPerformanceTab() {
                 <tr>
                   <td style="font-weight:600;">${skill}</td>
                   <td style="text-align:center;">
-                    <select class="perf-level-select" data-subj="${subj.key}" data-si="${si}" style="color:${lv.color};background:${lv.bg};"
-                      onchange="onPerfLevelChange(this)">
-                      ${PERF_LEVELS.map(l => `<option value="${l.value}" ${level===l.value?'selected':''}>${l.label}</option>`).join('')}
-                    </select>
+                    <span style="display:inline-block;padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:700;color:${lv.color};background:${lv.bg};">${lv.label}</span>
                   </td>
-                  <td>
-                    <input type="text" class="perf-notes-input" data-subj="${subj.key}" data-si="${si}" data-field="note"
-                      value="${escHtml(note)}" placeholder="ملاحظة اختيارية...">
-                  </td>
+                  <td style="color:var(--muted);font-size:0.85rem;">${escHtml(note) || '—'}</td>
                 </tr>`;
             }).join('')}
           </tbody>
@@ -3860,68 +3894,47 @@ function renderPerformanceTab() {
       </div>`;
   });
 
+  const meta = currentStudent.performanceMeta;
+  if (meta) {
+    try {
+      const d = new Date(meta.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+      html += `<div style="font-size:0.78rem;color:rgba(34,19,53,.42);margin-top:6px;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(meta.teacher)}</div>`;
+    } catch(e) {}
+  }
+
   container.innerHTML = html;
 }
 
-function onPerfLevelChange(sel) {
-  const level = sel.value;
-  const lv = PERF_LEVELS.find(l => l.value === level) || PERF_LEVELS[4];
-  sel.style.color = lv.color;
-  sel.style.background = lv.bg;
-}
-
-function savePerformance() {
-  if (!currentStudent) return;
-  const performance = {};
-  PERF_SUBJECTS.forEach(subj => {
-    performance[subj.key] = {};
-    subj.skills.forEach((_, si) => {
-      const sel  = document.querySelector(`.perf-level-select[data-subj="${subj.key}"][data-si="${si}"]`);
-      const note = document.querySelector(`.perf-notes-input[data-subj="${subj.key}"][data-si="${si}"]`);
-      performance[subj.key][si] = {
-        level: sel  ? sel.value  : 'na',
-        note:  note ? note.value : ''
-      };
-    });
-  });
-  currentStudent.performance = performance;
-  STUDENTS[currentStudent.pin].performance = performance;
-  upsertPerformanceToSupabase(currentStudent.pin, performance);
-  showToast('✅ تم حفظ قياس مستوى الأداء');
-}
-
-async function upsertPerformanceToSupabase(pin, performance) {
-  try {
-    const existing = STUDENTS[pin] || {};
-    const payload = Object.assign({}, existing, { performance });
-    const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
-    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
-      body: blob
-    });
-  } catch(e) { console.error('خطأ حفظ الأداء:', e); }
-}
-
 // =====================================================
-// جوانب القوة والاحتياج
+// جوانب القوة والاحتياج (عرض فقط — يحدّثها المعلم من بوابة المعلمين)
 // =====================================================
 
 function renderStrengthsTab() {
   const container = document.getElementById('strengths-content');
   if (!container || !currentStudent) return;
-  const pin = currentStudent.pin;
   const saved = (currentStudent.strengths) || {};
+  const hasData = Object.values(saved).some(s => (s.strengths && s.strengths.length) || (s.needs && s.needs.length));
+
+  if (!hasData) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="es-icon">💪</div>
+        <div class="es-title">لم تُضف جوانب القوة والاحتياج بعد</div>
+        <div class="es-sub">يقوم المعلم المسؤول بتعبئة هذا القسم من بوابة المعلمين</div>
+      </div>`;
+    return;
+  }
 
   let html = `
     <div style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;padding:10px 14px;background:#f8f9fc;border-radius:10px;border-right:3px solid var(--accent);">
-      📝 يُعبأ هذا القسم بناءً على تقييم الطالب في المواد الدراسية — يمكن إضافة وحذف العناصر بحرية
+      📝 يُحدَّث هذا القسم بواسطة المعلم المسؤول عن الطالب — للاطلاع فقط
     </div>`;
 
   PERF_SUBJECTS.forEach(subj => {
     const subjData = saved[subj.key] || { strengths: [], needs: [] };
     const strengths = subjData.strengths || [];
     const needs     = subjData.needs     || [];
+    if (strengths.length === 0 && needs.length === 0) return;
 
     html += `
       <div class="sw-block">
@@ -3930,87 +3943,115 @@ function renderStrengthsTab() {
           <!-- جوانب القوة -->
           <div class="sw-side">
             <div class="sw-side-title sw-strength-title">✅ جوانب القوة</div>
-            <div class="sw-item-list" id="sw-strengths-${subj.key}">
-              ${strengths.map((item, idx) => `
-                <div class="sw-item" id="sw-s-item-${subj.key}-${idx}">
+            <div class="sw-item-list">
+              ${strengths.length ? strengths.map(item => `
+                <div class="sw-item">
                   <div class="sw-item-dot-green"></div>
                   <span style="flex:1;">${escHtml(item)}</span>
-                  <button class="sw-del-btn" onclick="delSwItem('${subj.key}','strength',${idx})">✕</button>
-                </div>`).join('')}
-            </div>
-            <div class="sw-add-input">
-              <input type="text" id="sw-s-input-${subj.key}" placeholder="أضف جانب قوة...">
-              <button class="sw-add-btn" onclick="addSwItem('${subj.key}','strength')">+ إضافة</button>
+                </div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
             </div>
           </div>
           <!-- جوانب الاحتياج -->
           <div class="sw-side">
             <div class="sw-side-title sw-need-title">🎯 جوانب الاحتياج</div>
-            <div class="sw-item-list" id="sw-needs-${subj.key}">
-              ${needs.map((item, idx) => `
-                <div class="sw-item" id="sw-n-item-${subj.key}-${idx}">
+            <div class="sw-item-list">
+              ${needs.length ? needs.map(item => `
+                <div class="sw-item">
                   <div class="sw-item-dot-orange"></div>
                   <span style="flex:1;">${escHtml(item)}</span>
-                  <button class="sw-del-btn" onclick="delSwItem('${subj.key}','need',${idx})">✕</button>
-                </div>`).join('')}
-            </div>
-            <div class="sw-add-input">
-              <input type="text" id="sw-n-input-${subj.key}" placeholder="أضف جانب احتياج...">
-              <button class="sw-add-btn need" onclick="addSwItem('${subj.key}','need')">+ إضافة</button>
+                </div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
             </div>
           </div>
         </div>
       </div>`;
   });
 
+  const meta = currentStudent.strengthsMeta;
+  if (meta) {
+    try {
+      const d = new Date(meta.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+      html += `<div style="font-size:0.78rem;color:rgba(34,19,53,.42);">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(meta.teacher)}</div>`;
+    } catch(e) {}
+  }
+
   container.innerHTML = html;
 }
 
-function getSwData() {
-  if (!currentStudent) return {};
-  return currentStudent.strengths || {};
+// =====================================================
+// لوحة التعزيز — شهادات الشكر والتقدير (عرض + طباعة)
+// =====================================================
+
+function renderReinforceTab() {
+  const container = document.getElementById('reinforce-content');
+  if (!container || !currentStudent) return;
+  const history = (currentStudent.reinforcements || []).slice().reverse();
+
+  if (history.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="es-icon">🏆</div>
+        <div class="es-title">لا توجد شهادات شكر حتى الآن</div>
+        <div class="es-sub">عند إرسال شهادة شكر من المعلم المسؤول ستظهر هنا ويمكن طباعتها</div>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = history.map(item => `
+    <div class="reinforce-item">
+      <div class="reinforce-icon">🏆</div>
+      <div style="flex:1;">
+        <div class="reinforce-title">${escHtml(item.title)}</div>
+        <div class="reinforce-meta">📅 ${escHtml(item.dateLabel)} — ✍️ ${escHtml(item.teacher)}</div>
+        ${item.message ? `<div class="reinforce-msg">${escHtml(item.message)}</div>` : ''}
+      </div>
+      <button class="btn-print-cert" onclick="printCertificate('${item.id}')">🖨️ طباعة الشهادة</button>
+    </div>`).join('');
 }
 
-function addSwItem(subjKey, type) {
-  const inputId = type === 'strength' ? `sw-s-input-${subjKey}` : `sw-n-input-${subjKey}`;
-  const input = document.getElementById(inputId);
-  const text  = input?.value.trim();
-  if (!text) return;
-
-  if (!currentStudent.strengths) currentStudent.strengths = {};
-  if (!currentStudent.strengths[subjKey]) currentStudent.strengths[subjKey] = { strengths: [], needs: [] };
-  const arr = type === 'strength' ? currentStudent.strengths[subjKey].strengths : currentStudent.strengths[subjKey].needs;
-  arr.push(text);
-  input.value = '';
-  STUDENTS[currentStudent.pin].strengths = currentStudent.strengths;
-  renderStrengthsTab();
-}
-
-function delSwItem(subjKey, type, idx) {
-  if (!currentStudent.strengths?.[subjKey]) return;
-  const arr = type === 'strength' ? currentStudent.strengths[subjKey].strengths : currentStudent.strengths[subjKey].needs;
-  arr.splice(idx, 1);
-  STUDENTS[currentStudent.pin].strengths = currentStudent.strengths;
-  renderStrengthsTab();
-}
-
-function saveStrengths() {
+function printCertificate(id) {
   if (!currentStudent) return;
-  upsertStrengthsToSupabase(currentStudent.pin, currentStudent.strengths || {});
-  showToast('✅ تم حفظ جوانب القوة والاحتياج');
-}
+  const item = (currentStudent.reinforcements || []).find(r => r.id === id);
+  if (!item) return;
+  const studentName = currentStudent.name || '';
 
-async function upsertStrengthsToSupabase(pin, strengths) {
-  try {
-    const existing = STUDENTS[pin] || {};
-    const payload = Object.assign({}, existing, { strengths });
-    const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
-    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
-      body: blob
-    });
-  } catch(e) { console.error('خطأ حفظ جوانب القوة:', e); }
+  const win = window.open('', '_blank');
+  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
+
+  win.document.write(`
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<title>شهادة شكر — ${escHtml(studentName)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#F7F5FC;}
+  .cert{width:740px;max-width:92vw;border:10px solid #6B4C9A;border-radius:22px;padding:50px 44px;text-align:center;background:#fff;position:relative;}
+  .cert::after{content:'';position:absolute;inset:14px;border:2px dashed #B79EE0;border-radius:14px;pointer-events:none;}
+  .emoji{font-size:2.6rem;margin-bottom:6px;}
+  h1{font-family:'Tajawal',sans-serif;font-size:2.1rem;color:#2E2148;margin:0 0 6px;}
+  .sub{color:#6E5F82;font-size:.92rem;margin-bottom:26px;}
+  .lead{font-size:.95rem;color:#6E5F82;}
+  .name{font-family:'Tajawal',sans-serif;font-size:1.7rem;font-weight:900;color:#6B4C9A;margin:14px 0 18px;}
+  .reason{font-size:1.05rem;color:#221335;margin-bottom:10px;font-weight:800;}
+  .msg{font-size:.95rem;color:#221335;line-height:2;margin-bottom:28px;}
+  .footer{display:flex;justify-content:space-between;margin-top:36px;font-size:.84rem;color:#6E5F82;border-top:1px solid #EAE1F7;padding-top:14px;}
+  @media print{ body{background:#fff;} .cert{border-color:#6B4C9A;box-shadow:none;} }
+</style></head><body>
+  <div class="cert">
+    <div class="emoji">🏆</div>
+    <h1>شهادة شكر وتقدير</h1>
+    <div class="sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
+    <div class="lead">تُمنح هذه الشهادة للطالب/ـة</div>
+    <div class="name">${escHtml(studentName)}</div>
+    <div class="reason">${escHtml(item.title)}</div>
+    ${item.message ? `<div class="msg">${escHtml(item.message)}</div>` : ''}
+    <div class="footer">
+      <span>📅 ${escHtml(item.dateLabel)}</span>
+      <span>✍️ ${escHtml(item.teacher)}</span>
+    </div>
+  </div>
+  <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
+</body></html>`);
+  win.document.close();
 }
 
 </script>
