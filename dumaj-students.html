@@ -1299,7 +1299,7 @@ function loadStudent(pin) {
   (async () => {
     const exts = ['pdf','PDF','docx','doc'];
     for (const ext of exts) {
-      const url = `${SB_PLAN}plan-${pin}.${ext}`;
+      const url = `${SB_PLAN}plan-${pin}.${ext}?t=${Date.now()}`;
       try {
         const res = await fetch(url, { method: 'HEAD' });
         if (res.ok) {
@@ -1327,7 +1327,7 @@ function loadStudent(pin) {
   // دالة للتحقق من وجود الملف
   async function checkFile(url) {
     try {
-      const r = await fetch(url, { method: 'HEAD' });
+      const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { method: 'HEAD' });
       return r.ok;
     } catch { return false; }
   }
