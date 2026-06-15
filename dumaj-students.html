@@ -3,26 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
 <title>بوابة طلاب الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #1a3a5c;
-    --accent: #e07020;
-    --accent-light: #f59040;
-    --purple: #6d28d9;
-    --purple-light: #7c3aed;
-    --green: #c25a00;
-    --green-light: #e07020;
-    --bg: #f5f2eb;
+    --primary: #3F2E63;
+    --accent: #8B6ABF;
+    --accent-light: #D7A24A;
+    --purple: #6B4C9A;
+    --purple-light: #8B6ABF;
+    --green: #6B4C9A;
+    --green-light: #8B6ABF;
+    --bg: #F7F5FC;
     --card: #ffffff;
-    --border: #e0d8c8;
-    --text: #1a1a2e;
-    --muted: #5a6478;
+    --border: #DCD2EE;
+    --text: #221335;
+    --muted: #6E5F82;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ===== الشريط العلوي الرسمي (الخزامى) ===== */
+  .topbar{
+    background: linear-gradient(120deg, #2E2148, #3F2E63 70%, #4A3470);
+    color: rgba(255,255,255,.92);
+  }
+  .topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
+  .topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
+  .topbar-gov{ display:flex; align-items:center; gap:10px; }
+  .topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; transition:opacity .2s; }
+  .topbar-gov a{ display:flex; align-items:center; }
+  .topbar-gov a:hover img{ opacity:1; }
+  .topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+  .topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+  .topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
+  .topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+  @media (max-width:640px){
+    .topbar-row{ font-size:.7rem; }
+    .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+    .topbar-inner{ padding:7px 14px; }
+  }
 
   body {
     font-family: 'Cairo', sans-serif;
@@ -33,7 +60,7 @@
 
   /* ===== HEADER ===== */
   header {
-    background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
+    background: linear-gradient(135deg, #3F2E63 0%, #2E2148 60%, #4A3470 100%);
     padding: 16px 36px;
     display: flex;
     align-items: center;
@@ -46,8 +73,8 @@
   .header-icon {
     width: 46px; height: 46px;
     border-radius: 12px;
-    background: rgba(200,151,58,0.18);
-    border: 1px solid rgba(200,151,58,0.35);
+    background: rgba(215,162,74,0.18);
+    border: 1px solid rgba(215,162,74,0.35);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.4rem;
   }
@@ -92,8 +119,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #ede9fe;
-    border: 1px solid #c4b5fd;
+    background: #EAE1F7;
+    border: 1px solid #B79EE0;
     color: var(--purple);
     padding: 6px 18px;
     border-radius: 20px;
@@ -105,11 +132,11 @@
   .login-icon-big {
     width: 80px; height: 80px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    background: linear-gradient(135deg, #EAE1F7, #DDD0F2);
     margin: 0 auto 22px;
     display: flex; align-items: center; justify-content: center;
     font-size: 2.6rem;
-    box-shadow: 0 8px 24px rgba(109,40,217,0.2);
+    box-shadow: 0 8px 24px rgba(107,76,154,0.2);
   }
 
   .login-card h2 {
@@ -158,7 +185,7 @@
   .pin-input:focus {
     border-color: var(--purple-light);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
+    box-shadow: 0 0 0 4px rgba(139,106,191,0.1);
   }
 
   .pin-input.error {
@@ -198,15 +225,15 @@
     font-weight: 800;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(109,40,217,0.3);
+    box-shadow: 0 6px 20px rgba(107,76,154,0.3);
     letter-spacing: 0.5px;
   }
-  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(109,40,217,0.45); }
+  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(107,76,154,0.45); }
   .login-btn:active { transform: translateY(0); }
 
   .hint-box {
     margin-top: 22px;
-    background: #fffbf0;
+    background: #EAE1F7;
     border: 1px solid #f0d898;
     border-right: 3px solid var(--accent);
     border-radius: 10px;
@@ -221,7 +248,7 @@
   #student-portal { display: none; }
 
   .portal-banner {
-    background: linear-gradient(135deg, var(--green) 0%, #0d4a30 100%);
+    background: linear-gradient(135deg, var(--green) 0%, #2E2148 100%);
     padding: 26px 36px;
     display: flex;
     align-items: center;
@@ -233,10 +260,10 @@
 
   .student-identity { color: #fff; display:flex; align-items:center; gap:16px; }
   .student-photo-wrap { position:relative; flex-shrink:0; }
-  .student-photo { width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid rgba(240,184,74,0.7); background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; transition:all 0.2s; }
-  .student-photo:hover { border-color:#f59040; transform:scale(1.05); }
+  .student-photo { width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid rgba(215,162,74,0.7); background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; transition:all 0.2s; }
+  .student-photo:hover { border-color:#D7A24A; transform:scale(1.05); }
   .student-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
-  .photo-change-btn { position:absolute; bottom:0; left:0; background:#f59040; color:#7a2800; border:none; border-radius:50%; width:22px; height:22px; font-size:0.65rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:900; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
+  .photo-change-btn { position:absolute; bottom:0; left:0; background:#D7A24A; color:#2E2148; border:none; border-radius:50%; width:22px; height:22px; font-size:0.65rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:900; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
   .photo-input { display:none; }
 
   .student-name-display {
@@ -316,7 +343,7 @@
   .tab-btn.active {
     background: linear-gradient(135deg, var(--green), var(--green-light));
     color: #fff;
-    box-shadow: 0 3px 12px rgba(26,107,74,0.35);
+    box-shadow: 0 3px 12px rgba(18,158,124,0.35);
   }
 
   .tab-pane { display: none; animation: fadeIn 0.3s ease; }
@@ -343,7 +370,7 @@
     font-weight: 800;
     font-size: 0.92rem;
     color: var(--primary);
-    background: linear-gradient(135deg, #f8fffe, #f0faf5);
+    background: linear-gradient(135deg, #FBFAFE, #EAE1F7);
   }
 
   /* INFO TABLE */
@@ -376,18 +403,18 @@
   .tag-green { background: #d1fae5; color: #065f46; }
   .btn-download-report {
     display: inline-flex; align-items: center; gap: 4px;
-    background: linear-gradient(135deg, #1a3a5c, #2563a8);
+    background: linear-gradient(135deg, #3F2E63, #8B6ABF);
     color: #fff; padding: 5px 12px; border-radius: 8px;
     font-size: 0.75rem; font-weight: 700; text-decoration: none;
     white-space: nowrap; transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(26,58,92,0.2);
+    box-shadow: 0 2px 6px rgba(63,46,99,0.2);
   }
-  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26,58,92,0.3); }
+  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(63,46,99,0.3); }
   .tag-blue  { background: #dbeafe; color: #1e40af; }
-  .tag-orange { background: #fff3e0; color: #c25a00; }
+  .tag-orange { background: #EAE1F7; color: #6B4C9A; }
   .tag-blue { background: #dbeafe; color: #1e40af; }
   .tag-yellow { background: #fef3c7; color: #92400e; }
-  .tag-purple { background: #ede9fe; color: #5b21b6; }
+  .tag-purple { background: #EAE1F7; color: #5b21b6; }
   .tag-gray { background: #f3f4f6; color: #4b5563; }
 
   /* PLAN GRID */
@@ -434,7 +461,7 @@
     gap: 14px;
   }
   .report-row:last-child { border-bottom: none; }
-  .report-row:hover { background: #f8fffe; }
+  .report-row:hover { background: #FBFAFE; }
 
   .report-left { display: flex; align-items: center; gap: 14px; }
 
@@ -466,7 +493,7 @@
     font-weight: 600;
   }
   .fu-table tr:last-child td { border-bottom: none; }
-  .fu-table tr:hover td { background: #f0faf5; }
+  .fu-table tr:hover td { background: #EAE1F7; }
 
   .circle {
     display: inline-flex;
@@ -544,12 +571,12 @@
   }
 
   .btn-pdf-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light, #2563a8));
+    background: linear-gradient(135deg, var(--primary), var(--primary-light, #8B6ABF));
     color: #fff;
-    box-shadow: 0 3px 12px rgba(26,58,92,0.25);
+    box-shadow: 0 3px 12px rgba(63,46,99,0.25);
   }
 
-  .btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,58,92,0.35); }
+  .btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(63,46,99,0.35); }
 
   .btn-pdf-secondary {
     background: #fff;
@@ -561,7 +588,7 @@
 
   /* IQRAR */
   .iqrar-box {
-    background: linear-gradient(135deg, #fffbf0, #fff8e6);
+    background: linear-gradient(135deg, #EAE1F7, #EAE1F7);
     border: 1px solid #f0d898;
     border-right: 4px solid var(--accent);
     border-radius: 14px;
@@ -628,8 +655,8 @@
     overflow: hidden;
   }
 
-  .sign-area:hover { border-color: var(--accent); background: #fffbf0; }
-  .sign-area.signed { border-color: var(--green-light); border-style: solid; background: #f0faf5; }
+  .sign-area:hover { border-color: var(--accent); background: #EAE1F7; }
+  .sign-area.signed { border-color: var(--green-light); border-style: solid; background: #EAE1F7; }
 
   .sign-area canvas {
     position: absolute;
@@ -653,10 +680,10 @@
     font-weight: 800;
     cursor: pointer;
     transition: all 0.25s;
-    box-shadow: 0 4px 14px rgba(26,107,74,0.3);
+    box-shadow: 0 4px 14px rgba(18,158,124,0.3);
   }
 
-  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,74,0.4); }
+  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(18,158,124,0.4); }
 
   .btn-clear-sign {
     background: #fff;
@@ -688,21 +715,21 @@
 
   /* ADMIN PANEL */
   #admin-portal { display:none; }
-  .admin-banner { background:linear-gradient(135deg,#7a2800 0%,#a33800 60%,#c25a00 100%); padding:22px 36px; display:flex; align-items:center; justify-content:space-between; border-bottom:4px solid #f59040; }
-  .admin-badge { background:rgba(245,144,64,0.2); border:1px solid rgba(245,144,64,0.4); color:#f59040; padding:5px 16px; border-radius:20px; font-size:0.8rem; font-weight:700; }
+  .admin-banner { background:linear-gradient(135deg,#2E2148 0%,#3F2E63 60%,#6B4C9A 100%); padding:22px 36px; display:flex; align-items:center; justify-content:space-between; border-bottom:4px solid #D7A24A; }
+  .admin-badge { background:rgba(215,162,74,0.2); border:1px solid rgba(215,162,74,0.4); color:#D7A24A; padding:5px 16px; border-radius:20px; font-size:0.8rem; font-weight:700; }
   .admin-body { max-width:960px; margin:0 auto; padding:28px 36px 60px; }
   .admin-tabs { display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:26px; box-shadow:0 2px 12px rgba(0,0,0,0.04); }
   .admin-tab-btn { flex:1; padding:10px 8px; border:none; background:transparent; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all 0.22s; display:flex; align-items:center; justify-content:center; gap:5px; }
-  .admin-tab-btn.active { background:linear-gradient(135deg,#c25a00,#e07020); color:#fff; box-shadow:0 3px 12px rgba(194,90,0,0.35); }
+  .admin-tab-btn.active { background:linear-gradient(135deg,#6B4C9A,#8B6ABF); color:#fff; box-shadow:0 3px 12px rgba(107,76,154,0.35); }
   .admin-tab-pane { display:none; animation:fadeIn 0.3s ease; }
   .admin-tab-pane.active { display:block; }
   .students-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
   .stu-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px 18px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:12px; }
-  .stu-card:hover { border-color:#e07020; box-shadow:0 4px 18px rgba(194,90,0,0.12); transform:translateY(-2px); }
-  .stu-card-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#fff3e0,#ffe0b2); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+  .stu-card:hover { border-color:#8B6ABF; box-shadow:0 4px 18px rgba(107,76,154,0.12); transform:translateY(-2px); }
+  .stu-card-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#EAE1F7,#DDD0F2); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
   .stu-card-name { font-weight:800; font-size:0.88rem; color:var(--primary); margin-bottom:3px; }
   .stu-card-meta { font-size:0.75rem; color:var(--muted); }
-  .stu-card-pin { font-size:0.72rem; background:#fff3e0; color:#c25a00; padding:2px 8px; border-radius:8px; font-weight:700; }
+  .stu-card-pin { font-size:0.72rem; background:#EAE1F7; color:#6B4C9A; padding:2px 8px; border-radius:8px; font-weight:700; }
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; padding:20px; }
   .modal-overlay.open { display:flex; }
   .modal-box { background:#fff; border-radius:20px; padding:32px; width:100%; max-width:560px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,0.25); animation:fadeIn 0.2s ease; }
@@ -710,9 +737,9 @@
   .form-group { margin-bottom:16px; }
   .form-label { display:block; font-size:0.8rem; font-weight:700; color:var(--muted); margin-bottom:6px; }
   .form-input { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; color:var(--text); outline:none; transition:border-color 0.2s; }
-  .form-input:focus { border-color:#e07020; box-shadow:0 0 0 3px rgba(224,112,32,0.1); }
+  .form-input:focus { border-color:#8B6ABF; box-shadow:0 0 0 3px rgba(139,106,191,0.1); }
   .form-actions { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
-  .btn-save { background:linear-gradient(135deg,#c25a00,#e07020); color:#fff; border:none; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 14px rgba(194,90,0,0.3); }
+  .btn-save { background:linear-gradient(135deg,#6B4C9A,#8B6ABF); color:#fff; border:none; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 14px rgba(107,76,154,0.3); }
   .btn-save:hover { transform:translateY(-2px); }
   .btn-cancel { background:#fff; color:var(--muted); border:1px solid var(--border); padding:12px 20px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; font-weight:700; cursor:pointer; }
   .btn-delete-student { background:#fff; color:#dc2626; border:1px solid #fecaca; padding:12px 20px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; font-weight:700; cursor:pointer; margin-right:auto; }
@@ -721,29 +748,29 @@
   .goal-row .form-input { margin-bottom:8px; }
   .goal-row .form-input:last-of-type { margin-bottom:0; }
   .btn-remove-goal { position:absolute; top:8px; left:8px; background:#fee2e2; color:#dc2626; border:none; border-radius:6px; width:26px; height:26px; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; justify-content:center; }
-  .btn-add-goal { background:#fff3e0; border:1.5px dashed #e07020; color:#c25a00; width:100%; padding:10px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:8px; }
-  .btn-add-goal:hover { background:#ffe0b2; }
+  .btn-add-goal { background:#EAE1F7; border:1.5px dashed #8B6ABF; color:#6B4C9A; width:100%; padding:10px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:8px; }
+  .btn-add-goal:hover { background:#DDD0F2; }
   .fu-edit-row { display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 28px; gap:6px; align-items:center; margin-bottom:8px; }
   .fu-edit-row input, .fu-edit-row select { padding:8px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; outline:none; width:100%; }
-  .success-toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#c25a00; color:#fff; padding:12px 28px; border-radius:12px; font-weight:700; font-size:0.88rem; z-index:9999; box-shadow:0 8px 24px rgba(194,90,0,0.4); display:none; animation:fadeIn 0.3s ease; }
+  .success-toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#6B4C9A; color:#fff; padding:12px 28px; border-radius:12px; font-weight:700; font-size:0.88rem; z-index:9999; box-shadow:0 8px 24px rgba(107,76,154,0.4); display:none; animation:fadeIn 0.3s ease; }
 
   /* SCHEDULE TABLE */
   .sch-table { width:100%; border-collapse:collapse; font-size:0.78rem; }
   .sch-table th {
-    background: linear-gradient(135deg,#1a3a5c,#0f2440);
+    background: linear-gradient(135deg,#3F2E63,#2E2148);
     color:#fff; padding:8px 6px; text-align:center;
     font-family:'Tajawal',sans-serif; font-weight:800; font-size:0.75rem;
   }
   .sch-table td {
-    border:1px solid #e0d8c8; padding:7px 6px; text-align:center;
+    border:1px solid #DCD2EE; padding:7px 6px; text-align:center;
     vertical-align:middle; min-height:36px;
   }
-  .sch-period-label { background:#f5f2eb; font-weight:800; color:#1a3a5c; font-size:0.72rem; }
+  .sch-period-label { background:#F7F5FC; font-weight:800; color:#3F2E63; font-size:0.72rem; }
   .sch-cell-lesson { background:#fff; }
   .sch-cell-break { background:#fef9ee; color:#92400e; font-weight:700; }
-  .sch-cell-end { background:#f0faf5; color:#065f46; font-weight:700; }
+  .sch-cell-end { background:#EAE1F7; color:#065f46; font-weight:700; }
   .sch-cell-empty { background:#fafafa; color:#ccc; }
-  .sch-subject { font-weight:700; color:#1a3a5c; display:block; }
+  .sch-subject { font-weight:700; color:#3F2E63; display:block; }
   .sch-teacher { font-size:0.65rem; color:#888; display:block; margin-top:2px; }
   .sch-no-data { text-align:center; padding:40px 20px; color:#9ca3af; }
   @media (max-width:600px) {
@@ -769,7 +796,7 @@
 .iep-subject-head {
   display:flex;align-items:center;justify-content:space-between;
   padding:13px 18px;cursor:pointer;user-select:none;
-  background:linear-gradient(135deg,#c25a00 0%,#e07020 100%);color:#fff;
+  background:linear-gradient(135deg,#6B4C9A 0%,#8B6ABF 100%);color:#fff;
   border-radius:12px 12px 0 0;
 }
 .iep-subject-head.collapsed { border-radius:12px; }
@@ -788,18 +815,18 @@
   padding:3px 10px;border-radius:10px;font-size:0.72rem;font-weight:700;
   white-space:nowrap;
 }
-.status-excellent { background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd; }
+.status-excellent { background:#EAE1F7;color:#5b21b6;border:1px solid #B79EE0; }
 .status-advanced  { background:#d1fae5;color:#065f46;border:1px solid #6ee7b7; }
 .status-capable   { background:#dbeafe;color:#1e40af;border:1px solid #93c5fd; }
 .status-failed    { background:#fee2e2;color:#991b1b;border:1px solid #fca5a5; }
 .status-none      { background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb; }
 .iep-add-goal-btn {
-  width:100%;padding:9px;border:2px dashed #e07020;background:transparent;
-  color:#c25a00;border-radius:10px;font-family:'Cairo',sans-serif;
+  width:100%;padding:9px;border:2px dashed #8B6ABF;background:transparent;
+  color:#6B4C9A;border-radius:10px;font-family:'Cairo',sans-serif;
   font-size:0.82rem;font-weight:700;cursor:pointer;margin-top:4px;
   transition:all 0.15s;
 }
-.iep-add-goal-btn:hover { background:#fff3e0; }
+.iep-add-goal-btn:hover { background:#EAE1F7; }
 .iep-charts-wrap { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px; }
 @media(max-width:640px){ .iep-charts-wrap{grid-template-columns:1fr;} }
 .iep-chart-card {
@@ -810,15 +837,15 @@
 /* Edit mode goals */
 .iep-edit-goal-row {
   display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;
-  background:#fffbf5;border:1px dashed #e07020;border-radius:10px;
+  background:#FBFAFE;border:1px dashed #8B6ABF;border-radius:10px;
   padding:10px 12px;margin-bottom:8px;
 }
 .iep-edit-goal-input { width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none; }
-.iep-edit-goal-input:focus { border-color:#e07020; }
+.iep-edit-goal-input:focus { border-color:#8B6ABF; }
 .iep-goal-del-btn { background:#fee2e2;color:#dc2626;border:none;border-radius:7px;padding:5px 10px;cursor:pointer;font-size:0.8rem;font-weight:700;white-space:nowrap; }
-.iep-subject-colors { background:linear-gradient(135deg,#1a3a5c,#2563a8); }
-.iep-subject-colors.subj-arabic  { background:linear-gradient(135deg,#c25a00,#e07020); }
-.iep-subject-colors.subj-math    { background:linear-gradient(135deg,#1a3a5c,#2563a8); }
+.iep-subject-colors { background:linear-gradient(135deg,#3F2E63,#8B6ABF); }
+.iep-subject-colors.subj-arabic  { background:linear-gradient(135deg,#6B4C9A,#8B6ABF); }
+.iep-subject-colors.subj-math    { background:linear-gradient(135deg,#3F2E63,#8B6ABF); }
 .iep-subject-colors.subj-islamic { background:linear-gradient(135deg,#065f46,#10b981); }
 .iep-subject-colors.subj-science { background:linear-gradient(135deg,#5b21b6,#8b5cf6); }
 .iep-subject-colors.subj-life    { background:linear-gradient(135deg,#92400e,#d97706); }
@@ -831,13 +858,13 @@
 .perf-subject-head {
   display:flex;align-items:center;gap:10px;
   padding:12px 18px;
-  background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;
+  background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;
   font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:800;
 }
 .perf-skills-table { width:100%;border-collapse:collapse; }
 .perf-skills-table th {
-  padding:10px 14px;background:#fdf4ee;
-  font-size:0.8rem;font-weight:700;color:#c25a00;text-align:right;
+  padding:10px 14px;background:#FBFAFE;
+  font-size:0.8rem;font-weight:700;color:#6B4C9A;text-align:right;
   border-bottom:1px solid var(--border);
 }
 .perf-skills-table td {
@@ -851,16 +878,16 @@
   font-weight:700;outline:none;cursor:pointer;
   transition:border-color 0.2s;background:#fff;
 }
-.perf-level-select:focus { border-color:#e07020; }
+.perf-level-select:focus { border-color:#8B6ABF; }
 .perf-notes-input {
   width:100%;border:1.5px solid var(--border);border-radius:8px;
   padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;
   outline:none;resize:vertical;min-height:32px;
 }
-.perf-notes-input:focus { border-color:#e07020; }
+.perf-notes-input:focus { border-color:#8B6ABF; }
 .perf-legend {
   display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:12px 16px;
-  background:#fffbf0;border:1px solid #f0d898;border-radius:10px;
+  background:#EAE1F7;border:1px solid #f0d898;border-radius:10px;
 }
 .perf-legend-item {
   display:flex;align-items:center;gap:5px;
@@ -875,7 +902,7 @@
 .sw-subject-head {
   display:flex;align-items:center;gap:10px;
   padding:12px 18px;
-  background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;
+  background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;
   font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:800;
 }
 .sw-body { display:grid;grid-template-columns:1fr 1fr;gap:0; }
@@ -890,7 +917,7 @@
   border-bottom:2px solid;
 }
 .sw-strength-title { color:#065f46;border-color:#10b981; }
-.sw-need-title { color:#92400e;border-color:#e07020; }
+.sw-need-title { color:#92400e;border-color:#8B6ABF; }
 .sw-item-list { display:flex;flex-direction:column;gap:6px;margin-bottom:8px; }
 .sw-item {
   display:flex;align-items:flex-start;gap:8px;
@@ -898,7 +925,7 @@
   padding:7px 10px;font-size:0.82rem;
 }
 .sw-item-dot-green { width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:4px; }
-.sw-item-dot-orange { width:8px;height:8px;border-radius:50%;background:#e07020;flex-shrink:0;margin-top:4px; }
+.sw-item-dot-orange { width:8px;height:8px;border-radius:50%;background:#8B6ABF;flex-shrink:0;margin-top:4px; }
 .sw-add-input {
   display:flex;gap:6px;margin-top:6px;
 }
@@ -912,7 +939,7 @@
   border-radius:8px;padding:6px 12px;font-family:'Cairo',sans-serif;
   font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;
 }
-.sw-add-btn.need { background:#fff3e0;color:#92400e;border-color:#e07020; }
+.sw-add-btn.need { background:#EAE1F7;color:#92400e;border-color:#8B6ABF; }
 .sw-del-btn {
   background:none;border:none;color:#ccc;cursor:pointer;font-size:0.8rem;
   margin-right:auto;flex-shrink:0;
@@ -921,6 +948,22 @@
 </style>
 </head>
 <body>
+
+<!-- الشريط العلوي الرسمي -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="وزارة التعليم">
+        </a>
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      <b class="topbar-year">1447هـ</b>
+    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+  </div>
+</div>
 
 <header>
   <div class="header-left">
@@ -1009,7 +1052,7 @@
       <div class="s-card">
         <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
           <span>📏 استمارة قياس مستوى الأداء الحالي</span>
-          <button onclick="savePerformance()" style="background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ التقييم</button>
+          <button onclick="savePerformance()" style="background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">💾 حفظ التقييم</button>
         </div>
         <div style="padding:20px;" id="performance-content">
           <div style="text-align:center;padding:40px 20px;color:#9ca3af;">
@@ -1052,7 +1095,7 @@
       <div class="s-card">
         <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
           <span>🎯 تقييم الأهداف التربوية</span>
-          <button onclick="savePlanAsPDF(currentStudent&&currentStudent.pin)" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة الخطة</button>
+          <button onclick="savePlanAsPDF(currentStudent&&currentStudent.pin)" style="background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة الخطة</button>
         </div>
         <div style="padding:20px;">
           <div id="iep-view-content">
@@ -1237,7 +1280,7 @@ function loadStudent(pin) {
           document.getElementById('custom-plan-frame').innerHTML =
             ext === 'pdf' || ext === 'PDF'
               ? `<iframe src="${url}" title="الخطة الفردية المخصصة"></iframe>`
-              : `<div style="padding:20px;text-align:center;color:#5a6478;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
+              : `<div style="padding:20px;text-align:center;color:#6E5F82;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
           document.getElementById('custom-plan-actions').innerHTML = `
             <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">👁️ اطلع على الخطة</a>
             <button onclick="savePlanAsPDF('${url}')" class="btn-pdf btn-pdf-secondary">💾 حفظ كـ PDF</button>
@@ -1263,7 +1306,7 @@ function loadStudent(pin) {
 
   // التقارير الثابتة لكل طالب
   const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
+    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#EAE1F7", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
     { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
   ];
 
@@ -1385,7 +1428,7 @@ function loadStudent(pin) {
     <div class="iqrar-actions">
       <button class="btn-sign" onclick="submitIqrar()">✅ تأكيد الإقرار والتوقيع</button>
       <button class="btn-clear-sign" onclick="clearSign()">🗑️ مسح التوقيع</button>
-      <button id="btn-save-pdf" onclick="saveIqrarPDF()" style="display:none; align-items:center; gap:7px; padding:9px 18px; border-radius:9px; background:linear-gradient(135deg,#1a3a5c,#2563a8); color:#fff; border:none; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; cursor:pointer; box-shadow:0 3px 12px rgba(26,58,92,0.3);">🖨️ طباعة / حفظ PDF</button>
+      <button id="btn-save-pdf" onclick="saveIqrarPDF()" style="display:none; align-items:center; gap:7px; padding:9px 18px; border-radius:9px; background:linear-gradient(135deg,#3F2E63,#8B6ABF); color:#fff; border:none; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; cursor:pointer; box-shadow:0 3px 12px rgba(63,46,99,0.3);">🖨️ طباعة / حفظ PDF</button>
     </div>
 
     <div class="signed-badge" id="signed-badge">
@@ -1475,7 +1518,7 @@ function renderStudentSchedule() {
   if (!hasData) {
     el.innerHTML = `<div class="sch-no-data">
       <div style="font-size:2.5rem;margin-bottom:12px;">📅</div>
-      <div style="font-weight:800;color:#1a3a5c;margin-bottom:6px;">لم يُعدّ الجدول بعد</div>
+      <div style="font-weight:800;color:#3F2E63;margin-bottom:6px;">لم يُعدّ الجدول بعد</div>
       <div style="font-size:0.82rem;">يمكن للمشرف إعداد جدول ${gradeKey} من لوحة التحكم</div>
     </div>`;
     return;
@@ -1483,7 +1526,7 @@ function renderStudentSchedule() {
 
   let html = `
     <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px;">
-      <div style="background:linear-gradient(135deg,#1a3a5c,#0f2440);color:#fff;padding:6px 16px;border-radius:20px;font-family:'Tajawal',sans-serif;font-weight:800;font-size:0.85rem;">
+      <div style="background:linear-gradient(135deg,#3F2E63,#2E2148);color:#fff;padding:6px 16px;border-radius:20px;font-family:'Tajawal',sans-serif;font-weight:800;font-size:0.85rem;">
         📚 ${gradeKey}
       </div>
       <div style="font-size:0.78rem;color:#888;">الجدول الأسبوعي — الفصل الثاني 1447هـ</div>
@@ -1540,7 +1583,7 @@ function initCanvas() {
     signCanvas.width = area.offsetWidth;
     signCanvas.height = area.offsetHeight;
     signCtx = signCanvas.getContext('2d');
-    signCtx.strokeStyle = '#1a3a5c';
+    signCtx.strokeStyle = '#3F2E63';
     signCtx.lineWidth = 2.5;
     signCtx.lineCap = 'round';
     signCtx.lineJoin = 'round';
@@ -1639,21 +1682,21 @@ function saveIqrarPDF() {
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Cairo',sans-serif; background:#fff; color:#1a1a2e; padding:40px; direction:rtl; }
-        .header { text-align:center; margin-bottom:30px; border-bottom:3px solid #1a3a5c; padding-bottom:20px; }
-        .header h1 { font-size:1.4rem; font-weight:800; color:#1a3a5c; margin-bottom:4px; }
-        .header p { font-size:0.85rem; color:#5a6478; }
-        .badge { display:inline-block; background:#1a3a5c; color:#fff; padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:10px; }
-        .iqrar-text { background:#fffbf0; border:1px solid #f0d898; border-right:4px solid #c8973a; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
+        body { font-family:'Cairo',sans-serif; background:#fff; color:#221335; padding:40px; direction:rtl; }
+        .header { text-align:center; margin-bottom:30px; border-bottom:3px solid #3F2E63; padding-bottom:20px; }
+        .header h1 { font-size:1.4rem; font-weight:800; color:#3F2E63; margin-bottom:4px; }
+        .header p { font-size:0.85rem; color:#6E5F82; }
+        .badge { display:inline-block; background:#3F2E63; color:#fff; padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:10px; }
+        .iqrar-text { background:#EAE1F7; border:1px solid #f0d898; border-right:4px solid #D7A24A; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
         .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
-        .field { border:1px solid #e0d8c8; border-radius:8px; padding:10px 14px; }
-        .field-label { font-size:0.72rem; font-weight:700; color:#5a6478; margin-bottom:4px; }
-        .field-value { font-size:0.9rem; font-weight:800; color:#1a3a5c; }
+        .field { border:1px solid #DCD2EE; border-radius:8px; padding:10px 14px; }
+        .field-label { font-size:0.72rem; font-weight:700; color:#6E5F82; margin-bottom:4px; }
+        .field-value { font-size:0.9rem; font-weight:800; color:#3F2E63; }
         .sign-section { margin-top:24px; }
-        .sign-title { font-size:0.85rem; font-weight:700; color:#1a3a5c; margin-bottom:10px; }
-        .sign-box { border:2px solid #1a3a5c; border-radius:10px; height:120px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+        .sign-title { font-size:0.85rem; font-weight:700; color:#3F2E63; margin-bottom:10px; }
+        .sign-box { border:2px solid #3F2E63; border-radius:10px; height:120px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
         .sign-box img { max-height:110px; }
-        .footer { margin-top:30px; text-align:center; font-size:0.75rem; color:#9ca3af; border-top:1px solid #e0d8c8; padding-top:14px; }
+        .footer { margin-top:30px; text-align:center; font-size:0.75rem; color:#9ca3af; border-top:1px solid #DCD2EE; padding-top:14px; }
         @media print { body { padding:20px; } }
       </style>
     </head>
@@ -2008,7 +2051,7 @@ function renderIEPStudentView(pin) {
 
     return `
     <div class="iep-subject-block" style="margin-bottom:12px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border-radius:10px 10px 0 0;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border-radius:10px 10px 0 0;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
         <div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:0.9rem;">${data.icon||'📚'} ${data.name}</div>
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:10px;font-size:0.75rem;">${goals.length} هدف</span>
@@ -2166,7 +2209,7 @@ function renderIEPCharts(pin) {
       data: {
         labels,
         datasets: [
-          { label: '🌟 متفوق',     data: excellent, backgroundColor: '#6d28d9', borderRadius: 4 },
+          { label: '🌟 متفوق',     data: excellent, backgroundColor: '#6B4C9A', borderRadius: 4 },
           { label: '✅ متقدم',     data: advanced,  backgroundColor: '#10b981', borderRadius: 4 },
           { label: '🔵 متمكن',     data: capable,   backgroundColor: '#3b82f6', borderRadius: 4 },
           { label: '❌ غير مجتاز', data: failed,    backgroundColor: '#ef4444', borderRadius: 4 },
@@ -2194,9 +2237,9 @@ function renderIEPCharts(pin) {
         datasets: [{
           label: 'نسبة الأداء %',
           data: pct,
-          backgroundColor: 'rgba(194,90,0,0.15)',
-          borderColor: '#c25a00',
-          pointBackgroundColor: '#c25a00',
+          backgroundColor: 'rgba(107,76,154,0.15)',
+          borderColor: '#6B4C9A',
+          pointBackgroundColor: '#6B4C9A',
           pointRadius: 5,
           borderWidth: 2,
         }]
@@ -2306,17 +2349,17 @@ function printIEP() {
     const goals = iep[sub.key] || [];
     if (!goals.length) return '';
     return `<div style="margin-bottom:18px;">
-      <div style="background:linear-gradient(135deg,#c25a00,#e07020);color:#fff;padding:10px 16px;border-radius:8px 8px 0 0;font-weight:800;font-size:0.9rem;">${sub.icon} ${sub.label}</div>
+      <div style="background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;padding:10px 16px;border-radius:8px 8px 0 0;font-weight:800;font-size:0.9rem;">${sub.icon} ${sub.label}</div>
       <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
-        <thead><tr style="background:#f5f2eb;">
-          <th style="padding:8px 12px;text-align:right;border:1px solid #e0d8c8;width:60%;">الهدف التربوي</th>
-          <th style="padding:8px 12px;text-align:center;border:1px solid #e0d8c8;width:40%;">مستوى التحقق</th>
+        <thead><tr style="background:#F7F5FC;">
+          <th style="padding:8px 12px;text-align:right;border:1px solid #DCD2EE;width:60%;">الهدف التربوي</th>
+          <th style="padding:8px 12px;text-align:center;border:1px solid #DCD2EE;width:40%;">مستوى التحقق</th>
         </tr></thead>
         <tbody>${goals.map((g,i) => {
           const st = IEP_STATUS[g.status||'none'];
-          return `<tr style="background:${i%2?'#fffbf5':'#fff'}">
-            <td style="padding:8px 12px;border:1px solid #e0d8c8;">${escHtml(g.goal)}</td>
-            <td style="padding:8px 12px;border:1px solid #e0d8c8;text-align:center;font-weight:700;">${st.label}</td>
+          return `<tr style="background:${i%2?'#FBFAFE':'#fff'}">
+            <td style="padding:8px 12px;border:1px solid #DCD2EE;">${escHtml(g.goal)}</td>
+            <td style="padding:8px 12px;border:1px solid #DCD2EE;text-align:center;font-weight:700;">${st.label}</td>
           </tr>`;
         }).join('')}</tbody>
       </table>
@@ -2327,10 +2370,10 @@ function printIEP() {
   win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
     <title>الخطة التربوية — ${s.name}</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@800;900&display=swap" rel="stylesheet">
-    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Cairo',sans-serif;background:#fff;color:#1a1a2e;padding:28px;direction:rtl;font-size:13px}
-    .hdr{background:linear-gradient(135deg,#7a2800,#c25a00);color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;}
+    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Cairo',sans-serif;background:#fff;color:#221335;padding:28px;direction:rtl;font-size:13px}
+    .hdr{background:linear-gradient(135deg,#2E2148,#6B4C9A);color:#fff;padding:18px 24px;border-radius:12px;margin-bottom:20px;}
     h1{font-family:'Tajawal',sans-serif;font-size:1.2rem;font-weight:900}.sub{font-size:0.78rem;opacity:0.8;margin-top:3px}
-    .ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:10px}
+    .ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #DCD2EE;padding-top:10px}
     @media print{body{padding:12px}}</style></head><body>
     <div class="hdr"><h1>🎯 الخطة التربوية الفردية</h1>
       <div class="sub">👤 ${s.name} &nbsp;|&nbsp; 🏫 ${s.grade} &nbsp;|&nbsp; 🪪 ${s.id_full}</div>
@@ -2514,7 +2557,7 @@ function renderIEPEditor(pin) {
       <div style="font-size:0.85rem;color:var(--muted);">المواد الدراسية وأهدافها التربوية</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button onclick="iepAddSubject()" style="background:#e0f2fe;border:1.5px dashed #0284c7;color:#0369a1;border-radius:8px;padding:6px 14px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">+ إضافة مادة</button>
-        <button onclick="savePlanAsPDF('${pin}')" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة الخطة</button>
+        <button onclick="savePlanAsPDF('${pin}')" style="background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة الخطة</button>
       </div>
     </div>
   `;
@@ -2533,11 +2576,11 @@ function renderIEPEditor(pin) {
     html += `
     <div style="border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px;">
       <!-- رأس المادة -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(135deg,#fff8f3,#fff3e0);cursor:pointer;gap:8px;" onclick="iepToggleSubject('${key}')">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(135deg,#FBFAFE,#EAE1F7);cursor:pointer;gap:8px;" onclick="iepToggleSubject('${key}')">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="font-size:1.2rem;">${escHtml(data.icon||'📚')}</span>
           <span style="font-weight:800;font-size:0.9rem;color:var(--primary);">${escHtml(data.name)}</span>
-          <span style="background:#fff3e0;color:#c25a00;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:8px;">${goals.length} هدف</span>
+          <span style="background:#EAE1F7;color:#6B4C9A;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:8px;">${goals.length} هدف</span>
           ${isCore ? '' : `<span style="background:#e0f2fe;color:#0369a1;font-size:0.7rem;padding:2px 8px;border-radius:8px;">مضافة</span>`}
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
@@ -2779,7 +2822,7 @@ function renderIEPAnalysis(pin) {
 
     <!-- أزرار التصدير -->
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button onclick="exportAnalysisPDF('${pin}')" style="background:linear-gradient(135deg,#1a3a5c,#2563a8);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">🖨️ طباعة التحليل</button>
+      <button onclick="exportAnalysisPDF('${pin}')" style="background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">🖨️ طباعة التحليل</button>
       <button onclick="renderIEPAnalysis('${pin}')" style="background:#fff;color:var(--muted);border:1px solid var(--border);border-radius:8px;padding:9px 18px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">🔄 تحديث</button>
     </div>
   `;
@@ -2954,14 +2997,14 @@ function exportAnalysisPDF(pin) {
       ctx.fillStyle = '#fff'; ctx.fillRect(0,0,400,summaryCanvas.height);
       ctx.font = 'bold 13px Cairo';
       ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-      ctx.fillStyle = '#1a1a2e';
+      ctx.fillStyle = '#221335';
       ctx.fillText('📋 ملخص بالمواد', 390, 20);
 
       subjectStats.forEach((sub, i) => {
         const y = 40 + i*52;
         const barW = 260; const barX = 20;
         // اسم المادة
-        ctx.font = 'bold 12px Cairo'; ctx.fillStyle = '#1a1a2e'; ctx.textAlign = 'right';
+        ctx.font = 'bold 12px Cairo'; ctx.fillStyle = '#221335'; ctx.textAlign = 'right';
         ctx.fillText(`${sub.icon} ${sub.name}`, 390, y+10);
         // عدد الأهداف
         ctx.font = '11px Cairo'; ctx.fillStyle = '#9ca3af'; ctx.textAlign = 'left';
@@ -2994,27 +3037,27 @@ function exportAnalysisPDF(pin) {
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap');
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Cairo',sans-serif;padding:28px 32px;direction:rtl;color:#1a1a2e;background:#fff;}
-        .header{text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:3px solid #c25a00;}
-        .badge{background:#c25a00;color:#fff;display:inline-block;padding:4px 18px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;}
-        h1{font-size:1.25rem;font-weight:900;color:#c25a00;margin-bottom:4px;}
-        .sub{font-size:0.82rem;color:#5a6478;}
+        body{font-family:'Cairo',sans-serif;padding:28px 32px;direction:rtl;color:#221335;background:#fff;}
+        .header{text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:3px solid #6B4C9A;}
+        .badge{background:#6B4C9A;color:#fff;display:inline-block;padding:4px 18px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;}
+        h1{font-size:1.25rem;font-weight:900;color:#6B4C9A;margin-bottom:4px;}
+        .sub{font-size:0.82rem;color:#6E5F82;}
         .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0;}
         .stat{padding:12px 8px;text-align:center;border-radius:10px;border:1.5px solid;}
         .stat-num{font-size:2rem;font-weight:900;line-height:1;}
         .stat-lbl{font-size:0.76rem;font-weight:700;margin-top:4px;}
         .stat-pct{font-size:0.72rem;margin-top:2px;opacity:0.8;}
-        .section-title{font-size:0.95rem;font-weight:800;color:#1a3a5c;margin:18px 0 10px;padding-right:10px;border-right:4px solid #c25a00;}
+        .section-title{font-size:0.95rem;font-weight:800;color:#3F2E63;margin:18px 0 10px;padding-right:10px;border-right:4px solid #6B4C9A;}
         .charts-row{display:grid;grid-template-columns:1fr 360px;gap:16px;margin-bottom:18px;align-items:start;}
         .chart-box{background:#fafafa;border:1px solid #e8e0d4;border-radius:12px;padding:14px;text-align:center;}
         img.chart{width:100%;height:auto;display:block;}
         table{width:100%;border-collapse:collapse;font-size:0.83rem;}
-        thead th{background:#1a3a5c;color:#fff;padding:9px 12px;font-size:0.82rem;}
+        thead th{background:#3F2E63;color:#fff;padding:9px 12px;font-size:0.82rem;}
         thead th:first-child{text-align:right;}
-        tbody td{padding:8px 12px;border:1px solid #e0d8c8;}
+        tbody td{padding:8px 12px;border:1px solid #DCD2EE;}
         tbody tr:nth-child(even){background:#fafafa;}
-        tfoot td{padding:9px 12px;font-weight:900;background:#fff3e0;border-top:2px solid #c25a00;}
-        .footer{margin-top:20px;text-align:center;font-size:0.7rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
+        tfoot td{padding:9px 12px;font-weight:900;background:#EAE1F7;border-top:2px solid #6B4C9A;}
+        .footer{margin-top:20px;text-align:center;font-size:0.7rem;color:#9ca3af;border-top:1px solid #DCD2EE;padding-top:12px;}
         @media print{
           body{padding:15px 18px;}
           @page{margin:15mm;}
@@ -3116,13 +3159,13 @@ function savePlanAsPDF(pin) {
     const LEVEL_MAP = { excellent: { label:'متفوق', color:'#059669', bg:'#d1fae5' }, advanced: { label:'متقدم', color:'#2563eb', bg:'#dbeafe' }, capable: { label:'متمكن', color:'#d97706', bg:'#fef3c7' }, failed: { label:'غير مجتاز', color:'#dc2626', bg:'#fee2e2' }, none: { label:'—', color:'#9ca3af', bg:'#f3f4f6' } };
     return `
       <div style="margin-bottom:14px;">
-        <div style="background:#c25a00;color:#fff;padding:7px 14px;border-radius:6px;font-size:0.88rem;font-weight:800;margin-bottom:8px;">${data.icon||'📚'} ${data.name}</div>
+        <div style="background:#6B4C9A;color:#fff;padding:7px 14px;border-radius:6px;font-size:0.88rem;font-weight:800;margin-bottom:8px;">${data.icon||'📚'} ${data.name}</div>
         <table style="width:100%;border-collapse:collapse;">
-          <thead><tr><th style="background:#fff3e0;padding:6px 10px;text-align:right;font-size:0.78rem;border:1px solid #e0d8c8;width:60%;">الهدف التربوي</th><th style="background:#fff3e0;padding:6px 10px;text-align:center;font-size:0.78rem;border:1px solid #e0d8c8;">مستوى الأداء</th></tr></thead>
+          <thead><tr><th style="background:#EAE1F7;padding:6px 10px;text-align:right;font-size:0.78rem;border:1px solid #DCD2EE;width:60%;">الهدف التربوي</th><th style="background:#EAE1F7;padding:6px 10px;text-align:center;font-size:0.78rem;border:1px solid #DCD2EE;">مستوى الأداء</th></tr></thead>
           <tbody>
             ${data.goals.map((g,i) => {
               const lv = LEVEL_MAP[g.level||'none'] || LEVEL_MAP.none;
-              return `<tr><td style="padding:7px 10px;border:1px solid #e0d8c8;font-size:0.82rem;">${i+1}. ${g.text||'—'}</td><td style="padding:7px 10px;border:1px solid #e0d8c8;text-align:center;background:${lv.bg};color:${lv.color};font-weight:800;font-size:0.8rem;">${lv.label}</td></tr>`;
+              return `<tr><td style="padding:7px 10px;border:1px solid #DCD2EE;font-size:0.82rem;">${i+1}. ${g.text||'—'}</td><td style="padding:7px 10px;border:1px solid #DCD2EE;text-align:center;background:${lv.bg};color:${lv.color};font-weight:800;font-size:0.8rem;">${lv.label}</td></tr>`;
             }).join('')}
           </tbody>
         </table>
@@ -3135,21 +3178,21 @@ function savePlanAsPDF(pin) {
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
       *{margin:0;padding:0;box-sizing:border-box;}
-      body{font-family:'Cairo',sans-serif;padding:30px;direction:rtl;color:#1a1a2e;}
-      .header{text-align:center;margin-bottom:24px;border-bottom:3px solid #c25a00;padding-bottom:16px;}
-      h1{font-size:1.3rem;font-weight:800;color:#c25a00;}
+      body{font-family:'Cairo',sans-serif;padding:30px;direction:rtl;color:#221335;}
+      .header{text-align:center;margin-bottom:24px;border-bottom:3px solid #6B4C9A;padding-bottom:16px;}
+      h1{font-size:1.3rem;font-weight:800;color:#6B4C9A;}
       .fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0;}
-      .field{background:#fff8f3;border:1px solid #e0d8c8;border-radius:7px;padding:8px 12px;}
-      .fl{font-size:0.7rem;color:#5a6478;font-weight:700;}
-      .fv{font-size:0.85rem;color:#1a1a2e;font-weight:800;}
-      .footer{margin-top:20px;text-align:center;font-size:0.72rem;color:#9ca3af;border-top:1px solid #e0d8c8;padding-top:12px;}
+      .field{background:#FBFAFE;border:1px solid #DCD2EE;border-radius:7px;padding:8px 12px;}
+      .fl{font-size:0.7rem;color:#6E5F82;font-weight:700;}
+      .fv{font-size:0.85rem;color:#221335;font-weight:800;}
+      .footer{margin-top:20px;text-align:center;font-size:0.72rem;color:#9ca3af;border-top:1px solid #DCD2EE;padding-top:12px;}
       @media print{body{padding:15px;}}
     </style>
   </head><body>
     <div class="header">
-      <div style="background:#c25a00;color:#fff;display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;">برنامج الدمج الفكري</div>
+      <div style="background:#6B4C9A;color:#fff;display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;">برنامج الدمج الفكري</div>
       <h1>الخطة التعليمية الفردية (IEP)</h1>
-      <p style="font-size:0.82rem;color:#5a6478;margin-top:4px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
+      <p style="font-size:0.82rem;color:#6E5F82;margin-top:4px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
     </div>
     <div class="fields">
       <div class="field"><div class="fl">اسم الطالب</div><div class="fv">${s.name}</div></div>
@@ -3186,9 +3229,9 @@ const DUMAJ_CELL_TYPES = [
 ];
 const DUMAJ_GRADES = ['أول متوسط','ثاني متوسط','ثالث متوسط'];
 const DUMAJ_TEACHERS = [
-  { key:'suhaimy',   name:'محمد أحمد السهيمي',       color:'#1a3a5c', light:'#e8f0fa' },
-  { key:'alzahrani', name:'علي محمد الزهراني',        color:'#1a6b4a', light:'#e6f5ee' },
-  { key:'alghamdi',  name:'علي سعيد الغامدي',         color:'#7c3aed', light:'#f3eeff' },
+  { key:'suhaimy',   name:'محمد أحمد السهيمي',       color:'#3F2E63', light:'#e8f0fa' },
+  { key:'alzahrani', name:'علي محمد الزهراني',        color:'#129E7C', light:'#e6f5ee' },
+  { key:'alghamdi',  name:'علي سعيد الغامدي',         color:'#8B6ABF', light:'#f3eeff' },
   { key:'almalki',   name:'علي محمد المالكي',         color:'#b45309', light:'#fef3c7' },
   { key:'alyani',    name:'حسن علي العلياني',         color:'#be185d', light:'#fce7f3' },
   { key:'alqarni',   name:'زين العابدين سعد القرني',  color:'#0f766e', light:'#e6fafa' },
@@ -3297,7 +3340,7 @@ async function renderDumajSchedule() {
         #dumaj-schedule-container{padding:0!important}
         @page{size:A4 landscape;margin:10mm}
         *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-        .dumaj-tbl-wrap{box-shadow:none!important;border:1.5px solid #c25a00!important}
+        .dumaj-tbl-wrap{box-shadow:none!important;border:1.5px solid #6B4C9A!important}
         .dumaj-td-cell{padding:4px 3px!important}
         .dumaj-th{padding:7px 4px!important;font-size:7.5pt!important}
         .dumaj-td-day{font-size:7.5pt!important}
@@ -3307,11 +3350,11 @@ async function renderDumajSchedule() {
       }
       .dumaj-print-hdr{display:none}
       .dumaj-topbar{
-        background:linear-gradient(135deg,#7c2d00 0%,#c25a00 60%,#e07020 100%);
+        background:linear-gradient(135deg,#2E2148 0%,#6B4C9A 60%,#8B6ABF 100%);
         border-radius:16px;padding:18px 22px;
         display:flex;align-items:center;justify-content:space-between;
         flex-wrap:wrap;gap:12px;margin-bottom:20px;
-        box-shadow:0 4px 24px rgba(194,90,0,0.3);position:relative;overflow:hidden;
+        box-shadow:0 4px 24px rgba(107,76,154,0.3);position:relative;overflow:hidden;
       }
       .dumaj-topbar::before{content:'';position:absolute;top:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.05);pointer-events:none}
       .dumaj-grade-tabs{display:flex;border-radius:10px;overflow:hidden;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08)}
@@ -3320,16 +3363,16 @@ async function renderDumajSchedule() {
       .dumaj-action-btn{display:flex;align-items:center;gap:5px;padding:8px 16px;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.18s;white-space:nowrap}
       .dumaj-action-btn:hover{transform:translateY(-1px)}
       .dumaj-btn-season{background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.2)}
-      .dumaj-btn-save{background:#fff;color:#c25a00;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+      .dumaj-btn-save{background:#fff;color:#6B4C9A;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
       .dumaj-btn-print{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2)}
       .dumaj-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
       .dumaj-stat-card{border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;border:1.5px solid transparent;transition:transform 0.2s;cursor:default}
       .dumaj-stat-card:hover{transform:translateY(-2px)}
       .dumaj-tbl-wrap{border-radius:16px;overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow-x:auto}
       .dumaj-table{width:100%;border-collapse:collapse;min-width:760px;background:#fff}
-      .dumaj-th{background:linear-gradient(180deg,#7c2d00,#c25a00);color:#fff;padding:11px 8px;text-align:center;font-size:0.76rem;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
-      .dumaj-th-day{background:linear-gradient(180deg,#7c2d00,#c25a00);color:#fff;padding:14px 10px;text-align:center;font-size:0.8rem;font-weight:800;width:76px;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
-      .dumaj-td-day{padding:10px 8px;text-align:center;font-weight:800;font-size:0.84rem;color:#7c2d00;border-left:2px solid #fde8d0;background:linear-gradient(180deg,#fff8f4,#fef0e8);vertical-align:middle;white-space:nowrap;font-family:'Cairo',sans-serif}
+      .dumaj-th{background:linear-gradient(180deg,#2E2148,#6B4C9A);color:#fff;padding:11px 8px;text-align:center;font-size:0.76rem;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
+      .dumaj-th-day{background:linear-gradient(180deg,#2E2148,#6B4C9A);color:#fff;padding:14px 10px;text-align:center;font-size:0.8rem;font-weight:800;width:76px;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
+      .dumaj-td-day{padding:10px 8px;text-align:center;font-weight:800;font-size:0.84rem;color:#2E2148;border-left:2px solid #EAE1F7;background:linear-gradient(180deg,#fff8f4,#fef0e8);vertical-align:middle;white-space:nowrap;font-family:'Cairo',sans-serif}
       .dumaj-td-cell{padding:5px 4px;vertical-align:top;border-left:1px solid #f5e8e0;cursor:pointer;transition:background 0.15s;min-width:105px}
       .dumaj-td-cell:hover{background:#fff5ef!important}
       .dumaj-cell-inner{border-radius:8px;padding:5px 7px}
@@ -3338,7 +3381,7 @@ async function renderDumajSchedule() {
     </style>
 
     <!-- Print Header -->
-    <div class="dumaj-print-hdr" style="align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 18px;background:linear-gradient(135deg,#7c2d00,#c25a00);border-radius:8px;">
+    <div class="dumaj-print-hdr" style="align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 18px;background:linear-gradient(135deg,#2E2148,#6B4C9A);border-radius:8px;">
       <div>
         <div style="font-weight:900;font-size:13pt;color:#fff;">جدول الحصص الأسبوعي — برنامج الدمج الفكري</div>
         <div style="font-size:8.5pt;color:rgba(255,255,255,0.75);margin-top:3px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة — فصل: ${dumajCurrentGrade}</div>
@@ -3477,7 +3520,7 @@ function openDumajCellEditor(day, period) {
   const periodInfo = DUMAJ_PERIODS.find(p => p.num === period);
 
   const html = `
-    <div style="background:linear-gradient(135deg,#7c2d00,#c25a00);padding:18px 22px;border-radius:20px 20px 0 0;">
+    <div style="background:linear-gradient(135deg,#2E2148,#6B4C9A);padding:18px 22px;border-radius:20px 20px 0 0;">
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
           <div style="color:#fff;font-weight:800;font-size:0.95rem;">✏️ تعديل الحصة</div>
@@ -3491,13 +3534,13 @@ function openDumajCellEditor(day, period) {
       <!-- نوع الخلية -->
       <div style="margin-bottom:18px;">
         <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-          <span style="background:#c25a00;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">١</span>
+          <span style="background:#6B4C9A;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">١</span>
           نوع الحصة
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;" id="dumaj-type-group">
           ${DUMAJ_CELL_TYPES.map(ct => {
             const isSel = cellType === ct.value;
-            const colors = {lesson:'#c25a00', break:'#b45309', break_sup:'#be185d', end_sup:'#0369a1', empty:'#888'};
+            const colors = {lesson:'#6B4C9A', break:'#b45309', break_sup:'#be185d', end_sup:'#0369a1', empty:'#888'};
             const bgs    = {lesson:'#fef3c7', break:'#fef3c7', break_sup:'#fce7f3', end_sup:'#e0f2fe', empty:'#f0f0f0'};
             const c = colors[ct.value], bg = bgs[ct.value];
             return `
@@ -3512,7 +3555,7 @@ function openDumajCellEditor(day, period) {
       <!-- قسم المعلم (يظهر حسب النوع) -->
       <div id="dumaj-teacher-section" style="margin-bottom:18px;display:${['lesson','break_sup','end_sup'].includes(cellType)?'block':'none'};">
         <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-          <span style="background:#c25a00;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٢</span>
+          <span style="background:#6B4C9A;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٢</span>
           <span id="dumaj-teacher-label">اختر المعلم</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
@@ -3536,14 +3579,14 @@ function openDumajCellEditor(day, period) {
       <!-- قسم المادة (يظهر فقط لحصة دراسية) -->
       <div id="dumaj-subject-section" style="margin-bottom:18px;display:${cellType==='lesson'?'block':'none'};">
         <div style="font-size:0.8rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-          <span style="background:#c25a00;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٣</span>
+          <span style="background:#6B4C9A;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٣</span>
           اختر المادة
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;">
           ${DUMAJ_SUBJECTS.map(subj => {
             const isSel = cell.subject === subj;
             return `
-              <label class="dumaj-subj-label" style="display:flex;align-items:center;gap:5px;background:${isSel?'#fef3c7':'#f8f9fc'};border:1.5px solid ${isSel?'#c25a00':'#e8ecf2'};border-radius:20px;padding:5px 12px;cursor:pointer;font-size:0.75rem;font-weight:700;color:${isSel?'#92400e':'#555'};transition:all 0.15s;">
+              <label class="dumaj-subj-label" style="display:flex;align-items:center;gap:5px;background:${isSel?'#fef3c7':'#f8f9fc'};border:1.5px solid ${isSel?'#6B4C9A':'#e8ecf2'};border-radius:20px;padding:5px 12px;cursor:pointer;font-size:0.75rem;font-weight:700;color:${isSel?'#92400e':'#555'};transition:all 0.15s;">
                 <input type="radio" name="dumaj-subject" value="${subj}" ${isSel?'checked':''} style="display:none;">
                 ${subj}
               </label>`;
@@ -3551,7 +3594,7 @@ function openDumajCellEditor(day, period) {
         </div>
       </div>
 
-      <button onclick="saveDumajCellEdit()" style="width:100%;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(194,90,0,0.3);">
+      <button onclick="saveDumajCellEdit()" style="width:100%;background:linear-gradient(135deg,#2E2148,#6B4C9A);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(107,76,154,0.3);">
         💾 حفظ التعديلات
       </button>
     </div>
@@ -3567,7 +3610,7 @@ function openDumajCellEditor(day, period) {
       box.querySelectorAll('.dumaj-subj-label').forEach(l => {
         const sel = l.querySelector('input').checked;
         l.style.background   = sel ? '#fef3c7' : '#f8f9fc';
-        l.style.borderColor  = sel ? '#c25a00' : '#e8ecf2';
+        l.style.borderColor  = sel ? '#6B4C9A' : '#e8ecf2';
         l.style.color        = sel ? '#92400e' : '#555';
       });
     };
@@ -3584,7 +3627,7 @@ function openDumajCellEditor(day, period) {
 
 function onDumajTypeChange() {
   const type = document.querySelector('input[name="dumaj-type"]:checked')?.value || 'empty';
-  const colors = {lesson:'#c25a00', break:'#b45309', break_sup:'#be185d', end_sup:'#0369a1', empty:'#888'};
+  const colors = {lesson:'#6B4C9A', break:'#b45309', break_sup:'#be185d', end_sup:'#0369a1', empty:'#888'};
   const bgs    = {lesson:'#fef3c7', break:'#fef3c7', break_sup:'#fce7f3', end_sup:'#e0f2fe', empty:'#f0f0f0'};
 
   // Update type pill styles
@@ -3655,7 +3698,7 @@ function openDumajPeriodSettings() {
 
   const rows = periods.map((p,i) => `
     <tr style="border-bottom:1px solid #f0f0f0;">
-      <td style="padding:8px 10px;font-weight:700;color:#c25a00;font-size:0.82rem;text-align:center;width:30px;">${i+1}</td>
+      <td style="padding:8px 10px;font-weight:700;color:#6B4C9A;font-size:0.82rem;text-align:center;width:30px;">${i+1}</td>
       <td style="padding:6px 8px;">
         <input type="text" id="p-label-${i}" value="${p.label}"
           style="width:100%;border:1.5px solid #e0e0e0;border-radius:8px;padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.82rem;text-align:center;">
@@ -3671,7 +3714,7 @@ function openDumajPeriodSettings() {
     </tr>`).join('');
 
   contentEl.innerHTML = `
-    <div style="background:linear-gradient(135deg,#7c2d00,#c25a00);padding:18px 22px;border-radius:20px 20px 0 0;">
+    <div style="background:linear-gradient(135deg,#2E2148,#6B4C9A);padding:18px 22px;border-radius:20px 20px 0 0;">
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
           <div style="color:#fff;font-weight:800;font-size:0.95rem;">⚙️ إعدادات الحصص</div>
@@ -3683,17 +3726,17 @@ function openDumajPeriodSettings() {
     <div style="padding:20px 22px;font-family:'Cairo',sans-serif;direction:rtl;">
       <table style="width:100%;border-collapse:collapse;">
         <thead>
-          <tr style="background:#fdf4ee;">
-            <th style="padding:8px;font-size:0.75rem;color:#c25a00;font-weight:800;text-align:center;">#</th>
+          <tr style="background:#FBFAFE;">
+            <th style="padding:8px;font-size:0.75rem;color:#6B4C9A;font-weight:800;text-align:center;">#</th>
             <th style="padding:8px;font-size:0.75rem;color:#555;font-weight:700;text-align:center;">اسم الحصة</th>
-            <th style="padding:8px;font-size:0.75rem;color:#1a3a5c;font-weight:700;text-align:center;">❄️ شتوي</th>
-            <th style="padding:8px;font-size:0.75rem;color:#c8973a;font-weight:700;text-align:center;">☀️ صيفي</th>
+            <th style="padding:8px;font-size:0.75rem;color:#3F2E63;font-weight:700;text-align:center;">❄️ شتوي</th>
+            <th style="padding:8px;font-size:0.75rem;color:#D7A24A;font-weight:700;text-align:center;">☀️ صيفي</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
       <div style="display:flex;gap:8px;margin-top:16px;">
-        <button onclick="saveDumajPeriodSettings()" style="flex:1;background:linear-gradient(135deg,#7c2d00,#c25a00);color:#fff;border:none;border-radius:12px;padding:12px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;">
+        <button onclick="saveDumajPeriodSettings()" style="flex:1;background:linear-gradient(135deg,#2E2148,#6B4C9A);color:#fff;border:none;border-radius:12px;padding:12px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;">
           💾 حفظ الإعدادات
         </button>
         <button onclick="resetDumajPeriods()" style="background:#f5f5f5;color:#888;border:1.5px solid #e0e0e0;border-radius:12px;padding:12px 16px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">
