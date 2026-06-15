@@ -336,18 +336,23 @@ header.portal-header{
 .reinforce-meta{ font-size:.74rem; color:var(--ink-faint); margin-top:2px; }
 .reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
 
-/* بانر استدعاء الاجتماع */
+/* سجل استدعاءات الاجتماع */
+.meetings-log-wrap{ margin-bottom:18px; }
+.meetings-log-head{
+  display:flex; align-items:center; gap:8px; font-weight:800; font-size:.92rem; color:var(--lav-800);
+  margin-bottom:10px;
+}
 .meeting-banner-inner{
   display:flex; align-items:center; gap:14px; background:linear-gradient(135deg, var(--gold-soft), #fff);
   border:1.5px solid var(--gold); border-right:5px solid var(--gold); border-radius:14px;
-  padding:14px 20px; margin-bottom:18px; flex-wrap:wrap;
+  padding:14px 20px; margin-bottom:10px; flex-wrap:wrap;
 }
 .meeting-banner-icon{ font-size:1.8rem; flex-shrink:0; }
 .meeting-banner-title{ font-weight:800; font-size:.92rem; color:var(--lav-800); }
 .meeting-banner-meta{ font-size:.8rem; color:var(--muted); margin-top:3px; }
 .meeting-banner-close{
-  background:rgba(0,0,0,.05); border:none; border-radius:6px; width:26px; height:26px; cursor:pointer;
-  font-size:.8rem; color:var(--muted); flex-shrink:0;
+  background:rgba(220,38,38,.08); color:#dc2626; border:none; border-radius:6px; padding:6px 12px; cursor:pointer;
+  font-size:.78rem; font-weight:700; flex-shrink:0; white-space:nowrap;
 }
 
 /* جدول المعلم الأسبوعي */
@@ -457,15 +462,15 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
 
   <div class="portal-body">
 
-    <!-- بانر استدعاء الاجتماع -->
-    <div id="meeting-banner" style="display:none;"></div>
+    <!-- سجل استدعاءات الاجتماع -->
+    <div id="meetings-log" class="meetings-log-wrap" style="display:none;"></div>
 
     <!-- التبويبات الرئيسية -->
     <div class="tabs" id="main-tabs">
       <button class="tab-btn active" onclick="openMainTab('students',this)">👥 طلابي</button>
       <button class="tab-btn" onclick="openMainTab('schedule',this)">📅 جدولي</button>
       <button class="tab-btn" onclick="openMainTab('curriculum',this)">📘 توزيع المنهج</button>
-      <button class="tab-btn" onclick="openMainTab('portfolio',this)">📁 ملف الإنجاز</button>
+      <button class="tab-btn" onclick="openPortfolioFull()">📁 ملف الإنجاز ↗</button>
       <button class="tab-btn" id="assign-tab-btn" style="display:none;" onclick="openMainTab('assign',this)">📋 إسناد الطلاب</button>
     </div>
 
@@ -508,15 +513,6 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
       </div>
     </div>
 
-    <!-- ===== ملف الإنجاز ===== -->
-    <div class="tab-pane" id="main-tab-portfolio">
-      <div class="s-card" style="margin-bottom:0;">
-        <div class="s-card-head"><span>📁 ملف إنجاز المعلم</span></div>
-        <div class="s-card-body" style="padding:0;">
-          <iframe id="portfolio-iframe" src="" style="width:100%;height:80vh;border:none;display:block;background:var(--surface2);"></iframe>
-        </div>
-      </div>
-    </div>
 
     <!-- ===== إسناد الطلاب (مشرف) ===== -->
     <div class="tab-pane" id="main-tab-assign">
@@ -534,6 +530,26 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
               <tbody id="assign-tbody"></tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-head">📢 شريط الإشعارات (أعلى الصفحة الرئيسية)</div>
+        <div class="s-card-body">
+          <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه. يشترك في إدارته مشرف الإدارة العامة، مدير المدرسة، ومشرفا البرنامجين.</div>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem;font-weight:700;color:var(--lav-800);margin-bottom:12px;">
+            <input type="checkbox" id="tp-announce-enabled" style="width:18px;height:18px;">
+            تفعيل عرض الشريط
+          </label>
+          <div style="margin-bottom:10px;">
+            <label class="input-label">نص الإشعار</label>
+            <input type="text" class="text-input" id="tp-announce-message" placeholder="مثال: تبدأ الاختبارات النهائية يوم الأحد القادم">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label class="input-label">رابط إضافي (اختياري)</label>
+            <input type="url" class="text-input" id="tp-announce-link" placeholder="https://...">
+          </div>
+          <button class="btn-sm btn-sm-primary" onclick="saveAnnouncementTP()">📢 حفظ ونشر الإشعار</button>
         </div>
       </div>
     </div>
@@ -814,8 +830,6 @@ function doLogin() {
 function doLogout() {
   currentTeacher = null;
   currentDetail = null;
-  portfolioLoaded = false;
-  document.getElementById('portfolio-iframe').src = '';
   document.getElementById('teacher-portal').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('username-input').value = '';
@@ -841,7 +855,7 @@ async function openPortal() {
 
   await loadAssignments();
   await renderMyStudents();
-  if (currentTeacher.isSupervisor) await renderAssignTable();
+  if (currentTeacher.isSupervisor) { await renderAssignTable(); loadAnnouncementSettingsTP(); }
   loadMeetingInvite();
 }
 
@@ -931,11 +945,9 @@ function openMainTab(name, btn) {
   document.getElementById('main-tab-students').classList.toggle('active', name === 'students');
   document.getElementById('main-tab-schedule').classList.toggle('active', name === 'schedule');
   document.getElementById('main-tab-curriculum').classList.toggle('active', name === 'curriculum');
-  document.getElementById('main-tab-portfolio').classList.toggle('active', name === 'portfolio');
   document.getElementById('main-tab-assign').classList.toggle('active', name === 'assign');
   if (name === 'schedule') renderMySchedule();
   if (name === 'curriculum') renderCurriculumTab();
-  if (name === 'portfolio') loadPortfolioIframe();
 }
 
 function openDetailTab(name, btn) {
@@ -1298,7 +1310,7 @@ function fileExtFromName(name) {
 }
 
 async function checkFileExists(url) {
-  try { const r = await fetch(url, { method: 'HEAD' }); return r.ok; }
+  try { const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { method: 'HEAD' }); return r.ok; }
   catch(e) { return false; }
 }
 
@@ -1616,14 +1628,11 @@ const PORTFOLIO_MAP = {
   'saad.z':     { file:'teachers-yaseer.html', name:'سعد سالم الزهراني'   },
 };
 
-let portfolioLoaded = false;
-function loadPortfolioIframe() {
-  if (portfolioLoaded) return;
+function openPortfolioFull() {
   const map = PORTFOLIO_MAP[currentTeacher.username];
-  if (!map) return;
-  const url = `${map.file}?t=${encodeURIComponent(map.name)}&p=${encodeURIComponent(currentTeacher.pin)}&embed=1`;
-  document.getElementById('portfolio-iframe').src = url;
-  portfolioLoaded = true;
+  if (!map) { showToast('⚠️ لا يوجد ملف إنجاز مرتبط بهذا الحساب'); return; }
+  const url = `${map.file}?t=${encodeURIComponent(map.name)}&p=${encodeURIComponent(currentTeacher.pin)}`;
+  window.open(url, '_blank');
 }
 
 const SCHED_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
@@ -1775,39 +1784,67 @@ function printMySchedule() {
 // بانر استدعاء الاجتماع (من مشرف الإدارة العامة)
 // ===================================================
 async function loadMeetingInvite() {
-  const invite = await sbGetJSON(`reports/${currentTeacher.program}/meeting-invite.json`);
-  renderMeetingBanner(invite);
+  const list = await sbGetJSON(`reports/${currentTeacher.program}/meeting-invites.json`);
+  renderMeetingsLog(Array.isArray(list) ? list : []);
 }
 
-function renderMeetingBanner(invite) {
-  const el = document.getElementById('meeting-banner');
-  if (!invite || invite.status === 'dismissed' || !invite.link) {
+function renderMeetingsLog(list) {
+  const el = document.getElementById('meetings-log');
+  if (!list || list.length === 0) {
     el.style.display = 'none';
     el.innerHTML = '';
     return;
   }
-  let dtLabel = invite.datetime;
-  try {
-    dtLabel = new Date(invite.datetime).toLocaleDateString('ar-SA', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
-  } catch(e) {}
 
   el.style.display = 'block';
-  el.innerHTML = `
+  el.innerHTML = `<div class="meetings-log-head">📹 سجل استدعاءات الاجتماع (${list.length})</div>` +
+    list.map(invite => {
+      let dtLabel = invite.datetime;
+      try {
+        dtLabel = new Date(invite.datetime).toLocaleDateString('ar-SA', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      } catch(e) {}
+      return `
     <div class="meeting-banner-inner">
       <div class="meeting-banner-icon">📹</div>
       <div style="flex:1;">
         <div class="meeting-banner-title">استدعاء اجتماع: ${escHtml(invite.subject || '')}</div>
-        <div class="meeting-banner-meta">📅 ${escHtml(dtLabel)}${invite.notes ? ' — ' + escHtml(invite.notes) : ''}</div>
+        <div class="meeting-banner-meta">📅 ${escHtml(dtLabel)}${invite.notes ? ' — ' + escHtml(invite.notes) : ''}${invite.supervisorName ? ' — من: ' + escHtml(invite.supervisorName) : ''}</div>
       </div>
       <a href="${invite.link}" target="_blank" class="btn-sm btn-sm-gold">🔗 الانضمام للاجتماع</a>
-      <button class="meeting-banner-close" onclick="dismissMeetingBanner()" title="إغلاق">✕</button>
+      <button class="meeting-banner-close" onclick="deleteMeetingInviteShared('${invite.id}')">🗑️ حذف</button>
     </div>`;
+    }).join('');
 }
 
-function dismissMeetingBanner() {
-  const el = document.getElementById('meeting-banner');
-  el.style.display = 'none';
-  el.innerHTML = '';
+async function deleteMeetingInviteShared(id) {
+  if (!confirm('هل تم الاطلاع على هذا الاستدعاء؟ سيتم حذفه من السجل لجميع المعلمين.')) return;
+  const list = await sbGetJSON(`reports/${currentTeacher.program}/meeting-invites.json`);
+  const filtered = (Array.isArray(list) ? list : []).filter(m => String(m.id) !== String(id));
+  const ok = await sbSetJSON(`reports/${currentTeacher.program}/meeting-invites.json`, filtered);
+  if (ok) { showToast('🗑️ تم حذف الاستدعاء'); renderMeetingsLog(filtered); }
+  else showToast('⚠️ تعذر الحذف، تحقق من الاتصال');
+}
+
+// ===================================================
+// شريط الإشعارات العام (للمعلمين المشرفين)
+// ===================================================
+async function loadAnnouncementSettingsTP() {
+  const data = await sbGetJSON('reports/site-announcement.json');
+  if (data) {
+    document.getElementById('tp-announce-enabled').checked = !!data.enabled;
+    document.getElementById('tp-announce-message').value = data.message || '';
+    document.getElementById('tp-announce-link').value = data.link || '';
+  }
+}
+
+async function saveAnnouncementTP() {
+  const enabled = document.getElementById('tp-announce-enabled').checked;
+  const message = document.getElementById('tp-announce-message').value.trim();
+  const link = document.getElementById('tp-announce-link').value.trim();
+  if (enabled && !message) { showToast('⚠️ يرجى كتابة نص الإشعار قبل التفعيل'); return; }
+  const payload = { enabled, message, link, updatedAt: new Date().toISOString(), updatedBy: currentTeacher.name };
+  const ok = await sbSetJSON('reports/site-announcement.json', payload);
+  showToast(ok ? '✅ تم حفظ ونشر الإشعار' : '⚠️ تعذر الحفظ، تحقق من الاتصال');
 }
 </script>
 
