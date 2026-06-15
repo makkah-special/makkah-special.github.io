@@ -547,6 +547,33 @@ footer strong { color:var(--accent-light); }
         <div class="settings-desc">مزامنة بيانات الطلاب من Supabase</div>
         <button onclick="loadAllData()" style="background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">🔄 تحديث البيانات</button>
       </div>
+
+      <div class="settings-card">
+        <div class="settings-title">📢 شريط الإشعارات (أعلى الموقع)</div>
+        <div class="settings-desc">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه</div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" id="announce-enabled" style="width:18px;height:18px;">
+            تفعيل عرض الشريط
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">نص الإشعار</label>
+          <input type="text" class="form-input" id="announce-message" placeholder="مثال: تبدأ الاختبارات النهائية يوم الأحد القادم — نوفّق جميع الطلاب">
+        </div>
+        <div class="form-group">
+          <label class="form-label">رابط إضافي (اختياري)</label>
+          <input type="url" class="form-input" id="announce-link" placeholder="https://...">
+        </div>
+        <div id="announce-msg" style="font-size:0.8rem;min-height:20px;margin-bottom:10px;"></div>
+        <button onclick="saveAnnouncement()" style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">📢 حفظ ونشر الإشعار</button>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-title">📘 توزيع المناهج</div>
+        <div class="settings-desc">عرض توزيع المنهج الفصلي الذي يدخله كل معلم (لغتي والرياضيات وأي مواد أخرى)</div>
+        <a href="curriculum-viewer.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),#2563a8);color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;text-decoration:none;">📘 فتح صفحة توزيع المناهج</a>
+      </div>
     </div>
 
   </div>
@@ -806,6 +833,7 @@ function openTab(id, btn) {
   document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
+  if (id === 'settings') loadAnnouncementSettings();
 }
 
 function setFilter(f, btn) {
@@ -1769,6 +1797,60 @@ async function deleteMeetingInvite(i) {
   meetingInvites.splice(i, 1);
   try { localStorage.setItem('supervisor_meetings', JSON.stringify(meetingInvites)); } catch(e) {}
   renderMeetingsList();
+}
+
+// ===================================================
+// شريط الإشعارات العام (يظهر في الصفحة الرئيسية)
+// ===================================================
+async function loadAnnouncementSettings() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/public/reports/site-announcement.json?t=${Date.now()}`);
+    if (res.ok) {
+      const data = await res.json();
+      document.getElementById('announce-enabled').checked = !!data.enabled;
+      document.getElementById('announce-message').value = data.message || '';
+      document.getElementById('announce-link').value = data.link || '';
+    }
+  } catch(e) {}
+}
+
+async function saveAnnouncement() {
+  const enabled = document.getElementById('announce-enabled').checked;
+  const message = document.getElementById('announce-message').value.trim();
+  const link = document.getElementById('announce-link').value.trim();
+  const msgEl = document.getElementById('announce-msg');
+
+  if (enabled && !message) {
+    msgEl.style.color = '#dc2626';
+    msgEl.textContent = '⚠️ يرجى كتابة نص الإشعار قبل التفعيل';
+    return;
+  }
+
+  const payload = {
+    enabled, message, link,
+    updatedAt: new Date().toISOString(),
+    updatedBy: SUPERVISOR_NAME
+  };
+
+  try {
+    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/reports/site-announcement.json`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: blob
+    });
+    if (res.ok) {
+      msgEl.style.color = '#16a34a';
+      msgEl.textContent = enabled ? '✅ تم نشر الإشعار في الصفحة الرئيسية' : '✅ تم إيقاف الإشعار';
+      showToast('✅ تم حفظ إعدادات الإشعار');
+    } else {
+      msgEl.style.color = '#dc2626';
+      msgEl.textContent = '⚠️ تعذر الحفظ، تحقق من الاتصال';
+    }
+  } catch(e) {
+    msgEl.style.color = '#dc2626';
+    msgEl.textContent = '⚠️ تعذر الحفظ، تحقق من الاتصال';
+  }
 }
 
 </script>
