@@ -239,9 +239,12 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
       <div class="header-name" id="head-name-display">—</div>
     </div>
   </div>
-  <div style="display:none;align-items:center;gap:8px;" id="header-btns">
-    <button class="logout-btn" style="background:rgba(215,162,74,.18);border-color:rgba(215,162,74,.4);color:#E8C27A;" onclick="openSettingsModal()">⚙️ إعدادات الحساب</button>
-    <button class="logout-btn" onclick="doLogout()">تسجيل الخروج</button>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <a href="index.html" class="logout-btn" style="text-decoration:none;">← الرئيسية</a>
+    <div style="display:none;align-items:center;gap:8px;" id="header-btns">
+      <button class="logout-btn" style="background:rgba(215,162,74,.18);border-color:rgba(215,162,74,.4);color:#E8C27A;" onclick="openSettingsModal()">⚙️ إعدادات الحساب</button>
+      <button class="logout-btn" onclick="doLogout()">تسجيل الخروج</button>
+    </div>
   </div>
 </header>
 
@@ -249,7 +252,7 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
 <div class="login-screen" id="login-screen">
   <div class="login-card">
     <h2>رئيس قسم ذوي الإعاقة</h2>
-    <p>تسجيل الدخول للاطلاع على البيانات وكتابة الملاحظات وشهادات الشكر والتقدير</p>
+  
     <label class="input-label">اسم المستخدم</label>
     <input type="text" class="text-input" id="login-username" placeholder="اسم المستخدم" autocomplete="username">
     <label class="input-label">كلمة المرور</label>
@@ -894,6 +897,9 @@ h1{font-family:'Tajawal',sans-serif;color:#3F2E63;font-size:1.5rem;margin-bottom
 // توزيع المناهج (للاطلاع)
 // ====================================================
 function switchCurriculumGrid() {
+  const el = document.getElementById('curriculum-content');
+  el.innerHTML = `<div class="teachers-grid" id="curr-teachers-grid"></div>`;
+  el.style.paddingTop = '0';
   const grid = document.getElementById('curr-teachers-grid');
   grid.innerHTML = Object.entries(TEACHERS).map(([uname,t])=>`
     <div class="t-card" style="cursor:pointer;" onclick="openTeacherCurriculum('${uname}')">
@@ -903,7 +909,6 @@ function switchCurriculumGrid() {
         <div class="t-role">${escHtml(t.role)}</div>
       </div>
     </div>`).join('');
-  document.getElementById('curriculum-content').style.paddingTop='0';
 }
 
 async function openTeacherCurriculum(uname) {
