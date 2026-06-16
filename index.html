@@ -397,23 +397,26 @@ footer{
   background:linear-gradient(160deg, var(--lav-900), #3A2B5C 60%, var(--lav-800));
   padding:50px 24px 30px; text-align:center;
 }
-.footer-inner{ max-width:760px; margin:0 auto; }
+.footer-inner{ max-width:900px; margin:0 auto; }
 .footer-logo{
-  display:flex; align-items:center; justify-content:center; gap:12px;
-  margin-bottom:8px;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  margin-bottom:10px;
 }
-.footer-logo img{ width:42px; height:42px; border-radius:12px; }
-.footer-logo-text{ font-family:'Tajawal',sans-serif; font-size:1.35rem; font-weight:900; color:#fff; }
-.footer-copy{ font-size:.78rem; color:rgba(255,255,255,.45); margin-bottom:4px; }
-.footer-credit{ font-size:.8rem; color:var(--lav-300); font-weight:800; margin-bottom:30px; }
+.footer-logo img{ width:48px; height:48px; border-radius:14px; box-shadow:0 4px 16px rgba(0,0,0,.3); }
+.footer-logo-text{ font-family:'Tajawal',sans-serif; font-size:1.45rem; font-weight:900; color:#fff; line-height:1.2; }
+.footer-copy{ font-size:.72rem; color:rgba(255,255,255,.4); margin-top:2px; }
+.footer-credit{ font-size:.78rem; color:var(--lav-300); font-weight:800; margin-bottom:32px; }
 
-.footer-divider{ border:none; border-top:1px solid rgba(255,255,255,.1); margin-bottom:24px; }
+.footer-divider{ border:none; border-top:1px solid rgba(255,255,255,.1); margin-bottom:28px; }
 
-.footer-nav-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:700px; margin:0 auto 18px; }
+.footer-nav-grid{
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:24px; max-width:900px; margin:0 auto 18px;
+}
 .footer-nav-col{ display:flex; flex-direction:column; align-items:center; gap:8px; }
 .footer-sec-label{
-  font-size:.64rem; color:rgba(255,255,255,.35);
-  letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; font-weight:800;
+  font-size:.62rem; color:rgba(255,255,255,.32);
+  letter-spacing:1.5px; margin-bottom:6px; font-weight:800; white-space:nowrap;
 }
 .fl-primary, .fl-ghost{
   display:inline-flex; align-items:center; gap:6px;
@@ -421,15 +424,35 @@ footer{
   text-decoration:none; transition:.2s; font-weight:700;
 }
 .fl-primary{
-  background:rgba(183,158,224,.16); border:1px solid rgba(183,158,224,.32);
-  color:#E7DBFB; padding:8px 18px; border-radius:20px; font-size:.78rem;
+  background:rgba(183,158,224,.18); border:1px solid rgba(183,158,224,.38);
+  color:#E7DBFB; padding:9px 18px; border-radius:20px; font-size:.78rem;
 }
-.fl-primary:hover{ background:rgba(183,158,224,.28); color:#fff; }
+.fl-primary:hover{ background:rgba(183,158,224,.32); color:#fff; }
 .fl-ghost{
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
-  color:rgba(255,255,255,.65); padding:7px 16px; border-radius:18px; font-size:.76rem;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.6); padding:7px 14px; border-radius:16px; font-size:.74rem;
 }
-.fl-ghost:hover{ background:rgba(255,255,255,.12); color:#fff; }
+.fl-ghost:hover{ background:rgba(255,255,255,.13); color:#fff; }
+
+/* زر رئيس القسم المميز */
+.footer-section-head-btn{
+  display:inline-flex; align-items:center; gap:14px;
+  background:linear-gradient(135deg, rgba(215,162,74,.18), rgba(215,162,74,.08));
+  border:1.5px solid rgba(215,162,74,.55);
+  border-radius:18px; padding:14px 28px;
+  text-decoration:none; transition:all .25s;
+  max-width:420px; width:100%;
+}
+.footer-section-head-btn:hover{
+  background:linear-gradient(135deg, rgba(215,162,74,.3), rgba(215,162,74,.15));
+  border-color:rgba(215,162,74,.85); transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(215,162,74,.25);
+}
+.fsh-icon{ font-size:1.8rem; flex-shrink:0; }
+.fsh-text{ display:flex; flex-direction:column; gap:3px; flex:1; text-align:right; }
+.fsh-label{ font-weight:900; font-size:.92rem; color:#E8C27A; font-family:'Tajawal',sans-serif; }
+.fsh-sub{ font-size:.72rem; color:rgba(255,255,255,.5); }
+.fsh-arrow{ color:rgba(215,162,74,.6); font-size:1rem; flex-shrink:0; }
 
 /* ============================================================
    حركات
@@ -468,7 +491,7 @@ footer{
 
   footer{ padding:36px 16px 24px; }
   .footer-logo-text{ font-size:1.15rem; }
-  .footer-nav-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+  .footer-nav-grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
 }
 
 @media (max-width:400px){
@@ -804,37 +827,50 @@ footer{
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
+
+    <!-- شعار وبيانات -->
     <div class="footer-logo">
       <img src="icon-192.png" alt="شعار مَعَاك">
-      <div class="footer-logo-text">منصة مَعَاك</div>
+      <div>
+        <div class="footer-logo-text">منصة مَعَاك</div>
+        <div class="footer-copy">© 2026 مدرسة مكة المكرمة المتوسطة</div>
+      </div>
     </div>
-    <div class="footer-copy">© 2026 مدرسة مكة المكرمة المتوسطة</div>
-    <div class="footer-credit">إعداد وتنفيذ: أ. سعد سالم الزهراني</div>
+    <div class="footer-credit">إعداد وتنفيذ: أ. سعد سالم الزهراني — قسم ذوي الإعاقة</div>
+
     <hr class="footer-divider">
 
-    <div class="footer-nav-grid">
+    <!-- روابط الدخول -->
+    <div class="footer-nav-grid" style="grid-template-columns:repeat(2,1fr);max-width:520px;">
+
       <div class="footer-nav-col">
         <div class="footer-sec-label">مشرفو البرامج</div>
         <a href="admin-dumaj.html" class="fl-ghost">🔐 مشرف الدمج الفكري</a>
         <a href="admin-yaseer.html" class="fl-ghost">🔐 مشرف يسير التعليمي</a>
       </div>
+
       <div class="footer-nav-col">
-        <div class="footer-sec-label">بوابة المعلمين</div>
-        <a href="teachers-portal.html" class="fl-primary">👨‍🏫 الدخول للبوابة الموحدة</a>
-        <a href="teachers-portal.html" class="fl-ghost">📁 ملف الإنجاز + متابعة الطلاب</a>
+        <div class="footer-sec-label">الإدارة والإشراف</div>
+        <a href="principal-dashboard.html" class="fl-ghost">🏫 مدير المدرسة</a>
+        <a href="supervisor.html" class="fl-ghost">🏛️ مشرف الإدارة العامة</a>
       </div>
+
     </div>
 
-    <div class="footer-nav-grid" style="margin-bottom:0;">
-      <div class="footer-nav-col">
-        <div class="footer-sec-label">الإشراف التربوي</div>
-        <a href="supervisor.html" class="fl-primary">🏛️ مشرف ذوي الإعاقة — الإدارة العامة</a>
-      </div>
-      <div class="footer-nav-col">
-        <div class="footer-sec-label">إدارة المدرسة</div>
-        <a href="principal-dashboard.html" class="fl-ghost">🏫 إدارة المدرسة</a>
-      </div>
+    <!-- رئيس القسم — بارز في المنتصف -->
+    <div style="margin-top:28px;display:flex;justify-content:center;">
+      <a href="section-head.html" class="footer-section-head-btn">
+        <span class="fsh-text">
+          <span class="fsh-label">رئيس قسم ذوي الإعاقة</span>
+        </span>
+        <span class="fsh-arrow">←</span>
+      </a>
     </div>
+
+    <div style="font-size:.68rem;color:rgba(255,255,255,.2);margin-top:24px;">
+      منصة مَعَاك — نظام إدارة برامج ذوي الإعاقة | مدرسة مكة المكرمة المتوسطة
+    </div>
+
   </div>
 </footer>
 
