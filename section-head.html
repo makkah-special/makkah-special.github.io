@@ -885,7 +885,8 @@ function printCert() {
 .praise-cert-sig{border-top:1.5px solid #DCD2EE;padding-top:16px;font-size:.88rem;color:#6E5F82;}
 .praise-cert-sig strong{color:#3F2E63;display:block;font-size:.95rem;}
 @media print{@page{size:A4;margin:14mm}}
-</style></head><body>${content}<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script></body></html>`);
+</style></head><body>${content}<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script><script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</body></html>`);
   win.document.close();
 }
 
@@ -914,7 +915,8 @@ h1{font-family:'Tajawal',sans-serif;color:#3F2E63;font-size:1.5rem;margin-bottom
   <div class="body">${escHtml(n.body)}</div>
   <div class="sig">✍️ ${escHtml(n.by)} — رئيس قسم ذوي الإعاقة<br>📅 ${escHtml(dateStr)} | مدرسة مكة المكرمة المتوسطة</div>
 </div>
-<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script></body></html>`);
+<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script><script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</body></html>`);
   win.document.close();
 }
 
@@ -992,7 +994,8 @@ function printTeacherCurriculum() {
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box}body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;color:#221335}h1{font-family:'Tajawal',sans-serif;color:#2E2148}h2{font-family:'Tajawal',sans-serif;color:#6B4C9A;margin:18px 0 8px}table{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:10px}th{background:#EAE1F7;color:#6B4C9A;padding:8px;text-align:right;font-weight:800;border:1px solid #DCD2EE}td{padding:7px;border:1px solid #DCD2EE}.wk{font-weight:800;color:#6B4C9A;white-space:nowrap}@media print{@page{size:A4;margin:14mm}}</style>
 </head><body><h1>📘 توزيع المنهج — ${escHtml(t.name)}</h1><p style="color:#6E5F82;margin-bottom:14px;">${escHtml(t.role)} — الفصل الثاني 1447هـ</p>
-${subjectsHtml}<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script></body></html>`);
+${subjectsHtml}<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script><script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</body></html>`);
   win.document.close();
 }
 
@@ -1113,5 +1116,6 @@ function closeStuModal() { document.getElementById('stu-modal').style.display = 
 document.getElementById('login-password').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 document.getElementById('login-username').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('login-password').focus(); });
 </script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
 </body>
 </html>
