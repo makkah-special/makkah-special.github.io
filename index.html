@@ -901,15 +901,25 @@ footer{
       منصة مَعَاك — نظام إدارة برامج ذوي الإعاقة | مدرسة مكة المكرمة المتوسطة
     </div>
 
-
-    <!-- ساعة | يوم | تاريخ -->
-    <div class="clk">
-      <div class="clk-seg"><span class="clk-time"><span id="clk-h">00</span><span class="clk-colon">:</span><span id="clk-m">00</span><span class="clk-colon">:</span><span id="clk-s">00</span></span></div>
-      <div class="clk-div"></div>
-      <div class="clk-seg"><span class="clk-day" id="clk-day">الأحد</span></div>
-      <div class="clk-div"></div>
-      <div class="clk-seg"><span class="clk-hijri" id="clk-hijri">جارٍ التحميل...</span></div>
+    <!-- ساعة في سطر واحد -->
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);">
+      <table style="margin:0 auto;border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 18px;white-space:nowrap;">
+            <span id="clk-h" style="font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.9);font-family:monospace;">00</span><span id="c1" style="font-size:1.55rem;font-weight:700;color:rgba(215,162,74,.9);font-family:monospace;animation:bclk 1s step-end infinite;">:</span><span id="clk-m" style="font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.9);font-family:monospace;">00</span><span id="c2" style="font-size:1.55rem;font-weight:700;color:rgba(215,162,74,.9);font-family:monospace;animation:bclk 1s step-end infinite;">:</span><span id="clk-s" style="font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.9);font-family:monospace;">00</span>
+          </td>
+          <td style="width:1px;background:rgba(255,255,255,.2);padding:0;height:28px;"></td>
+          <td style="padding:0 18px;white-space:nowrap;">
+            <span id="clk-day" style="font-size:.95rem;font-weight:700;color:rgba(215,162,74,.9);font-family:'Tajawal',sans-serif;">الأحد</span>
+          </td>
+          <td style="width:1px;background:rgba(255,255,255,.2);padding:0;height:28px;"></td>
+          <td style="padding:0 18px;white-space:nowrap;">
+            <span id="clk-hijri" style="font-size:.82rem;color:rgba(255,255,255,.6);font-family:'Cairo',sans-serif;">جارٍ التحميل...</span>
+          </td>
+        </tr>
+      </table>
     </div>
+    <style>@keyframes bclk{0%,100%{opacity:1}50%{opacity:.1}}</style>
   </div>
 </footer>
 
