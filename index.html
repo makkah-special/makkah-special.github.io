@@ -623,14 +623,9 @@ footer{
   color: #2E2148;
   font-weight: 900; font-size: .88rem;
   text-shadow: 0 1px 2px rgba(255,255,255,.4);
-  animation: annScroll 25s linear infinite;
+  position: absolute;
+  right: 0;
   will-change: transform;
-}
-#ann-ticker-bar .ann-running:hover { animation-play-state: paused; }
-
-@keyframes annScroll {
-  0%   { transform: translateX(100vw); }
-  100% { transform: translateX(-100%); }
 }
 
 .ann-dot-sep { color: #5C3A00; margin: 0 20px; font-size: .8rem; }
@@ -1042,15 +1037,27 @@ footer{
     var el = document.getElementById('ann-running');
     if (el) {
       el.innerHTML = unit;
-      // احسب عرض النص وعيّن animation duration بناء عليه
-      el.style.animation = "none";
-      setTimeout(function() {
-        var trackW = el.parentElement ? el.parentElement.offsetWidth : 800;
-        var textW  = el.scrollWidth;
-        var speed  = 80; // بكسل/ثانية
-        var dur    = Math.max(10, (trackW + textW) / speed);
-        el.style.animation = "annScroll " + dur + "s linear infinite";
-      }, 50);
+      // تحريك بـ requestAnimationFrame لضمان عمل صحيح
+      var pos = 0;
+      var paused = false;
+      el.addEventListener('mouseenter', function(){ paused = true; });
+      el.addEventListener('mouseleave', function(){ paused = false; });
+      function tickerMove() {
+        if (!paused) {
+          pos -= 1.2; // سرعة التحريك (بكسل/frame)
+          var trackEl = el.parentElement;
+          var textW = el.offsetWidth;
+          var trackW = trackEl ? trackEl.offsetWidth : 800;
+          if (Math.abs(pos) > textW + trackW) {
+            pos = trackW; // أعد من اليمين
+          }
+          el.style.transform = 'translateX(' + pos + 'px)';
+        }
+        requestAnimationFrame(tickerMove);
+      }
+      // ابدأ من خارج الشاشة يميناً
+      pos = document.getElementById('ann-ticker-bar').offsetWidth || 800;
+      requestAnimationFrame(tickerMove);
     }
 
     // وقت
