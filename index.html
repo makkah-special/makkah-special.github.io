@@ -499,124 +499,88 @@ footer{
   .hero-btns{ flex-direction:column; align-items:stretch; }
   .btn-primary, .btn-outline{ justify-content:center; }
 /* شريط الإشعارات العام */
+#announcement-bar{
+  display:none; position:relative; overflow:hidden;
+  background:linear-gradient(120deg, #8a6116, var(--gold) 45%, #E8C27A 75%, var(--gold));
+  background-size:200% 100%;
+  animation:annShift 6s ease-in-out infinite;
+  color:#fff; padding:13px 24px; text-align:center;
+  box-shadow:0 2px 16px rgba(215,162,74,.45);
+  border-bottom:2px solid #8a6116;
+}
+@keyframes annShift{
+  0%,100%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+}
+#announcement-bar .ann-inner{
+  max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:center;
+  gap:12px; flex-wrap:wrap; font-size:.92rem; font-weight:800;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+#announcement-bar .ann-icon{
+  font-size:1.25rem; flex-shrink:0; display:inline-block;
+  animation:annPulse 1.6s ease-in-out infinite;
+}
+@keyframes annPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.18); }
+}
+#announcement-bar a.ann-link{
+  color:#fff; text-decoration:none; font-weight:900; background:rgba(0,0,0,.18);
+  padding:3px 14px; border-radius:20px; white-space:nowrap; transition:background .2s;
+}
+#announcement-bar a.ann-link:hover{ background:rgba(0,0,0,.3); }
+#announcement-bar .ann-close{
+  position:absolute; left:14px; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.15); border:none; border-radius:6px; width:26px; height:26px;
+  cursor:pointer; font-size:.8rem; color:#fff; transition:background .2s;
+}
+#announcement-bar .ann-close:hover{ background:rgba(0,0,0,.3); }
+@media (max-width:640px){
+  #announcement-bar{ padding:11px 40px 11px 36px; }
+  #announcement-bar .ann-inner{ font-size:.8rem; }
+}
 
-/* ========= شريط الإشعارات ticker ========= */
-#ann-ticker-bar{
-  display:none; width:100%; height:46px; overflow:hidden;
-  position:relative;
-  background:linear-gradient(90deg,#4A2000,#8B5000 15%,#C88010 30%,#F5C830 45%,#FFD84D 50%,#F5C830 55%,#C88010 70%,#8B5000 85%,#4A2000);
-  background-size:250% 100%;
-  animation:annGoldFlow 3s linear infinite;
-  border-top:2px solid #FFD84D; border-bottom:2px solid #6B3A00;
-  box-shadow:0 2px 16px rgba(150,90,0,.5);
-  font-family:'Cairo','Tajawal',sans-serif; z-index:200;
-}
+/* شريط ticker */
+#ann-ticker-bar{display:none;width:100%;height:46px;overflow:hidden;position:relative;background:linear-gradient(90deg,#4A2000,#8B5000 15%,#C88010 30%,#F5C830 45%,#FFD84D 50%,#F5C830 55%,#C88010 70%,#8B5000 85%,#4A2000);background-size:250% 100%;animation:annGoldFlow 3s linear infinite;border-top:2px solid #FFD84D;border-bottom:2px solid #6B3A00;box-shadow:0 2px 16px rgba(150,90,0,.5);font-family:'Cairo','Tajawal',sans-serif;z-index:200;}
 @keyframes annGoldFlow{0%{background-position:100% 0}100%{background-position:0% 0}}
-#ann-ticker-bar::before{
-  content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,200,.22),transparent);
-  animation:annShimmer 2.5s ease-in-out infinite; pointer-events:none; z-index:1;
-}
-@keyframes annShimmer{0%{left:-60%}100%{left:120%}}
 .ann-bar-row{display:flex;align-items:stretch;height:46px;position:relative;z-index:2;}
-.ann-close-col{flex-shrink:0;width:42px;height:46px;background:rgba(0,0,0,.3);border:none;border-left:1px solid rgba(255,220,80,.25);color:rgba(255,245,160,.9);font-size:.78rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
-.ann-close-col:hover{background:rgba(0,0,0,.5);color:#fff;}
+.ann-close-col{flex-shrink:0;width:42px;height:46px;background:rgba(0,0,0,.3);border:none;border-left:1px solid rgba(255,220,80,.25);color:rgba(255,245,160,.9);font-size:.78rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.ann-close-col:hover{background:rgba(0,0,0,.5);}
 .ann-badge-col{flex-shrink:0;height:46px;padding:0 14px;background:rgba(0,0,0,.3);border-left:1px solid rgba(255,220,80,.25);display:flex;align-items:center;gap:6px;white-space:nowrap;}
 .ann-badge-col .ann-b-icon{font-size:.95rem;}
 .ann-badge-col .ann-b-lbl{color:#FFE87A;font-weight:900;font-size:.68rem;letter-spacing:2px;}
 .ann-scroll-area{flex:1;height:46px;overflow:hidden;position:relative;}
-.ann-scroll-txt{
-  display:inline-block; height:46px; line-height:46px;
-  white-space:nowrap; color:#2E2148; font-weight:900; font-size:.88rem;
-  text-shadow:0 1px 2px rgba(255,255,255,.3);
-  position:absolute; right:0; will-change:transform;
-}
+.ann-scroll-txt{display:inline-block;height:46px;line-height:46px;white-space:nowrap;color:#2E2148;font-weight:900;font-size:.88rem;position:absolute;right:0;will-change:transform;}
 .ann-exp-col{flex-shrink:0;height:46px;padding:0 12px;background:rgba(0,0,0,.2);border-right:1px solid rgba(255,220,80,.25);display:flex;align-items:center;color:rgba(255,250,180,.75);font-size:.7rem;white-space:nowrap;}
-@media(max-width:640px){.ann-badge-col .ann-b-lbl{display:none;}.ann-badge-col{padding:0 9px;}.ann-exp-col{display:none;}.ann-scroll-txt{font-size:.82rem;}}
+@media(max-width:640px){.ann-badge-col .ann-b-lbl{display:none;}.ann-exp-col{display:none;}}
 
-/* ========= ساعة وتاريخ ========= */
+/* ساعة */
+.clk{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:0;width:100%;border-top:1px solid rgba(255,255,255,.12);padding:16px 0 4px;margin-top:18px;}
+.clk-seg{padding:0 18px;display:flex;align-items:center;}
+.clk-div{width:1px;height:24px;background:rgba(255,255,255,.18);}
+.clk-time{font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.88);font-family:monospace;font-variant-numeric:tabular-nums;}
+.clk-colon{animation:blk 1s step-end infinite;color:rgba(215,162,74,.85);}
+@keyframes blk{0%,100%{opacity:1}50%{opacity:.08}}
+.clk-day{font-size:.92rem;font-weight:700;color:rgba(215,162,74,.9);font-family:'Tajawal',sans-serif;}
+.clk-hijri{font-size:.8rem;color:rgba(255,255,255,.55);font-family:'Cairo',sans-serif;}
+@media(max-width:480px){.clk{flex-wrap:wrap;}.clk-seg{padding:0 10px;}.clk-time{font-size:1.2rem;}.clk-day,.clk-hijri{font-size:.75rem;}}
 
-
-/* ========= PWA Install Banner ========= */
-#pwa-banner{
-  display:none; position:fixed; bottom:16px; right:16px; left:16px;
-  z-index:9999; justify-content:center;
-  animation:slideUp .4s ease;
-}
-@keyframes slideUp{from{transform:translateY(120%);opacity:0}to{transform:translateY(0);opacity:1}}
-.pwa-inner{
-  background:linear-gradient(135deg,var(--lav-800),var(--lav-900));
-  border:1px solid rgba(215,162,74,.4); border-radius:18px;
-  padding:14px 18px; display:flex; align-items:center; gap:14px;
-  max-width:540px; width:100%;
-  box-shadow:0 8px 32px rgba(0,0,0,.45);
-}
-.pwa-icon{width:46px;height:46px;border-radius:12px;flex-shrink:0;}
-.pwa-text{flex:1;}
-.pwa-title{color:#fff;font-weight:800;font-size:.88rem;}
-.pwa-sub{color:rgba(255,255,255,.55);font-size:.74rem;margin-top:2px;}
-.pwa-btn{background:linear-gradient(135deg,#7A4800,var(--gold));color:#fff;border:none;border-radius:10px;padding:9px 20px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.84rem;cursor:pointer;flex-shrink:0;white-space:nowrap;}
-.pwa-close{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.5);width:28px;height:28px;border-radius:7px;cursor:pointer;flex-shrink:0;font-size:.8rem;}
-.pwa-close:hover{background:rgba(255,255,255,.15);color:#fff;}
-
-/* ========= Responsive Fixes ========= */
-@media(max-width:480px){
-  .nav-links{display:none;}
-  .portals-grid{grid-template-columns:1fr!important;}
-  .portal-card{border-radius:18px;}
-  .footer-grid{grid-template-columns:1fr 1fr;}
-  main{padding:40px 14px 60px;}
-}
-
-.clock-strip{
-  display:flex; align-items:center; justify-content:center;
-  flex-direction:row; flex-wrap:nowrap;
-  border-top:1px solid rgba(255,255,255,.1);
-  padding:16px 20px 0; margin-top:18px; gap:0;
-}
-.clock-sep{
-  width:1px; height:28px;
-  background:rgba(255,255,255,.2);
-  margin:0 6px; flex-shrink:0;
-}
-.clock-piece{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:0 18px; flex-shrink:0;
-}
-.clock-time-txt{
-  font-size:1.6rem; font-weight:700; letter-spacing:2px;
-  color:rgba(255,255,255,.85); font-variant-numeric:tabular-nums;
-  font-family:'Cairo',monospace;
-}
-.clock-time-txt .colon{
-  animation:blink 1s step-end infinite;
-  color:rgba(215,162,74,.9);
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
-.clock-day-txt{
-  font-size:.95rem; font-weight:700;
-  color:rgba(215,162,74,.9);
-  font-family:'Tajawal',sans-serif;
-}
-.clock-hijri-txt{
-  font-size:.82rem; font-weight:400;
-  color:rgba(255,255,255,.6);
-  font-family:'Cairo',sans-serif;
-}
-@media(max-width:500px){
-  .clock-strip{ flex-wrap:wrap; gap:4px; padding:12px 8px 0; }
-  .clock-time-txt{ font-size:1.3rem; }
-  .clock-day-txt{ font-size:.82rem; }
-  .clock-hijri-txt{ font-size:.72rem; }
-  .clock-piece{ padding:0 10px; }
-}
+/* Responsive */
+@media(max-width:480px){.nav-links{display:none;}.portals-grid{grid-template-columns:1fr!important;}.portal-card{border-radius:18px;}main{padding:40px 14px 60px;}}
 </style>
 </head>
 <body>
 
 <div class="dot-field"></div>
 
-
+<!-- شريط الإشعارات -->
+<div id="announcement-bar">
+  <div class="ann-inner">
+    <span id="announcement-text"></span>
+  </div>
+  <button class="ann-close" onclick="closeAnnouncementBar()" title="إغلاق">✕</button>
+</div>
 
 <!-- الشريط العلوي الرسمي -->
 <div class="topbar">
@@ -694,7 +658,7 @@ footer{
   </div>
 </div>
 
-<!-- شريط إشعارات — مخفي افتراضياً، يظهر عند إرسال إشعار -->
+<!-- شريط إشعارات ticker — مخفي افتراضياً -->
 <div id="ann-ticker-bar">
   <div class="ann-bar-row">
     <button class="ann-close-col" onclick="annClose()">✕</button>
@@ -937,25 +901,26 @@ footer{
       منصة مَعَاك — نظام إدارة برامج ذوي الإعاقة | مدرسة مكة المكرمة المتوسطة
     </div>
 
-    <!-- ساعة ● يوم ● تاريخ هجري -->
-    <div class="clock-strip">
-      <div class="clock-piece"><span class="clock-time-txt"><span id="clock-h">00</span><span class="colon">:</span><span id="clock-m">00</span><span class="colon">:</span><span id="clock-s">00</span></span></div>
-      <div class="clock-sep"></div>
-      <div class="clock-piece"><span class="clock-day-txt" id="clock-day">الأحد</span></div>
-      <div class="clock-sep"></div>
-      <div class="clock-piece"><span class="clock-hijri-txt" id="clock-hijri">جارٍ التحميل...</span></div>
+
+    <!-- ساعة | يوم | تاريخ -->
+    <div class="clk">
+      <div class="clk-seg"><span class="clk-time"><span id="clk-h">00</span><span class="clk-colon">:</span><span id="clk-m">00</span><span class="clk-colon">:</span><span id="clk-s">00</span></span></div>
+      <div class="clk-div"></div>
+      <div class="clk-seg"><span class="clk-day" id="clk-day">الأحد</span></div>
+      <div class="clk-div"></div>
+      <div class="clk-seg"><span class="clk-hijri" id="clk-hijri">جارٍ التحميل...</span></div>
     </div>
   </div>
 </footer>
 
 <script>
-  // Intersection Observer للظهور التدريجي
+  // Intersection Observer
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // عدّادات متحركة
+  // عدادات
   function animateCount(el, target) {
     if (!el) return;
     let cur = 0;
@@ -966,160 +931,89 @@ footer{
       if (cur >= target) clearInterval(interval);
     }, 40);
   }
-
   setTimeout(() => {
     animateCount(document.getElementById('cnt1'), 21);
     animateCount(document.getElementById('cnt2'), 20);
     animateCount(document.getElementById('cnt3'), 8);
   }, 400);
 
-// ===================================================
-// ساعة رقمية + تاريخ هجري
-// ===================================================
-function updateClock() {
-  var now  = new Date();
-  var h    = String(now.getHours()).padStart(2,'0');
-  var m    = String(now.getMinutes()).padStart(2,'0');
-  var s    = String(now.getSeconds()).padStart(2,'0');
-  var hEl  = document.getElementById('clock-h');
-  var mEl  = document.getElementById('clock-m');
-  var sEl  = document.getElementById('clock-s');
-  if (hEl) hEl.textContent = h;
-  if (mEl) mEl.textContent = m;
-  if (sEl) sEl.textContent = s;
+  // ساعة + تاريخ هجري
+  function updateClock() {
+    var now = new Date();
+    var pad = function(n){ return String(n).padStart(2,'0'); };
+    var hEl = document.getElementById('clk-h');
+    var mEl = document.getElementById('clk-m');
+    var sEl = document.getElementById('clk-s');
+    if (hEl) hEl.textContent = pad(now.getHours());
+    if (mEl) mEl.textContent = pad(now.getMinutes());
+    if (sEl) sEl.textContent = pad(now.getSeconds());
+    var days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+    var dayEl = document.getElementById('clk-day');
+    if (dayEl) dayEl.textContent = days[now.getDay()];
+    try {
+      var hijri = now.toLocaleDateString('ar-SA-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'});
+      var hijriEl = document.getElementById('clk-hijri');
+      if (hijriEl) hijriEl.textContent = hijri.replace(/\s*هـ\s*$/, '') + ' هـ';
+    } catch(e) {}
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
 
-  var days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-  var dayEl = document.getElementById('clock-day');
-  if (dayEl) dayEl.textContent = days[now.getDay()];
-
-  try {
-    var hijri = now.toLocaleDateString('ar-SA-u-ca-islamic', {
-      day:'numeric', month:'long', year:'numeric'
-    });
-    var hijriEl = document.getElementById('clock-hijri');
-    // إزالة هـ إذا كانت مضمنة تلقائياً في النتيجة
-    var hFinal = hijri.replace(/[هـ]ـ*\s*$/, '').trim();
-    if (hijriEl) hijriEl.textContent = hFinal + ' هـ';
-  } catch(e) {}
-}
-updateClock();
-setInterval(updateClock, 1000);
-
-// ===================================================
-// شريط الإشعارات ticker
-// ===================================================
-(async function() {
-  try {
-    if (sessionStorage.getItem('ann_closed')) return;
-    var SB  = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
-    var res = await fetch(SB + '/storage/v1/object/public/reports/site-announcement.json?t=' + Date.now());
-    if (!res.ok) return;
-    var d = await res.json();
-    if (!d || !d.enabled || !d.message) return;
-    if (d.expiresAt && new Date(d.expiresAt) < new Date()) return;
-
-    var icons  = {default:'📢',news:'📰',alert:'🔔',important:'⚠️'};
-    var labels = {default:'إشعار',news:'أخبار',alert:'تنبيه',important:'مهم'};
-    var t = d.type || 'default';
-    var bi = document.getElementById('ann-b-icon');
-    var bl = document.getElementById('ann-b-lbl');
-    if (bi) bi.textContent = icons[t]  || '📢';
-    if (bl) bl.textContent = labels[t] || 'إشعار';
-
-    function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-    var lnk  = d.link ? ' <a style="color:#3F2E63;text-decoration:none;background:rgba(0,0,0,.1);padding:2px 10px;border-radius:8px;font-size:.76rem;" href="'+d.link+'" target="_blank" rel="noopener">← المزيد</a>' : '';
-    var txt  = document.getElementById('ann-scroll-txt');
-    if (txt) txt.innerHTML = esc(d.message) + lnk;
-
-    if (d.expiresAt) {
-      var diff = new Date(d.expiresAt) - new Date();
-      var days = Math.floor(diff/86400000);
-      var hrs  = Math.floor((diff%86400000)/3600000);
-      var expEl = document.getElementById('ann-exp-col');
-      if (expEl) expEl.textContent = days>0 ? ('⏱ '+days+' يوم') : hrs>0 ? ('⏱ '+hrs+' ساعة') : '⏱ ينتهي قريباً';
-    }
-
-    var bar = document.getElementById('ann-ticker-bar');
-    if (bar) bar.style.display = 'block';
-
-    // تحريك النص بـ requestAnimationFrame
-    var pos = 0;
-    var paused = false;
-    if (txt) {
-      txt.addEventListener('mouseenter', function(){ paused = true; });
-      txt.addEventListener('mouseleave', function(){ paused = false; });
-      txt.addEventListener('touchstart', function(){ paused = !paused; }, {passive:true});
-    }
-    function scroll() {
-      if (!paused && txt && bar) {
-        pos -= 1.0;
-        var trackW = bar.offsetWidth;
-        var textW  = txt.offsetWidth;
-        if (Math.abs(pos) > textW + trackW) pos = trackW;
-        txt.style.transform = 'translateX(' + pos + 'px)';
+  // شريط الإشعارات
+  (async function() {
+    try {
+      if (sessionStorage.getItem('ann_closed')) return;
+      var SB  = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
+      var res = await fetch(SB + '/storage/v1/object/public/reports/site-announcement.json?t=' + Date.now());
+      if (!res.ok) return;
+      var d = await res.json();
+      if (!d || !d.enabled || !d.message) return;
+      if (d.expiresAt && new Date(d.expiresAt) < new Date()) return;
+      var icons  = {default:'📢',news:'📰',alert:'🔔',important:'⚠️'};
+      var labels = {default:'إشعار',news:'أخبار',alert:'تنبيه',important:'مهم'};
+      var t = d.type || 'default';
+      var bi = document.getElementById('ann-b-icon');
+      var bl = document.getElementById('ann-b-lbl');
+      if (bi) bi.textContent = icons[t]  || '📢';
+      if (bl) bl.textContent = labels[t] || 'إشعار';
+      function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      var lnk = d.link ? ' <a style="color:#3F2E63;text-decoration:none;background:rgba(0,0,0,.1);padding:2px 10px;border-radius:8px;font-size:.76rem;" href="'+d.link+'" target="_blank" rel="noopener">← المزيد</a>' : '';
+      var txt = document.getElementById('ann-scroll-txt');
+      if (txt) txt.innerHTML = esc(d.message) + lnk;
+      if (d.expiresAt) {
+        var diff = new Date(d.expiresAt) - new Date();
+        var ddays = Math.floor(diff/86400000);
+        var hrs  = Math.floor((diff%86400000)/3600000);
+        var expEl = document.getElementById('ann-exp-col');
+        if (expEl) expEl.textContent = ddays>0 ? ('⏱ '+ddays+' يوم') : hrs>0 ? ('⏱ '+hrs+' ساعة') : '⏱ ينتهي قريباً';
       }
+      var bar = document.getElementById('ann-ticker-bar');
+      if (bar) bar.style.display = 'block';
+      var pos = 0, paused = false;
+      if (txt) {
+        txt.addEventListener('mouseenter', function(){ paused = true; });
+        txt.addEventListener('mouseleave', function(){ paused = false; });
+      }
+      function scroll() {
+        if (!paused && txt && bar) {
+          pos -= 1.0;
+          var textW = txt.offsetWidth;
+          var trackW = bar.offsetWidth;
+          if (Math.abs(pos) > textW + trackW) pos = trackW;
+          txt.style.transform = 'translateX(' + pos + 'px)';
+        }
+        requestAnimationFrame(scroll);
+      }
+      pos = (bar ? bar.offsetWidth : 800);
       requestAnimationFrame(scroll);
-    }
-    pos = (bar ? bar.offsetWidth : 800);
-    requestAnimationFrame(scroll);
-  } catch(e) {}
-})();
+    } catch(e) {}
+  })();
 
-function annClose() {
-  var bar = document.getElementById('ann-ticker-bar');
-  if (bar) bar.style.display = 'none';
-  try { sessionStorage.setItem('ann_closed','1'); } catch(e) {}
-}
-
-// ===================================================
-// PWA — تثبيت التطبيق
-// ===================================================
-var _pwaPrompt = null;
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').catch(function(){});
-  });
-}
-window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  _pwaPrompt = e;
-  setTimeout(function() {
-    try { if (!sessionStorage.getItem('pwa_dismissed')) showPWABanner(); } catch(z) {}
-  }, 3000);
-});
-function showPWABanner() {
-  var b = document.getElementById('pwa-banner');
-  if (b) b.style.display = 'flex';
-}
-function installPWA() {
-  var b = document.getElementById('pwa-banner');
-  if (b) b.style.display = 'none';
-  if (!_pwaPrompt) return;
-  _pwaPrompt.prompt();
-  _pwaPrompt.userChoice.then(function(){ _pwaPrompt = null; });
-}
-function dismissPWA() {
-  var b = document.getElementById('pwa-banner');
-  if (b) b.style.display = 'none';
-  try { sessionStorage.setItem('pwa_dismissed','1'); } catch(e) {}
-}
-window.addEventListener('appinstalled', function() {
-  var b = document.getElementById('pwa-banner');
-  if (b) b.style.display = 'none';
-});
+  function annClose() {
+    var bar = document.getElementById('ann-ticker-bar');
+    if (bar) bar.style.display = 'none';
+    try { sessionStorage.setItem('ann_closed','1'); } catch(e) {}
+  }
 </script>
-
-<!-- PWA Install Banner -->
-<div id="pwa-banner">
-  <div class="pwa-inner">
-    <img src="icon-192.png" alt="مَعَاك" class="pwa-icon">
-    <div class="pwa-text">
-      <div class="pwa-title">أضف منصة مَعَاك للشاشة الرئيسية</div>
-      <div class="pwa-sub">تجربة تطبيق أسرع وأسهل بدون متجر</div>
-    </div>
-    <button class="pwa-btn" onclick="installPWA()">تثبيت</button>
-    <button class="pwa-close" onclick="dismissPWA()">✕</button>
-  </div>
-</div>
 </body>
 </html>
