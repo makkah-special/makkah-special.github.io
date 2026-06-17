@@ -306,20 +306,33 @@ footer strong { color:var(--accent-light); }
   box-shadow:0 8px 28px rgba(0,0,0,0.12);
   border-color:#D7A24A;
 }
-
-.ann-compose{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px 22px;margin-bottom:18px;}
-.ann-compose-head{font-weight:900;font-size:.92rem;color:#3F2E63;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #EAE1F7;}
-.ann-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-.ann-field-g{display:flex;flex-direction:column;gap:5px;}
-.ann-field-g label{font-size:.78rem;font-weight:700;color:#6E5F82;}
-.ann-inp-g,.ann-sel-g{padding:9px 12px;border:1.5px solid #DCD2EE;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.85rem;width:100%;outline:none;background:#FBFAFE;color:#221335;}
-.ann-inp-g:focus,.ann-sel-g:focus{border-color:#8B6ABF;}
-.ann-send-g{width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:11px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;}
-.ann-res-g{font-size:.8rem;min-height:18px;margin-top:8px;font-weight:700;text-align:center;}
-.ann-disable-box{margin-top:10px;padding:10px 14px;background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
-.ann-disable-lbl{font-size:.82rem;color:#7F1D1D;font-weight:700;}
-.ann-disable-btn{background:#DC2626;color:#fff;border:none;border-radius:8px;padding:7px 18px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.82rem;cursor:pointer;}
-@media(max-width:640px){.ann-grid-2{grid-template-columns:1fr;}}
+.ann-card{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px;margin-bottom:16px;}
+.ann-card-title{font-weight:900;font-size:.9rem;color:#3F2E63;margin-bottom:14px;border-bottom:1px solid #EAE1F7;padding-bottom:8px;}
+.ann-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.ann-f{display:flex;flex-direction:column;gap:4px;}
+.ann-f label{font-size:.74rem;font-weight:700;color:#6E5F82;}
+.ann-inp,.ann-sel{padding:8px 12px;border:1.5px solid #DCD2EE;border-radius:8px;font-family:Cairo,sans-serif;font-size:.83rem;width:100%;color:#221335;background:#FBFAFE;outline:none;}
+.ann-inp:focus,.ann-sel:focus{border-color:#8B6ABF;}
+.ann-send-btn{width:100%;margin-top:10px;padding:11px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:10px;font-family:Cairo,sans-serif;font-weight:800;font-size:.87rem;cursor:pointer;}
+.ann-disable-row{margin-top:8px;padding:9px 13px;background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.ann-disable-lbl{font-size:.78rem;color:#7F1D1D;font-weight:700;}
+.ann-disable-btn{background:#DC2626;color:#fff;border:none;border-radius:7px;padding:6px 14px;font-family:Cairo,sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;}
+.ann-res{font-size:.78rem;min-height:16px;margin-top:6px;font-weight:700;text-align:center;}
+.ann-log{margin-top:14px;border-top:1px solid #EAE1F7;padding-top:12px;}
+.ann-log-title{font-weight:800;font-size:.82rem;color:#3F2E63;margin-bottom:8px;}
+.ann-log-item{background:#FBFAFE;border:1px solid #DCD2EE;border-radius:9px;padding:9px 36px 9px 13px;margin-bottom:7px;position:relative;}
+.ann-log-msg{font-weight:700;font-size:.82rem;color:#221335;margin-bottom:3px;}
+.ann-log-meta{font-size:.7rem;color:#6E5F82;}
+.ann-log-del{position:absolute;top:7px;left:8px;background:#FEF2F2;color:#DC2626;border:none;border-radius:5px;padding:2px 8px;font-size:.7rem;cursor:pointer;font-weight:700;}
+.ann-log-empty{text-align:center;color:#9ca3af;font-size:.8rem;padding:16px 0;}
+.t-ann-box{border-radius:13px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;border-right:5px solid #D7A24A;background:linear-gradient(135deg,rgba(215,162,74,.08),#fff);}
+.t-ann-icon{font-size:1.3rem;flex-shrink:0;}
+.t-ann-body{flex:1;}
+.t-ann-msg{font-weight:800;font-size:.87rem;margin-bottom:3px;}
+.t-ann-meta{font-size:.73rem;color:#6E5F82;}
+.t-ann-link{font-size:.74rem;color:#6B4C9A;font-weight:700;text-decoration:none;}
+.ann-container{margin-bottom:16px;}
+@media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -572,47 +585,50 @@ footer strong { color:var(--accent-light); }
 
     <!-- TAB: الإعدادات -->
     <div class="main-tab-pane" id="tab-settings">
-<div class="ann-compose">
-<div class="ann-compose-head">📢 إرسال إشعار / تنبيه</div>
-<div class="ann-grid-2">
-<div class="ann-field-g"><label>نوع الإشعار</label>
-<select id="ann-type-g" class="ann-sel-g">
+<div class="ann-card">
+<div class="ann-card-title">📢 إرسال إشعار</div>
+<div class="ann-row2">
+<div class="ann-f"><label>نوع الإشعار</label>
+<select id="ann-type-g" class="ann-sel">
 <option value="default">📢 إشعار عام</option>
-<option value="news">📰 خبر / إعلان</option>
+<option value="news">📰 خبر</option>
 <option value="alert">🔔 تنبيه</option>
-<option value="important">⚠️ مهم جداً</option>
+<option value="important">⚠️ مهم</option>
 </select></div>
-<div class="ann-field-g"><label>الوجهة</label>
-<select id="ann-target-g" class="ann-sel-g">
-<option value="main">🌐 الصفحة الرئيسية</option>
+<div class="ann-f"><label>الوجهة</label>
+<select id="ann-target-g" class="ann-sel">
 <option value="teachers">👨‍🏫 بوابة المعلمين</option>
-<option value="both">📡 الاثنتان</option>
+<option value="principal">🏫 لوحة مدير المدرسة</option>
+<option value="all_admin">📡 المعلمون وإدارة المدرسة</option>
 </select></div>
 </div>
-<div class="ann-field-g" style="margin-bottom:12px;"><label>نص الإشعار</label>
-<input type="text" id="ann-message-g" class="ann-inp-g" placeholder="اكتب نص الإشعار..."></div>
-<div class="ann-grid-2">
-<div class="ann-field-g"><label>رابط (اختياري)</label>
-<input type="url" id="ann-link-g" class="ann-inp-g" placeholder="https://..."></div>
-<div class="ann-field-g"><label>المدة</label>
-<select id="ann-duration-g" class="ann-sel-g">
+<div class="ann-row2">
+<div class="ann-f"><label>البرنامج (للمعلمين)</label>
+<select id="ann-prog-g" class="ann-sel">
+<option value="both">الكل</option>
+<option value="dumaj">الدمج الفكري</option>
+<option value="yaseer">يسير</option>
+</select></div>
+<div class="ann-f"><label>المدة</label>
+<select id="ann-dur-g" class="ann-sel">
 <option value="0">بدون انتهاء</option>
-<option value="1">يوم واحد</option>
+<option value="1">يوم</option>
 <option value="3">3 أيام</option>
 <option value="7" selected>أسبوع</option>
 <option value="14">أسبوعان</option>
 <option value="30">شهر</option>
 </select></div>
 </div>
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.84rem;font-weight:700;color:#3F2E63;margin-bottom:4px;">
-<input type="checkbox" id="ann-enabled-g" checked style="width:16px;height:16px;"> تفعيل الإشعار فوراً</label>
-<button class="ann-send-g" onclick="sendAnnouncement("مشرف الإدارة العامة")">📤 إرسال الإشعار</button>
-<div class="ann-res-g" id="ann-res-g"></div>
-<div class="ann-disable-box">
-<div class="ann-disable-lbl">⚡ إيقاف الإشعار الحالي فوراً</div>
-<button class="ann-disable-btn" onclick="disableAnnouncementNow()">🔴 تعطيل الآن</button>
+<div class="ann-f" style="margin-bottom:9px;"><label>نص الإشعار</label>
+<input type="text" id="ann-msg-g" class="ann-inp" placeholder="نص الإشعار..."></div>
+<div class="ann-f" style="margin-bottom:9px;"><label>رابط (اختياري)</label>
+<input type="url" id="ann-link-g" class="ann-inp" placeholder="https://..."></div>
+<label style="display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:700;color:#3F2E63;margin-bottom:3px;">
+<input type="checkbox" id="ann-en-g" checked style="width:15px;height:15px;"> تفعيل فوراً</label>
+<button class="ann-send-btn" onclick="annSend('مشرف الإدارة العامة')">📤 إرسال</button>
+<div class="ann-res" id="ann-res"></div>
 </div>
-</div>
+
       <div class="settings-card">
         <div class="settings-title">🔐 تغيير رمز الدخول</div>
         <div class="settings-desc">تغيير رمز دخول لوحة المشرف</div>
@@ -1983,92 +1999,11 @@ async function saveAnnouncement() {
   }
 }
 
-
-var _ANN_SB  = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-var _ANN_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-
-async function sendAnnouncement(senderName) {
-  var enabled  = document.getElementById('ann-enabled-g') ? document.getElementById('ann-enabled-g').checked : true;
-  var message  = (document.getElementById('ann-message-g') ? document.getElementById('ann-message-g').value : '').trim();
-  var link     = (document.getElementById('ann-link-g') ? document.getElementById('ann-link-g').value : '').trim();
-  var type     = document.getElementById('ann-type-g') ? document.getElementById('ann-type-g').value : 'default';
-  var target   = document.getElementById('ann-target-g') ? document.getElementById('ann-target-g').value : 'main';
-  var duration = parseInt(document.getElementById('ann-duration-g') ? document.getElementById('ann-duration-g').value : '0');
-  var resEl    = document.getElementById('ann-res-g');
-
-  if (!message) {
-    if (resEl) { resEl.style.color='#dc2626'; resEl.textContent='⚠️ اكتب نص الإشعار أولاً'; }
-    return;
-  }
-  var expiresAt = duration > 0 ? new Date(Date.now() + duration*86400000).toISOString() : null;
-  var payload = {enabled:enabled, message:message, link:link, type:type, target:target,
-    expiresAt:expiresAt, sentAt:new Date().toISOString(), sentBy:senderName||'إدارة'};
-
-  var paths = [];
-  if (target === 'main' || target === 'both') paths.push('reports/site-announcement.json');
-  if (target === 'teachers' || target === 'both') paths.push('reports/teachers-announcement.json');
-
-  var ok = false;
-  for (var i = 0; i < paths.length; i++) {
-    try {
-      var blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
-      var r = await fetch(_ANN_SB + '/storage/v1/object/' + paths[i], {
-        method: 'POST',
-        headers: {apikey:_ANN_KEY, Authorization:'Bearer '+_ANN_KEY,
-          'Content-Type':'application/json', 'x-upsert':'true'},
-        body: blob
-      });
-      if (r.ok) ok = true;
-    } catch(e) {}
-  }
-
-  if (resEl) {
-    resEl.style.color = ok ? '#16a34a' : '#dc2626';
-    var dest = target==='both' ? 'للصفحتين' : target==='teachers' ? 'لبوابة المعلمين' : 'للصفحة الرئيسية';
-    resEl.textContent = ok ? ('✅ تم الإرسال ' + dest) : '⚠️ تعذر الإرسال، تحقق من الاتصال';
-  }
-  if (ok) {
-    setTimeout(function() {
-      if (resEl) resEl.textContent = '';
-      var m = document.getElementById('ann-message-g');
-      if (m) m.value = '';
-    }, 4000);
-  }
-}
-
-async function disableAnnouncementNow() {
-  if (!confirm('تعطيل الإشعار الحالي فوراً لجميع المستخدمين؟')) return;
-  try {
-    var r = await fetch(_ANN_SB + '/storage/v1/object/public/reports/site-announcement.json?t=' + Date.now());
-    var d = r.ok ? await r.json() : {};
-    d.enabled = false;
-    d.disabledAt = new Date().toISOString();
-    var blob = new Blob([JSON.stringify(d)], {type:'application/json'});
-    var res = await fetch(_ANN_SB + '/storage/v1/object/reports/site-announcement.json', {
-      method: 'POST',
-      headers: {apikey:_ANN_KEY, Authorization:'Bearer '+_ANN_KEY,
-        'Content-Type':'application/json', 'x-upsert':'true'},
-      body: blob
-    });
-    var resEl = document.getElementById('ann-res-g');
-    if (res.ok) {
-      if (resEl) { resEl.style.color='#16a34a'; resEl.textContent='✅ تم تعطيل الإشعار فوراً'; }
-      else alert('✅ تم تعطيل الإشعار فوراً');
-    } else {
-      if (resEl) { resEl.style.color='#dc2626'; resEl.textContent='⚠️ تعذر التعطيل'; }
-      else alert('⚠️ تعذر التعطيل');
-    }
-  } catch(e) { alert('⚠️ خطأ: ' + e.message); }
-}
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("/sw.js");
-  });
-}
 </script>
 
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#2E2148,#3F2E63);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(46,33,72,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
 </body>
 </html>
+<script src="ann-system.js"></script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
