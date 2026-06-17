@@ -1600,7 +1600,8 @@ function saveIqrarPDF() {
         © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
       </div>
       <scr' + 'ipt>window.onload=()=>window.print();</scr' + 'ipt>
-    </body>
+    <script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</body>
     </html>
   `);
   win.document.close();
@@ -2646,10 +2647,12 @@ function printCertificate(id) {
     </div>
   </div>
   <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
 </body></html>`);
   win.document.close();
 }
 
 </script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
 </body>
 </html>
