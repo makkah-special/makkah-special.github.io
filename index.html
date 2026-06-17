@@ -939,6 +939,8 @@ try {
   }
 } catch(e) {}
 </script>
+
+<script>
 (async function loadAnnouncementBar() {
   try {
     if (sessionStorage.getItem('announcement_dismissed')) return;
@@ -1009,5 +1011,15 @@ function closeAnnouncementBar() {
 .pwa-btn-close:hover{ background:rgba(255,255,255,.15); color:#fff; }
 </style>
 
+
+<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("/sw.js");
+  });
+}
+</script>
 </body>
 </html>
