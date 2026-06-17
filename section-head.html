@@ -225,10 +225,13 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
 .ann-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .ann-field-g{display:flex;flex-direction:column;gap:5px;}
 .ann-field-g label{font-size:.78rem;font-weight:700;color:#6E5F82;}
-.ann-inp-g,.ann-sel-g{padding:9px 12px;border:1.5px solid #DCD2EE;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.85rem;width:100%;outline:none;background:#FBFAFE;transition:border .2s;color:#221335;}
-.ann-inp-g:focus,.ann-sel-g:focus{border-color:#8B6ABF;background:#fff;}
+.ann-inp-g,.ann-sel-g{padding:9px 12px;border:1.5px solid #DCD2EE;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.85rem;width:100%;outline:none;background:#FBFAFE;color:#221335;}
+.ann-inp-g:focus,.ann-sel-g:focus{border-color:#8B6ABF;}
 .ann-send-g{width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:11px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;}
 .ann-res-g{font-size:.8rem;min-height:18px;margin-top:8px;font-weight:700;text-align:center;}
+.ann-disable-box{margin-top:10px;padding:10px 14px;background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.ann-disable-lbl{font-size:.82rem;color:#7F1D1D;font-weight:700;}
+.ann-disable-btn{background:#DC2626;color:#fff;border:none;border-radius:8px;padding:7px 18px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.82rem;cursor:pointer;}
 @media(max-width:640px){.ann-grid-2{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -377,6 +380,7 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
       <button class="tab-btn" onclick="switchTab('meetings',this)">📹 سجل الاستدعاءات</button>
       <button class="tab-btn" onclick="switchTab('notes',this)">✍️ الملاحظات والشكر</button>
       <button class="tab-btn" onclick="switchTab('curriculum',this)">📘 المناهج</button>
+<button class="tab-btn" onclick="switchTab('announcements',this)">📢 إشعارات</button>
     </div>
 
     <!-- ===== لمحة عامة ===== -->
@@ -479,7 +483,7 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
     </div>
 
     <!-- ===== المناهج ===== -->
-    <div class="ann-compose">
+    <div class="tab-pane" id="tab-announcements"><div class="s-card"><div class="s-card-head">📢 إشعارات</div><div class="s-card-body"><div class="ann-compose">
 <div class="ann-compose-head">📢 إرسال إشعار / تنبيه</div>
 <div class="ann-grid-2">
 <div class="ann-field-g"><label>نوع الإشعار</label>
@@ -487,7 +491,7 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
 <option value="default">📢 إشعار عام</option>
 <option value="news">📰 خبر / إعلان</option>
 <option value="alert">🔔 تنبيه</option>
-<option value="important">⚠️ مهم</option>
+<option value="important">⚠️ مهم جداً</option>
 </select></div>
 <div class="ann-field-g"><label>الوجهة</label>
 <select id="ann-target-g" class="ann-sel-g">
@@ -504,7 +508,7 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
 <div class="ann-field-g"><label>المدة</label>
 <select id="ann-duration-g" class="ann-sel-g">
 <option value="0">بدون انتهاء</option>
-<option value="1">يوم</option>
+<option value="1">يوم واحد</option>
 <option value="3">3 أيام</option>
 <option value="7" selected>أسبوع</option>
 <option value="14">أسبوعان</option>
@@ -512,14 +516,14 @@ select.sel-inp:focus{ border-color:var(--lav-500); }
 </select></div>
 </div>
 <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.84rem;font-weight:700;color:#3F2E63;margin-bottom:4px;">
-<input type="checkbox" id="ann-enabled-g" checked style="width:16px;height:16px;"> تفعيل فوراً</label>
-<button class="ann-send-g" onclick="sendAnnouncement(currentUser.name)">📤 إرسال</button>
+<input type="checkbox" id="ann-enabled-g" checked style="width:16px;height:16px;"> تفعيل الإشعار فوراً</label>
+<button class="ann-send-g" onclick="sendAnnouncement(currentUser.name)">📤 إرسال الإشعار</button>
 <div class="ann-res-g" id="ann-res-g"></div>
-<div style="margin-top:10px;padding:10px 14px;background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-  <div style="font-size:.82rem;color:#7F1D1D;font-weight:700;">⚡ إيقاف الإشعار فوراً</div>
-  <button onclick="disableAnnouncementNow()" style="background:#DC2626;color:#fff;border:none;border-radius:8px;padding:7px 18px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.82rem;cursor:pointer;">🔴 تعطيل الآن</button>
+<div class="ann-disable-box">
+<div class="ann-disable-lbl">⚡ إيقاف الإشعار الحالي فوراً</div>
+<button class="ann-disable-btn" onclick="disableAnnouncementNow()">🔴 تعطيل الآن</button>
 </div>
-</div>
+</div></div></div></div>
 <div class="tab-pane" id="tab-curriculum">
       <div class="s-card">
         <div class="s-card-head">📘 توزيع مناهج المعلمين — للاطلاع فقط</div>
@@ -1164,43 +1168,89 @@ function closeStuModal() { document.getElementById('stu-modal').style.display = 
 // ====================================================
 document.getElementById('login-password').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 document.getElementById('login-username').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('login-password').focus(); });
-</script>
-<script>
-const _ANN_SB="https://pyrxwqgapwjwhiskowhk.supabase.co";
-const _ANN_KEY="sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-async function sendAnnouncement(senderName){
-  const enabled=document.getElementById('ann-enabled-g')?.checked??true;
-  const message=(document.getElementById('ann-message-g')?.value||'').trim();
-  const link=(document.getElementById('ann-link-g')?.value||'').trim();
-  const type=document.getElementById('ann-type-g')?.value||'default';
-  const target=document.getElementById('ann-target-g')?.value||'main';
-  const duration=parseInt(document.getElementById('ann-duration-g')?.value||'0');
-  const resEl=document.getElementById('ann-res-g');
-  if(!message){if(resEl){resEl.style.color='#dc2626';resEl.textContent='⚠️ اكتب النص';}return;}
-  const expiresAt=duration>0?new Date(Date.now()+duration*86400000).toISOString():null;
-  const payload={enabled,message,link,type,target,expiresAt,sentAt:new Date().toISOString(),sentBy:senderName||'إدارة'};
-  const paths=[];
-  if(target==='main'||target==='both')paths.push('reports/site-announcement.json');
-  if(target==='teachers'||target==='both')paths.push('reports/teachers-announcement.json');
-  let ok=false;
-  for(const p of paths){
-    try{
-      const b=new Blob([JSON.stringify(payload)],{type:'application/json'});
-      const r=await fetch(_ANN_SB+'/storage/v1/object/'+p,{method:'POST',
-        headers:{apikey:_ANN_KEY,Authorization:'Bearer '+_ANN_KEY,'Content-Type':'application/json','x-upsert':'true'},body:b});
-      if(r.ok)ok=true;
-    }catch(e){}
+
+var _ANN_SB  = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+var _ANN_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+
+async function sendAnnouncement(senderName) {
+  var enabled  = document.getElementById('ann-enabled-g') ? document.getElementById('ann-enabled-g').checked : true;
+  var message  = (document.getElementById('ann-message-g') ? document.getElementById('ann-message-g').value : '').trim();
+  var link     = (document.getElementById('ann-link-g') ? document.getElementById('ann-link-g').value : '').trim();
+  var type     = document.getElementById('ann-type-g') ? document.getElementById('ann-type-g').value : 'default';
+  var target   = document.getElementById('ann-target-g') ? document.getElementById('ann-target-g').value : 'main';
+  var duration = parseInt(document.getElementById('ann-duration-g') ? document.getElementById('ann-duration-g').value : '0');
+  var resEl    = document.getElementById('ann-res-g');
+
+  if (!message) {
+    if (resEl) { resEl.style.color='#dc2626'; resEl.textContent='⚠️ اكتب نص الإشعار أولاً'; }
+    return;
   }
-  if(resEl){
-    resEl.style.color=ok?'#16a34a':'#dc2626';
-    const d=target==='both'?'للصفحتين':target==='teachers'?'لبوابة المعلمين':'للصفحة الرئيسية';
-    resEl.textContent=ok?'✅ تم الإرسال '+d:'⚠️ تعذر الإرسال';
+  var expiresAt = duration > 0 ? new Date(Date.now() + duration*86400000).toISOString() : null;
+  var payload = {enabled:enabled, message:message, link:link, type:type, target:target,
+    expiresAt:expiresAt, sentAt:new Date().toISOString(), sentBy:senderName||'إدارة'};
+
+  var paths = [];
+  if (target === 'main' || target === 'both') paths.push('reports/site-announcement.json');
+  if (target === 'teachers' || target === 'both') paths.push('reports/teachers-announcement.json');
+
+  var ok = false;
+  for (var i = 0; i < paths.length; i++) {
+    try {
+      var blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+      var r = await fetch(_ANN_SB + '/storage/v1/object/' + paths[i], {
+        method: 'POST',
+        headers: {apikey:_ANN_KEY, Authorization:'Bearer '+_ANN_KEY,
+          'Content-Type':'application/json', 'x-upsert':'true'},
+        body: blob
+      });
+      if (r.ok) ok = true;
+    } catch(e) {}
   }
-  if(ok){setTimeout(()=>{if(resEl)resEl.textContent='';const m=document.getElementById('ann-message-g');if(m)m.value='';},4000);}
+
+  if (resEl) {
+    resEl.style.color = ok ? '#16a34a' : '#dc2626';
+    var dest = target==='both' ? 'للصفحتين' : target==='teachers' ? 'لبوابة المعلمين' : 'للصفحة الرئيسية';
+    resEl.textContent = ok ? ('✅ تم الإرسال ' + dest) : '⚠️ تعذر الإرسال، تحقق من الاتصال';
+  }
+  if (ok) {
+    setTimeout(function() {
+      if (resEl) resEl.textContent = '';
+      var m = document.getElementById('ann-message-g');
+      if (m) m.value = '';
+    }, 4000);
+  }
 }
-</script>
-<script>
-if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}
+
+async function disableAnnouncementNow() {
+  if (!confirm('تعطيل الإشعار الحالي فوراً لجميع المستخدمين؟')) return;
+  try {
+    var r = await fetch(_ANN_SB + '/storage/v1/object/public/reports/site-announcement.json?t=' + Date.now());
+    var d = r.ok ? await r.json() : {};
+    d.enabled = false;
+    d.disabledAt = new Date().toISOString();
+    var blob = new Blob([JSON.stringify(d)], {type:'application/json'});
+    var res = await fetch(_ANN_SB + '/storage/v1/object/reports/site-announcement.json', {
+      method: 'POST',
+      headers: {apikey:_ANN_KEY, Authorization:'Bearer '+_ANN_KEY,
+        'Content-Type':'application/json', 'x-upsert':'true'},
+      body: blob
+    });
+    var resEl = document.getElementById('ann-res-g');
+    if (res.ok) {
+      if (resEl) { resEl.style.color='#16a34a'; resEl.textContent='✅ تم تعطيل الإشعار فوراً'; }
+      else alert('✅ تم تعطيل الإشعار فوراً');
+    } else {
+      if (resEl) { resEl.style.color='#dc2626'; resEl.textContent='⚠️ تعذر التعطيل'; }
+      else alert('⚠️ تعذر التعطيل');
+    }
+  } catch(e) { alert('⚠️ خطأ: ' + e.message); }
+}
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("/sw.js");
+  });
+}
 </script>
 </body>
 </html>
