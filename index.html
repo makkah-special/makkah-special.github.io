@@ -62,6 +62,7 @@
 
 *{ margin:0; padding:0; box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
+html,body{margin:0;padding:0;}
 body{
   font-family:'Cairo', sans-serif;
   background: var(--bg);
@@ -499,47 +500,7 @@ footer{
   .hero-btns{ flex-direction:column; align-items:stretch; }
   .btn-primary, .btn-outline{ justify-content:center; }
 /* شريط الإشعارات العام */
-#announcement-bar{
-  display:none; position:relative; overflow:hidden;
-  background:linear-gradient(120deg, #8a6116, var(--gold) 45%, #E8C27A 75%, var(--gold));
-  background-size:200% 100%;
-  animation:annShift 6s ease-in-out infinite;
-  color:#fff; padding:13px 24px; text-align:center;
-  box-shadow:0 2px 16px rgba(215,162,74,.45);
-  border-bottom:2px solid #8a6116;
-}
-@keyframes annShift{
-  0%,100%{ background-position:0% 50%; }
-  50%{ background-position:100% 50%; }
-}
-#announcement-bar .ann-inner{
-  max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:center;
-  gap:12px; flex-wrap:wrap; font-size:.92rem; font-weight:800;
-  text-shadow:0 1px 2px rgba(0,0,0,.18);
-}
-#announcement-bar .ann-icon{
-  font-size:1.25rem; flex-shrink:0; display:inline-block;
-  animation:annPulse 1.6s ease-in-out infinite;
-}
-@keyframes annPulse{
-  0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.18); }
-}
-#announcement-bar a.ann-link{
-  color:#fff; text-decoration:none; font-weight:900; background:rgba(0,0,0,.18);
-  padding:3px 14px; border-radius:20px; white-space:nowrap; transition:background .2s;
-}
-#announcement-bar a.ann-link:hover{ background:rgba(0,0,0,.3); }
-#announcement-bar .ann-close{
-  position:absolute; left:14px; top:50%; transform:translateY(-50%);
-  background:rgba(0,0,0,.15); border:none; border-radius:6px; width:26px; height:26px;
-  cursor:pointer; font-size:.8rem; color:#fff; transition:background .2s;
-}
-#announcement-bar .ann-close:hover{ background:rgba(0,0,0,.3); }
-@media (max-width:640px){
-  #announcement-bar{ padding:11px 40px 11px 36px; }
-  #announcement-bar .ann-inner{ font-size:.8rem; }
-}
+
 
 /* شريط ticker */
 #ann-ticker-bar{display:none;width:100%;height:46px;overflow:hidden;position:relative;background:linear-gradient(90deg,#4A2000,#8B5000 15%,#C88010 30%,#F5C830 45%,#FFD84D 50%,#F5C830 55%,#C88010 70%,#8B5000 85%,#4A2000);background-size:250% 100%;animation:annGoldFlow 3s linear infinite;border-top:2px solid #FFD84D;border-bottom:2px solid #6B3A00;box-shadow:0 2px 16px rgba(150,90,0,.5);font-family:'Cairo','Tajawal',sans-serif;z-index:200;}
@@ -574,14 +535,6 @@ footer{
 
 <div class="dot-field"></div>
 
-<!-- شريط الإشعارات -->
-<div id="announcement-bar">
-  <div class="ann-inner">
-    <span id="announcement-text"></span>
-  </div>
-  <button class="ann-close" onclick="closeAnnouncementBar()" title="إغلاق">✕</button>
-</div>
-
 <!-- الشريط العلوي الرسمي -->
 <div class="topbar">
   <div class="topbar-inner">
@@ -592,11 +545,12 @@ footer{
         </a>
         <span>المملكة العربية السعودية — وزارة التعليم</span>
       </div>
-      <b class="topbar-year">1447هـ</b>
+      
     </div>
     <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
   </div>
 </div>
+
 
 <!-- شريط التنقل -->
 <div class="navbar">
@@ -659,7 +613,7 @@ footer{
 </div>
 
 <!-- شريط إشعارات ticker — مخفي افتراضياً -->
-<div id="ann-ticker-bar">
+<div id="ann-ticker-bar" style="display:none;">
   <div class="ann-bar-row">
     <button class="ann-close-col" onclick="annClose()">✕</button>
     <div class="ann-badge-col">
