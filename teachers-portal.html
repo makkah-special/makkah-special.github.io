@@ -1546,10 +1546,6 @@ function printCertificate(id) {
     </div>
   </div>
   <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
-
-
-
-
 </body></html>`);
   win.document.close();
 }
@@ -1780,7 +1776,6 @@ function printMySchedule() {
   <div style="color:#6E5F82;margin-bottom:14px;">${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
   ${lastScheduleHTML}
   <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
-
 </body></html>`);
   win.document.close();
 }
@@ -2013,7 +2008,6 @@ function printCurriculum() {
   <div class="sub">${escHtml(currentTeacher.name)} — ${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
   ${subjectsHtml}
   <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
-
 </body></html>`);
   win.document.close();
 }
@@ -2032,6 +2026,7 @@ document.getElementById('username-input').addEventListener('keydown', function(e
 document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
 document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
 </script>
+
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
@@ -2039,6 +2034,5 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
-
 </body>
 </html>

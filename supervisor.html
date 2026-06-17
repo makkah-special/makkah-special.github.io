@@ -3,36 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
 <title>مشرف ذوي الإعاقة — الإدارة العامة للتعليم</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1a3a5c;
-  --accent: #c8973a;
-  --accent-light: #e6b85a;
-  --green: #1a6b4a;
-  --green-light: #2d9e6b;
+  --primary: #3F2E63;
+  --accent: #D7A24A;
+  --accent-light: #E8C27A;
+  --green: #129E7C;
+  --green-light: #8B6ABF;
   --red: #dc2626;
-  --bg: #f0f4f8;
+  --bg: #F7F5FC;
   --card: #ffffff;
-  --border: #dde3ec;
-  --text: #1a1a2e;
-  --muted: #5a6478;
+  --border: #DCD2EE;
+  --text: #221335;
+  --muted: #6E5F82;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
 /* HEADER */
+/* ===== الشريط العلوي الرسمي ===== */
+.topbar{ background: linear-gradient(120deg, #2E2148, #3F2E63 70%, #4A3470); color: rgba(255,255,255,.92); }
+.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
+.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
+.topbar-gov{ display:flex; align-items:center; gap:10px; }
+.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
+.topbar-gov a{ display:flex; align-items:center; }
+.topbar-gov a:hover img{ opacity:1; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+@media (max-width:640px){
+  .topbar-row{ font-size:.7rem; }
+  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+  .topbar-inner{ padding:7px 14px; }
+}
+
 header {
-  background:linear-gradient(135deg,#0f2440 0%,#1a3a5c 60%,#1a4a6c 100%);
+  background:linear-gradient(135deg,#3F2E63 0%,#2E2148 60%,#4A3470 100%);
   padding:16px 36px;
   display:flex; align-items:center; justify-content:space-between;
   border-bottom:3px solid var(--accent);
   position:sticky; top:0; z-index:100;
 }
 .header-left { display:flex; align-items:center; gap:14px; }
-.header-icon { width:48px; height:48px; border-radius:12px; background:rgba(200,151,58,0.18); border:1px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
+.header-icon { width:48px; height:48px; border-radius:12px; background:rgba(215,162,74,0.18); border:1px solid rgba(215,162,74,0.4); display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
 .header-title { color:#fff; font-family:'Tajawal',sans-serif; font-size:1.05rem; font-weight:900; }
 .header-sub { color:rgba(255,255,255,0.55); font-size:0.75rem; margin-top:2px; }
 .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; }
@@ -44,12 +68,12 @@ header {
 .pin-title { font-family:'Tajawal',sans-serif; font-size:1.4rem; font-weight:900; color:var(--primary); margin-bottom:4px; }
 .pin-org { font-size:0.8rem; color:var(--accent); font-weight:700; margin-bottom:6px; }
 .pin-desc { font-size:0.83rem; color:var(--muted); margin-bottom:24px; }
-.pin-input { width:100%; padding:14px; border:2px solid var(--border); border-radius:12px; font-family:'Cairo',sans-serif; font-size:1.4rem; font-weight:700; text-align:center; letter-spacing:10px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:12px; }
+.pin-input { width:100%; padding:14px; border:2px solid var(--border); border-radius:12px; font-family:'Cairo',sans-serif; font-size:1.4rem; font-weight:700; text-align:center; letter-spacing:10px; outline:none; transition:all 0.2s; background:#FBFAFE; margin-bottom:12px; }
 .pin-input:focus { border-color:var(--primary); background:#fff; }
 .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
 .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:12px; background:#fee2e2; padding:8px 14px; border-radius:8px; }
-.btn-enter { width:100%; padding:14px; background:linear-gradient(135deg,#0f2440,#1a3a5c); color:#fff; border:none; border-radius:11px; font-family:'Cairo',sans-serif; font-size:1rem; font-weight:800; cursor:pointer; box-shadow:0 4px 16px rgba(26,58,92,0.35); transition:all 0.2s; }
+.btn-enter { width:100%; padding:14px; background:linear-gradient(135deg,#2E2148,#3F2E63); color:#fff; border:none; border-radius:11px; font-family:'Cairo',sans-serif; font-size:1rem; font-weight:800; cursor:pointer; box-shadow:0 4px 16px rgba(63,46,99,0.35); transition:all 0.2s; }
 .btn-enter:hover { transform:translateY(-2px); }
 
 /* PORTAL */
@@ -59,7 +83,7 @@ header {
 /* MAIN TABS */
 .main-tabs { display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:26px; box-shadow:0 2px 12px rgba(0,0,0,0.04); flex-wrap:wrap; }
 .main-tab-btn { flex:1; min-width:100px; padding:11px 8px; border:none; background:transparent; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all 0.22s; display:flex; align-items:center; justify-content:center; gap:5px; }
-.main-tab-btn.active { background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; box-shadow:0 3px 12px rgba(26,58,92,0.35); }
+.main-tab-btn.active { background:linear-gradient(135deg,var(--primary),#8B6ABF); color:#fff; box-shadow:0 3px 12px rgba(63,46,99,0.35); }
 .main-tab-pane { display:none; animation:fadeIn 0.3s ease; }
 .main-tab-pane.active { display:block; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
@@ -82,13 +106,13 @@ header {
 .stat-label { font-size:0.76rem; color:var(--muted); font-weight:700; margin-top:6px; }
 .stat-badge { display:inline-block; padding:3px 12px; border-radius:12px; font-size:0.7rem; font-weight:700; margin-top:8px; }
 .badge-ys { background:#dbeafe; color:#1e40af; }
-.badge-dj { background:#fff3e0; color:#c25a00; }
+.badge-dj { background:#EAE1F7; color:#6B4C9A; }
 
 /* PROGRAM SELECTOR */
 .prog-selector { display:flex; gap:8px; margin-bottom:18px; }
 .prog-btn { flex:1; padding:10px; border:2px solid var(--border); border-radius:10px; background:#fff; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer; transition:all 0.2s; color:var(--muted); }
 .prog-btn.active-ys { border-color:#1e40af; background:#dbeafe; color:#1e40af; }
-.prog-btn.active-dj { border-color:#c25a00; background:#fff3e0; color:#c25a00; }
+.prog-btn.active-dj { border-color:#6B4C9A; background:#EAE1F7; color:#6B4C9A; }
 
 /* STUDENT CARDS */
 .students-grid { display:block; }
@@ -97,14 +121,14 @@ header {
 .stu-card-head { padding:16px 18px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); }
 .stu-avatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
 .stu-avatar-ys { background:linear-gradient(135deg,#dbeafe,#bfdbfe); }
-.stu-avatar-dj { background:linear-gradient(135deg,#fff3e0,#ffe0b2); }
+.stu-avatar-dj { background:linear-gradient(135deg,#EAE1F7,#DDD0F2); }
 .stu-name { font-weight:800; font-size:0.9rem; color:var(--primary); }
 .stu-meta { font-size:0.74rem; color:var(--muted); margin-top:2px; }
 .stu-card-body { padding:12px 18px; }
 .stu-info-row { display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:0.76rem; }
 .stu-info-item { color:var(--muted); }
 .stu-info-item span { color:var(--text); font-weight:700; }
-.stu-card-foot { padding:10px 16px; background:#f8f9fc; border-top:1px solid var(--border); display:flex; gap:8px; }
+.stu-card-foot { padding:10px 16px; background:#FBFAFE; border-top:1px solid var(--border); display:flex; gap:8px; }
 .btn-view { flex:1; padding:8px; border:none; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
 .btn-view-plan { background:#dbeafe; color:#1e40af; }
 .btn-view-plan:hover { background:#bfdbfe; }
@@ -130,7 +154,7 @@ header {
 .modal-body { padding:22px 26px; }
 
 /* TABS inside modal */
-.modal-tabs { display:flex; gap:4px; background:#f0f4f8; border-radius:10px; padding:4px; margin-bottom:20px; }
+.modal-tabs { display:flex; gap:4px; background:#F7F5FC; border-radius:10px; padding:4px; margin-bottom:20px; }
 .modal-tab-btn { flex:1; padding:8px; border:none; background:transparent; border-radius:7px; font-family:'Cairo',sans-serif; font-size:0.8rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all 0.2s; }
 .modal-tab-btn.active { background:#fff; color:var(--primary); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
 .modal-tab-pane { display:none; }
@@ -147,7 +171,7 @@ header {
 /* PLAN VIEW */
 .plan-section { margin-bottom:16px; }
 .plan-section-title { font-family:'Tajawal',sans-serif; font-weight:800; font-size:0.95rem; color:var(--primary); border-right:4px solid var(--accent); padding-right:10px; margin-bottom:10px; }
-.goal-item { background:#f8f9fc; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.goal-item { background:#FBFAFE; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .goal-text { font-size:0.83rem; flex:1; }
 .goal-level { padding:3px 10px; border-radius:8px; font-size:0.72rem; font-weight:700; white-space:nowrap; }
 .level-mastered { background:#d1fae5; color:#065f46; }
@@ -168,7 +192,7 @@ header {
 .sign-name-input:focus { border-color:var(--primary); }
 .sign-actions { display:flex; gap:8px; margin-top:12px; }
 .btn-clear-sign { padding:9px 16px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; }
-.btn-approve { flex:1; padding:11px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(26,107,74,0.3); transition:all 0.2s; }
+.btn-approve { flex:1; padding:11px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(18,158,124,0.3); transition:all 0.2s; }
 .btn-approve:hover { transform:translateY(-2px); }
 .approved-stamp { background:linear-gradient(135deg,#d1fae5,#a7f3d0); border:2px solid #6ee7b7; border-radius:14px; padding:18px; text-align:center; }
 .stamp-icon { font-size:2.5rem; margin-bottom:8px; }
@@ -190,11 +214,11 @@ header {
 .visit-form { background:#fff; border:1px solid var(--border); border-radius:14px; padding:22px; }
 .form-group { margin-bottom:16px; }
 .form-label { display:block; font-size:0.8rem; font-weight:700; color:var(--muted); margin-bottom:7px; }
-.form-input { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; color:var(--text); outline:none; transition:border-color 0.2s; background:#fafafa; }
+.form-input { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; color:var(--text); outline:none; transition:border-color 0.2s; background:#FBFAFE; }
 .form-input:focus { border-color:var(--primary); background:#fff; }
 .form-textarea { resize:vertical; min-height:90px; }
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-.btn-submit-visit { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:11px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; margin-top:8px; box-shadow:0 4px 14px rgba(26,58,92,0.3); transition:all 0.2s; }
+.btn-submit-visit { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#8B6ABF); color:#fff; border:none; border-radius:11px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; margin-top:8px; box-shadow:0 4px 14px rgba(63,46,99,0.3); transition:all 0.2s; }
 .btn-submit-visit:hover { transform:translateY(-2px); }
 .visit-list { margin-top:22px; }
 .visit-item { background:#fff; border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
@@ -211,7 +235,7 @@ header {
 .settings-desc { font-size:0.78rem; color:var(--muted); margin-bottom:18px; }
 
 /* TOAST */
-.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--primary); color:#fff; padding:13px 28px; border-radius:12px; font-weight:700; font-size:0.88rem; z-index:9999; box-shadow:0 8px 24px rgba(26,58,92,0.4); display:none; animation:fadeIn 0.3s ease; }
+.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--primary); color:#fff; padding:13px 28px; border-radius:12px; font-weight:700; font-size:0.88rem; z-index:9999; box-shadow:0 8px 24px rgba(63,46,99,0.4); display:none; animation:fadeIn 0.3s ease; }
 
 /* FILTER BAR */
 .filter-bar { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; align-items:center; }
@@ -228,7 +252,7 @@ footer strong { color:var(--accent-light); }
 
 /* S-CARD */
 .s-card { background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-.s-card-head { padding:14px 18px; font-family:'Tajawal',sans-serif; font-weight:800; font-size:0.95rem; color:#fff; background:linear-gradient(135deg,var(--primary),#2563a8); display:flex; align-items:center; gap:8px; }
+.s-card-head { padding:14px 18px; font-family:'Tajawal',sans-serif; font-weight:800; font-size:0.95rem; color:#fff; background:linear-gradient(135deg,var(--primary),#8B6ABF); display:flex; align-items:center; gap:8px; }
 
 /* RESPONSIVE */
 @media(max-width:640px) {
@@ -245,7 +269,7 @@ footer strong { color:var(--accent-light); }
   margin-bottom:16px; margin-top:10px;
 }
 .dj-header {
-  background:linear-gradient(135deg,#fff3e0,#ffe0b2);
+  background:linear-gradient(135deg,#EAE1F7,#DDD0F2);
   border:2px solid #fb923c;
 }
 .ys-header {
@@ -280,11 +304,27 @@ footer strong { color:var(--accent-light); }
 .stu-card:hover {
   transform:translateY(-3px);
   box-shadow:0 8px 28px rgba(0,0,0,0.12);
-  border-color:#c8973a;
+  border-color:#D7A24A;
 }
 </style>
 </head>
 <body>
+
+<!-- الشريط العلوي الرسمي -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="وزارة التعليم">
+        </a>
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      <b class="topbar-year">1447هـ</b>
+    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+  </div>
+</div>
 
 <header>
   <div class="header-left">
@@ -299,7 +339,7 @@ footer strong { color:var(--accent-light); }
 
 <!-- PIN SCREEN -->
 <div id="pin-screen">
-  <a href="index.html" style="position:absolute;top:20px;right:20px;background:rgba(26,58,92,0.08);border:1.5px solid rgba(26,58,92,0.2);color:var(--primary,#1a3a5c);padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
+  <a href="index.html" style="position:absolute;top:20px;right:20px;background:rgba(63,46,99,0.08);border:1.5px solid rgba(63,46,99,0.2);color:var(--primary,#3F2E63);padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
   <div class="pin-box">
     <div class="pin-icon">🏛️</div>
     <div class="pin-title">بوابة المشرف</div>
@@ -319,10 +359,10 @@ footer strong { color:var(--accent-light); }
 
     <!-- STATS -->
     <div class="stats-row" id="stats-row">
-      <div class="stat-card" style="--accent:#c25a00;" onclick="setFilter('dumaj',document.querySelector('[onclick*=\'dumaj\']'));openTab('students',document.querySelector('.main-tab-btn'))">
-        <div class="stat-num" style="color:#c25a00;" id="stat-total-dj">0</div>
+      <div class="stat-card" style="--accent:#6B4C9A;" onclick="setFilter('dumaj',document.querySelector('[onclick*=\'dumaj\']'));openTab('students',document.querySelector('.main-tab-btn'))">
+        <div class="stat-num" style="color:#6B4C9A;" id="stat-total-dj">0</div>
         <div class="stat-label">طلاب الدمج</div>
-        <div class="stat-badge" style="background:#fff3e0;color:#c25a00;">📙 برنامج الدمج</div>
+        <div class="stat-badge" style="background:#EAE1F7;color:#6B4C9A;">📙 برنامج الدمج</div>
       </div>
       <div class="stat-card" style="--accent:#1e40af;" onclick="setFilter('yaseer',document.querySelector('[onclick*=\'yaseer\']'));openTab('students',document.querySelector('.main-tab-btn'))">
         <div class="stat-num" style="color:#1e40af;" id="stat-total-ys">0</div>
@@ -347,7 +387,7 @@ footer strong { color:var(--accent-light); }
       <div class="stat-card" style="--accent:#5b21b6;">
         <div class="stat-num" style="color:#5b21b6;" id="stat-visits">0</div>
         <div class="stat-label">تقارير الزيارة</div>
-        <div class="stat-badge" style="background:#ede9fe;color:#5b21b6;">📋 زيارة</div>
+        <div class="stat-badge" style="background:#EAE1F7;color:#5b21b6;">📋 زيارة</div>
       </div>
     </div>
 
@@ -402,7 +442,7 @@ footer strong { color:var(--accent-light); }
             </div>
             <div>
               <canvas id="chart-dj" height="220"></canvas>
-              <div style="text-align:center;font-size:0.8rem;font-weight:700;color:#c25a00;margin-top:8px;">برنامج الدمج</div>
+              <div style="text-align:center;font-size:0.8rem;font-weight:700;color:#6B4C9A;margin-top:8px;">برنامج الدمج</div>
             </div>
           </div>
           <div id="results-summary"></div>
@@ -532,7 +572,7 @@ footer strong { color:var(--accent-light); }
           </div>
         </div>
         <div id="pin-change-msg" style="font-size:0.8rem;min-height:20px;margin-bottom:10px;"></div>
-        <button onclick="changeSupervisorPin()" style="background:linear-gradient(135deg,var(--primary),#2563a8);color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">💾 تحديث الرمز</button>
+        <button onclick="changeSupervisorPin()" style="background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">💾 تحديث الرمز</button>
       </div>
       <div class="settings-card">
         <div class="settings-title">👤 بيانات المشرف</div>
@@ -546,6 +586,33 @@ footer strong { color:var(--accent-light); }
         <div class="settings-title">🔄 تحديث البيانات</div>
         <div class="settings-desc">مزامنة بيانات الطلاب من Supabase</div>
         <button onclick="loadAllData()" style="background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">🔄 تحديث البيانات</button>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-title">📢 شريط الإشعارات (أعلى الموقع)</div>
+        <div class="settings-desc">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه</div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" id="announce-enabled" style="width:18px;height:18px;">
+            تفعيل عرض الشريط
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">نص الإشعار</label>
+          <input type="text" class="form-input" id="announce-message" placeholder="مثال: تبدأ الاختبارات النهائية يوم الأحد القادم — نوفّق جميع الطلاب">
+        </div>
+        <div class="form-group">
+          <label class="form-label">رابط إضافي (اختياري)</label>
+          <input type="url" class="form-input" id="announce-link" placeholder="https://...">
+        </div>
+        <div id="announce-msg" style="font-size:0.8rem;min-height:20px;margin-bottom:10px;"></div>
+        <button onclick="saveAnnouncement()" style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">📢 حفظ ونشر الإشعار</button>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-title">📘 توزيع المناهج</div>
+        <div class="settings-desc">عرض توزيع المنهج الفصلي الذي يدخله كل معلم (لغتي والرياضيات وأي مواد أخرى)</div>
+        <a href="curriculum-viewer.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;text-decoration:none;">📘 فتح صفحة توزيع المناهج</a>
       </div>
     </div>
 
@@ -806,6 +873,8 @@ function openTab(id, btn) {
   document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
+  if (id === 'settings') loadAnnouncementSettings();
+  if (id === 'meeting') loadMeetingInvites();
 }
 
 function setFilter(f, btn) {
@@ -892,7 +961,7 @@ function renderStudents() {
       const studs = gradeMap[gKey];
       // أيقونة وألوان حسب الصف
       const gradeColors = {
-        'الأول المتوسط':  { bg:'#fff7ed', border:'#fb923c', accent:'#c2410c', badge:'#fff3e0', badgeText:'#c2410c', icon:'🥇' },
+        'الأول المتوسط':  { bg:'#fff7ed', border:'#fb923c', accent:'#c2410c', badge:'#EAE1F7', badgeText:'#c2410c', icon:'🥇' },
         'الثاني المتوسط': { bg:'#fefce8', border:'#facc15', accent:'#a16207', badge:'#fef9c3', badgeText:'#a16207', icon:'🥈' },
         'الثالث المتوسط': { bg:'#f0fdf4', border:'#4ade80', accent:'#166534', badge:'#dcfce7', badgeText:'#166534', icon:'🥉' },
         'أخرى':           { bg:'#f8fafc', border:'#94a3b8', accent:'#475569', badge:'#f1f5f9', badgeText:'#475569', icon:'📚' },
@@ -1231,7 +1300,7 @@ function renderModalApprove(pin) {
         ${approval.supervisorNotes ? `
         <div style="margin-top:14px;background:#f0f7ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;text-align:right;">
           <div style="font-size:0.75rem;font-weight:700;color:#1e40af;margin-bottom:6px;">📝 ملاحظات المشرف</div>
-          <div style="font-size:0.84rem;color:#1a3a5c;line-height:1.8;">${approval.supervisorNotes}</div>
+          <div style="font-size:0.84rem;color:#3F2E63;line-height:1.8;">${approval.supervisorNotes}</div>
         </div>` : ''}
         <button onclick="revokeApproval('${pin}')" style="margin-top:14px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:8px;padding:8px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;">🗑️ إلغاء الاعتماد</button>
       </div>`;
@@ -1245,11 +1314,11 @@ function renderModalApprove(pin) {
           <div style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:900;color:var(--primary);" id="plan-teacher-name">${teacherName}</div>
           <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${isYS ? '📘 برنامج يسير' : '📙 برنامج الدمج الفكري'}</div>
         </div>
-        <button onclick="editTeacherName('${pin}')" style="margin-right:auto;background:rgba(26,58,92,0.08);border:1px solid #bfdbfe;border-radius:8px;padding:5px 10px;font-family:'Cairo',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;color:var(--primary);">✏️ تعديل</button>
+        <button onclick="editTeacherName('${pin}')" style="margin-right:auto;background:rgba(63,46,99,0.08);border:1px solid #bfdbfe;border-radius:8px;padding:5px 10px;font-family:'Cairo',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;color:var(--primary);">✏️ تعديل</button>
       </div>
 
       <!-- نص الاعتماد -->
-      <div style="background:#fffbf0;border:1px solid #f0d898;border-right:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:0.85rem;line-height:1.8;">
+      <div style="background:#EAE1F7;border:1px solid #DCD2EE;border-right:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:0.85rem;line-height:1.8;">
         اعتماد الخطة التربوية الفردية للطالب <strong>${s.name}</strong> للفصل الدراسي الثاني 1447هـ
         — إعداد: <strong>${teacherName}</strong>
       </div>
@@ -1261,7 +1330,7 @@ function renderModalApprove(pin) {
           <span style="font-size:0.7rem;color:var(--muted);font-weight:600;">(اختياري)</span>
         </div>
         <textarea id="supervisor-notes-input"
-          style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;color:var(--text);outline:none;resize:vertical;min-height:90px;background:#fafafa;transition:border-color 0.2s;"
+          style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;color:var(--text);outline:none;resize:vertical;min-height:90px;background:#FBFAFE;transition:border-color 0.2s;"
           placeholder="أدخل ملاحظاتك على الخطة التربوية..."
           onfocus="this.style.borderColor='var(--primary)'"
           onblur="this.style.borderColor='var(--border)'"
@@ -1344,7 +1413,7 @@ async function saveRevisionRequest(pin, notes) {
 function initSignCanvas(canvas) {
   signCanvas = canvas;
   signCtx = canvas.getContext('2d');
-  signCtx.strokeStyle = '#1a3a5c';
+  signCtx.strokeStyle = '#3F2E63';
   signCtx.lineWidth = 2.5;
   signCtx.lineCap = 'round';
   signCtx.lineJoin = 'round';
@@ -1394,11 +1463,11 @@ function requestRevision(pin) {
 
   // تحديث الواجهة
   document.getElementById('modal-tab-approve').innerHTML = `
-    <div style="background:#fffbf0;border:2px solid #f59e0b;border-radius:14px;padding:22px;text-align:center;">
+    <div style="background:#EAE1F7;border:2px solid #f59e0b;border-radius:14px;padding:22px;text-align:center;">
       <div style="font-size:2.5rem;margin-bottom:10px;">🔄</div>
       <div style="font-family:'Tajawal',sans-serif;font-size:1.05rem;font-weight:900;color:#92400e;margin-bottom:8px;">في انتظار تعديل الخطة</div>
       <div style="font-size:0.82rem;color:#92400e;margin-bottom:14px;">تم إرسال الملاحظات للمعلم المسؤول</div>
-      <div style="background:#fff;border:1px solid #f0d898;border-radius:10px;padding:12px 16px;text-align:right;margin-bottom:14px;">
+      <div style="background:#fff;border:1px solid #DCD2EE;border-radius:10px;padding:12px 16px;text-align:right;margin-bottom:14px;">
         <div style="font-size:0.72rem;font-weight:700;color:#92400e;margin-bottom:4px;">📝 الملاحظات المرسلة:</div>
         <div style="font-size:0.84rem;line-height:1.8;">${notes}</div>
       </div>
@@ -1514,7 +1583,7 @@ function loadApprovals() {
 // =====================================================
 function renderCharts() {
   renderProgramChart('chart-ys', Object.values(YS_STUDENTS), '#1e40af', '#bfdbfe');
-  renderProgramChart('chart-dj', Object.values(DJ_STUDENTS), '#c25a00', '#ffe0b2');
+  renderProgramChart('chart-dj', Object.values(DJ_STUDENTS), '#6B4C9A', '#DDD0F2');
 }
 
 function renderProgramChart(canvasId, students, color, bgColor) {
@@ -1687,21 +1756,48 @@ document.getElementById('student-modal').addEventListener('click', function(e) {
 });
 
 // =====================================================
-// MEETING INVITES
+// MEETING INVITES — سجل مشترك (Supabase)
 // =====================================================
 let meetingInvites = [];
 
-function loadMeetingInvites() {
+async function fetchMeetingsArray(program) {
   try {
-    const saved = localStorage.getItem('supervisor_meetings');
-    if (saved) meetingInvites = JSON.parse(saved);
-    renderMeetingsList();
-  } catch(e) {}
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/public/reports/${program}/meeting-invites.json?t=${Date.now()}`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch(e) { return []; }
+}
+
+async function saveMeetingsArray(program, list) {
+  try {
+    const blob = new Blob([JSON.stringify(list)], {type:'application/json'});
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/reports/${program}/meeting-invites.json`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: blob
+    });
+    return res.ok;
+  } catch(e) { return false; }
+}
+
+async function loadMeetingInvites() {
+  const el = document.getElementById('meetings-list');
+  if (el) el.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div><p>جارٍ التحميل...</p></div>';
+
+  const [dj, ys] = await Promise.all([fetchMeetingsArray('dumaj'), fetchMeetingsArray('yaseer')]);
+  meetingInvites = [
+    ...dj.map(m => ({ ...m, _program: 'dumaj' })),
+    ...ys.map(m => ({ ...m, _program: 'yaseer' })),
+  ].sort((a,b) => (b.sentAt||'').localeCompare(a.sentAt||''));
+
+  renderMeetingsList();
+
   try {
     const dt = new Date(Date.now() + 3600000);
     const local = new Date(dt.getTime() - dt.getTimezoneOffset()*60000).toISOString().slice(0,16);
-    const el = document.getElementById('meeting-datetime');
-    if (el) el.value = local;
+    const dEl = document.getElementById('meeting-datetime');
+    if (dEl) dEl.value = local;
   } catch(e) {}
 }
 
@@ -1724,6 +1820,7 @@ async function sendMeetingInvite() {
   let saved = false;
   for (const target of targets) {
     try {
+      // نسخة واحدة (للتنبيه المنبثق في لوحات المشرفين)
       const blob = new Blob([JSON.stringify(invite)], {type:'application/json'});
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/reports/${target}/meeting-invite.json`, {
         method: 'POST',
@@ -1731,16 +1828,19 @@ async function sendMeetingInvite() {
         body: blob
       });
       if (res.ok) saved = true;
+
+      // إضافة للسجل المشترك (تظهر لكل المعلمين ويمكن حذفها)
+      const arr = await fetchMeetingsArray(target);
+      arr.unshift({ ...invite, id: invite.id + '_' + target });
+      await saveMeetingsArray(target, arr);
     } catch(e) {}
   }
 
-  meetingInvites.unshift(invite);
-  try { localStorage.setItem('supervisor_meetings', JSON.stringify(meetingInvites)); } catch(e) {}
-  renderMeetingsList();
   document.getElementById('meeting-link').value = '';
   document.getElementById('meeting-subject').value = '';
   document.getElementById('meeting-notes').value = '';
-  showToast(saved ? '✅ تم إرسال الاستدعاء بنجاح' : '⚠️ تم الحفظ محلياً فقط');
+  showToast(saved ? '✅ تم إرسال الاستدعاء بنجاح' : '⚠️ تعذر الإرسال، تحقق من الاتصال');
+  loadMeetingInvites();
 }
 
 function renderMeetingsList() {
@@ -1751,30 +1851,87 @@ function renderMeetingsList() {
     return;
   }
   const progLabel = { dumaj:'مشرف الدمج', yaseer:'مشرف يسير', both:'الاثنين' };
-  el.innerHTML = meetingInvites.map((m,i) => {
+  el.innerHTML = meetingInvites.map((m) => {
     const dt = new Date(m.datetime).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
     return `<div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px 18px;margin-bottom:12px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
         <div style="font-weight:800;font-size:0.9rem;color:var(--primary);">📹 ${m.subject}</div>
-        <button onclick="deleteMeetingInvite(${i})" style="background:#fee2e2;color:#dc2626;border:none;border-radius:8px;padding:4px 10px;font-size:0.75rem;font-weight:700;cursor:pointer;">🗑️</button>
+        <button onclick="deleteMeetingInvite('${m._program}','${m.id}')" style="background:#fee2e2;color:#dc2626;border:none;border-radius:8px;padding:4px 10px;font-size:0.75rem;font-weight:700;cursor:pointer;">🗑️</button>
       </div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:6px;">👥 ${progLabel[m.program]||m.program} • 📅 ${dt}</div>
+      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:6px;">👥 ${progLabel[m._program]||m._program} • 📅 ${dt}</div>
       <a href="${m.link}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#0369a1;color:#fff;padding:6px 14px;border-radius:8px;font-size:0.8rem;font-weight:700;text-decoration:none;">🔗 فتح رابط الاجتماع</a>
       ${m.notes ? `<div style="margin-top:8px;font-size:0.78rem;color:var(--muted);">${m.notes}</div>` : ''}
     </div>`;
   }).join('');
 }
 
-async function deleteMeetingInvite(i) {
-  meetingInvites.splice(i, 1);
-  try { localStorage.setItem('supervisor_meetings', JSON.stringify(meetingInvites)); } catch(e) {}
-  renderMeetingsList();
+async function deleteMeetingInvite(program, id) {
+  if (!confirm('هل تم الاطلاع على هذا الاستدعاء؟ سيتم حذفه من السجل لجميع المعلمين.')) return;
+  const arr = await fetchMeetingsArray(program);
+  const filtered = arr.filter(m => String(m.id) !== String(id));
+  const ok = await saveMeetingsArray(program, filtered);
+  if (ok) { showToast('🗑️ تم حذف الاستدعاء'); loadMeetingInvites(); }
+  else showToast('⚠️ تعذر الحذف، تحقق من الاتصال');
+}
+
+// ===================================================
+// شريط الإشعارات العام (يظهر في الصفحة الرئيسية)
+// ===================================================
+async function loadAnnouncementSettings() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/public/reports/site-announcement.json?t=${Date.now()}`);
+    if (res.ok) {
+      const data = await res.json();
+      document.getElementById('announce-enabled').checked = !!data.enabled;
+      document.getElementById('announce-message').value = data.message || '';
+      document.getElementById('announce-link').value = data.link || '';
+    }
+  } catch(e) {}
+}
+
+async function saveAnnouncement() {
+  const enabled = document.getElementById('announce-enabled').checked;
+  const message = document.getElementById('announce-message').value.trim();
+  const link = document.getElementById('announce-link').value.trim();
+  const msgEl = document.getElementById('announce-msg');
+
+  if (enabled && !message) {
+    msgEl.style.color = '#dc2626';
+    msgEl.textContent = '⚠️ يرجى كتابة نص الإشعار قبل التفعيل';
+    return;
+  }
+
+  const payload = {
+    enabled, message, link,
+    updatedAt: new Date().toISOString(),
+    updatedBy: SUPERVISOR_NAME
+  };
+
+  try {
+    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/reports/site-announcement.json`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: blob
+    });
+    if (res.ok) {
+      msgEl.style.color = '#16a34a';
+      msgEl.textContent = enabled ? '✅ تم نشر الإشعار في الصفحة الرئيسية' : '✅ تم إيقاف الإشعار';
+      showToast('✅ تم حفظ إعدادات الإشعار');
+    } else {
+      msgEl.style.color = '#dc2626';
+      msgEl.textContent = '⚠️ تعذر الحفظ، تحقق من الاتصال';
+    }
+  } catch(e) {
+    msgEl.style.color = '#dc2626';
+    msgEl.textContent = '⚠️ تعذر الحفظ، تحقق من الاتصال';
+  }
 }
 
 </script>
 
 <!-- زر الرئيسية الثابت -->
-<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#0f2440,#1a3a5c);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(15,36,64,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#2E2148,#3F2E63);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(46,33,72,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
 
 <script>
 if ("serviceWorker" in navigator) {

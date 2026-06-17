@@ -3,25 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
 <title>بوابة طلاب يسير | مدرسة مكة المكرمة المتوسطة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #1a3a5c;
-    --accent: #c8973a;
-    --accent-light: #f0b84a;
-    --purple: #6d28d9;
-    --purple-light: #7c3aed;
-    --green: #1a6b4a;
-    --green-light: #22a06b;
-    --bg: #f5f2eb;
+    --primary: #3F2E63;
+    --accent: #8B6ABF;
+    --accent-light: #D7A24A;
+    --purple: #6B4C9A;
+    --purple-light: #8B6ABF;
+    --green: #6B4C9A;
+    --green-light: #8B6ABF;
+    --bg: #F7F5FC;
     --card: #ffffff;
-    --border: #e0d8c8;
-    --text: #1a1a2e;
-    --muted: #5a6478;
+    --border: #DCD2EE;
+    --text: #221335;
+    --muted: #6E5F82;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ===== الشريط العلوي الرسمي (الخزامى) ===== */
+  .topbar{
+    background: linear-gradient(120deg, #2E2148, #3F2E63 70%, #4A3470);
+    color: rgba(255,255,255,.92);
+  }
+  .topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
+  .topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
+  .topbar-gov{ display:flex; align-items:center; gap:10px; }
+  .topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; transition:opacity .2s; }
+  .topbar-gov a{ display:flex; align-items:center; }
+  .topbar-gov a:hover img{ opacity:1; }
+  .topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+  .topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+  .topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
+  .topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+  @media (max-width:640px){
+    .topbar-row{ font-size:.7rem; }
+    .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+    .topbar-inner{ padding:7px 14px; }
+  }
 
   body {
     font-family: 'Cairo', sans-serif;
@@ -32,7 +59,7 @@
 
   /* ===== HEADER ===== */
   header {
-    background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
+    background: linear-gradient(135deg, #3F2E63 0%, #2E2148 60%, #4A3470 100%);
     padding: 16px 36px;
     display: flex;
     align-items: center;
@@ -45,8 +72,8 @@
   .header-icon {
     width: 46px; height: 46px;
     border-radius: 12px;
-    background: rgba(200,151,58,0.18);
-    border: 1px solid rgba(200,151,58,0.35);
+    background: rgba(215,162,74,0.18);
+    border: 1px solid rgba(215,162,74,0.35);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.4rem;
   }
@@ -91,8 +118,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #ede9fe;
-    border: 1px solid #c4b5fd;
+    background: #EAE1F7;
+    border: 1px solid #B79EE0;
     color: var(--purple);
     padding: 6px 18px;
     border-radius: 20px;
@@ -104,11 +131,11 @@
   .login-icon-big {
     width: 80px; height: 80px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    background: linear-gradient(135deg, #EAE1F7, #DDD0F2);
     margin: 0 auto 22px;
     display: flex; align-items: center; justify-content: center;
     font-size: 2.6rem;
-    box-shadow: 0 8px 24px rgba(109,40,217,0.2);
+    box-shadow: 0 8px 24px rgba(107,76,154,0.2);
   }
 
   .login-card h2 {
@@ -150,14 +177,14 @@
     color: var(--primary);
     outline: none;
     transition: all 0.25s;
-    background: #fafafa;
+    background: #FBFAFE;
     margin-bottom: 12px;
   }
 
   .pin-input:focus {
     border-color: var(--purple-light);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
+    box-shadow: 0 0 0 4px rgba(139,106,191,0.1);
   }
 
   .pin-input.error {
@@ -197,16 +224,16 @@
     font-weight: 800;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(109,40,217,0.3);
+    box-shadow: 0 6px 20px rgba(107,76,154,0.3);
     letter-spacing: 0.5px;
   }
-  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(109,40,217,0.45); }
+  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(107,76,154,0.45); }
   .login-btn:active { transform: translateY(0); }
 
   .hint-box {
     margin-top: 22px;
-    background: #fffbf0;
-    border: 1px solid #f0d898;
+    background: #EAE1F7;
+    border: 1px solid #DCD2EE;
     border-right: 3px solid var(--accent);
     border-radius: 10px;
     padding: 13px 16px;
@@ -220,7 +247,7 @@
   #student-portal { display: none; }
 
   .portal-banner {
-    background: linear-gradient(135deg, var(--green) 0%, #0d4a30 100%);
+    background: linear-gradient(135deg, var(--green) 0%, #2E2148 100%);
     padding: 26px 36px;
     display: flex;
     align-items: center;
@@ -240,20 +267,20 @@
     width: 70px; height: 70px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid rgba(240,184,74,0.7);
+    border: 3px solid rgba(215,162,74,0.7);
     background: rgba(255,255,255,0.1);
     display: flex; align-items: center; justify-content: center;
     font-size: 2rem;
     cursor: pointer;
     transition: all 0.2s;
   }
-  .student-photo:hover { border-color: #f0b84a; transform: scale(1.05); }
+  .student-photo:hover { border-color: #E8C27A; transform: scale(1.05); }
   .student-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
   .photo-change-btn {
     position: absolute;
     bottom: 0; left: 0;
-    background: #f0b84a;
-    color: #1a3a5c;
+    background: #E8C27A;
+    color: #3F2E63;
     border: none;
     border-radius: 50%;
     width: 22px; height: 22px;
@@ -342,7 +369,7 @@
   .tab-btn.active {
     background: linear-gradient(135deg, var(--green), var(--green-light));
     color: #fff;
-    box-shadow: 0 3px 12px rgba(26,107,74,0.35);
+    box-shadow: 0 3px 12px rgba(18,158,124,0.35);
   }
 
   .tab-pane { display: none; animation: fadeIn 0.3s ease; }
@@ -369,7 +396,7 @@
     font-weight: 800;
     font-size: 0.92rem;
     color: var(--primary);
-    background: linear-gradient(135deg, #f8fffe, #f0faf5);
+    background: linear-gradient(135deg, #FBFAFE, #EAE1F7);
   }
 
   /* INFO TABLE */
@@ -402,17 +429,17 @@
   .tag-green { background: #d1fae5; color: #065f46; }
   .btn-download-report {
     display: inline-flex; align-items: center; gap: 4px;
-    background: linear-gradient(135deg, #1a3a5c, #2563a8);
+    background: linear-gradient(135deg, #3F2E63, #8B6ABF);
     color: #fff; padding: 5px 12px; border-radius: 8px;
     font-size: 0.75rem; font-weight: 700; text-decoration: none;
     white-space: nowrap; transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(26,58,92,0.2);
+    box-shadow: 0 2px 6px rgba(63,46,99,0.2);
   }
-  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26,58,92,0.3); }
+  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(63,46,99,0.3); }
   .tag-blue  { background: #dbeafe; color: #1e40af; }
   .tag-blue { background: #dbeafe; color: #1e40af; }
   .tag-yellow { background: #fef3c7; color: #92400e; }
-  .tag-purple { background: #ede9fe; color: #5b21b6; }
+  .tag-purple { background: #EAE1F7; color: #5b21b6; }
   .tag-gray { background: #f3f4f6; color: #4b5563; }
 
   /* PLAN GRID */
@@ -459,7 +486,7 @@
     gap: 14px;
   }
   .report-row:last-child { border-bottom: none; }
-  .report-row:hover { background: #f8fffe; }
+  .report-row:hover { background: #FBFAFE; }
 
   .report-left { display: flex; align-items: center; gap: 14px; }
 
@@ -491,7 +518,7 @@
     font-weight: 600;
   }
   .fu-table tr:last-child td { border-bottom: none; }
-  .fu-table tr:hover td { background: #f0faf5; }
+  .fu-table tr:hover td { background: #EAE1F7; }
 
   .circle {
     display: inline-flex;
@@ -569,12 +596,12 @@
   }
 
   .btn-pdf-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light, #2563a8));
+    background: linear-gradient(135deg, var(--primary), var(--primary-light, #8B6ABF));
     color: #fff;
-    box-shadow: 0 3px 12px rgba(26,58,92,0.25);
+    box-shadow: 0 3px 12px rgba(63,46,99,0.25);
   }
 
-  .btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,58,92,0.35); }
+  .btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(63,46,99,0.35); }
 
   .btn-pdf-secondary {
     background: #fff;
@@ -586,8 +613,8 @@
 
   /* IQRAR */
   .iqrar-box {
-    background: linear-gradient(135deg, #fffbf0, #fff8e6);
-    border: 1px solid #f0d898;
+    background: linear-gradient(135deg, #EAE1F7, #EAE1F7);
+    border: 1px solid #DCD2EE;
     border-right: 4px solid var(--accent);
     border-radius: 14px;
     padding: 24px;
@@ -653,8 +680,8 @@
     overflow: hidden;
   }
 
-  .sign-area:hover { border-color: var(--accent); background: #fffbf0; }
-  .sign-area.signed { border-color: var(--green-light); border-style: solid; background: #f0faf5; }
+  .sign-area:hover { border-color: var(--accent); background: #EAE1F7; }
+  .sign-area.signed { border-color: var(--green-light); border-style: solid; background: #EAE1F7; }
 
   .sign-area canvas {
     position: absolute;
@@ -678,10 +705,10 @@
     font-weight: 800;
     cursor: pointer;
     transition: all 0.25s;
-    box-shadow: 0 4px 14px rgba(26,107,74,0.3);
+    box-shadow: 0 4px 14px rgba(18,158,124,0.3);
   }
 
-  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,74,0.4); }
+  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(18,158,124,0.4); }
 
   .btn-clear-sign {
     background: #fff;
@@ -715,14 +742,14 @@
   #admin-portal { display:none; }
 
   .admin-banner {
-    background: linear-gradient(135deg, #1a3a5c 0%, #0f2440 60%, #1a4a6c 100%);
+    background: linear-gradient(135deg, #3F2E63 0%, #2E2148 60%, #4A3470 100%);
     padding: 22px 36px;
     display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 4px solid #c8973a;
+    border-bottom: 4px solid #D7A24A;
   }
   .admin-badge {
-    background: rgba(200,151,58,0.2); border: 1px solid rgba(200,151,58,0.4);
-    color: #f0b84a; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    background: rgba(215,162,74,0.2); border: 1px solid rgba(215,162,74,0.4);
+    color: #E8C27A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
   }
   .admin-body { max-width: 960px; margin: 0 auto; padding: 28px 36px 60px; }
 
@@ -738,8 +765,8 @@
     display: flex; align-items: center; justify-content: center; gap: 5px;
   }
   .admin-tab-btn.active {
-    background: linear-gradient(135deg, #1a3a5c, #2563a8);
-    color: #fff; box-shadow: 0 3px 12px rgba(26,58,92,0.35);
+    background: linear-gradient(135deg, #3F2E63, #8B6ABF);
+    color: #fff; box-shadow: 0 3px 12px rgba(63,46,99,0.35);
   }
   .admin-tab-pane { display: none; animation: fadeIn 0.3s ease; }
   .admin-tab-pane.active { display: block; }
@@ -753,14 +780,14 @@
     padding: 16px 18px; cursor: pointer; transition: all 0.2s;
     display: flex; align-items: center; gap: 12px;
   }
-  .stu-card:hover { border-color: var(--green-light); box-shadow: 0 4px 18px rgba(26,107,74,0.12); transform: translateY(-2px); }
+  .stu-card:hover { border-color: var(--green-light); box-shadow: 0 4px 18px rgba(18,158,124,0.12); transform: translateY(-2px); }
   .stu-card-avatar {
-    width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#e6f4ef,#d1fae5);
+    width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#EAE1F7,#d1fae5);
     display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;
   }
   .stu-card-name { font-weight: 800; font-size: 0.88rem; color: var(--primary); margin-bottom: 3px; }
   .stu-card-meta { font-size: 0.75rem; color: var(--muted); }
-  .stu-card-pin { font-size: 0.72rem; background: #ede9fe; color: #5b21b6; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
+  .stu-card-pin { font-size: 0.72rem; background: #EAE1F7; color: #5b21b6; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
 
   /* Edit Modal */
   .modal-overlay {
@@ -787,13 +814,13 @@
     font-family: 'Cairo', sans-serif; font-size: 0.88rem; color: var(--text); outline: none;
     transition: border-color 0.2s;
   }
-  .form-input:focus { border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(34,160,107,0.1); }
+  .form-input:focus { border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(139,106,191,0.1); }
   .form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
   .btn-save {
     background: linear-gradient(135deg, var(--green), var(--green-light)); color: #fff;
     border: none; padding: 12px 24px; border-radius: 10px;
     font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 800;
-    cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(26,107,74,0.3);
+    cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(18,158,124,0.3);
   }
   .btn-save:hover { transform: translateY(-2px); }
   .btn-cancel {
@@ -821,11 +848,11 @@
     font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
   }
   .btn-add-goal {
-    background: #f0faf5; border: 1.5px dashed var(--green-light); color: var(--green);
+    background: #EAE1F7; border: 1.5px dashed var(--green-light); color: var(--green);
     width: 100%; padding: 10px; border-radius: 10px; font-family: 'Cairo', sans-serif;
     font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px;
   }
-  .btn-add-goal:hover { background: #e6f4ef; }
+  .btn-add-goal:hover { background: #EAE1F7; }
 
   /* Follow-up editor */
   .fu-edit-row {
@@ -844,13 +871,13 @@
     padding: 28px; text-align: center; cursor: pointer; transition: all 0.2s;
     color: var(--green); font-weight: 700;
   }
-  .add-student-card:hover { background: #f0faf5; }
+  .add-student-card:hover { background: #EAE1F7; }
 
   .success-toast {
     position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-    background: #1a6b4a; color: #fff; padding: 12px 28px; border-radius: 12px;
+    background: #129E7C; color: #fff; padding: 12px 28px; border-radius: 12px;
     font-weight: 700; font-size: 0.88rem; z-index: 9999;
-    box-shadow: 0 8px 24px rgba(26,107,74,0.4); display: none;
+    box-shadow: 0 8px 24px rgba(18,158,124,0.4); display: none;
     animation: fadeIn 0.3s ease;
   }
 
@@ -863,9 +890,79 @@
     .tab-btn { font-size: 0.75rem; padding: 8px 4px; }
     .login-card { padding: 32px 22px; }
   }
+
+  /* ===== المستوى والمتابعة + التعزيز (عرض فقط) ===== */
+  .empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
+  .empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
+  .empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
+  .empty-state .es-sub{ font-size:.82rem; }
+
+  .progress-section-title{
+    font-family:'Tajawal',sans-serif; font-size:1rem; font-weight:900; color:var(--primary);
+    margin:22px 0 12px; padding-right:10px; border-right:4px solid var(--accent);
+  }
+  .progress-section-title:first-child{ margin-top:0; }
+
+  .perf-legend{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .perf-subject-block{ margin-bottom:16px; }
+  .perf-subject-head{ font-weight:800; font-size:.92rem; color:var(--primary); margin-bottom:8px; }
+  .perf-skills-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
+  .perf-skills-table th{ background:#FBFAFE; color:var(--primary); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
+  .perf-skills-table td{ padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
+  .perf-skills-table tr:last-child td{ border-bottom:none; }
+
+  .sw-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px; }
+  .sw-subject-head{ padding:12px 16px; background:#FBFAFE; font-weight:800; font-size:.9rem; color:var(--primary); }
+  .sw-body{ display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:14px; }
+  .sw-side-title{ font-size:.82rem; font-weight:800; margin-bottom:8px; }
+  .sw-strength-title{ color:var(--green); }
+  .sw-need-title{ color:#92400e; }
+  .sw-item-list{ display:flex; flex-direction:column; gap:6px; }
+  .sw-item{ display:flex; align-items:center; gap:8px; background:#FBFAFE; border:1px solid var(--border); border-radius:8px; padding:7px 10px; font-size:.82rem; }
+  .sw-item-dot-green{ width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0; }
+  .sw-item-dot-orange{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+  @media (max-width:640px){ .sw-body{ grid-template-columns:1fr; } }
+
+  .iep-subject-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:12px; }
+  .iep-subject-head{ display:flex; align-items:center; gap:8px; padding:12px 16px; background:#FBFAFE; font-weight:800; font-size:.9rem; color:var(--primary); }
+  .iep-goal-row{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+  .iep-goal-row:last-child{ border-bottom:none; }
+  .iep-goal-num{ background:var(--accent); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800; flex-shrink:0; }
+  .iep-goal-text{ flex:1; min-width:180px; font-size:.85rem; color:var(--text); line-height:1.7; }
+  .iep-level-badge{ padding:5px 14px; border-radius:8px; font-size:.78rem; font-weight:700; white-space:nowrap; }
+
+  .reinforce-item{
+    display:flex; align-items:flex-start; gap:12px; background:#fffaf3; border:1px solid var(--border);
+    border-right:4px solid var(--accent); border-radius:10px; padding:12px 16px; margin-bottom:10px;
+  }
+  .reinforce-icon{ font-size:1.4rem; flex-shrink:0; }
+  .reinforce-title{ font-weight:800; font-size:.86rem; color:var(--primary); }
+  .reinforce-meta{ font-size:.74rem; color:#9ca3af; margin-top:2px; }
+  .reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
+  .btn-print-cert{
+    background:#fff; color:var(--primary); border:1px solid var(--border); border-radius:8px;
+    padding:7px 14px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s;
+  }
+  .btn-print-cert:hover{ border-color:var(--primary); background:var(--bg); }
 </style>
 </head>
 <body>
+
+<!-- الشريط العلوي الرسمي -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="وزارة التعليم">
+        </a>
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      <b class="topbar-year">1447هـ</b>
+    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+  </div>
+</div>
 
 <header>
   <div class="header-left">
@@ -926,7 +1023,9 @@
       <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
       <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
+      <button class="tab-btn" onclick="openTab('progress',this)">📏 المستوى والمتابعة</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
+      <button class="tab-btn" onclick="openTab('reinforce',this)">🏆 لوحة التعزيز</button>
     </div>
 
     <!-- INFO -->
@@ -953,11 +1052,30 @@
       </div>
     </div>
 
+    <!-- PROGRESS: IEP + PERFORMANCE + STRENGTHS (عرض فقط) -->
+    <div class="tab-pane" id="tab-progress">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>📏 المستوى والمتابعة التربوية</span>
+          <span style="background:#EAE1F7;color:#6B4C9A;border-radius:8px;padding:5px 14px;font-size:0.78rem;font-weight:700;">👁️ للاطلاع فقط — يحدّثها المعلم المسؤول</span>
+        </div>
+        <div style="padding:20px;" id="progress-content"></div>
+      </div>
+    </div>
+
     <!-- IQRAR -->
     <div class="tab-pane" id="tab-iqrar">
       <div class="s-card">
         <div class="s-card-head">✍️ إقرار اطلاع ولي الأمر على الخطة الفردية</div>
         <div style="padding:24px;" id="iqrar-content"></div>
+      </div>
+    </div>
+
+    <!-- REINFORCEMENT BOARD -->
+    <div class="tab-pane" id="tab-reinforce">
+      <div class="s-card">
+        <div class="s-card-head">🏆 لوحة التعزيز — شهادات الشكر والتقدير</div>
+        <div style="padding:20px;" id="reinforce-content"></div>
       </div>
     </div>
 
@@ -1117,7 +1235,7 @@ function loadStudent(pin) {
     const exts = ['pdf','PDF','docx','doc'];
     let found = false;
     for (const ext of exts) {
-      const url = `${SB_PLAN}plan-${pin}.${ext}`;
+      const url = `${SB_PLAN}plan-${pin}.${ext}?t=${Date.now()}`;
       try {
         const res = await fetch(url, { method: 'HEAD' });
         if (res.ok) {
@@ -1127,7 +1245,7 @@ function loadStudent(pin) {
           document.getElementById('custom-plan-frame').innerHTML =
             ext === 'pdf' || ext === 'PDF'
               ? `<iframe src="${url}" title="الخطة الفردية المخصصة"></iframe>`
-              : `<div style="padding:20px;text-align:center;color:#5a6478;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
+              : `<div style="padding:20px;text-align:center;color:#6E5F82;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
           document.getElementById('custom-plan-actions').innerHTML = `
             <a href="${url}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح الخطة</a>
             <a href="${url}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة الفردية</a>
@@ -1146,14 +1264,14 @@ function loadStudent(pin) {
   // دالة للتحقق من وجود الملف
   async function checkFile(url) {
     try {
-      const r = await fetch(url, { method: 'HEAD' });
+      const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { method: 'HEAD' });
       return r.ok;
     } catch { return false; }
   }
 
   // التقارير الثابتة لكل طالب
   const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#ede9fe", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
+    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#EAE1F7", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
     { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
   ];
 
@@ -1275,7 +1393,7 @@ function loadStudent(pin) {
     <div class="iqrar-actions">
       <button class="btn-sign" onclick="submitIqrar()">✅ تأكيد الإقرار والتوقيع</button>
       <button class="btn-clear-sign" onclick="clearSign()">🗑️ مسح التوقيع</button>
-      <button id="btn-save-pdf" onclick="saveIqrarPDF()" style="display:none; align-items:center; gap:7px; padding:9px 18px; border-radius:9px; background:linear-gradient(135deg,#1a3a5c,#2563a8); color:#fff; border:none; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; cursor:pointer; box-shadow:0 3px 12px rgba(26,58,92,0.3);">🖨️ طباعة / حفظ PDF</button>
+      <button id="btn-save-pdf" onclick="saveIqrarPDF()" style="display:none; align-items:center; gap:7px; padding:9px 18px; border-radius:9px; background:linear-gradient(135deg,#3F2E63,#8B6ABF); color:#fff; border:none; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; cursor:pointer; box-shadow:0 3px 12px rgba(63,46,99,0.3);">🖨️ طباعة / حفظ PDF</button>
     </div>
 
     <div class="signed-badge" id="signed-badge">
@@ -1313,6 +1431,8 @@ function openTab(id, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
+  if (id === 'progress') renderProgressTab();
+  if (id === 'reinforce') renderReinforceTab();
   // Init canvas when iqrar tab is opened
   if (id === 'iqrar') setTimeout(initCanvas, 100);
 }
@@ -1332,7 +1452,7 @@ function initCanvas() {
     signCanvas.width = area.offsetWidth;
     signCanvas.height = area.offsetHeight;
     signCtx = signCanvas.getContext('2d');
-    signCtx.strokeStyle = '#1a3a5c';
+    signCtx.strokeStyle = '#3F2E63';
     signCtx.lineWidth = 2.5;
     signCtx.lineCap = 'round';
     signCtx.lineJoin = 'round';
@@ -1431,21 +1551,21 @@ function saveIqrarPDF() {
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Cairo',sans-serif; background:#fff; color:#1a1a2e; padding:40px; direction:rtl; }
-        .header { text-align:center; margin-bottom:30px; border-bottom:3px solid #1a3a5c; padding-bottom:20px; }
-        .header h1 { font-size:1.4rem; font-weight:800; color:#1a3a5c; margin-bottom:4px; }
-        .header p { font-size:0.85rem; color:#5a6478; }
-        .badge { display:inline-block; background:#1a3a5c; color:#fff; padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:10px; }
-        .iqrar-text { background:#fffbf0; border:1px solid #f0d898; border-right:4px solid #c8973a; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
+        body { font-family:'Cairo',sans-serif; background:#fff; color:#221335; padding:40px; direction:rtl; }
+        .header { text-align:center; margin-bottom:30px; border-bottom:3px solid #3F2E63; padding-bottom:20px; }
+        .header h1 { font-size:1.4rem; font-weight:800; color:#3F2E63; margin-bottom:4px; }
+        .header p { font-size:0.85rem; color:#6E5F82; }
+        .badge { display:inline-block; background:#3F2E63; color:#fff; padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:10px; }
+        .iqrar-text { background:#EAE1F7; border:1px solid #DCD2EE; border-right:4px solid #D7A24A; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
         .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
-        .field { border:1px solid #e0d8c8; border-radius:8px; padding:10px 14px; }
-        .field-label { font-size:0.72rem; font-weight:700; color:#5a6478; margin-bottom:4px; }
-        .field-value { font-size:0.9rem; font-weight:800; color:#1a3a5c; }
+        .field { border:1px solid #DCD2EE; border-radius:8px; padding:10px 14px; }
+        .field-label { font-size:0.72rem; font-weight:700; color:#6E5F82; margin-bottom:4px; }
+        .field-value { font-size:0.9rem; font-weight:800; color:#3F2E63; }
         .sign-section { margin-top:24px; }
-        .sign-title { font-size:0.85rem; font-weight:700; color:#1a3a5c; margin-bottom:10px; }
-        .sign-box { border:2px solid #1a3a5c; border-radius:10px; height:120px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+        .sign-title { font-size:0.85rem; font-weight:700; color:#3F2E63; margin-bottom:10px; }
+        .sign-box { border:2px solid #3F2E63; border-radius:10px; height:120px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
         .sign-box img { max-height:110px; }
-        .footer { margin-top:30px; text-align:center; font-size:0.75rem; color:#9ca3af; border-top:1px solid #e0d8c8; padding-top:14px; }
+        .footer { margin-top:30px; text-align:center; font-size:0.75rem; color:#9ca3af; border-top:1px solid #DCD2EE; padding-top:14px; }
         @media print { body { padding:20px; } }
       </style>
     </head>
@@ -1595,6 +1715,13 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].program_place  = sd('program_place');
       STUDENTS[pin].program_start  = sd('program_start');
       STUDENTS[pin].program_end    = sd('program_end');
+      STUDENTS[pin].reports        = data.reports || STUDENTS[pin].reports || [];
+      STUDENTS[pin].iep            = data.iep || STUDENTS[pin].iep || {};
+      STUDENTS[pin].performance    = data.performance || STUDENTS[pin].performance || {};
+      STUDENTS[pin].performanceMeta = data.performanceMeta || STUDENTS[pin].performanceMeta || null;
+      STUDENTS[pin].strengths      = data.strengths || STUDENTS[pin].strengths || {};
+      STUDENTS[pin].strengthsMeta  = data.strengthsMeta || STUDENTS[pin].strengthsMeta || null;
+      STUDENTS[pin].reinforcements = data.reinforcements || STUDENTS[pin].reinforcements || [];
     }
   } catch(e) { /* ملف غير موجود */ }
 }
@@ -1673,8 +1800,8 @@ const PERIODS = [
   { num: 5, label: 'الخامسة', timeS: '10:20–11:05',  timeW: '10:50–11:35' },
 ];
 const TEACHERS_TBL = [
-  { key: 'saad',   name: 'سعد الزهراني',  color: '#1a3a5c', accent: '#2563a8', light: '#e8f0fa' },
-  { key: 'husain', name: 'حسين الكبيشي', color: '#1a6b4a', accent: '#15803d', light: '#e8f7f1' },
+  { key: 'saad',   name: 'سعد الزهراني',  color: '#3F2E63', accent: '#8B6ABF', light: '#e8f0fa' },
+  { key: 'husain', name: 'حسين الكبيشي', color: '#129E7C', accent: '#15803d', light: '#e8f7f1' },
 ];
 const SUBJECTS_LIST = ['لغة عربية', 'رياضيات'];
 const TIMETABLE_KEY = 'yaseer_timetable_v4'; // للـ cache المحلي فقط
@@ -1796,7 +1923,7 @@ async function renderSchedule() {
         #schedule-container { padding: 0 !important; }
         .timetable-card {
           box-shadow: none !important;
-          border: 1.5px solid #1a3a5c !important;
+          border: 1.5px solid #3F2E63 !important;
           border-radius: 0 !important;
           overflow: visible !important;
         }
@@ -1817,7 +1944,7 @@ async function renderSchedule() {
 
       /* Header bar */
       .sched-topbar {
-        background: linear-gradient(135deg, #0f2440 0%, #1a3a5c 50%, #1e4976 100%);
+        background: linear-gradient(135deg, #2E2148 0%, #3F2E63 50%, #1e4976 100%);
         border-radius: 16px; padding: 18px 22px;
         display: flex; align-items: center; justify-content: space-between;
         flex-wrap: wrap; gap: 12px; margin-bottom: 20px;
@@ -1832,7 +1959,7 @@ async function renderSchedule() {
       .sched-topbar::after {
         content: ''; position: absolute; bottom: -60px; right: 10%;
         width: 240px; height: 240px; border-radius: 50%;
-        background: rgba(200,151,58,0.08); pointer-events: none;
+        background: rgba(215,162,74,0.08); pointer-events: none;
       }
       .sched-title { color: #fff; font-size: 1.05rem; font-weight: 800; margin: 0; }
       .sched-sub   { color: rgba(255,255,255,0.55); font-size: 0.72rem; margin-top: 3px; }
@@ -1849,7 +1976,7 @@ async function renderSchedule() {
         transition: all 0.22s; background: transparent; color: rgba(255,255,255,0.55);
       }
       .season-btn.active { background: rgba(255,255,255,0.18); color: #fff; }
-      .season-btn.active-gold { background: rgba(200,151,58,0.7); color: #fff; }
+      .season-btn.active-gold { background: rgba(215,162,74,0.7); color: #fff; }
 
       /* Action buttons */
       .sched-btn {
@@ -1860,7 +1987,7 @@ async function renderSchedule() {
       }
       .sched-btn:hover { transform: translateY(-1px); }
       .sched-btn-print { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
-      .sched-btn-save  { background: #c8973a; color: #fff; box-shadow: 0 2px 10px rgba(200,151,58,0.4); }
+      .sched-btn-save  { background: #D7A24A; color: #fff; box-shadow: 0 2px 10px rgba(215,162,74,0.4); }
       .sched-btn-reset { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
 
       /* Teacher stat cards */
@@ -1898,13 +2025,13 @@ async function renderSchedule() {
       }
       .sched-table { width: 100%; border-collapse: collapse; min-width: 680px; background: #fff; }
       .sched-th-day {
-        background: linear-gradient(180deg, #0f2440 0%, #1a3a5c 100%);
+        background: linear-gradient(180deg, #2E2148 0%, #3F2E63 100%);
         color: #fff; padding: 14px 10px; text-align: center;
         font-size: 0.8rem; font-weight: 800; width: 76px;
         border-left: 1px solid rgba(255,255,255,0.08);
       }
       .sched-th-period {
-        background: linear-gradient(180deg, #0f2440 0%, #1a3a5c 100%);
+        background: linear-gradient(180deg, #2E2148 0%, #3F2E63 100%);
         color: #fff; padding: 11px 8px; text-align: center;
         font-size: 0.76rem; border-left: 1px solid rgba(255,255,255,0.08);
       }
@@ -1913,7 +2040,7 @@ async function renderSchedule() {
 
       .sched-td-day {
         padding: 10px 8px; text-align: center; font-weight: 800; font-size: 0.84rem;
-        color: #1a3a5c; border-left: 2px solid #e8eef6;
+        color: #3F2E63; border-left: 2px solid #e8eef6;
         background: linear-gradient(180deg, #f4f7fb 0%, #eaf0f8 100%);
         vertical-align: middle; white-space: nowrap;
       }
@@ -1924,7 +2051,7 @@ async function renderSchedule() {
       }
       .sched-td-cell:hover { background: #f0f6ff !important; }
       .sched-row-even { background: #fff; }
-      .sched-row-odd  { background: #fafbfd; }
+      .sched-row-odd  { background: #FBFAFE; }
 
       .sched-cell { min-height: 60px; }
       .cell-teacher-label {
@@ -1950,7 +2077,7 @@ async function renderSchedule() {
     </style>
 
     <!-- رأس الطباعة -->
-    <div class="sched-print-header" style="align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 18px;background:linear-gradient(135deg,#0f2440,#1a3a5c);border-radius:8px;">
+    <div class="sched-print-header" style="align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 18px;background:linear-gradient(135deg,#2E2148,#3F2E63);border-radius:8px;">
       <div style="text-align:right;">
         <div style="font-weight:900;font-size:13pt;color:#fff;">جدول الحصص الأسبوعي — برنامج يسير التعليمي</div>
         <div style="font-size:8.5pt;color:rgba(255,255,255,0.7);margin-top:4px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة</div>
@@ -2022,7 +2149,7 @@ async function renderSchedule() {
                   const cell = timetableData[day]?.[p.num] || { teacher: '', students: [] };
                   const t = TEACHERS_TBL.find(x => x.key === cell.teacher);
                   const hasData = cell.teacher && cell.students?.length > 0;
-                  const rowBg = di % 2 === 0 ? '#fff' : '#fafbfd';
+                  const rowBg = di % 2 === 0 ? '#fff' : '#FBFAFE';
                   return `
                     <td class="sched-td-cell ${di%2===0?'sched-row-even':'sched-row-odd'}"
                         onclick="openCellEditor('${day}',${p.num})"
@@ -2066,7 +2193,7 @@ function openCellEditor(day, period) {
   const allPins = Object.keys(STUDENTS);
 
   const html = `
-    <div style="background:linear-gradient(135deg,#0f2440,#1a3a5c);padding:18px 22px;border-radius:20px 20px 0 0;">
+    <div style="background:linear-gradient(135deg,#2E2148,#3F2E63);padding:18px 22px;border-radius:20px 20px 0 0;">
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
           <div style="color:#fff;font-weight:800;font-size:0.95rem;">✏️ تعديل الحصة</div>
@@ -2080,14 +2207,14 @@ function openCellEditor(day, period) {
       <!-- اختيار المعلم -->
       <div style="margin-bottom:18px;">
         <div style="font-size:0.78rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-          <span style="background:#1a3a5c;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">١</span>
+          <span style="background:#3F2E63;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">١</span>
           المعلم المسؤول عن هذه الحصة
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;">
           ${TEACHERS_TBL.map(t => {
             const isSelected = cell.teacher === t.key;
             return `
-              <label style="display:flex;align-items:center;gap:8px;background:${isSelected ? t.light : '#f8f9fc'};border:2px solid ${isSelected ? t.color : '#e8ecf2'};border-radius:12px;padding:10px 14px;cursor:pointer;transition:all 0.15s;">
+              <label style="display:flex;align-items:center;gap:8px;background:${isSelected ? t.light : '#FBFAFE'};border:2px solid ${isSelected ? t.color : '#DCD2EE'};border-radius:12px;padding:10px 14px;cursor:pointer;transition:all 0.15s;">
                 <input type="radio" name="cell-teacher" value="${t.key}" ${isSelected ? 'checked' : ''} style="accent-color:${t.color};width:14px;height:14px;" onchange="updateTeacherSelection()">
                 <div>
                   <div style="font-size:0.82rem;font-weight:800;color:${t.color};">${t.name.split(' ')[0]}</div>
@@ -2095,7 +2222,7 @@ function openCellEditor(day, period) {
                 </div>
               </label>`;
           }).join('')}
-          <label style="display:flex;align-items:center;gap:6px;background:${!cell.teacher ? '#f0f0f0' : '#f8f9fc'};border:2px solid ${!cell.teacher ? '#999' : '#e8ecf2'};border-radius:12px;padding:10px 12px;cursor:pointer;">
+          <label style="display:flex;align-items:center;gap:6px;background:${!cell.teacher ? '#f0f0f0' : '#FBFAFE'};border:2px solid ${!cell.teacher ? '#999' : '#DCD2EE'};border-radius:12px;padding:10px 12px;cursor:pointer;">
             <input type="radio" name="cell-teacher" value="" ${!cell.teacher ? 'checked' : ''} style="width:14px;height:14px;" onchange="updateTeacherSelection()">
             <span style="font-size:0.78rem;color:#888;font-weight:600;">فارغة</span>
           </label>
@@ -2110,7 +2237,7 @@ function openCellEditor(day, period) {
       <!-- الطلاب -->
       <div style="margin-bottom:18px;">
         <div style="font-size:0.78rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-          <span style="background:#1a3a5c;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٢</span>
+          <span style="background:#3F2E63;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٢</span>
           الطلاب في هذه الحصة
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;">
@@ -2122,10 +2249,10 @@ function openCellEditor(day, period) {
             const checked = !!entry;
             const subj = entry?.subject || 'لغة عربية';
             return `
-              <div id="stu-wrap-${pin}" style="background:${checked ? '#f0f4fa' : '#f8f9fc'};border:1.5px solid ${checked ? '#1a3a5c' : '#e8ecf2'};border-radius:10px;padding:7px 10px;transition:all 0.15s;min-width:90px;">
+              <div id="stu-wrap-${pin}" style="background:${checked ? '#f0f4fa' : '#FBFAFE'};border:1.5px solid ${checked ? '#3F2E63' : '#DCD2EE'};border-radius:10px;padding:7px 10px;transition:all 0.15s;min-width:90px;">
                 <label style="display:flex;align-items:center;gap:5px;cursor:pointer;margin-bottom:${checked ? '6px' : '0'};">
-                  <input type="checkbox" data-pin="${pin}" ${checked ? 'checked' : ''} style="accent-color:#1a3a5c;width:13px;height:13px;" onchange="toggleStudentInCell(this,'${pin}')">
-                  <span style="font-size:0.77rem;font-weight:700;color:#1a3a5c;">${shortName}</span>
+                  <input type="checkbox" data-pin="${pin}" ${checked ? 'checked' : ''} style="accent-color:#3F2E63;width:13px;height:13px;" onchange="toggleStudentInCell(this,'${pin}')">
+                  <span style="font-size:0.77rem;font-weight:700;color:#3F2E63;">${shortName}</span>
                 </label>
                 <div id="subj-row-${pin}" style="display:${checked ? 'flex' : 'none'};gap:4px;flex-wrap:wrap;">
                   ${SUBJECTS_LIST.map(subj2 => `
@@ -2139,7 +2266,7 @@ function openCellEditor(day, period) {
         </div>
       </div>
 
-      <button onclick="saveCellEdit()" style="width:100%;background:linear-gradient(135deg,#0f2440,#2563a8);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(15,36,64,0.3);transition:transform 0.15s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='none'">
+      <button onclick="saveCellEdit()" style="width:100%;background:linear-gradient(135deg,#2E2148,#8B6ABF);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(15,36,64,0.3);transition:transform 0.15s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='none'">
         💾 حفظ التعديلات
       </button>
     </div>
@@ -2168,7 +2295,7 @@ function toggleStudentInCell(cb, pin) {
   const wrap = document.getElementById('stu-wrap-' + pin);
   const subjRow = document.getElementById('subj-row-' + pin);
   if (cb.checked) {
-    wrap.style.borderColor = '#1a3a5c';
+    wrap.style.borderColor = '#3F2E63';
     subjRow.style.display = 'flex';
   } else {
     wrap.style.borderColor = '#e0e0e0';
@@ -2267,6 +2394,262 @@ function showToast(msg) {
 document.getElementById('edit-modal')?.addEventListener('click', e => {
   if (e.target === document.getElementById('edit-modal')) closeModal();
 });
+
+// =====================================================
+// أدوات مساعدة + ثوابت المواد والمستويات
+// (للعرض فقط — تُعبَّأ من بوابة المعلمين)
+// =====================================================
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+const CORE_SUBJECTS_Y = [
+  { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖' },
+  { key:'math',    name:'الرياضيات',             icon:'🔢' },
+  { key:'islamic', name:'التربية الإسلامية',     icon:'🕌' },
+  { key:'science', name:'العلوم',                icon:'🔬' },
+  { key:'life',    name:'المهارات الحياتية',     icon:'🌱' },
+];
+
+const IEP_LEVELS_Y = [
+  { value:'excellent', label:'متفوق',          color:'#059669', bg:'#d1fae5' },
+  { value:'advanced',  label:'متقدم',           color:'#2563eb', bg:'#dbeafe' },
+  { value:'capable',   label:'متمكن',           color:'#d97706', bg:'#fef3c7' },
+  { value:'failed',    label:'غير مجتاز',       color:'#dc2626', bg:'#fee2e2' },
+  { value:'none',      label:'— لم يُقيَّم —', color:'#9ca3af', bg:'#f3f4f6' },
+];
+
+const PERF_SUBJECTS_Y = [
+  { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖', skills:['القراءة الجهرية','الكتابة والإملاء','الفهم والاستيعاب','التعبير الشفوي','القواعد النحوية'] },
+  { key:'math',    name:'الرياضيات',             icon:'🔢', skills:['العمليات الحسابية الأساسية','الأعداد والتسلسل','الأشكال الهندسية','القياس والوحدات','حل المسائل'] },
+  { key:'islamic', name:'التربية الإسلامية',     icon:'🕌', skills:['الحفظ والتلاوة','العقيدة والأركان','الفقه والعبادات','السيرة والأخلاق','التطبيق العملي'] },
+  { key:'science', name:'العلوم',                icon:'🔬', skills:['الفهم والاستيعاب','التجارب العلمية','حفظ المعلومات','التطبيق والاستنتاج','المفاهيم البيئية'] },
+  { key:'life',    name:'المهارات الحياتية',     icon:'🌱', skills:['العناية الشخصية','التواصل الاجتماعي','المهارات العملية','الاستقلالية','التنظيم وإدارة الوقت'] },
+];
+
+const PERF_LEVELS_Y = [
+  { value:'mastered',   label:'متقن',       color:'#059669', bg:'#d1fae5' },
+  { value:'developing', label:'في التطور',  color:'#2563eb', bg:'#dbeafe' },
+  { value:'emerging',   label:'بدايات',     color:'#d97706', bg:'#fef3c7' },
+  { value:'not_yet',    label:'لم يصل بعد', color:'#dc2626', bg:'#fee2e2' },
+  { value:'na',         label:'غير مقيَّم', color:'#9ca3af', bg:'#f3f4f6' },
+];
+
+// =====================================================
+// المستوى والمتابعة (تقييم الأهداف + الأداء + القوة والاحتياج)
+// عرض فقط — يقوم المعلم المسؤول بالتحديث من بوابة المعلمين
+// =====================================================
+function renderProgressTab() {
+  const container = document.getElementById('progress-content');
+  if (!container || !currentStudent) return;
+
+  const iep = currentStudent.iep || {};
+  const allIEPSubjects = [
+    ...CORE_SUBJECTS_Y.map(cs => ({ key: cs.key, info: cs, data: iep[cs.key] })),
+    ...Object.entries(iep._custom || {}).map(([k,d]) => ({ key:k, info:{name:d.name, icon:d.icon}, data:d }))
+  ].filter(s => s.data && Array.isArray(s.data.goals) && s.data.goals.length > 0);
+
+  const perf = currentStudent.performance || {};
+  const hasPerf = Object.keys(perf).length > 0;
+
+  const sw = currentStudent.strengths || {};
+  const hasSW = Object.values(sw).some(s => (s.strengths && s.strengths.length) || (s.needs && s.needs.length));
+
+  if (allIEPSubjects.length === 0 && !hasPerf && !hasSW) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="es-icon">📏</div>
+        <div class="es-title">لا توجد بيانات متابعة بعد</div>
+        <div class="es-sub">يقوم المعلم المسؤول عن الطالب بتعبئة هذا القسم من بوابة المعلمين</div>
+      </div>`;
+    return;
+  }
+
+  let html = '';
+
+  // ===== تقييم الأهداف =====
+  html += `<div class="progress-section-title">🎯 تقييم الأهداف التربوية</div>`;
+  if (allIEPSubjects.length === 0) {
+    html += `<div class="empty-state"><div class="es-icon">🎯</div><div class="es-title">لا توجد أهداف مُحددة بعد</div></div>`;
+  } else {
+    allIEPSubjects.forEach(sub => {
+      html += `<div class="iep-subject-block">
+        <div class="iep-subject-head"><span>${escHtml(sub.info.icon || '📚')}</span><span>${escHtml(sub.info.name)}</span></div>`;
+      sub.data.goals.forEach((g, i) => {
+        const lv = IEP_LEVELS_Y.find(l => l.value === (g.level || 'none')) || IEP_LEVELS_Y[4];
+        html += `
+        <div class="iep-goal-row">
+          <div class="iep-goal-num">${i+1}</div>
+          <div class="iep-goal-text">${escHtml(g.text || '')}</div>
+          <span class="iep-level-badge" style="color:${lv.color};background:${lv.bg};">${lv.label}</span>
+        </div>`;
+      });
+      html += `</div>`;
+    });
+    if (iep._lastEval) {
+      try {
+        const d = new Date(iep._lastEval.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+        html += `<div style="font-size:0.78rem;color:#9ca3af;margin-bottom:8px;">آخر تقييم: ${escHtml(d)} — بواسطة ${escHtml(iep._lastEval.teacher)}</div>`;
+      } catch(e) {}
+    }
+  }
+
+  // ===== مستوى الأداء =====
+  html += `<div class="progress-section-title">📏 مستوى الأداء الحالي</div>`;
+  if (!hasPerf) {
+    html += `<div class="empty-state"><div class="es-icon">📏</div><div class="es-title">لم يتم تقييم مستوى الأداء بعد</div></div>`;
+  } else {
+    html += `<div class="perf-legend">${PERF_LEVELS_Y.map(l => `<span style="background:${l.bg};color:${l.color};padding:2px 8px;border-radius:6px;font-size:0.73rem;font-weight:700;">${l.label}</span>`).join('')}</div>`;
+    PERF_SUBJECTS_Y.forEach(subj => {
+      const subjData = perf[subj.key];
+      if (!subjData) return;
+      html += `
+      <div class="perf-subject-block">
+        <div class="perf-subject-head">${subj.icon} ${escHtml(subj.name)}</div>
+        <table class="perf-skills-table">
+          <thead><tr><th style="width:46%;">المهارة</th><th style="width:24%;text-align:center;">المستوى</th><th>ملاحظات</th></tr></thead>
+          <tbody>
+            ${subj.skills.map((skill, si) => {
+              const skillData = subjData[si] || {};
+              const level = skillData.level || 'na';
+              const note  = skillData.note  || '';
+              const lv = PERF_LEVELS_Y.find(l => l.value === level) || PERF_LEVELS_Y[4];
+              return `<tr>
+                <td style="font-weight:600;">${escHtml(skill)}</td>
+                <td style="text-align:center;"><span style="display:inline-block;padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:700;color:${lv.color};background:${lv.bg};">${lv.label}</span></td>
+                <td style="color:var(--muted);font-size:0.85rem;">${escHtml(note) || '—'}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    });
+    const pm = currentStudent.performanceMeta;
+    if (pm) {
+      try {
+        const d = new Date(pm.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+        html += `<div style="font-size:0.78rem;color:#9ca3af;margin-bottom:8px;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(pm.teacher)}</div>`;
+      } catch(e) {}
+    }
+  }
+
+  // ===== القوة والاحتياج =====
+  html += `<div class="progress-section-title">💪 جوانب القوة والاحتياج</div>`;
+  if (!hasSW) {
+    html += `<div class="empty-state"><div class="es-icon">💪</div><div class="es-title">لم تُضف جوانب القوة والاحتياج بعد</div></div>`;
+  } else {
+    PERF_SUBJECTS_Y.forEach(subj => {
+      const subjData = sw[subj.key] || { strengths: [], needs: [] };
+      const strengths = subjData.strengths || [];
+      const needs     = subjData.needs     || [];
+      if (strengths.length === 0 && needs.length === 0) return;
+      html += `
+      <div class="sw-block">
+        <div class="sw-subject-head">${subj.icon} ${escHtml(subj.name)}</div>
+        <div class="sw-body">
+          <div>
+            <div class="sw-side-title sw-strength-title">✅ جوانب القوة</div>
+            <div class="sw-item-list">
+              ${strengths.length ? strengths.map(item => `<div class="sw-item"><div class="sw-item-dot-green"></div><span style="flex:1;">${escHtml(item)}</span></div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
+            </div>
+          </div>
+          <div>
+            <div class="sw-side-title sw-need-title">🎯 جوانب الاحتياج</div>
+            <div class="sw-item-list">
+              ${needs.length ? needs.map(item => `<div class="sw-item"><div class="sw-item-dot-orange"></div><span style="flex:1;">${escHtml(item)}</span></div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+    const sm = currentStudent.strengthsMeta;
+    if (sm) {
+      try {
+        const d = new Date(sm.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+        html += `<div style="font-size:0.78rem;color:#9ca3af;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(sm.teacher)}</div>`;
+      } catch(e) {}
+    }
+  }
+
+  container.innerHTML = html;
+}
+
+// =====================================================
+// لوحة التعزيز — شهادات الشكر والتقدير (عرض + طباعة)
+// =====================================================
+function renderReinforceTab() {
+  const container = document.getElementById('reinforce-content');
+  if (!container || !currentStudent) return;
+  const history = (currentStudent.reinforcements || []).slice().reverse();
+
+  if (history.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="es-icon">🏆</div>
+        <div class="es-title">لا توجد شهادات شكر حتى الآن</div>
+        <div class="es-sub">عند إرسال شهادة شكر من المعلم المسؤول ستظهر هنا ويمكن طباعتها</div>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = history.map(item => `
+    <div class="reinforce-item">
+      <div class="reinforce-icon">🏆</div>
+      <div style="flex:1;">
+        <div class="reinforce-title">${escHtml(item.title)}</div>
+        <div class="reinforce-meta">📅 ${escHtml(item.dateLabel)} — ✍️ ${escHtml(item.teacher)}</div>
+        ${item.message ? `<div class="reinforce-msg">${escHtml(item.message)}</div>` : ''}
+      </div>
+      <button class="btn-print-cert" onclick="printCertificate('${item.id}')">🖨️ طباعة الشهادة</button>
+    </div>`).join('');
+}
+
+function printCertificate(id) {
+  if (!currentStudent) return;
+  const item = (currentStudent.reinforcements || []).find(r => r.id === id);
+  if (!item) return;
+  const studentName = currentStudent.name || '';
+
+  const win = window.open('', '_blank');
+  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
+
+  win.document.write(`
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<title>شهادة شكر — ${escHtml(studentName)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#F7F5FC;}
+  .cert{width:740px;max-width:92vw;border:10px solid #6B4C9A;border-radius:22px;padding:50px 44px;text-align:center;background:#fff;position:relative;}
+  .cert::after{content:'';position:absolute;inset:14px;border:2px dashed #B79EE0;border-radius:14px;pointer-events:none;}
+  .emoji{font-size:2.6rem;margin-bottom:6px;}
+  h1{font-family:'Tajawal',sans-serif;font-size:2.1rem;color:#2E2148;margin:0 0 6px;}
+  .sub{color:#6E5F82;font-size:.92rem;margin-bottom:26px;}
+  .lead{font-size:.95rem;color:#6E5F82;}
+  .name{font-family:'Tajawal',sans-serif;font-size:1.7rem;font-weight:900;color:#6B4C9A;margin:14px 0 18px;}
+  .reason{font-size:1.05rem;color:#221335;margin-bottom:10px;font-weight:800;}
+  .msg{font-size:.95rem;color:#221335;line-height:2;margin-bottom:28px;}
+  .footer{display:flex;justify-content:space-between;margin-top:36px;font-size:.84rem;color:#6E5F82;border-top:1px solid #EAE1F7;padding-top:14px;}
+  @media print{ body{background:#fff;} .cert{border-color:#6B4C9A;box-shadow:none;} }
+</style></head><body>
+  <div class="cert">
+    <div class="emoji">🏆</div>
+    <h1>شهادة شكر وتقدير</h1>
+    <div class="sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
+    <div class="lead">تُمنح هذه الشهادة للطالب/ـة</div>
+    <div class="name">${escHtml(studentName)}</div>
+    <div class="reason">${escHtml(item.title)}</div>
+    ${item.message ? `<div class="msg">${escHtml(item.message)}</div>` : ''}
+    <div class="footer">
+      <span>📅 ${escHtml(item.dateLabel)}</span>
+      <span>✍️ ${escHtml(item.teacher)}</span>
+    </div>
+  </div>
+  <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
+</body></html>`);
+  win.document.close();
+}
+
 </script>
 
 <script>

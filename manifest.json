@@ -1,45 +1,23 @@
 {
   "name": "منصة مَعَاك | مدرسة مكة المكرمة المتوسطة",
   "short_name": "مَعَاك",
-  "description": "منصة إدارة برامج ذوي الإعاقة — الدمج الفكري ويسير",
-  "start_url": "/index.html",
-  "scope": "/",
+  "description": "منصة برامج ذوي الإعاقة — برنامج يسير والدمج الفكري",
+  "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#2E2148",
-  "theme_color": "#6B4C9A",
+  "background_color": "#080f1e",
+  "theme_color": "#080f1e",
   "lang": "ar",
   "dir": "rtl",
-  "categories": ["education", "productivity"],
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "بوابة طلاب الدمج",
-      "url": "/dumaj-students.html",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "بوابة طلاب يسير",
-      "url": "/students.html",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "بوابة المعلمين",
-      "url": "/teachers-portal.html",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+      "type": "image/png"
     }
   ]
 }
