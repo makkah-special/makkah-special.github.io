@@ -306,6 +306,19 @@ footer strong { color:var(--accent-light); }
   box-shadow:0 8px 28px rgba(0,0,0,0.12);
   border-color:#D7A24A;
 }
+
+/* ===== نموذج إرسال الإشعار ===== */
+.ann-compose{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px 22px;margin-bottom:18px;}
+.ann-compose-head{font-weight:900;font-size:.92rem;color:#3F2E63;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #EAE1F7;}
+.ann-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.ann-field-g{display:flex;flex-direction:column;gap:5px;}
+.ann-field-g label{font-size:.78rem;font-weight:700;color:#6E5F82;}
+.ann-inp-g,.ann-sel-g{padding:9px 12px;border:1.5px solid #DCD2EE;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.85rem;width:100%;outline:none;background:#FBFAFE;transition:border .2s;color:#221335;}
+.ann-inp-g:focus,.ann-sel-g:focus{border-color:#8B6ABF;background:#fff;}
+.ann-send-g{width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:11px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;}
+.ann-send-g:hover{opacity:.9;}
+.ann-res-g{font-size:.8rem;min-height:18px;margin-top:8px;font-weight:700;text-align:center;}
+@media(max-width:640px){.ann-grid-2{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -559,62 +572,56 @@ footer strong { color:var(--accent-light); }
     <!-- TAB: الإعدادات -->
     <div class="main-tab-pane" id="tab-settings">
       <div class="settings-card">
-        <div class="settings-title">🔐 تغيير رمز الدخول</div>
-        <div class="settings-desc">تغيير رمز دخول لوحة المشرف</div>
-        <div class="form-grid" style="max-width:440px;">
-          <div class="form-group">
-            <label class="form-label">الرمز الحالي</label>
-            <input type="password" class="form-input" id="cur-pin" maxlength="8" placeholder="الرمز الحالي">
-          </div>
-          <div class="form-group">
-            <label class="form-label">الرمز الجديد</label>
-            <input type="password" class="form-input" id="new-pin" maxlength="8" placeholder="الرمز الجديد">
-          </div>
-        </div>
-        <div id="pin-change-msg" style="font-size:0.8rem;min-height:20px;margin-bottom:10px;"></div>
-        <button onclick="changeSupervisorPin()" style="background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">💾 تحديث الرمز</button>
-      </div>
-      <div class="settings-card">
-        <div class="settings-title">👤 بيانات المشرف</div>
-        <div class="settings-desc">المعلومات التي تظهر في ختم الاعتماد</div>
-        <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:10px;padding:16px 18px;">
-          <div style="font-size:0.9rem;font-weight:800;color:var(--primary);">أحمد سعيد الزهراني</div>
-          <div style="font-size:0.8rem;color:var(--muted);margin-top:4px;">مشرف ذوي الإعاقة — الإدارة العامة للتعليم</div>
-        </div>
-      </div>
-      <div class="settings-card">
-        <div class="settings-title">🔄 تحديث البيانات</div>
-        <div class="settings-desc">مزامنة بيانات الطلاب من Supabase</div>
-        <button onclick="loadAllData()" style="background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">🔄 تحديث البيانات</button>
-      </div>
-
-      <div class="settings-card">
-        <div class="settings-title">📢 شريط الإشعارات (أعلى الموقع)</div>
-        <div class="settings-desc">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه</div>
-        <div class="form-group" style="margin-bottom:10px;">
-          <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <input type="checkbox" id="announce-enabled" style="width:18px;height:18px;">
-            تفعيل عرض الشريط
-          </label>
-        </div>
-        <div class="form-group">
-          <label class="form-label">نص الإشعار</label>
-          <input type="text" class="form-input" id="announce-message" placeholder="مثال: تبدأ الاختبارات النهائية يوم الأحد القادم — نوفّق جميع الطلاب">
-        </div>
-        <div class="form-group">
-          <label class="form-label">رابط إضافي (اختياري)</label>
-          <input type="url" class="form-input" id="announce-link" placeholder="https://...">
-        </div>
-        <div id="announce-msg" style="font-size:0.8rem;min-height:20px;margin-bottom:10px;"></div>
-        <button onclick="saveAnnouncement()" style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;">📢 حفظ ونشر الإشعار</button>
-      </div>
-
-      <div class="settings-card">
-        <div class="settings-title">📘 توزيع المناهج</div>
-        <div class="settings-desc">عرض توزيع المنهج الفصلي الذي يدخله كل معلم (لغتي والرياضيات وأي مواد أخرى)</div>
-        <a href="curriculum-viewer.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;border:none;border-radius:9px;padding:11px 24px;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;text-decoration:none;">📘 فتح صفحة توزيع المناهج</a>
-      </div>
+        <div style="font-weight:900;font-size:1rem;margin-bottom:4px;">📢 الإشعارات والتنبيهات</div>
+        <div class="ann-compose">
+  <div class="ann-compose-head">📢 إرسال إشعار / تنبيه</div>
+  <div class="ann-grid-2">
+    <div class="ann-field-g">
+      <label>نوع الإشعار</label>
+      <select id="ann-type-g" class="ann-sel-g">
+        <option value="default">📢 إشعار عام</option>
+        <option value="news">📰 خبر / إعلان</option>
+        <option value="alert">🔔 تنبيه</option>
+        <option value="important">⚠️ مهم جداً</option>
+      </select>
     </div>
+    <div class="ann-field-g">
+      <label>الوجهة</label>
+      <select id="ann-target-g" class="ann-sel-g">
+        <option value="main">🌐 الصفحة الرئيسية</option>
+        <option value="teachers">👨‍🏫 بوابة المعلمين</option>
+        <option value="both">📡 الاثنتان</option>
+      </select>
+    </div>
+  </div>
+  <div class="ann-field-g" style="margin-bottom:12px;">
+    <label>نص الإشعار</label>
+    <input type="text" id="ann-message-g" class="ann-inp-g" placeholder="اكتب نص الإشعار...">
+  </div>
+  <div class="ann-grid-2">
+    <div class="ann-field-g">
+      <label>رابط إضافي (اختياري)</label>
+      <input type="url" id="ann-link-g" class="ann-inp-g" placeholder="https://...">
+    </div>
+    <div class="ann-field-g">
+      <label>مدة الإشعار</label>
+      <select id="ann-duration-g" class="ann-sel-g">
+        <option value="0">بدون انتهاء</option>
+        <option value="1">يوم واحد</option>
+        <option value="3">3 أيام</option>
+        <option value="7" selected>أسبوع</option>
+        <option value="14">أسبوعان</option>
+        <option value="30">شهر</option>
+      </select>
+    </div>
+  </div>
+  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.84rem;font-weight:700;color:#3F2E63;margin-bottom:4px;">
+    <input type="checkbox" id="ann-enabled-g" checked style="width:16px;height:16px;"> تفعيل الإشعار فوراً
+  </label>
+  <button class="ann-send-g" onclick="sendAnnouncement(SUPERVISOR_NAME)">📤 إرسال الإشعار</button>
+  <div class="ann-res-g" id="ann-res-g"></div>
+</div>
+      </div>
 
   </div>
 </div>

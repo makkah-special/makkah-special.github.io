@@ -239,216 +239,72 @@ footer strong{color:var(--accent-light);}
   .tab-btn{min-width:80px;font-size:0.7rem;padding:8px 4px;}
   .detail-grid{grid-template-columns:1fr;}
 }
+
+/* ===== نموذج إرسال الإشعار ===== */
+.ann-compose{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px 22px;margin-bottom:18px;}
+.ann-compose-head{font-weight:900;font-size:.92rem;color:#3F2E63;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #EAE1F7;}
+.ann-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.ann-field-g{display:flex;flex-direction:column;gap:5px;}
+.ann-field-g label{font-size:.78rem;font-weight:700;color:#6E5F82;}
+.ann-inp-g,.ann-sel-g{padding:9px 12px;border:1.5px solid #DCD2EE;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.85rem;width:100%;outline:none;background:#FBFAFE;transition:border .2s;color:#221335;}
+.ann-inp-g:focus,.ann-sel-g:focus{border-color:#8B6ABF;background:#fff;}
+.ann-send-g{width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:11px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;}
+.ann-send-g:hover{opacity:.9;}
+.ann-res-g{font-size:.8rem;min-height:18px;margin-top:8px;font-weight:700;text-align:center;}
+@media(max-width:640px){.ann-grid-2{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <!-- الشريط العلوي الرسمي -->
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-row">
-      <div class="topbar-gov">
-        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
-          <img src="moe-logo.png" alt="وزارة التعليم">
-        </a>
-        <span>المملكة العربية السعودية — وزارة التعليم</span>
-      </div>
-      <b class="topbar-year">1447هـ</b>
+<div class="ann-compose">
+  <div class="ann-compose-head">📢 إرسال إشعار / تنبيه</div>
+  <div class="ann-grid-2">
+    <div class="ann-field-g">
+      <label>نوع الإشعار</label>
+      <select id="ann-type-g" class="ann-sel-g">
+        <option value="default">📢 إشعار عام</option>
+        <option value="news">📰 خبر / إعلان</option>
+        <option value="alert">🔔 تنبيه</option>
+        <option value="important">⚠️ مهم جداً</option>
+      </select>
     </div>
-    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+    <div class="ann-field-g">
+      <label>الوجهة</label>
+      <select id="ann-target-g" class="ann-sel-g">
+        <option value="main">🌐 الصفحة الرئيسية</option>
+        <option value="teachers">👨‍🏫 بوابة المعلمين</option>
+        <option value="both">📡 الاثنتان</option>
+      </select>
+    </div>
   </div>
+  <div class="ann-field-g" style="margin-bottom:12px;">
+    <label>نص الإشعار</label>
+    <input type="text" id="ann-message-g" class="ann-inp-g" placeholder="اكتب نص الإشعار...">
+  </div>
+  <div class="ann-grid-2">
+    <div class="ann-field-g">
+      <label>رابط إضافي (اختياري)</label>
+      <input type="url" id="ann-link-g" class="ann-inp-g" placeholder="https://...">
+    </div>
+    <div class="ann-field-g">
+      <label>مدة الإشعار</label>
+      <select id="ann-duration-g" class="ann-sel-g">
+        <option value="0">بدون انتهاء</option>
+        <option value="1">يوم واحد</option>
+        <option value="3">3 أيام</option>
+        <option value="7" selected>أسبوع</option>
+        <option value="14">أسبوعان</option>
+        <option value="30">شهر</option>
+      </select>
+    </div>
+  </div>
+  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.84rem;font-weight:700;color:#3F2E63;margin-bottom:4px;">
+    <input type="checkbox" id="ann-enabled-g" checked style="width:16px;height:16px;"> تفعيل الإشعار فوراً
+  </label>
+  <button class="ann-send-g" onclick="sendAnnouncement("مدير المدرسة")">📤 إرسال الإشعار</button>
+  <div class="ann-res-g" id="ann-res-g"></div>
 </div>
-
-<header>
-  <div class="header-top">
-    <div class="header-logos">
-      <div class="logo-icon">🏫</div>
-      <div>
-        <div class="header-name">مدرسة مكة المكرمة المتوسطة — لوحة متابعة المدير</div>
-        <div class="header-sub">قسم ذوي الإعاقة — إشراف إداري شامل</div>
-      </div>
-    </div>
-    <a href="index.html" class="back-link">← الرئيسية</a>
-  </div>
-  <div class="hero">
-   
-    <h1>لوحة <span>المتابعة </span></h1>
-    <p>مؤشرات الأداء والبيانات الإحصائية للبرامج التعليمية </p>
-  </div>
-</header>
-
-<!-- PIN -->
-<div class="pin-screen" id="pin-screen">
-  <div class="pin-box">
-    <div class="pin-icon">🔐</div>
-    <div class="pin-title">دخول المدير</div>
-    <div class="pin-desc">أدخل رمز المدير للاطلاع على بيانات البرامج</div>
-    <input type="password" class="pin-input" id="admin-pin" maxlength="8"
-           placeholder="• • • •" onkeydown="if(event.key==='Enter')doLogin()"
-           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
-    <button class="btn-enter" onclick="doLogin()">✅ دخول</button>
-  </div>
-</div>
-
-<!-- CONTENT -->
-<div id="content">
-<main>
-
-  <div class="tabs-bar">
-    <button class="tab-btn active" onclick="switchTab('overview',this)">📊 نظرة عامة</button>
-    <button class="tab-btn" onclick="switchTab('attendance',this)">📋 الحضور</button>
-    <button class="tab-btn" onclick="switchTab('students',this)">👨‍🎓 الطلاب</button>
-    <button class="tab-btn" onclick="switchTab('iep',this)">📋 الخطط الفردية</button>
-    <button class="tab-btn" onclick="switchTab('timetable',this)">📅 الجداول</button>
-    <button class="tab-btn" onclick="switchTab('portfolio',this)">📁 الاقرارات</button>
-    <button class="tab-btn" onclick="switchTab('settings',this)">⚙️ الإعدادات</button>
-  </div>
-
-  <!-- OVERVIEW -->
-  <div class="tab-pane active" id="tab-overview">
-    <div class="kpi-grid">
-      <div class="kpi-card c-blue"><div class="kpi-icon">👨‍🎓</div><div class="kpi-val" id="kpi-total">—</div><div class="kpi-label">إجمالي الطلاب</div></div>
-      <div class="kpi-card c-orange"><div class="kpi-icon">📘</div><div class="kpi-val">20</div><div class="kpi-label">طلاب برنامج يسير</div></div>
-      <div class="kpi-card c-green"><div class="kpi-icon">🧑‍🏫</div><div class="kpi-val" id="kpi-dumaj">—</div><div class="kpi-label">طلاب برنامج الدمج</div></div>
-      <div class="kpi-card c-gold"><div class="kpi-icon">✅</div><div class="kpi-val" id="kpi-att">—</div><div class="kpi-label">نسبة الحضور</div></div>
-      <div class="kpi-card c-red"><div class="kpi-icon">❌</div><div class="kpi-val" id="kpi-abs">—</div><div class="kpi-label">غيابات هذا الأسبوع</div></div>
-      <div class="kpi-card c-purple"><div class="kpi-icon">📅</div><div class="kpi-val" id="kpi-week">—</div><div class="kpi-label">الأسبوع الحالي</div></div>
-    </div>
-    <div class="ov-card">
-      <div class="ov-head">📊 ملخص الحضور اليومي — الأسبوع الحالي</div>
-      <div id="ov-body"><div class="loading">⏳ جاري التحميل...</div></div>
-    </div>
-  </div>
-
-  <!-- ATTENDANCE -->
-  <div class="tab-pane" id="tab-attendance">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-      <div class="sec-title" style="border:none;margin:0;padding:0;">📋 كشف الحضور والغياب</div>
-      <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchAttProg('dumaj',this)">🧑‍🏫 دمج</button>
-        <button class="prog-btn" onclick="switchAttProg('yaseer',this)">📘 يسير</button>
-      </div>
-    </div>
-    <div class="week-nav">
-      <button class="btn-nav" onclick="changeAttWeek(-1)">→ السابق</button>
-      <div class="week-info">
-        <div class="week-num" id="att-wn">—</div>
-        <div class="week-dates" id="att-wd">—</div>
-        <div class="week-hijri" id="att-wh">—</div>
-      </div>
-      <button class="btn-nav" onclick="changeAttWeek(1)">التالي ←</button>
-      <input type="date" class="date-inp" id="att-date" onchange="setAttDate(this.value)">
-      <button class="btn-load" onclick="loadAttView()">🔄 عرض</button>
-      <button class="btn-print" onclick="window.print()">🖨️ طباعة</button>
-    </div>
-    <div id="att-wrap"><div class="empty-state"><div class="empty-icon">📋</div>اختر أسبوعاً واضغط عرض</div></div>
-  </div>
-
-  <!-- STUDENTS -->
-  <div class="tab-pane" id="tab-students">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-      <div class="sec-title" style="border:none;margin:0;padding:0;">👨‍🎓 ملفات الطلاب</div>
-      <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchStudProg('dumaj',this)">🧑‍🏫 دمج</button>
-        <button class="prog-btn" onclick="switchStudProg('yaseer',this)">📘 يسير</button>
-      </div>
-    </div>
-    <input type="text" class="stu-search" id="stu-q" placeholder="🔍 ابحث باسم الطالب..." oninput="filterStu()">
-    <div class="stu-grid" id="stu-grid"><div class="loading">⏳ جاري التحميل...</div></div>
-  </div>
-
-  <!-- TIMETABLE -->
-  <div class="tab-pane" id="tab-timetable">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-      <div class="sec-title" style="border:none;margin:0;padding:0;">📅 جداول الحصص</div>
-      <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchTTProg('dumaj',this)">🧑‍🏫 دمج</button>
-        <button class="prog-btn" onclick="switchTTProg('yaseer',this)">📘 يسير</button>
-      </div>
-    </div>
-    <div class="grade-tabs" id="grade-tabs"></div>
-    <div class="tt-wrap"><table class="tt-table" id="tt-table"><tbody><tr><td class="loading" colspan="9">⏳ جاري التحميل...</td></tr></tbody></table></div>
-  </div>
-
-  <!-- PORTFOLIO -->
-  <div class="tab-pane" id="tab-portfolio">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-      <div class="sec-title" style="border:none;margin:0;padding:0;">📁 الاقرارات</div>
-      <div class="prog-switch">
-        <button class="prog-btn active" onclick="switchPortProg('dumaj',this)">🧑‍🏫 دمج</button>
-        <button class="prog-btn" onclick="switchPortProg('yaseer',this)">📘 يسير</button>
-      </div>
-    </div>
-    <div class="port-grid" id="port-grid"><div class="loading">⏳ جاري التحميل...</div></div>
-  </div>
-
-  <!-- IEP PLANS -->
-  <div class="tab-pane" id="tab-iep">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-      <div class="sec-title" style="border:none;margin:0;padding:0;">📋 الخطط التعليمية الفردية</div>
-      <div class="prog-switch">
-        <button class="prog-btn active" id="iep-prog-dumaj" onclick="switchIepProg('dumaj',this)">🧑‍🏫 دمج</button>
-        <button class="prog-btn" id="iep-prog-yaseer" onclick="switchIepProg('yaseer',this)">📘 يسير</button>
-      </div>
-    </div>
-    <!-- بحث -->
-    <div style="position:relative;margin-bottom:20px;">
-      <input type="text" id="iep-search" placeholder="🔍 ابحث باسم الطالب..." oninput="filterIepStudents()"
-        style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;background:#fff;transition:all 0.2s;"
-        onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
-    </div>
-    <!-- قائمة الطلاب -->
-    <div id="iep-students-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:20px;"></div>
-    <!-- عرض الخطة -->
-    <div id="iep-plan-view" style="display:none;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-        <button onclick="closeIepView()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">← رجوع</button>
-        <div id="iep-plan-title" style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:900;color:var(--primary);"></div>
-      </div>
-      <div id="iep-plan-content" style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;min-height:200px;"></div>
-    </div>
-  </div>
-
-  <!-- SETTINGS -->
-  <div class="tab-pane" id="tab-settings">
-    <div class="sec-title">⚙️ إعدادات لوحة المدير</div>
-    <div class="settings-wrap">
-      <div class="set-row">
-        <div><div class="set-label">🔐 تغيير رمز الدخول</div><div class="set-sub">الرمز الحالي محفوظ في المتصفح</div></div>
-        <div style="display:flex;gap:6px;">
-          <input type="password" class="set-inp" id="new-pin" placeholder="رمز جديد">
-          <button class="btn-save" onclick="changePin()">حفظ</button>
-        </div>
-      </div>
-      <div class="set-row">
-        <div><div class="set-label">🏫 اسم المدير</div><div class="set-sub">للسجل والتقارير</div></div>
-        <div style="display:flex;gap:6px;">
-          <input type="text" class="set-inp" id="p-name" placeholder="الاسم">
-          <button class="btn-save" onclick="saveName()">حفظ</button>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:24px;padding:18px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
-      <div class="set-label" style="margin-bottom:10px;">📢 شريط الإشعارات (أعلى الصفحة الرئيسية)</div>
-      <div class="set-sub" style="margin-bottom:12px;">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه</div>
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:10px;">
-        <input type="checkbox" id="announce-enabled" style="width:18px;height:18px;">
-        تفعيل عرض الشريط
-      </label>
-      <input type="text" class="set-inp" id="announce-message" placeholder="نص الإشعار..." style="width:100%;margin-bottom:8px;">
-      <input type="url" class="set-inp" id="announce-link" placeholder="رابط إضافي (اختياري)" style="width:100%;margin-bottom:10px;">
-      <button class="btn-save" onclick="saveAnnouncementP()">📢 حفظ ونشر الإشعار</button>
-    </div>
-
-    <div style="margin-top:24px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:0.78rem;color:var(--muted);line-height:2.2;">
-      🏫 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
-      📚 برنامج يسير + برنامج الدمج الفكري<br>
-      🗓️ الفصل الثاني 1447هـ<br>
-      <strong style="color:var(--primary);">إعداد وتنفيذ: أ. سعد الزهراني</strong>
-    </div>
-  </div>
 
 </main>
 </div>
@@ -990,6 +846,54 @@ function closeIepView() {
   document.getElementById('iep-plan-view').style.display = 'none';
   document.getElementById('iep-students-list').style.display = 'grid';
   document.getElementById('iep-search').style.display = 'block';
+}
+
+// ===================================================
+// إرسال الإشعار — مشترك
+// ===================================================
+const _ANN_SB  = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const _ANN_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+
+async function sendAnnouncement(senderName) {
+  const enabled  = document.getElementById('ann-enabled-g')?.checked ?? true;
+  const message  = (document.getElementById('ann-message-g')?.value||'').trim();
+  const link     = (document.getElementById('ann-link-g')?.value||'').trim();
+  const type     = document.getElementById('ann-type-g')?.value||'default';
+  const target   = document.getElementById('ann-target-g')?.value||'main';
+  const duration = parseInt(document.getElementById('ann-duration-g')?.value||'0');
+  const resEl    = document.getElementById('ann-res-g');
+
+  if (!message) {
+    if(resEl){resEl.style.color='#dc2626';resEl.textContent='⚠️ اكتب نص الإشعار أولاً';}
+    return;
+  }
+
+  const expiresAt = duration>0 ? new Date(Date.now()+duration*86400000).toISOString() : null;
+  const payload = {enabled,message,link,type,target,expiresAt,
+    sentAt:new Date().toISOString(), sentBy:senderName||'إدارة'};
+
+  const paths=[];
+  if(target==='main'||target==='both')     paths.push('reports/site-announcement.json');
+  if(target==='teachers'||target==='both') paths.push('reports/teachers-announcement.json');
+
+  let ok=false;
+  for(const path of paths){
+    try{
+      const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});
+      const r=await fetch(`${_ANN_SB}/storage/v1/object/${path}`,{
+        method:'POST',
+        headers:{'apikey':_ANN_KEY,'Authorization':'Bearer '+_ANN_KEY,
+          'Content-Type':'application/json','x-upsert':'true'},
+        body:blob});
+      if(r.ok) ok=true;
+    }catch(e){}
+  }
+  if(resEl){
+    resEl.style.color=ok?'#16a34a':'#dc2626';
+    const d=target==='both'?'للصفحتين':target==='teachers'?'لبوابة المعلمين':'للصفحة الرئيسية';
+    resEl.textContent=ok?`✅ تم الإرسال ${d}`:'⚠️ تعذر الإرسال';
+  }
+  if(ok){setTimeout(()=>{if(resEl)resEl.textContent='';const m=document.getElementById('ann-message-g');if(m)m.value='';},4000);}
 }
 </script>
 

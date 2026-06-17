@@ -93,6 +93,17 @@ header.portal-header{
   text-decoration:none; font-size:.82rem; font-weight:600; transition:all .2s; white-space:nowrap;
 }
 .back-btn:hover{ background:rgba(255,255,255,.15); }
+
+.ann-compose{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px 22px;margin-bottom:18px;}
+.ann-compose-head{font-weight:900;font-size:.92rem;color:#3F2E63;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #EAE1F7;}
+.ann-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.ann-field-g{display:flex;flex-direction:column;gap:5px;}
+.ann-field-g label{font-size:.78rem;font-weight:700;color:#6E5F82;}
+.ann-inp-g,.ann-sel-g{padding:9px 12px;border:1.5px solid #DCD2EE;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.85rem;width:100%;outline:none;background:#FBFAFE;transition:border .2s;color:#221335;}
+.ann-inp-g:focus,.ann-sel-g:focus{border-color:#8B6ABF;background:#fff;}
+.ann-send-g{width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:11px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;}
+.ann-res-g{font-size:.8rem;min-height:18px;margin-top:8px;font-weight:700;text-align:center;}
+@media(max-width:640px){.ann-grid-2{grid-template-columns:1fr;}}
 </style>
 
 <style>
@@ -481,7 +492,44 @@ textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-siz
       </div>
       <div class="students-grid" id="students-grid">
         <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
-      </div>
+      <div class="ann-compose">
+<div class="ann-compose-head">📢 إرسال إشعار / تنبيه</div>
+<div class="ann-grid-2">
+<div class="ann-field-g"><label>نوع الإشعار</label>
+<select id="ann-type-g" class="ann-sel-g">
+<option value="default">📢 إشعار عام</option>
+<option value="news">📰 خبر / إعلان</option>
+<option value="alert">🔔 تنبيه</option>
+<option value="important">⚠️ مهم</option>
+</select></div>
+<div class="ann-field-g"><label>الوجهة</label>
+<select id="ann-target-g" class="ann-sel-g">
+<option value="main">🌐 الصفحة الرئيسية</option>
+<option value="teachers">👨‍🏫 بوابة المعلمين</option>
+<option value="both">📡 الاثنتان</option>
+</select></div>
+</div>
+<div class="ann-field-g" style="margin-bottom:12px;"><label>نص الإشعار</label>
+<input type="text" id="ann-message-g" class="ann-inp-g" placeholder="اكتب نص الإشعار..."></div>
+<div class="ann-grid-2">
+<div class="ann-field-g"><label>رابط (اختياري)</label>
+<input type="url" id="ann-link-g" class="ann-inp-g" placeholder="https://..."></div>
+<div class="ann-field-g"><label>المدة</label>
+<select id="ann-duration-g" class="ann-sel-g">
+<option value="0">بدون انتهاء</option>
+<option value="1">يوم</option>
+<option value="3">3 أيام</option>
+<option value="7" selected>أسبوع</option>
+<option value="14">أسبوعان</option>
+<option value="30">شهر</option>
+</select></div>
+</div>
+<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.84rem;font-weight:700;color:#3F2E63;margin-bottom:4px;">
+<input type="checkbox" id="ann-enabled-g" checked style="width:16px;height:16px;"> تفعيل فوراً</label>
+<button class="ann-send-g" onclick="sendAnnouncement(currentTeacher.name)">📤 إرسال</button>
+<div class="ann-res-g" id="ann-res-g"></div>
+</div>
+</div>
     </div>
 
     <!-- ===== جدولي ===== -->
@@ -2026,13 +2074,42 @@ document.getElementById('username-input').addEventListener('keydown', function(e
 document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
 document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
 </script>
-
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("/sw.js");
-  });
+const _ANN_SB="https://pyrxwqgapwjwhiskowhk.supabase.co";
+const _ANN_KEY="sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+async function sendAnnouncement(senderName){
+  const enabled=document.getElementById('ann-enabled-g')?.checked??true;
+  const message=(document.getElementById('ann-message-g')?.value||'').trim();
+  const link=(document.getElementById('ann-link-g')?.value||'').trim();
+  const type=document.getElementById('ann-type-g')?.value||'default';
+  const target=document.getElementById('ann-target-g')?.value||'main';
+  const duration=parseInt(document.getElementById('ann-duration-g')?.value||'0');
+  const resEl=document.getElementById('ann-res-g');
+  if(!message){if(resEl){resEl.style.color='#dc2626';resEl.textContent='⚠️ اكتب النص';}return;}
+  const expiresAt=duration>0?new Date(Date.now()+duration*86400000).toISOString():null;
+  const payload={enabled,message,link,type,target,expiresAt,sentAt:new Date().toISOString(),sentBy:senderName||'إدارة'};
+  const paths=[];
+  if(target==='main'||target==='both')paths.push('reports/site-announcement.json');
+  if(target==='teachers'||target==='both')paths.push('reports/teachers-announcement.json');
+  let ok=false;
+  for(const p of paths){
+    try{
+      const b=new Blob([JSON.stringify(payload)],{type:'application/json'});
+      const r=await fetch(_ANN_SB+'/storage/v1/object/'+p,{method:'POST',
+        headers:{apikey:_ANN_KEY,Authorization:'Bearer '+_ANN_KEY,'Content-Type':'application/json','x-upsert':'true'},body:b});
+      if(r.ok)ok=true;
+    }catch(e){}
+  }
+  if(resEl){
+    resEl.style.color=ok?'#16a34a':'#dc2626';
+    const d=target==='both'?'للصفحتين':target==='teachers'?'لبوابة المعلمين':'للصفحة الرئيسية';
+    resEl.textContent=ok?'✅ تم الإرسال '+d:'⚠️ تعذر الإرسال';
+  }
+  if(ok){setTimeout(()=>{if(resEl)resEl.textContent='';const m=document.getElementById('ann-message-g');if(m)m.value='';},4000);}
 }
+</script>
+<script>
+if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}
 </script>
 </body>
 </html>
