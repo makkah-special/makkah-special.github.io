@@ -1248,7 +1248,8 @@ function printEntry(id) {
     (imgs.length ? '<div class="sec"><div class="sec-t">المرفقات</div><div class="imgs">' + imgs.map(f => '<img src="' + f.dataUrl + '" alt="">').join('') + '</div></div>' : '') +
     (others.length ? '<div class="sec"><div class="sec-t">ملفات مرفقة</div>' + others.map(f => '<div style="font-size:0.82rem;padding:4px 0">📎 ' + escHtml(f.name) + '</div>').join('') + '</div>' : '') +
     '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>' +
-    '<script>window.onload=()=>window.print();<\/script></body></html>');
+    '<script>window.onload=()=>window.print();<\/script><script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</body></html>');
   win.document.close();
 }
 
@@ -1301,7 +1302,8 @@ function printWitness(id) {
     + '<div style="margin-top:30px;display:flex;justify-content:flex-end"><div style="border-top:1.5px solid #221335;width:150px;text-align:center;padding-top:6px;font-size:0.73rem;color:#374151">مدير المدرسة<br>إبراهيم علي آل صمع</div></div>'
     + '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>'
     + '</div>'
-    + '<script>window.onload=()=>window.print();<\/script></body></html>');
+    + '<script>window.onload=()=>window.print();<\/script><script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</body></html>');
   win.document.close();
 }
 
@@ -1526,7 +1528,8 @@ function printProfile() {
     html += '</div>';
   }
   html += '<div class="ft">📅 ' + todayG + ' | 🌙 ' + todayH + '<br>© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>';
-  html += '<script>window.onload=function(){window.print();};<\/script></body></html>';
+  html += '<script>window.onload=function(){window.print();};<\/script><script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</body></html>';
   win.document.write(html);
   win.document.close();
 }
@@ -1720,5 +1723,6 @@ document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key
   } catch(e) {}
 })();
 </script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
 </body>
 </html>
