@@ -1017,30 +1017,6 @@ footer{
 // ===================================================
 // شريط الإشعارات العام
 // ===================================================
-(async function loadAnnouncementBar() {
-  try {
-    if (sessionStorage.getItem('announcement_dismissed')) return;
-    const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/site-announcement.json?t=${Date.now()}`);
-    if (!res.ok) return;
-    const data = await res.json();
-    if (!data || !data.enabled || !data.message) return;
-
-    const bar = document.getElementById('announcement-bar');
-    const textEl = document.getElementById('announcement-text');
-    textEl.innerHTML = '<span class="ann-icon">📢</span> ' + data.message.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    if (data.link) {
-      textEl.innerHTML += ` — <a class="ann-link" href="${data.link}" target="_blank" rel="noopener">المزيد</a>`;
-    }
-    bar.style.display = 'block';
-  } catch(e) {}
-})();
-
-function closeAnnouncementBar() {
-  document.getElementById('announcement-bar').style.display = 'none';
-  try { sessionStorage.setItem('announcement_dismissed', '1'); } catch(e) {}
-}
-
 // ===== شريط إشعارات ticker =====
 (async function() {
   try {
