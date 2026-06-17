@@ -10,9 +10,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="منصة مَعَك">
+<meta name="apple-mobile-web-app-title" content="منصة مَعَاك">
 <meta name="theme-color" content="#6B4C9A">
-<title>منصة مَعَك | مدرسة مكة المكرمة المتوسطة</title>
+<title>منصة مَعَاك | مدرسة مكة المكرمة المتوسطة</title>
 <!-- Open Graph -->
 <meta property="og:title" content="منصة مَعَاك | مدرسة مكة المكرمة المتوسطة" />
 <meta property="og:description" content="منصة برامج ذوي الإعاقة — برنامج يسير والدمج الفكري" />
@@ -701,8 +701,8 @@ footer{
   <!-- بوابات الطلاب -->
   <div class="fade-in" id="portals">
     <div class="sec-head">
-      <div class="sec-label">الطلاب وأولياء الأمور والمعلمين</div>
-      <div class="sec-title">🔐 البوابات الرقمية</div>
+      <div class="sec-label">الطلاب وأولياء الأمور</div>
+      <div class="sec-title">🔐 بوابة الطلاب</div>
       <div class="sec-sub">بوابة خاصة لكل برنامج — الدخول برمز سري خاص بكل طالب</div>
     </div>
 
@@ -887,8 +887,58 @@ footer{
   }, 400);
 
 // ===================================================
-// شريط الإشعارات العام
+// PWA — تسجيل Service Worker وبانر التثبيت
 // ===================================================
+let deferredPrompt = null;
+
+// تسجيل SW
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('✅ SW registered:', reg.scope))
+      .catch(err => console.log('SW error:', err));
+  });
+}
+
+// اعتراض حدث التثبيت
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // إظهار بانر التثبيت بعد ثانيتين
+  setTimeout(() => showInstallBanner(), 2000);
+});
+
+function showInstallBanner() {
+  if (!deferredPrompt) return;
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) banner.style.display = 'flex';
+}
+
+function installPWA() {
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) banner.style.display = 'none';
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(choice => {
+    deferredPrompt = null;
+  });
+}
+
+function dismissInstallBanner() {
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) banner.style.display = 'none';
+  // لا تظهر مرة أخرى في هذه الجلسة
+  try { sessionStorage.setItem('pwa_dismissed','1'); } catch(e) {}
+}
+
+// إخفاء البانر إذا رفضه سابقاً
+try {
+  if (sessionStorage.getItem('pwa_dismissed')) {
+    const b = document.getElementById('pwa-install-banner');
+    if (b) b.style.display = 'none';
+  }
+} catch(e) {}
+</script>
 (async function loadAnnouncementBar() {
   try {
     if (sessionStorage.getItem('announcement_dismissed')) return;
@@ -913,5 +963,51 @@ function closeAnnouncementBar() {
   try { sessionStorage.setItem('announcement_dismissed', '1'); } catch(e) {}
 }
 </script>
+
+<!-- بانر تثبيت التطبيق PWA -->
+<div id="pwa-install-banner" style="display:none;">
+  <div class="pwa-banner-inner">
+    <img src="icon-192.png" alt="مَعَاك" class="pwa-banner-icon">
+    <div class="pwa-banner-text">
+      <div class="pwa-banner-title">أضف منصة مَعَاك لشاشتك الرئيسية</div>
+      <div class="pwa-banner-sub">تجربة تطبيق أسرع وأسهل</div>
+    </div>
+    <button class="pwa-btn-install" onclick="installPWA()">تثبيت</button>
+    <button class="pwa-btn-close" onclick="dismissInstallBanner()">✕</button>
+  </div>
+</div>
+
+<style>
+#pwa-install-banner{
+  position:fixed; bottom:0; right:0; left:0; z-index:9999;
+  justify-content:center; padding:0 16px 16px;
+  animation:slideUp .4s ease;
+}
+@keyframes slideUp{ from{transform:translateY(100%)} to{transform:translateY(0)} }
+.pwa-banner-inner{
+  background:linear-gradient(135deg,var(--lav-800),var(--lav-900));
+  border:1px solid rgba(215,162,74,.4); border-radius:18px;
+  padding:14px 18px; display:flex; align-items:center; gap:14px;
+  max-width:560px; margin:0 auto; width:100%;
+  box-shadow:0 -4px 32px rgba(46,33,72,.6), 0 8px 32px rgba(0,0,0,.4);
+}
+.pwa-banner-icon{ width:46px; height:46px; border-radius:12px; flex-shrink:0; }
+.pwa-banner-text{ flex:1; }
+.pwa-banner-title{ color:#fff; font-weight:800; font-size:.88rem; }
+.pwa-banner-sub{ color:rgba(255,255,255,.55); font-size:.75rem; margin-top:2px; }
+.pwa-btn-install{
+  background:linear-gradient(135deg,#8a6116,var(--gold));
+  color:#fff; border:none; border-radius:10px; padding:9px 20px;
+  font-family:'Cairo',sans-serif; font-weight:800; font-size:.84rem;
+  cursor:pointer; flex-shrink:0; white-space:nowrap;
+}
+.pwa-btn-install:hover{ opacity:.9; }
+.pwa-btn-close{
+  background:rgba(255,255,255,.08); border:none; color:rgba(255,255,255,.5);
+  width:28px; height:28px; border-radius:7px; cursor:pointer; flex-shrink:0; font-size:.8rem;
+}
+.pwa-btn-close:hover{ background:rgba(255,255,255,.15); color:#fff; }
+</style>
+
 </body>
 </html>
