@@ -271,9 +271,9 @@ footer strong{color:var(--accent-light);}
     <a href="index.html" class="back-link">← الرئيسية</a>
   </div>
   <div class="hero">
-   
-    <h1>لوحة <span>المتابعة </span></h1>
-    <p>مؤشرات الأداء والبيانات الإحصائية للبرامج التعليمية </p>
+    <div class="hero-badge">👁️ صلاحية المدير</div>
+    <h1>لوحة <span>المتابعة الإدارية</span></h1>
+    <p>عرض شامل لبرنامجَي يسير والدمج الفكري — قراءة فقط</p>
   </div>
 </header>
 
@@ -992,5 +992,6 @@ function closeIepView() {
   document.getElementById('iep-search').style.display = 'block';
 }
 </script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
 </body>
 </html>
