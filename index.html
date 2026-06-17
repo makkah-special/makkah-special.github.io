@@ -498,172 +498,173 @@ footer{
   .hero h1{ font-size:2.15rem; }
   .hero-btns{ flex-direction:column; align-items:stretch; }
   .btn-primary, .btn-outline{ justify-content:center; }
-/* ===== شريط الإشعارات المتحرك الاحترافي ===== */
-/* ===== شريط إشعارات متحرك - نيوز تيكر ذهبي ===== */
-/* ========================================
-   شريط الإشعارات — Ticker ذهبي
-======================================== */
-#announcement-bar{
-  display:none;
-  width:100%;
-  height:44px;
-  line-height:44px;
-  background:linear-gradient(135deg,#5C3400 0%,#A06000 20%,#D4A020 40%,#F5C830 50%,#D4A020 60%,#A06000 80%,#5C3400 100%);
-  background-size:300% 100%;
-  animation:annGold 4s ease-in-out infinite alternate;
-  border-top:2px solid #FFD84D;
-  border-bottom:2px solid #7A4800;
-  box-shadow:0 3px 18px rgba(160,100,0,.55), inset 0 1px 0 rgba(255,240,120,.4);
-  overflow:hidden;
-  position:relative;
-  z-index:9998;
-  font-family:'Cairo','Tajawal',sans-serif;
+/* شريط الإشعارات العام */
+
+@keyframes annShift{
+  0%,100%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
 }
-@keyframes annGold{
-  0%{background-position:0% 50%}
-  100%{background-position:100% 50%}
+#announcement-bar .ann-inner{
+  max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:center;
+  gap:12px; flex-wrap:wrap; font-size:.92rem; font-weight:800;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+#announcement-bar .ann-icon{
+  font-size:1.25rem; flex-shrink:0; display:inline-block;
+  animation:annPulse 1.6s ease-in-out infinite;
+}
+@keyframes annPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.18); }
+}
+#announcement-bar a.ann-link{
+  color:#fff; text-decoration:none; font-weight:900; background:rgba(0,0,0,.18);
+  padding:3px 14px; border-radius:20px; white-space:nowrap; transition:background .2s;
+}
+#announcement-bar a.ann-link:hover{ background:rgba(0,0,0,.3); }
+#announcement-bar .ann-close{
+  position:absolute; left:14px; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.15); border:none; border-radius:6px; width:26px; height:26px;
+  cursor:pointer; font-size:.8rem; color:#fff; transition:background .2s;
+}
+#announcement-bar .ann-close:hover{ background:rgba(0,0,0,.3); }
+@media (max-width:640px){
+  
+  #announcement-bar .ann-inner{ font-size:.8rem; }
 }
 
-/* شريط لامع يتحرك فوق الذهب */
-#announcement-bar .ann-shimmer{
-  position:absolute;top:0;left:0;right:0;bottom:0;
-  background:linear-gradient(90deg,
-    transparent 0%,
-    rgba(255,255,200,.25) 50%,
-    transparent 100%
-  );
-  background-size:40% 100%;
-  animation:annShine 2s ease-in-out infinite;
-  pointer-events:none;z-index:1;
-}
-@keyframes annShine{
-  0%{background-position:-40% 0}
-  100%{background-position:140% 0}
-}
-
-/* الصف الداخلي */
-#announcement-bar .ann-row{
-  position:relative;z-index:2;
-  display:flex;
-  align-items:center;
-  height:44px;
-  width:100%;
+/* ===== شريط إشعارات ticker ===== */
+#ann-ticker-bar {
+  display: none;
+  width: 100%;
+  height: 46px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(90deg,
+    #4A2000, #8B5000 15%, #C88010 30%,
+    #F5C830 45%, #FFD84D 50%,
+    #F5C830 55%, #C88010 70%,
+    #8B5000 85%, #4A2000);
+  background-size: 300% 100%;
+  animation: annGoldFlow 3s linear infinite;
+  border-top: 2px solid #FFD84D;
+  border-bottom: 2px solid #6B3A00;
+  box-shadow: 0 2px 16px rgba(150,90,0,.5);
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  z-index: 100;
 }
 
-/* زر الإغلاق */
-#announcement-bar .ann-x{
-  flex-shrink:0;
-  width:40px;height:44px;
-  background:rgba(0,0,0,.3);
-  border:none;
-  border-left:1px solid rgba(255,220,80,.35);
-  color:rgba(255,245,160,.9);
-  font-size:.8rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .2s;
-  font-weight:700;
+  100% { background-position: 0%   0; }
 }
-#announcement-bar .ann-x:hover{background:rgba(0,0,0,.5);color:#fff;}
+/* وميض */
+#ann-ticker-bar::before {
+  content: '';
+  position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,200,.28), transparent);
+  animation: annShimmer 2.2s ease-in-out infinite;
+  pointer-events: none; z-index: 3;
+}
+@keyframes annShimmer { 0% { left:-60%; } 100% { left:120%; } }
 
-/* التسمية */
-#announcement-bar .ann-tag{
-  flex-shrink:0;
-  height:44px;
-  padding:0 14px;
-  background:rgba(0,0,0,.3);
-  border-left:1px solid rgba(255,220,80,.3);
-  display:flex;align-items:center;gap:6px;
-  white-space:nowrap;
-}
-#announcement-bar .ann-tag-icon{font-size:1rem;}
-#announcement-bar .ann-tag-txt{
-  color:#FFE87A;font-weight:900;font-size:.7rem;
-  letter-spacing:2px;text-shadow:0 1px 4px rgba(0,0,0,.6);
+/* صف داخلي */
+#ann-ticker-bar .ann-inner-row {
+  display: flex;
+  align-items: center;
+  height: 46px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
-/* حاوية التمرير */
-#announcement-bar .ann-scroll-wrap{
-  flex:1;
-  height:44px;
-  overflow:hidden;
-  position:relative;
+/* زر X */
+#ann-ticker-bar .ann-x-btn {
+  flex-shrink: 0;
+  width: 42px; height: 46px;
+  background: rgba(0,0,0,.32);
+  border: none;
+  border-left: 1px solid rgba(255,210,60,.3);
+  color: rgba(255,245,160,.9);
+  font-size: .82rem; font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+#ann-ticker-bar .ann-x-btn:hover { background: rgba(0,0,0,.55); color:#fff; }
+
+/* بطاقة النوع */
+#ann-ticker-bar .ann-badge {
+  flex-shrink: 0;
+  height: 46px; padding: 0 14px;
+  background: rgba(0,0,0,.3);
+  border-left: 1px solid rgba(255,210,60,.28);
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+#ann-ticker-bar .ann-badge span:first-child { font-size: .95rem; }
+#ann-ticker-bar .ann-badge span:last-child {
+  color: #FFE87A; font-weight: 900; font-size: .68rem;
+  letter-spacing: 2px; text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+
+/* المسار */
+#ann-ticker-bar .ann-track {
+  flex: 1;
+  height: 46px;
+  overflow: hidden;
+  position: relative;
 }
 
 /* النص المتحرك */
-#announcement-bar .ann-scroll-inner{
-  display:inline-block;
-  white-space:nowrap;
-  height:44px;
-  line-height:44px;
-  padding-right:60px;
-  color:#fff;
-  font-weight:800;
-  font-size:.88rem;
-  text-shadow:0 1px 5px rgba(0,0,0,.55);
-  animation:annScroll 20s linear infinite;
-  will-change:transform;
+#ann-ticker-bar .ann-running {
+  display: inline-block;
+  height: 46px;
+  line-height: 46px;
+  white-space: nowrap;
+  color: #fff;
+  font-weight: 800; font-size: .88rem;
+  text-shadow: 0 1px 5px rgba(0,0,0,.55);
+  animation: annRun 25s linear infinite;
+  will-change: transform;
 }
-#announcement-bar .ann-scroll-inner:hover{
-  animation-play-state:paused;
+#ann-ticker-bar .ann-running:hover { animation-play-state: paused; }
+
+@keyframes annRun {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
-@keyframes annScroll{
-  0%  {transform:translateX(0);}
-  100%{transform:translateX(-50%);}
+
+.ann-dot-sep { color: rgba(255,220,80,.8); margin: 0 20px; font-size: .8rem; }
+
+.ann-ext-link {
+  color: #FFF0A0; text-decoration: none;
+  background: rgba(0,0,0,.28); padding: 2px 11px;
+  border-radius: 10px; font-size: .74rem; font-weight: 800;
+  border: 1px solid rgba(255,210,80,.4); margin-right: 6px;
 }
-#announcement-bar .ann-sep{
-  color:rgba(255,230,100,.8);
-  font-size:.8rem;
-  margin:0 24px;
-}
-#announcement-bar .ann-link{
-  color:#FFF0A0;text-decoration:none;
-  background:rgba(0,0,0,.28);
-  padding:2px 12px;border-radius:10px;
-  font-size:.76rem;font-weight:800;
-  border:1px solid rgba(255,220,100,.45);
-  margin-right:8px;
-}
-#announcement-bar .ann-link:hover{background:rgba(0,0,0,.48);}
+.ann-ext-link:hover { background: rgba(0,0,0,.48); }
 
 /* وقت الانتهاء */
-#announcement-bar .ann-exp{
-  flex-shrink:0;
-  height:44px;padding:0 12px;
-  background:rgba(0,0,0,.25);
-  border-right:1px solid rgba(255,220,80,.3);
-  display:flex;align-items:center;
-  color:rgba(255,250,180,.75);
-  font-size:.7rem;white-space:nowrap;
+#ann-ticker-bar .ann-time {
+  flex-shrink: 0;
+  height: 46px; padding: 0 12px;
+  background: rgba(0,0,0,.25);
+  border-right: 1px solid rgba(255,210,60,.28);
+  display: flex; align-items: center;
+  color: rgba(255,248,180,.72); font-size: .68rem; white-space: nowrap;
 }
 
-@media(max-width:768px){
-  #announcement-bar .ann-tag-txt{display:none;}
-  #announcement-bar .ann-tag{padding:0 10px;}
-  #announcement-bar .ann-exp{display:none;}
-  #announcement-bar .ann-scroll-inner{font-size:.82rem;animation-duration:18s;}
+@media (max-width: 768px) {
+  #ann-ticker-bar .ann-badge span:last-child { display: none; }
+  #ann-ticker-bar .ann-badge { padding: 0 10px; }
+  #ann-ticker-bar .ann-time { display: none; }
+  #ann-ticker-bar .ann-running { font-size: .82rem; animation-duration: 18s; }
 }
-
 </style>
 </head>
 <body>
 
 <div class="dot-field"></div>
 
-<!-- ======= شريط الإشعارات ticker ذهبي ======= -->
-<div id="announcement-bar">
-  <div class="ann-shimmer"></div>
-  <div class="ann-row">
-    <button class="ann-x" onclick="closeAnnouncementBar()">✕</button>
-    <div class="ann-tag">
-      <span class="ann-tag-icon" id="ann-icon">📢</span>
-      <span class="ann-tag-txt" id="ann-label">إشعار</span>
-    </div>
-    <div class="ann-scroll-wrap">
-      <div class="ann-scroll-inner" id="ann-scroll"></div>
-    </div>
-    <div class="ann-exp" id="ann-exp"></div>
-  </div>
-</div>
 
 <!-- الشريط العلوي الرسمي -->
 <div class="topbar">
@@ -738,6 +739,22 @@ footer{
       <span class="stat-num">2</span>
       <span class="stat-label">📋 برامج رئيسية</span>
     </div>
+  </div>
+</div>
+
+
+<!-- ====== شريط إشعارات ticker ذهبي ====== -->
+<div id="ann-ticker-bar">
+  <div class="ann-inner-row">
+    <button class="ann-x-btn" onclick="annClose()">✕</button>
+    <div class="ann-badge">
+      <span id="ann-icon">📢</span>
+      <span id="ann-label">إشعار</span>
+    </div>
+    <div class="ann-track">
+      <div class="ann-running" id="ann-running"></div>
+    </div>
+    <div class="ann-time" id="ann-time"></div>
   </div>
 </div>
 
@@ -998,61 +1015,75 @@ footer{
   }, 400);
 
 // ===================================================
-// شريط الإشعارات — ticker ذهبي
+// شريط الإشعارات العام
 // ===================================================
 (async function loadAnnouncementBar() {
   try {
-    if (sessionStorage.getItem('ann_dismissed')) return;
-    const SB = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-    const res = await fetch(`${SB}/storage/v1/object/public/reports/site-announcement.json?t=${Date.now()}`);
+    if (sessionStorage.getItem('announcement_dismissed')) return;
+    const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/site-announcement.json?t=${Date.now()}`);
     if (!res.ok) return;
-    const d = await res.json();
-    if (!d || !d.enabled || !d.message) return;
-    if (d.expiresAt && new Date(d.expiresAt) < new Date()) return;
+    const data = await res.json();
+    if (!data || !data.enabled || !data.message) return;
 
-    const icons  = {default:'📢',news:'📰',alert:'🔔',important:'⚠️'};
-    const labels = {default:'إشعار',news:'أخبار',alert:'تنبيه',important:'مهم'};
-    const t = d.type||'default';
-    const iconEl  = document.getElementById('ann-icon');
-    const labelEl = document.getElementById('ann-label');
-    if(iconEl)  iconEl.textContent  = icons[t]||'📢';
-    if(labelEl) labelEl.textContent = labels[t]||'إشعار';
-
-    // بناء النص المتكرر للتمرير اللانهائي
-    const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    const link = d.link
-      ? ` <a class="ann-link" href="${d.link}" target="_blank" rel="noopener">← المزيد</a>`
-      : '';
-    const unit = `${esc(d.message)}${link}<span class="ann-sep">◆</span>`;
-    // نكرر النص بما يكفي لملء الشاشة مرتين
-    const scroll = document.getElementById('ann-scroll');
-    if(scroll) scroll.innerHTML = unit.repeat(8);
-
-    // الوقت المتبقي
-    if(d.expiresAt) {
-      const diff = new Date(d.expiresAt) - new Date();
-      const days = Math.floor(diff/86400000);
-      const hrs  = Math.floor((diff%86400000)/3600000);
-      const expEl = document.getElementById('ann-exp');
-      if(expEl) expEl.textContent = days>0?`⏱ ${days} يوم`:hrs>0?`⏱ ${hrs} ساعة`:'⏱ ينتهي قريباً';
+    const bar = document.getElementById('announcement-bar');
+    const textEl = document.getElementById('announcement-text');
+    textEl.innerHTML = '<span class="ann-icon">📢</span> ' + data.message.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    if (data.link) {
+      textEl.innerHTML += ` — <a class="ann-link" href="${data.link}" target="_blank" rel="noopener">المزيد</a>`;
     }
-
-    document.getElementById('announcement-bar').style.display = 'block';
+    bar.style.display = 'block';
   } catch(e) {}
 })();
 
 function closeAnnouncementBar() {
   document.getElementById('announcement-bar').style.display = 'none';
-  try { sessionStorage.setItem('ann_dismissed','1'); } catch(e) {}
+  try { sessionStorage.setItem('announcement_dismissed', '1'); } catch(e) {}
 }
-</script>
 
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("/sw.js");
-  });
+// ===== شريط إشعارات ticker =====
+(async function() {
+  try {
+    if (sessionStorage.getItem('ann_closed')) return;
+    const SB = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
+    const r = await fetch(SB + '/storage/v1/object/public/reports/site-announcement.json?t=' + Date.now());
+    if (!r.ok) return;
+    const d = await r.json();
+    if (!d || !d.enabled || !d.message) return;
+    if (d.expiresAt && new Date(d.expiresAt) < new Date()) return;
+
+    // نوع
+    var icons  = {default:'📢', news:'📰', alert:'🔔', important:'⚠️'};
+    var labels = {default:'إشعار', news:'أخبار', alert:'تنبيه', important:'مهم'};
+    var t = d.type || 'default';
+    document.getElementById('ann-icon').textContent  = icons[t]  || '📢';
+    document.getElementById('ann-label').textContent = labels[t] || 'إشعار';
+
+    // النص
+    var esc = function(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+    var lnk = d.link ? '<a class="ann-ext-link" href="'+d.link+'" target="_blank">← المزيد</a>' : '';
+    var unit = esc(d.message) + lnk + '<span class="ann-dot-sep">◆</span>';
+    var el = document.getElementById('ann-running');
+    if (el) el.innerHTML = unit.repeat(6);
+
+    // وقت
+    if (d.expiresAt) {
+      var diff = new Date(d.expiresAt) - new Date();
+      var days = Math.floor(diff / 86400000);
+      var hrs  = Math.floor((diff % 86400000) / 3600000);
+      var te = document.getElementById('ann-time');
+      if (te) te.textContent = days > 0 ? ('⏱ ' + days + ' يوم') : hrs > 0 ? ('⏱ ' + hrs + ' ساعة') : '⏱ ينتهي قريباً';
+    }
+
+    document.getElementById('ann-ticker-bar').style.display = 'block';
+  } catch(e) {}
+})();
+
+function annClose() {
+  document.getElementById('ann-ticker-bar').style.display = 'none';
+  try { sessionStorage.setItem('ann_closed', '1'); } catch(e) {}
 }
+
 </script>
 </body>
 </html>
