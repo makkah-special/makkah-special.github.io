@@ -23,6 +23,15 @@ function openDetailTab(n,b) {
 }
 function openPortfolioFull() { if(window._openPortfolioFull) window._openPortfolioFull(); }
 
+
+(function() {
+
+  // إخفاء المتغيرات الخارجية بـ var محلية
+  var CORE_SUBJECTS = (typeof CORE_SUBJECTS !== 'undefined') ? CORE_SUBJECTS : [];
+  var IEP_LEVELS = (typeof IEP_LEVELS !== 'undefined') ? IEP_LEVELS : [];
+  var IEP_STATUS = (typeof IEP_STATUS !== 'undefined') ? IEP_STATUS : {};
+  var IEP_SUBJECTS = (typeof IEP_SUBJECTS !== 'undefined') ? IEP_SUBJECTS : [];
+  
 // ----- Block 0 -----
 
 // ===================================================
@@ -1407,3 +1416,34 @@ window._initSupPanel = function(program, username, uname, urole) {
   loadMeetingInvite();
   if(window.loadTeacherAnnouncements) loadTeacherAnnouncements();
 };
+
+  // تصدير الدوال للـ global scope
+  if (typeof doLogin === "function") window.doLogin = doLogin;
+  if (typeof doLogout === "function") window.doLogout = doLogout;
+  if (typeof openPortal === "function") window.openPortal = openPortal;
+  if (typeof openStudentDetail === "function") window.openStudentDetail = openStudentDetail;
+  if (typeof closeStudentDetail === "function") window.closeStudentDetail = closeStudentDetail;
+  if (typeof renderMyStudents === "function") window.renderMyStudents = renderMyStudents;
+  if (typeof saveIEPEval === "function") window.saveIEPEval = saveIEPEval;
+  if (typeof saveTeacherPerformance === "function") window.saveTeacherPerformance = saveTeacherPerformance;
+  if (typeof saveTeacherStrengths === "function") window.saveTeacherStrengths = saveTeacherStrengths;
+  if (typeof renderCurriculumTab === "function") window.renderCurriculumTab = renderCurriculumTab;
+  if (typeof saveCurriculum === "function") window.saveCurriculum = saveCurriculum;
+  if (typeof printCurriculum === "function") window.printCurriculum = printCurriculum;
+  if (typeof renderReinforceTab === "function") window.renderReinforceTab = renderReinforceTab;
+  if (typeof addSwItem === "function") window.addSwItem = addSwItem;
+  if (typeof delSwItem === "function") window.delSwItem = delSwItem;
+  if (typeof addSwSubject === "function") window.addSwSubject = addSwSubject;
+  if (typeof removeSwSubject === "function") window.removeSwSubject = removeSwSubject;
+  if (typeof addPerfSubject === "function") window.addPerfSubject = addPerfSubject;
+  if (typeof removePerfSubject === "function") window.removePerfSubject = removePerfSubject;
+  if (typeof iepLevelChanged === "function") window.iepLevelChanged = iepLevelChanged;
+  if (typeof perfLevelChanged === "function") window.perfLevelChanged = perfLevelChanged;
+  if (typeof loadMeetingInvite === "function") window.loadMeetingInvite = loadMeetingInvite;
+  if (typeof loadAssignments === "function") window.loadAssignments = loadAssignments;
+  if (typeof renderAssignTable === "function") window.renderAssignTable = renderAssignTable;
+  if (typeof saveAssignments === "function") window.saveAssignments = saveAssignments;
+  if (typeof loadTeacherAnnouncements === "function") window.loadTeacherAnnouncements = loadTeacherAnnouncements;
+  if (typeof _initTPListeners === "function") window._initTPListeners = _initTPListeners;
+
+})();
