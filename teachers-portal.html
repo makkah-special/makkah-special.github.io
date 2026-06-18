@@ -1116,27 +1116,44 @@ async function saveIEPEval() {
 // ===================================================
 function renderPerformanceEditor() {
   const container = document.getElementById('performance-content');
-  const saved = currentDetail.data.performance || {};
+  if (!currentDetail.data.performance) currentDetail.data.performance = {};
+  const saved = currentDetail.data.performance;
+
+  // المواد النشطة — مادتان افتراضيتان
+  if (!Array.isArray(saved._activePerf) || saved._activePerf.length === 0) {
+    saved._activePerf = ['arabic','math'];
+  }
+  const active = saved._activePerf;
 
   let html = `<div class="perf-legend">`;
   PERF_LEVELS.forEach(l => {
     html += `<span style="background:${l.bg};color:${l.color};padding:3px 10px;border-radius:7px;font-size:.74rem;font-weight:700;">${l.label}</span>`;
   });
   html += `</div>`;
-  html += `<div style="font-size:.84rem;color:var(--muted);margin-bottom:14px;">حدّد مستوى أداء الطالب الحالي في كل مهارة، مع إمكانية إضافة ملاحظة، ثم اضغط «حفظ التقييم».</div>`;
+  html += `<div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;padding:9px 12px;background:var(--surface2);border-radius:9px;border-right:3px solid var(--lav-500);">
+    📏 تظهر مادتا اللغة العربية والرياضيات افتراضياً. يمكن إضافة مواد أخرى من القائمة أدناه.
+  </div>`;
 
-  PERF_SUBJECTS.forEach(subj => {
-    const subjData = saved[subj.key] || {};
+  active.forEach(subjKey => {
+    const subj = PERF_SUBJECTS.find(s => s.key === subjKey);
+    if (!subj) return;
+    if (!saved[subjKey]) saved[subjKey] = {};
+    const subjData = saved[subjKey];
+
     html += `<div class="perf-subject-block">
-      <div class="perf-subject-head"><span>${subj.icon}</span><span>${escHtml(subj.name)}</span></div>
+      <div class="perf-subject-head" style="display:flex;align-items:center;justify-content:space-between;">
+        <span><span>${subj.icon}</span> ${escHtml(subj.name)}</span>
+        <button class="sw-del-btn" style="background:rgba(220,38,38,.08);color:#dc2626;border-radius:6px;width:24px;height:24px;font-size:.72rem;" onclick="removePerfSubject('${subj.key}')" title="إزالة المادة">✕</button>
+      </div>
       <div style="overflow-x:auto;">
       <table class="perf-skills-table">
         <thead><tr><th style="width:38%;">المهارة</th><th style="width:24%;text-align:center;">مستوى الأداء</th><th>ملاحظات</th></tr></thead>
         <tbody>`;
+
     subj.skills.forEach((skill, si) => {
       const skillData = subjData[si] || {};
       const level = skillData.level || 'na';
-      const note = skillData.note || '';
+      const note  = skillData.note  || '';
       const lv = PERF_LEVELS.find(l => l.value === level) || PERF_LEVELS[4];
       html += `<tr>
         <td style="font-weight:700;">${escHtml(skill)}</td>
@@ -1147,18 +1164,51 @@ function renderPerformanceEditor() {
             ${PERF_LEVELS.map(l => `<option value="${l.value}" ${level===l.value?'selected':''}>${l.label}</option>`).join('')}
           </select>
         </td>
-        <td><input type="text" class="perf-notes-input" data-subj="${subj.key}" data-si="${si}" value="${escHtml(note)}" placeholder="ملاحظة اختيارية..."></td>
+        <td><input type="text" class="perf-notes-input" data-subj="${subj.key}" data-si="${si}" value="${escHtml(note)}" placeholder="ملاحظة..."></td>
       </tr>`;
     });
+
     html += `</tbody></table></div></div>`;
   });
 
+  // قائمة إضافة مادة
+  const remaining = PERF_SUBJECTS.filter(s => !active.includes(s.key));
+  if (remaining.length > 0) {
+    html += `<div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;">
+      <select id="perf-add-select" class="assign-select" style="flex:1;min-width:180px;">
+        ${remaining.map(s => `<option value="${s.key}">${s.icon} ${escHtml(s.name)}</option>`).join('')}
+      </select>
+      <button class="btn-sm btn-sm-outline" onclick="addPerfSubject()">+ إضافة مادة</button>
+    </div>`;
+  }
+
   const meta = currentDetail.data.performanceMeta;
   if (meta) {
-    html += `<div style="font-size:.78rem;color:var(--ink-faint);">آخر تحديث: ${escHtml(toHijriLike(meta.date))} — بواسطة ${escHtml(meta.teacher)}</div>`;
+    html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:8px;">آخر تحديث: ${escHtml(toHijriLike(meta.date))} — بواسطة ${escHtml(meta.teacher)}</div>`;
   }
 
   container.innerHTML = html;
+}
+
+function addPerfSubject() {
+  const sel = document.getElementById('perf-add-select');
+  if (!sel || !sel.value) return;
+  const key = sel.value;
+  if (!currentDetail.data.performance) currentDetail.data.performance = {};
+  const saved = currentDetail.data.performance;
+  if (!Array.isArray(saved._activePerf)) saved._activePerf = ['arabic','math'];
+  if (!saved._activePerf.includes(key)) saved._activePerf.push(key);
+  if (!saved[key]) saved[key] = {};
+  renderPerformanceEditor();
+}
+
+function removePerfSubject(key) {
+  if (!confirm('إزالة هذه المادة من قياس الأداء؟ (ستبقى بياناتها المحفوظة)')) return;
+  const saved = currentDetail.data.performance;
+  if (!saved) return;
+  saved._activePerf = (saved._activePerf || []).filter(k => k !== key);
+  if (saved._activePerf.length === 0) saved._activePerf = ['arabic','math'];
+  renderPerformanceEditor();
 }
 
 function perfLevelChanged(sel) {
@@ -1169,20 +1219,25 @@ function perfLevelChanged(sel) {
 }
 
 async function saveTeacherPerformance() {
-  const performance = {};
-  PERF_SUBJECTS.forEach(subj => {
-    performance[subj.key] = {};
+  const saved = currentDetail.data.performance || {};
+  const activePerf = saved._activePerf || ['arabic','math'];
+  const performance = { _activePerf: activePerf };
+  activePerf.forEach(subjKey => {
+    const subj = PERF_SUBJECTS.find(s => s.key === subjKey);
+    if (!subj) return;
+    performance[subjKey] = {};
     subj.skills.forEach((_, si) => {
-      const sel  = document.querySelector(`.perf-level-select[data-subj="${subj.key}"][data-si="${si}"]`);
-      const note = document.querySelector(`.perf-notes-input[data-subj="${subj.key}"][data-si="${si}"]`);
-      performance[subj.key][si] = { level: sel ? sel.value : 'na', note: note ? note.value.trim() : '' };
+      const sel  = document.querySelector(`.perf-level-select[data-subj="${subjKey}"][data-si="${si}"]`);
+      const note = document.querySelector(`.perf-notes-input[data-subj="${subjKey}"][data-si="${si}"]`);
+      performance[subjKey][si] = { level: sel ? sel.value : 'na', note: note ? note.value.trim() : '' };
     });
   });
   const performanceMeta = { date: new Date().toISOString(), teacher: currentTeacher.name };
 
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { performance, performanceMeta });
-  if (saved) {
-    currentDetail.data = saved;
+  const perfPayload = { performance: performance, performanceMeta: performanceMeta };
+  const perfSaved = await saveStudentData(currentDetail.program, currentDetail.pin, perfPayload);
+  if (perfSaved) {
+    currentDetail.data = perfSaved;
     showToast('✅ تم حفظ قياس مستوى الأداء');
     renderPerformanceEditor();
   } else {
@@ -1201,6 +1256,7 @@ function renderStrengthsEditor() {
   if (!currentDetail.data.strengths) currentDetail.data.strengths = {};
   const saved = currentDetail.data.strengths;
 
+  if (!saved._activeSubjects) saved._activeSubjects = SW_DEFAULT_SUBJECTS.slice();
   if (!Array.isArray(saved._activeSubjects) || saved._activeSubjects.length === 0) {
     saved._activeSubjects = SW_DEFAULT_SUBJECTS.slice();
   }
@@ -1299,9 +1355,13 @@ function addSwItem(subjKey, type) {
   const input = document.getElementById(inputId);
   const text = (input?.value || '').trim();
   if (!text) return;
+  // تأكد من وجود strengths أولاً
+  if (!currentDetail.data.strengths) currentDetail.data.strengths = {};
+  if (!currentDetail.data.strengths._activeSubjects) currentDetail.data.strengths._activeSubjects = ['arabic','math'];
   if (!currentDetail.data.strengths[subjKey]) currentDetail.data.strengths[subjKey] = { strengths: [], needs: [] };
   const arr = type === 'strength' ? currentDetail.data.strengths[subjKey].strengths : currentDetail.data.strengths[subjKey].needs;
   arr.push(text);
+  input.value = '';
   renderStrengthsEditor();
 }
 
