@@ -2,24 +2,31 @@
 
 // ===== دوال متاحة فوراً =====
 function openMainTab(n,b) {
-  var t=document.getElementById('main-tab-'+n);
-  var tabs=document.querySelectorAll('.tab-pane[id^="main-tab-"]');
+  var wrap = document.getElementById('sup-portal-wrap') || document;
+  var t = document.getElementById('main-tab-'+n);
+  var tabs = wrap.querySelectorAll('.tab-pane[id^="main-tab-"]');
   tabs.forEach(function(el){el.classList.remove('active');});
   if(t) t.classList.add('active');
-  var btns=document.querySelectorAll('#main-tabs .tab-btn');
+  var btns = wrap.querySelectorAll('#main-tabs .tab-btn');
   btns.forEach(function(el){el.classList.remove('active');});
   if(b) b.classList.add('active');
-  if(n==='curriculum' && window.renderCurriculumTab) renderCurriculumTab();
-  if(n==='assign' && window.renderAssignTable) renderAssignTable();
+  if(n==='curriculum' && window.renderCurriculumTab) setTimeout(renderCurriculumTab,0);
+  if(n==='assign' && window.renderAssignTable) setTimeout(renderAssignTable,0);
+  if(n==='schedule' && window.renderScheduleTab) setTimeout(renderScheduleTab,0);
 }
 function openDetailTab(n,b) {
-  var t=document.getElementById('detail-tab-'+n);
-  var tabs=document.querySelectorAll('.tab-pane[id^="detail-tab-"]');
+  var wrap = document.getElementById('sup-portal-wrap') || document;
+  var t = document.getElementById('detail-tab-'+n);
+  var tabs = wrap.querySelectorAll('.tab-pane[id^="detail-tab-"]');
   tabs.forEach(function(el){el.classList.remove('active');});
   if(t) t.classList.add('active');
-  var btns=document.querySelectorAll('#detail-tabs .tab-btn');
+  var btns = wrap.querySelectorAll('#detail-tabs .tab-btn');
   btns.forEach(function(el){el.classList.remove('active');});
   if(b) b.classList.add('active');
+  if(n==='iep') setTimeout(renderIEPEval,0);
+  if(n==='performance') setTimeout(renderPerformanceEditor,0);
+  if(n==='strengths') setTimeout(renderStrengthsEditor,0);
+  if(n==='reinforce') setTimeout(renderReinforceTab,0);
 }
 function openPortfolioFull() { if(window._openPortfolioFull) window._openPortfolioFull(); }
 
@@ -28,8 +35,6 @@ function openPortfolioFull() { if(window._openPortfolioFull) window._openPortfol
 // ===================================================
 // إعدادات Supabase
 // ===================================================
-if (typeof SB_URL === "undefined") var SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-if (typeof SB_KEY === "undefined") var SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
 
 if (typeof PROGRAM_INFO === "undefined") var PROGRAM_INFO = {
   dumaj:  { label: 'الدمج الفكري', dataPath: 'dumaj',  badge: 'dumaj'  },
@@ -1424,3 +1429,8 @@ window._initSupPanel = function(program, username, uname, urole) {
   loadMeetingInvite();
   if(window.loadTeacherAnnouncements) loadTeacherAnnouncements();
 };
+
+function renderScheduleTab() {
+  if (window._renderScheduleTab) window._renderScheduleTab();
+  else if (window.renderMySchedule) renderMySchedule();
+}
