@@ -1,10 +1,27 @@
+// ===== teacher-portal-sup.js =====
 
-// ===== Wrapper functions للتأكد من التحميل =====
-function openMainTab(n,b){ if(window._openMainTab) window._openMainTab(n,b); }
-function openDetailTab(n,b){ if(window._openDetailTab) window._openDetailTab(n,b); }
-function openPortfolioFull(){ if(window._openPortfolioFull) window._openPortfolioFull(); }
-
-// ===== teachers-portal.js — نظام الإشراف التربوي =====
+// ===== دوال متاحة فوراً =====
+function openMainTab(n,b) {
+  var t=document.getElementById('main-tab-'+n);
+  var tabs=document.querySelectorAll('.tab-pane[id^="main-tab-"]');
+  tabs.forEach(function(el){el.classList.remove('active');});
+  if(t) t.classList.add('active');
+  var btns=document.querySelectorAll('#main-tabs .tab-btn');
+  btns.forEach(function(el){el.classList.remove('active');});
+  if(b) b.classList.add('active');
+  if(n==='curriculum' && window.renderCurriculumTab) renderCurriculumTab();
+  if(n==='assign' && window.renderAssignTable) renderAssignTable();
+}
+function openDetailTab(n,b) {
+  var t=document.getElementById('detail-tab-'+n);
+  var tabs=document.querySelectorAll('.tab-pane[id^="detail-tab-"]');
+  tabs.forEach(function(el){el.classList.remove('active');});
+  if(t) t.classList.add('active');
+  var btns=document.querySelectorAll('#detail-tabs .tab-btn');
+  btns.forEach(function(el){el.classList.remove('active');});
+  if(b) b.classList.add('active');
+}
+function openPortfolioFull() { if(window._openPortfolioFull) window._openPortfolioFull(); }
 
 // ----- Block 0 -----
 
@@ -14,7 +31,7 @@ function openPortfolioFull(){ if(window._openPortfolioFull) window._openPortfoli
 if (typeof SB_URL === "undefined") var SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
 if (typeof SB_KEY === "undefined") var SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
 
-var PROGRAM_INFO = {
+if (typeof PROGRAM_INFO === "undefined") var PROGRAM_INFO = {
   dumaj:  { label: 'الدمج الفكري', dataPath: 'dumaj',  badge: 'dumaj'  },
   yaseer: { label: 'يسير',          dataPath: 'yaseer', badge: 'yaseer' },
 };
@@ -22,6 +39,17 @@ var PROGRAM_INFO = {
 // ===================================================
 // قاعدة بيانات المعلمين (موحّدة للبرنامجين)
 // ===================================================
+if (typeof TEACHERS === "undefined") var TEACHERS = {
+  "m.suhayymi": { name:"محمد أحمد السهيمي",   pin:"1234", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"س",  isSupervisor:false },
+  "z.qarni":    { name:"زين العابدين القرني", pin:"6789", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ز",  isSupervisor:false },
+  "a.ghamdi":   { name:"علي سعيد الغامدي",    pin:"3456", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"غ",  isSupervisor:false },
+  "a.malki":    { name:"علي محمد المالكي",    pin:"4567", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"م",  isSupervisor:false },
+  "h.ulyani":   { name:"حسن علي العلياني",    pin:"5678", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ع",  isSupervisor:false },
+  "a.zahrani":  { name:"علي محمد الزهراني",   pin:"2345", role:"مشرف برنامج الدمج الفكري",       program:"dumaj",  avatar:"ز",  isSupervisor:true  },
+
+  "h.kubaishi": { name:"حسين منصور الكبيشي",  pin:"1111", role:"معلم تربية خاصة — يسير",         program:"yaseer", avatar:"ك",  isSupervisor:false },
+  "saad.z":     { name:"سعد سالم الزهراني",   pin:"2222", role:"مشرف برنامج يسير التعليمي",      program:"yaseer", avatar:"ز",  isSupervisor:true  },
+};
 
 // ===================================================
 // المواد والمستويات (موحّدة مع بوابة الطلاب)
@@ -123,98 +151,40 @@ async function saveStudentData(program, pin, patch) {
 }
 
 
-var TEACHERS_HASH = {
-  "e2bd7f4d1f3ba7780007be08232567ba2fc18d47d3fc27c7e095af4db2eb804f": {
-    "name": "محمد أحمد السهيمي",
-    "role": "معلم تربية خاصة — الدمج الفكري",
-    "program": "dumaj",
-    "avatar": "س"
-  },
-  "525f5a1194081d0a8f1dde67042d60dbe6946500b509ff6853b8376ea6834d6b": {
-    "name": "زين العابدين القرني",
-    "role": "معلم تربية خاصة — الدمج الفكري",
-    "program": "dumaj",
-    "avatar": "ز"
-  },
-  "2346607f3833af82865122bff17fda445dd6585c7067b5383827ed0a2973f9c2": {
-    "name": "علي سعيد الغامدي",
-    "role": "معلم تربية خاصة — الدمج الفكري",
-    "program": "dumaj",
-    "avatar": "غ"
-  },
-  "56f43c41ed6fdc3237bb720df28a264253fbbb8d06659eab67f72e4bb3f93820": {
-    "name": "علي محمد المالكي",
-    "role": "معلم تربية خاصة — الدمج الفكري",
-    "program": "dumaj",
-    "avatar": "م"
-  },
-  "4ec1177a37ed9b36ecc47addf8f1f0365da1b32e3282e74850cee30c11f89d55": {
-    "name": "حسن علي العلياني",
-    "role": "معلم تربية خاصة — الدمج الفكري",
-    "program": "dumaj",
-    "avatar": "ع"
-  },
-  "5240da1809a1b2151cfdc3e74edce55a083494b8dc3c813aefc133fa0e83776a": {
-    "name": "حسين منصور الكبيشي",
-    "role": "معلم تربية خاصة — يسير",
-    "program": "yaseer",
-    "avatar": "ك"
-  }
-};
-
-function _hashCred(u, p) {
-  // SHA-256 بسيط باستخدام SubtleCrypto
-  var msg = u + ':' + p;
-  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg))
-    .then(function(buf) {
-      return Array.from(new Uint8Array(buf))
-        .map(function(b){ return b.toString(16).padStart(2,'0'); })
-        .join('');
-    });
-}
-
-function doLogin() {
-  var username = (document.getElementById('username-input') ? document.getElementById('username-input').value : '').trim().toLowerCase();
-  var pin      = (document.getElementById('pin-input') ? document.getElementById('pin-input').value : '').trim();
-  var errEl    = document.getElementById('login-error');
-
-  if (!username || !pin) {
-    if (errEl) { errEl.textContent = 'أدخل اسم المستخدم والرمز السري'; errEl.classList.add('show'); }
-    return;
-  }
-
-  _hashCred(username, pin).then(function(hash) {
-    var t = TEACHERS_HASH[hash];
-    if (!t) {
-      if (errEl) {
-        errEl.textContent = 'اسم المستخدم أو الرمز غير صحيح';
-        errEl.classList.add('show');
-        setTimeout(function() { errEl.classList.remove('show'); }, 2500);
-        var pi = document.getElementById('pin-input');
-        var ui = document.getElementById('username-input');
-        if (pi) { pi.classList.add('error'); setTimeout(function(){pi.classList.remove('error');},500); }
-        if (ui) { ui.classList.add('error'); setTimeout(function(){ui.classList.remove('error');},500); }
-      }
-      return;
-    }
-    currentTeacher = Object.assign({ username: username, pin: pin, isSupervisor: false }, t);
-    openPortal();
-  });
-}
-
 // ----- Block 1 -----
 
 // ===================================================
 // الحالة العامة
 // ===================================================
-var currentTeacher = null;
-var ASSIGNMENTS = { dumaj:{}, yaseer:{} };
-var currentDetail = null;
-var STUDENT_CONFIGS = { dumaj:null, yaseer:null };
+if (typeof currentTeacher === "undefined") var currentTeacher = null;
+if (typeof ASSIGNMENTS === "undefined") var ASSIGNMENTS = { dumaj:{}, yaseer:{} };
+if (typeof currentDetail === "undefined") var currentDetail = null;
+if (typeof STUDENT_CONFIGS === "undefined") var STUDENT_CONFIGS = { dumaj:null, yaseer:null };
 
 // ===================================================
 // تسجيل الدخول / الخروج
 // ===================================================
+function doLogin() {
+  const username = (document.getElementById('username-input').value || '').trim().toLowerCase();
+  const pin      = (document.getElementById('pin-input').value || '').trim();
+  const errEl    = document.getElementById('login-error');
+  const t = TEACHERS[username];
+
+  if (!t || t.pin !== pin) {
+    errEl.classList.add('show');
+    document.getElementById('pin-input').classList.add('error');
+    document.getElementById('username-input').classList.add('error');
+    setTimeout(() => {
+      document.getElementById('pin-input').classList.remove('error');
+      document.getElementById('username-input').classList.remove('error');
+    }, 500);
+    return;
+  }
+
+  errEl.classList.remove('show');
+  currentTeacher = Object.assign({ username }, t);
+  openPortal();
+}
 
 function doLogout() {
   currentTeacher = null;
@@ -329,7 +299,7 @@ async function renderMyStudents() {
 // ===================================================
 // التنقل بين التبويبات
 // ===================================================
-window._openMainTab = function openMainTab(name, btn) {
+function openMainTab(name, btn) {
   document.querySelectorAll('#main-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('main-tab-students').classList.toggle('active', name === 'students');
@@ -340,7 +310,7 @@ window._openMainTab = function openMainTab(name, btn) {
   if (name === 'curriculum') renderCurriculumTab();
 }
 
-window._openDetailTab = function openDetailTab(name, btn) {
+function openDetailTab(name, btn) {
   document.querySelectorAll('#detail-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('#student-detail .tab-pane').forEach(p => p.classList.remove('active'));
@@ -562,7 +532,7 @@ async function saveTeacherPerformance() {
 // ===================================================
 // جوانب القوة والاحتياج
 // ===================================================
-var SW_DEFAULT_SUBJECTS = ['arabic', 'math'];
+if (typeof SW_DEFAULT_SUBJECTS === "undefined") var SW_DEFAULT_SUBJECTS = ['arabic', 'math'];
 
 function renderStrengthsEditor() {
   const container = document.getElementById('strengths-content');
@@ -945,7 +915,7 @@ function printCertificate(id) {
       <span>✍️ ${escHtml(item.teacher)}</span>
     </div>
   </div>
-  <scr'+'ipt>window.onload = () => setTimeout(() => window.print(), 350);<\/scr'+'ipt>
+  <scr'+'ipt>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
 </body></html>`);
   win.document.close();
 }
@@ -1005,7 +975,7 @@ async function assignTeacher(pin, uname) {
 // ===================================================
 // جدول المعلم الأسبوعي (المعتمد من مشرف البرنامج)
 // ===================================================
-var SCHEDULE_KEY_MAP = {
+if (typeof SCHEDULE_KEY_MAP === "undefined") var SCHEDULE_KEY_MAP = {
   'm.suhayymi': { program:'dumaj',  key:'suhaimy'   },
   'z.qarni':    { program:'dumaj',  key:'alqarni'   },
   'a.ghamdi':   { program:'dumaj',  key:'alghamdi'  },
@@ -1019,7 +989,7 @@ var SCHEDULE_KEY_MAP = {
 // ===================================================
 // ملف الإنجاز (مضمَّن من ملفات إنجاز المعلمين)
 // ===================================================
-var PORTFOLIO_MAP = {
+if (typeof PORTFOLIO_MAP === "undefined") var PORTFOLIO_MAP = {
   'm.suhayymi': { file:'teachers-dumaj.html',  name:'محمد أحمد السهيمي'   },
   'z.qarni':    { file:'teachers-dumaj.html',  name:'زين العابدين سعد القرني' },
   'a.ghamdi':   { file:'teachers-dumaj.html',  name:'علي سعيد الغامدي'    },
@@ -1030,7 +1000,7 @@ var PORTFOLIO_MAP = {
   'saad.z':     { file:'teachers-yaseer.html', name:'سعد سالم الزهراني'   },
 };
 
-window._openPortfolioFull = function openPortfolioFull() {
+function openPortfolioFull() {
   const map = PORTFOLIO_MAP[currentTeacher.username];
   if (!map) { showToast('⚠️ لا يوجد ملف إنجاز مرتبط بهذا الحساب'); return; }
   const url = `${map.file}?t=${encodeURIComponent(map.name)}&p=${encodeURIComponent(currentTeacher.pin)}`;
@@ -1177,7 +1147,7 @@ function printMySchedule() {
   <h1>📅 جدولي الأسبوعي — ${escHtml(currentTeacher.name)}</h1>
   <div style="color:#6E5F82;margin-bottom:14px;">${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
   ${lastScheduleHTML}
-  <scr'+'ipt>window.onload=()=>setTimeout(()=>window.print(),350);<\/scr'+'ipt>
+  <scr'+'ipt>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
 </body></html>`);
   win.document.close();
 }
@@ -1255,7 +1225,7 @@ async function saveAnnouncementTP() {
 // ===================================================
 // توزيع المنهج الفصلي
 // ===================================================
-var CURRICULUM_WEEKS = 16;
+if (typeof CURRICULUM_WEEKS === "undefined") var CURRICULUM_WEEKS = 16;
 
 function emptyCurriculumWeeks() {
   return Array.from({ length: CURRICULUM_WEEKS }, () => ({ topic: '', notes: '' }));
@@ -1272,7 +1242,7 @@ function defaultCurriculum() {
   };
 }
 
-var myCurriculum = null;
+if (typeof myCurriculum === "undefined") var myCurriculum = null;
 
 function curriculumPath() {
   return `curriculum/${currentTeacher.program}/${currentTeacher.username}.json`;
@@ -1410,58 +1380,47 @@ function printCurriculum() {
   <h1>📘 توزيع المنهج الفصلي</h1>
   <div class="sub">${escHtml(currentTeacher.name)} — ${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
   ${subjectsHtml}
-  <scr'+'ipt>window.onload=()=>setTimeout(()=>window.print(),350);<\/scr'+'ipt>
+  <scr'+'ipt>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
 </body></html>`);
   win.document.close();
 }
 
 
-// ----- Block 9 — التهيئة (مؤجلة حتى يُنقر التبويب) -----
-function _initTPListeners() {
-  var pinInput = document.getElementById('pin-input');
-  var userInput = document.getElementById('username-input');
-  var certTitle = document.getElementById('cert-title-input');
-  var certMsg = document.getElementById('cert-message-input');
-  if (pinInput) pinInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') doLogin();
-  });
-  if (userInput) userInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { var p=document.getElementById('pin-input'); if(p) p.focus(); }
-  });
-  if (certTitle) certTitle.addEventListener('input', updateCertPreview);
-  if (certMsg) certMsg.addEventListener('input', updateCertPreview);
-}
+// ----- Block 9 -----
+
+// ===================================================
+// التهيئة
+// ===================================================
+document.getElementById('pin-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('username-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('pin-input').focus();
+});
+document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
+document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
 
 
 
-// ===== تهيئة لوحة الإشراف (تُستدعى من admin pages) =====
+// ===== تهيئة الإشراف =====
 var _supReady = false;
 window._initSupPanel = function(program, username, uname, urole) {
   if (_supReady) return; _supReady = true;
+  currentTeacher = {username:username, name:uname, pin:'0000',
+    role:urole, program:program, avatar:uname.charAt(0), isSupervisor:true};
+  var l=document.getElementById('login-screen'), p=document.getElementById('teacher-portal');
+  if(l) l.style.display='none';
+  if(p) p.style.display='block';
+  var av=document.getElementById('t-avatar'),nm=document.getElementById('t-name'),rl=document.getElementById('t-role');
+  if(av) av.textContent=currentTeacher.avatar;
+  if(nm) nm.textContent=currentTeacher.name;
+  if(rl) rl.textContent='🎓 '+currentTeacher.role;
+  var ab=document.getElementById('assign-tab-btn');
+  if(ab) ab.style.display='flex';
+  var at=document.getElementById('assign-head-title');
+  if(at) at.textContent='📋 إسناد طلاب البرنامج للمعلمين';
   _initTPListeners();
-  currentTeacher = {
-    username: username, name: uname, pin: '0000',
-    role: urole, program: program,
-    avatar: uname.charAt(0), isSupervisor: true
-  };
-  var l = document.getElementById('login-screen');
-  var p = document.getElementById('teacher-portal');
-  if (l) l.style.display = 'none';
-  if (p) p.style.display = 'block';
-  var av = document.getElementById('t-avatar');
-  var nm = document.getElementById('t-name');
-  var rl = document.getElementById('t-role');
-  if (av) av.textContent = currentTeacher.avatar;
-  if (nm) nm.textContent = currentTeacher.name;
-  if (rl) rl.textContent = '🎓 ' + currentTeacher.role;
-  var ab = document.getElementById('assign-tab-btn');
-  if (ab) ab.style.display = 'flex';
-  var at = document.getElementById('assign-head-title');
-  if (at) at.textContent = '📋 إسناد طلاب البرنامج للمعلمين';
-  loadAssignments().then(function() {
-    renderMyStudents();
-    renderAssignTable();
-  });
+  loadAssignments().then(function(){ renderMyStudents(); renderAssignTable(); });
   loadMeetingInvite();
-  if (window.loadTeacherAnnouncements) loadTeacherAnnouncements();
+  if(window.loadTeacherAnnouncements) loadTeacherAnnouncements();
 };

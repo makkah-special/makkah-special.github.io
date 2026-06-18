@@ -869,7 +869,7 @@
   @keyframes ring { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} 60%{transform:rotate(-10deg)} 80%{transform:rotate(10deg)} }
 
 
-/* === TP CSS === */
+/* TP CSS */
 
 :root {
   --bg:        #F7F5FC;
@@ -981,22 +981,16 @@ header.portal-header{
 @media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
 
 </style>
-
 <script>
-// تعريف مبكر لـ initSupPanel حتى لا تفشل الـ onclick
+// Early init — ينتظر تحميل teacher-portal-sup.js
 function initSupPanel(prog, user, name, role) {
-  // انتظر تحميل teacher-portal-sup.js ثم استدع الدالة
   function tryInit() {
-    if (window._initSupPanel) {
-      window._initSupPanel(prog, user, name, role);
-    } else {
-      setTimeout(tryInit, 100);
-    }
+    if (window._initSupPanel) window._initSupPanel(prog, user, name, role);
+    else setTimeout(tryInit, 50);
   }
   tryInit();
 }
-</script>
-</head>
+</script></head>
 <body>
 
 <!-- الشريط العلوي الرسمي -->
