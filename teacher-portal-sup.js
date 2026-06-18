@@ -1,3 +1,4 @@
+
 // ===== Wrapper functions للتأكد من التحميل =====
 function openMainTab(n,b){ if(window._openMainTab) window._openMainTab(n,b); }
 function openDetailTab(n,b){ if(window._openDetailTab) window._openDetailTab(n,b); }
@@ -10,8 +11,8 @@ function openPortfolioFull(){ if(window._openPortfolioFull) window._openPortfoli
 // ===================================================
 // إعدادات Supabase
 // ===================================================
-var SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-var SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+if (typeof SB_URL === "undefined") var SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+if (typeof SB_KEY === "undefined") var SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
 
 var PROGRAM_INFO = {
   dumaj:  { label: 'الدمج الفكري', dataPath: 'dumaj',  badge: 'dumaj'  },
@@ -25,7 +26,7 @@ var PROGRAM_INFO = {
 // ===================================================
 // المواد والمستويات (موحّدة مع بوابة الطلاب)
 // ===================================================
-var CORE_SUBJECTS = [
+if (typeof CORE_SUBJECTS === "undefined") var CORE_SUBJECTS = [
   { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖' },
   { key:'math',    name:'الرياضيات',             icon:'🔢' },
   { key:'islamic', name:'التربية الإسلامية',     icon:'🕌' },
@@ -33,7 +34,7 @@ var CORE_SUBJECTS = [
   { key:'life',    name:'المهارات الحياتية',     icon:'🌱' },
 ];
 
-var IEP_LEVELS = [
+if (typeof IEP_LEVELS === "undefined") var IEP_LEVELS = [
   { value:'excellent', label:'متفوق',          color:'#059669', bg:'#d1fae5' },
   { value:'advanced',  label:'متقدم',           color:'#2563eb', bg:'#dbeafe' },
   { value:'capable',   label:'متمكن',           color:'#d97706', bg:'#fef3c7' },
@@ -1435,7 +1436,7 @@ function _initTPListeners() {
 
 // ===== تهيئة لوحة الإشراف (تُستدعى من admin pages) =====
 var _supReady = false;
-function initSupPanel(program, username, uname, urole) {
+window._initSupPanel = function(program, username, uname, urole) {
   if (_supReady) return; _supReady = true;
   _initTPListeners();
   currentTeacher = {
@@ -1463,4 +1464,4 @@ function initSupPanel(program, username, uname, urole) {
   });
   loadMeetingInvite();
   if (window.loadTeacherAnnouncements) loadTeacherAnnouncements();
-}
+};

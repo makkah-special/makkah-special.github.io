@@ -1043,6 +1043,21 @@ header.portal-header{
 @media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
 
 </style>
+
+<script>
+// تعريف مبكر لـ initSupPanel حتى لا تفشل الـ onclick
+function initSupPanel(prog, user, name, role) {
+  // انتظر تحميل teacher-portal-sup.js ثم استدع الدالة
+  function tryInit() {
+    if (window._initSupPanel) {
+      window._initSupPanel(prog, user, name, role);
+    } else {
+      setTimeout(tryInit, 100);
+    }
+  }
+  tryInit();
+}
+</script>
 </head>
 <body>
 
