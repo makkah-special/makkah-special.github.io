@@ -2131,8 +2131,6 @@ function saveIqrarPDF() {
 
 
 
-
-<script src="teacher-portal-sup.js"></script>
 </body>
     </html>
   `);
@@ -3213,7 +3211,7 @@ function printIEP() {
       <div class="sub">📅 ${todayG} &nbsp;|&nbsp; 🌙 ${todayH}</div></div>
     ${subjectsHTML || '<div style="text-align:center;padding:40px;color:#9ca3af">لا توجد أهداف بعد</div>'}
     <div class="ft">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — برنامج الدمج الفكري</div>
-    <script>window.onload=()=>window.print();<\/script>
+    <scr'+'ipt>window.onload=()=>window.print();<\/script>
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
 
@@ -3973,7 +3971,7 @@ function exportAnalysisPDF(pin) {
       </table>
 
       <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
-      <script>
+      <scr'+'ipt>
         // طباعة تلقائية بعد تحميل الصور
         window.onload = () => setTimeout(() => window.print(), 400);
       <\/script>
@@ -4046,7 +4044,7 @@ function savePlanAsPDF(pin) {
     </div>
     ${subHTML || '<p style="text-align:center;color:#9ca3af;padding:30px;">لا توجد أهداف مُدخلة بعد</p>'}
     <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
-    <script>window.onload=()=>window.print();<\/script>
+    <scr'+'ipt>window.onload=()=>window.print();<\/script>
   
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
@@ -5056,7 +5054,7 @@ function downloadPDF(idx) {
         </div>
       </div>
       <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني</div>
-      <script>window.onload=()=>window.print();<\/script>
+      <scr'+'ipt>window.onload=()=>window.print();<\/script>
     
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
@@ -5418,5 +5416,8 @@ function dismissMeeting(id) {
   <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
 </div>
 
+
+<script src="teacher-portal-sup.js"></script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
 </body>
 </html>
