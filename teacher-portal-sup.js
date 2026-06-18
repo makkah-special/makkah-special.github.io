@@ -114,7 +114,7 @@ function toHijriLike(dateStr) {
 
 async function sbGetJSON(path) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/${path}?t=${Date.now()}`);
+    const res = await fetch("https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/" + path + "?t=" + Date.now());
     if (!res.ok) return null;
     return await res.json();
   } catch(e) { return null; }
@@ -123,9 +123,9 @@ async function sbGetJSON(path) {
 async function sbSetJSON(path, data) {
   try {
     const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
-    const res = await fetch(`${SB_URL}/storage/v1/object/${path}`, {
+    const res = await fetch("https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/" + path, {
       method:'POST',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
+      headers:{'apikey':'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Authorization':'Bearer sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Content-Type':'application/json','x-upsert':'true'},
       body: blob
     });
     return res.ok;
@@ -134,9 +134,9 @@ async function sbSetJSON(path, data) {
 
 async function sbUploadFile(path, file) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/${path}`, {
+    const res = await fetch("https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/" + path, {
       method:'POST',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type': file.type || 'application/octet-stream','x-upsert':'true'},
+      headers:{'apikey':'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Authorization':'Bearer sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Content-Type': file.type || 'application/octet-stream','x-upsert':'true'},
       body: file
     });
     return res.ok;
@@ -690,7 +690,7 @@ async function checkFileExists(url) {
 async function renderFilesTab() {
   const program = currentDetail.program;
   const pin = currentDetail.pin;
-  const base = `${SB_URL}/storage/v1/object/public/reports/${program}/`;
+  const base = `https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/${program}/`;
 
   // ===== الخطة الفردية =====
   const planEl = document.getElementById('plan-current');
@@ -1038,8 +1038,8 @@ var lastScheduleHTML = '';
 
 async function fetchTimetableData(key) {
   try {
-    const res = await fetch(`${SB_URL}/rest/v1/teacher_portfolios?teacher_key=eq.${encodeURIComponent(key)}&select=data`, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    const res = await fetch(`https://pyrxwqgapwjwhiskowhk.supabase.co/rest/v1/teacher_portfolios?teacher_key=eq.${encodeURIComponent(key)}&select=data`, {
+      headers: { 'apikey': "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere", 'Authorization': 'Bearer sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere' }
     });
     if (res.ok) {
       const rows = await res.json();
