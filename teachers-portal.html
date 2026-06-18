@@ -706,18 +706,51 @@ const PROGRAM_INFO = {
   yaseer: { label: 'يسير',          dataPath: 'yaseer', badge: 'yaseer' },
 };
 
-// ===================================================
-// قاعدة بيانات المعلمين (موحّدة للبرنامجين)
-// ===================================================
-const TEACHERS = {
-  "m.suhayymi": { name:"محمد أحمد السهيمي",   pin:"1234", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"س",  isSupervisor:false },
-  "z.qarni":    { name:"زين العابدين القرني", pin:"6789", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ز",  isSupervisor:false },
-  "a.ghamdi":   { name:"علي سعيد الغامدي",    pin:"3456", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"غ",  isSupervisor:false },
-  "a.malki":    { name:"علي محمد المالكي",    pin:"4567", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"م",  isSupervisor:false },
-  "h.ulyani":   { name:"حسن علي العلياني",    pin:"5678", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ع",  isSupervisor:false },
-
-  "h.kubaishi": { name:"حسين منصور الكبيشي",  pin:"1111", role:"معلم تربية خاصة — يسير",         program:"yaseer", avatar:"ك",  isSupervisor:false },
+var TEACHERS_HASH = {
+  "e2bd7f4d1f3ba7780007be08232567ba2fc18d47d3fc27c7e095af4db2eb804f": {
+    "name": "محمد أحمد السهيمي",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "س"
+  },
+  "525f5a1194081d0a8f1dde67042d60dbe6946500b509ff6853b8376ea6834d6b": {
+    "name": "زين العابدين القرني",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "ز"
+  },
+  "2346607f3833af82865122bff17fda445dd6585c7067b5383827ed0a2973f9c2": {
+    "name": "علي سعيد الغامدي",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "غ"
+  },
+  "56f43c41ed6fdc3237bb720df28a264253fbbb8d06659eab67f72e4bb3f93820": {
+    "name": "علي محمد المالكي",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "م"
+  },
+  "4ec1177a37ed9b36ecc47addf8f1f0365da1b32e3282e74850cee30c11f89d55": {
+    "name": "حسن علي العلياني",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "ع"
+  },
+  "5240da1809a1b2151cfdc3e74edce55a083494b8dc3c813aefc133fa0e83776a": {
+    "name": "حسين منصور الكبيشي",
+    "role": "معلم تربية خاصة — يسير",
+    "program": "yaseer",
+    "avatar": "ك"
+  }
 };
+
+function _hashCred(u, p) {
+  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(u+':'+p))
+    .then(function(buf){
+      return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+    });
+}
 
 // ===================================================
 // المواد والمستويات (موحّدة مع بوابة الطلاب)
@@ -838,11 +871,10 @@ function _hashCred(u, p) {
     });
 }
 
+
 function doLogin() {
-  var username = (document.getElementById('username-input')||{}).value||'';
-  username = username.trim().toLowerCase();
-  var pin = (document.getElementById('pin-input')||{}).value||'';
-  pin = pin.trim();
+  var username = ((document.getElementById('username-input')||{}).value||'').trim().toLowerCase();
+  var pin = ((document.getElementById('pin-input')||{}).value||'').trim();
   var errEl = document.getElementById('login-error');
   if (!username || !pin) {
     if(errEl){errEl.textContent='أدخل اسم المستخدم والرمز السري';errEl.classList.add('show');}
@@ -865,6 +897,7 @@ function doLogin() {
     openPortal();
   });
 }
+
 
 
 function doLogout() {
