@@ -1,3 +1,8 @@
+// ===== Wrapper functions للتأكد من التحميل =====
+function openMainTab(n,b){ if(window._openMainTab) window._openMainTab(n,b); }
+function openDetailTab(n,b){ if(window._openDetailTab) window._openDetailTab(n,b); }
+function openPortfolioFull(){ if(window._openPortfolioFull) window._openPortfolioFull(); }
+
 // ===== teachers-portal.js — نظام الإشراف التربوي =====
 
 // ----- Block 0 -----
@@ -323,7 +328,7 @@ async function renderMyStudents() {
 // ===================================================
 // التنقل بين التبويبات
 // ===================================================
-function openMainTab(name, btn) {
+window._openMainTab = function openMainTab(name, btn) {
   document.querySelectorAll('#main-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('main-tab-students').classList.toggle('active', name === 'students');
@@ -334,7 +339,7 @@ function openMainTab(name, btn) {
   if (name === 'curriculum') renderCurriculumTab();
 }
 
-function openDetailTab(name, btn) {
+window._openDetailTab = function openDetailTab(name, btn) {
   document.querySelectorAll('#detail-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('#student-detail .tab-pane').forEach(p => p.classList.remove('active'));
@@ -1024,7 +1029,7 @@ var PORTFOLIO_MAP = {
   'saad.z':     { file:'teachers-yaseer.html', name:'سعد سالم الزهراني'   },
 };
 
-function openPortfolioFull() {
+window._openPortfolioFull = function openPortfolioFull() {
   const map = PORTFOLIO_MAP[currentTeacher.username];
   if (!map) { showToast('⚠️ لا يوجد ملف إنجاز مرتبط بهذا الحساب'); return; }
   const url = `${map.file}?t=${encodeURIComponent(map.name)}&p=${encodeURIComponent(currentTeacher.pin)}`;
