@@ -1,707 +1,14 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<meta name="theme-color" content="#6B4C9A">
-<title>بوابة المعلمين | مدرسة مكة المكرمة المتوسطة</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:        #F7F5FC;
-  --bg-soft:   #EFE8FA;
-  --card:      #FFFFFF;
-  --surface2:  #FBFAFE;
+// ===== teachers-portal.js — نظام الإشراف التربوي =====
 
-  --ink:       #221335;
-  --muted:     #6E5F82;
-  --ink-faint: rgba(34,19,53,.42);
+// ----- Block 0 -----
 
-  --border:    #DCD2EE;
-  --line2:     rgba(107,76,154,.26);
-
-  --lav-900:   #2E2148;
-  --lav-800:   #3F2E63;
-  --lav-700:   #6B4C9A;
-  --lav-600:   #7C5BAE;
-  --lav-500:   #8B6ABF;
-  --lav-300:   #B79EE0;
-  --lav-100:   #EAE1F7;
-
-  --primary:   #3F2E63;
-  --accent:    #8B6ABF;
-  --gold:      #D7A24A;
-  --gold-soft: rgba(215,162,74,.14);
-  --teal:      #129E7C;
-  --teal-soft: rgba(18,158,124,.12);
-  --red:       #DC2626;
-  --red-soft:  rgba(220,38,38,.08);
-
-  --shadow-sm: 0 6px 20px rgba(107,76,154,.10);
-  --shadow-md: 0 16px 44px rgba(107,76,154,.16);
-}
-
-*{ margin:0; padding:0; box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-body{
-  font-family:'Cairo', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height:100vh;
-}
-
-/* ===== الشريط العلوي الرسمي ===== */
-.topbar{ background: linear-gradient(120deg, var(--lav-900), var(--lav-800) 70%, #4A3470); color: rgba(255,255,255,.92); }
-.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
-.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
-.topbar-gov{ display:flex; align-items:center; gap:10px; }
-.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
-.topbar-gov a{ display:flex; align-items:center; }
-.topbar-gov a:hover img{ opacity:1; }
-.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
-.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
-.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
-.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
-@media (max-width:640px){
-  .topbar-row{ font-size:.7rem; }
-  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
-  .topbar-inner{ padding:7px 14px; }
-}
-
-/* ===== هيدر البوابة ===== */
-header.portal-header{
-  background: linear-gradient(135deg, var(--lav-800) 0%, var(--lav-900) 60%, var(--lav-700) 100%);
-  padding:16px 36px; display:flex; align-items:center; justify-content:space-between;
-  border-bottom:3px solid var(--gold); gap:14px; flex-wrap:wrap;
-}
-.header-left{ display:flex; align-items:center; gap:14px; }
-.header-icon{
-  width:46px; height:46px; border-radius:12px;
-  background:rgba(215,162,74,.18); border:1px solid rgba(215,162,74,.35);
-  display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0;
-}
-.header-title{ color:#fff; font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:900; }
-.header-sub{ color:rgba(255,255,255,.55); font-size:.76rem; margin-top:2px; }
-.back-btn{
-  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
-  color:rgba(255,255,255,.8); padding:8px 18px; border-radius:8px;
-  text-decoration:none; font-size:.82rem; font-weight:600; transition:all .2s; white-space:nowrap;
-}
-.back-btn:hover{ background:rgba(255,255,255,.15); }
-.ann-card{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px;margin-bottom:16px;}
-.ann-card-title{font-weight:900;font-size:.9rem;color:#3F2E63;margin-bottom:14px;border-bottom:1px solid #EAE1F7;padding-bottom:8px;}
-.ann-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.ann-f{display:flex;flex-direction:column;gap:4px;}
-.ann-f label{font-size:.74rem;font-weight:700;color:#6E5F82;}
-.ann-inp,.ann-sel{padding:8px 12px;border:1.5px solid #DCD2EE;border-radius:8px;font-family:Cairo,sans-serif;font-size:.83rem;width:100%;color:#221335;background:#FBFAFE;outline:none;}
-.ann-inp:focus,.ann-sel:focus{border-color:#8B6ABF;}
-.ann-send-btn{width:100%;margin-top:10px;padding:11px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:10px;font-family:Cairo,sans-serif;font-weight:800;font-size:.87rem;cursor:pointer;}
-.ann-disable-row{margin-top:8px;padding:9px 13px;background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
-.ann-disable-lbl{font-size:.78rem;color:#7F1D1D;font-weight:700;}
-.ann-disable-btn{background:#DC2626;color:#fff;border:none;border-radius:7px;padding:6px 14px;font-family:Cairo,sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;}
-.ann-res{font-size:.78rem;min-height:16px;margin-top:6px;font-weight:700;text-align:center;}
-.ann-log{margin-top:14px;border-top:1px solid #EAE1F7;padding-top:12px;}
-.ann-log-title{font-weight:800;font-size:.82rem;color:#3F2E63;margin-bottom:8px;}
-.ann-log-item{background:#FBFAFE;border:1px solid #DCD2EE;border-radius:9px;padding:9px 36px 9px 13px;margin-bottom:7px;position:relative;}
-.ann-log-msg{font-weight:700;font-size:.82rem;color:#221335;margin-bottom:3px;}
-.ann-log-meta{font-size:.7rem;color:#6E5F82;}
-.ann-log-del{position:absolute;top:7px;left:8px;background:#FEF2F2;color:#DC2626;border:none;border-radius:5px;padding:2px 8px;font-size:.7rem;cursor:pointer;font-weight:700;}
-.ann-log-empty{text-align:center;color:#9ca3af;font-size:.8rem;padding:16px 0;}
-.t-ann-box{border-radius:13px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;border-right:5px solid #D7A24A;background:linear-gradient(135deg,rgba(215,162,74,.08),#fff);}
-.t-ann-icon{font-size:1.3rem;flex-shrink:0;}
-.t-ann-body{flex:1;}
-.t-ann-msg{font-weight:800;font-size:.87rem;margin-bottom:3px;}
-.t-ann-meta{font-size:.73rem;color:#6E5F82;}
-.t-ann-link{font-size:.74rem;color:#6B4C9A;font-weight:700;text-decoration:none;}
-.ann-container{margin-bottom:16px;}
-@media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
-</style>
-
-<style>
-/* ===== شاشة الدخول ===== */
-#login-screen{ min-height:calc(100vh - 130px); display:flex; align-items:center; justify-content:center; padding:40px 20px; }
-.login-card{
-  background:var(--card); border:1px solid var(--border); border-radius:24px;
-  padding:44px 38px; max-width:420px; width:100%;
-  box-shadow:var(--shadow-md); text-align:center;
-}
-.login-badge{
-  display:inline-flex; align-items:center; gap:8px; background:var(--lav-100);
-  border:1px solid var(--lav-300); color:var(--lav-700);
-  padding:6px 18px; border-radius:20px; font-size:.8rem; font-weight:700; margin-bottom:18px;
-}
-.login-icon-big{
-  width:78px; height:78px; border-radius:20px;
-  background:linear-gradient(135deg, var(--lav-100), #DDD0F2);
-  margin:0 auto 20px; display:flex; align-items:center; justify-content:center;
-  font-size:2.5rem; box-shadow:0 8px 24px rgba(107,76,154,.2);
-}
-.login-card h2{ font-family:'Tajawal',sans-serif; font-size:1.45rem; font-weight:900; color:var(--lav-800); margin-bottom:8px; }
-.login-card .login-desc{ color:var(--muted); font-size:.85rem; line-height:1.7; margin-bottom:26px; }
-.input-label{ text-align:right; font-size:.83rem; font-weight:700; color:var(--lav-800); margin-bottom:7px; display:flex; align-items:center; gap:6px; }
-.text-input, .pin-input{
-  width:100%; padding:13px 16px; border:2px solid var(--border); border-radius:12px;
-  font-family:'Cairo',sans-serif; font-size:1rem; font-weight:700; color:var(--ink);
-  outline:none; transition:all .25s; background:var(--surface2); margin-bottom:12px;
-}
-.pin-input{ text-align:center; letter-spacing:8px; font-size:1.3rem; }
-.text-input:focus, .pin-input:focus{ border-color:var(--lav-500); background:#fff; box-shadow:0 0 0 4px rgba(139,106,191,.12); }
-.text-input.error, .pin-input.error{ border-color:#ef4444; background:#fff5f5; animation:shake .4s ease; }
-@keyframes shake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-10px);} 60%{transform:translateX(10px);} 80%{transform:translateX(-5px);} }
-.error-msg{ display:none; color:#dc2626; font-size:.82rem; font-weight:700; margin-bottom:12px; background:#fee2e2; border-radius:8px; padding:8px 14px; }
-.error-msg.show{ display:block; }
-.login-btn{
-  width:100%; padding:14px; background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
-  color:#fff; border:none; border-radius:12px; font-family:'Cairo',sans-serif;
-  font-size:1rem; font-weight:800; cursor:pointer; transition:all .3s;
-  box-shadow:0 6px 20px rgba(107,76,154,.3); letter-spacing:.5px;
-}
-.login-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 28px rgba(107,76,154,.45); }
-.hint-box{
-  margin-top:22px; background:var(--gold-soft); border:1px solid rgba(215,162,74,.35);
-  border-right:3px solid var(--gold); border-radius:10px; padding:13px 16px;
-  font-size:.79rem; color:#8a6116; text-align:right; line-height:1.7;
-}
-
-/* ===== لوحة المعلم ===== */
-#teacher-portal{ display:none; }
-.portal-banner{
-  background: linear-gradient(135deg, var(--lav-700) 0%, var(--lav-900) 100%);
-  padding:26px 36px; display:flex; align-items:center; justify-content:space-between;
-  flex-wrap:wrap; gap:14px; border-bottom:3px solid var(--gold);
-}
-.teacher-identity{ color:#fff; display:flex; align-items:center; gap:16px; }
-.teacher-avatar{
-  width:64px; height:64px; border-radius:50%; flex-shrink:0;
-  background:rgba(255,255,255,.12); border:3px solid rgba(215,162,74,.7);
-  display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:900;
-}
-.teacher-name-display{ font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; margin-bottom:4px; }
-.teacher-meta-display{ opacity:.75; font-size:.82rem; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.meta-chip{ background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); padding:3px 12px; border-radius:12px; font-size:.76rem; }
-.logout-btn{
-  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.85);
-  padding:9px 20px; border-radius:9px; cursor:pointer; font-family:'Cairo',sans-serif;
-  font-size:.84rem; font-weight:700; transition:all .2s;
-}
-.logout-btn:hover{ background:rgba(255,255,255,.2); }
-
-.portal-body{ max-width:1040px; margin:0 auto; padding:28px 24px 60px; }
-
-/* TABS (أعلى المستوى) */
-.tabs{ display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:22px; box-shadow:var(--shadow-sm); flex-wrap:wrap; }
-.tab-btn{
-  flex:1; min-width:110px; padding:10px 8px; border:none; background:transparent; border-radius:9px;
-  font-family:'Cairo',sans-serif; font-size:.84rem; font-weight:700; color:var(--muted); cursor:pointer;
-  transition:all .22s; display:flex; align-items:center; justify-content:center; gap:5px;
-}
-.tab-btn.active{ background:linear-gradient(135deg, var(--lav-700), var(--lav-500)); color:#fff; box-shadow:0 3px 12px rgba(107,76,154,.35); }
-.tab-pane{ display:none; animation:fadeIn .3s ease; }
-.tab-pane.active{ display:block; }
-@keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
-
-/* بطاقة عامة */
-.s-card{ background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:18px; box-shadow:var(--shadow-sm); }
-.s-card-head{
-  padding:14px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center;
-  justify-content:space-between; gap:9px; flex-wrap:wrap; font-weight:800; font-size:.92rem;
-  color:var(--lav-700); background:var(--lav-100);
-}
-.s-card-body{ padding:18px 22px; }
-
-.btn-sm{
-  border:none; border-radius:8px; padding:7px 16px; font-family:'Cairo',sans-serif;
-  font-size:.8rem; font-weight:700; cursor:pointer; transition:all .2s; white-space:nowrap;
-}
-.btn-sm-primary{ background:linear-gradient(135deg, var(--lav-700), var(--lav-500)); color:#fff; }
-.btn-sm-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
-.btn-sm-gold{ background:linear-gradient(135deg, var(--gold), #E8C27A); color:#5c3d0c; }
-.btn-sm-gold:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
-.btn-sm-outline{ background:#fff; color:var(--lav-700); border:1px solid var(--border); }
-.btn-sm-outline:hover{ border-color:var(--lav-500); background:var(--lav-100); }
-.btn-sm-danger{ background:#fee2e2; color:#dc2626; }
-.btn-sm-danger:hover{ background:#fecaca; }
-</style>
-
-<style>
-/* شبكة بطاقات الطلاب */
-.students-toolbar{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
-.students-toolbar .search-input{
-  flex:1; min-width:180px; padding:11px 16px; border:1.5px solid var(--border); border-radius:10px;
-  font-family:'Cairo',sans-serif; font-size:.85rem; outline:none; background:#fff;
-}
-.students-toolbar .search-input:focus{ border-color:var(--lav-500); }
-.students-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; }
-.stu-card{
-  background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px 18px;
-  cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px;
-}
-.stu-card:hover{ border-color:var(--lav-500); box-shadow:var(--shadow-sm); transform:translateY(-2px); }
-.stu-card-avatar{
-  width:46px; height:46px; border-radius:50%; background:var(--lav-100); color:var(--lav-700);
-  display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex-shrink:0; font-weight:900;
-}
-.stu-card-name{ font-weight:800; font-size:.88rem; color:var(--lav-800); margin-bottom:3px; }
-.stu-card-meta{ font-size:.75rem; color:var(--muted); display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
-.prog-badge{ font-size:.7rem; font-weight:700; padding:2px 9px; border-radius:8px; }
-.prog-badge.dumaj{ background:var(--lav-100); color:var(--lav-700); }
-.prog-badge.yaseer{ background:var(--gold-soft); color:#8a6116; }
-.empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
-.empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
-.empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
-.empty-state .es-sub{ font-size:.82rem; }
-
-/* لوحة الإسناد (المشرف) */
-.assign-table{ width:100%; border-collapse:collapse; font-size:.85rem; }
-.assign-table th{ background:var(--lav-100); color:var(--lav-700); padding:10px 14px; text-align:right; font-weight:800; font-size:.8rem; }
-.assign-table td{ padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
-.assign-table tr:last-child td{ border-bottom:none; }
-.assign-select{
-  padding:8px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif;
-  font-size:.82rem; color:var(--ink); outline:none; background:#fff; min-width:170px; cursor:pointer;
-}
-.assign-select:focus{ border-color:var(--lav-500); }
-.assign-status{ font-size:.74rem; font-weight:700; padding:2px 9px; border-radius:8px; }
-.assign-status.assigned{ background:var(--teal-soft); color:#0c6b54; }
-.assign-status.unassigned{ background:#f3f4f6; color:#6b7280; }
-
-/* زر العودة لقائمة الطلاب */
-.student-detail-back{
-  display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid var(--border);
-  color:var(--lav-700); padding:9px 18px; border-radius:10px; font-size:.84rem; font-weight:700;
-  cursor:pointer; margin-bottom:16px; transition:all .2s;
-}
-.student-detail-back:hover{ background:var(--lav-100); }
-.student-detail-head{
-  display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--border);
-  border-radius:16px; padding:16px 20px; margin-bottom:18px; box-shadow:var(--shadow-sm); flex-wrap:wrap;
-}
-.student-detail-head .sd-avatar{
-  width:54px; height:54px; border-radius:50%; background:var(--lav-100); color:var(--lav-700);
-  display:flex; align-items:center; justify-content:center; font-size:1.4rem; font-weight:900; flex-shrink:0;
-}
-.student-detail-head .sd-name{ font-family:'Tajawal',sans-serif; font-weight:900; font-size:1.05rem; color:var(--lav-800); }
-.student-detail-head .sd-meta{ font-size:.8rem; color:var(--muted); margin-top:3px; }
-
-/* ===== تقييم الأهداف ===== */
-.iep-subject-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:12px; }
-.iep-subject-head{ display:flex; align-items:center; gap:8px; padding:12px 16px; background:var(--lav-100); font-weight:800; font-size:.9rem; color:var(--lav-700); }
-.iep-goal-row{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-.iep-goal-row:last-child{ border-bottom:none; }
-.iep-goal-num{ background:var(--lav-500); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800; flex-shrink:0; }
-.iep-goal-text{ flex:1; min-width:180px; font-size:.85rem; color:var(--ink); line-height:1.7; }
-.iep-level-select{ padding:7px 10px; border-radius:8px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; outline:none; cursor:pointer; min-width:120px; border:1.5px solid var(--border); }
-
-/* ===== استمارة الأداء ===== */
-.perf-legend{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-.perf-subject-block{ margin-bottom:18px; }
-.perf-subject-head{ font-weight:800; font-size:.92rem; color:var(--lav-700); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
-.perf-skills-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
-.perf-skills-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
-.perf-skills-table td{ padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
-.perf-skills-table tr:last-child td{ border-bottom:none; }
-.perf-level-select{ padding:6px 10px; border-radius:8px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; outline:none; cursor:pointer; border:1.5px solid var(--border); width:100%; }
-.perf-notes-input{ width:100%; padding:7px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:.8rem; outline:none; }
-.perf-notes-input:focus, .perf-level-select:focus{ border-color:var(--lav-500); }
-
-/* ===== جوانب القوة والاحتياج ===== */
-.sw-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px; }
-.sw-subject-head{ padding:12px 16px; background:var(--lav-100); font-weight:800; font-size:.9rem; color:var(--lav-700); }
-.sw-body{ display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:14px; }
-.sw-side-title{ font-size:.82rem; font-weight:800; margin-bottom:8px; }
-.sw-strength-title{ color:#0c6b54; }
-.sw-need-title{ color:#8a6116; }
-.sw-item-list{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
-.sw-item{ display:flex; align-items:center; gap:8px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:7px 10px; font-size:.82rem; }
-.sw-item-dot-green{ width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0; }
-.sw-item-dot-orange{ width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0; }
-.sw-del-btn{ background:#fee2e2; color:#dc2626; border:none; border-radius:6px; width:22px; height:22px; cursor:pointer; font-size:.7rem; flex-shrink:0; }
-.sw-add-input{ display:flex; gap:8px; }
-.sw-add-input input{ flex:1; padding:8px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:.8rem; outline:none; }
-.sw-add-btn{ background:var(--teal-soft); color:#0c6b54; border:1.5px dashed var(--teal); border-radius:8px; padding:8px 14px; font-family:'Cairo',sans-serif; font-size:.8rem; font-weight:700; cursor:pointer; white-space:nowrap; }
-.sw-add-btn.need{ background:var(--gold-soft); color:#8a6116; border-color:var(--gold); }
-@media (max-width:640px){ .sw-body{ grid-template-columns:1fr; } }
-
-/* ===== الملفات والتقارير ===== */
-.file-row{ display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); gap:14px; }
-.file-row:last-child{ border-bottom:none; }
-.file-left{ display:flex; align-items:center; gap:12px; }
-.file-icon{ width:40px; height:40px; border-radius:10px; background:var(--lav-100); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
-.file-name{ font-size:.88rem; font-weight:800; color:var(--ink); }
-.file-type{ font-size:.75rem; color:var(--ink-faint); margin-top:2px; }
-.upload-zone{
-  border:2px dashed var(--border); border-radius:12px; padding:22px; text-align:center;
-  color:var(--muted); font-size:.85rem; cursor:pointer; transition:all .2s; background:var(--surface2);
-}
-.upload-zone:hover{ border-color:var(--lav-500); background:var(--lav-100); }
-.upload-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px; }
-.upload-row input[type=text]{ flex:1; min-width:160px; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:.84rem; outline:none; }
-
-/* ===== لوحة التعزيز ===== */
-.cert-preview{
-  background:linear-gradient(135deg,#fff, var(--lav-100));
-  border:3px double var(--lav-500); border-radius:18px; padding:34px 26px; text-align:center; position:relative; overflow:hidden;
-}
-.cert-preview::before{ content:'🏆'; position:absolute; font-size:7rem; opacity:.06; top:-10px; left:-10px; }
-.cert-title{ font-family:'Tajawal',sans-serif; font-size:1.6rem; font-weight:900; color:var(--lav-800); margin-bottom:6px; }
-.cert-sub{ font-size:.85rem; color:var(--muted); margin-bottom:18px; }
-.cert-student{ font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--lav-700); margin:14px 0; }
-.cert-message{ font-size:.95rem; color:var(--ink); line-height:2; margin-bottom:18px; }
-.cert-footer{ display:flex; justify-content:space-between; font-size:.78rem; color:var(--muted); margin-top:24px; flex-wrap:wrap; gap:8px; }
-.reinforce-history{ margin-top:18px; }
-.reinforce-item{
-  display:flex; align-items:flex-start; gap:12px; background:var(--surface2); border:1px solid var(--border);
-  border-right:4px solid var(--gold); border-radius:10px; padding:12px 16px; margin-bottom:10px;
-}
-.reinforce-icon{ font-size:1.4rem; flex-shrink:0; }
-.reinforce-title{ font-weight:800; font-size:.86rem; color:var(--lav-800); }
-.reinforce-meta{ font-size:.74rem; color:var(--ink-faint); margin-top:2px; }
-.reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
-
-/* سجل استدعاءات الاجتماع */
-.meetings-log-wrap{ margin-bottom:18px; }
-.meetings-log-head{
-  display:flex; align-items:center; gap:8px; font-weight:800; font-size:.92rem; color:var(--lav-800);
-  margin-bottom:10px;
-}
-.meeting-banner-inner{
-  display:flex; align-items:center; gap:14px; background:linear-gradient(135deg, var(--gold-soft), #fff);
-  border:1.5px solid var(--gold); border-right:5px solid var(--gold); border-radius:14px;
-  padding:14px 20px; margin-bottom:10px; flex-wrap:wrap;
-}
-.meeting-banner-icon{ font-size:1.8rem; flex-shrink:0; }
-.meeting-banner-title{ font-weight:800; font-size:.92rem; color:var(--lav-800); }
-.meeting-banner-meta{ font-size:.8rem; color:var(--muted); margin-top:3px; }
-.meeting-banner-close{
-  background:rgba(220,38,38,.08); color:#dc2626; border:none; border-radius:6px; padding:6px 12px; cursor:pointer;
-  font-size:.78rem; font-weight:700; flex-shrink:0; white-space:nowrap;
-}
-
-/* جدول المعلم الأسبوعي */
-.my-sched-table{ width:100%; border-collapse:collapse; font-size:.8rem; min-width:640px; }
-.my-sched-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 8px; text-align:center; font-weight:800; font-size:.76rem; border:1px solid var(--border); }
-.my-sched-table td{ padding:8px; border:1px solid var(--border); text-align:center; vertical-align:middle; }
-.my-sched-period-col{ background:var(--surface2); font-weight:800; color:var(--lav-700); font-size:.74rem; white-space:nowrap; }
-.my-sched-cell-fill{ background:var(--lav-100); border-radius:8px; padding:6px; }
-.my-sched-subj{ font-weight:800; color:var(--lav-800); font-size:.78rem; }
-.my-sched-grade{ font-size:.7rem; color:var(--muted); margin-top:2px; }
-.my-sched-cell-empty{ color:#c9c2da; font-size:.78rem; }
-
-/* توزيع المنهج */
-.curr-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
-.curr-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
-.curr-table td{ padding:6px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
-.curr-table tr:last-child td{ border-bottom:none; }
-.curr-week-num{ font-weight:800; color:var(--lav-700); white-space:nowrap; font-size:.78rem; }
-.curr-input{ width:100%; padding:7px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:.82rem; outline:none; }
-.curr-input:focus{ border-color:var(--lav-500); }
-
-/* عام */
-textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-size:.88rem; }
-.success-toast{
-  position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--lav-700); color:#fff;
-  padding:12px 28px; border-radius:12px; font-weight:700; font-size:.88rem; z-index:9999;
-  box-shadow:0 8px 24px rgba(107,76,154,.4); display:none; animation:fadeIn .3s ease;
-}
-@media (max-width:768px){
-  header.portal-header{ padding:14px 18px; }
-  .portal-banner{ padding:18px; }
-  .portal-body{ padding:20px 14px 50px; }
-  .sw-body{ grid-template-columns:1fr; }
-}
-</style>
-</head>
-<body>
-
-<!-- الشريط العلوي الرسمي -->
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-row">
-      <div class="topbar-gov">
-        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
-          <img src="moe-logo.png" alt="وزارة التعليم">
-        </a>
-        <span>المملكة العربية السعودية — وزارة التعليم</span>
-      </div>
-      <b class="topbar-year">1447هـ</b>
-    </div>
-    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
-  </div>
-</div>
-
-<header class="portal-header">
-  <div class="header-left">
-    <div class="header-icon">👨‍🏫</div>
-    <div>
-      <div class="header-title">بوابة المعلمين — متابعة الطلاب</div>
-      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
-    </div>
-  </div>
-  <a href="index.html" class="back-btn">← الرئيسية</a>
-</header>
-
-<!-- ============ تسجيل الدخول ============ -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-badge">🔐 بوابة آمنة للمعلمين</div>
-    <div class="login-icon-big">👨‍🏫</div>
-    <h2>بوابة المعلمين</h2>
-    <div class="login-desc">
-      بوابة موحّدة لمعلمي برنامج الدمج الفكري وبرنامج يسير — لمتابعة الطلاب المسندين إليك،
-      تقييم الأهداف، قياس مستوى الأداء، توثيق جوانب القوة والاحتياج، وإرسال شهادات تعزيز.
-    </div>
-
-    <div class="input-label">👤 اسم المستخدم</div>
-    <input type="text" class="text-input" id="username-input" placeholder="مثال: a.malki" autocomplete="username">
-
-    <div class="input-label">🔑 الرمز السري</div>
-    <input type="password" class="pin-input" id="pin-input" placeholder="• • • •" maxlength="6" autocomplete="current-password">
-
-    <div class="error-msg" id="login-error">❌ اسم المستخدم أو الرمز السري غير صحيح</div>
-    <button class="login-btn" onclick="doLogin()" id="login-btn">🔓 دخول</button>
-
-    <div class="hint-box">
-      💡 إن لم يكن لديك بيانات دخول، يرجى التواصل مع مشرف البرنامج (الدمج الفكري أو يسير) لإنشاء حساب لك.
-    </div>
-  </div>
-</div>
-
-<!-- ============ بوابة المعلم ============ -->
-<div id="teacher-portal">
-  <div class="portal-banner">
-    <div class="teacher-identity">
-      <div class="teacher-avatar" id="t-avatar">👨‍🏫</div>
-      <div>
-        <div class="teacher-name-display" id="t-name">—</div>
-        <div class="teacher-meta-display">
-          <span class="meta-chip" id="t-role">—</span>
-          <span class="meta-chip" id="t-count">0 طالب</span>
-        </div>
-      </div>
-    </div>
-    <button class="logout-btn" onclick="doLogout()">🚪 تسجيل الخروج</button>
-  </div>
-
-  <div class="portal-body">
-
-    <!-- سجل استدعاءات الاجتماع -->
-    <div id="meetings-log" class="meetings-log-wrap" style="display:none;"></div>
-
-    <!-- التبويبات الرئيسية -->
-    <div class="tabs" id="main-tabs">
-      <button class="tab-btn active" onclick="openMainTab('students',this)">👥 طلابي</button>
-      <button class="tab-btn" onclick="openMainTab('schedule',this)">📅 جدولي</button>
-      <button class="tab-btn" onclick="openMainTab('curriculum',this)">📘 توزيع المنهج</button>
-      <button class="tab-btn" onclick="openPortfolioFull()">📁 ملف الإنجاز ↗</button>
-      <button class="tab-btn" id="assign-tab-btn" style="display:none;" onclick="openMainTab('assign',this)">📋 إسناد الطلاب</button>
-    </div>
-
-    <!-- ===== طلابي ===== -->
-    <div class="tab-pane active" id="main-tab-students">
-      <div class="students-toolbar">
-        <input class="search-input" id="student-search" placeholder="🔍 بحث باسم الطالب أو الرمز..." oninput="renderMyStudents()">
-      </div>
-      <div class="students-grid" id="students-grid">
-        <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
-      </div>
-    </div>
-
-    <!-- ===== جدولي ===== -->
-    <div class="tab-pane" id="main-tab-schedule">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>📅 جدولي الأسبوعي</span>
-          <button class="btn-sm btn-sm-outline" onclick="printMySchedule()">🖨️ طباعة</button>
-        </div>
-        <div class="s-card-body" id="schedule-content" style="overflow-x:auto;">
-          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== توزيع المنهج ===== -->
-    <div class="tab-pane" id="main-tab-curriculum">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>📘 توزيع المنهج الفصلي</span>
-          <div style="display:flex;gap:8px;">
-            <button class="btn-sm btn-sm-outline" onclick="printCurriculum()">🖨️ طباعة</button>
-            <button class="btn-sm btn-sm-primary" onclick="saveCurriculum()">💾 حفظ</button>
-          </div>
-        </div>
-        <div class="s-card-body" id="curriculum-content">
-          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ===== إسناد الطلاب (مشرف) ===== -->
-    <div class="tab-pane" id="main-tab-assign">
-      <div class="s-card">
-        <div class="s-card-head">
-          <span id="assign-head-title">📋 إسناد طلاب البرنامج للمعلمين</span>
-          <input class="search-input" id="assign-search" placeholder="🔍 بحث..." style="max-width:220px;" oninput="renderAssignTable()">
-        </div>
-        <div class="s-card-body" style="padding:0;">
-          <div style="overflow-x:auto;">
-            <table class="assign-table" id="assign-table">
-              <thead>
-                <tr><th>الطالب</th><th>الرمز</th><th>الصف</th><th>المعلم المسؤول</th><th>الحالة</th></tr>
-              </thead>
-              <tbody id="assign-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="s-card">
-        <div class="s-card-head">📢 شريط الإشعارات (أعلى الصفحة الرئيسية)</div>
-        <div class="s-card-body">
-          <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه. يشترك في إدارته مشرف الإدارة العامة، مدير المدرسة، ومشرفا البرنامجين.</div>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem;font-weight:700;color:var(--lav-800);margin-bottom:12px;">
-            <input type="checkbox" id="tp-announce-enabled" style="width:18px;height:18px;">
-            تفعيل عرض الشريط
-          </label>
-          <div style="margin-bottom:10px;">
-            <label class="input-label">نص الإشعار</label>
-            <input type="text" class="text-input" id="tp-announce-message" placeholder="مثال: تبدأ الاختبارات النهائية يوم الأحد القادم">
-          </div>
-          <div style="margin-bottom:12px;">
-            <label class="input-label">رابط إضافي (اختياري)</label>
-            <input type="url" class="text-input" id="tp-announce-link" placeholder="https://...">
-          </div>
-          <button class="btn-sm btn-sm-primary" onclick="saveAnnouncementTP()">📢 حفظ ونشر الإشعار</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== تفاصيل الطالب ===== -->
-    <div id="student-detail" style="display:none;">
-      <button class="student-detail-back" onclick="closeStudentDetail()">→ رجوع لقائمة طلابي</button>
-      <div class="student-detail-head" id="sd-head"></div>
-
-      <div class="tabs" id="detail-tabs">
-        <button class="tab-btn active" onclick="openDetailTab('iep',this)">🎯 تقييم الأهداف</button>
-        <button class="tab-btn" onclick="openDetailTab('performance',this)">📏 مستوى الأداء</button>
-        <button class="tab-btn" onclick="openDetailTab('strengths',this)">💪 القوة والاحتياج</button>
-        <button class="tab-btn" onclick="openDetailTab('files',this)">📎 الخطط والتقارير</button>
-        <button class="tab-btn" onclick="openDetailTab('reinforce',this)">🏆 لوحة التعزيز</button>
-      </div>
-
-      <!-- تقييم الأهداف -->
-      <div class="tab-pane active" id="detail-tab-iep">
-        <div class="s-card">
-          <div class="s-card-head">
-            <span>🎯 تقييم الأهداف التربوية</span>
-            <button class="btn-sm btn-sm-primary" onclick="saveIEPEval()">💾 حفظ التقييم</button>
-          </div>
-          <div class="s-card-body" id="iep-eval-content"></div>
-        </div>
-      </div>
-
-      <!-- مستوى الأداء -->
-      <div class="tab-pane" id="detail-tab-performance">
-        <div class="s-card">
-          <div class="s-card-head">
-            <span>📏 استمارة قياس مستوى الأداء الحالي</span>
-            <button class="btn-sm btn-sm-primary" onclick="saveTeacherPerformance()">💾 حفظ التقييم</button>
-          </div>
-          <div class="s-card-body" id="performance-content"></div>
-        </div>
-      </div>
-
-      <!-- القوة والاحتياج -->
-      <div class="tab-pane" id="detail-tab-strengths">
-        <div class="s-card">
-          <div class="s-card-head">
-            <span>💪 جوانب القوة والاحتياج</span>
-            <button class="btn-sm btn-sm-primary" onclick="saveTeacherStrengths()">💾 حفظ</button>
-          </div>
-          <div class="s-card-body" id="strengths-content"></div>
-        </div>
-      </div>
-
-      <!-- الخطط والتقارير -->
-      <div class="tab-pane" id="detail-tab-files">
-        <div class="s-card">
-          <div class="s-card-head"><span>📋 الخطة الفردية</span></div>
-          <div class="s-card-body">
-            <div class="upload-zone" onclick="document.getElementById('plan-file-input').click()">
-              📤 اضغط لرفع ملف الخطة الفردية (PDF/Word) — سيستبدل الخطة الحالية إن وُجدت
-            </div>
-            <input type="file" id="plan-file-input" accept=".pdf,.doc,.docx" style="display:none;" onchange="uploadPlanFile(this)">
-            <div id="plan-current" style="margin-top:12px;"></div>
-          </div>
-        </div>
-        <div class="s-card">
-          <div class="s-card-head"><span>📊 التقارير والوثائق</span></div>
-          <div class="s-card-body">
-            <div id="reports-current"></div>
-            <div class="upload-row">
-              <input type="text" id="report-title-input" placeholder="عنوان التقرير (مثال: تقرير المتابعة الشهري)">
-              <input type="file" id="report-file-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display:none;" onchange="uploadReportFile(this)">
-              <button class="btn-sm btn-sm-outline" onclick="document.getElementById('report-file-input').click()">📤 إضافة تقرير</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- لوحة التعزيز -->
-      <div class="tab-pane" id="detail-tab-reinforce">
-        <div class="s-card">
-          <div class="s-card-head"><span>🏆 إرسال شهادة شكر وتقدير</span></div>
-          <div class="s-card-body">
-            <div class="input-label">📝 سبب التكريم</div>
-            <input type="text" class="text-input" id="cert-title-input" placeholder="مثال: التميز في الالتزام بالواجبات اليومية">
-            <div class="input-label">💬 رسالة التعزيز (اختياري)</div>
-            <textarea class="text-input" id="cert-message-input" placeholder="نص إضافي يظهر في الشهادة..."></textarea>
-            <button class="btn-sm btn-sm-gold" onclick="sendCertificate()" style="margin-top:6px;">🏆 إرسال الشهادة لملف الطالب</button>
-
-            <div style="margin-top:22px;">
-              <div class="input-label" style="margin-bottom:10px;">👁️ معاينة الشهادة</div>
-              <div class="cert-preview" id="cert-preview-box">
-                <div class="cert-title">شهادة شكر وتقدير</div>
-                <div class="cert-sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
-                <div class="cert-message">تُمنح هذه الشهادة للطالب</div>
-                <div class="cert-student" id="cert-student-name">—</div>
-                <div class="cert-message" id="cert-message-preview">تقديراً وتشجيعاً له على تميّزه واجتهاده.</div>
-                <div class="cert-footer">
-                  <span id="cert-date-preview">📅 —</span>
-                  <span id="cert-teacher-preview">✍️ —</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="s-card">
-          <div class="s-card-head"><span>📜 سجل شهادات وتعزيزات الطالب</span></div>
-          <div class="s-card-body">
-            <div class="reinforce-history" id="reinforce-history"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="success-toast" id="success-toast"></div>
-
-<script>
 // ===================================================
 // إعدادات Supabase
 // ===================================================
-const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+var SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+var SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
 
-const PROGRAM_INFO = {
+var PROGRAM_INFO = {
   dumaj:  { label: 'الدمج الفكري', dataPath: 'dumaj',  badge: 'dumaj'  },
   yaseer: { label: 'يسير',          dataPath: 'yaseer', badge: 'yaseer' },
 };
@@ -709,20 +16,11 @@ const PROGRAM_INFO = {
 // ===================================================
 // قاعدة بيانات المعلمين (موحّدة للبرنامجين)
 // ===================================================
-const TEACHERS = {
-  "m.suhayymi": { name:"محمد أحمد السهيمي",   pin:"1234", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"س",  isSupervisor:false },
-  "z.qarni":    { name:"زين العابدين القرني", pin:"6789", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ز",  isSupervisor:false },
-  "a.ghamdi":   { name:"علي سعيد الغامدي",    pin:"3456", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"غ",  isSupervisor:false },
-  "a.malki":    { name:"علي محمد المالكي",    pin:"4567", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"م",  isSupervisor:false },
-  "h.ulyani":   { name:"حسن علي العلياني",    pin:"5678", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ع",  isSupervisor:false },
-
-  "h.kubaishi": { name:"حسين منصور الكبيشي",  pin:"1111", role:"معلم تربية خاصة — يسير",         program:"yaseer", avatar:"ك",  isSupervisor:false },
-};
 
 // ===================================================
 // المواد والمستويات (موحّدة مع بوابة الطلاب)
 // ===================================================
-const CORE_SUBJECTS = [
+var CORE_SUBJECTS = [
   { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖' },
   { key:'math',    name:'الرياضيات',             icon:'🔢' },
   { key:'islamic', name:'التربية الإسلامية',     icon:'🕌' },
@@ -730,7 +28,7 @@ const CORE_SUBJECTS = [
   { key:'life',    name:'المهارات الحياتية',     icon:'🌱' },
 ];
 
-const IEP_LEVELS = [
+var IEP_LEVELS = [
   { value:'excellent', label:'متفوق',          color:'#059669', bg:'#d1fae5' },
   { value:'advanced',  label:'متقدم',           color:'#2563eb', bg:'#dbeafe' },
   { value:'capable',   label:'متمكن',           color:'#d97706', bg:'#fef3c7' },
@@ -738,7 +36,7 @@ const IEP_LEVELS = [
   { value:'none',      label:'— لم يُقيَّم —', color:'#9ca3af', bg:'#f3f4f6' },
 ];
 
-const PERF_SUBJECTS = [
+var PERF_SUBJECTS = [
   { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖', skills:['القراءة الجهرية','الكتابة والإملاء','الفهم والاستيعاب','التعبير الشفوي','القواعد النحوية'] },
   { key:'math',    name:'الرياضيات',             icon:'🔢', skills:['العمليات الحسابية الأساسية','الأعداد والتسلسل','الأشكال الهندسية','القياس والوحدات','حل المسائل'] },
   { key:'islamic', name:'التربية الإسلامية',     icon:'🕌', skills:['الحفظ والتلاوة','العقيدة والأركان','الفقه والعبادات','السيرة والأخلاق','التطبيق العملي'] },
@@ -746,7 +44,7 @@ const PERF_SUBJECTS = [
   { key:'life',    name:'المهارات الحياتية',     icon:'🌱', skills:['العناية الشخصية','التواصل الاجتماعي','المهارات العملية','الاستقلالية','التنظيم وإدارة الوقت'] },
 ];
 
-const PERF_LEVELS = [
+var PERF_LEVELS = [
   { value:'mastered',   label:'متقن',       color:'#059669', bg:'#d1fae5' },
   { value:'developing', label:'في التطور',  color:'#2563eb', bg:'#dbeafe' },
   { value:'emerging',   label:'بدايات',     color:'#d97706', bg:'#fef3c7' },
@@ -817,55 +115,100 @@ async function saveStudentData(program, pin, patch) {
   const ok = await sbSetJSON(`reports/${program}/data/student-${pin}.json`, merged);
   return ok ? merged : null;
 }
-</script>
-<script>
-// ===================================================
-// الحالة العامة
-// ===================================================
-let currentTeacher = null;
-let ASSIGNMENTS = { dumaj:{}, yaseer:{} };
-let currentDetail = null;
-let STUDENT_CONFIGS = { dumaj:null, yaseer:null };
 
-// ===================================================
-// تسجيل الدخول / الخروج
-// ===================================================
+
+var TEACHERS_HASH = {
+  "e2bd7f4d1f3ba7780007be08232567ba2fc18d47d3fc27c7e095af4db2eb804f": {
+    "name": "محمد أحمد السهيمي",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "س"
+  },
+  "525f5a1194081d0a8f1dde67042d60dbe6946500b509ff6853b8376ea6834d6b": {
+    "name": "زين العابدين القرني",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "ز"
+  },
+  "2346607f3833af82865122bff17fda445dd6585c7067b5383827ed0a2973f9c2": {
+    "name": "علي سعيد الغامدي",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "غ"
+  },
+  "56f43c41ed6fdc3237bb720df28a264253fbbb8d06659eab67f72e4bb3f93820": {
+    "name": "علي محمد المالكي",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "م"
+  },
+  "4ec1177a37ed9b36ecc47addf8f1f0365da1b32e3282e74850cee30c11f89d55": {
+    "name": "حسن علي العلياني",
+    "role": "معلم تربية خاصة — الدمج الفكري",
+    "program": "dumaj",
+    "avatar": "ع"
+  },
+  "5240da1809a1b2151cfdc3e74edce55a083494b8dc3c813aefc133fa0e83776a": {
+    "name": "حسين منصور الكبيشي",
+    "role": "معلم تربية خاصة — يسير",
+    "program": "yaseer",
+    "avatar": "ك"
+  }
+};
 
 function _hashCred(u, p) {
-  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(u+':'+p))
-    .then(function(buf){
-      return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  // SHA-256 بسيط باستخدام SubtleCrypto
+  var msg = u + ':' + p;
+  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg))
+    .then(function(buf) {
+      return Array.from(new Uint8Array(buf))
+        .map(function(b){ return b.toString(16).padStart(2,'0'); })
+        .join('');
     });
 }
 
 function doLogin() {
-  var username = (document.getElementById('username-input')||{}).value||'';
-  username = username.trim().toLowerCase();
-  var pin = (document.getElementById('pin-input')||{}).value||'';
-  pin = pin.trim();
-  var errEl = document.getElementById('login-error');
+  var username = (document.getElementById('username-input') ? document.getElementById('username-input').value : '').trim().toLowerCase();
+  var pin      = (document.getElementById('pin-input') ? document.getElementById('pin-input').value : '').trim();
+  var errEl    = document.getElementById('login-error');
+
   if (!username || !pin) {
-    if(errEl){errEl.textContent='أدخل اسم المستخدم والرمز السري';errEl.classList.add('show');}
+    if (errEl) { errEl.textContent = 'أدخل اسم المستخدم والرمز السري'; errEl.classList.add('show'); }
     return;
   }
+
   _hashCred(username, pin).then(function(hash) {
     var t = TEACHERS_HASH[hash];
     if (!t) {
-      if(errEl){
-        errEl.textContent='اسم المستخدم أو الرمز غير صحيح';errEl.classList.add('show');
-        setTimeout(function(){errEl.classList.remove('show');},2500);
-        ['pin-input','username-input'].forEach(function(id){
-          var el=document.getElementById(id);
-          if(el){el.classList.add('error');setTimeout(function(){el.classList.remove('error');},500);}
-        });
+      if (errEl) {
+        errEl.textContent = 'اسم المستخدم أو الرمز غير صحيح';
+        errEl.classList.add('show');
+        setTimeout(function() { errEl.classList.remove('show'); }, 2500);
+        var pi = document.getElementById('pin-input');
+        var ui = document.getElementById('username-input');
+        if (pi) { pi.classList.add('error'); setTimeout(function(){pi.classList.remove('error');},500); }
+        if (ui) { ui.classList.add('error'); setTimeout(function(){ui.classList.remove('error');},500); }
       }
       return;
     }
-    currentTeacher = Object.assign({username:username, pin:pin, isSupervisor:false}, t);
+    currentTeacher = Object.assign({ username: username, pin: pin, isSupervisor: false }, t);
     openPortal();
   });
 }
 
+// ----- Block 1 -----
+
+// ===================================================
+// الحالة العامة
+// ===================================================
+var currentTeacher = null;
+var ASSIGNMENTS = { dumaj:{}, yaseer:{} };
+var currentDetail = null;
+var STUDENT_CONFIGS = { dumaj:null, yaseer:null };
+
+// ===================================================
+// تسجيل الدخول / الخروج
+// ===================================================
 
 function doLogout() {
   currentTeacher = null;
@@ -885,11 +228,17 @@ async function openPortal() {
   document.getElementById('t-name').textContent = currentTeacher.name;
   document.getElementById('t-role').textContent = '🎓 ' + currentTeacher.role;
 
-  document.getElementById('assign-tab-btn').style.display = 'none';
+  if (currentTeacher.isSupervisor) {
+    document.getElementById('assign-tab-btn').style.display = 'flex';
+    document.getElementById('assign-head-title').textContent =
+      `📋 إسناد طلاب برنامج ${PROGRAM_INFO[currentTeacher.program].label} للمعلمين`;
+  } else {
+    document.getElementById('assign-tab-btn').style.display = 'none';
+  }
 
   await loadAssignments();
   await renderMyStudents();
-
+  if (currentTeacher.isSupervisor) { await renderAssignTable(); loadAnnouncementSettingsTP(); }
   loadMeetingInvite();
   if(window.loadTeacherAnnouncements) window.loadTeacherAnnouncements();
 }
@@ -1035,8 +384,10 @@ function closeStudentDetail() {
   openMainTab('students', firstBtn);
   renderMyStudents();
 }
-</script>
-<script>
+
+
+// ----- Block 2 -----
+
 // ===================================================
 // تقييم الأهداف التربوية (IEP)
 // ===================================================
@@ -1116,8 +467,10 @@ async function saveIEPEval() {
     showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
   }
 }
-</script>
-<script>
+
+
+// ----- Block 3 -----
+
 // ===================================================
 // قياس مستوى الأداء الحالي
 // ===================================================
@@ -1196,12 +549,14 @@ async function saveTeacherPerformance() {
     showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
   }
 }
-</script>
-<script>
+
+
+// ----- Block 4 -----
+
 // ===================================================
 // جوانب القوة والاحتياج
 // ===================================================
-const SW_DEFAULT_SUBJECTS = ['arabic', 'math'];
+var SW_DEFAULT_SUBJECTS = ['arabic', 'math'];
 
 function renderStrengthsEditor() {
   const container = document.getElementById('strengths-content');
@@ -1334,8 +689,10 @@ async function saveTeacherStrengths() {
     showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
   }
 }
-</script>
-<script>
+
+
+// ----- Block 5 -----
+
 // ===================================================
 // الخطة الفردية والتقارير (رفع وعرض)
 // ===================================================
@@ -1451,8 +808,10 @@ async function removeReport(idx) {
     showToast('⚠️ تعذر الحذف، تحقق من الاتصال');
   }
 }
-</script>
-<script>
+
+
+// ----- Block 6 -----
+
 // ===================================================
 // لوحة التعزيز — شهادات الشكر والتقدير
 // ===================================================
@@ -1580,7 +939,7 @@ function printCertificate(id) {
       <span>✍️ ${escHtml(item.teacher)}</span>
     </div>
   </div>
-  <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
+  <scr'+'ipt>window.onload = () => setTimeout(() => window.print(), 350);<\/scr'+'ipt>
 </body></html>`);
   win.document.close();
 }
@@ -1633,12 +992,14 @@ async function assignTeacher(pin, uname) {
   if (ok) { showToast('✅ تم تحديث إسناد الطالب'); renderAssignTable(); }
   else showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
 }
-</script>
-<script>
+
+
+// ----- Block 7 -----
+
 // ===================================================
 // جدول المعلم الأسبوعي (المعتمد من مشرف البرنامج)
 // ===================================================
-const SCHEDULE_KEY_MAP = {
+var SCHEDULE_KEY_MAP = {
   'm.suhayymi': { program:'dumaj',  key:'suhaimy'   },
   'z.qarni':    { program:'dumaj',  key:'alqarni'   },
   'a.ghamdi':   { program:'dumaj',  key:'alghamdi'  },
@@ -1652,7 +1013,7 @@ const SCHEDULE_KEY_MAP = {
 // ===================================================
 // ملف الإنجاز (مضمَّن من ملفات إنجاز المعلمين)
 // ===================================================
-const PORTFOLIO_MAP = {
+var PORTFOLIO_MAP = {
   'm.suhayymi': { file:'teachers-dumaj.html',  name:'محمد أحمد السهيمي'   },
   'z.qarni':    { file:'teachers-dumaj.html',  name:'زين العابدين سعد القرني' },
   'a.ghamdi':   { file:'teachers-dumaj.html',  name:'علي سعيد الغامدي'    },
@@ -1670,9 +1031,9 @@ function openPortfolioFull() {
   window.open(url, '_blank');
 }
 
-const SCHED_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+var SCHED_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
 
-const DUMAJ_SCHED_PERIODS = [
+var DUMAJ_SCHED_PERIODS = [
   { num:1, label:'الأولى',  time:'7:30–8:15'   },
   { num:2, label:'الثانية', time:'8:15–9:00'   },
   { num:3, label:'الثالثة', time:'9:00–9:45'   },
@@ -1681,10 +1042,10 @@ const DUMAJ_SCHED_PERIODS = [
   { num:6, label:'السادسة', time:'11:35–12:20' },
   { num:7, label:'السابعة', time:'12:20–13:05' },
 ];
-const DUMAJ_SCHED_GRADES = ['أول متوسط','ثاني متوسط','ثالث متوسط'];
-const DUMAJ_CELL_LABELS = { lesson:'📚', break_sup:'☕ فسحة', end_sup:'🏫 نهاية الدوام' };
+var DUMAJ_SCHED_GRADES = ['أول متوسط','ثاني متوسط','ثالث متوسط'];
+var DUMAJ_CELL_LABELS = { lesson:'📚', break_sup:'☕ فسحة', end_sup:'🏫 نهاية الدوام' };
 
-const YASEER_SCHED_PERIODS = [
+var YASEER_SCHED_PERIODS = [
   { num:1, label:'الأولى',  time:'7:00–7:45'   },
   { num:2, label:'الثانية', time:'7:45–8:30'   },
   { num:3, label:'الثالثة', time:'8:30–9:15'   },
@@ -1692,7 +1053,7 @@ const YASEER_SCHED_PERIODS = [
   { num:5, label:'الخامسة', time:'10:20–11:05' },
 ];
 
-let lastScheduleHTML = '';
+var lastScheduleHTML = '';
 
 async function fetchTimetableData(key) {
   try {
@@ -1810,7 +1171,7 @@ function printMySchedule() {
   <h1>📅 جدولي الأسبوعي — ${escHtml(currentTeacher.name)}</h1>
   <div style="color:#6E5F82;margin-bottom:14px;">${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
   ${lastScheduleHTML}
-  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
+  <scr'+'ipt>window.onload=()=>setTimeout(()=>window.print(),350);<\/scr'+'ipt>
 </body></html>`);
   win.document.close();
 }
@@ -1881,13 +1242,14 @@ async function saveAnnouncementTP() {
   const ok = await sbSetJSON('reports/site-announcement.json', payload);
   showToast(ok ? '✅ تم حفظ ونشر الإشعار' : '⚠️ تعذر الحفظ، تحقق من الاتصال');
 }
-</script>
 
-<script>
+
+// ----- Block 8 -----
+
 // ===================================================
 // توزيع المنهج الفصلي
 // ===================================================
-const CURRICULUM_WEEKS = 16;
+var CURRICULUM_WEEKS = 16;
 
 function emptyCurriculumWeeks() {
   return Array.from({ length: CURRICULUM_WEEKS }, () => ({ topic: '', notes: '' }));
@@ -1904,7 +1266,7 @@ function defaultCurriculum() {
   };
 }
 
-let myCurriculum = null;
+var myCurriculum = null;
 
 function curriculumPath() {
   return `curriculum/${currentTeacher.program}/${currentTeacher.username}.json`;
@@ -2042,26 +1404,58 @@ function printCurriculum() {
   <h1>📘 توزيع المنهج الفصلي</h1>
   <div class="sub">${escHtml(currentTeacher.name)} — ${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
   ${subjectsHtml}
-  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
+  <scr'+'ipt>window.onload=()=>setTimeout(()=>window.print(),350);<\/scr'+'ipt>
 </body></html>`);
   win.document.close();
 }
-</script>
 
-<script>
-// ===================================================
-// التهيئة
-// ===================================================
-document.getElementById('pin-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
-document.getElementById('username-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') document.getElementById('pin-input').focus();
-});
-document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
-document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
-</script>
-</body>
-</html>
-<script src="ann-system.js"></script>
-<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
+
+// ----- Block 9 — التهيئة (مؤجلة حتى يُنقر التبويب) -----
+function _initTPListeners() {
+  var pinInput = document.getElementById('pin-input');
+  var userInput = document.getElementById('username-input');
+  var certTitle = document.getElementById('cert-title-input');
+  var certMsg = document.getElementById('cert-message-input');
+  if (pinInput) pinInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doLogin();
+  });
+  if (userInput) userInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { var p=document.getElementById('pin-input'); if(p) p.focus(); }
+  });
+  if (certTitle) certTitle.addEventListener('input', updateCertPreview);
+  if (certMsg) certMsg.addEventListener('input', updateCertPreview);
+}
+
+
+
+// ===== تهيئة لوحة الإشراف (تُستدعى من admin pages) =====
+var _supReady = false;
+function initSupPanel(program, username, uname, urole) {
+  if (_supReady) return; _supReady = true;
+  _initTPListeners();
+  currentTeacher = {
+    username: username, name: uname, pin: '0000',
+    role: urole, program: program,
+    avatar: uname.charAt(0), isSupervisor: true
+  };
+  var l = document.getElementById('login-screen');
+  var p = document.getElementById('teacher-portal');
+  if (l) l.style.display = 'none';
+  if (p) p.style.display = 'block';
+  var av = document.getElementById('t-avatar');
+  var nm = document.getElementById('t-name');
+  var rl = document.getElementById('t-role');
+  if (av) av.textContent = currentTeacher.avatar;
+  if (nm) nm.textContent = currentTeacher.name;
+  if (rl) rl.textContent = '🎓 ' + currentTeacher.role;
+  var ab = document.getElementById('assign-tab-btn');
+  if (ab) ab.style.display = 'flex';
+  var at = document.getElementById('assign-head-title');
+  if (at) at.textContent = '📋 إسناد طلاب البرنامج للمعلمين';
+  loadAssignments().then(function() {
+    renderMyStudents();
+    renderAssignTable();
+  });
+  loadMeetingInvite();
+  if (window.loadTeacherAnnouncements) loadTeacherAnnouncements();
+}

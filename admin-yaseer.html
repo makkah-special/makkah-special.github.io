@@ -930,6 +930,90 @@
   .meeting-alert-icon { font-size:3.5rem; margin-bottom:12px; animation:ring 1s ease infinite; }
   @keyframes ring { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} 60%{transform:rotate(-10deg)} 80%{transform:rotate(10deg)} }
 
+
+/* === TP CSS === */
+
+:root {
+  --bg:        #F7F5FC;
+  --bg-soft:   #EFE8FA;
+  --card:      #FFFFFF;
+  --surface2:  #FBFAFE;
+
+  --ink:       #221335;
+  --muted:     #6E5F82;
+  --ink-faint: rgba(34,19,53,.42);
+
+  --border:    #DCD2EE;
+  --line2:     rgba(107,76,154,.26);
+
+  --lav-900:   #2E2148;
+  --lav-800:   #3F2E63;
+  --lav-700:   #6B4C9A;
+  --lav-600:   #7C5BAE;
+  --lav-500:   #8B6ABF;
+  --lav-300:   #B79EE0;
+  --lav-100:   #EAE1F7;
+
+  --primary:   #3F2E63;
+  --accent:    #8B6ABF;
+  --gold:      #D7A24A;
+  --gold-soft: rgba(215,162,74,.14);
+  --teal:      #129E7C;
+  --teal-soft: rgba(18,158,124,.12);
+  --red:       #DC2626;
+  --red-soft:  rgba(220,38,38,.08);
+
+  --shadow-sm: 0 6px 20px rgba(107,76,154,.10);
+  --shadow-md: 0 16px 44px rgba(107,76,154,.16);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height:100vh;
+}
+
+/* ===== الشريط العلوي الرسمي ===== */
+.topbar{ background: linear-gradient(120deg, var(--lav-900), var(--lav-800) 70%, #4A3470); color: rgba(255,255,255,.92); }
+.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
+.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
+.topbar-gov{ display:flex; align-items:center; gap:10px; }
+.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
+.topbar-gov a{ display:flex; align-items:center; }
+.topbar-gov a:hover img{ opacity:1; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+@media (max-width:640px){
+  .topbar-row{ font-size:.7rem; }
+  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+  .topbar-inner{ padding:7px 14px; }
+}
+
+/* ===== هيدر البوابة ===== */
+header.portal-header{
+  background: linear-gradient(135deg, var(--lav-800) 0%, var(--lav-900) 60%, var(--lav-700) 100%);
+  padding:16px 36px; display:flex; align-items:center; justify-content:space-between;
+  border-bottom:3px solid var(--gold); gap:14px; flex-wrap:wrap;
+}
+.header-left{ display:flex; align-items:center; gap:14px; }
+.header-icon{
+  width:46px; height:46px; border-radius:12px;
+  background:rgba(215,162,74,.18); border:1px solid rgba(215,162,74,.35);
+  display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0;
+}
+.header-title{ color:#fff; font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:900; }
+.header-sub{ color:rgba(255,255,255,.55); font-size:.76rem; margin-top:2px; }
+.back-btn{
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.8); padding:8px 18px; border-radius:8px;
+  text-decoration:none; font-size:.82rem; font-weight:600; transition:all .2s; white-space:nowrap;
+}
+.back-btn:hover{ background:rgba(255,255,255,.15); }
 .ann-card{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px;margin-bottom:16px;}
 .ann-card-title{font-weight:900;font-size:.9rem;color:#3F2E63;margin-bottom:14px;border-bottom:1px solid #EAE1F7;padding-bottom:8px;}
 .ann-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -957,6 +1041,7 @@
 .t-ann-link{font-size:.74rem;color:#6B4C9A;font-weight:700;text-decoration:none;}
 .ann-container{margin-bottom:16px;}
 @media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -1032,6 +1117,7 @@
       <button class="admin-tab-btn" onclick="openAdminTab('sigs',this);loadSignatures()">✍️ التوقيعات</button>
       <button class="admin-tab-btn" onclick="openAdminTab('schedule',this)">📅 توزيع الحصص</button>
       <button class="admin-tab-btn" onclick="openAdminTab('meetings',this);loadMeetingTab()">📹 الاستدعاءات</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('supervisor',this);initSupPanel('yaseer','saad.z','سعد سالم الزهراني','مشرف برنامج يسير التعليمي')">👩‍🏫 الإشراف التربوي</button>
       <button class="admin-tab-btn" onclick="openAdminTab('settings',this);renderStudentPinList()">⚙️ الإعدادات</button>
     </div>
 
@@ -1135,9 +1221,219 @@
       </div>
     </div>
 
-    <div class="admin-tab-pane" id="admin-tab-settings">
-<div class="ann-card"><div class="ann-card-title">📢 إرسال إشعار</div><div class="ann-row2"><div class="ann-f"><label>نوع الإشعار</label><select id="ann-type-g" class="ann-sel"><option value="default">📢 إشعار عام</option><option value="news">📰 خبر</option><option value="alert">🔔 تنبيه</option><option value="important">⚠️ مهم</option></select></div><div class="ann-f"><label>الوجهة</label><select id="ann-target-g" class="ann-sel"><option value="teachers">👨‍🏫 بوابة المعلمين</option><option value="site">🌐 الصفحة الرئيسية</option><option value="site_teachers">📡 المعلمون + الرئيسية</option></select></div></div><div class="ann-row2"><div class="ann-f"><label>البرنامج</label><select id="ann-prog-g" class="ann-sel"><option value="both">الكل</option><option value="dumaj">الدمج الفكري</option><option value="yaseer">يسير</option></select></div><div class="ann-f"><label>المدة</label><select id="ann-dur-g" class="ann-sel"><option value="0">بدون انتهاء</option><option value="1">يوم</option><option value="3">3 أيام</option><option value="7" selected>أسبوع</option><option value="30">شهر</option></select></div></div><div class="ann-f" style="margin-bottom:9px;"><label>نص الإشعار</label><input type="text" id="ann-msg-g" class="ann-inp" placeholder="نص الإشعار..."></div><div class="ann-f" style="margin-bottom:9px;"><label>رابط (اختياري)</label><input type="url" id="ann-link-g" class="ann-inp" placeholder="https://..."></div><label style="display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:700;color:#3F2E63;margin-bottom:3px;"><input type="checkbox" id="ann-en-g" checked style="width:15px;height:15px;"> تفعيل فوراً</label><button class="ann-send-btn" onclick="annSend('مشرف يسير التعليمي')">📤 إرسال</button><div class="ann-res" id="ann-res"></div><div class="ann-disable-row"><div class="ann-disable-lbl">⚡ تعطيل إشعار الصفحة الرئيسية</div><button class="ann-disable-btn" onclick="annDisable()">🔴 تعطيل</button></div><div class="ann-log" id="ann-log-section"><div class="ann-log-title">📋 سجل الإشعارات</div><div id="ann-log-items"><div class="ann-log-empty">جارٍ التحميل...</div></div></div></div>
 
+    <div class="admin-tab-pane" id="admin-tab-supervisor">
+      <div id="sup-portal-wrap">
+        <div class="portal-body">
+
+    <!-- سجل استدعاءات الاجتماع -->
+    <div id="meetings-log" class="meetings-log-wrap" style="display:none;"></div>
+
+    <!-- التبويبات الرئيسية -->
+    <div class="tabs" id="main-tabs">
+      <button class="tab-btn active" onclick="openMainTab('students',this)">👥 طلابي</button>
+      <button class="tab-btn" onclick="openMainTab('schedule',this)">📅 جدولي</button>
+      <button class="tab-btn" onclick="openMainTab('curriculum',this)">📘 توزيع المنهج</button>
+      <button class="tab-btn" onclick="openPortfolioFull()">📁 ملف الإنجاز ↗</button>
+      <button class="tab-btn" id="assign-tab-btn" style="display:none;" onclick="openMainTab('assign',this)">📋 إسناد الطلاب</button>
+    </div>
+
+    <!-- ===== طلابي ===== -->
+    <div class="tab-pane active" id="main-tab-students">
+      <div class="students-toolbar">
+        <input class="search-input" id="student-search" placeholder="🔍 بحث باسم الطالب أو الرمز..." oninput="renderMyStudents()">
+      </div>
+      <div class="students-grid" id="students-grid">
+        <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+      </div>
+    </div>
+
+    <!-- ===== جدولي ===== -->
+    <div class="tab-pane" id="main-tab-schedule">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>📅 جدولي الأسبوعي</span>
+          <button class="btn-sm btn-sm-outline" onclick="printMySchedule()">🖨️ طباعة</button>
+        </div>
+        <div class="s-card-body" id="schedule-content" style="overflow-x:auto;">
+          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== توزيع المنهج ===== -->
+    <div class="tab-pane" id="main-tab-curriculum">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>📘 توزيع المنهج الفصلي</span>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-sm btn-sm-outline" onclick="printCurriculum()">🖨️ طباعة</button>
+            <button class="btn-sm btn-sm-primary" onclick="saveCurriculum()">💾 حفظ</button>
+          </div>
+        </div>
+        <div class="s-card-body" id="curriculum-content">
+          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ===== إسناد الطلاب (مشرف) ===== -->
+    <div class="tab-pane" id="main-tab-assign">
+      <div class="s-card">
+        <div class="s-card-head">
+          <span id="assign-head-title">📋 إسناد طلاب البرنامج للمعلمين</span>
+          <input class="search-input" id="assign-search" placeholder="🔍 بحث..." style="max-width:220px;" oninput="renderAssignTable()">
+        </div>
+        <div class="s-card-body" style="padding:0;">
+          <div style="overflow-x:auto;">
+            <table class="assign-table" id="assign-table">
+              <thead>
+                <tr><th>الطالب</th><th>الرمز</th><th>الصف</th><th>المعلم المسؤول</th><th>الحالة</th></tr>
+              </thead>
+              <tbody id="assign-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-head">📢 شريط الإشعارات (أعلى الصفحة الرئيسية)</div>
+        <div class="s-card-body">
+          <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه. يشترك في إدارته مشرف الإدارة العامة، مدير المدرسة، ومشرفا البرنامجين.</div>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem;font-weight:700;color:var(--lav-800);margin-bottom:12px;">
+            <input type="checkbox" id="tp-announce-enabled" style="width:18px;height:18px;">
+            تفعيل عرض الشريط
+          </label>
+          <div style="margin-bottom:10px;">
+            <label class="input-label">نص الإشعار</label>
+            <input type="text" class="text-input" id="tp-announce-message" placeholder="مثال: تبدأ الاختبارات النهائية يوم الأحد القادم">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label class="input-label">رابط إضافي (اختياري)</label>
+            <input type="url" class="text-input" id="tp-announce-link" placeholder="https://...">
+          </div>
+          <button class="btn-sm btn-sm-primary" onclick="saveAnnouncementTP()">📢 حفظ ونشر الإشعار</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== تفاصيل الطالب ===== -->
+    <div id="student-detail" style="display:none;">
+      <button class="student-detail-back" onclick="closeStudentDetail()">→ رجوع لقائمة طلابي</button>
+      <div class="student-detail-head" id="sd-head"></div>
+
+      <div class="tabs" id="detail-tabs">
+        <button class="tab-btn active" onclick="openDetailTab('iep',this)">🎯 تقييم الأهداف</button>
+        <button class="tab-btn" onclick="openDetailTab('performance',this)">📏 مستوى الأداء</button>
+        <button class="tab-btn" onclick="openDetailTab('strengths',this)">💪 القوة والاحتياج</button>
+        <button class="tab-btn" onclick="openDetailTab('files',this)">📎 الخطط والتقارير</button>
+        <button class="tab-btn" onclick="openDetailTab('reinforce',this)">🏆 لوحة التعزيز</button>
+      </div>
+
+      <!-- تقييم الأهداف -->
+      <div class="tab-pane active" id="detail-tab-iep">
+        <div class="s-card">
+          <div class="s-card-head">
+            <span>🎯 تقييم الأهداف التربوية</span>
+            <button class="btn-sm btn-sm-primary" onclick="saveIEPEval()">💾 حفظ التقييم</button>
+          </div>
+          <div class="s-card-body" id="iep-eval-content"></div>
+        </div>
+      </div>
+
+      <!-- مستوى الأداء -->
+      <div class="tab-pane" id="detail-tab-performance">
+        <div class="s-card">
+          <div class="s-card-head">
+            <span>📏 استمارة قياس مستوى الأداء الحالي</span>
+            <button class="btn-sm btn-sm-primary" onclick="saveTeacherPerformance()">💾 حفظ التقييم</button>
+          </div>
+          <div class="s-card-body" id="performance-content"></div>
+        </div>
+      </div>
+
+      <!-- القوة والاحتياج -->
+      <div class="tab-pane" id="detail-tab-strengths">
+        <div class="s-card">
+          <div class="s-card-head">
+            <span>💪 جوانب القوة والاحتياج</span>
+            <button class="btn-sm btn-sm-primary" onclick="saveTeacherStrengths()">💾 حفظ</button>
+          </div>
+          <div class="s-card-body" id="strengths-content"></div>
+        </div>
+      </div>
+
+      <!-- الخطط والتقارير -->
+      <div class="tab-pane" id="detail-tab-files">
+        <div class="s-card">
+          <div class="s-card-head"><span>📋 الخطة الفردية</span></div>
+          <div class="s-card-body">
+            <div class="upload-zone" onclick="document.getElementById('plan-file-input').click()">
+              📤 اضغط لرفع ملف الخطة الفردية (PDF/Word) — سيستبدل الخطة الحالية إن وُجدت
+            </div>
+            <input type="file" id="plan-file-input" accept=".pdf,.doc,.docx" style="display:none;" onchange="uploadPlanFile(this)">
+            <div id="plan-current" style="margin-top:12px;"></div>
+          </div>
+        </div>
+        <div class="s-card">
+          <div class="s-card-head"><span>📊 التقارير والوثائق</span></div>
+          <div class="s-card-body">
+            <div id="reports-current"></div>
+            <div class="upload-row">
+              <input type="text" id="report-title-input" placeholder="عنوان التقرير (مثال: تقرير المتابعة الشهري)">
+              <input type="file" id="report-file-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display:none;" onchange="uploadReportFile(this)">
+              <button class="btn-sm btn-sm-outline" onclick="document.getElementById('report-file-input').click()">📤 إضافة تقرير</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- لوحة التعزيز -->
+      <div class="tab-pane" id="detail-tab-reinforce">
+        <div class="s-card">
+          <div class="s-card-head"><span>🏆 إرسال شهادة شكر وتقدير</span></div>
+          <div class="s-card-body">
+            <div class="input-label">📝 سبب التكريم</div>
+            <input type="text" class="text-input" id="cert-title-input" placeholder="مثال: التميز في الالتزام بالواجبات اليومية">
+            <div class="input-label">💬 رسالة التعزيز (اختياري)</div>
+            <textarea class="text-input" id="cert-message-input" placeholder="نص إضافي يظهر في الشهادة..."></textarea>
+            <button class="btn-sm btn-sm-gold" onclick="sendCertificate()" style="margin-top:6px;">🏆 إرسال الشهادة لملف الطالب</button>
+
+            <div style="margin-top:22px;">
+              <div class="input-label" style="margin-bottom:10px;">👁️ معاينة الشهادة</div>
+              <div class="cert-preview" id="cert-preview-box">
+                <div class="cert-title">شهادة شكر وتقدير</div>
+                <div class="cert-sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
+                <div class="cert-message">تُمنح هذه الشهادة للطالب</div>
+                <div class="cert-student" id="cert-student-name">—</div>
+                <div class="cert-message" id="cert-message-preview">تقديراً وتشجيعاً له على تميّزه واجتهاده.</div>
+                <div class="cert-footer">
+                  <span id="cert-date-preview">📅 —</span>
+                  <span id="cert-teacher-preview">✍️ —</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="s-card">
+          <div class="s-card-head"><span>📜 سجل شهادات وتعزيزات الطالب</span></div>
+          <div class="s-card-body">
+            <div class="reinforce-history" id="reinforce-history"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="success-toast" id="success-toast"></div>
+      </div>
+    </div>
+
+        <div class="admin-tab-pane" id="admin-tab-settings">
       <div style="max-width:560px;margin:0 auto;padding:8px 0">
         <!-- رمز المشرف -->
         <div style="background:#fff;border:1px solid var(--border,#DCD2EE);border-radius:14px;padding:20px 22px;margin-bottom:18px">
@@ -1853,6 +2149,8 @@ function saveIqrarPDF() {
 <!-- زر الرئيسية الثابت -->
 <a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
 
+
+<script src="teacher-portal-sup.js"></script>
 </body>
     </html>
   `);
@@ -3651,5 +3949,3 @@ function dismissMeeting(id) {
 
 </body>
 </html>
-<script src="ann-system.js"></script>
-<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
