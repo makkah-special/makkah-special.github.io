@@ -1017,15 +1017,6 @@ header.portal-header{
 
 
 body > .topbar, body > header { display:none !important; }
-/* إصلاح تبويب الإشراف التربوي: نفس بوابة المعلمين بدون الهيدر الرسمي */
-#admin-tab-supervisor #teacher-portal{display:block!important;}
-#admin-tab-supervisor .portal-banner{border-radius:18px;margin-bottom:18px;}
-#admin-tab-supervisor .portal-body{max-width:1040px;margin:0 auto;padding:0 0 50px;}
-#admin-tab-supervisor .tabs{margin-top:0;}
-#admin-tab-supervisor .logout-btn{background:rgba(255,255,255,.12);}
-#admin-tab-supervisor #assign-tab-btn{display:flex!important;}
-#admin-tab-supervisor #login-screen, #admin-tab-supervisor .topbar, #admin-tab-supervisor header.portal-header{display:none!important;}
-
 </style>
 <script>
 function initSupPanel(prog, user, name, role) {
@@ -1189,7 +1180,50 @@ function initSupPanel(prog, user, name, role) {
 
     <div class="admin-tab-pane" id="admin-tab-supervisor">
       <div id="sup-portal-wrap">
-<div id="teacher-portal" style="display:block;">
+        
+
+<!-- الشريط العلوي الرسمي -->
+</div>
+
+<header class="portal-header">
+  <div class="header-left">
+    <div class="header-icon">👨‍🏫</div>
+    <div>
+      <div class="header-title">بوابة المعلمين — متابعة الطلاب</div>
+      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+    </div>
+  </div>
+  <a href="index.html" class="back-btn">← الرئيسية</a>
+</header>
+
+<!-- ============ تسجيل الدخول ============ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-badge">🔐 بوابة آمنة للمعلمين</div>
+    <div class="login-icon-big">👨‍🏫</div>
+    <h2>بوابة المعلمين</h2>
+    <div class="login-desc">
+      بوابة موحّدة لمعلمي برنامج الدمج الفكري وبرنامج يسير — لمتابعة الطلاب المسندين إليك،
+      تقييم الأهداف، قياس مستوى الأداء، توثيق جوانب القوة والاحتياج، وإرسال شهادات تعزيز.
+    </div>
+
+    <div class="input-label">👤 اسم المستخدم</div>
+    <input type="text" class="text-input" id="username-input" placeholder="مثال: a.malki" autocomplete="username">
+
+    <div class="input-label">🔑 الرمز السري</div>
+    <input type="password" class="pin-input" id="pin-input" placeholder="• • • •" maxlength="6" autocomplete="current-password">
+
+    <div class="error-msg" id="login-error">❌ اسم المستخدم أو الرمز السري غير صحيح</div>
+    <button class="login-btn" onclick="doLogin()" id="login-btn">🔓 دخول</button>
+
+    <div class="hint-box">
+      💡 إن لم يكن لديك بيانات دخول، يرجى التواصل مع مشرف البرنامج (الدمج الفكري أو يسير) لإنشاء حساب لك.
+    </div>
+  </div>
+</div>
+
+<!-- ============ بوابة المعلم ============ -->
+<div id="teacher-portal">
   <div class="portal-banner">
     <div class="teacher-identity">
       <div class="teacher-avatar" id="t-avatar">👨‍🏫</div>
@@ -1201,7 +1235,7 @@ function initSupPanel(prog, user, name, role) {
         </div>
       </div>
     </div>
-    <button class="logout-btn" onclick="renderMyStudents();renderAssignTable();">🔄 تحديث</button>
+    <button class="logout-btn" onclick="doLogout()">🚪 تسجيل الخروج</button>
   </div>
 
   <div class="portal-body">
@@ -1408,6 +1442,10 @@ function initSupPanel(prog, user, name, role) {
     </div>
   </div>
 </div>
+
+<div class="success-toast" id="success-toast"></div>
+
+
       </div>
     </div>
 
@@ -5446,7 +5484,7 @@ function dismissMeeting(id) {
 </div>
 
 
-<script src="teacher-portal-sup.js?v=1781960601"></script>
+<script src="teacher-portal-sup.js?v=1781962400"></script>
 <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
 </body>
 </html>

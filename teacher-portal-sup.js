@@ -1,4 +1,4 @@
-// v1781959902 - avoid Supabase public fetch 400 by listing files before loading
+// v1781962400 - supervisor assignment cleaned and exported
 
 function openMainTab(n,b) {
   var wrap = document.getElementById('sup-portal-wrap') || document;
@@ -1030,13 +1030,14 @@ async function renderAssignTable() {
       <td style="font-weight:700;">${escHtml(s.name || '')}</td>
       <td>${escHtml(s.pin || '')}</td>
       <td>${escHtml(s.grade || '—')}</td>
-      <td><select class="assign-select" onchange="assignTeacher('${s.pin}', this.value)">${options}</select></td>
+      <td><select class="assign-select" onchange="window.assignTeacher('${s.pin}', this.value)">${options}</select></td>
       <td>${current ? '<span class="assign-status assigned">✅ مُسند</span>' : '<span class="assign-status unassigned">— غير مُسند —</span>'}</td>
     </tr>`;
   }).join('');
 }
 
 async function assignTeacher(pin, uname) {
+  if (!currentTeacher || !currentTeacher.program) { showToast('⚠️ لم يتم تهيئة بيانات المشرف'); return; }
   const program = currentTeacher.program;
   if (uname) ASSIGNMENTS[program][pin] = uname;
   else delete ASSIGNMENTS[program][pin];
@@ -1045,6 +1046,8 @@ async function assignTeacher(pin, uname) {
   if (ok) { showToast('✅ تم تحديث إسناد الطالب'); renderAssignTable(); }
   else showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
 }
+
+if (typeof assignTeacher === 'function') window.assignTeacher = assignTeacher; // direct export after definition
 
 
 // Block 7
