@@ -165,6 +165,7 @@ textarea.f-input{resize:vertical;min-height:110px;}
 .fade-in{opacity:0;transform:translateY(16px);transition:all .5s ease;}
 .fade-in.visible{opacity:1;transform:none;}
 </style>
+<link rel="stylesheet" href="assets/css/common-ui.css">
 </head>
 <body>
 
@@ -362,5 +363,6 @@ function sendEmail() {
 var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.08});
 document.querySelectorAll('.fade-in').forEach(function(el){ obs.observe(el); });
 </script>
+<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>

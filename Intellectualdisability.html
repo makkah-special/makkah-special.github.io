@@ -365,6 +365,7 @@ footer{
   .footer-logo-text{ font-size:1.1rem; }
 }
 </style>
+<link rel="stylesheet" href="assets/css/common-ui.css">
 </head>
 <body>
 
@@ -663,5 +664,6 @@ footer{
   const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.08});
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
+<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>

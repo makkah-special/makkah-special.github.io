@@ -2003,7 +2003,8 @@ function printCurriculum() {
   td{ padding:7px 10px; border:1px solid #DCD2EE; }
   .wk{ font-weight:800; color:#6B4C9A; white-space:nowrap; }
   @media print{ @page{ size:A4; margin:14mm; } }
-</style></head><body>
+</style><link rel="stylesheet" href="assets/css/common-ui.css">
+</head><body>
   <h1>📘 توزيع المنهج الفصلي</h1>
   <div class="sub">${escHtml(currentTeacher.name)} — ${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
   ${subjectsHtml}
@@ -2026,5 +2027,6 @@ document.getElementById('username-input').addEventListener('keydown', function(e
 document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
 document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
 </script>
+<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>

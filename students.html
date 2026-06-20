@@ -2810,7 +2810,8 @@ function printCertificate(id) {
   .msg{font-size:.95rem;color:#221335;line-height:2;margin-bottom:28px;}
   .footer{display:flex;justify-content:space-between;margin-top:36px;font-size:.84rem;color:#6E5F82;border-top:1px solid #EAE1F7;padding-top:14px;}
   @media print{ body{background:#fff;} .cert{border-color:#6B4C9A;box-shadow:none;} }
-</style></head><body>
+</style><link rel="stylesheet" href="assets/css/common-ui.css">
+</head><body>
   <div class="cert">
     <div class="emoji">🏆</div>
     <h1>شهادة شكر وتقدير</h1>
@@ -2838,5 +2839,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>

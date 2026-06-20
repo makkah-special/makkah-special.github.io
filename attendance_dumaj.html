@@ -990,7 +990,8 @@ function printAttendance() {
       .sign-img{max-height:70px;border:1px dashed #ccc;border-radius:6px;}
       @media print{body{padding:10px;}}
     </style>
-  </head><body>
+  <link rel="stylesheet" href="assets/css/common-ui.css">
+</head><body>
     <h2>🧑🏻‍🏫 كشف حضور — برنامج الدمج الفكري</h2>
     <div class="meta">
       مدرسة مكة المكرمة المتوسطة | ${sem} | الأسبوع: ${days[0].dateStr} — ${days[4].dateStr}
@@ -1218,5 +1219,6 @@ function markDay(di, val) {
 }
 
 </script>
+<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>

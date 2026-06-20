@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
+<title>لوحة التحكم الموحدة | قسم ذوي الإعاقة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/common-ui.css">
+<style>
+:root{--bg:#F7F5FC;--card:#fff;--text:#221335;--muted:#6E5F82;--border:#DCD2EE;--primary:#3F2E63;--purple:#6B4C9A;--accent:#D7A24A;--green:#129E7C;--red:#DC2626;}
+*{box-sizing:border-box}body{margin:0;font-family:'Cairo','Tajawal',Arial,sans-serif;background:radial-gradient(circle at top right,rgba(139,106,191,.18),transparent 34%),var(--bg);color:var(--text);min-height:100vh}.topbar{background:linear-gradient(120deg,#2E2148,#3F2E63 70%,#4A3470);color:rgba(255,255,255,.92)}.topbar-inner{max-width:1180px;margin:0 auto;padding:8px 24px;font-weight:700}.topbar-row{display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:.82rem}.topbar-gov{display:flex;align-items:center;gap:10px}.topbar-gov img{height:34px;width:auto}.hero{max-width:1180px;margin:28px auto 18px;padding:0 22px}.hero-card{background:linear-gradient(135deg,#3F2E63,#6B4C9A);color:#fff;border-radius:28px;padding:26px;box-shadow:0 18px 48px rgba(63,46,99,.22);position:relative;overflow:hidden}.hero-card:before{content:"";position:absolute;inset:auto -90px -120px auto;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.10)}.hero h1{margin:0 0 8px;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900}.hero p{margin:0;max-width:780px;line-height:1.9;color:rgba(255,255,255,.86)}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;border-radius:999px;text-decoration:none;font-weight:900;border:1px solid rgba(255,255,255,.2)}.btn.primary{background:#fff;color:var(--primary)}.btn.ghost{color:#fff;background:rgba(255,255,255,.12)}main{max-width:1180px;margin:0 auto;padding:18px 22px 60px}.section-title{margin:24px 0 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}.section-title h2{margin:0;font-size:1.35rem;color:var(--primary)}.pill{padding:7px 11px;border-radius:999px;background:#EFE8FA;color:var(--primary);font-weight:900;font-size:.78rem}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:18px;box-shadow:0 10px 28px rgba(63,46,99,.09);transition:.18s ease}.card:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(63,46,99,.13)}.card h3{margin:0 0 8px;color:var(--primary);font-size:1.03rem}.card p{margin:0 0 14px;color:var(--muted);line-height:1.75;font-size:.9rem}.card a{display:inline-flex;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--primary),var(--purple));padding:9px 13px;border-radius:999px;font-weight:900;font-size:.82rem}.status-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.metric{background:#fff;border:1px solid var(--border);border-radius:20px;padding:14px;text-align:center;box-shadow:0 8px 22px rgba(63,46,99,.07)}.metric b{display:block;font-size:1.55rem;color:var(--primary)}.metric span{color:var(--muted);font-size:.82rem;font-weight:800}.workflow{display:grid;grid-template-columns:1fr 1fr;gap:14px}.role-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:18px}.role-card h3{margin:0 0 12px;color:var(--primary)}.role-card ul{margin:0;padding-right:18px;line-height:2;color:var(--muted)}.timeline{background:#fff;border:1px solid var(--border);border-radius:22px;overflow:hidden}.timeline div{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border)}.timeline div:last-child{border-bottom:0}.timeline b{color:var(--primary)}.timeline span{color:var(--muted);line-height:1.7}.notice{margin-top:16px;background:#FFFBEB;border:1px solid rgba(215,162,74,.35);border-radius:20px;padding:14px 16px;color:#6B4A00;line-height:1.8;font-weight:700}@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.status-grid{grid-template-columns:1fr 1fr}.workflow{grid-template-columns:1fr}.timeline div{grid-template-columns:1fr}.hero-card{padding:22px}}@media(max-width:560px){.grid{grid-template-columns:1fr}.status-grid{grid-template-columns:1fr 1fr}.topbar-row{flex-direction:column;align-items:flex-start}.btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-inner"><div class="topbar-row"><div class="topbar-gov"><img src="moe-logo.png" alt="شعار وزارة التعليم"><span>مدرسة مكة المكرمة المتوسطة</span></div><strong>قسم ذوي الإعاقة</strong></div></div></div>
+<section class="hero">
+  <div class="hero-card">
+    <h1>لوحة التحكم الموحدة</h1>
+    <p>صفحة إدارية تجمع مداخل البرامج والطلاب والمعلمين والخطط وملفات الإنجاز في مكان واحد، لتقليل التنقل بين الصفحات وتجهيز الموقع للربط المستقبلي بقواعد البيانات.</p>
+    <div class="hero-actions"><a class="btn primary" href="#students">إدارة الطلاب</a><a class="btn ghost" href="#reports">الإحصائيات والتقارير</a><a class="btn ghost" href="#workflow">الصلاحيات</a></div>
+  </div>
+</section>
+<main>
+  <div class="section-title" id="students"><h2>إدارة الطلاب والملفات</h2><span class="pill">ملف الطالب الإلكتروني</span></div>
+  <div class="grid">
+    <div class="card"><h3>طلاب برنامج يسير</h3><p>الدخول إلى ملف الطالب الإلكتروني لبرنامج يسير ومتابعة الخطط والتقارير والأنشطة.</p><a href="students.html">فتح الملف</a></div>
+    <div class="card"><h3>طلاب الدمج الفكري</h3><p>الدخول إلى ملف الطالب الإلكتروني لطلاب الدمج الفكري بنفس هيكلة يسير.</p><a href="dumaj-students.html">فتح الملف</a></div>
+    <div class="card"><h3>لوحة الفصول العامة</h3><p>متابعة الفصول العامة وأعداد الطلاب والحالات بانتظار التشخيص.</p><a href="dashboard.html">فتح اللوحة</a></div>
+  </div>
+
+  <div class="section-title"><h2>إدارة البرامج والمعلمين</h2><span class="pill">مداخل مختصرة</span></div>
+  <div class="grid">
+    <div class="card"><h3>مشرف برنامج يسير</h3><p>إدارة بيانات يسير ومتابعة ملفات الطلاب وخطط البرنامج.</p><a href="admin-yaseer.html">فتح لوحة يسير</a></div>
+    <div class="card"><h3>مشرف الدمج الفكري</h3><p>إدارة بيانات برنامج الدمج الفكري ومتابعة ملفات الطلاب.</p><a href="admin-dumaj.html">فتح لوحة الدمج</a></div>
+    <div class="card"><h3>بوابة المعلمين</h3><p>مركز المعلمين لملفات الإنجاز والنماذج والمهام المرتبطة بالطلاب.</p><a href="teachers-portal.html">فتح البوابة</a></div>
+  </div>
+
+  <div class="section-title" id="reports"><h2>لوحة إحصائيات مباشرة</h2><span class="pill">نموذج جاهز للربط</span></div>
+  <div class="status-grid">
+    <div class="metric"><b>21</b><span>طلاب الدمج الفكري</span></div>
+    <div class="metric"><b>21</b><span>طلاب يسير</span></div>
+    <div class="metric"><b>8</b><span>المعلمون</span></div>
+    <div class="metric"><b>IEP</b><span>خطط تربوية فردية</span></div>
+    <div class="metric"><b>قريبًا</b><span>تنبيهات مباشرة</span></div>
+  </div>
+
+  <div class="section-title" id="workflow"><h2>توزيع الصلاحيات</h2><span class="pill">منع التداخل</span></div>
+  <div class="workflow">
+    <div class="role-card"><h3>المعلم المسند للطالب</h3><ul><li>إضافة الأنشطة المنزلية والملاحظات الأسبوعية.</li><li>رفع تقارير التقدم وملف الإنجاز.</li><li>إضافة المواعيد الفردية مع ولي الأمر.</li><li>تحديث الأعمال والشهادات والصور الخاصة بالطالب.</li></ul></div>
+    <div class="role-card"><h3>مشرف البرنامج</h3><ul><li>اعتماد الخطط التربوية الفردية.</li><li>إضافة النماذج الرسمية والتنبيهات العامة.</li><li>متابعة اكتمال ملفات الطلاب وجودة البيانات.</li><li>مراجعة سجل التعديلات وإدارة الصلاحيات.</li></ul></div>
+  </div>
+
+  <div class="section-title"><h2>خطة التطوير التقنية</h2><span class="pill">GitHub Pages الآن</span></div>
+  <div class="timeline">
+    <div><b>المرحلة 1</b><span>توحيد التصميم والتنقل وإضافة زر العودة للأعلى وتحسين الجوال.</span></div>
+    <div><b>المرحلة 2</b><span>لوحة تحكم موحدة وروابط مختصرة لإدارة الطلاب والمعلمين والخطط والتقارير.</span></div>
+    <div><b>المرحلة 3</b><span>تجهيز هيكل assets و data لاستخدام ملفات CSS و JavaScript موحدة وتقليل التكرار.</span></div>
+    <div><b>المرحلة 4</b><span>ربط مستقبلي مع Supabase للبيانات والملفات، وFirebase للتسجيل والتنبيهات عند الحاجة.</span></div>
+  </div>
+  <div class="notice">ملاحظة: هذه النسخة لا تغيّر طريقة تخزين البيانات الحالية، لكنها تجهّز الموقع تدريجيًا ليكون منصة إدارية أكثر تنظيمًا وقابلية للتطوير.</div>
+</main>
+<script src="assets/js/common-ui.js" defer></script>
+</body>
+</html>
