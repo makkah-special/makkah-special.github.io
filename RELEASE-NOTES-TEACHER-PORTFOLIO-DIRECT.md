@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="منصة مَعَك">
+<meta name="theme-color" content="#6B4C9A">
+<title>منصة مَعَك | مدرسة مكة المكرمة المتوسطة</title>
+<!-- Open Graph -->
+<meta property="og:title" content="منصة مَعَاك | مدرسة مكة المكرمة المتوسطة" />
+<meta property="og:description" content="منصة برامج ذوي الإعاقة — برنامج يسير والدمج الفكري" />
+<meta property="og:image" content="https://makkah-special.github.io/og-image.png" />
+<meta property="og:url" content="https://makkah-special.github.io" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ar_SA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://makkah-special.github.io/og-image.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   نظام الألوان — هوية "الخزامى" الرسمية (فاتح)
+   ============================================================ */
+:root{
+  --bg:        #F7F5FC;
+  --bg-soft:   #EFE8FA;
+  --surface:   #FFFFFF;
+  --surface2:  #FBFAFE;
+
+  --ink:       #221335;
+  --ink-soft:  rgba(34,19,53,.62);
+  --ink-faint: rgba(34,19,53,.42);
+
+  --line:      rgba(107,76,154,.14);
+  --line2:     rgba(107,76,154,.26);
+
+  --lav-900:   #2E2148;
+  --lav-800:   #3F2E63;
+  --lav-700:   #6B4C9A;
+  --lav-600:   #7C5BAE;
+  --lav-500:   #8B6ABF;
+  --lav-300:   #B79EE0;
+  --lav-100:   #EAE1F7;
+
+  --teal:      #129E7C;
+  --teal-soft: rgba(18,158,124,.12);
+  --gold:      #D7A24A;
+  --gold-soft: rgba(215,162,74,.14);
+
+  --shadow-sm: 0 6px 20px rgba(107,76,154,.10);
+  --shadow-md: 0 16px 44px rgba(107,76,154,.16);
+  --radius-lg: 22px;
+  --radius-md: 16px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* نقشة نقاط خفيفة مستوحاة من شعار الوزارة — موزّعة على كامل الصفحة */
+.dot-field{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Ccircle cx='18' cy='26' r='3' fill='%236B4C9A' opacity='0.10'/%3E%3Ccircle cx='58' cy='12' r='4.5' fill='%238B6ABF' opacity='0.09'/%3E%3Ccircle cx='100' cy='40' r='2.5' fill='%23D7A24A' opacity='0.10'/%3E%3Ccircle cx='150' cy='20' r='5' fill='%23B79EE0' opacity='0.10'/%3E%3Ccircle cx='190' cy='60' r='3' fill='%236B4C9A' opacity='0.08'/%3E%3Ccircle cx='40' cy='100' r='4' fill='%238B6ABF' opacity='0.07'/%3E%3Ccircle cx='120' cy='110' r='2.5' fill='%23129E7C' opacity='0.08'/%3E%3Ccircle cx='180' cy='150' r='4.5' fill='%236B4C9A' opacity='0.07'/%3E%3Ccircle cx='70' cy='180' r='3' fill='%23B79EE0' opacity='0.09'/%3E%3Ccircle cx='10' cy='190' r='2.5' fill='%238B6ABF' opacity='0.08'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+}
+
+/* ============================================================
+   الشريط العلوي الرسمي
+   ============================================================ */
+.topbar{
+  position:relative; z-index:60;
+  background: linear-gradient(120deg, var(--lav-900), var(--lav-800) 70%, #4A3470);
+  color: rgba(255,255,255,.92);
+}
+.topbar-inner{
+  max-width:1180px; margin:0 auto;
+  padding:8px 24px;
+  font-weight:600;
+}
+.topbar-row{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  font-size:.78rem;
+}
+.topbar-gov{ display:flex; align-items:center; gap:10px; }
+.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; transition:opacity .2s; }
+.topbar-gov a{ display:flex; align-items:center; }
+.topbar-gov a:hover img{ opacity:1; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+.topbar-dept{
+  margin-top:3px; padding-right:30px;
+  font-size:.68rem; font-weight:600;
+  color:rgba(255,255,255,.45);
+}
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+@media (max-width:640px){
+  .topbar-row{ font-size:.7rem; }
+  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+  .topbar-inner{ padding:7px 14px; }
+}
+
+/* ============================================================
+   شريط التنقل الرئيسي
+   ============================================================ */
+.navbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.navbar-inner{
+  max-width:1180px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:12px 24px;
+}
+.nav-brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+.nav-brand img{
+  width:46px; height:46px; border-radius:14px;
+  box-shadow: var(--shadow-sm);
+}
+.nav-brand-text b{
+  display:block; font-family:'Tajawal',sans-serif;
+  font-size:1.08rem; font-weight:900; color:var(--lav-700);
+  letter-spacing:.2px;
+}
+.nav-brand-text span{ font-size:.7rem; color:var(--ink-faint); font-weight:600; }
+
+.nav-links{ display:flex; align-items:center; gap:2px; }
+.nav-link{
+  padding:10px 16px; border-radius:12px;
+  color:var(--ink-soft); text-decoration:none;
+  font-weight:700; font-size:.86rem; transition:.2s;
+}
+.nav-link:hover{ background:var(--lav-100); color:var(--lav-700); }
+.nav-cta{
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
+  color:#fff; padding:10px 20px; border-radius:12px;
+  font-weight:800; font-size:.85rem; text-decoration:none;
+  box-shadow: var(--shadow-sm); transition:.2s; white-space:nowrap;
+}
+.nav-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(107,76,154,.28); }
+
+@media (max-width:900px){ .nav-links{ display:none; } }
+@media (max-width:640px){
+  .navbar-inner{ padding:10px 16px; }
+  .nav-brand img{ width:40px; height:40px; }
+  .nav-brand-text b{ font-size:.95rem; }
+  .nav-cta{ padding:9px 14px; font-size:.78rem; }
+}
+
+/* ============================================================
+   الهيرو
+   ============================================================ */
+.hero{
+  position:relative; z-index:5;
+  text-align:center;
+  padding:64px 24px 40px;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute; top:-220px; left:50%; transform:translateX(-50%);
+  width:760px; height:760px; border-radius:50%;
+  background: radial-gradient(circle, rgba(107,76,154,.14) 0%, rgba(139,106,191,.06) 45%, transparent 72%);
+  pointer-events:none;
+}
+.hero-content{ position:relative; }
+
+.hero h1{
+  font-family:'Tajawal',sans-serif;
+  font-size:clamp(2.8rem, 8vw, 5.2rem);
+  font-weight:900; line-height:1.12;
+  margin-bottom:8px; letter-spacing:-1px;
+  animation: fadeUp .7s ease both;
+}
+.hero h1 .platform{
+  display:block; font-size:.42em; font-weight:700;
+  color:var(--ink-soft); margin-bottom:6px;
+}
+.hero h1 .brand{
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-300));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+.hero-slogan{ margin:22px auto 46px; max-width:760px; animation: fadeUp .8s ease both; }
+.hero-slogan-item{
+  display:inline-block; margin:4px 8px;
+  font-size:clamp(.82rem, 2vw, .96rem);
+  color:var(--ink-soft); font-weight:600;
+}
+.hero-slogan-item strong{ color:var(--lav-700); font-weight:900; }
+.hero-slogan-item .dot{ color:var(--lav-300); }
+
+.hero-btns{
+  display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+  margin-bottom:54px;
+  animation: fadeUp 1s ease both;
+}
+.btn-primary{
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
+  color:#fff; padding:14px 30px; border-radius:14px;
+  font-weight:800; font-size:.92rem; text-decoration:none;
+  transition:.25s; box-shadow:0 10px 30px rgba(107,76,154,.28);
+}
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 36px rgba(107,76,154,.4); }
+.btn-outline{
+  background:var(--surface);
+  border:1px solid var(--line2);
+  color:var(--lav-700);
+  padding:14px 24px; border-radius:14px;
+  font-weight:800; font-size:.9rem; text-decoration:none;
+  transition:.25s; box-shadow: var(--shadow-sm);
+}
+.btn-outline:hover{ background:var(--lav-100); transform:translateY(-2px); }
+
+/* ── شريط الإحصائيات العائم ── */
+.stats-card{
+  position:relative; z-index:6;
+  max-width:920px; margin:0 auto 8px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display:grid; grid-template-columns:repeat(4,1fr);
+  overflow:hidden;
+  animation: fadeUp 1.1s ease both;
+}
+.stat-item{ text-align:center; padding:22px 12px; border-right:1px solid var(--line); }
+.stat-item:first-child{ border-right:none; }
+.stat-num{
+  display:block; font-family:'Tajawal',sans-serif;
+  font-size:1.9rem; font-weight:900; color:var(--lav-700);
+  line-height:1; margin-bottom:6px;
+}
+.stat-label{ font-size:.76rem; color:var(--ink-soft); font-weight:700; }
+
+/* ============================================================
+   المحتوى الرئيسي
+   ============================================================ */
+main{ position:relative; z-index:5; max-width:1180px; margin:0 auto; padding:70px 24px 80px; }
+
+.sec-head{ text-align:center; margin-bottom:36px; }
+.sec-label{
+  display:inline-block;
+  background:var(--lav-100); border:1px solid var(--line2);
+  color:var(--lav-700);
+  padding:5px 16px; border-radius:20px;
+  font-size:.7rem; font-weight:800; letter-spacing:1.5px;
+  text-transform:uppercase; margin-bottom:12px;
+}
+.sec-title{
+  font-family:'Tajawal',sans-serif; font-size:1.7rem; font-weight:900;
+  color:var(--ink); margin-bottom:8px;
+}
+.sec-sub{ color:var(--ink-soft); font-size:.92rem; }
+
+/* ── بطاقات البرامج ── */
+.programs-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px; margin-bottom:80px; }
+.prog-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  overflow:hidden; transition:all .3s;
+  box-shadow: var(--shadow-sm);
+}
+.prog-card:hover{ transform:translateY(-5px); box-shadow: var(--shadow-md); border-color:var(--line2); }
+.prog-card-stripe{ height:5px; width:100%; }
+.prog-card-body{ padding:26px 24px; }
+.prog-icon-wrap{
+  width:56px; height:56px; border-radius:16px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.7rem; margin-bottom:16px;
+}
+.prog-title{ font-family:'Tajawal',sans-serif; font-size:1.22rem; font-weight:900; margin-bottom:8px; color:var(--ink); }
+.prog-desc{ font-size:.86rem; color:var(--ink-soft); line-height:1.85; margin-bottom:22px; }
+.prog-stats{ display:flex; border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:20px; }
+.prog-stat{ flex:1; text-align:center; padding:12px 8px; border-right:1px solid var(--line); background:var(--surface2); }
+.prog-stat:first-child{ border-right:none; }
+.prog-stat-num{ display:block; font-family:'Tajawal',sans-serif; font-size:1.32rem; font-weight:900; }
+.prog-stat-lbl{ font-size:.68rem; color:var(--ink-faint); font-weight:700; }
+.prog-btn{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; padding:13px; border-radius:12px;
+  font-weight:800; font-size:.88rem; text-decoration:none;
+  transition:all .25s;
+}
+
+/* ── بطاقات البوابات ── */
+.portals-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; margin-bottom:80px; }
+.portal-card{
+  border-radius:var(--radius-lg); position:relative; overflow:hidden;
+  transition:all .35s cubic-bezier(.4,0,.2,1);
+  box-shadow: var(--shadow-md);
+}
+.portal-card:hover{ transform:translateY(-6px); box-shadow:0 26px 60px rgba(107,76,154,.28); }
+.portal-card::after{
+  content:''; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Ccircle cx='20' cy='24' r='3' fill='%23ffffff' opacity='0.10'/%3E%3Ccircle cx='70' cy='10' r='4' fill='%23ffffff' opacity='0.08'/%3E%3Ccircle cx='130' cy='40' r='2.5' fill='%23ffffff' opacity='0.10'/%3E%3Ccircle cx='160' cy='90' r='4' fill='%23ffffff' opacity='0.07'/%3E%3Ccircle cx='40' cy='120' r='3' fill='%23ffffff' opacity='0.08'/%3E%3Ccircle cx='110' cy='150' r='3.5' fill='%23ffffff' opacity='0.09'/%3E%3C/svg%3E");
+  background-size:180px 180px; pointer-events:none;
+}
+.portal-card-inner{
+  position:relative; z-index:1;
+  padding:38px 28px 30px;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+}
+.portal-icon-wrap{
+  width:88px; height:88px; border-radius:50%;
+  background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.3);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:18px; backdrop-filter:blur(4px);
+}
+.portal-icon{ font-size:3.6rem; line-height:1; filter:drop-shadow(0 4px 10px rgba(0,0,0,.18)); }
+.portal-title{ font-family:'Tajawal',sans-serif; font-size:1.24rem; font-weight:900; color:#fff; margin-bottom:10px; }
+.portal-desc{ font-size:.84rem; color:rgba(255,255,255,.85); line-height:1.85; margin-bottom:20px; }
+.portal-features{ width:100%; display:flex; flex-direction:column; gap:7px; margin-bottom:24px; text-align:right; }
+.portal-feature{
+  display:flex; align-items:center; gap:8px;
+  font-size:.8rem; color:rgba(255,255,255,.92); font-weight:600;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.16);
+  border-radius:10px; padding:8px 12px;
+}
+.portal-dot{ width:6px; height:6px; border-radius:50%; flex-shrink:0; background:#fff; }
+.portal-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; padding:13px; border-radius:14px;
+  font-weight:900; font-size:.9rem; text-decoration:none;
+  background:rgba(255,255,255,.97); transition:all .25s;
+  box-shadow:0 6px 20px rgba(0,0,0,.15);
+}
+.portal-btn:hover{ background:#fff; transform:translateY(-2px); }
+
+/* ── بطاقات "عن القسم" ── */
+.about-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; margin-bottom:80px; }
+.about-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-right:4px solid var(--lav-500);
+  border-radius:var(--radius-md);
+  padding:26px 24px; transition:.25s;
+  box-shadow: var(--shadow-sm);
+}
+.about-card:hover{ box-shadow: var(--shadow-md); transform:translateY(-2px); }
+.about-card h3{
+  font-family:'Tajawal',sans-serif; font-size:1.05rem; font-weight:900;
+  margin-bottom:14px; color:var(--lav-700);
+}
+.about-list{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+.about-list li{
+  font-size:.86rem; color:var(--ink-soft); line-height:1.8;
+  padding-right:18px; position:relative;
+}
+.about-list li::before{
+  content:'◈'; position:absolute; right:0; color:var(--lav-500);
+  font-size:.65rem; top:6px;
+}
+.mission-list li{ line-height:1.9; }
+.mission-list li strong{ color:var(--lav-700); font-weight:900; }
+
+/* ── الكادر التعليمي ── */
+.staff-section{
+  background:var(--lav-100);
+  border:1px solid var(--line2);
+  border-radius:var(--radius-lg);
+  padding:28px 24px; margin-bottom:10px; text-align:center;
+}
+.staff-title{
+  font-family:'Tajawal',sans-serif; font-size:1.05rem; font-weight:900;
+  color:var(--lav-700); margin-bottom:18px;
+}
+.staff-tags{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; }
+.staff-tag{
+  background:var(--surface); border:1px solid var(--line2);
+  color:var(--ink-soft); padding:7px 16px; border-radius:20px;
+  font-size:.8rem; font-weight:700;
+}
+
+/* ============================================================
+   الفوتر
+   ============================================================ */
+footer{
+  position:relative; z-index:5;
+  background:linear-gradient(160deg, var(--lav-900), #3A2B5C 60%, var(--lav-800));
+  padding:50px 24px 30px; text-align:center;
+}
+.footer-inner{ max-width:900px; margin:0 auto; }
+.footer-logo{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  margin-bottom:10px;
+}
+.footer-logo img{ width:48px; height:48px; border-radius:14px; box-shadow:0 4px 16px rgba(0,0,0,.3); }
+.footer-logo-text{ font-family:'Tajawal',sans-serif; font-size:1.45rem; font-weight:900; color:#fff; line-height:1.2; }
+.footer-copy{ font-size:.72rem; color:rgba(255,255,255,.4); margin-top:2px; }
+.footer-credit{ font-size:.78rem; color:var(--lav-300); font-weight:800; margin-bottom:32px; }
+
+.footer-divider{ border:none; border-top:1px solid rgba(255,255,255,.1); margin-bottom:28px; }
+
+.footer-nav-grid{
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:24px; max-width:900px; margin:0 auto 18px;
+}
+.footer-nav-col{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.footer-sec-label{
+  font-size:.62rem; color:rgba(255,255,255,.32);
+  letter-spacing:1.5px; margin-bottom:6px; font-weight:800; white-space:nowrap;
+}
+.fl-primary, .fl-ghost{
+  display:inline-flex; align-items:center; gap:6px;
+  width:100%; justify-content:center;
+  text-decoration:none; transition:.2s; font-weight:700;
+}
+.fl-primary{
+  background:rgba(183,158,224,.18); border:1px solid rgba(183,158,224,.38);
+  color:#E7DBFB; padding:9px 18px; border-radius:20px; font-size:.78rem;
+}
+.fl-primary:hover{ background:rgba(183,158,224,.32); color:#fff; }
+.fl-ghost{
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.6); padding:7px 14px; border-radius:16px; font-size:.74rem;
+}
+.fl-ghost:hover{ background:rgba(255,255,255,.13); color:#fff; }
+
+/* زر رئيس القسم المميز */
+.footer-section-head-btn{
+  display:inline-flex; align-items:center; gap:14px;
+  background:linear-gradient(135deg, rgba(215,162,74,.18), rgba(215,162,74,.08));
+  border:1.5px solid rgba(215,162,74,.55);
+  border-radius:18px; padding:14px 28px;
+  text-decoration:none; transition:all .25s;
+  max-width:420px; width:100%;
+}
+.footer-section-head-btn:hover{
+  background:linear-gradient(135deg, rgba(215,162,74,.3), rgba(215,162,74,.15));
+  border-color:rgba(215,162,74,.85); transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(215,162,74,.25);
+}
+.fsh-icon{ font-size:1.8rem; flex-shrink:0; }
+.fsh-text{ display:flex; flex-direction:column; gap:3px; flex:1; text-align:right; }
+.fsh-label{ font-weight:900; font-size:.92rem; color:#E8C27A; font-family:'Tajawal',sans-serif; }
+.fsh-sub{ font-size:.72rem; color:rgba(255,255,255,.5); }
+.fsh-arrow{ color:rgba(215,162,74,.6); font-size:1rem; flex-shrink:0; }
+
+/* ============================================================
+   حركات
+   ============================================================ */
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(24px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.fade-in{ opacity:0; transform:translateY(20px); transition:all .7s ease; }
+.fade-in.visible{ opacity:1; transform:translateY(0); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+}
+
+/* ============================================================
+   استجابة الجوال
+   ============================================================ */
+@media (max-width:768px){
+  .hero{ padding:40px 16px 28px; }
+  .hero h1{ font-size:2.6rem; }
+  .hero h1 .platform{ font-size:.4em; }
+  .hero-slogan-item{ font-size:.78rem; margin:3px 5px; }
+  .btn-primary, .btn-outline{ padding:12px 20px; font-size:.84rem; }
+
+  .stats-card{ grid-template-columns:repeat(2,1fr); }
+  .stat-item:nth-child(odd){ border-right:none; }
+  .stat-item:nth-child(-n+2){ border-bottom:1px solid var(--line); }
+  .stat-num{ font-size:1.5rem; }
+  .stat-label{ font-size:.66rem; }
+
+  main{ padding:44px 16px 56px; }
+  .sec-title{ font-size:1.35rem; }
+  .programs-grid, .portals-grid, .about-grid{ grid-template-columns:1fr; gap:14px; }
+  .prog-card-body, .portal-card-inner, .about-card{ padding:20px 18px; }
+
+  footer{ padding:36px 16px 24px; }
+  .footer-logo-text{ font-size:1.15rem; }
+  .footer-nav-grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
+}
+
+@media (max-width:400px){
+  .hero h1{ font-size:2.15rem; }
+  .hero-btns{ flex-direction:column; align-items:stretch; }
+  .btn-primary, .btn-outline{ justify-content:center; }
+/* شريط الإشعارات العام */
+
+
+/* شريط ticker */
+#ann-ticker-bar{display:none;width:100%;height:46px;overflow:hidden;position:relative;background:linear-gradient(90deg,#4A2000,#8B5000 15%,#C88010 30%,#F5C830 45%,#FFD84D 50%,#F5C830 55%,#C88010 70%,#8B5000 85%,#4A2000);background-size:250% 100%;animation:annGoldFlow 3s linear infinite;border-top:2px solid #FFD84D;border-bottom:2px solid #6B3A00;box-shadow:0 2px 16px rgba(150,90,0,.5);font-family:'Cairo','Tajawal',sans-serif;z-index:200;}
+@keyframes annGoldFlow{0%{background-position:100% 0}100%{background-position:0% 0}}
+.ann-bar-row{display:flex;align-items:stretch;height:46px;position:relative;z-index:2;}
+.ann-close-col{flex-shrink:0;width:42px;height:46px;background:rgba(0,0,0,.3);border:none;border-left:1px solid rgba(255,220,80,.25);color:rgba(255,245,160,.9);font-size:.78rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.ann-close-col:hover{background:rgba(0,0,0,.5);}
+.ann-badge-col{flex-shrink:0;height:46px;padding:0 14px;background:rgba(0,0,0,.3);border-left:1px solid rgba(255,220,80,.25);display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.ann-badge-col .ann-b-icon{font-size:.95rem;}
+.ann-badge-col .ann-b-lbl{color:#FFE87A;font-weight:900;font-size:.68rem;letter-spacing:2px;}
+.ann-scroll-area{flex:1;height:46px;overflow:hidden;position:relative;}
+.ann-scroll-txt{display:inline-block;height:46px;line-height:46px;white-space:nowrap;color:#2E2148;font-weight:900;font-size:.88rem;position:absolute;right:0;will-change:transform;}
+.ann-exp-col{flex-shrink:0;height:46px;padding:0 12px;background:rgba(0,0,0,.2);border-right:1px solid rgba(255,220,80,.25);display:flex;align-items:center;color:rgba(255,250,180,.75);font-size:.7rem;white-space:nowrap;}
+@media(max-width:640px){.ann-badge-col .ann-b-lbl{display:none;}.ann-exp-col{display:none;}}
+
+/* ساعة */
+.clk{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:0;width:100%;border-top:1px solid rgba(255,255,255,.12);padding:16px 0 4px;margin-top:18px;}
+.clk-seg{padding:0 18px;display:flex;align-items:center;}
+.clk-div{width:1px;height:24px;background:rgba(255,255,255,.18);}
+.clk-time{font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.88);font-family:monospace;font-variant-numeric:tabular-nums;}
+.clk-colon{animation:blk 1s step-end infinite;color:rgba(215,162,74,.85);}
+@keyframes blk{0%,100%{opacity:1}50%{opacity:.08}}
+.clk-day{font-size:.92rem;font-weight:700;color:rgba(215,162,74,.9);font-family:'Tajawal',sans-serif;}
+.clk-hijri{font-size:.8rem;color:rgba(255,255,255,.55);font-family:'Cairo',sans-serif;}
+@media(max-width:480px){.clk{flex-wrap:wrap;}.clk-seg{padding:0 10px;}.clk-time{font-size:1.2rem;}.clk-day,.clk-hijri{font-size:.75rem;}}
+
+/* Responsive */
+@media(max-width:480px){.nav-links{display:none;}.portals-grid{grid-template-columns:1fr!important;}.portal-card{border-radius:18px;}main{padding:40px 14px 60px;}}
+</style>
+<link rel="stylesheet" href="assets/css/common-ui.css">
+</head>
+<body>
+
+<div class="dot-field"></div>
+
+<!-- الشريط العلوي الرسمي -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="وزارة التعليم">
+        </a>
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      
+    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+  </div>
+</div>
+
+
+<!-- شريط التنقل -->
+<div class="navbar">
+  <div class="navbar-inner">
+    <a href="#top" class="nav-brand">
+      <img src="icon-192.png" alt="شعار مَعَاك">
+      <div class="nav-brand-text">
+        <b>مَعَاك</b>
+        <span>قسم ذوي الإعاقة — مدرسة مكة المكرمة المتوسطة</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="#top" class="nav-link">الرئيسية</a>
+      <a href="#programs" class="nav-link">البرامج</a>
+      <a href="#portals" class="nav-link">البوابات</a>
+      <a href="#teachers-portal-section" class="nav-link">بوابة المعلمين</a>
+      <a href="#about" class="nav-link">عن القسم</a>
+      <a href="contact.html" class="nav-link">خدمة المستفيد</a>
+    </nav>
+    <a href="#portals" class="nav-cta">🔐 بوابة الطلاب</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-content">
+    <h1>
+      <span class="platform">بوابة</span>
+      <span class="brand">مَعَاك</span>
+    </h1>
+
+    <div class="hero-slogan">
+      <span class="hero-slogan-item">لا تُفْرض على المعلم بل تعمل <strong>معه</strong></span>
+      <span class="hero-slogan-item dot">•</span>
+      <span class="hero-slogan-item">لا تُعقِّد على ولي الأمر بل تُيسِّر <strong>له</strong></span>
+      <span class="hero-slogan-item dot">•</span>
+      <span class="hero-slogan-item">لا تُثقِل على الطالب بل تدعمه <strong>دائماً</strong></span>
+    </div>
+  </div>
+
+  <!-- شريط الإحصائيات -->
+  <div class="stats-card">
+    <div class="stat-item">
+      <span class="stat-num" id="cnt1">0</span>
+      <span class="stat-label">🧑🏻‍🏫 طلاب الدمج الفكري</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="cnt2">0</span>
+      <span class="stat-label">📘 طلاب برنامج يسير</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="cnt3">0</span>
+      <span class="stat-label">👨‍🏫 كوادر تعليمية</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">2</span>
+      <span class="stat-label">📋 برامج رئيسية</span>
+    </div>
+  </div>
+</div>
+
+<!-- شريط إشعارات ticker — مخفي افتراضياً -->
+<div id="ann-ticker-bar" style="display:none;">
+  <div class="ann-bar-row">
+    <button class="ann-close-col" onclick="annClose()">✕</button>
+    <div class="ann-badge-col">
+      <span class="ann-b-icon" id="ann-b-icon">📢</span>
+      <span class="ann-b-lbl" id="ann-b-lbl">إشعار</span>
+    </div>
+    <div class="ann-scroll-area">
+      <div class="ann-scroll-txt" id="ann-scroll-txt"></div>
+    </div>
+    <div class="ann-exp-col" id="ann-exp-col"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- البرامج -->
+  <div class="fade-in" id="programs">
+    <div class="sec-head">
+      <div class="sec-label">البرامج</div>
+      <div class="sec-title">📚 البرامج المتاحة</div>
+      <div class="sec-sub">اختر البرنامج للدخول للصفحة التفصيلية</div>
+    </div>
+
+    <div class="programs-grid">
+
+      <div class="prog-card">
+        <div class="prog-card-stripe" style="background:linear-gradient(90deg,var(--lav-700),var(--lav-500));"></div>
+        <div class="prog-card-body">
+          <div class="prog-icon-wrap" style="background:var(--lav-100);">🧑🏻‍🏫</div>
+          <div class="prog-title">برنامج الدمج الفكري</div>
+          <div class="prog-desc">يقدم خدمات تربوية وتعليمية لطلاب الإعاقة الفكرية ضمن بيئة دراسية دامجة مع أقرانهم</div>
+          <div class="prog-stats">
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:var(--lav-700);" id="dis-count">21</span>
+              <span class="prog-stat-lbl">طالب مقيد</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:var(--lav-700);">6</span>
+              <span class="prog-stat-lbl">معلمين</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:var(--lav-700);">✅</span>
+              <span class="prog-stat-lbl">خطط فردية</span>
+            </div>
+          </div>
+          <a href="Intellectualdisability.html" class="prog-btn" style="background:var(--lav-100);border:1px solid var(--line2);color:var(--lav-700);">
+            دخول الصفحة ←
+          </a>
+        </div>
+      </div>
+
+      <div class="prog-card">
+        <div class="prog-card-stripe" style="background:linear-gradient(90deg,var(--teal),#3FCBA5);"></div>
+        <div class="prog-card-body">
+          <div class="prog-icon-wrap" style="background:var(--teal-soft);">📘</div>
+          <div class="prog-title">برنامج يسير التعليمي</div>
+          <div class="prog-desc">يدعم الطلاب ذوي بطء التعلم بخطط تدخل مناسبة وأدوات تعليمية فعّالة</div>
+          <div class="prog-stats">
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:var(--teal);" id="slow-count">20</span>
+              <span class="prog-stat-lbl">طالب مقيد</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:var(--teal);">2</span>
+              <span class="prog-stat-lbl">معلمين</span>
+            </div>
+            <div class="prog-stat">
+              <span class="prog-stat-num" style="color:var(--teal);">📊</span>
+              <span class="prog-stat-lbl">لوحات متابعة</span>
+            </div>
+          </div>
+          <a href="Slowlearning.html" class="prog-btn" style="background:var(--teal-soft);border:1px solid rgba(18,158,124,.28);color:var(--teal);">
+            دخول الصفحة ←
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- بوابات الطلاب -->
+  <div class="fade-in" id="portals">
+    <div class="sec-head">
+      <div class="sec-label">الطلاب وأولياء الأمور والمعلمين</div>
+      <div class="sec-title">🔐 البوابات الرقمية</div>
+      <div class="sec-sub">بوابة خاصة لكل برنامج — الدخول برمز سري خاص بكل طالب</div>
+    </div>
+
+    <div class="portals-grid">
+
+      <div class="portal-card" style="background:linear-gradient(160deg,#3F2E63 0%,var(--lav-700) 55%,var(--lav-500) 100%);">
+        <div class="portal-card-inner">
+          <div class="portal-icon-wrap">
+            <span class="portal-icon">🧑🏻‍🏫</span>
+          </div>
+          <div class="portal-title">بوابة طلاب الدمج الفكري</div>
+          <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج الدمج الفكري</div>
+          <div class="portal-features">
+            <div class="portal-feature"><div class="portal-dot"></div> الخطة التعليمية الفردية</div>
+            <div class="portal-feature"><div class="portal-dot"></div> التقارير الفصلية</div>
+            <div class="portal-feature"><div class="portal-dot"></div> إقرار ولي الأمر</div>
+          </div>
+          <a href="dumaj-students.html" class="portal-btn" style="color:var(--lav-700);">🔐 دخول البوابة</a>
+        </div>
+      </div>
+
+      <div class="portal-card" style="background:linear-gradient(160deg,#0E6E55 0%,var(--teal) 55%,#3FCBA5 100%);">
+        <div class="portal-card-inner">
+          <div class="portal-icon-wrap">
+            <span class="portal-icon">📘</span>
+          </div>
+          <div class="portal-title">بوابة طلاب يسير التعليمي</div>
+          <div class="portal-desc">نظام متكامل يتيح لأولياء الأمور الاطلاع على ملفات أبنائهم في برنامج يسير التعليمي</div>
+          <div class="portal-features">
+            <div class="portal-feature"><div class="portal-dot"></div> الخطة التعليمية الفردية</div>
+            <div class="portal-feature"><div class="portal-dot"></div> التقارير الفصلية</div>
+            <div class="portal-feature"><div class="portal-dot"></div> إقرار ولي الأمر</div>
+          </div>
+          <a href="students.html" class="portal-btn" style="color:var(--teal);">🔐 دخول البوابة</a>
+        </div>
+      </div>
+
+      <div class="portal-card" style="background:linear-gradient(160deg,#8a6116 0%,var(--gold) 55%,#E8C27A 100%);" id="teachers-portal-section">
+        <div class="portal-card-inner">
+          <div class="portal-icon-wrap">
+            <span class="portal-icon">👨‍🏫</span>
+          </div>
+          <div class="portal-title">بوابة المعلمين</div>
+          <div class="portal-desc">دخول المعلم بحسابه الخاص لمتابعة طلابه المسندين في برنامجي الدمج الفكري ويسير</div>
+          <div class="portal-features">
+            <div class="portal-feature"><div class="portal-dot"></div> تقييم الأهداف التربوية</div>
+            <div class="portal-feature"><div class="portal-dot"></div> قياس مستوى الأداء وجوانب القوة والاحتياج</div>
+            <div class="portal-feature"><div class="portal-dot"></div> إرفاق الخطط والتقارير</div>
+            <div class="portal-feature"><div class="portal-dot"></div> لوحة التعزيز — شهادات الشكر</div>
+            <div class="portal-feature"><div class="portal-dot"></div> توزيع المنهج، الجدول الأسبوعي، وملف الإنجاز</div>
+          </div>
+          <a href="teachers-portal.html" class="portal-btn" style="color:#8a6116;">🔐 دخول البوابة</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- عن القسم -->
+  <div class="fade-in" id="about">
+    <div class="sec-head">
+      <div class="sec-label">عن القسم</div>
+      <div class="sec-title">🏫 رؤيتنا وغايتنا ورسالتنا</div>
+      <div class="sec-sub">الإطار التربوي الذي ينطلق منه عمل قسم ذوي الإعاقة</div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>🎯 من نحن</h3>
+        <ul class="about-list mission-list">
+          <li><strong>رؤيتنا:</strong> أن يكون كل طالب من ذوي الإعاقة مُمكَّنًا من التعلم والمشاركة والنجاح.</li>
+          <li><strong>غايتنا:</strong> تمكين الطلاب ذوي الإعاقة من تحقيق أقصى إمكاناتهم.</li>
+          <li><strong>رسالتنا:</strong> تقديم خدمات تربوية متخصصة وشراكة فاعلة مع الأسرة ومتابعة مستمرة تدعم التعلم والاندماج وجودة الحياة.</li>
+        </ul>
+      </div>
+      <div class="about-card">
+        <h3>📩 خدمة المستفيد</h3>
+        <ul class="about-list">
+          <li>للاستفسارات والملاحظات يمكن التواصل عبر صفحة التواصل</li>
+          <li>نضمن الرد في أقرب وقت ممكن خلال أيام الدراسة</li>
+          <li>يمكن لولي الأمر التوقيع إلكترونياً على الخطة الفردية</li>
+          <li>جميع البيانات سرية ومحمية لضمان خصوصية الطلاب</li>
+        </ul>
+        <div style="margin-top:18px;">
+          <a href="contact.html" class="btn-primary" style="font-size:.8rem;padding:10px 22px;">فتح صفحة التواصل ←</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الكادر التعليمي -->
+  <div class="staff-section fade-in">
+    <div class="staff-title">👨‍🏫 الكادر التعليمي</div>
+    <div class="staff-tags">
+      <span class="staff-tag">معلمو الدمج الفكري</span>
+      <span class="staff-tag">معلمو برنامج يسير</span>
+      <span class="staff-tag">معلم تربية فنية</span>
+      <span class="staff-tag">معلم تربية بدنية</span>
+      <span class="staff-tag">رائد نشاط</span>
+      <span class="staff-tag">موجه طلابي</span>
+      <span class="staff-tag">إداري تربية خاصة</span>
+      <span class="staff-tag">وكيل المدرسة</span>
+      <span class="staff-tag">مدير المدرسة</span>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <!-- شعار وبيانات -->
+    <div class="footer-logo">
+      <img src="icon-192.png" alt="شعار مَعَاك">
+      <div>
+        <div class="footer-logo-text">منصة مَعَاك</div>
+        <div class="footer-copy">© 2026 مدرسة مكة المكرمة المتوسطة</div>
+      </div>
+    </div>
+    <div class="footer-credit">إعداد وتنفيذ: أ. سعد سالم الزهراني — قسم ذوي الإعاقة</div>
+
+    <hr class="footer-divider">
+
+    <!-- روابط الدخول -->
+    <div class="footer-nav-grid" style="grid-template-columns:repeat(2,1fr);max-width:520px;">
+
+      <div class="footer-nav-col">
+        <div class="footer-sec-label">مشرفو البرامج</div>
+        <a href="admin-dumaj.html" class="fl-ghost">🔐 مشرف الدمج الفكري</a>
+        <a href="admin-yaseer.html" class="fl-ghost">🔐 مشرف يسير التعليمي</a>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-sec-label">الإدارة والإشراف</div>
+        <a href="principal-dashboard.html" class="fl-ghost">🏫 مدير المدرسة</a>
+        <a href="supervisor.html" class="fl-ghost">🏛️ مشرف الإدارة العامة</a>
+      </div>
+
+    </div>
+
+    <!-- رئيس القسم — بارز في المنتصف -->
+    <div style="margin-top:28px;display:flex;justify-content:center;">
+      <a href="section-head.html" class="footer-section-head-btn">
+        <span class="fsh-text">
+          <span class="fsh-label">رئيس قسم ذوي الإعاقة</span>
+        </span>
+        <span class="fsh-arrow">←</span>
+      </a>
+    </div>
+
+    <div style="font-size:.68rem;color:rgba(255,255,255,.2);margin-top:24px;">
+      منصة مَعَاك — نظام إدارة برامج ذوي الإعاقة | مدرسة مكة المكرمة المتوسطة
+    </div>
+
+    <!-- ساعة في سطر واحد -->
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);">
+      <table style="margin:0 auto;border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 18px;white-space:nowrap;">
+            <span id="clk-h" style="font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.9);font-family:monospace;">00</span><span id="c1" style="font-size:1.55rem;font-weight:700;color:rgba(215,162,74,.9);font-family:monospace;animation:bclk 1s step-end infinite;">:</span><span id="clk-m" style="font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.9);font-family:monospace;">00</span><span id="c2" style="font-size:1.55rem;font-weight:700;color:rgba(215,162,74,.9);font-family:monospace;animation:bclk 1s step-end infinite;">:</span><span id="clk-s" style="font-size:1.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.9);font-family:monospace;">00</span>
+          </td>
+          <td style="width:1px;background:rgba(255,255,255,.2);padding:0;height:28px;"></td>
+          <td style="padding:0 18px;white-space:nowrap;">
+            <span id="clk-day" style="font-size:.95rem;font-weight:700;color:rgba(215,162,74,.9);font-family:'Tajawal',sans-serif;">الأحد</span>
+          </td>
+          <td style="width:1px;background:rgba(255,255,255,.2);padding:0;height:28px;"></td>
+          <td style="padding:0 18px;white-space:nowrap;">
+            <span id="clk-hijri" style="font-size:.82rem;color:rgba(255,255,255,.6);font-family:'Cairo',sans-serif;">جارٍ التحميل...</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <style>@keyframes bclk{0%,100%{opacity:1}50%{opacity:.1}}</style>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // عدادات
+  function animateCount(el, target) {
+    if (!el) return;
+    let cur = 0;
+    const step = Math.ceil(target / 40);
+    const interval = setInterval(() => {
+      cur = Math.min(cur + step, target);
+      el.textContent = cur;
+      if (cur >= target) clearInterval(interval);
+    }, 40);
+  }
+  setTimeout(() => {
+    animateCount(document.getElementById('cnt1'), 21);
+    animateCount(document.getElementById('cnt2'), 20);
+    animateCount(document.getElementById('cnt3'), 8);
+  }, 400);
+
+  // ساعة + تاريخ هجري
+  function updateClock() {
+    var now = new Date();
+    var pad = function(n){ return String(n).padStart(2,'0'); };
+    var hEl = document.getElementById('clk-h');
+    var mEl = document.getElementById('clk-m');
+    var sEl = document.getElementById('clk-s');
+    if (hEl) hEl.textContent = pad(now.getHours());
+    if (mEl) mEl.textContent = pad(now.getMinutes());
+    if (sEl) sEl.textContent = pad(now.getSeconds());
+    var days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+    var dayEl = document.getElementById('clk-day');
+    if (dayEl) dayEl.textContent = days[now.getDay()];
+    try {
+      var hijri = now.toLocaleDateString('ar-SA-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'});
+      var hijriEl = document.getElementById('clk-hijri');
+      if (hijriEl) hijriEl.textContent = hijri.replace(/\s*هـ\s*$/, '') + ' هـ';
+    } catch(e) {}
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // شريط الإشعارات
+  (async function() {
+    try {
+      if (sessionStorage.getItem('ann_closed')) return;
+      var SB  = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
+      var res = await fetch(SB + '/storage/v1/object/public/reports/site-announcement.json?t=' + Date.now());
+      if (!res.ok) return;
+      var d = await res.json();
+      if (!d || !d.enabled || !d.message) return;
+      if (d.expiresAt && new Date(d.expiresAt) < new Date()) return;
+      var icons  = {default:'📢',news:'📰',alert:'🔔',important:'⚠️'};
+      var labels = {default:'إشعار',news:'أخبار',alert:'تنبيه',important:'مهم'};
+      var t = d.type || 'default';
+      var bi = document.getElementById('ann-b-icon');
+      var bl = document.getElementById('ann-b-lbl');
+      if (bi) bi.textContent = icons[t]  || '📢';
+      if (bl) bl.textContent = labels[t] || 'إشعار';
+      function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      var lnk = d.link ? ' <a style="color:#3F2E63;text-decoration:none;background:rgba(0,0,0,.1);padding:2px 10px;border-radius:8px;font-size:.76rem;" href="'+d.link+'" target="_blank" rel="noopener">← المزيد</a>' : '';
+      var txt = document.getElementById('ann-scroll-txt');
+      if (txt) txt.innerHTML = esc(d.message) + lnk;
+      if (d.expiresAt) {
+        var diff = new Date(d.expiresAt) - new Date();
+        var ddays = Math.floor(diff/86400000);
+        var hrs  = Math.floor((diff%86400000)/3600000);
+        var expEl = document.getElementById('ann-exp-col');
+        if (expEl) expEl.textContent = ddays>0 ? ('⏱ '+ddays+' يوم') : hrs>0 ? ('⏱ '+hrs+' ساعة') : '⏱ ينتهي قريباً';
+      }
+      var bar = document.getElementById('ann-ticker-bar');
+      if (bar) bar.style.display = 'block';
+      var pos = 0, paused = false;
+      if (txt) {
+        txt.addEventListener('mouseenter', function(){ paused = true; });
+        txt.addEventListener('mouseleave', function(){ paused = false; });
+      }
+      function scroll() {
+        if (!paused && txt && bar) {
+          pos -= 1.0;
+          var textW = txt.offsetWidth;
+          var trackW = bar.offsetWidth;
+          if (Math.abs(pos) > textW + trackW) pos = trackW;
+          txt.style.transform = 'translateX(' + pos + 'px)';
+        }
+        requestAnimationFrame(scroll);
+      }
+      pos = (bar ? bar.offsetWidth : 800);
+      requestAnimationFrame(scroll);
+    } catch(e) {}
+  })();
+
+  function annClose() {
+    var bar = document.getElementById('ann-ticker-bar');
+    if (bar) bar.style.display = 'none';
+    try { sessionStorage.setItem('ann_closed','1'); } catch(e) {}
+  }
+</script>
+<script src="assets/js/common-ui.js" defer></script>
+
+<section style="max-width:1180px;margin:26px auto;padding:0 22px;direction:rtl;font-family:Cairo,Tajawal,Arial,sans-serif;">
+  <div class="mk-system-note">
+    <strong style="color:#3F2E63;font-size:1.08rem;">لوحة التحكم الموحدة</strong>
+    <p style="margin:8px 0 12px;color:#6E5F82;line-height:1.8;">مدخل سريع لإدارة الطلاب والمعلمين والخطط وملفات الإنجاز والتقارير.</p>
+    <a href="unified-admin.html" style="display:inline-flex;padding:10px 15px;border-radius:999px;background:linear-gradient(135deg,#3F2E63,#6B4C9A);color:#fff;text-decoration:none;font-weight:900;">فتح لوحة التحكم الموحدة</a>
+  </div>
+</section>
+</body>
+</html>
