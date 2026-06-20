@@ -1,60 +1,58 @@
-
-(function(){
-'use strict';
-const KEY='mk_platform_admin_v1';
-const defaultData={
- students:[
-  {id:'Y-001',name:'طالب تجريبي - يسير',program:'yaseer',grade:'الأول متوسط',teacher:'T-001',pin:'1234',plan:true,report:true,portfolio:false,activities:true,appointments:false,forms:true,alerts:true},
-  {id:'D-001',name:'طالب تجريبي - الدمج الفكري',program:'dumaj',grade:'الأول متوسط',teacher:'T-002',pin:'5678',plan:true,report:false,portfolio:true,activities:false,appointments:true,forms:true,alerts:false}
- ],
- teachers:[
-  {id:'T-001',name:'معلم برنامج يسير',program:'yaseer',role:'teacher',phone:''},
-  {id:'T-002',name:'معلم الدمج الفكري',program:'dumaj',role:'teacher',phone:''},
-  {id:'S-001',name:'مشرف البرنامج',program:'all',role:'supervisor',phone:''}
- ],
- notifications:[
-  {id:'N-001',program:'all',title:'تنبيه تجريبي',body:'هذه مساحة لإدارة التنبيهات العامة قبل الربط الفعلي.',audience:'أولياء الأمور',date:new Date().toISOString().slice(0,10)}
- ],
- audit:[{action:'تهيئة لوحة التحكم الموحدة',user:'النظام',date:new Date().toLocaleString('ar-SA')}]
-};
-function load(){try{return JSON.parse(localStorage.getItem(KEY))||structuredClone(defaultData)}catch(e){return JSON.parse(JSON.stringify(defaultData))}}
-function save(){localStorage.setItem(KEY,JSON.stringify(state));renderAll()}
-let state=load();
-const $=s=>document.querySelector(s);
-function pct(s){const keys=['plan','report','portfolio','activities','appointments','forms','alerts'];return Math.round(keys.filter(k=>!!s[k]).length/keys.length*100)}
-function progName(p){return p==='yaseer'?'برنامج يسير':p==='dumaj'?'برنامج الدمج الفكري':'كلا البرنامجين'}
-function roleName(r){return r==='supervisor'?'مشرف برنامج':r==='teacher'?'معلم مسند':'إدارة'}
-function audit(action,user='النظام'){state.audit.unshift({action,user,date:new Date().toLocaleString('ar-SA')});state.audit=state.audit.slice(0,50)}
-function renderMetrics(){
- const y=state.students.filter(s=>s.program==='yaseer').length,d=state.students.filter(s=>s.program==='dumaj').length,t=state.teachers.filter(x=>x.role==='teacher').length;
- const avg=state.students.length?Math.round(state.students.reduce((a,s)=>a+pct(s),0)/state.students.length):0;
- const pending=state.students.filter(s=>pct(s)<80).length;
- const n=state.notifications.length;
- const html=[['طلاب يسير',y],['طلاب الدمج',d],['المعلمون',t],['متوسط الإنجاز',avg+'%'],['ملفات تحتاج متابعة',pending],['تنبيهات',n]].map(([a,b])=>`<div class="metric"><b>${b}</b><span>${a}</span></div>`).join('');
- const box=$('#metrics'); if(box)box.innerHTML=html;
+{
+  "version": "2026.06-platform-all-in-one-dev",
+  "name": "منصة قسم ذوي الإعاقة - إصدار تطوير شامل",
+  "student_portal_name": "ملف الطالب الإلكتروني",
+  "programs": [
+    {
+      "id": "yaseer",
+      "name": "برنامج يسير",
+      "student_page": "students.html",
+      "admin_page": "admin-yaseer.html",
+      "table": "yaseer_students",
+      "storage_path": "reports/yaseer"
+    },
+    {
+      "id": "dumaj",
+      "name": "برنامج الدمج الفكري",
+      "student_page": "dumaj-students.html",
+      "admin_page": "admin-dumaj.html",
+      "table": "dumaj_students",
+      "storage_path": "reports/dumaj"
+    }
+  ],
+  "roles": {
+    "teacher": [
+      "إضافة الأنشطة المنزلية",
+      "إضافة تقارير التقدم",
+      "رفع ملف الإنجاز",
+      "إضافة المواعيد الفردية",
+      "تحديث ملاحظات الطالب"
+    ],
+    "supervisor": [
+      "اعتماد الخطط التربوية الفردية",
+      "إضافة النماذج الرسمية",
+      "إرسال التنبيهات العامة",
+      "مراجعة اكتمال ملفات الطلاب",
+      "إدارة الصلاحيات وسجل التعديلات"
+    ],
+    "guardian": [
+      "عرض ملف الطالب الإلكتروني",
+      "تحميل التقارير والخطط",
+      "استلام التنبيهات",
+      "الاطلاع على المواعيد والأنشطة"
+    ]
+  },
+  "database_ready_tables": [
+    "students",
+    "teachers",
+    "programs",
+    "iep_plans",
+    "reports",
+    "portfolio",
+    "home_activities",
+    "appointments",
+    "forms",
+    "notifications",
+    "audit_logs"
+  ]
 }
-function renderStudents(){
- const tbody=$('#studentsBody'); if(!tbody)return;
- if(!state.students.length){tbody.innerHTML='<tr><td colspan="8" class="empty">لا توجد بيانات</td></tr>';return}
- tbody.innerHTML=state.students.map(s=>{const teacher=state.teachers.find(t=>t.id===s.teacher)?.name||'غير مسند';const p=pct(s);return `<tr><td><b>${s.name}</b><br><small>${s.id} / PIN: ${s.pin||'-'}</small></td><td>${progName(s.program)}</td><td>${s.grade||'-'}</td><td>${teacher}</td><td><div class="progress" title="${p}%"><i style="width:${p}%"></i></div><small>${p}%</small></td><td>${s.plan?'✅':'—'}</td><td>${s.report?'✅':'—'}</td><td><button class="mini-btn danger" data-del-student="${s.id}">حذف</button></td></tr>`}).join('');
-}
-function renderTeachers(){const tbody=$('#teachersBody'); if(!tbody)return; tbody.innerHTML=state.teachers.map(t=>`<tr><td><b>${t.name}</b><br><small>${t.id}</small></td><td>${progName(t.program)}</td><td>${roleName(t.role)}</td><td>${t.phone||'-'}</td><td>${state.students.filter(s=>s.teacher===t.id).length}</td><td><button class="mini-btn danger" data-del-teacher="${t.id}">حذف</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">لا توجد بيانات</td></tr>'}
-function renderTeacherOptions(){const el=$('#studentTeacher'); if(!el)return; el.innerHTML='<option value="">اختر المعلم</option>'+state.teachers.filter(t=>t.role==='teacher').map(t=>`<option value="${t.id}">${t.name} - ${progName(t.program)}</option>`).join('')}
-function renderAlerts(){const box=$('#alertsList'); if(!box)return; box.innerHTML=state.notifications.map(n=>`<div class="audit-item"><b>${n.title}</b><small>${progName(n.program)} — ${n.audience} — ${n.date}</small><div>${n.body}</div></div>`).join('')||'<div class="empty">لا توجد تنبيهات</div>'}
-function renderAudit(){const box=$('#auditList'); if(!box)return; box.innerHTML=state.audit.map(a=>`<div class="audit-item"><b>${a.action}</b><small>${a.user} — ${a.date}</small></div>`).join('')||'<div class="empty">لا يوجد سجل تعديلات</div>'}
-function renderAll(){renderMetrics();renderStudents();renderTeachers();renderTeacherOptions();renderAlerts();renderAudit()}
-function val(id){return (document.getElementById(id)?.value||'').trim()}
-function checked(id){return !!document.getElementById(id)?.checked}
-function clear(ids){ids.forEach(id=>{const e=document.getElementById(id); if(!e)return; if(e.type==='checkbox')e.checked=false; else e.value=''})}
-function exportJson(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='platform-admin-data.json';a.click();URL.revokeObjectURL(a.href)}
-function bind(){
- document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab)?.classList.add('active')}));
- $('#studentForm')?.addEventListener('submit',e=>{e.preventDefault();const id=val('studentId')||('ST-'+Date.now());state.students.push({id,name:val('studentName')||'طالب بدون اسم',program:val('studentProgram')||'yaseer',grade:val('studentGrade'),teacher:val('studentTeacher'),pin:val('studentPin'),plan:checked('cPlan'),report:checked('cReport'),portfolio:checked('cPortfolio'),activities:checked('cActivities'),appointments:checked('cAppointments'),forms:checked('cForms'),alerts:checked('cAlerts')});audit('إضافة/تسجيل طالب: '+(val('studentName')||id),'لوحة التحكم');clear(['studentId','studentName','studentGrade','studentTeacher','studentPin','cPlan','cReport','cPortfolio','cActivities','cAppointments','cForms','cAlerts']);save()});
- $('#teacherForm')?.addEventListener('submit',e=>{e.preventDefault();const id=val('teacherId')||('T-'+Date.now());state.teachers.push({id,name:val('teacherName')||'معلم بدون اسم',program:val('teacherProgram')||'all',role:val('teacherRole')||'teacher',phone:val('teacherPhone')});audit('إضافة مستخدم/معلم: '+(val('teacherName')||id),'لوحة التحكم');clear(['teacherId','teacherName','teacherPhone']);save()});
- $('#alertForm')?.addEventListener('submit',e=>{e.preventDefault();state.notifications.unshift({id:'N-'+Date.now(),program:val('alertProgram')||'all',title:val('alertTitle')||'تنبيه',body:val('alertBody')||'',audience:val('alertAudience')||'أولياء الأمور',date:new Date().toISOString().slice(0,10)});audit('إضافة تنبيه: '+(val('alertTitle')||'تنبيه'),'لوحة التحكم');clear(['alertTitle','alertBody']);save()});
- document.addEventListener('click',e=>{const ds=e.target.dataset.delStudent,dt=e.target.dataset.delTeacher;if(ds){state.students=state.students.filter(s=>s.id!==ds);audit('حذف طالب: '+ds,'لوحة التحكم');save()} if(dt){state.teachers=state.teachers.filter(t=>t.id!==dt);audit('حذف مستخدم: '+dt,'لوحة التحكم');save()} });
- $('#resetDemo')?.addEventListener('click',()=>{if(confirm('استعادة البيانات التجريبية؟')){state=JSON.parse(JSON.stringify(defaultData));audit('استعادة البيانات التجريبية','لوحة التحكم');save()}});
- $('#exportData')?.addEventListener('click',exportJson);
-}
-document.addEventListener('DOMContentLoaded',()=>{bind();renderAll()});
-})();
