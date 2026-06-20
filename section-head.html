@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
+<title>رئيس قسم ذوي الإعاقة | مدرسة مكة المكرمة المتوسطة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F5FC; --surface2:#FBFAFE; --card:#fff;
+  --ink:#221335; --muted:#6E5F82; --ink-faint:rgba(34,19,53,.42);
+  --border:#DCD2EE;
+  --lav-900:#2E2148; --lav-800:#3F2E63; --lav-700:#6B4C9A; --lav-600:#7C5BAE; --lav-500:#8B6ABF; --lav-300:#B79EE0; --lav-100:#EAE1F7;
+  --gold:#D7A24A; --gold-soft:rgba(215,162,74,.14); --gold-light:#E8C27A;
+  --teal:#129E7C; --teal-soft:rgba(18,158,124,.12);
+  --red:#DC2626; --red-soft:rgba(220,38,38,.08);
+  --shadow-sm:0 6px 20px rgba(107,76,154,.10); --shadow-md:0 16px 44px rgba(107,76,154,.16);
+  --radius-lg:22px; --radius-md:16px;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:'Cairo',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; }
+
+/* === الشريط العلوي === */
+.topbar{ background:linear-gradient(120deg,var(--lav-900),var(--lav-800) 70%,#4A3470); color:rgba(255,255,255,.92); }
+.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; }
+.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; font-weight:600; }
+.topbar-gov{ display:flex; align-items:center; gap:10px; }
+.topbar-gov img{ height:32px; opacity:.95; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; }
+.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+
+/* === هيدر === */
+header.portal-header{
+  background:linear-gradient(135deg,var(--lav-800) 0%,var(--lav-900) 60%,#4A3470 100%);
+  padding:18px 36px; display:flex; align-items:center; justify-content:space-between;
+  border-bottom:3px solid var(--gold); gap:14px; flex-wrap:wrap;
+}
+.header-left{ display:flex; align-items:center; gap:14px; }
+.header-icon{
+  width:50px; height:50px; border-radius:14px;
+  background:rgba(215,162,74,.18); border:1px solid rgba(215,162,74,.4);
+  display:flex; align-items:center; justify-content:center; font-size:1.5rem;
+}
+.header-title{ color:#fff; font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:900; }
+.header-sub{ color:rgba(255,255,255,.55); font-size:.75rem; margin-top:2px; }
+.header-name{ color:var(--gold-light); font-weight:800; font-size:.82rem; margin-top:3px; }
+.logout-btn{
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:rgba(255,255,255,.8);
+  padding:9px 18px; border-radius:8px; font-family:'Cairo',sans-serif; font-size:.82rem; font-weight:700; cursor:pointer; transition:.2s;
+}
+.logout-btn:hover{ background:rgba(255,255,255,.16); }
+
+/* === شاشة الدخول === */
+.login-screen{ display:flex; align-items:center; justify-content:center; min-height:70vh; padding:30px 20px; }
+.login-card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg);
+  padding:44px 40px; width:100%; max-width:420px; text-align:center; box-shadow:var(--shadow-md);
+}
+.login-icon{ font-size:3.2rem; margin-bottom:14px; }
+.login-card h2{ font-family:'Tajawal',sans-serif; font-size:1.55rem; font-weight:900; color:var(--lav-800); margin-bottom:8px; }
+.login-card p{ color:var(--muted); font-size:.86rem; line-height:1.7; margin-bottom:28px; }
+.input-label{ text-align:right; font-size:.83rem; font-weight:700; color:var(--lav-800); margin-bottom:7px; display:block; }
+.text-input{
+  width:100%; padding:13px 16px; border:2px solid var(--border); border-radius:12px;
+  font-family:'Cairo',sans-serif; font-size:.95rem; font-weight:700; color:var(--ink);
+  outline:none; transition:all .25s; background:var(--surface2); margin-bottom:12px;
+}
+.text-input:focus{ border-color:var(--lav-500); background:#fff; }
+.btn-login{
+  width:100%; padding:15px; background:linear-gradient(135deg,var(--lav-700),var(--lav-500));
+  color:#fff; border:none; border-radius:12px; font-family:'Cairo',sans-serif;
+  font-size:1rem; font-weight:800; cursor:pointer; transition:.2s; margin-top:4px;
+}
+.btn-login:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+.login-err{ color:var(--red); font-size:.82rem; font-weight:700; min-height:20px; margin-top:4px; }
+
+/* === لوحة التحكم === */
+.portal{ display:none; }
+.portal-body{ max-width:1080px; margin:0 auto; padding:28px 24px 60px; }
+
+/* التبويبات الرئيسية */
+.main-tabs{ display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:6px; margin-bottom:22px; box-shadow:var(--shadow-sm); overflow-x:auto; flex-wrap:wrap; }
+.tab-btn{
+  flex:1; min-width:100px; padding:10px 12px; border:none; background:transparent; border-radius:9px;
+  font-family:'Cairo',sans-serif; font-size:.82rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all .22s; white-space:nowrap;
+}
+.tab-btn.active{ background:linear-gradient(135deg,var(--lav-700),var(--lav-500)); color:#fff; box-shadow:0 3px 12px rgba(107,76,154,.35); }
+
+/* البطاقات */
+.s-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; margin-bottom:18px; box-shadow:var(--shadow-sm); }
+.s-card-head{ padding:14px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; font-weight:800; font-size:.9rem; color:var(--lav-700); background:var(--lav-100); }
+.s-card-body{ padding:18px 20px; }
+
+.tab-pane{ display:none; }
+.tab-pane.active{ display:block; }
+
+/* شبكة الطلاب */
+.students-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+.student-card{
+  background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md);
+  padding:16px 18px; cursor:pointer; transition:all .22s;
+}
+.student-card:hover{ border-color:var(--lav-500); box-shadow:var(--shadow-sm); transform:translateY(-2px); }
+.sc-name{ font-weight:800; font-size:.9rem; color:var(--lav-800); margin-bottom:4px; }
+.sc-meta{ font-size:.76rem; color:var(--muted); }
+.sc-pin{ font-size:.72rem; color:var(--lav-500); font-weight:700; margin-top:4px; }
+.badge{ display:inline-block; padding:2px 10px; border-radius:10px; font-size:.7rem; font-weight:700; }
+.badge-teal{ background:var(--teal-soft); color:var(--teal); }
+.badge-lav{ background:var(--lav-100); color:var(--lav-700); }
+.badge-gold{ background:var(--gold-soft); color:#8a6116; }
+
+/* بطاقة المعلم */
+.teachers-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.t-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px 16px; display:flex; align-items:center; gap:12px; }
+.t-avatar{ width:44px; height:44px; border-radius:50%; background:var(--lav-100); color:var(--lav-700); display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:900; flex-shrink:0; }
+.t-name{ font-weight:800; font-size:.85rem; color:var(--lav-800); }
+.t-role{ font-size:.72rem; color:var(--muted); margin-top:2px; }
+
+/* الملاحظات والشكر */
+.note-card{
+  background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md);
+  padding:16px 18px; margin-bottom:12px;
+}
+.note-card.praise{ border-color:var(--gold); border-right:5px solid var(--gold); background:linear-gradient(135deg,var(--gold-soft),#fff); }
+.note-card.remark{ border-color:var(--lav-300); border-right:5px solid var(--lav-700); }
+.note-type{ font-size:.7rem; font-weight:800; color:var(--muted); margin-bottom:6px; letter-spacing:1px; }
+.note-body{ font-size:.88rem; font-weight:600; color:var(--ink); line-height:1.8; margin-bottom:8px; }
+.note-meta{ font-size:.74rem; color:var(--ink-faint); }
+.note-to{ display:inline-flex; align-items:center; gap:5px; background:var(--lav-100); color:var(--lav-700); padding:2px 10px; border-radius:10px; font-size:.72rem; font-weight:800; margin-bottom:6px; }
+
+/* أزرار */
+.btn-sm{ border:none; border-radius:8px; padding:7px 16px; font-family:'Cairo',sans-serif; font-size:.8rem; font-weight:700; cursor:pointer; transition:.2s; white-space:nowrap; }
+.btn-sm-outline{ background:var(--card); color:var(--lav-700); border:1.5px solid var(--border); }
+.btn-sm-outline:hover{ border-color:var(--lav-500); background:var(--lav-100); }
+.btn-sm-primary{ background:linear-gradient(135deg,var(--lav-700),var(--lav-500)); color:#fff; }
+.btn-sm-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+.btn-sm-gold{ background:linear-gradient(135deg,#8a6116,var(--gold)); color:#fff; }
+.btn-sm-gold:hover{ transform:translateY(-1px); }
+.btn-sm-danger{ background:var(--red-soft); color:var(--red); }
+.btn-sm-danger:hover{ background:rgba(220,38,38,.16); }
+.btn-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+
+.search-input{
+  padding:10px 16px; border:1.5px solid var(--border); border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:.85rem; width:100%; max-width:340px; outline:none;
+}
+.search-input:focus{ border-color:var(--lav-500); }
+
+textarea.t-area{
+  width:100%; padding:12px 16px; border:1.5px solid var(--border); border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:.88rem; color:var(--ink); resize:vertical; min-height:90px; outline:none;
+}
+textarea.t-area:focus{ border-color:var(--lav-500); }
+select.sel-inp{
+  padding:10px 14px; border:1.5px solid var(--border); border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:.85rem; color:var(--ink); background:#fff; outline:none;
+}
+select.sel-inp:focus{ border-color:var(--lav-500); }
+
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+.form-col label{ font-size:.82rem; font-weight:700; color:var(--lav-800); display:block; margin-bottom:6px; }
+
+/* شهادة الشكر (طباعة) */
+.praise-cert{
+  max-width:700px; margin:0 auto; background:#fff; border:3px solid var(--gold);
+  border-radius:20px; padding:40px; text-align:center; font-family:'Tajawal',sans-serif;
+  box-shadow:var(--shadow-md); position:relative; overflow:hidden;
+}
+.praise-cert::before{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at top, rgba(215,162,74,.06), transparent 60%),
+             radial-gradient(ellipse at bottom, rgba(107,76,154,.06), transparent 60%);
+}
+.praise-cert-logo{ font-size:3rem; margin-bottom:6px; }
+.praise-cert-school{ font-size:.85rem; color:var(--muted); margin-bottom:20px; }
+.praise-cert-title{ font-size:1.8rem; font-weight:900; color:var(--gold); margin-bottom:16px; letter-spacing:1px; }
+.praise-cert-to{ font-size:1.2rem; font-weight:800; color:var(--lav-800); margin-bottom:12px; }
+.praise-cert-body{ font-size:1rem; color:var(--ink); line-height:2; margin-bottom:24px; }
+.praise-cert-sig{ border-top:1.5px solid var(--border); padding-top:16px; font-size:.88rem; color:var(--muted); }
+.praise-cert-sig strong{ color:var(--lav-800); display:block; font-size:.95rem; }
+
+.empty-state{ text-align:center; padding:50px 20px; }
+.es-icon{ font-size:3rem; margin-bottom:12px; }
+.es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
+.es-sub{ font-size:.82rem; color:var(--ink-faint); }
+
+/* شبكة تفاصيل الطالب */
+.detail-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.detail-item{ background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:8px 12px; }
+.detail-key{ font-size:.7rem; color:var(--muted); font-weight:700; margin-bottom:3px; }
+.detail-val{ font-size:.85rem; font-weight:800; color:var(--ink); }
+@media (max-width:520px){ .detail-grid{ grid-template-columns:1fr; } }
+
+/* تنبيه Toast */
+.toast{ position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--lav-700); color:#fff; padding:12px 28px; border-radius:12px; font-weight:700; font-size:.88rem; z-index:9999; box-shadow:0 8px 24px rgba(107,76,154,.4); display:none; animation:fadeIn .3s ease; }
+@keyframes fadeIn{ from{opacity:0;transform:translateX(-50%) translateY(8px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+/* نافذة تعديل البيانات */
+.modal-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1000; backdrop-filter:blur(4px); }
+.modal-box{ position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1001; background:#fff; border-radius:var(--radius-lg); padding:32px; width:min(460px,92vw); box-shadow:var(--shadow-md); }
+.modal-title{ font-family:'Tajawal',sans-serif; font-size:1.15rem; font-weight:900; color:var(--lav-800); margin-bottom:20px; }
+.modal-close{ position:absolute; top:16px; left:16px; background:var(--lav-100); border:none; border-radius:8px; width:30px; height:30px; cursor:pointer; font-size:.9rem; color:var(--lav-700); }
+
+@media (max-width:768px){
+  header.portal-header{ padding:14px 18px; }
+  .portal-body{ padding:20px 14px 50px; }
+  .form-row{ grid-template-columns:1fr; }
+  .students-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:520px){
+  .students-grid{ grid-template-columns:1fr; }
+  .login-card{ padding:30px 20px; }
+}
+.ann-card{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px;margin-bottom:16px;}
+.ann-card-title{font-weight:900;font-size:.9rem;color:#3F2E63;margin-bottom:14px;border-bottom:1px solid #EAE1F7;padding-bottom:8px;}
+.ann-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.ann-f{display:flex;flex-direction:column;gap:4px;}
+.ann-f label{font-size:.74rem;font-weight:700;color:#6E5F82;}
+.ann-inp,.ann-sel{padding:8px 12px;border:1.5px solid #DCD2EE;border-radius:8px;font-family:Cairo,sans-serif;font-size:.83rem;width:100%;color:#221335;background:#FBFAFE;outline:none;}
+.ann-inp:focus,.ann-sel:focus{border-color:#8B6ABF;}
+.ann-send-btn{width:100%;margin-top:10px;padding:11px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:10px;font-family:Cairo,sans-serif;font-weight:800;font-size:.87rem;cursor:pointer;}
+.ann-disable-row{margin-top:8px;padding:9px 13px;background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.ann-disable-lbl{font-size:.78rem;color:#7F1D1D;font-weight:700;}
+.ann-disable-btn{background:#DC2626;color:#fff;border:none;border-radius:7px;padding:6px 14px;font-family:Cairo,sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;}
+.ann-res{font-size:.78rem;min-height:16px;margin-top:6px;font-weight:700;text-align:center;}
+.ann-log{margin-top:14px;border-top:1px solid #EAE1F7;padding-top:12px;}
+.ann-log-title{font-weight:800;font-size:.82rem;color:#3F2E63;margin-bottom:8px;}
+.ann-log-item{background:#FBFAFE;border:1px solid #DCD2EE;border-radius:9px;padding:9px 36px 9px 13px;margin-bottom:7px;position:relative;}
+.ann-log-msg{font-weight:700;font-size:.82rem;color:#221335;margin-bottom:3px;}
+.ann-log-meta{font-size:.7rem;color:#6E5F82;}
+.ann-log-del{position:absolute;top:7px;left:8px;background:#FEF2F2;color:#DC2626;border:none;border-radius:5px;padding:2px 8px;font-size:.7rem;cursor:pointer;font-weight:700;}
+.ann-log-empty{text-align:center;color:#9ca3af;font-size:.8rem;padding:16px 0;}
+.t-ann-box{border-radius:13px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;border-right:5px solid #D7A24A;background:linear-gradient(135deg,rgba(215,162,74,.08),#fff);}
+.t-ann-icon{font-size:1.3rem;flex-shrink:0;}
+.t-ann-body{flex:1;}
+.t-ann-msg{font-weight:800;font-size:.87rem;margin-bottom:3px;}
+.t-ann-meta{font-size:.73rem;color:#6E5F82;}
+.t-ann-link{font-size:.74rem;color:#6B4C9A;font-weight:700;text-decoration:none;}
+.ann-container{margin-bottom:16px;}
+@media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- الشريط العلوي -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener"><img src="moe-logo.png" alt="وزارة التعليم"></a>
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      <b class="topbar-year">1447هـ</b>
+    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+  </div>
+</div>
+
+<!-- الهيدر -->
+<header class="portal-header">
+  <div class="header-left">
+    <div>
+      <div class="header-title">بوابة رئيس قسم ذوي الإعاقة</div>
+      <div class="header-sub">مدرسة مكة المكرمة المتوسطة</div>
+      <div class="header-name" id="head-name-display">—</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <a href="index.html" class="logout-btn" style="text-decoration:none;">← الرئيسية</a>
+    <div style="display:none;align-items:center;gap:8px;" id="header-btns">
+      <button class="logout-btn" style="background:rgba(215,162,74,.18);border-color:rgba(215,162,74,.4);color:#E8C27A;" onclick="openSettingsModal()">⚙️ إعدادات الحساب</button>
+      <button class="logout-btn" onclick="doLogout()">تسجيل الخروج</button>
+    </div>
+  </div>
+</header>
+
+<!-- شاشة تسجيل الدخول -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <h2>رئيس قسم ذوي الإعاقة</h2>
+    <label class="input-label">اسم المستخدم</label>
+    <input type="text" class="text-input" id="login-username" placeholder="اسم المستخدم" autocomplete="username">
+    <label class="input-label">كلمة المرور</label>
+    <input type="password" class="text-input" id="login-password" placeholder="كلمة المرور" autocomplete="current-password"
+      onkeydown="if(event.key==='Enter') doLogin()">
+    <div class="login-err" id="login-err"></div>
+    <button class="btn-login" onclick="doLogin()">🔐 دخول</button>
+  </div>
+</div>
+
+<!-- نافذة الإعدادات -->
+<div class="modal-overlay" id="settings-modal" onclick="if(event.target===this) closeSettingsModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeSettingsModal()">✕</button>
+    <div class="modal-title">⚙️ إعدادات الحساب</div>
+    <label class="input-label">الاسم الظاهر</label>
+    <input type="text" class="text-input" id="set-name" placeholder="اسمك الكامل">
+    <label class="input-label">كلمة المرور الجديدة (اتركها فارغة للإبقاء عليها)</label>
+    <input type="password" class="text-input" id="set-password" placeholder="كلمة مرور جديدة">
+    <div style="display:flex;gap:10px;margin-top:4px;">
+      <button class="btn-sm btn-sm-primary" style="flex:1;" onclick="saveSettings()">💾 حفظ التعديلات</button>
+      <button class="btn-sm btn-sm-outline" onclick="closeSettingsModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- نافذة إضافة ملاحظة/شكر -->
+<div class="modal-overlay" id="note-modal" onclick="if(event.target===this) closeNoteModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeNoteModal()">✕</button>
+    <div class="modal-title" id="note-modal-title">✍️ إضافة ملاحظة / شكر وتقدير</div>
+    <div class="form-row" style="margin-bottom:12px;">
+      <div class="form-col">
+        <label>النوع</label>
+        <select class="sel-inp" id="note-type" style="width:100%;" onchange="updateNoteForm()">
+          <option value="praise">🏅 شكر وتقدير</option>
+          <option value="remark">📝 ملاحظة</option>
+        </select>
+      </div>
+      <div class="form-col">
+        <label>الجهة</label>
+        <select class="sel-inp" id="note-target-group" style="width:100%;" onchange="updateNoteTargets()">
+          <option value="teacher">👨‍🏫 معلم</option>
+          <option value="student">🎓 طالب</option>
+          <option value="admin">🏫 إدارة المدرسة</option>
+          <option value="parent">👨‍👩‍👧 ولي أمر</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-col" style="margin-bottom:12px;">
+      <label>الموجه إلى</label>
+      <select class="sel-inp" id="note-target-name" style="width:100%;"></select>
+    </div>
+    <div class="form-col" style="margin-bottom:12px;">
+      <label id="note-body-label">نص الشكر والتقدير</label>
+      <textarea class="t-area" id="note-body" placeholder="اكتب النص هنا..."></textarea>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-sm btn-sm-gold" style="flex:1;" id="note-submit-btn" onclick="saveNote()">💾 حفظ</button>
+      <button class="btn-sm btn-sm-outline" onclick="closeNoteModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- نافذة عرض شهادة الشكر -->
+<div class="modal-overlay" id="cert-modal" onclick="if(event.target===this) closeCertModal()">
+  <div class="modal-box" style="max-width:760px;width:92vw;padding:24px;">
+    <button class="modal-close" onclick="closeCertModal()">✕</button>
+    <div id="cert-preview"></div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:center;">
+      <button class="btn-sm btn-sm-gold" onclick="printCert()">🖨️ طباعة</button>
+      <button class="btn-sm btn-sm-outline" onclick="closeCertModal()">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- نافذة بيانات الطالب -->
+<div class="modal-overlay" id="stu-modal" onclick="if(event.target===this) closeStuModal()">
+  <div class="modal-box" style="max-width:780px;width:94vw;padding:0;overflow:hidden;">
+    <div style="background:linear-gradient(135deg,var(--lav-800),var(--lav-900));padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="stu-avatar" style="width:58px;height:58px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">👤</div>
+        <div>
+          <div style="color:#fff;font-weight:800;font-size:.95rem;" id="stu-name">—</div>
+          <div style="color:rgba(255,255,255,.55);font-size:.72rem;margin-top:2px;" id="stu-info">—</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeStuModal()">✕</button>
+    </div>
+    <div style="padding:22px;max-height:70vh;overflow-y:auto;" id="stu-body">
+      <div class="empty-state"><div class="es-icon">⏳</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- البوابة الرئيسية -->
+<div class="portal" id="portal">
+  <div class="portal-body">
+
+    <!-- التبويبات -->
+    <div class="main-tabs" id="main-tabs">
+      <button class="tab-btn active" onclick="switchTab('overview',this)">📊 لمحة عامة</button>
+      <button class="tab-btn" onclick="switchTab('students',this)">🎓 الطلاب</button>
+      <button class="tab-btn" onclick="switchTab('teachers',this)">👨‍🏫 المعلمون</button>
+      <button class="tab-btn" onclick="switchTab('meetings',this)">📹 سجل الاستدعاءات</button>
+      <button class="tab-btn" onclick="switchTab('notes',this)">✍️ الملاحظات والشكر</button>
+      <button class="tab-btn" onclick="switchTab('curriculum',this)">📘 المناهج</button>
+<button class="tab-btn" onclick="switchTab('ann',this)">📢 إشعارات</button>
+    </div>
+
+    <!-- ===== لمحة عامة ===== -->
+    <div class="tab-pane active" id="tab-overview">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:22px;" id="stats-grid">
+        <div class="s-card" style="text-align:center;padding:22px 16px;">
+          <div style="font-size:2rem;font-weight:900;color:var(--lav-700);" id="stat-total">—</div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--muted);margin-top:4px;">إجمالي الطلاب</div>
+        </div>
+        <div class="s-card" style="text-align:center;padding:22px 16px;">
+          <div style="font-size:2rem;font-weight:900;color:var(--teal);" id="stat-dumaj">—</div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--muted);margin-top:4px;">طلاب الدمج الفكري</div>
+        </div>
+        <div class="s-card" style="text-align:center;padding:22px 16px;">
+          <div style="font-size:2rem;font-weight:900;color:var(--gold);" id="stat-yaseer">—</div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--muted);margin-top:4px;">طلاب يسير</div>
+        </div>
+        <div class="s-card" style="text-align:center;padding:22px 16px;">
+          <div style="font-size:2rem;font-weight:900;color:var(--lav-500);" id="stat-teachers">8</div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--muted);margin-top:4px;">معلمو القسم</div>
+        </div>
+        <div class="s-card" style="text-align:center;padding:22px 16px;">
+          <div style="font-size:2rem;font-weight:900;color:var(--gold);" id="stat-praise">—</div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--muted);margin-top:4px;">شهادات الشكر</div>
+        </div>
+        <div class="s-card" style="text-align:center;padding:22px 16px;">
+          <div style="font-size:2rem;font-weight:900;color:var(--lav-600);" id="stat-remarks">—</div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--muted);margin-top:4px;">الملاحظات</div>
+        </div>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-head">✍️ آخر الملاحظات والشكر والتقدير</div>
+        <div class="s-card-body" id="overview-notes">
+          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== الطلاب ===== -->
+    <div class="tab-pane" id="tab-students">
+      <div class="s-card">
+        <div class="s-card-head">
+          <span>🎓 جميع الطلاب</span>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <select class="sel-inp" id="prog-filter" onchange="renderStudentsTab()">
+              <option value="all">الكل</option>
+              <option value="dumaj">الدمج الفكري</option>
+              <option value="yaseer">يسير</option>
+            </select>
+            <input class="search-input" id="student-search" placeholder="🔍 بحث..." oninput="renderStudentsTab()" style="max-width:220px;">
+          </div>
+        </div>
+        <div class="s-card-body">
+          <div class="students-grid" id="students-grid">
+            <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== المعلمون ===== -->
+    <div class="tab-pane" id="tab-teachers">
+      <div class="s-card">
+        <div class="s-card-head">👨‍🏫 معلمو قسم ذوي الإعاقة</div>
+        <div class="s-card-body">
+          <div class="teachers-grid" id="teachers-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== سجل الاستدعاءات ===== -->
+    <div class="tab-pane" id="tab-meetings">
+      <div class="s-card">
+        <div class="s-card-head">📹 سجل استدعاءات مشرف الإدارة العامة</div>
+        <div class="s-card-body" id="meetings-list">
+          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== الملاحظات والشكر ===== -->
+    <div class="tab-pane" id="tab-notes">
+      <div class="s-card" style="margin-bottom:14px;">
+        <div class="s-card-head">
+          <span>✍️ الملاحظات وشهادات الشكر والتقدير</span>
+          <button class="btn-sm btn-sm-gold" onclick="openNoteModal()">＋ إضافة</button>
+        </div>
+        <div class="s-card-body">
+          <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+            <select class="sel-inp" id="notes-filter" onchange="renderNotesTab()">
+              <option value="all">الكل</option>
+              <option value="praise">🏅 شكر وتقدير فقط</option>
+              <option value="remark">📝 ملاحظات فقط</option>
+            </select>
+          </div>
+          <div id="notes-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== المناهج ===== -->
+    <div class="tab-pane" id="tab-ann"><div class="s-card"><div class="s-card-head">📢 إرسال إشعار</div><div class="s-card-body"><div class="ann-card">
+<div class="ann-card-title">📢 إرسال إشعار</div>
+<div class="ann-row2">
+<div class="ann-f"><label>نوع الإشعار</label>
+<select id="ann-type-g" class="ann-sel">
+<option value="default">📢 إشعار عام</option>
+<option value="news">📰 خبر</option>
+<option value="alert">🔔 تنبيه</option>
+<option value="important">⚠️ مهم</option>
+</select></div>
+<div class="ann-f"><label>الوجهة</label>
+<select id="ann-target-g" class="ann-sel">
+<option value="teachers">👨‍🏫 المعلمون (الكل)</option>
+<option value="dumaj_sup">🧩 مشرف الدمج الفكري فقط</option>
+<option value="yaseer_sup">📘 مشرف يسير فقط</option>
+<option value="principal">🏫 مدير المدرسة</option>
+<option value="all_admin">📡 جميع المشرفين الإداريين</option>
+</select></div>
+</div>
+<div class="ann-row2">
+<div class="ann-f"><label>البرنامج (للمعلمين)</label>
+<select id="ann-prog-g" class="ann-sel">
+<option value="both">الكل</option>
+<option value="dumaj">الدمج الفكري فقط</option>
+<option value="yaseer">يسير فقط</option>
+</select></div>
+<div class="ann-f"><label>المدة</label>
+<select id="ann-dur-g" class="ann-sel">
+<option value="0">بدون انتهاء</option>
+<option value="1">يوم</option>
+<option value="3">3 أيام</option>
+<option value="7" selected>أسبوع</option>
+<option value="14">أسبوعان</option>
+<option value="30">شهر</option>
+</select></div>
+</div>
+<div class="ann-f" style="margin-bottom:9px;"><label>نص الإشعار</label>
+<input type="text" id="ann-msg-g" class="ann-inp" placeholder="نص الإشعار..."></div>
+<div class="ann-f" style="margin-bottom:9px;"><label>رابط (اختياري)</label>
+<input type="url" id="ann-link-g" class="ann-inp" placeholder="https://..."></div>
+<label style="display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:700;color:#3F2E63;margin-bottom:3px;">
+<input type="checkbox" id="ann-en-g" checked style="width:15px;height:15px;"> تفعيل فوراً</label>
+<button class="ann-send-btn" onclick="annSend(currentUser.name)">📤 إرسال</button>
+<div class="ann-res" id="ann-res"></div>
+</div></div></div></div>
+<div class="tab-pane" id="tab-curriculum">
+      <div class="s-card">
+        <div class="s-card-head">📘 توزيع مناهج المعلمين — للاطلاع فقط</div>
+        <div class="s-card-body" id="curriculum-content">
+          <div class="teachers-grid" id="curr-teachers-grid"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+
+// ====================================================
+// بيانات الحساب (محلية، قابلة للتعديل)
+// ====================================================
+const CRED_KEY = 'sh_credentials';
+function getCredentials() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CRED_KEY));
+    if (saved && saved.username) return saved;
+  } catch(e) {}
+  return { username: 'section.head', password: 'sh2024', name: 'رئيس قسم ذوي الإعاقة' };
+}
+
+// ====================================================
+// ثوابت
+// ====================================================
+const TEACHERS = {
+  'm.suhayymi': { name:'محمد أحمد السهيمي',   role:'معلم تربية خاصة', program:'dumaj', avatar:'س' },
+  'z.qarni':    { name:'زين العابدين القرني', role:'معلم تربية خاصة', program:'dumaj', avatar:'ز' },
+  'a.ghamdi':   { name:'علي سعيد الغامدي',    role:'معلم تربية خاصة', program:'dumaj', avatar:'غ' },
+  'a.malki':    { name:'علي محمد المالكي',    role:'معلم تربية خاصة', program:'dumaj', avatar:'م' },
+  'h.ulyani':   { name:'حسن علي العلياني',    role:'معلم تربية خاصة', program:'dumaj', avatar:'ع' },
+  'a.zahrani':  { name:'علي محمد الزهراني',   role:'مشرف الدمج الفكري', program:'dumaj', avatar:'ز' },
+  'h.kubaishi': { name:'حسين منصور الكبيشي',  role:'معلم تربية خاصة', program:'yaseer', avatar:'ك' },
+  'saad.z':     { name:'سعد سالم الزهراني',   role:'مشرف يسير التعليمي', program:'yaseer', avatar:'ز' },
+};
+
+const ADMIN_TARGETS = ['مدير المدرسة','وكيل المدرسة','المشرف التربوي'];
+
+let currentUser = null;
+let allStudents = { dumaj:[], yaseer:[] };
+let allNotes = [];
+let currDetailTeacher = null;
+let currDetailData = null;
+
+// ====================================================
+// مساعدات Supabase
+// ====================================================
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function sbGet(path) {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/${path}?t=${Date.now()}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) { return null; }
+}
+
+async function sbSet(path, data) {
+  try {
+    const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+    const res = await fetch(`${SB_URL}/storage/v1/object/${path}`, {
+      method:'POST',
+      headers:{ apikey:SB_KEY, Authorization:'Bearer '+SB_KEY, 'Content-Type':'application/json', 'x-upsert':'true' },
+      body: blob
+    });
+    return res.ok;
+  } catch(e) { return false; }
+}
+
+function showToast(msg, dur=2600) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.style.display='block';
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>{ el.style.display='none'; }, dur);
+}
+
+// ====================================================
+// تسجيل الدخول
+// ====================================================
+function doLogin() {
+  const creds = getCredentials();
+  const uname = document.getElementById('login-username').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  const err   = document.getElementById('login-err');
+  if (uname === creds.username && pass === creds.password) {
+    currentUser = creds;
+    err.textContent = '';
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('portal').style.display = 'block';
+    document.getElementById('header-btns').style.display = 'flex';
+    document.getElementById('head-name-display').textContent = currentUser.name;
+    initPortal();
+  } else {
+    err.textContent = '⚠️ اسم المستخدم أو كلمة المرور غير صحيحة';
+  }
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('portal').style.display = 'none';
+  document.getElementById('header-btns').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+}
+
+// ====================================================
+// إعدادات الحساب
+// ====================================================
+function openSettingsModal() {
+  const creds = getCredentials();
+  document.getElementById('set-name').value = creds.name;
+  document.getElementById('set-password').value = '';
+  document.getElementById('settings-modal').style.display = 'block';
+}
+function closeSettingsModal(){ document.getElementById('settings-modal').style.display='none'; }
+function saveSettings() {
+  const name = document.getElementById('set-name').value.trim();
+  const pass = document.getElementById('set-password').value;
+  if (!name) { showToast('⚠️ يرجى إدخال الاسم'); return; }
+  const creds = getCredentials();
+  const newCreds = { ...creds, name, password: pass || creds.password };
+  localStorage.setItem(CRED_KEY, JSON.stringify(newCreds));
+  currentUser = newCreds;
+  document.getElementById('head-name-display').textContent = name;
+  closeSettingsModal();
+  showToast('✅ تم حفظ إعدادات الحساب');
+}
+
+// ====================================================
+// التهيئة
+// ====================================================
+async function initPortal() {
+  await loadAllStudents();
+  renderTeachersGrid();
+  renderStudentsTab();
+  updateOverviewStats();
+  switchCurriculumGrid();
+}
+
+async function loadAllStudents() {
+  const [djCfg, yCfg] = await Promise.all([
+    sbGet('reports/admin-dumaj-config.json'),
+    sbGet('reports/admin-yaseer-config.json'),
+  ]);
+  allStudents.dumaj  = djCfg?.students  || [];
+  allStudents.yaseer = yCfg?.students || [];
+}
+
+// ====================================================
+// التبويبات
+// ====================================================
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+
+  if (id==='students')  renderStudentsTab();
+  if (id==='meetings')  loadMeetings();
+  if (id==='notes')     renderNotesTab();
+  if (id==='curriculum') switchCurriculumGrid();
+  if (id==='overview')  updateOverviewStats();
+}
+
+// ====================================================
+// لمحة عامة
+// ====================================================
+function updateOverviewStats() {
+  const djCount = allStudents.dumaj.length;
+  const ysCount = allStudents.yaseer.length;
+  document.getElementById('stat-total').textContent   = djCount + ysCount;
+  document.getElementById('stat-dumaj').textContent   = djCount;
+  document.getElementById('stat-yaseer').textContent  = ysCount;
+  document.getElementById('stat-teachers').textContent = Object.keys(TEACHERS).length;
+
+  const allNotesList = getNotes();
+  const praise  = allNotesList.filter(n=>n.type==='praise').length;
+  const remarks = allNotesList.filter(n=>n.type==='remark').length;
+  document.getElementById('stat-praise').textContent  = praise;
+  document.getElementById('stat-remarks').textContent = remarks;
+
+  const el = document.getElementById('overview-notes');
+  const latest = allNotesList.slice(0,5);
+  if (!latest.length) {
+    el.innerHTML = '<div class="empty-state"><div class="es-icon">✍️</div><div class="es-title">لا توجد ملاحظات أو شكر بعد</div></div>';
+    return;
+  }
+  el.innerHTML = latest.map(n=>renderNoteCard(n, false)).join('');
+}
+
+// ====================================================
+// الطلاب
+// ====================================================
+function renderStudentsTab() {
+  const filter = document.getElementById('prog-filter').value;
+  const q = (document.getElementById('student-search').value||'').toLowerCase();
+  let list = [];
+  if (filter !== 'yaseer') list = list.concat(allStudents.dumaj.map(s=>({...s,program:'dumaj'})));
+  if (filter !== 'dumaj')  list = list.concat(allStudents.yaseer.map(s=>({...s,program:'yaseer'})));
+  if (q) list = list.filter(s=>(s.name||'').toLowerCase().includes(q) || String(s.pin||'').includes(q));
+  const grid = document.getElementById('students-grid');
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🔍</div><div class="es-title">لا توجد نتائج</div></div>';
+    return;
+  }
+  grid.innerHTML = list.map(s=>`
+    <div class="student-card" onclick="openStuModal('${s.pin}','${s.program}')">
+      <div class="sc-name">${escHtml(s.name)}</div>
+      <div class="sc-meta">الصف: ${escHtml(s.grade||'—')} | الهوية: ${escHtml(s.id_full||'—')}</div>
+      <div class="sc-pin">رمز الدخول: ${escHtml(s.pin||'—')}</div>
+      <div style="margin-top:8px;">
+        <span class="badge ${s.program==='dumaj'?'badge-lav':'badge-teal'}">${s.program==='dumaj'?'الدمج الفكري':'يسير'}</span>
+      </div>
+    </div>`).join('');
+}
+
+// ====================================================
+// المعلمون
+// ====================================================
+function renderTeachersGrid() {
+  const grid = document.getElementById('teachers-grid');
+  grid.innerHTML = Object.entries(TEACHERS).map(([uname,t])=>`
+    <div class="t-card">
+      <div class="t-avatar">${escHtml(t.avatar)}</div>
+      <div>
+        <div class="t-name">${escHtml(t.name)}</div>
+        <div class="t-role">${escHtml(t.role)}</div>
+        <div style="margin-top:4px;"><span class="badge ${t.program==='dumaj'?'badge-lav':'badge-teal'}">${t.program==='dumaj'?'الدمج الفكري':'يسير'}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+// ====================================================
+// سجل الاستدعاءات
+// ====================================================
+async function loadMeetings() {
+  const el = document.getElementById('meetings-list');
+  el.innerHTML = '<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>';
+  const [dj, ys] = await Promise.all([
+    sbGet('reports/dumaj/meeting-invites.json'),
+    sbGet('reports/yaseer/meeting-invites.json'),
+  ]);
+  const list = [
+    ...(Array.isArray(dj) ? dj.map(m=>({...m,_prog:'الدمج الفكري'})) : []),
+    ...(Array.isArray(ys) ? ys.map(m=>({...m,_prog:'يسير'}))         : []),
+  ].sort((a,b)=>(b.sentAt||'').localeCompare(a.sentAt||''));
+
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state"><div class="es-icon">📭</div><div class="es-title">لا توجد استدعاءات مسجّلة</div></div>';
+    return;
+  }
+  el.innerHTML = list.map(m=>{
+    let dt='';
+    try{ dt=new Date(m.datetime).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){}
+    return `<div class="note-card" style="border-right:5px solid var(--lav-300);">
+      <div class="note-type">📹 ${escHtml(m._prog)}</div>
+      <div class="note-body"><strong>${escHtml(m.subject||'')}</strong></div>
+      <div class="note-meta">📅 ${escHtml(dt)}${m.notes?' — '+escHtml(m.notes):''}${m.supervisorName?' | من: '+escHtml(m.supervisorName):''}</div>
+      <div class="btn-row" style="margin-top:8px;">
+        <a href="${m.link}" target="_blank" class="btn-sm btn-sm-primary" style="text-decoration:none;font-size:.76rem;">🔗 الانضمام للاجتماع</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ====================================================
+// الملاحظات وشهادات الشكر
+// ====================================================
+const NOTES_KEY = 'sh_notes';
+function getNotes() {
+  try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || []; } catch(e) { return []; }
+}
+function saveNotes(list) { localStorage.setItem(NOTES_KEY, JSON.stringify(list)); }
+
+function openNoteModal() {
+  document.getElementById('note-body').value = '';
+  document.getElementById('note-type').value = 'praise';
+  document.getElementById('note-target-group').value = 'teacher';
+  updateNoteForm();
+  updateNoteTargets();
+  document.getElementById('note-modal').style.display='block';
+}
+function closeNoteModal(){ document.getElementById('note-modal').style.display='none'; }
+
+function updateNoteForm() {
+  const type = document.getElementById('note-type').value;
+  document.getElementById('note-modal-title').textContent  = type==='praise' ? '🏅 شكر وتقدير' : '📝 ملاحظة';
+  document.getElementById('note-body-label').textContent   = type==='praise' ? 'نص شهادة الشكر والتقدير' : 'نص الملاحظة';
+  document.getElementById('note-submit-btn').textContent   = type==='praise' ? '🏅 حفظ الشكر والتقدير' : '📝 حفظ الملاحظة';
+}
+
+function updateNoteTargets() {
+  const group = document.getElementById('note-target-group').value;
+  const sel = document.getElementById('note-target-name');
+  sel.innerHTML = '';
+  if (group==='teacher') {
+    Object.values(TEACHERS).forEach(t=>{ const o=document.createElement('option'); o.value=t.name; o.textContent=t.name+' — '+t.role; sel.appendChild(o); });
+  } else if (group==='student') {
+    const all = [...allStudents.dumaj,...allStudents.yaseer];
+    all.forEach(s=>{ const o=document.createElement('option'); o.value=s.name; o.textContent=s.name+(s.grade?' — '+s.grade:''); sel.appendChild(o); });
+    if (!all.length) { const o=document.createElement('option'); o.value=''; o.textContent='لا توجد بيانات'; sel.appendChild(o); }
+  } else if (group==='admin') {
+    ADMIN_TARGETS.forEach(a=>{ const o=document.createElement('option'); o.value=a; o.textContent=a; sel.appendChild(o); });
+  } else if (group==='parent') {
+    const all = [...allStudents.dumaj,...allStudents.yaseer];
+    all.forEach(s=>{ const o=document.createElement('option'); o.value='ولي أمر '+s.name; o.textContent='ولي أمر '+s.name; sel.appendChild(o); });
+    if (!all.length) { const o=document.createElement('option'); o.value=''; o.textContent='لا توجد بيانات'; sel.appendChild(o); }
+  }
+}
+
+function saveNote() {
+  const type   = document.getElementById('note-type').value;
+  const target = document.getElementById('note-target-name').value;
+  const body   = document.getElementById('note-body').value.trim();
+  if (!body) { showToast('⚠️ يرجى كتابة النص'); return; }
+  if (!target) { showToast('⚠️ يرجى اختيار الموجه إليه'); return; }
+
+  const notes = getNotes();
+  notes.unshift({ id:Date.now(), type, target, body, date:new Date().toISOString(), by:currentUser.name });
+  saveNotes(notes);
+  closeNoteModal();
+  renderNotesTab();
+  updateOverviewStats();
+  showToast(type==='praise' ? '🏅 تم حفظ شهادة الشكر والتقدير' : '📝 تم حفظ الملاحظة');
+}
+
+function renderNoteCard(n, showDelete=true) {
+  let dateStr='';
+  try{ dateStr=new Date(n.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'}); }catch(e){}
+  const btns = n.type==='praise'
+    ? `<button class="btn-sm btn-sm-gold" onclick="showCert(${n.id})">🖨️ طباعة الشهادة</button>`
+    : `<button class="btn-sm btn-sm-outline" onclick="printRemark(${n.id})">🖨️ طباعة الملاحظة</button>`;
+  const del = showDelete
+    ? `<button class="btn-sm btn-sm-danger" onclick="deleteNote(${n.id})">🗑️</button>`
+    : '';
+  return `<div class="note-card ${n.type==='praise'?'praise':'remark'}">
+    <div class="note-type">${n.type==='praise'?'🏅 شكر وتقدير':'📝 ملاحظة'}</div>
+    <div class="note-to">موجّه إلى: ${escHtml(n.target)}</div>
+    <div class="note-body">${escHtml(n.body)}</div>
+    <div class="note-meta">✍️ ${escHtml(n.by)} — 📅 ${escHtml(dateStr)}</div>
+    <div class="btn-row">${btns}${del}</div>
+  </div>`;
+}
+
+function renderNotesTab() {
+  const filter = document.getElementById('notes-filter').value;
+  let notes = getNotes();
+  if (filter==='praise') notes=notes.filter(n=>n.type==='praise');
+  if (filter==='remark') notes=notes.filter(n=>n.type==='remark');
+  const el = document.getElementById('notes-list');
+  if (!notes.length) {
+    el.innerHTML='<div class="empty-state"><div class="es-icon">✍️</div><div class="es-title">لا توجد ملاحظات أو شكر بعد</div><div class="es-sub">اضغط "＋ إضافة" لإنشاء ملاحظة أو شهادة شكر</div></div>';
+    return;
+  }
+  el.innerHTML = notes.map(n=>renderNoteCard(n,true)).join('');
+}
+
+function deleteNote(id) {
+  if (!confirm('هل تريد حذف هذا العنصر؟')) return;
+  saveNotes(getNotes().filter(n=>n.id!==id));
+  renderNotesTab(); updateOverviewStats();
+  showToast('🗑️ تم الحذف');
+}
+
+// ====================================================
+// شهادة الشكر والتقدير
+// ====================================================
+function showCert(id) {
+  const n = getNotes().find(n=>n.id===id);
+  if (!n) return;
+  let dateStr='';
+  try{ dateStr=new Date(n.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'}); }catch(e){}
+  document.getElementById('cert-preview').innerHTML = `
+    <div class="praise-cert" id="cert-content">
+      <div class="praise-cert-logo">🏅</div>
+      <div class="praise-cert-school">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
+      <div class="praise-cert-title">شهادة شكر وتقدير</div>
+      <div style="font-size:.9rem;color:var(--muted);margin-bottom:14px;">تُقدّم إدارة قسم ذوي الإعاقة هذه الشهادة إلى:</div>
+      <div class="praise-cert-to">${escHtml(n.target)}</div>
+      <div class="praise-cert-body">${escHtml(n.body)}</div>
+      <div class="praise-cert-sig">
+        <strong>${escHtml(n.by)}</strong>
+        رئيس قسم ذوي الإعاقة<br>
+        مدرسة مكة المكرمة المتوسطة<br>
+        ${escHtml(dateStr)} | الفصل الثاني 1447هـ
+      </div>
+    </div>`;
+  document.getElementById('cert-modal').style.display='block';
+}
+function closeCertModal(){ document.getElementById('cert-modal').style.display='none'; }
+function printCert() {
+  const content = document.getElementById('cert-content')?.outerHTML || '';
+  const win = window.open('','_blank');
+  if (!win) return;
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<title>شهادة شكر وتقدير</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;} body{font-family:'Cairo',sans-serif;padding:30px;direction:rtl;background:#fff;}
+.praise-cert{max-width:680px;margin:0 auto;background:#fff;border:3px solid #D7A24A;border-radius:20px;padding:40px;text-align:center;font-family:'Tajawal',sans-serif;position:relative;}
+.praise-cert-logo{font-size:3rem;margin-bottom:6px;}
+.praise-cert-school{font-size:.85rem;color:#6E5F82;margin-bottom:20px;}
+.praise-cert-title{font-size:2rem;font-weight:900;color:#D7A24A;margin-bottom:16px;}
+.praise-cert-to{font-size:1.25rem;font-weight:800;color:#3F2E63;margin-bottom:12px;}
+.praise-cert-body{font-size:1rem;color:#221335;line-height:2;margin-bottom:24px;}
+.praise-cert-sig{border-top:1.5px solid #DCD2EE;padding-top:16px;font-size:.88rem;color:#6E5F82;}
+.praise-cert-sig strong{color:#3F2E63;display:block;font-size:.95rem;}
+@media print{@page{size:A4;margin:14mm}}
+</style></head><body>${content}<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script></body></html>`);
+  win.document.close();
+}
+
+function printRemark(id) {
+  const n = getNotes().find(n=>n.id===id);
+  if (!n) return;
+  let dateStr='';
+  try{ dateStr=new Date(n.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'}); }catch(e){}
+  const win = window.open('','_blank');
+  if (!win) return;
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<title>ملاحظة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;} body{font-family:'Cairo',sans-serif;padding:30px;direction:rtl;background:#fff;}
+.box{max-width:680px;margin:0 auto;border:2px solid #6B4C9A;border-right:8px solid #6B4C9A;border-radius:14px;padding:32px;}
+h1{font-family:'Tajawal',sans-serif;color:#3F2E63;font-size:1.5rem;margin-bottom:8px;}
+.to{background:#EAE1F7;color:#3F2E63;display:inline-block;padding:4px 14px;border-radius:10px;font-weight:800;font-size:.88rem;margin-bottom:14px;}
+.body{font-size:1rem;color:#221335;line-height:2;margin-bottom:20px;}
+.sig{border-top:1px solid #DCD2EE;padding-top:12px;font-size:.85rem;color:#6E5F82;}
+@media print{@page{size:A4;margin:14mm}}
+</style></head><body>
+<div class="box">
+  <h1>📝 ملاحظة من قسم ذوي الإعاقة</h1>
+  <div class="to">موجّه إلى: ${escHtml(n.target)}</div>
+  <div class="body">${escHtml(n.body)}</div>
+  <div class="sig">✍️ ${escHtml(n.by)} — رئيس قسم ذوي الإعاقة<br>📅 ${escHtml(dateStr)} | مدرسة مكة المكرمة المتوسطة</div>
+</div>
+<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script></body></html>`);
+  win.document.close();
+}
+
+// ====================================================
+// توزيع المناهج (للاطلاع)
+// ====================================================
+function switchCurriculumGrid() {
+  const el = document.getElementById('curriculum-content');
+  el.innerHTML = `<div class="teachers-grid" id="curr-teachers-grid"></div>`;
+  el.style.paddingTop = '0';
+  const grid = document.getElementById('curr-teachers-grid');
+  grid.innerHTML = Object.entries(TEACHERS).map(([uname,t])=>`
+    <div class="t-card" style="cursor:pointer;" onclick="openTeacherCurriculum('${uname}')">
+      <div class="t-avatar">${escHtml(t.avatar)}</div>
+      <div>
+        <div class="t-name">${escHtml(t.name)}</div>
+        <div class="t-role">${escHtml(t.role)}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function openTeacherCurriculum(uname) {
+  const t = TEACHERS[uname];
+  const el = document.getElementById('curriculum-content');
+  el.innerHTML = `<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>`;
+
+  const data = await sbGet(`reports/curriculum/${t.program}/${uname}.json`);
+  if (!data || !Array.isArray(data.activeSubjects) || !data.activeSubjects.length) {
+    el.innerHTML = `
+      <button class="btn-sm btn-sm-outline" onclick="switchCurriculumGrid()" style="margin-bottom:14px;">→ رجوع</button>
+      <div class="empty-state"><div class="es-icon">📘</div><div class="es-title">لم يقم هذا المعلم بإدخال توزيع المنهج بعد</div></div>`;
+    return;
+  }
+  currDetailTeacher = { uname, ...t }; currDetailData = data;
+
+  let html = `<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+    <button class="btn-sm btn-sm-outline" onclick="switchCurriculumGrid()">→ رجوع</button>
+    <div style="font-weight:800;color:var(--lav-800);">📘 ${escHtml(t.name)}</div>
+    <button class="btn-sm btn-sm-gold" onclick="printTeacherCurriculum()">🖨️ طباعة</button>
+  </div>`;
+
+  data.activeSubjects.forEach(key=>{
+    const subj=data.subjects[key]; if(!subj) return;
+    html+=`<h3 style="font-family:'Tajawal',sans-serif;color:var(--lav-700);margin:16px 0 8px;">📘 ${escHtml(subj.name)}</h3>
+    <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+      <thead><tr>
+        <th style="background:var(--lav-100);color:var(--lav-700);padding:8px;text-align:right;font-weight:800;border:1px solid var(--border);width:90px;">الأسبوع</th>
+        <th style="background:var(--lav-100);color:var(--lav-700);padding:8px;text-align:right;font-weight:800;border:1px solid var(--border);">الموضوع</th>
+        <th style="background:var(--lav-100);color:var(--lav-700);padding:8px;text-align:right;font-weight:800;border:1px solid var(--border);">ملاحظات</th>
+      </tr></thead>
+      <tbody>${subj.weeks.map((w,i)=>`<tr>
+        <td style="border:1px solid var(--border);padding:7px;font-weight:800;color:var(--lav-700);">الأسبوع ${i+1}</td>
+        <td style="border:1px solid var(--border);padding:7px;">${escHtml(w.topic||'—')}</td>
+        <td style="border:1px solid var(--border);padding:7px;">${escHtml(w.notes||'—')}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>`;
+  });
+
+  el.innerHTML = html;
+}
+
+function printTeacherCurriculum() {
+  if (!currDetailData || !currDetailTeacher) return;
+  const t = currDetailTeacher;
+  const subjectsHtml = (currDetailData.activeSubjects||[]).map(key=>{
+    const subj=currDetailData.subjects[key]; if(!subj) return '';
+    return `<h2>📘 ${escHtml(subj.name)}</h2>
+    <table><thead><tr><th style="width:90px;">الأسبوع</th><th>الموضوع</th><th>ملاحظات</th></tr></thead>
+    <tbody>${subj.weeks.map((w,i)=>`<tr><td class="wk">الأسبوع ${i+1}</td><td>${escHtml(w.topic||'')}</td><td>${escHtml(w.notes||'')}</td></tr>`).join('')}</tbody></table>`;
+  }).join('');
+  const win = window.open('','_blank');
+  if(!win) return;
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>توزيع المنهج</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box}body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;color:#221335}h1{font-family:'Tajawal',sans-serif;color:#2E2148}h2{font-family:'Tajawal',sans-serif;color:#6B4C9A;margin:18px 0 8px}table{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:10px}th{background:#EAE1F7;color:#6B4C9A;padding:8px;text-align:right;font-weight:800;border:1px solid #DCD2EE}td{padding:7px;border:1px solid #DCD2EE}.wk{font-weight:800;color:#6B4C9A;white-space:nowrap}@media print{@page{size:A4;margin:14mm}}</style>
+</head><body><h1>📘 توزيع المنهج — ${escHtml(t.name)}</h1><p style="color:#6E5F82;margin-bottom:14px;">${escHtml(t.role)} — الفصل الثاني 1447هـ</p>
+${subjectsHtml}<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script></body></html>`);
+  win.document.close();
+}
+
+// ====================================================
+// نافذة بيانات الطالب
+// ====================================================
+async function openStuModal(pin, prog) {
+  document.getElementById('stu-modal').style.display = 'block';
+  document.getElementById('stu-body').innerHTML = '<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>';
+
+  // البحث عن بيانات الطالب الأساسية
+  const stuList = prog === 'dumaj' ? allStudents.dumaj : allStudents.yaseer;
+  const s = stuList.find(x => x.pin === pin) || { name:'—', grade:'—', pin };
+
+  document.getElementById('stu-name').textContent = s.name;
+  document.getElementById('stu-info').textContent = `${s.grade||'—'} — رمز: ${pin} — ${prog==='dumaj'?'برنامج الدمج الفكري':'برنامج يسير التعليمي'}`;
+
+  // صورة الطالب
+  const img = new Image();
+  img.onload = () => {
+    const av = document.getElementById('stu-avatar');
+    if (av) av.innerHTML = `<img src="${img.src}" style="width:58px;height:58px;border-radius:12px;object-fit:cover;">`;
+  };
+  img.src = `${SB_URL}/storage/v1/object/public/reports/${prog}/photos/photo-${pin}.jpg`;
+
+  // تحميل البيانات المفصّلة
+  let data = null;
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/teacher_portfolios?teacher_key=eq.student_${prog}_${pin}&select=data`, {
+      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }, cache: 'no-store'
+    });
+    const rows = res.ok ? await res.json() : [];
+    if (rows?.length) data = rows[0].data;
+  } catch(e) {}
+
+  if (!data) {
+    data = await sbGet(`reports/${prog}/data/student-${pin}.json`);
+  }
+
+  const body = document.getElementById('stu-body');
+  if (!data) {
+    body.innerHTML = '<div class="empty-state"><div class="es-icon">📭</div><div class="es-title">لا توجد بيانات محفوظة لهذا الطالب بعد</div></div>';
+    return;
+  }
+
+  const SECTIONS = [
+    { title:'🪪 البيانات الشخصية', color:'var(--lav-800)', fields:[
+      ['رقم الهوية / الإقامة', data.id_full || data.id],
+      ['تاريخ الميلاد', data.birthdate],
+      ['العمر', data.age ? data.age + ' سنوات' : null],
+      ['الجنسية', data.nationality],
+      ['العنوان', data.address],
+    ]},
+    { title:'👨‍👩‍👦 بيانات ولي الأمر', color:'var(--teal)', fields:[
+      ['اسم ولي الأمر', data.parentName],
+      ['الهاتف', data.phone],
+      ['المستوى الاقتصادي', data.economic_level],
+    ]},
+    { title:'📋 البيانات التعليمية', color:'var(--gold)', fields:[
+      ['التشخيص', data.diagnosis],
+      ['نوع الإعاقة', data.disabilityType],
+      ['مستوى الأداء', data.level],
+      ['المعلم المسؤول', data.teacher],
+      ['الفصل الدراسي', data.semester],
+      ['تاريخ الخطة التعليمية', data.planDate],
+    ]},
+  ];
+
+  let html = '';
+  SECTIONS.forEach(sec => {
+    const rows = sec.fields.filter(([,v]) => v);
+    if (!rows.length) return;
+    html += `<div style="margin-bottom:16px;">
+      <div style="font-size:.78rem;font-weight:800;color:${sec.color};margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid ${sec.color}33;">${sec.title}</div>
+      <div class="detail-grid">${rows.map(([k,v]) => `
+        <div class="detail-item">
+          <div class="detail-key">${escHtml(k)}</div>
+          <div class="detail-val">${escHtml(v)}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  });
+
+  // الأهداف التعليمية
+  if (data.goals && Object.keys(data.goals).length) {
+    html += `<div style="margin-top:16px;background:var(--surface2);border-radius:10px;padding:14px;">
+      <div style="font-weight:800;color:var(--lav-700);font-size:.85rem;margin-bottom:10px;">🎯 الأهداف التعليمية</div>
+      ${Object.entries(data.goals).map(([subj,gs]) => `
+        <div style="margin-bottom:10px;">
+          <div style="font-size:.73rem;font-weight:700;color:var(--muted);margin-bottom:4px;">${escHtml(subj)}</div>
+          ${(Array.isArray(gs)?gs:[]).map(g => `<div style="font-size:.78rem;background:#fff;border:1px solid var(--border);border-radius:6px;padding:4px 10px;margin-bottom:4px;">${escHtml(g)}</div>`).join('')}
+        </div>`).join('')}
+    </div>`;
+  }
+
+  // مستوى الأداء
+  if (data.performance && Object.keys(data.performance).length) {
+    const perfEntries = Object.entries(data.performance);
+    html += `<div style="margin-top:16px;background:var(--surface2);border-radius:10px;padding:14px;">
+      <div style="font-weight:800;color:var(--lav-700);font-size:.85rem;margin-bottom:10px;">📏 مستوى الأداء</div>
+      <div class="detail-grid">${perfEntries.map(([k,v]) => `
+        <div class="detail-item">
+          <div class="detail-key">${escHtml(k)}</div>
+          <div class="detail-val">${escHtml(typeof v==='object'?v.level||'—':v)}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  body.innerHTML = html || '<div class="empty-state"><div class="es-icon">📭</div><div class="es-title">لا توجد تفاصيل إضافية</div></div>';
+}
+
+function closeStuModal() { document.getElementById('stu-modal').style.display = 'none'; }
+
+// ====================================================
+// تهيئة
+// ====================================================
+document.getElementById('login-password').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+document.getElementById('login-username').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('login-password').focus(); });
+</script>
+</body>
+</html>
+<script src="ann-system.js"></script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>

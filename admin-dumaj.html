@@ -8,10 +8,10 @@
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#6B4C9A">
-<title>بوابة طلاب الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
+<title>لوحة مشرف الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --primary: #3F2E63;
@@ -30,15 +30,20 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ===== الشريط العلوي الرسمي (الخزامى) ===== */
-  .topbar{
-    background: linear-gradient(120deg, #2E2148, #3F2E63 70%, #4A3470);
-    color: rgba(255,255,255,.92);
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
   }
+
+  /* ===== HEADER ===== */
+  /* ===== الشريط العلوي الرسمي ===== */
+  .topbar{ background: linear-gradient(120deg, #2E2148, #3F2E63 70%, #4A3470); color: rgba(255,255,255,.92); }
   .topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
   .topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
   .topbar-gov{ display:flex; align-items:center; gap:10px; }
-  .topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; transition:opacity .2s; }
+  .topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
   .topbar-gov a{ display:flex; align-items:center; }
   .topbar-gov a:hover img{ opacity:1; }
   .topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
@@ -51,14 +56,6 @@
     .topbar-inner{ padding:7px 14px; }
   }
 
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
-
-  /* ===== HEADER ===== */
   header {
     background: linear-gradient(135deg, #3F2E63 0%, #2E2148 60%, #4A3470 100%);
     padding: 16px 36px;
@@ -132,11 +129,11 @@
   .login-icon-big {
     width: 80px; height: 80px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #EAE1F7, #DDD0F2);
+    background: linear-gradient(135deg, #EAE1F7, #ddd6fe);
     margin: 0 auto 22px;
     display: flex; align-items: center; justify-content: center;
     font-size: 2.6rem;
-    box-shadow: 0 8px 24px rgba(107,76,154,0.2);
+    box-shadow: 0 8px 24px rgba(109,40,217,0.2);
   }
 
   .login-card h2 {
@@ -178,14 +175,14 @@
     color: var(--primary);
     outline: none;
     transition: all 0.25s;
-    background: #fafafa;
+    background: #FBFAFE;
     margin-bottom: 12px;
   }
 
   .pin-input:focus {
     border-color: var(--purple-light);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(139,106,191,0.1);
+    box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
   }
 
   .pin-input.error {
@@ -225,16 +222,16 @@
     font-weight: 800;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(107,76,154,0.3);
+    box-shadow: 0 6px 20px rgba(109,40,217,0.3);
     letter-spacing: 0.5px;
   }
-  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(107,76,154,0.45); }
+  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(109,40,217,0.45); }
   .login-btn:active { transform: translateY(0); }
 
   .hint-box {
     margin-top: 22px;
     background: #EAE1F7;
-    border: 1px solid #f0d898;
+    border: 1px solid #DCD2EE;
     border-right: 3px solid var(--accent);
     border-radius: 10px;
     padding: 13px 16px;
@@ -248,7 +245,7 @@
   #student-portal { display: none; }
 
   .portal-banner {
-    background: linear-gradient(135deg, var(--green) 0%, #2E2148 100%);
+    background: linear-gradient(135deg, var(--green) 0%, #0d4a30 100%);
     padding: 26px 36px;
     display: flex;
     align-items: center;
@@ -260,7 +257,7 @@
 
   .student-identity { color: #fff; display:flex; align-items:center; gap:16px; }
   .student-photo-wrap { position:relative; flex-shrink:0; }
-  .student-photo { width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid rgba(215,162,74,0.7); background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; transition:all 0.2s; }
+  .student-photo { width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid rgba(240,184,74,0.7); background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; transition:all 0.2s; }
   .student-photo:hover { border-color:#D7A24A; transform:scale(1.05); }
   .student-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
   .photo-change-btn { position:absolute; bottom:0; left:0; background:#D7A24A; color:#2E2148; border:none; border-radius:50%; width:22px; height:22px; font-size:0.65rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:900; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
@@ -343,7 +340,7 @@
   .tab-btn.active {
     background: linear-gradient(135deg, var(--green), var(--green-light));
     color: #fff;
-    box-shadow: 0 3px 12px rgba(18,158,124,0.35);
+    box-shadow: 0 3px 12px rgba(26,107,74,0.35);
   }
 
   .tab-pane { display: none; animation: fadeIn 0.3s ease; }
@@ -584,12 +581,12 @@
     border: 1px solid var(--border);
   }
 
-  .btn-pdf-secondary:hover { border-color: var(--primary); background: #f0f4ff; }
+  .btn-pdf-secondary:hover { border-color: var(--primary); background: #EAE1F7; }
 
   /* IQRAR */
   .iqrar-box {
-    background: linear-gradient(135deg, #EAE1F7, #EAE1F7);
-    border: 1px solid #f0d898;
+    background: linear-gradient(135deg, #EAE1F7, #fff8e6);
+    border: 1px solid #DCD2EE;
     border-right: 4px solid var(--accent);
     border-radius: 14px;
     padding: 24px;
@@ -680,10 +677,10 @@
     font-weight: 800;
     cursor: pointer;
     transition: all 0.25s;
-    box-shadow: 0 4px 14px rgba(18,158,124,0.3);
+    box-shadow: 0 4px 14px rgba(26,107,74,0.3);
   }
 
-  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(18,158,124,0.4); }
+  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,74,0.4); }
 
   .btn-clear-sign {
     background: #fff;
@@ -715,8 +712,8 @@
 
   /* ADMIN PANEL */
   #admin-portal { display:none; }
-  .admin-banner { background:linear-gradient(135deg,#2E2148 0%,#3F2E63 60%,#6B4C9A 100%); padding:22px 36px; display:flex; align-items:center; justify-content:space-between; border-bottom:4px solid #D7A24A; }
-  .admin-badge { background:rgba(215,162,74,0.2); border:1px solid rgba(215,162,74,0.4); color:#D7A24A; padding:5px 16px; border-radius:20px; font-size:0.8rem; font-weight:700; }
+  .admin-banner { background:linear-gradient(135deg,#2E2148 0%,#a33800 60%,#6B4C9A 100%); padding:22px 36px; display:flex; align-items:center; justify-content:space-between; border-bottom:4px solid #D7A24A; }
+  .admin-badge { background:rgba(245,144,64,0.2); border:1px solid rgba(245,144,64,0.4); color:#D7A24A; padding:5px 16px; border-radius:20px; font-size:0.8rem; font-weight:700; }
   .admin-body { max-width:960px; margin:0 auto; padding:28px 36px 60px; }
   .admin-tabs { display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:26px; box-shadow:0 2px 12px rgba(0,0,0,0.04); }
   .admin-tab-btn { flex:1; padding:10px 8px; border:none; background:transparent; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all 0.22s; display:flex; align-items:center; justify-content:center; gap:5px; }
@@ -737,7 +734,7 @@
   .form-group { margin-bottom:16px; }
   .form-label { display:block; font-size:0.8rem; font-weight:700; color:var(--muted); margin-bottom:6px; }
   .form-input { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.88rem; color:var(--text); outline:none; transition:border-color 0.2s; }
-  .form-input:focus { border-color:#8B6ABF; box-shadow:0 0 0 3px rgba(139,106,191,0.1); }
+  .form-input:focus { border-color:#8B6ABF; box-shadow:0 0 0 3px rgba(224,112,32,0.1); }
   .form-actions { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
   .btn-save { background:linear-gradient(135deg,#6B4C9A,#8B6ABF); color:#fff; border:none; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:800; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 14px rgba(107,76,154,0.3); }
   .btn-save:hover { transform:translateY(-2px); }
@@ -754,31 +751,11 @@
   .fu-edit-row input, .fu-edit-row select { padding:8px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; outline:none; width:100%; }
   .success-toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#6B4C9A; color:#fff; padding:12px 28px; border-radius:12px; font-weight:700; font-size:0.88rem; z-index:9999; box-shadow:0 8px 24px rgba(107,76,154,0.4); display:none; animation:fadeIn 0.3s ease; }
 
-  /* SCHEDULE TABLE */
-  .sch-table { width:100%; border-collapse:collapse; font-size:0.78rem; }
-  .sch-table th {
-    background: linear-gradient(135deg,#3F2E63,#2E2148);
-    color:#fff; padding:8px 6px; text-align:center;
-    font-family:'Tajawal',sans-serif; font-weight:800; font-size:0.75rem;
-  }
-  .sch-table td {
-    border:1px solid #DCD2EE; padding:7px 6px; text-align:center;
-    vertical-align:middle; min-height:36px;
-  }
-  .sch-period-label { background:#F7F5FC; font-weight:800; color:#3F2E63; font-size:0.72rem; }
-  .sch-cell-lesson { background:#fff; }
-  .sch-cell-break { background:#fef9ee; color:#92400e; font-weight:700; }
-  .sch-cell-end { background:#EAE1F7; color:#065f46; font-weight:700; }
-  .sch-cell-empty { background:#fafafa; color:#ccc; }
-  .sch-subject { font-weight:700; color:#3F2E63; display:block; }
-  .sch-teacher { font-size:0.65rem; color:#888; display:block; margin-top:2px; }
-  .sch-no-data { text-align:center; padding:40px 20px; color:#9ca3af; }
-  @media (max-width:600px) {
-    .sch-table { font-size:0.65rem; }
-    .sch-table th, .sch-table td { padding:5px 3px; }
-  }
-
   /* RESPONSIVE */
+  @keyframes revisionPulse {
+    0%,100% { transform:scale(1); }
+    50% { transform:scale(1.08); background:#f59e0b; color:#fff; }
+  }
   @media (max-width: 640px) {
     header { padding: 12px 18px; }
     .portal-banner { padding: 18px; }
@@ -806,7 +783,7 @@
 .iep-subject-body.collapsed { display:none; }
 .iep-goal-row {
   display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;
-  background:#fafafa;border:1px solid var(--border);border-radius:10px;
+  background:#FBFAFE;border:1px solid var(--border);border-radius:10px;
   padding:10px 12px;margin-bottom:8px;
 }
 .iep-goal-text { font-size:0.85rem;color:var(--text);line-height:1.5; }
@@ -850,120 +827,47 @@
 .iep-subject-colors.subj-science { background:linear-gradient(135deg,#5b21b6,#8b5cf6); }
 .iep-subject-colors.subj-life    { background:linear-gradient(135deg,#92400e,#d97706); }
 
-/* ===== قياس مستوى الأداء ===== */
-.perf-subject-block {
-  background:#fff;border:1.5px solid var(--border);border-radius:14px;
-  margin-bottom:16px;overflow:hidden;
-}
-.perf-subject-head {
-  display:flex;align-items:center;gap:10px;
-  padding:12px 18px;
-  background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;
-  font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:800;
-}
-.perf-skills-table { width:100%;border-collapse:collapse; }
-.perf-skills-table th {
-  padding:10px 14px;background:#FBFAFE;
-  font-size:0.8rem;font-weight:700;color:#6B4C9A;text-align:right;
-  border-bottom:1px solid var(--border);
-}
-.perf-skills-table td {
-  padding:10px 14px;border-bottom:1px solid #f5f5f5;
-  font-size:0.84rem;color:var(--text);vertical-align:middle;
-}
-.perf-skills-table tr:last-child td { border-bottom:none; }
-.perf-level-select {
-  border:1.5px solid var(--border);border-radius:8px;
-  padding:5px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;
-  font-weight:700;outline:none;cursor:pointer;
-  transition:border-color 0.2s;background:#fff;
-}
-.perf-level-select:focus { border-color:#8B6ABF; }
-.perf-notes-input {
-  width:100%;border:1.5px solid var(--border);border-radius:8px;
-  padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;
-  outline:none;resize:vertical;min-height:32px;
-}
-.perf-notes-input:focus { border-color:#8B6ABF; }
-.perf-legend {
-  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:12px 16px;
-  background:#EAE1F7;border:1px solid #f0d898;border-radius:10px;
-}
-.perf-legend-item {
-  display:flex;align-items:center;gap:5px;
-  font-size:0.76rem;font-weight:700;
-}
+  /* ===== SIGNATURES ===== */
+  .sigs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+  .sig-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.05); transition:all 0.2s; }
+  .sig-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+  .sig-head { padding:14px 16px; background:linear-gradient(135deg,#EAE1F7,#DDD0F2); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+  .sig-avatar { width:38px; height:38px; background:var(--primary); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; font-weight:800; flex-shrink:0; }
+  .sig-name { font-size:0.88rem; font-weight:800; color:var(--primary); }
+  .sig-grade { font-size:0.74rem; color:var(--muted); margin-top:2px; }
+  .sig-img-wrap { padding:12px 16px; background:#f9f9f9; border-bottom:1px solid var(--border); height:100px; display:flex; align-items:center; justify-content:center; }
+  .sig-img-wrap img { max-height:88px; max-width:100%; object-fit:contain; }
+  .sig-foot { padding:10px 16px; display:flex; align-items:center; justify-content:space-between; }
+  .sig-date { font-size:0.73rem; color:var(--muted); }
+  .sig-badge { background:#d1fae5; color:#065f46; padding:3px 10px; border-radius:10px; font-size:0.72rem; font-weight:700; }
+  .sig-actions { display:flex; gap:8px; padding:10px 16px; background:#f8f8f8; border-top:1px solid var(--border); }
+  .btn-dl-png { flex:1; padding:7px; background:#DDD0F2; color:#1e40af; border:1px solid #bfdbfe; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; }
+  .btn-dl-pdf { flex:1; padding:7px; background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; }
+  .btn-dl-del { flex:1; padding:7px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; }
+  /* ===== UPLOAD ===== */
+  .drop-zone { border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:all 0.2s; background:#FBFAFE; position:relative; }
+  .drop-zone:hover, .drop-zone.dragover { border-color:var(--primary); background:#EAE1F7; }
+  .drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .upload-status { margin-top:10px; font-size:0.78rem; font-weight:700; text-align:center; padding:6px 10px; border-radius:8px; display:none; }
+  .status-uploading { background:#fef3c7; color:#92400e; }
+  .status-success { background:#d1fae5; color:#065f46; }
+  .status-error { background:#fee2e2; color:#dc2626; }
+  .status-exists { background:#dbeafe; color:#1e40af; }
+  .file-preview { margin-top:10px; padding:8px 12px; background:#EAE1F7; border-radius:8px; display:none; align-items:center; gap:8px; font-size:0.78rem; color:var(--primary); font-weight:600; }
+  .file-preview .del-btn { margin-right:auto; background:#fee2e2; color:#dc2626; border:none; border-radius:6px; padding:3px 8px; font-size:0.72rem; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; }
+  .btn-upload-file { width:100%; padding:9px; background:linear-gradient(135deg,#129E7C,#8B6ABF); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:10px; display:none; }
+  .progress-bar { height:4px; background:#DCD2EE; border-radius:2px; margin-top:8px; display:none; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,#129E7C,#8B6ABF); border-radius:2px; transition:width 0.3s; width:0%; }
+  .btn-delete-file { width:100%; padding:9px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:6px; }
 
-/* ===== جوانب القوة والاحتياج ===== */
-.sw-block {
-  background:#fff;border:1.5px solid var(--border);border-radius:14px;
-  margin-bottom:16px;overflow:hidden;
-}
-.sw-subject-head {
-  display:flex;align-items:center;gap:10px;
-  padding:12px 18px;
-  background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;
-  font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:800;
-}
-.sw-body { display:grid;grid-template-columns:1fr 1fr;gap:0; }
-@media(max-width:640px){ .sw-body{grid-template-columns:1fr;} }
-.sw-side {
-  padding:14px 16px;
-}
-.sw-side:first-child { border-left:1px solid var(--border); }
-.sw-side-title {
-  font-size:0.82rem;font-weight:800;margin-bottom:10px;
-  display:flex;align-items:center;gap:6px;padding-bottom:8px;
-  border-bottom:2px solid;
-}
-.sw-strength-title { color:#065f46;border-color:#10b981; }
-.sw-need-title { color:#92400e;border-color:#8B6ABF; }
-.sw-item-list { display:flex;flex-direction:column;gap:6px;margin-bottom:8px; }
-.sw-item {
-  display:flex;align-items:flex-start;gap:8px;
-  background:#f9fafb;border:1px solid var(--border);border-radius:8px;
-  padding:7px 10px;font-size:0.82rem;
-}
-.sw-item-dot-green { width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:4px; }
-.sw-item-dot-orange { width:8px;height:8px;border-radius:50%;background:#8B6ABF;flex-shrink:0;margin-top:4px; }
-.sw-add-input {
-  display:flex;gap:6px;margin-top:6px;
-}
-.sw-add-input input {
-  flex:1;border:1.5px solid var(--border);border-radius:8px;
-  padding:6px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;outline:none;
-}
-.sw-add-input input:focus { border-color:#10b981; }
-.sw-add-btn {
-  background:#d1fae5;color:#065f46;border:1.5px solid #10b981;
-  border-radius:8px;padding:6px 12px;font-family:'Cairo',sans-serif;
-  font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;
-}
-.sw-add-btn.need { background:#EAE1F7;color:#92400e;border-color:#8B6ABF; }
-.sw-del-btn {
-  background:none;border:none;color:#ccc;cursor:pointer;font-size:0.8rem;
-  margin-right:auto;flex-shrink:0;
-}
-.sw-del-btn:hover { color:#ef4444; }
 
-/* لوحة التعزيز */
-.empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
-.empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
-.empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
-.empty-state .es-sub{ font-size:.82rem; }
-.reinforce-item{
-  display:flex; align-items:flex-start; gap:12px; background:#FBFAFE; border:1px solid var(--border);
-  border-right:4px solid #D7A24A; border-radius:10px; padding:12px 16px; margin-bottom:10px;
-}
-.reinforce-icon{ font-size:1.4rem; flex-shrink:0; }
-.reinforce-title{ font-weight:800; font-size:.86rem; color:var(--primary); }
-.reinforce-meta{ font-size:.74rem; color:rgba(34,19,53,.42); margin-top:2px; }
-.reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
-.btn-print-cert{
-  background:#fff; color:var(--purple); border:1px solid var(--border); border-radius:8px;
-  padding:7px 14px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s;
-}
-.btn-print-cert:hover{ border-color:var(--purple); background:var(--bg); }
+  /* ===== MEETING INVITE ALERT ===== */
+  .meeting-alert-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9998; backdrop-filter:blur(4px); }
+  .meeting-alert-box { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:9999; background:#fff; border-radius:20px; padding:32px; width:min(480px,92vw); box-shadow:0 24px 64px rgba(0,0,0,0.3); animation:meetingPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275); text-align:center; }
+  @keyframes meetingPop { from{opacity:0;transform:translate(-50%,-50%) scale(0.8)} to{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+  .meeting-alert-icon { font-size:3.5rem; margin-bottom:12px; animation:ring 1s ease infinite; }
+  @keyframes ring { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} 60%{transform:rotate(-10deg)} 80%{transform:rotate(10deg)} }
+
 </style>
 </head>
 <body>
@@ -978,7 +882,7 @@
         </a>
         <span>المملكة العربية السعودية — وزارة التعليم</span>
       </div>
-      <b class="topbar-year">1447هـ</b>
+      
     </div>
     <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
   </div>
@@ -986,190 +890,374 @@
 
 <header>
   <div class="header-left">
-    <div class="header-icon">📘</div>
+    <div class="header-icon">🔧</div>
     <div>
-      <div class="header-title">بوابة ملفات الطلاب — برنامج الدمج الفكري</div>
-      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+      <div class="header-title">لوحة مشرف الدمج الفكري</div>
+      <div class="header-sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
     </div>
   </div>
-  <a href="index.html" class="back-btn">← الرئيسية</a>
+  <a href="index.html" style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);color:#fff;padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
 </header>
 
-<!-- ============ LOGIN ============ -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-badge">🔐 بوابة آمنة</div>
-    <div class="login-icon-big">🎓</div>
-    <h2>بوابة ملفات الطلاب</h2>
-    <p class="login-desc">
-      أدخل آخر 4 أرقام من السجل المدني للطالب للاطلاع على ملفه الكامل
-    </p>
-    <div class="input-label">🔑 رمز الدخول (آخر 4 أرقام من السجل المدني)</div>
-    <input type="password" class="pin-input" id="pin-input" maxlength="4" placeholder="• • • •" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')" onkeydown="if(event.key==='Enter') checkPin()">
-    <div class="error-msg" id="error-msg">❌ الرمز غير صحيح، يرجى المحاولة مجدداً</div>
-    <button class="login-btn" onclick="checkPin()">🔓 دخول البوابة</button>
-    <div class="hint-box">
-      💡 <strong>لأولياء الأمور:</strong> رمز الدخول هو آخر 4 أرقام من السجل المدني لابنكم. في حال وجود أي استفسار تواصلوا مع المعلم المختص.
-    </div>
+<!-- PIN SCREEN -->
+<div id="pin-screen" style="display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;background:var(--bg);">
+  <a href="index.html" style="position:absolute;top:20px;right:20px;background:rgba(63,46,99,0.08);border:1.5px solid rgba(63,46,99,0.2);color:var(--primary,#3F2E63);padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
+  <div style="background:#fff;border-radius:20px;padding:40px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
+    <div style="font-size:2.6rem;margin-bottom:14px;">🔐</div>
+    <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:var(--primary);margin-bottom:6px;">لوحة مشرف الدمج</div>
+    <div style="font-size:0.83rem;color:var(--muted);margin-bottom:22px;">أدخل رمز المشرف للدخول</div>
+    <input type="password" id="admin-pin" maxlength="6" placeholder="• • • •"
+      class="pin-input"
+      onkeydown="if(event.key==='Enter') checkPin()"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div id="pin-error" style="display:none;color:#dc2626;font-size:0.8rem;font-weight:700;margin-bottom:10px;background:#fee2e2;padding:7px 12px;border-radius:8px;">❌ الرمز غير صحيح</div>
+    <button onclick="checkPin()" style="width:100%;padding:13px;background:linear-gradient(135deg,#2E2148,#6B4C9A);color:#fff;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;margin-top:10px;">✅ دخول</button>
   </div>
 </div>
 
-<!-- ============ PORTAL ============ -->
-<div id="student-portal">
-
-  <div class="portal-banner">
-    <div class="student-identity">
-      <div class="student-photo-wrap">
-        <div class="student-photo" id="student-photo-circle" onclick="document.getElementById('photo-input').click()">
-          <img id="student-photo-img" src="" alt="" style="display:none;">
-          <span id="student-photo-emoji">🎓</span>
-        </div>
-        <button class="photo-change-btn" onclick="document.getElementById('photo-input').click()" title="تغيير الصورة">✏️</button>
-        <input type="file" id="photo-input" class="photo-input" accept="image/*" onchange="uploadStudentPhoto(this)">
-      </div>
-      <div class="student-name-display" id="disp-name">—</div>
-      <div class="student-meta-display">
-        <span class="meta-chip" id="disp-grade">—</span>
-        <span class="meta-chip">📘 برنامج الدمج الفكري</span>
-        <span class="meta-chip" id="disp-id">—</span>
+<!-- ADMIN PORTAL -->
+<!-- ============ ADMIN PORTAL ============ -->
+<div id="admin-portal" style="display:none;">
+  <div class="admin-banner">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div style="width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔧</div>
+      <div>
+        <div style="color:#fff;font-family:'Tajawal',sans-serif;font-size:1.1rem;font-weight:900;">لوحة تحكم المشرف — برنامج الدمج الفكري</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:0.76rem;margin-top:2px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
       </div>
     </div>
-    <button class="logout-btn" onclick="logout()">🚪 خروج</button>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div class="admin-badge" id="admin-student-count">— طالب</div>
+      <button onclick="saveAllStudents()" id="btn-save-all" style="background:linear-gradient(135deg,#8B6ABF,#D7A24A);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(224,112,32,0.4);display:flex;align-items:center;gap:6px;">💾 حفظ جميع البيانات</button>
+      <button class="logout-btn" onclick="adminLogout()">🚪 خروج</button>
+      <div id="revision-alert" style="display:none;background:#fef3c7;border:1px solid #f59e0b;color:#92400e;border-radius:10px;padding:8px 14px;font-size:0.82rem;font-weight:700;cursor:pointer;" onclick="showRevisionRequests()">🔄 <span id="revision-count">0</span> خطة تنتظر تعديل</div>
+      <button onclick="window.open('attendance_dumaj.html','_blank')" style="background:linear-gradient(135deg,#129E7C,#8B6ABF);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">📋 كشف الحضور</button>
+    </div>
   </div>
-
-  <div class="portal-body">
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
-      <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
-      <button class="tab-btn" onclick="openTab('performance',this)">📏 قياس مستوى الأداء</button>
-      <button class="tab-btn" onclick="openTab('strengths',this)">💪 جوانب القوة والضعف</button>
-      <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
-      <button class="tab-btn" onclick="openTab('iep',this)">🎯 تقييم الأهداف</button>
-      <button class="tab-btn" onclick="openTab('schedule',this)">📅 الجدول الدراسي</button>
-      <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
-      <button class="tab-btn" onclick="openTab('reinforce',this)">🏆 لوحة التعزيز</button>
+  <div class="admin-body">
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" onclick="openAdminTab('list',this)">👨‍🎓 قائمة الطلاب</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('add',this)">➕ إضافة طالب</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('upload',this)">📤 رفع التقارير</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('sigs',this);loadSignatures()">✍️ التوقيعات</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('schedule',this)">📅 جدول الحصص</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('meetings',this);loadMeetingTab()">📹 الاستدعاءات</button>
+      <button class="admin-tab-btn" onclick="openAdminTab('settings',this);renderStudentPinList();loadGradeTeachers()">⚙️ الإعدادات</button>
     </div>
-
-    <!-- INFO -->
-    <div class="tab-pane active" id="tab-info">
-      <div class="s-card">
-        <div class="s-card-head">👤 بيانات الطالب</div>
-        <table class="info-tbl" id="info-tbl"></table>
+    <div class="admin-tab-pane active" id="admin-tab-list">
+      <div style="margin-bottom:14px;">
+        <input type="text" class="form-input" id="admin-search" placeholder="🔍 ابحث باسم الطالب أو رمز الدخول..." oninput="renderStudentCards()" style="max-width:400px;">
       </div>
+      <div class="students-grid" id="students-grid"></div>
     </div>
-
-    <!-- REPORTS -->
-    <div class="tab-pane" id="tab-reports">
+    <div class="admin-tab-pane" id="admin-tab-add">
       <div class="s-card">
-        <div class="s-card-head">📊 التقارير والوثائق</div>
-        <div id="reports-list"></div>
-      </div>
-    </div>
-
-    <!-- PERFORMANCE LEVEL -->
-    <div class="tab-pane" id="tab-performance">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>📏 استمارة قياس مستوى الأداء الحالي</span>
-          <span style="background:var(--lav-100);color:var(--lav-700);border-radius:8px;padding:5px 14px;font-size:0.78rem;font-weight:700;">👁️ للاطلاع فقط — يقوم المعلم بالتحديث</span>
-        </div>
-        <div style="padding:20px;" id="performance-content">
-          <div style="text-align:center;padding:40px 20px;color:#9ca3af;">
-            <div style="font-size:3rem;margin-bottom:12px;">📏</div>
-            <div style="font-weight:800;font-size:0.95rem;">جارٍ تحميل الاستمارة...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- STRENGTHS & WEAKNESSES -->
-    <div class="tab-pane" id="tab-strengths">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>💪 جوانب القوة والاحتياج</span>
-          <span style="background:var(--lav-100);color:var(--lav-700);border-radius:8px;padding:5px 14px;font-size:0.78rem;font-weight:700;">👁️ للاطلاع فقط — يقوم المعلم بالتحديث</span>
-        </div>
-        <div style="padding:20px;" id="strengths-content">
-          <div style="text-align:center;padding:40px 20px;color:#9ca3af;">
-            <div style="font-size:3rem;margin-bottom:12px;">💪</div>
-            <div style="font-weight:800;font-size:0.95rem;">جارٍ تحميل البيانات...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PLAN -->
-    <div class="tab-pane" id="tab-plan">
-      <div class="s-card">
-        <div class="s-card-head">📋 الخطة التعليمية الفردية — الفصل الثاني 1447هـ</div>
-        <div style="padding:20px;" id="plan-pdfs"></div>
-      </div>
-    </div>
-
-
-
-
-    <!-- IEP GOALS - تقييم الأهداف -->
-    <div class="tab-pane" id="tab-iep">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>🎯 تقييم الأهداف التربوية</span>
-          <button onclick="savePlanAsPDF(currentStudent&&currentStudent.pin)" style="background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🖨️ طباعة الخطة</button>
-        </div>
-        <div style="padding:20px;">
-          <div id="iep-view-content">
-            <div style="text-align:center;padding:50px 20px;color:#9ca3af;">
-              <div style="font-size:3rem;margin-bottom:12px;">🎯</div>
-              <div style="font-weight:800;font-size:0.95rem;margin-bottom:6px;">لم تُضف أهداف الخطة بعد</div>
-              <div style="font-size:0.82rem;">يمكن للمشرف إضافة الأهداف من لوحة التحكم</div>
+        <div class="s-card-head">➕ إضافة طالب جديد</div>
+        <div style="padding:24px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label class="form-label">اسم الطالب الكامل *</label>
+              <input type="text" class="form-input" id="new-name" placeholder="مثال: محمد أحمد الزهراني">
+            </div>
+            <div class="form-group">
+              <label class="form-label">رقم السجل المدني / الإقامة *</label>
+              <input type="text" class="form-input" id="new-id" placeholder="10 أرقام" maxlength="10">
+            </div>
+            <div class="form-group">
+              <label class="form-label">الصف الدراسي *</label>
+              <input type="text" class="form-input" id="new-grade" placeholder="مثال: الأول المتوسط / 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label">جوال ولي الأمر</label>
+              <input type="text" class="form-input" id="new-phone" placeholder="05xxxxxxxx">
             </div>
           </div>
-          <div id="iep-charts-section" style="display:none;padding-top:16px;">
-            <div style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:10px;border-right:4px solid var(--accent);padding-right:10px;">📊 تحليل النتائج</div>
-            <div id="iep-stats-summary"></div>
-            <canvas id="iep-student-chart" height="180"></canvas>
+          <div class="form-group" style="margin-top:8px;">
+            <label class="form-label">💡 رمز الدخول (آخر 4 أرقام من السجل تلقائياً)</label>
+            <input type="text" class="form-input" id="new-pin-preview" placeholder="يُحسب تلقائياً" readonly style="background:#f9f9f9;color:var(--muted);">
+          </div>
+          <button class="btn-save" onclick="addNewStudent()" style="margin-top:8px;">✅ إضافة الطالب</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- رفع التقارير TAB -->
+    <div class="admin-tab-pane" id="admin-tab-upload">
+      <div class="s-card" style="margin-bottom:18px;">
+        <div class="s-card-head">📤 رفع تقارير الطلاب</div>
+        <div style="padding:20px;">
+          <div style="margin-bottom:14px;">
+            <label class="form-label">👤 اختر الطالب</label>
+            <select class="form-input" id="upload-student-select" onchange="loadStudentUploads()" style="max-width:400px;">
+              <option value="">— اختر الطالب —</option>
+            </select>
+          </div>
+          <div id="upload-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- التوقيعات TAB -->
+    <div class="admin-tab-pane" id="admin-tab-sigs">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:18px;">
+        <div class="s-card" style="text-align:center;padding:18px;">
+          <div style="font-family:'Tajawal',sans-serif;font-size:2rem;font-weight:900;color:var(--primary);" id="stat-total">0</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-top:4px;">إجمالي التوقيعات</div>
+        </div>
+        <div class="s-card" style="text-align:center;padding:18px;">
+          <div style="font-family:'Tajawal',sans-serif;font-size:2rem;font-weight:900;color:var(--primary);" id="stat-today">0</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-top:4px;">توقيعات اليوم</div>
+        </div>
+        <div class="s-card" style="text-align:center;padding:18px;">
+          <div style="font-family:'Tajawal',sans-serif;font-size:2rem;font-weight:900;color:var(--primary);" id="stat-students">0</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-top:4px;">طلاب وقّعوا</div>
+        </div>
+      </div>
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;">
+          <span>✍️ سجل توقيعات أولياء الأمور</span>
+          <button onclick="loadSignatures()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">🔄 تحديث</button>
+        </div>
+        <div style="padding:16px;">
+          <input type="text" class="form-input" id="search-input" placeholder="🔍 ابحث باسم الطالب أو الصف..." oninput="filterSigs()" style="margin-bottom:14px;">
+          <div id="sigs-container"><div style="text-align:center;padding:40px;color:var(--muted);">⏳ جاري التحميل...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- جدول الحصص -->
+    <div class="admin-tab-pane" id="admin-tab-schedule">
+      <div id="dumaj-schedule-container"></div>
+    </div>
+    <div class="admin-tab-pane" id="admin-tab-meetings">
+      <div style="max-width:560px;margin:0 auto;padding:8px 0;">
+        <div style="background:#fff;border:1px solid var(--border,#DCD2EE);border-radius:14px;padding:20px 22px;margin-bottom:18px;">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px;">📹 استدعاءات الاجتماع</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:16px;">الاستدعاءات الواردة من المشرف التربوي</div>
+          <div id="meetings-tab-content">
+            <div style="text-align:center;padding:30px;color:#999;">⏳ جاري التحميل...</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SCHEDULE -->
-    <div class="tab-pane" id="tab-schedule">
-      <div class="s-card">
-        <div class="s-card-head">📅 الجدول الدراسي الأسبوعي</div>
-        <div style="padding:16px;" id="schedule-content">
-          <div style="text-align:center;padding:40px;color:#9ca3af;">
-            <div style="font-size:2.5rem;margin-bottom:10px;">📅</div>
-            <div style="font-weight:800;">جارٍ تحميل الجدول...</div>
+    <div class="admin-tab-pane" id="admin-tab-settings">
+      <div style="max-width:560px;margin:0 auto;padding:8px 0">
+        <!-- رمز المشرف -->
+        <div style="background:#fff;border:1px solid var(--border,#DCD2EE);border-radius:14px;padding:20px 22px;margin-bottom:18px">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px">🔐 رمز دخول المشرف</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px">تغيير رمز دخول لوحة التحكم</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div>
+              <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:4px">الرمز الحالي</div>
+              <input type="password" id="dumaj-cur-admin-pin" maxlength="8" placeholder="أدخل الرمز الحالي"
+                style="width:100%;border:1.5px solid #ddd;border-radius:8px;padding:9px 12px;font-family:Cairo,sans-serif;font-size:0.9rem;direction:rtl">
+            </div>
+            <div>
+              <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:4px">الرمز الجديد</div>
+              <input type="password" id="dumaj-new-admin-pin" maxlength="8" placeholder="الرمز الجديد"
+                style="width:100%;border:1.5px solid #ddd;border-radius:8px;padding:9px 12px;font-family:Cairo,sans-serif;font-size:0.9rem;direction:rtl">
+            </div>
           </div>
+          <div id="dumaj-admin-pin-msg" style="font-size:0.78rem;margin-bottom:10px;min-height:18px"></div>
+          <button onclick="changeAdminPin()" style="background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-family:Cairo,sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer">💾 تحديث رمز المشرف</button>
+        </div>
+        <!-- إسناد المعلمين للصفوف -->
+        <div style="background:#fff;border:1px solid var(--border,#DCD2EE);border-radius:14px;padding:20px 22px;margin-bottom:18px">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px">👨‍🏫 إسناد المعلمين للصفوف</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px">حدد المعلم المسؤول عن خطط كل صف دراسي</div>
+          <div style="display:flex;flex-direction:column;gap:12px;" id="grade-teachers-list">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#f9f9f9;border-radius:10px;padding:12px 14px;">
+              <div style="font-size:0.85rem;font-weight:800;color:var(--primary);">الأول المتوسط / ١</div>
+              <input type="text" id="teacher-grade-1" class="form-input" placeholder="اسم المعلم" style="padding:9px 12px;font-size:0.85rem;"
+                value="" oninput="previewTeacherSave()">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#f9f9f9;border-radius:10px;padding:12px 14px;">
+              <div style="font-size:0.85rem;font-weight:800;color:var(--primary);">الثاني المتوسط / ١</div>
+              <input type="text" id="teacher-grade-2" class="form-input" placeholder="اسم المعلم" style="padding:9px 12px;font-size:0.85rem;"
+                value="" oninput="previewTeacherSave()">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;background:#f9f9f9;border-radius:10px;padding:12px 14px;">
+              <div style="font-size:0.85rem;font-weight:800;color:var(--primary);">الثالث المتوسط / ١</div>
+              <input type="text" id="teacher-grade-3" class="form-input" placeholder="اسم المعلم" style="padding:9px 12px;font-size:0.85rem;"
+                value="" oninput="previewTeacherSave()">
+            </div>
+          </div>
+          <div id="teacher-save-msg" style="font-size:0.78rem;min-height:18px;margin:10px 0;"></div>
+          <button onclick="saveGradeTeachers()" style="background:linear-gradient(135deg,#129E7C,#8B6ABF);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-family:Cairo,sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;">💾 حفظ المعلمين</button>
+        </div>
+        <!-- رموز الطلاب -->
+        <div style="background:#fff;border:1px solid var(--border,#DCD2EE);border-radius:14px;padding:20px 22px">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px">🎓 رموز دخول الطلاب</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px">تعديل رمز دخول أي طالب من القائمة</div>
+          <div id="dumaj-students-pin-list" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+
+        <!-- سجل التدقيق -->
+        <div style="background:#fff;border:1px solid var(--border,#DCD2EE);border-radius:14px;padding:20px 22px;margin-top:18px;">
+          <div style="font-weight:900;font-size:1rem;margin-bottom:4px;">🔍 سجل التدقيق</div>
+          <div style="font-size:0.78rem;color:#666;margin-bottom:14px;">جميع التعديلات والعمليات المسجّلة</div>
+          <button onclick="showAuditLog()" style="background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:9px;padding:10px 20px;font-family:Cairo,sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;">🔍 عرض السجل</button>
         </div>
       </div>
     </div>
 
-    <!-- IQRAR -->
-    <div class="tab-pane" id="tab-iqrar">
-      <div class="s-card">
-        <div class="s-card-head">✍️ إقرار اطلاع ولي الأمر على الخطة الفردية</div>
-        <div style="padding:24px;" id="iqrar-content"></div>
-      </div>
-    </div>
-
-    <!-- REINFORCEMENT BOARD -->
-    <div class="tab-pane" id="tab-reinforce">
-      <div class="s-card">
-        <div class="s-card-head">🏆 لوحة التعزيز — شهادات الشكر والتقدير</div>
-        <div style="padding:20px;" id="reinforce-content"></div>
-      </div>
-    </div>
 
   </div>
 </div>
 
 
+<!-- DUMAJ CELL EDITOR MODAL -->
+<div id="dumaj-cell-overlay" onclick="closeDumajCellEditor()" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.6);z-index:9000;backdrop-filter:blur(3px);"></div>
+<div id="dumaj-cell-box" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:0;width:min(560px,96vw);max-height:90vh;overflow-y:auto;z-index:9001;box-shadow:0 12px 50px rgba(10,20,40,0.25);">
+  <div id="dumaj-cell-content"></div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-box" style="max-width:680px;">
+    <div class="modal-title" id="modal-title">✏️ تعديل بيانات الطالب</div>
+    <!-- 4 تابات فقط -->
+    <div style="display:flex;gap:4px;background:#F7F5FC;border-radius:10px;padding:4px;margin-bottom:20px;flex-wrap:wrap;">
+      <button class="admin-tab-btn active" onclick="openEditTab('basic',this)" style="font-size:0.8rem;padding:9px 12px;flex:1;min-width:90px;">👤 البيانات</button>
+      <button class="admin-tab-btn" onclick="openEditTab('iep',this)" style="font-size:0.8rem;padding:9px 12px;flex:1;min-width:90px;">🎯 الخطة</button>
+      <button class="admin-tab-btn" onclick="openEditTab('analysis',this)" style="font-size:0.8rem;padding:9px 12px;flex:1;min-width:90px;">📊 التحليل</button>
+      <button class="admin-tab-btn" onclick="openEditTab('details',this)" style="font-size:0.8rem;padding:9px 12px;flex:1;min-width:90px;">📝 التفاصيل</button>
+    </div>
+
+    <!-- TAB 1: البيانات الأساسية -->
+    <div id="edit-tab-basic">
+      <div class="form-group"><label class="form-label">اسم الطالب</label><input type="text" class="form-input" id="edit-name"></div>
+      <div class="form-group"><label class="form-label">الصف الدراسي</label><input type="text" class="form-input" id="edit-grade"></div>
+      <div class="form-group"><label class="form-label">رقم السجل المدني / الإقامة</label><input type="text" class="form-input" id="edit-id"></div>
+      <div class="form-group"><label class="form-label">جوال ولي الأمر</label><input type="text" class="form-input" id="edit-phone"></div>
+    </div>
+
+    <!-- TAB 2: الخطة التربوية IEP -->
+    <div id="edit-tab-iep" style="display:none;">
+      <div id="iep-editor-wrap"></div>
+    </div>
+
+    <!-- TAB 3: تحليل النتائج -->
+    <div id="edit-tab-analysis" style="display:none;">
+      <div id="iep-analysis-wrap">
+        <div style="text-align:center;padding:40px;color:#9ca3af;">
+          <div style="font-size:2rem;margin-bottom:8px;">📊</div>
+          <div style="font-size:0.88rem;">افتح تاب الخطة أولاً ثم عد للتحليل</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: التفاصيل -->
+    <div id="edit-tab-details" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label class="form-label" style="font-size:0.8rem;font-weight:800;color:var(--primary);">📋 المعلومات الشخصية</label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ الميلاد</label>
+          <input type="date" class="form-input" id="edit-birthdate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الجنسية</label>
+          <input type="text" class="form-input" id="edit-nationality" placeholder="الجنسية">
+        </div>
+        <div class="form-group">
+          <label class="form-label">العمر</label>
+          <input type="text" class="form-input" id="edit-age" placeholder="العمر">
+        </div>
+        <div class="form-group">
+          <label class="form-label">العنوان</label>
+          <input type="text" class="form-input" id="edit-address" placeholder="العنوان">
+        </div>
+        <div class="form-group">
+          <label class="form-label">درجة الذكاء</label>
+          <input type="text" class="form-input" id="edit-iq" placeholder="درجة الذكاء">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ترتيب الطالب بين إخوته</label>
+          <input type="text" class="form-input" id="edit-sibling-order" placeholder="مثال: الثاني">
+        </div>
+        <div class="form-group">
+          <label class="form-label">المستوى الاقتصادي للأسرة</label>
+          <select class="form-input" id="edit-economic-level">
+            <option value="">اختر...</option>
+            <option value="منخفض">منخفض</option>
+            <option value="متوسط">متوسط</option>
+            <option value="مرتفع">مرتفع</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">مستوى تعليم الأب</label>
+          <select class="form-input" id="edit-father-edu">
+            <option value="">اختر...</option>
+            <option value="ابتدائي">ابتدائي</option>
+            <option value="متوسط">متوسط</option>
+            <option value="ثانوي">ثانوي</option>
+            <option value="جامعي">جامعي</option>
+            <option value="دراسات عليا">دراسات عليا</option>
+            <option value="غير متعلم">غير متعلم</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">مستوى تعليم الأم</label>
+          <select class="form-input" id="edit-mother-edu">
+            <option value="">اختر...</option>
+            <option value="ابتدائي">ابتدائي</option>
+            <option value="متوسط">متوسط</option>
+            <option value="ثانوي">ثانوي</option>
+            <option value="جامعي">جامعي</option>
+            <option value="دراسات عليا">دراسات عليا</option>
+            <option value="غير متعلم">غير متعلم</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">الوضع النفسي</label>
+          <textarea class="form-input" id="edit-status-psych" rows="2" style="resize:vertical;"></textarea>
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">الوضع الاجتماعي</label>
+          <textarea class="form-input" id="edit-status-social" rows="2" style="resize:vertical;"></textarea>
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">الوضع الصحي</label>
+          <textarea class="form-input" id="edit-status-health" rows="2" style="resize:vertical;"></textarea>
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">التشخيص</label>
+          <textarea class="form-input" id="edit-diagnosis" rows="2" style="resize:vertical;"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">المكان التربوي المناسب</label>
+          <input type="text" class="form-input" id="edit-program-place">
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ بدء البرنامج</label>
+          <input type="text" class="form-input" id="edit-program-start" placeholder="1/1/1447هـ">
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ إنهاء البرنامج</label>
+          <input type="text" class="form-input" id="edit-program-end" placeholder="1/5/1447هـ">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-delete-student" onclick="deleteStudent()">🗑️ حذف الطالب</button>
+      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+      <button class="btn-save" onclick="saveStudentEdits()">💾 حفظ التعديلات</button>
+    </div>
+  </div>
+</div>
 
 <!-- Toast -->
 <div class="success-toast" id="success-toast">✅ تم الحفظ بنجاح</div>
+
+<footer style="background:var(--primary);color:rgba(255,255,255,0.6);text-align:center;padding:18px;font-size:0.78rem;border-top:3px solid var(--accent);margin-top:40px;">
+  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong style="color:var(--accent-light);">إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
 
 <script>
 // =====================================================
@@ -1177,7 +1265,7 @@
 // =====================================================
 const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-let ADMIN_PIN = "7410"; // رمز مشرف الدمج
+let ADMIN_PIN = null; // لا يُخزن في الكود — يُتحقق منه عبر Supabase
 
 async function sbSaveSignature(pin, name, grade, signData) {
   try {
@@ -1216,7 +1304,7 @@ async function sbSaveSignature(pin, name, grade, signData) {
 
 const BASE_URL = "https://makkah-special.github.io/";
 
-// STUDENTS محذوف من الكود — التحقق يتم عبر Supabase
+// STUDENTS محذوف من الكود — يُجلب من Supabase عند الدخول
 const STUDENTS = {};
 // =====================================================
 // LOGIC
@@ -1227,6 +1315,51 @@ let currentStudent = null;
 const SB_PHOTOS = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/dumaj/photos/";
 const SB_URL    = "https://pyrxwqgapwjwhiskowhk.supabase.co";
 const SB_KEY    = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+
+// ===== AUDIT SYSTEM =====
+const AUDIT_USER    = "مشرف الدمج الفكري";
+const AUDIT_PROGRAM = "الدمج الفكري";
+const AUDIT_FILE    = 'reports/audit/audit-log.json';
+let auditLog = [];
+
+async function loadAuditLog() {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/${AUDIT_FILE}`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      auditLog = Array.isArray(data) ? data : [];
+    }
+  } catch(e) { auditLog = []; }
+}
+
+async function saveAuditLog() {
+  try {
+    const blob = new Blob([JSON.stringify(auditLog)], { type: 'application/json' });
+    await fetch(`${SB_URL}/storage/v1/object/${AUDIT_FILE}`, {
+      method: 'POST',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY,
+                 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: blob
+    });
+  } catch(e) { console.warn('Audit save:', e); }
+}
+
+async function logAudit(action, details = {}) {
+  const entry = {
+    id:        Date.now(),
+    timestamp: new Date().toISOString(),
+    user:      AUDIT_USER,
+    program:   AUDIT_PROGRAM,
+    action,
+    details,
+  };
+  auditLog.unshift(entry);
+  if (auditLog.length > 500) auditLog = auditLog.slice(0, 500);
+  saveAuditLog();
+}
+
 
 async function loadStudentPhoto(pin) {
   const exts = ['jpg','jpeg','png','webp'];
@@ -1299,7 +1432,7 @@ function loadStudent(pin) {
   (async () => {
     const exts = ['pdf','PDF','docx','doc'];
     for (const ext of exts) {
-      const url = `${SB_PLAN}plan-${pin}.${ext}?t=${Date.now()}`;
+      const url = `${SB_PLAN}plan-${pin}.${ext}`;
       try {
         const res = await fetch(url, { method: 'HEAD' });
         if (res.ok) {
@@ -1327,7 +1460,7 @@ function loadStudent(pin) {
   // دالة للتحقق من وجود الملف
   async function checkFile(url) {
     try {
-      const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { method: 'HEAD' });
+      const r = await fetch(url, { method: 'HEAD' });
       return r.ok;
     } catch { return false; }
   }
@@ -1470,8 +1603,8 @@ function loadStudent(pin) {
   // SHOW PORTAL
   document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
   document.querySelectorAll('.tab-pane').forEach((p,i) => p.classList.toggle('active', i===0));
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('student-portal').style.display = 'block';
+  // login-screen not used in admin-only page
+  // student-portal not in admin page
   window.scrollTo(0, 0);
   // تطبيق وتهيئة IEP
   ensureIEP(pin);
@@ -1479,9 +1612,9 @@ function loadStudent(pin) {
 
 function logout() {
   currentStudent = null;
-  document.getElementById('pin-input').value = '';
-  document.getElementById('student-portal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-pin').value = '';
+  // student-portal not in admin page
+  document.getElementById('pin-screen').style.display = 'flex';
   // Reset tabs
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-plan').classList.add('active');
@@ -1501,100 +1634,7 @@ function openTab(id, btn) {
       renderIEPStudentView(pin);
     }
   }
-  if (id === 'schedule') renderStudentSchedule();
-  if (id === 'performance') renderPerformanceTab();
-  if (id === 'strengths') renderStrengthsTab();
-  if (id === 'reinforce') renderReinforceTab();
   if (id === 'iqrar') setTimeout(initCanvas, 100);
-}
-
-// ===== SCHEDULE TAB =====
-function renderStudentSchedule() {
-  const el = document.getElementById('schedule-content');
-  if (!el || !currentStudent) return;
-
-  // استخراج الصف من بيانات الطالب (مثال: "الأول المتوسط / ١" → "أول متوسط")
-  const gradeRaw = (currentStudent.grade || '').trim();
-  let gradeKey = '';
-  if (gradeRaw.includes('الأول'))   gradeKey = 'أول متوسط';
-  else if (gradeRaw.includes('الثاني')) gradeKey = 'ثاني متوسط';
-  else if (gradeRaw.includes('الثالث')) gradeKey = 'ثالث متوسط';
-
-  if (!gradeKey) {
-    el.innerHTML = '<div class="sch-no-data">⚠️ لم يتم تحديد صف الطالب</div>';
-    return;
-  }
-
-  // تحميل الجدول من localStorage (نفس مفتاح admin-dumaj)
-  let timetable = {};
-  try {
-    const raw = localStorage.getItem('dumaj_timetable_v1_' + gradeKey);
-    if (raw) timetable = JSON.parse(raw);
-  } catch(e) {}
-
-  const days    = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
-  const periods = [
-    { num:1, label:'الأولى',   time:'7:30–8:15'   },
-    { num:2, label:'الثانية',  time:'8:15–9:00'   },
-    { num:3, label:'الثالثة',  time:'9:00–9:45'   },
-    { num:4, label:'الرابعة',  time:'10:05–10:50' },
-    { num:5, label:'الخامسة',  time:'10:50–11:35' },
-    { num:6, label:'السادسة',  time:'11:35–12:20' },
-    { num:7, label:'السابعة',  time:'12:20–13:05' },
-  ];
-
-  const hasData = Object.keys(timetable).length > 0;
-  if (!hasData) {
-    el.innerHTML = `<div class="sch-no-data">
-      <div style="font-size:2.5rem;margin-bottom:12px;">📅</div>
-      <div style="font-weight:800;color:#3F2E63;margin-bottom:6px;">لم يُعدّ الجدول بعد</div>
-      <div style="font-size:0.82rem;">يمكن للمشرف إعداد جدول ${gradeKey} من لوحة التحكم</div>
-    </div>`;
-    return;
-  }
-
-  let html = `
-    <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px;">
-      <div style="background:linear-gradient(135deg,#3F2E63,#2E2148);color:#fff;padding:6px 16px;border-radius:20px;font-family:'Tajawal',sans-serif;font-weight:800;font-size:0.85rem;">
-        📚 ${gradeKey}
-      </div>
-      <div style="font-size:0.78rem;color:#888;">الجدول الأسبوعي — الفصل الثاني 1447هـ</div>
-    </div>
-    <div style="overflow-x:auto;">
-    <table class="sch-table">
-      <thead>
-        <tr>
-          <th>الحصة</th>
-          <th>الوقت</th>
-          ${days.map(d => `<th>${d}</th>`).join('')}
-        </tr>
-      </thead>
-      <tbody>`;
-
-  periods.forEach(p => {
-    html += `<tr>
-      <td class="sch-period-label">${p.label}</td>
-      <td class="sch-period-label" style="font-size:0.65rem;color:#888;font-weight:600;">${p.time}</td>`;
-    days.forEach(day => {
-      const cell = (timetable[day] || {})[p.num] || { type:'empty' };
-      if (cell.type === 'lesson') {
-        html += `<td class="sch-cell-lesson">
-          <span class="sch-subject">${cell.subject || '—'}</span>
-          ${cell.teacher ? `<span class="sch-teacher">👤 ${cell.teacher}</span>` : ''}
-        </td>`;
-      } else if (cell.type === 'break_sup') {
-        html += `<td class="sch-cell-break">☕ فسحة</td>`;
-      } else if (cell.type === 'end_sup') {
-        html += `<td class="sch-cell-end">🏫 نهاية</td>`;
-      } else {
-        html += `<td class="sch-cell-empty">—</td>`;
-      }
-    });
-    html += '</tr>';
-  });
-
-  html += '</tbody></table></div>';
-  el.innerHTML = html;
 }
 
 // Legend
@@ -1716,7 +1756,7 @@ function saveIqrarPDF() {
         .header h1 { font-size:1.4rem; font-weight:800; color:#3F2E63; margin-bottom:4px; }
         .header p { font-size:0.85rem; color:#6E5F82; }
         .badge { display:inline-block; background:#3F2E63; color:#fff; padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:10px; }
-        .iqrar-text { background:#EAE1F7; border:1px solid #f0d898; border-right:4px solid #D7A24A; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
+        .iqrar-text { background:#EAE1F7; border:1px solid #DCD2EE; border-right:4px solid #D7A24A; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
         .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
         .field { border:1px solid #DCD2EE; border-radius:8px; padding:10px 14px; }
         .field-label { font-size:0.72rem; font-weight:700; color:#6E5F82; margin-bottom:4px; }
@@ -1760,7 +1800,13 @@ function saveIqrarPDF() {
         © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
       </div>
       <scr' + 'ipt>window.onload=()=>window.print();</scr' + 'ipt>
-    </body>
+    
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+
+
+</body>
     </html>
   `);
   win.document.close();
@@ -1775,66 +1821,141 @@ let editingPin = null;
 
 
 // ══ SETTINGS: change PINs ══════════════════════════════════════
-
-
-
-
-async function checkPin() {
-  const enteredPin = document.getElementById('pin-input').value.trim();
-  const errMsg = document.getElementById('error-msg');
-  const pinInput = document.getElementById('pin-input');
-  const loginBtn = document.querySelector('.login-btn');
-
-  if (!enteredPin || enteredPin.length !== 4) {
-    errMsg.textContent = '❌ أدخل رمزاً مكوناً من 4 أرقام';
-    errMsg.classList.add('show');
-    return;
+function renderStudentPinList() {
+  const container = document.getElementById("dumaj-students-pin-list");
+  if (!container) return;
+  container.innerHTML = "";
+  Object.keys(STUDENTS).forEach(pin => {
+    const s = STUDENTS[pin];
+    const row = document.createElement("div");
+    row.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f9f9f9;border:1px solid #eee;border-radius:10px";
+    row.innerHTML = '<span style="flex:1;font-size:0.85rem;font-weight:700">' + (s.name||pin) + '</span>'
+      + '<input type="text" data-oldpin="' + pin + '" value="' + pin + '" maxlength="8"'
+      + ' style="width:100px;border:1.5px solid #ddd;border-radius:7px;padding:7px 10px;font-family:Cairo,sans-serif;font-size:0.85rem;text-align:center">'
+      + '<button onclick="saveStudentPin(this)" style="background:#3F2E63;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-family:Cairo,sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer">حفظ</button>';
+    container.appendChild(row);
+  });
+}
+function saveStudentPin(btn) {
+  const input = btn.previousElementSibling;
+  const oldPin = input.dataset.oldpin;
+  const newPin = input.value.trim();
+  if (!newPin) { alert("الرمز لا يمكن أن يكون فارغاً"); return; }
+  if (newPin === oldPin) { showPinMsg(btn, "لم يتغير الرمز", "#888"); return; }
+  if (STUDENTS[newPin] && newPin !== oldPin) { showPinMsg(btn, "❌ الرمز مستخدم بالفعل", "#dc2626"); return; }
+  STUDENTS[newPin] = STUDENTS[oldPin];
+  delete STUDENTS[oldPin];
+  input.dataset.oldpin = newPin;
+  showPinMsg(btn, "✅ تم التحديث", "#16a34a");
+}
+async function changeAdminPin() {
+  const cur = document.getElementById("dumaj-cur-admin-pin").value.trim();
+  const nw  = document.getElementById("dumaj-new-admin-pin").value.trim();
+  const msg = document.getElementById("dumaj-admin-pin-msg");
+  if (cur !== ADMIN_PIN) { msg.textContent = "❌ الرمز الحالي غير صحيح"; msg.style.color="#dc2626"; return; }
+  if (!nw) { msg.textContent = "❌ أدخل الرمز الجديد"; msg.style.color="#dc2626"; return; }
+  try {
+    await fetch(`${SB_URL}/storage/v1/object/reports/admin-dumaj-config.json`, {
+      method: 'POST',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+      body: JSON.stringify({ pin: nw })
+    });
+    ADMIN_PIN = nw;
+    msg.textContent = "✅ تم تحديث رمز المشرف بنجاح";
+    msg.style.color = "#16a34a";
+  } catch(e) {
+    msg.textContent = "❌ فشل الحفظ، حاول مجدداً";
+    msg.style.color = "#dc2626";
   }
+  document.getElementById("dumaj-cur-admin-pin").value = "";
+  document.getElementById("dumaj-new-admin-pin").value = "";
+}
+function showPinMsg(btn, txt, color) {
+  const old = btn.textContent;
+  btn.textContent = txt;
+  btn.style.background = color;
+  setTimeout(() => { btn.textContent = "حفظ"; btn.style.background = "#3F2E63"; }, 2000);
+}
+async function checkPin() {
+  const enteredPin = document.getElementById('admin-pin').value.trim();
+  const errMsg = document.getElementById('pin-error');
+  const pinInput = document.getElementById('admin-pin');
+  const btn = document.querySelector('.btn-enter');
 
-  // تعطيل الزر أثناء التحقق
-  if (loginBtn) { loginBtn.disabled = true; loginBtn.textContent = '⏳ جارٍ التحقق...'; }
-  errMsg.classList.remove('show');
+  if (!enteredPin) return;
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ جارٍ التحقق...'; }
+  errMsg.style.display = 'none';
 
   try {
-    // التحقق من Supabase Storage مباشرة
+    // تحقق من رمز المشرف
     const res = await fetch(
+      `${SB_URL}/storage/v1/object/public/reports/admin-dumaj-config.json?t=${Date.now()}`
+    );
+    if (res.ok) {
+      const config = await res.json();
+      if (config && config.pin && enteredPin === config.pin) {
+        ADMIN_PIN = config.pin;
+        pinInput.classList.remove('error');
+        loadAdminPanel();
+        return;
+      }
+    }
+
+    // تحقق من رمز طالب
+    const stuRes = await fetch(
       `${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${enteredPin}.json?t=${Date.now()}`
     );
-
-    if (res.ok) {
-      const data = await res.json();
+    if (stuRes.ok) {
+      const data = await stuRes.json();
       if (data && data.name) {
-        // PIN صحيح — أضف الطالب في الذاكرة المؤقتة فقط
         STUDENTS[enteredPin] = {
-          name: data.name || '',
-          id_full: data.id_full || '',
-          grade: data.grade || '',
-          phone: data.phone || '',
-          plan: data.plan || [],
-          reports: data.reports || [],
-          followup: data.followup || [],
-          pin: enteredPin
+          name: data.name || '', id_full: data.id_full || '',
+          grade: data.grade || '', phone: data.phone || '',
+          plan: data.plan || [], reports: data.reports || [], followup: data.followup || []
         };
+        errMsg.style.display = 'none';
         pinInput.classList.remove('error');
         loadStudentWithSync(enteredPin);
         return;
       }
     }
-    // PIN خاطئ
-    errMsg.textContent = '❌ الرمز غير صحيح، يرجى المحاولة مجدداً';
-    errMsg.classList.add('show');
+
+    // خاطئ
+    errMsg.style.display = 'block';
     pinInput.classList.add('error');
     pinInput.value = '';
     setTimeout(() => pinInput.classList.remove('error'), 500);
 
   } catch(e) {
-    errMsg.textContent = '❌ تعذّر الاتصال، تحقق من الإنترنت';
-    errMsg.classList.add('show');
+    errMsg.textContent = '❌ تعذّر الاتصال';
+    errMsg.style.display = 'block';
   } finally {
-    if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = '🔓 دخول البوابة'; }
+    if (btn) { btn.disabled = false; btn.textContent = '🔓 دخول'; }
   }
 }
 
+async function loadAdminPanel() {
+  // إظهار اللوحة فوراً بدون انتظار Supabase
+  document.getElementById('pin-screen').style.display = 'none';
+  document.getElementById('admin-portal').style.display = 'block';
+  logAudit('دخول لوحة التحكم', {});
+  loadAuditLog();
+  document.getElementById('admin-student-count').textContent = '⏳ جاري التحميل...';
+  window.scrollTo(0, 0);
+  // تحميل البيانات في الخلفية
+  applyDefaultIEPAll();
+  renderStudentCards();
+  // ثم جلب البيانات من Supabase بشكل غير متزامن
+  try {
+    await syncFromSupabase();
+    applyDefaultIEPAll();
+    renderStudentCards();
+  } catch(e) {
+    showToast('⚠️ تعذر تحميل البيانات من السيرفر، تم عرض البيانات المحلية');
+  }
+  // فحص استدعاءات الاجتماع بعد ثانيتين
+  setTimeout(checkMeetingInvite, 2000);
+}
 
 // ===== SUPABASE SYNC =====
 const SB_TABLE = SUPABASE_URL + '/rest/v1/dumaj_students';
@@ -1846,7 +1967,24 @@ const SB_HEADERS = {
 };
 
 async function syncFromSupabase() {
-  // لا نحتاج sync عند البداية — البيانات تُجلب فقط بعد تسجيل الدخول
+  // جلب قائمة الطلاب من config ثم تحميل بياناتهم
+  try {
+    const cfgRes = await fetch(`${SB_URL}/storage/v1/object/public/reports/admin-dumaj-config.json?t=${Date.now()}`);
+    if (cfgRes.ok) {
+      const cfg = await cfgRes.json();
+      if (cfg && cfg.students && Array.isArray(cfg.students)) {
+        // أضف الطلاب الغير موجودين في STUDENTS
+        cfg.students.forEach(s => {
+          if (!STUDENTS[s.pin]) {
+            STUDENTS[s.pin] = { name: s.name||'', id_full: s.id_full||'', grade: s.grade||'', phone: s.phone||'', plan:[], reports:[], followup:[] };
+          }
+        });
+      }
+    }
+  } catch(e) {}
+  // جلب بيانات جميع الطلاب من Storage
+  const pins = Object.keys(STUDENTS);
+  await Promise.all(pins.map(pin => loadStudentDataFromStorage(pin)));
 }
 
 async function loadStudentDataFromStorage(pin) {
@@ -1893,8 +2031,6 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].program_place  = sd('program_place');
       STUDENTS[pin].program_start  = sd('program_start');
       STUDENTS[pin].program_end    = sd('program_end');
-      if (data.performance) STUDENTS[pin].performance = data.performance;
-      if (data.strengths)   STUDENTS[pin].strengths   = data.strengths;
     }
   } catch(e) { /* ملف غير موجود */ }
 }
@@ -1932,8 +2068,7 @@ async function upsertToSupabase(pin, studentData) {
       program_place:  studentData.program_place  || '',
       program_start:  studentData.program_start  || '',
       program_end:    studentData.program_end    || '',
-      performance:    studentData.performance    || {},
-      strengths:      studentData.strengths      || {},
+      teacher_name:   studentData.teacher_name  || '',
     };
     const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
     const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
@@ -1948,6 +2083,7 @@ async function upsertToSupabase(pin, studentData) {
     });
     if (res.ok) {
       showToast('✅ تم حفظ بيانات ' + studentData.name);
+      logAudit('تعديل بيانات طالب', { studentName: studentData.name, pin, grade: studentData.grade });
     } else {
       const err = await res.text();
       console.error('Storage error:', err);
@@ -1961,32 +2097,373 @@ async function upsertToSupabase(pin, studentData) {
 
 
 
+function adminLogout() {
+  document.getElementById('admin-pin').value = '';
+  document.getElementById('admin-portal').style.display = 'none';
+  document.getElementById('pin-screen').style.display = 'flex';
+}
+
+function openAdminTab(id, btn) {
+  document.querySelectorAll('#admin-portal .admin-tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('admin-tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'schedule') renderDumajSchedule();
+  if (id === 'upload') populateUploadStudentSelect();
+  if (id === 'settings') { loadGradeTeachers(); renderStudentPinList(); }
+  if (id === 'meetings') loadMeetingTab();
+}
+
+function renderStudentCards() {
+  const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
+  const grid = document.getElementById('students-grid');
+  const entries = Object.entries(STUDENTS).filter(([pin, s]) =>
+    s.name.toLowerCase().includes(search) || pin.includes(search)
+  );
+  entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, 'ar'));
+  grid.innerHTML = entries.map(([pin, s]) => `
+    <div style="background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.05);transition:transform 0.2s,box-shadow 0.2s;" onmouseenter="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'" onmouseleave="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.05)'">
+      <div style="padding:20px 20px 14px;text-align:center;position:relative;cursor:pointer;" onclick="openEditModal('${pin}')">
+        <button style="position:absolute;top:14px;right:14px;background:transparent;border:none;cursor:pointer;font-size:1rem;color:var(--muted);" onclick="event.stopPropagation();openEditModal('${pin}')" title="تعديل">✏️</button>
+        <div style="width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:2px solid #7dd3fc;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 12px;">🎓</div>
+        <div style="font-family:'Tajawal',sans-serif;font-size:0.98rem;font-weight:900;color:var(--primary);line-height:1.4;margin-bottom:5px;">${s.name}</div>
+        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:8px;">${s.grade}</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+          <span style="background:#EAE1F7;color:#5b21b6;font-size:0.75rem;font-weight:800;padding:3px 12px;border-radius:12px;">${pin}</span>
+          <span style="font-size:0.75rem;color:var(--muted);">${s.phone || ''}</span>
+        </div>
+      </div>
+      <div style="padding:10px 16px;background:#FBFAFE;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:0.74rem;">
+          <div style="color:var(--muted);">تاريخ الميلاد: <span style="color:var(--text);font-weight:700;">${s.birthdate || '—'}</span></div>
+          <div style="color:var(--muted);">الجنسية: <span style="color:var(--text);font-weight:700;">${s.nationality || '—'}</span></div>
+          <div style="color:var(--muted);">العمر: <span style="color:var(--text);font-weight:700;">${s.age || '—'}</span></div>
+          <div style="color:var(--muted);">درجة الذكاء: <span style="color:var(--text);font-weight:700;">${s.iq || '—'}</span></div>
+          <div style="color:var(--muted);">رقم الجوال: <span style="color:var(--primary);font-weight:700;">${s.phone || '—'}</span></div>
+          <div style="color:var(--muted);">العنوان: <span style="color:var(--text);font-weight:700;">${s.address || '—'}</span></div>
+          ${s.diagnosis ? `<div style="color:var(--muted);grid-column:1/-1;">التشخيص: <span style="color:#6B4C9A;font-weight:700;">${s.diagnosis}</span></div>` : ''}
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;">
+        <button onclick="saveOneStudent('${pin}')" style="background:linear-gradient(135deg,#129E7C,#8B6ABF);color:#fff;border:none;padding:11px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity 0.2s;" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">💾 حفظ</button>
+        <button onclick="printStudentCard('${pin}')" style="background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-right:1px solid rgba(255,255,255,0.15);padding:11px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity 0.2s;" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">🖨️ طباعة</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
+}
 
 
+async function openEditModal(pin) {
+  showToast('⏳ جاري تحميل البيانات...');
+  await loadStudentDataFromStorage(pin);
+  editingPin = pin;
+  const sM = STUDENTS[pin];
+  document.getElementById('modal-title').textContent = '✏️ تعديل: ' + sM.name;
+  document.getElementById('edit-name').value = sM.name || '';
+  document.getElementById('edit-grade').value = sM.grade || '';
+  document.getElementById('edit-id').value = sM.id_full || '';
+  document.getElementById('edit-phone').value = sM.phone || '';
+  const setV = (id, v) => { const e = document.getElementById(id); if(e) e.value = v||''; };
+  setV('edit-birthdate', sM.birthdate); setV('edit-nationality', sM.nationality);
+  setV('edit-age', sM.age); setV('edit-address', sM.address); setV('edit-iq', sM.iq);
+  setV('edit-sibling-order', sM.sibling_order); setV('edit-economic-level', sM.economic_level);
+  setV('edit-father-edu', sM.father_edu); setV('edit-mother-edu', sM.mother_edu);
+  setV('edit-status-psych', sM.status_psych); setV('edit-status-social', sM.status_social);
+  setV('edit-status-health', sM.status_health); setV('edit-diagnosis', sM.diagnosis);
+  setV('edit-program-place', sM.program_place); setV('edit-program-start', sM.program_start);
+  setV('edit-program-end', sM.program_end);
+  ensureIEP(pin);
+  openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
+  document.getElementById('edit-modal').classList.add('open');
+}
+function openEditTab(id, btn) {
+  ['basic','iep','analysis','details'].forEach(t => {
+    const el = document.getElementById('edit-tab-' + t);
+    if (el) el.style.display = t === id ? 'block' : 'none';
+  });
+  document.querySelectorAll('#edit-modal .admin-tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (id === 'iep' && editingPin) { ensureIEP(editingPin); renderIEPEditor(editingPin); }
+  if (id === 'analysis' && editingPin) { renderIEPAnalysis(editingPin); }
+}
 
 
+function closeModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+  editingPin = null;
+}
 
+function renderPlanEditor(plan) {
+  let container = document.getElementById('plan-goals-editor');
+  container.innerHTML = plan.map((g, i) => goalRowHTML(g.title, g.desc, i)).join('');
+}
 
+function goalRowHTML(title, desc, i) {
+  return `<div class="goal-row" id="goal-row-${i}">
+    <button class="btn-remove-goal" onclick="removeGoalRow(${i})">✕</button>
+    <input type="text" class="form-input" placeholder="عنوان الهدف" value="${title||''}" data-goal-title="${i}">
+    <input type="text" class="form-input" placeholder="وصف الهدف" value="${desc||''}" data-goal-desc="${i}">
+  </div>`;
+}
 
+function addGoalRow() {
+  let container = document.getElementById('plan-goals-editor');
+  let i = container.children.length;
+  let div = document.createElement('div');
+  div.innerHTML = goalRowHTML('', '', i);
+  container.appendChild(div.firstChild);
+}
 
+function removeGoalRow(i) { document.getElementById('goal-row-' + i)?.remove(); }
 
+const FU_OPTIONS = ['✓','~','✗'];
 
+function renderFollowupEditor(followup) {
+  document.getElementById('followup-editor').innerHTML = followup.map((f, i) => followupRowHTML(f, i)).join('');
+}
 
+function followupRowHTML(f, i) {
+  const sel = (val, key) => FU_OPTIONS.map(o => `<option value="${o}" ${f[key]===o?'selected':''}>${o}</option>`).join('');
+  return `<div class="fu-edit-row" id="fu-row-${i}">
+    <input type="text" placeholder="المهارة" value="${f.skill||''}" data-fu-skill="${i}">
+    <select data-fu-m1="${i}">${sel(f.m1,'m1')}</select>
+    <select data-fu-m2="${i}">${sel(f.m2,'m2')}</select>
+    <select data-fu-m3="${i}">${sel(f.m3,'m3')}</select>
+    <select data-fu-m4="${i}">${sel(f.m4,'m4')}</select>
+    <select data-fu-m5="${i}">${sel(f.m5,'m5')}</select>
+    <button onclick="removeFuRow(${i})" style="background:#fee2e2;color:#dc2626;border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:0.8rem;">✕</button>
+  </div>`;
+}
 
+function addFollowupRow() {
+  let container = document.getElementById('followup-editor');
+  let i = container.children.length;
+  let div = document.createElement('div');
+  div.innerHTML = followupRowHTML({skill:'',m1:'~',m2:'~',m3:'~',m4:'~',m5:'~'}, i);
+  container.appendChild(div.firstChild);
+}
 
+function removeFuRow(i) { document.getElementById('fu-row-' + i)?.remove(); }
 
+function saveStudentEdits() {
+  if (!editingPin) return;
+  const sEdit = STUDENTS[editingPin];
 
+  // دالة مساعدة: تقرأ القيمة من الحقل فقط إذا كان التاب ظاهراً أو القيمة غير فارغة
+  // لتجنب مسح البيانات عند الحفظ من تاب آخر
+  const getVal = (id, fallback) => {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    const v = el.value.trim();
+    return v !== '' ? v : fallback;
+  };
+
+  sEdit.name    = getVal('edit-name',  sEdit.name)  || sEdit.name;
+  sEdit.grade   = getVal('edit-grade', sEdit.grade) || sEdit.grade;
+  sEdit.id_full = getVal('edit-id',    sEdit.id_full) || sEdit.id_full;
+  sEdit.phone   = getVal('edit-phone', sEdit.phone);
+  collectIEPFromEditor(editingPin);
+  // البيانات التفصيلية — نحتفظ بالقيمة القديمة إذا كان الحقل فارغاً (التاب مخفي)
+  sEdit.birthdate      = getVal('edit-birthdate',      sEdit.birthdate);
+  sEdit.nationality    = getVal('edit-nationality',    sEdit.nationality);
+  sEdit.age            = getVal('edit-age',            sEdit.age);
+  sEdit.address        = getVal('edit-address',        sEdit.address);
+  sEdit.iq             = getVal('edit-iq',             sEdit.iq);
+  sEdit.sibling_order  = getVal('edit-sibling-order',  sEdit.sibling_order);
+  sEdit.economic_level = getVal('edit-economic-level', sEdit.economic_level);
+  sEdit.father_edu     = getVal('edit-father-edu',     sEdit.father_edu);
+  sEdit.mother_edu     = getVal('edit-mother-edu',     sEdit.mother_edu);
+  sEdit.status_psych   = getVal('edit-status-psych',   sEdit.status_psych);
+  sEdit.status_social  = getVal('edit-status-social',  sEdit.status_social);
+  sEdit.status_health  = getVal('edit-status-health',  sEdit.status_health);
+  sEdit.diagnosis      = getVal('edit-diagnosis',      sEdit.diagnosis);
+  sEdit.program_place  = getVal('edit-program-place',  sEdit.program_place);
+  sEdit.program_start  = getVal('edit-program-start',  sEdit.program_start);
+  sEdit.program_end    = getVal('edit-program-end',    sEdit.program_end);
+  // حفظ الخطة التربوية الفردية
+  if (editingPin) collectIEPFromEditor(editingPin);
+  // الأهداف محفوظة في IEP عبر collectIEPFromEditor
+  const pinToSave = editingPin; // نحفظ الـ pin قبل closeModal تُصفّره
+  closeModal();
+  renderStudentCards();
+  saveOneStudent(pinToSave);
+}
+
+function deleteStudent() {
+  if (!editingPin) return;
+  const sDel = STUDENTS[editingPin];
+  if (!confirm(`⚠️ هل أنت متأكد من حذف الطالب "${sDel.name}"?`)) return;
+  const deletedPin = editingPin;
+  delete STUDENTS[deletedPin];
+  closeModal();
+  renderStudentCards();
+  deleteFromSupabase(deletedPin).then(() => showToast('🗑️ تم حذف الطالب ' + sDel.name));
+}
+
+document.addEventListener('input', e => {
+  if (e.target.id === 'new-id') {
+    const val = e.target.value.trim();
+    document.getElementById('new-pin-preview').value = val.length >= 4 ? val.slice(-4) : '';
+  }
+});
+
+function addNewStudent() {
+  const newName  = document.getElementById('new-name').value.trim();
+  const newId    = document.getElementById('new-id').value.trim();
+  const newGrade = document.getElementById('new-grade').value.trim();
+  const newPhone = document.getElementById('new-phone').value.trim();
+  if (!newName || !newId || !newGrade) { alert('⚠️ يرجى تعبئة الاسم والسجل والصف'); return; }
+  if (newId.length < 4) { alert('⚠️ رقم السجل قصير جداً'); return; }
+  const newPin = newId.slice(-4);
+  if (STUDENTS[newPin]) { alert(`⚠️ الرمز "${newPin}" مستخدم للطالب: ${STUDENTS[newPin].name}`); return; }
+  STUDENTS[newPin] = { name: newName, id_full: newId, grade: newGrade, phone: newPhone, plan: [], reports: [], followup: [] };
+  ['new-name','new-id','new-grade','new-phone','new-pin-preview'].forEach(fieldId => {
+    const fieldEl = document.getElementById(fieldId); if (fieldEl) fieldEl.value = '';
+  });
+  openAdminTab('list', document.querySelector('.admin-tab-btn'));
+  renderStudentCards();
+  showToast('⏳ جاري الحفظ...');
+  upsertToSupabase(newPin, STUDENTS[newPin]).then(() =>
+    showToast('✅ تمت إضافة الطالب ' + newName + ' — الرمز: ' + newPin)
+  );
+}
 
 
 // ===== حفظ جميع الطلاب =====
+async function saveAllStudents() {
+  applyDefaultIEPAll();
+  const btn = document.getElementById('btn-save-all');
+  const pins = Object.keys(STUDENTS);
+  if (btn) { btn.innerHTML = '⏳ جاري الحفظ...'; btn.disabled = true; btn.style.opacity = '0.7'; }
+  let success = 0, failed = 0;
+  for (const pin of pins) {
+    try {
+      await saveOneSilent(pin);
+      success++;
+    } catch(e) { failed++; }
+  }
+  if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = '💾 حفظ جميع البيانات'; }
+  showToast(failed === 0 ? `✅ تم حفظ ${success} طالب بنجاح` : `⚠️ تم حفظ ${success} وفشل ${failed}`);
+}
 
 // ===== حفظ طالب واحد =====
 // حفظ صامت بدون toast (للاستخدام الداخلي)
+async function saveOneSilent(pin) {
+  applyDefaultIEP(pin);
+  const s = STUDENTS[pin];
+  const payload = {
+    pin, name: s.name, id_full: s.id_full, grade: s.grade, phone: s.phone || '',
+    plan: s.plan || [], followup: s.followup || [], iep: s.iep || {},
+    birthdate: s.birthdate || '', nationality: s.nationality || '', age: s.age || '',
+    address: s.address || '', iq: s.iq || '', sibling_order: s.sibling_order || '',
+    economic_level: s.economic_level || '', father_edu: s.father_edu || '',
+    mother_edu: s.mother_edu || '', status_psych: s.status_psych || '',
+    status_social: s.status_social || '', status_health: s.status_health || '',
+    diagnosis: s.diagnosis || '', program_place: s.program_place || '',
+    program_start: s.program_start || '', program_end: s.program_end || '',
+    teacher_name: s.teacher_name || '',
+  };
+  const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
+  const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+    body: blob
+  });
+  if (!res.ok) throw new Error('Save failed for ' + pin);
+}
 
+async function saveOneStudent(pin) {
+  if (!pin || !STUDENTS[pin]) { showToast('❌ خطأ: الطالب غير موجود'); return; }
+  // تطبيق الأهداف الافتراضية إذا كانت مواد فارغة
+  applyDefaultIEP(pin);
+  const s = STUDENTS[pin];
+  const blob = new Blob([JSON.stringify({
+    pin, name: s.name, id_full: s.id_full, grade: s.grade, phone: s.phone || '',
+    plan: s.plan || [], followup: s.followup || [], iep: s.iep || {},
+    birthdate: s.birthdate || '', nationality: s.nationality || '', age: s.age || '',
+    address: s.address || '', iq: s.iq || '', sibling_order: s.sibling_order || '',
+    economic_level: s.economic_level || '', father_edu: s.father_edu || '',
+    mother_edu: s.mother_edu || '', status_psych: s.status_psych || '',
+    status_social: s.status_social || '', status_health: s.status_health || '',
+    diagnosis: s.diagnosis || '', program_place: s.program_place || '',
+    program_start: s.program_start || '', program_end: s.program_end || '',
+  })], {type: 'application/json'});
+  const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'x-upsert': 'true' },
+    body: blob
+  });
+  showToast(res.ok ? '✅ تم حفظ بيانات ' + s.name : '❌ فشل الحفظ');
+}
 
 // ===== طباعة بطاقة الطالب =====
+function printStudentCard(pin) {
+  const s = STUDENTS[pin];
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8"><title>بطاقة ${s.name}</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Cairo',sans-serif;background:#fff;color:#221335;padding:30px;direction:rtl;}
+      .header{text-align:center;margin-bottom:20px;border-bottom:3px solid #6B4C9A;padding-bottom:14px;}
+      h1{font-size:1.2rem;font-weight:800;color:#6B4C9A;}
+      .section{background:#6B4C9A;color:#fff;padding:7px 14px;font-size:0.85rem;font-weight:800;margin:14px 0 8px;border-radius:6px;}
+      table{width:100%;border-collapse:collapse;}
+      th{background:#FBFAFE;padding:7px 12px;text-align:right;font-size:0.76rem;font-weight:700;color:#6E5F82;border:1px solid #DCD2EE;width:35%;}
+      td{padding:7px 12px;font-size:0.82rem;font-weight:600;border:1px solid #DCD2EE;}
+      .footer{margin-top:20px;text-align:center;font-size:0.7rem;color:#9ca3af;border-top:1px solid #DCD2EE;padding-top:12px;}
+      @media print{body{padding:15px;}}
+    </style>
+  </head><body>
+    <div class="header">
+      <div style="background:#6B4C9A;color:#fff;display:inline-block;padding:3px 14px;border-radius:20px;font-size:0.76rem;font-weight:700;margin-bottom:6px;">برنامج الدمج الفكري</div>
+      <h1>بطاقة الطالب</h1>
+      <p style="font-size:0.8rem;color:#6E5F82;margin-top:3px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
+    </div>
+    <div class="section">📋 المعلومات الشخصية</div>
+    <table>
+      <tr><th>الطالب</th><td>${s.name}</td><th>تاريخ الميلاد</th><td>${s.birthdate||'—'}</td></tr>
+      <tr><th>الجنسية</th><td>${s.nationality||'—'}</td><th>الصف</th><td>${s.grade}</td></tr>
+      <tr><th>العمر</th><td>${s.age||'—'}</td><th>درجة الذكاء</th><td>${s.iq||'—'}</td></tr>
+      <tr><th>العنوان</th><td>${s.address||'—'}</td><th>رقم الجوال</th><td>${s.phone||'—'}</td></tr>
+    </table>
+    <div class="section">📊 المعلومات العامة</div>
+    <table>
+      <tr><th>ترتيب الطالب</th><td>${s.sibling_order||'—'}</td><th>المستوى الاقتصادي</th><td>${s.economic_level||'—'}</td></tr>
+      <tr><th>تعليم الأب</th><td>${s.father_edu||'—'}</td><th>تعليم الأم</th><td>${s.mother_edu||'—'}</td></tr>
+      <tr><th>الوضع النفسي</th><td colspan="3">${s.status_psych||'—'}</td></tr>
+      <tr><th>الوضع الاجتماعي</th><td colspan="3">${s.status_social||'—'}</td></tr>
+      <tr><th>الوضع الصحي</th><td colspan="3">${s.status_health||'—'}</td></tr>
+    </table>
+    <div class="section">🏥 التشخيص والبرنامج</div>
+    <table>
+      <tr><th>التشخيص</th><td colspan="3">${s.diagnosis||'—'}</td></tr>
+      <tr><th>المكان التربوي</th><td colspan="3">${s.program_place||'—'}</td></tr>
+      <tr><th>تاريخ البدء</th><td>${s.program_start||'—'}</td><th>تاريخ الإنهاء</th><td>${s.program_end||'—'}</td></tr>
+    </table>
+    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
+    <scri` + `pt>window.onload=()=>window.print();</scri` + `pt>
+  
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+
+
+</body></html>`);
+  win.document.close();
+}
 
 // ===== حذف من Supabase =====
+async function deleteFromSupabase(pin) {
+  try {
+    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/data/student-${pin}.json`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+  } catch(e) { console.error('Delete error:', e); }
+}
 
 function showToast(msg) {
   const t = document.getElementById('success-toast');
@@ -2091,7 +2568,7 @@ function renderIEPStudentView(pin) {
         ${goals.map((g, i) => {
           const lv = LEVEL_MAP[g.level||'none'] || LEVEL_MAP.none;
           return `
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);background:${i%2===0?'#fff':'#fafafa'};">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);background:${i%2===0?'#fff':'#FBFAFE'};">
             <div style="font-size:0.84rem;color:var(--text);flex:1;">${i+1}. ${escHtml(g.text||'')}</div>
             <span style="background:${lv.bg};color:${lv.color};font-size:0.76rem;font-weight:700;padding:3px 10px;border-radius:8px;white-space:nowrap;margin-right:10px;">${lv.icon} ${lv.label}</span>
           </div>`;
@@ -2409,7 +2886,13 @@ function printIEP() {
       <div class="sub">📅 ${todayG} &nbsp;|&nbsp; 🌙 ${todayH}</div></div>
     ${subjectsHTML || '<div style="text-align:center;padding:40px;color:#9ca3af">لا توجد أهداف بعد</div>'}
     <div class="ft">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — برنامج الدمج الفكري</div>
-    <script>window.onload=()=>window.print();<\/script></body></html>`);
+    <script>window.onload=()=>window.print();<\/script>
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+
+
+</body></html>`);
   win.document.close();
 }
 
@@ -2463,7 +2946,7 @@ function renderSkillsTable(skills) {
     '—': 'background:#f3f4f6;color:#6b7280',
   };
   tbody.innerHTML = skills.map((r, i) => `
-    <tr style="border-bottom:1px solid var(--border);${i%2===0?'background:#fafafa;':'background:#fff;'}">
+    <tr style="border-bottom:1px solid var(--border);${i%2===0?'background:#FBFAFE;':'background:#fff;'}">
       <td style="padding:9px 14px;text-align:right;font-weight:600;">${r.skill||'—'}</td>
       <td style="padding:9px 14px;text-align:center;font-size:0.78rem;color:var(--muted);">${r.axis||'—'}</td>
       ${['m1','m2','m3','m4','m5'].map(m => {
@@ -3078,13 +3561,13 @@ function exportAnalysisPDF(pin) {
         .stat-pct{font-size:0.72rem;margin-top:2px;opacity:0.8;}
         .section-title{font-size:0.95rem;font-weight:800;color:#3F2E63;margin:18px 0 10px;padding-right:10px;border-right:4px solid #6B4C9A;}
         .charts-row{display:grid;grid-template-columns:1fr 360px;gap:16px;margin-bottom:18px;align-items:start;}
-        .chart-box{background:#fafafa;border:1px solid #e8e0d4;border-radius:12px;padding:14px;text-align:center;}
+        .chart-box{background:#FBFAFE;border:1px solid #e8e0d4;border-radius:12px;padding:14px;text-align:center;}
         img.chart{width:100%;height:auto;display:block;}
         table{width:100%;border-collapse:collapse;font-size:0.83rem;}
         thead th{background:#3F2E63;color:#fff;padding:9px 12px;font-size:0.82rem;}
         thead th:first-child{text-align:right;}
         tbody td{padding:8px 12px;border:1px solid #DCD2EE;}
-        tbody tr:nth-child(even){background:#fafafa;}
+        tbody tr:nth-child(even){background:#FBFAFE;}
         tfoot td{padding:9px 12px;font-weight:900;background:#EAE1F7;border-top:2px solid #6B4C9A;}
         .footer{margin-top:20px;text-align:center;font-size:0.7rem;color:#9ca3af;border-top:1px solid #DCD2EE;padding-top:12px;}
         @media print{
@@ -3167,7 +3650,13 @@ function exportAnalysisPDF(pin) {
         // طباعة تلقائية بعد تحميل الصور
         window.onload = () => setTimeout(() => window.print(), 400);
       <\/script>
-    </body></html>`);
+    
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+
+
+</body></html>`);
     win.document.close();
   });
 }
@@ -3231,7 +3720,13 @@ function savePlanAsPDF(pin) {
     ${subHTML || '<p style="text-align:center;color:#9ca3af;padding:30px;">لا توجد أهداف مُدخلة بعد</p>'}
     <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
     <script>window.onload=()=>window.print();<\/script>
-  </body></html>`);
+  
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+
+
+</body></html>`);
   win.document.close();
 }
 
@@ -3401,7 +3896,7 @@ async function renderDumajSchedule() {
       .dumaj-table{width:100%;border-collapse:collapse;min-width:760px;background:#fff}
       .dumaj-th{background:linear-gradient(180deg,#2E2148,#6B4C9A);color:#fff;padding:11px 8px;text-align:center;font-size:0.76rem;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
       .dumaj-th-day{background:linear-gradient(180deg,#2E2148,#6B4C9A);color:#fff;padding:14px 10px;text-align:center;font-size:0.8rem;font-weight:800;width:76px;border-left:1px solid rgba(255,255,255,0.1);font-family:'Cairo',sans-serif}
-      .dumaj-td-day{padding:10px 8px;text-align:center;font-weight:800;font-size:0.84rem;color:#2E2148;border-left:2px solid #EAE1F7;background:linear-gradient(180deg,#fff8f4,#fef0e8);vertical-align:middle;white-space:nowrap;font-family:'Cairo',sans-serif}
+      .dumaj-td-day{padding:10px 8px;text-align:center;font-weight:800;font-size:0.84rem;color:#2E2148;border-left:2px solid #fde8d0;background:linear-gradient(180deg,#fff8f4,#fef0e8);vertical-align:middle;white-space:nowrap;font-family:'Cairo',sans-serif}
       .dumaj-td-cell{padding:5px 4px;vertical-align:top;border-left:1px solid #f5e8e0;cursor:pointer;transition:background 0.15s;min-width:105px}
       .dumaj-td-cell:hover{background:#fff5ef!important}
       .dumaj-cell-inner{border-radius:8px;padding:5px 7px}
@@ -3573,7 +4068,7 @@ function openDumajCellEditor(day, period) {
             const bgs    = {lesson:'#fef3c7', break:'#fef3c7', break_sup:'#fce7f3', end_sup:'#e0f2fe', empty:'#f0f0f0'};
             const c = colors[ct.value], bg = bgs[ct.value];
             return `
-              <label id="type-label-${ct.value}" style="display:flex;align-items:center;gap:6px;background:${isSel?bg:'#f8f9fc'};border:2px solid ${isSel?c:'#e8ecf2'};border-radius:10px;padding:8px 14px;cursor:pointer;font-size:0.78rem;font-weight:700;color:${isSel?c:'#666'};transition:all 0.15s;">
+              <label id="type-label-${ct.value}" style="display:flex;align-items:center;gap:6px;background:${isSel?bg:'#FBFAFE'};border:2px solid ${isSel?c:'#DCD2EE'};border-radius:10px;padding:8px 14px;cursor:pointer;font-size:0.78rem;font-weight:700;color:${isSel?c:'#666'};transition:all 0.15s;">
                 <input type="radio" name="dumaj-type" value="${ct.value}" ${isSel?'checked':''} style="display:none;" onchange="onDumajTypeChange()">
                 ${ct.icon} ${ct.label}
               </label>`;
@@ -3591,13 +4086,13 @@ function openDumajCellEditor(day, period) {
           ${DUMAJ_TEACHERS.map(t => {
             const isSel = cell.teacher === t.key;
             return `
-              <label style="display:flex;align-items:center;gap:8px;background:${isSel?t.light:'#f8f9fc'};border:2px solid ${isSel?t.color:'#e8ecf2'};border-radius:11px;padding:9px 12px;cursor:pointer;transition:all 0.15s;"
+              <label style="display:flex;align-items:center;gap:8px;background:${isSel?t.light:'#FBFAFE'};border:2px solid ${isSel?t.color:'#DCD2EE'};border-radius:11px;padding:9px 12px;cursor:pointer;transition:all 0.15s;"
                      onclick="selectDumajTeacher(this,'${t.key}')">
                 <input type="radio" name="dumaj-teacher" value="${t.key}" ${isSel?'checked':''} style="accent-color:${t.color};width:14px;height:14px;">
                 <span style="font-size:0.78rem;font-weight:800;color:${t.color};">أ. ${t.name.split(' ').slice(-1)[0]}</span>
               </label>`;
           }).join('')}
-          <label style="display:flex;align-items:center;gap:8px;background:${!cell.teacher?'#f0f0f0':'#f8f9fc'};border:2px solid ${!cell.teacher?'#999':'#e8ecf2'};border-radius:11px;padding:9px 12px;cursor:pointer;"
+          <label style="display:flex;align-items:center;gap:8px;background:${!cell.teacher?'#f0f0f0':'#FBFAFE'};border:2px solid ${!cell.teacher?'#999':'#DCD2EE'};border-radius:11px;padding:9px 12px;cursor:pointer;"
                  onclick="selectDumajTeacher(this,'')">
             <input type="radio" name="dumaj-teacher" value="" ${!cell.teacher?'checked':''} style="width:14px;height:14px;">
             <span style="font-size:0.78rem;color:#888;font-weight:600;">بدون معلم</span>
@@ -3615,7 +4110,7 @@ function openDumajCellEditor(day, period) {
           ${DUMAJ_SUBJECTS.map(subj => {
             const isSel = cell.subject === subj;
             return `
-              <label class="dumaj-subj-label" style="display:flex;align-items:center;gap:5px;background:${isSel?'#fef3c7':'#f8f9fc'};border:1.5px solid ${isSel?'#6B4C9A':'#e8ecf2'};border-radius:20px;padding:5px 12px;cursor:pointer;font-size:0.75rem;font-weight:700;color:${isSel?'#92400e':'#555'};transition:all 0.15s;">
+              <label class="dumaj-subj-label" style="display:flex;align-items:center;gap:5px;background:${isSel?'#fef3c7':'#FBFAFE'};border:1.5px solid ${isSel?'#6B4C9A':'#DCD2EE'};border-radius:20px;padding:5px 12px;cursor:pointer;font-size:0.75rem;font-weight:700;color:${isSel?'#92400e':'#555'};transition:all 0.15s;">
                 <input type="radio" name="dumaj-subject" value="${subj}" ${isSel?'checked':''} style="display:none;">
                 ${subj}
               </label>`;
@@ -3638,8 +4133,8 @@ function openDumajCellEditor(day, period) {
       lbl.querySelector('input').checked = true;
       box.querySelectorAll('.dumaj-subj-label').forEach(l => {
         const sel = l.querySelector('input').checked;
-        l.style.background   = sel ? '#fef3c7' : '#f8f9fc';
-        l.style.borderColor  = sel ? '#6B4C9A' : '#e8ecf2';
+        l.style.background   = sel ? '#fef3c7' : '#FBFAFE';
+        l.style.borderColor  = sel ? '#6B4C9A' : '#DCD2EE';
         l.style.color        = sel ? '#92400e' : '#555';
       });
     };
@@ -3664,8 +4159,8 @@ function onDumajTypeChange() {
     const lbl = inp.closest('label');
     const v = inp.value;
     const sel = v === type;
-    lbl.style.background  = sel ? bgs[v]    : '#f8f9fc';
-    lbl.style.borderColor = sel ? colors[v] : '#e8ecf2';
+    lbl.style.background  = sel ? bgs[v]    : '#FBFAFE';
+    lbl.style.borderColor = sel ? colors[v] : '#DCD2EE';
     lbl.style.color       = sel ? colors[v] : '#666';
   });
 
@@ -3689,8 +4184,8 @@ function selectDumajTeacher(lbl, key) {
     const isSel  = inp.value === key;
     // Find teacher color
     const t = DUMAJ_TEACHERS.find(x => x.key === inp.value);
-    parent.style.borderColor = isSel ? (t?.color || '#999') : '#e8ecf2';
-    parent.style.background  = isSel ? (t?.light || '#f0f0f0') : '#f8f9fc';
+    parent.style.borderColor = isSel ? (t?.color || '#999') : '#DCD2EE';
+    parent.style.background  = isSel ? (t?.light || '#f0f0f0') : '#FBFAFE';
   });
 }
 
@@ -3755,7 +4250,7 @@ function openDumajPeriodSettings() {
     <div style="padding:20px 22px;font-family:'Cairo',sans-serif;direction:rtl;">
       <table style="width:100%;border-collapse:collapse;">
         <thead>
-          <tr style="background:#FBFAFE;">
+          <tr style="background:#fdf4ee;">
             <th style="padding:8px;font-size:0.75rem;color:#6B4C9A;font-weight:800;text-align:center;">#</th>
             <th style="padding:8px;font-size:0.75rem;color:#555;font-weight:700;text-align:center;">اسم الحصة</th>
             <th style="padding:8px;font-size:0.75rem;color:#3F2E63;font-weight:700;text-align:center;">❄️ شتوي</th>
@@ -3801,266 +4296,800 @@ function resetDumajPeriods() {
   renderDumajSchedule();
 }
 
-// =====================================================
-// قياس مستوى الأداء الحالي
-// =====================================================
 
-const PERF_SUBJECTS = [
-  {
-    key: 'arabic', name: 'اللغة العربية (لغتي)', icon: '📖',
-    skills: ['القراءة الجهرية','الكتابة والإملاء','الفهم والاستيعاب','التعبير الشفوي','القواعد النحوية']
-  },
-  {
-    key: 'math', name: 'الرياضيات', icon: '🔢',
-    skills: ['العمليات الحسابية الأساسية','الأعداد والتسلسل','الأشكال الهندسية','القياس والوحدات','حل المسائل']
-  },
-  {
-    key: 'islamic', name: 'التربية الإسلامية', icon: '🕌',
-    skills: ['الحفظ والتلاوة','العقيدة والأركان','الفقه والعبادات','السيرة والأخلاق','التطبيق العملي']
-  },
-  {
-    key: 'science', name: 'العلوم', icon: '🔬',
-    skills: ['الفهم والاستيعاب','التجارب العلمية','حفظ المعلومات','التطبيق والاستنتاج','المفاهيم البيئية']
-  },
-  {
-    key: 'life', name: 'المهارات الحياتية', icon: '🌱',
-    skills: ['العناية الشخصية','التواصل الاجتماعي','المهارات العملية','الاستقلالية','التنظيم وإدارة الوقت']
-  },
+
+
+// ===== SHARED UPLOAD CONSTANTS =====
+const BUCKET = 'reports';
+const REPORT_TYPES = [
+  { key: 'plan',    label: '📋 الخطة الفردية',        icon: '📋', color: '#EAE1F7' },
+  { key: 'psych',   label: 'التقرير النفسي الموحد',   icon: '🧑🏻‍🏫', color: '#EAE1F7' },
+  { key: 'medical', label: 'التقرير الطبي',            icon: '🏥', color: '#dbeafe' },
+  { key: 'report1', label: 'التقرير الدوري ١',         icon: '📄', color: '#fef3c7' },
+  { key: 'report2', label: 'التقرير الدوري ٢',         icon: '📊', color: '#d1fae5' },
+  { key: 'report3', label: 'التقرير الدوري ٣',         icon: '📋', color: '#EAE1F7' },
 ];
+let selectedFiles = {};
+let allSigs = [];
 
-const PERF_LEVELS = [
-  { value: 'mastered',  label: 'متقن',       color: '#059669', bg: '#d1fae5' },
-  { value: 'developing',label: 'في التطور',  color: '#2563eb', bg: '#dbeafe' },
-  { value: 'emerging',  label: 'بدايات',     color: '#d97706', bg: '#fef3c7' },
-  { value: 'not_yet',   label: 'لم يصل بعد', color: '#dc2626', bg: '#fee2e2' },
-  { value: 'na',        label: 'غير مقيَّم', color: '#9ca3af', bg: '#f3f4f6' },
-];
-
-function renderPerformanceTab() {
-  const container = document.getElementById('performance-content');
-  if (!container || !currentStudent) return;
-  const saved = (currentStudent.performance) || {};
-  const hasData = Object.keys(saved).length > 0;
-
-  let html = `
-    <div class="perf-legend">
-      ${PERF_LEVELS.map(l => `
-        <div class="perf-legend-item">
-          <span style="background:${l.bg};color:${l.color};padding:2px 8px;border-radius:6px;font-size:0.73rem;font-weight:700;">${l.label}</span>
-        </div>`).join('')}
-    </div>`;
-
-  if (!hasData) {
-    html += `
-      <div class="empty-state">
-        <div class="es-icon">📏</div>
-        <div class="es-title">لم يتم تقييم مستوى الأداء بعد</div>
-        <div class="es-sub">يقوم المعلم المسؤول بتعبئة هذه الاستمارة من بوابة المعلمين</div>
-      </div>`;
-    container.innerHTML = html;
-    return;
-  }
-
-  PERF_SUBJECTS.forEach(subj => {
-    const subjData = saved[subj.key] || {};
-    html += `
-      <div class="perf-subject-block">
-        <div class="perf-subject-head">${subj.icon} ${subj.name}</div>
-        <table class="perf-skills-table">
-          <thead>
-            <tr>
-              <th style="width:46%;">المهارة</th>
-              <th style="width:24%;text-align:center;">مستوى الأداء</th>
-              <th>ملاحظات</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${subj.skills.map((skill, si) => {
-              const skillData = subjData[si] || {};
-              const level = skillData.level || 'na';
-              const note  = skillData.note  || '';
-              const lv    = PERF_LEVELS.find(l => l.value === level) || PERF_LEVELS[4];
-              return `
-                <tr>
-                  <td style="font-weight:600;">${skill}</td>
-                  <td style="text-align:center;">
-                    <span style="display:inline-block;padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:700;color:${lv.color};background:${lv.bg};">${lv.label}</span>
-                  </td>
-                  <td style="color:var(--muted);font-size:0.85rem;">${escHtml(note) || '—'}</td>
-                </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>`;
+function populateUploadStudentSelect() {
+  const sel = document.getElementById('upload-student-select');
+  if (sel.options.length > 1) return; // already populated
+  const byGrade = {};
+  Object.entries(STUDENTS).forEach(([pin, s]) => {
+    if (!byGrade[s.grade]) byGrade[s.grade] = [];
+    byGrade[s.grade].push({ pin, name: s.name });
   });
+  Object.entries(byGrade).sort((a,b) => a[0].localeCompare(b[0],'ar')).forEach(([grade, arr]) => {
+    const og = document.createElement('optgroup');
+    og.label = grade;
+    arr.forEach(({ pin, name }) => {
+      const opt = document.createElement('option');
+      opt.value = pin;
+      opt.textContent = name + ' — ' + pin;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+}
 
-  const meta = currentStudent.performanceMeta;
-  if (meta) {
+
+
+
+
+
+
+
+
+
+
+
+
+function loadStudentUploads() {
+  const pin = document.getElementById('upload-student-select').value;
+  const grid = document.getElementById('upload-grid');
+  if (!pin) { grid.innerHTML = ''; return; }
+
+  selectedFiles = {};
+  grid.innerHTML = REPORT_TYPES.map(r => `
+    <div class="upload-card" id="card-${r.key}">
+      <div class="upload-head">
+        <div class="upload-icon" style="background:${r.color}">${r.icon}</div>
+        <div>
+          <div class="upload-title">${r.label}</div>
+          <div class="upload-filename" id="fname-${r.key}">${r.key}-${pin}.pdf</div>
+        </div>
+      </div>
+      <div class="upload-body">
+        <div class="drop-zone" id="drop-${r.key}"
+          ondragover="event.preventDefault();this.classList.add('dragover')"
+          ondragleave="this.classList.remove('dragover')"
+          ondrop="handleDrop(event,'${r.key}','${pin}')">
+          <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" onchange="handleFile(this,'${r.key}','${pin}')">
+          <div class="drop-icon">📂</div>
+          <div class="drop-text">اضغط لاختيار الملف أو اسحبه هنا</div>
+          <div class="drop-sub">PDF, Word, صور</div>
+        </div>
+        <div class="file-preview" id="preview-${r.key}">
+          <span>📎</span>
+          <span id="preview-name-${r.key}"></span>
+          <button class="del-btn" onclick="clearFile('${r.key}')">✕ إلغاء</button>
+        </div>
+        <div class="progress-bar" id="progress-${r.key}">
+          <div class="progress-fill" id="progress-fill-${r.key}"></div>
+        </div>
+        <div class="upload-status" id="status-${r.key}"></div>
+        <button class="btn-upload" id="btn-${r.key}" onclick="uploadFile('${r.key}','${pin}')">
+          ⬆️ رفع الملف
+        </button>
+        <button class="btn-delete" id="del-btn-${r.key}" onclick="deleteFile('${r.key}','${pin}')" style="display:none;">
+          🗑️ حذف الملف المرفوع
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  // تحقق من الملفات الموجودة
+  checkExistingFiles(pin);
+}
+
+async function checkExistingFiles(pin) {
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  for (const r of REPORT_TYPES) {
+    for (const ext of extensions) {
+      try {
+        const fileName = `${r.key}-${pin}.${ext}`;
+        const url = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/dumaj/${fileName}`;
+        const res = await fetch(url, { method: 'HEAD' });
+        if (res.ok) {
+          showStatus(r.key, 'exists', `✅ يوجد ملف مرفوع — ${fileName}`);
+          document.getElementById(`del-btn-${r.key}`).style.display = 'block';
+          document.getElementById(`fname-${r.key}`).textContent = fileName;
+          // عرض معاينة الملف الموجود
+          document.getElementById(`preview-name-${r.key}`).textContent = fileName;
+          document.getElementById(`preview-${r.key}`).style.display = 'flex';
+          break;
+        }
+      } catch(e) {}
+    }
+  }
+}
+
+function handleFile(input, key, pin) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function handleDrop(e, key, pin) {
+  e.preventDefault();
+  document.getElementById(`drop-${key}`).classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function showPreview(key, name, pin) {
+  document.getElementById(`preview-name-${key}`).textContent = name;
+  document.getElementById(`preview-${key}`).style.display = 'flex';
+  document.getElementById(`btn-${key}`).style.display = 'block';
+  document.getElementById(`status-${key}`).style.display = 'none';
+}
+
+function clearFile(key) {
+  delete selectedFiles[key];
+  document.getElementById(`preview-${key}`).style.display = 'none';
+  document.getElementById(`btn-${key}`).style.display = 'none';
+  document.getElementById(`status-${key}`).style.display = 'none';
+  document.getElementById(`progress-${key}`).style.display = 'none';
+}
+
+async function uploadFile(key, pin) {
+  const file = selectedFiles[key];
+  if (!file) return;
+
+  const ext = file.name.split('.').pop();
+  const fileName = `${key}-${pin}.${ext}`;
+
+  const btn = document.getElementById(`btn-${key}`);
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الرفع...';
+
+  showStatus(key, 'uploading', '⏳ جاري رفع الملف...');
+  document.getElementById(`progress-${key}`).style.display = 'block';
+
+  // Simulate progress
+  let prog = 0;
+  const interval = setInterval(() => {
+    prog = Math.min(prog + 10, 85);
+    document.getElementById(`progress-fill-${key}`).style.width = prog + '%';
+  }, 200);
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'true'
+      },
+      body: file
+    });
+
+    clearInterval(interval);
+    document.getElementById(`progress-fill-${key}`).style.width = '100%';
+
+    if (res.ok) {
+      showStatus(key, 'success', `✅ تم رفع الملف بنجاح — ${fileName}`);
+      document.getElementById(`fname-${key}`).textContent = fileName;
+      btn.textContent = '✅ تم الرفع';
+      document.getElementById(`del-btn-${key}`).style.display = 'block';
+    } else {
+      const err = await res.text();
+      showStatus(key, 'error', '❌ فشل الرفع — حاول مرة أخرى');
+      btn.textContent = '⬆️ إعادة المحاولة';
+      btn.disabled = false;
+    }
+  } catch(e) {
+    clearInterval(interval);
+    showStatus(key, 'error', '❌ خطأ في الاتصال');
+    btn.textContent = '⬆️ إعادة المحاولة';
+    btn.disabled = false;
+  }
+}
+
+async function deleteFile(key, pin) {
+  if (!confirm(`هل تريد حذف ملف "${key}-${pin}" نهائياً؟`)) return;
+
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  let deleted = false;
+
+  for (const ext of extensions) {
+    const fileName = `${key}-${pin}.${ext}`;
     try {
-      const d = new Date(meta.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
-      html += `<div style="font-size:0.78rem;color:rgba(34,19,53,.42);margin-top:6px;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(meta.teacher)}</div>`;
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
+      });
+      if (res.ok) {
+        deleted = true;
+        showStatus(key, 'error', '🗑️ تم حذف الملف بنجاح');
+        document.getElementById(`del-btn-${key}`).style.display = 'none';
+        document.getElementById(`fname-${key}`).textContent = `${key}-${pin}.pdf`;
+        clearFile(key);
+        break;
+      }
     } catch(e) {}
   }
 
-  container.innerHTML = html;
+  if (!deleted) showStatus(key, 'error', '❌ لم يُعثر على ملف للحذف');
 }
 
-// =====================================================
-// جوانب القوة والاحتياج (عرض فقط — يحدّثها المعلم من بوابة المعلمين)
-// =====================================================
+function showStatus(key, type, msg) {
+  const el = document.getElementById(`status-${key}`);
+  el.style.display = 'block';
+  el.className = `upload-status status-${type}`;
+  el.textContent = msg;
+}
 
-function renderStrengthsTab() {
-  const container = document.getElementById('strengths-content');
-  if (!container || !currentStudent) return;
-  const saved = (currentStudent.strengths) || {};
-  const hasData = Object.values(saved).some(s => (s.strengths && s.strengths.length) || (s.needs && s.needs.length));
 
-  if (!hasData) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">💪</div>
-        <div class="es-title">لم تُضف جوانب القوة والاحتياج بعد</div>
-        <div class="es-sub">يقوم المعلم المسؤول بتعبئة هذا القسم من بوابة المعلمين</div>
-      </div>`;
+
+
+
+
+
+
+
+
+async function loadSignatures() {
+  document.getElementById('sigs-container').innerHTML = '<div class="loading-spinner">⏳ جاري التحميل...</div>';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/signatures?program=eq.dumaj&order=signed_at.desc`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      }
+    });
+    if (!res.ok) {
+      // إذا فشل الاستعلام (مثلاً عمود program غير موجود) نجلب الكل ونفلتر يدوياً
+      const res2 = await fetch(`${SUPABASE_URL}/rest/v1/signatures?order=signed_at.desc`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+      });
+      const allData = await res2.json();
+      // نستبعد توقيعات يسير (التي فيها program=yaseer)
+      allSigs = Array.isArray(allData) ? allData.filter(s => s.program !== 'yaseer') : [];
+    } else {
+      allSigs = await res.json();
+      if (!Array.isArray(allSigs)) allSigs = [];
+    }
+    updateStats();
+    renderSigs(allSigs);
+  } catch(e) {
+    document.getElementById('sigs-container').innerHTML = '<div class="empty-state"><div class="empty-icon">❌</div><p>خطأ في تحميل البيانات</p></div>';
+  }
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = allSigs.length;
+  const today = new Date().toDateString();
+  const todayCount = allSigs.filter(s => new Date(s.signed_at).toDateString() === today).length;
+  document.getElementById('stat-today').textContent = todayCount;
+  const unique = new Set(allSigs.map(s => s.student_pin)).size;
+  document.getElementById('stat-students').textContent = unique;
+}
+
+function renderSigs(sigs) {
+  const container = document.getElementById('sigs-container');
+  if (!sigs.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد توقيعات محفوظة بعد</p></div>';
     return;
   }
-
-  let html = `
-    <div style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;padding:10px 14px;background:#f8f9fc;border-radius:10px;border-right:3px solid var(--accent);">
-      📝 يُحدَّث هذا القسم بواسطة المعلم المسؤول عن الطالب — للاطلاع فقط
-    </div>`;
-
-  PERF_SUBJECTS.forEach(subj => {
-    const subjData = saved[subj.key] || { strengths: [], needs: [] };
-    const strengths = subjData.strengths || [];
-    const needs     = subjData.needs     || [];
-    if (strengths.length === 0 && needs.length === 0) return;
-
-    html += `
-      <div class="sw-block">
-        <div class="sw-subject-head">${subj.icon} ${subj.name}</div>
-        <div class="sw-body">
-          <!-- جوانب القوة -->
-          <div class="sw-side">
-            <div class="sw-side-title sw-strength-title">✅ جوانب القوة</div>
-            <div class="sw-item-list">
-              ${strengths.length ? strengths.map(item => `
-                <div class="sw-item">
-                  <div class="sw-item-dot-green"></div>
-                  <span style="flex:1;">${escHtml(item)}</span>
-                </div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
-            </div>
-          </div>
-          <!-- جوانب الاحتياج -->
-          <div class="sw-side">
-            <div class="sw-side-title sw-need-title">🎯 جوانب الاحتياج</div>
-            <div class="sw-item-list">
-              ${needs.length ? needs.map(item => `
-                <div class="sw-item">
-                  <div class="sw-item-dot-orange"></div>
-                  <span style="flex:1;">${escHtml(item)}</span>
-                </div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
-            </div>
+  container.innerHTML = `<div class="sigs-grid">${sigs.map(s => {
+    const date = new Date(s.signed_at).toLocaleDateString('ar-SA-u-nu-latn', {
+      year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'
+    });
+    const initial = s.student_name ? s.student_name.split(' ').map(w=>w[0]).join('').slice(0,2) : '؟';
+    const idx = sigs.indexOf(s);
+    return `
+      <div class="sig-card">
+        <div class="sig-head">
+          <div class="sig-avatar">${initial}</div>
+          <div>
+            <div class="sig-name">${s.student_name || '—'}</div>
+            <div class="sig-grade">${s.grade || '—'}</div>
           </div>
         </div>
-      </div>`;
-  });
-
-  const meta = currentStudent.strengthsMeta;
-  if (meta) {
-    try {
-      const d = new Date(meta.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
-      html += `<div style="font-size:0.78rem;color:rgba(34,19,53,.42);">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(meta.teacher)}</div>`;
-    } catch(e) {}
-  }
-
-  container.innerHTML = html;
-}
-
-// =====================================================
-// لوحة التعزيز — شهادات الشكر والتقدير (عرض + طباعة)
-// =====================================================
-
-function renderReinforceTab() {
-  const container = document.getElementById('reinforce-content');
-  if (!container || !currentStudent) return;
-  const history = (currentStudent.reinforcements || []).slice().reverse();
-
-  if (history.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">🏆</div>
-        <div class="es-title">لا توجد شهادات شكر حتى الآن</div>
-        <div class="es-sub">عند إرسال شهادة شكر من المعلم المسؤول ستظهر هنا ويمكن طباعتها</div>
-      </div>`;
-    return;
-  }
-
-  container.innerHTML = history.map(item => `
-    <div class="reinforce-item">
-      <div class="reinforce-icon">🏆</div>
-      <div style="flex:1;">
-        <div class="reinforce-title">${escHtml(item.title)}</div>
-        <div class="reinforce-meta">📅 ${escHtml(item.dateLabel)} — ✍️ ${escHtml(item.teacher)}</div>
-        ${item.message ? `<div class="reinforce-msg">${escHtml(item.message)}</div>` : ''}
+        <div class="sig-img-wrap">
+          ${s.signature_data
+            ? `<img src="${s.signature_data}" alt="التوقيع" id="sigimg-${idx}">`
+            : '<span style="color:#9ca3af;font-size:0.8rem;">لا يوجد توقيع</span>'}
+        </div>
+        <div class="sig-foot">
+          <span class="sig-date">📅 ${date}</span>
+          <span class="sig-badge">✅ موقّع</span>
+        </div>
+        ${s.signature_data ? `
+        <div class="sig-actions">
+          <button class="btn-dl-png" onclick="downloadPNG('${s.signature_data}', '${s.student_name}')">⬇️ صورة</button>
+          <button class="btn-dl-pdf" onclick="downloadPDF(${idx})">🖨️ PDF</button>
+          <button class="btn-dl-del" onclick="deleteSig(${s.id}, '${s.student_name}')">🗑️ حذف</button>
+        </div>` : ''}
       </div>
-      <button class="btn-print-cert" onclick="printCertificate('${item.id}')">🖨️ طباعة الشهادة</button>
-    </div>`).join('');
+    `;
+  }).join('')}</div>`;
 }
 
-function printCertificate(id) {
-  if (!currentStudent) return;
-  const item = (currentStudent.reinforcements || []).find(r => r.id === id);
-  if (!item) return;
-  const studentName = currentStudent.name || '';
+function filterSigs() {
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  if (!q) { renderSigs(allSigs); return; }
+  const filtered = allSigs.filter(s =>
+    (s.student_name||'').includes(q) || (s.grade||'').includes(q)
+  );
+  renderSigs(filtered);
+}
 
+async function deleteSig(id, name) {
+  if (!confirm(`هل تريد حذف توقيع "${name}"؟`)) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/signatures?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      }
+    });
+    if (res.ok) {
+      allSigs = allSigs.filter(s => s.id !== id);
+      updateStats();
+      filterSigs();
+    } else {
+      alert('❌ خطأ في الحذف');
+    }
+  } catch(e) {
+    alert('❌ خطأ في الاتصال: ' + e.message);
+  }
+}
+
+function downloadPNG(dataUrl, name) {
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = `توقيع_${name || 'ولي_الأمر'}.png`;
+  a.click();
+}
+
+function downloadPDF(idx) {
+  const s = allSigs[idx];
+  if (!s) return;
+  const dateObj = new Date(s.signed_at);
+  const date = dateObj.toLocaleDateString('ar-SA-u-nu-latn', {
+    year:'numeric', month:'long', day:'numeric', weekday:'long'
+  });
+  const time = dateObj.toLocaleTimeString('ar-SA-u-nu-latn', {
+    hour:'2-digit', minute:'2-digit', hour12:true
+  });
   const win = window.open('', '_blank');
-  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
-
   win.document.write(`
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-<title>شهادة شكر — ${escHtml(studentName)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  *{box-sizing:border-box;}
-  body{font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#F7F5FC;}
-  .cert{width:740px;max-width:92vw;border:10px solid #6B4C9A;border-radius:22px;padding:50px 44px;text-align:center;background:#fff;position:relative;}
-  .cert::after{content:'';position:absolute;inset:14px;border:2px dashed #B79EE0;border-radius:14px;pointer-events:none;}
-  .emoji{font-size:2.6rem;margin-bottom:6px;}
-  h1{font-family:'Tajawal',sans-serif;font-size:2.1rem;color:#2E2148;margin:0 0 6px;}
-  .sub{color:#6E5F82;font-size:.92rem;margin-bottom:26px;}
-  .lead{font-size:.95rem;color:#6E5F82;}
-  .name{font-family:'Tajawal',sans-serif;font-size:1.7rem;font-weight:900;color:#6B4C9A;margin:14px 0 18px;}
-  .reason{font-size:1.05rem;color:#221335;margin-bottom:10px;font-weight:800;}
-  .msg{font-size:.95rem;color:#221335;line-height:2;margin-bottom:28px;}
-  .footer{display:flex;justify-content:space-between;margin-top:36px;font-size:.84rem;color:#6E5F82;border-top:1px solid #EAE1F7;padding-top:14px;}
-  @media print{ body{background:#fff;} .cert{border-color:#6B4C9A;box-shadow:none;} }
-</style></head><body>
-  <div class="cert">
-    <div class="emoji">🏆</div>
-    <h1>شهادة شكر وتقدير</h1>
-    <div class="sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
-    <div class="lead">تُمنح هذه الشهادة للطالب/ـة</div>
-    <div class="name">${escHtml(studentName)}</div>
-    <div class="reason">${escHtml(item.title)}</div>
-    ${item.message ? `<div class="msg">${escHtml(item.message)}</div>` : ''}
-    <div class="footer">
-      <span>📅 ${escHtml(item.dateLabel)}</span>
-      <span>✍️ ${escHtml(item.teacher)}</span>
-    </div>
-  </div>
-  <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
-</body></html>`);
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+      <meta charset="UTF-8">
+      <title>إقرار — ${s.student_name}</title>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Cairo',sans-serif; background:#fff; color:#221335; padding:40px; direction:rtl; }
+        .header { text-align:center; margin-bottom:28px; border-bottom:3px solid #3F2E63; padding-bottom:18px; }
+        .school { font-size:0.78rem; color:#fff; background:#3F2E63; display:inline-block; padding:4px 16px; border-radius:20px; margin-bottom:10px; }
+        h1 { font-size:1.35rem; font-weight:900; color:#3F2E63; margin-bottom:4px; }
+        .sub { font-size:0.83rem; color:#6E5F82; }
+        .iqrar-text { background:#EAE1F7; border:1px solid #DCD2EE; border-right:4px solid #D7A24A; border-radius:10px; padding:16px 18px; margin:20px 0; font-size:0.88rem; line-height:2; }
+        .fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0; }
+        .fields .field:last-child:nth-child(odd) { grid-column: span 2; }
+        .field { border:1px solid #DCD2EE; border-radius:8px; padding:10px 14px; }
+        .field-label { font-size:0.7rem; font-weight:700; color:#6E5F82; margin-bottom:3px; }
+        .field-value { font-size:0.88rem; font-weight:800; color:#3F2E63; }
+        .sign-section { margin-top:22px; }
+        .sign-title { font-size:0.83rem; font-weight:700; color:#3F2E63; margin-bottom:8px; }
+        .sign-box { border:2px solid #3F2E63; border-radius:10px; height:110px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+        .sign-box img { max-height:100px; }
+        .footer { margin-top:26px; text-align:center; font-size:0.72rem; color:#9ca3af; border-top:1px solid #DCD2EE; padding-top:12px; }
+        @media print { body { padding:20px; } }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div class="school">وزارة التعليم — مدرسة مكة المكرمة المتوسطة</div>
+        <h1>إقرار اطلاع ولي الأمر على الخطة الفردية</h1>
+        <div class="sub">قسم ذوي الإعاقة — برنامج يسير التعليمي</div>
+      </div>
+      <div class="iqrar-text">
+        أنا ولي أمر الطالب / <strong>${s.student_name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
+        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
+        وأتعهد بالتعاون مع فريق التربية الخاصة لتحقيق أفضل النتائج لابني.
+      </div>
+      <div class="fields">
+        <div class="field"><div class="field-label">اسم الطالب</div><div class="field-value">${s.student_name}</div></div>
+        <div class="field"><div class="field-label">الصف الدراسي</div><div class="field-value">${s.grade || '—'}</div></div>
+        <div class="field"><div class="field-label">البرنامج</div><div class="field-value"> برنامج الدمج الفكري</div></div>
+        <div class="field"><div class="field-label">تاريخ التوقيع</div><div class="field-value">${date}</div></div>
+        <div class="field"><div class="field-label">وقت التوقيع</div><div class="field-value">${time}</div></div>
+      </div>
+      <div class="sign-section">
+        <div class="sign-title">✍️ توقيع ولي الأمر</div>
+        <div class="sign-box">
+          ${s.signature_data
+            ? `<img src="${s.signature_data}">`
+            : '<span style="color:#9ca3af;font-size:0.8rem;">لا يوجد توقيع</span>'}
+        </div>
+      </div>
+      <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني</div>
+      <script>window.onload=()=>window.print();<\/script>
+    
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+
+
+</body>
+    </html>
+  `);
   win.document.close();
 }
 
-</script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("/sw.js");
-  });
+
+// =====================================================
+// GRADE TEACHERS & REVISION SYSTEM
+// =====================================================
+const GRADE_TEACHER_KEY = 'dumaj_grade_teachers_v1';
+
+const GRADE_MAP = {
+  'الأول المتوسط / ١':  'teacher-grade-1',
+  'الثاني المتوسط / ١': 'teacher-grade-2',
+  'الثالث المتوسط / ١': 'teacher-grade-3',
+};
+
+function loadGradeTeachers() {
+  try {
+    const saved = localStorage.getItem(GRADE_TEACHER_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      Object.entries(GRADE_MAP).forEach(([grade, inputId]) => {
+        const el = document.getElementById(inputId);
+        if (el && data[grade]) el.value = data[grade];
+      });
+    }
+  } catch(e) {}
 }
+
+function getTeacherForGrade(grade) {
+  try {
+    const saved = localStorage.getItem(GRADE_TEACHER_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      return data[grade] || '';
+    }
+  } catch(e) {}
+  return '';
+}
+
+function saveGradeTeachers() {
+  const data = {};
+  Object.entries(GRADE_MAP).forEach(([grade, inputId]) => {
+    const el = document.getElementById(inputId);
+    if (el) data[grade] = el.value.trim();
+  });
+  try {
+    localStorage.setItem(GRADE_TEACHER_KEY, JSON.stringify(data));
+    // تحديث teacher_name في جميع الطلاب
+    Object.entries(STUDENTS).forEach(([pin, s]) => {
+      const teacher = data[s.grade] || '';
+      STUDENTS[pin].teacher_name = teacher;
+    });
+    const msg = document.getElementById('teacher-save-msg');
+    if (msg) { msg.style.color = '#065f46'; msg.textContent = '✅ تم حفظ المعلمين وتحديث بيانات الطلاب'; }
+    setTimeout(() => { if (msg) msg.textContent = ''; }, 3000);
+    showToast('✅ تم حفظ المعلمين للصفوف');
+  } catch(e) {}
+}
+
+function previewTeacherSave() {
+  const msg = document.getElementById('teacher-save-msg');
+  if (msg) { msg.style.color = '#92400e'; msg.textContent = '⚠️ لا تنسَ الضغط على "حفظ المعلمين"'; }
+}
+
+// نظام الخطط المعلقة
+const REVISION_KEY = 'dumaj_revision_requests_v1';
+let revisionRequests = {}; // pin -> { notes, requestedAt }
+
+async function loadRevisionRequests() {
+  // أولاً: تحميل من localStorage كـ fallback
+  try {
+    const saved = localStorage.getItem(REVISION_KEY);
+    if (saved) revisionRequests = JSON.parse(saved);
+  } catch(e) {}
+
+  // ثانياً: جلب من Supabase (المصدر الحقيقي)
+  try {
+    // جلب قائمة الملفات من مجلد dumaj/revisions
+    const res = await fetch(`${SB_URL}/storage/v1/object/list/reports/dumaj/revisions`, {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ limit: 100, offset: 0, prefix: '' })
+    });
+    if (res.ok) {
+      const files = await res.json();
+      const revFiles = files.filter(f => f.name && f.name.startsWith('revision-'));
+      // جلب محتوى كل ملف
+      const fetches = revFiles.map(async f => {
+        try {
+          const r = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/revisions/${f.name}`, {
+            headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+          });
+          if (r.ok) {
+            const data = await r.json();
+            if (data && data.pin && data.status === 'pending') {
+              revisionRequests[data.pin] = data;
+            }
+          }
+        } catch(e) {}
+      });
+      await Promise.all(fetches);
+      // حفظ في localStorage
+      localStorage.setItem(REVISION_KEY, JSON.stringify(revisionRequests));
+    }
+  } catch(e) { console.warn('Could not load revisions from Supabase:', e); }
+
+  updateRevisionAlert();
+}
+
+// فحص دوري كل 20 ثانية لطلبات التعديل الجديدة
+function startRevisionPolling() {
+  setInterval(async () => {
+    const oldCount = Object.keys(revisionRequests).length;
+    await loadRevisionRequests();
+    const newCount = Object.keys(revisionRequests).length;
+    if (newCount > oldCount) {
+      const diff = newCount - oldCount;
+      showToast(`🔄 ${diff} خطة جديدة تنتظر التعديل من المشرف التربوي`);
+      const alertEl = document.getElementById('revision-alert');
+      if (alertEl) alertEl.style.animation = 'revisionPulse 0.6s ease 3';
+      setTimeout(showRevisionRequests, 500);
+    }
+  }, 30000);
+}
+
+function updateRevisionAlert() {
+  const pins = Object.keys(revisionRequests);
+  const alertEl = document.getElementById('revision-alert');
+  const count = document.getElementById('revision-count');
+  if (alertEl && count) {
+    if (pins.length > 0) {
+      alertEl.style.display = 'flex';
+      alertEl.style.alignItems = 'center';
+      alertEl.style.gap = '6px';
+      count.textContent = pins.length;
+    } else {
+      alertEl.style.display = 'none';
+    }
+  }
+}
+
+function showRevisionPopupOnLoad() {
+  const pins = Object.keys(revisionRequests);
+  if (!pins.length) return;
+  // إظهار toast واضح
+  const names = pins.map(p => STUDENTS[p]?.name || p).join('، ');
+  showToast(`🔄 يوجد ${pins.length} خطة تنتظر تعديلك: ${names.slice(0,60)}...`);
+}
+
+function showRevisionRequests() {
+  const pins = Object.keys(revisionRequests);
+  if (!pins.length) return;
+
+  let html = '<div style="padding:20px;">';
+  html += '<div style="font-family:Tajawal,sans-serif;font-size:1.1rem;font-weight:900;color:#3F2E63;margin-bottom:16px;border-bottom:2px solid #DCD2EE;padding-bottom:12px;">🔄 خطط تنتظر التعديل</div>';
+
+  pins.forEach(pin => {
+    const s = STUDENTS[pin];
+    const req = revisionRequests[pin];
+    if (!s) return;
+    html += `
+      <div style="background:#EAE1F7;border:1px solid #DCD2EE;border-right:4px solid #f59e0b;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
+        <div style="font-weight:800;font-size:0.9rem;color:#3F2E63;margin-bottom:6px;">👤 ${s.name} — ${s.grade}</div>
+        <div style="font-size:0.78rem;font-weight:700;color:#92400e;margin-bottom:6px;">📝 ملاحظات المشرف:</div>
+        <div style="font-size:0.83rem;color:#221335;line-height:1.8;margin-bottom:10px;">${req.notes}</div>
+        <div style="font-size:0.72rem;color:#9ca3af;">📅 ${new Date(req.requestedAt).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric'})}</div>
+        <button onclick="markRevisionDone('${pin}')" style="margin-top:10px;background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:8px;padding:7px 14px;font-family:Cairo,sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;">✅ تم التعديل</button>
+      </div>`;
+  });
+
+  html += '</div>';
+  document.getElementById('dumaj-cell-content').innerHTML = html;
+  document.getElementById('dumaj-cell-box').style.display = 'block';
+  document.getElementById('dumaj-cell-overlay').style.display = 'block';
+}
+
+async function markRevisionDone(pin) {
+  delete revisionRequests[pin];
+  try { localStorage.setItem(REVISION_KEY, JSON.stringify(revisionRequests)); } catch(e) {}
+  // حذف الملف من Supabase
+  try {
+    await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/revisions/revision-${pin}.json`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+  } catch(e) {}
+  updateRevisionAlert();
+  showRevisionRequests();
+  showToast('✅ تم تعليم الخطة كمُعدَّلة');
+  if (!Object.keys(revisionRequests).length) closeDumajCellEditor();
+}
+
+
+// =====================================================
+// MEETING INVITE CHECK
+// =====================================================
+async function checkMeetingInvite() {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/meeting-invite.json`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (!res.ok) return;
+    const invite = await res.json();
+    if (!invite || !invite.link) return;
+    const shownKey = 'shown_meeting_' + invite.id;
+    if (localStorage.getItem(shownKey)) return;
+    document.getElementById('meeting-subject-label').textContent = invite.subject || '—';
+    const dt = invite.datetime ? new Date(invite.datetime).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+    document.getElementById('meeting-datetime-label').textContent = dt;
+    document.getElementById('meeting-join-btn').href = invite.link;
+    if (invite.supervisorName) document.getElementById('meeting-from-label').textContent = 'من: ' + invite.supervisorName;
+    if (invite.notes) {
+      document.getElementById('meeting-notes-label').textContent = invite.notes;
+      document.getElementById('meeting-notes-wrap').style.display = 'block';
+    }
+    document.getElementById('meeting-overlay').style.display = 'block';
+    document.getElementById('meeting-alert-box').style.display = 'block';
+    localStorage.setItem(shownKey, '1');
+  } catch(e) { console.warn('Meeting check failed:', e); }
+}
+
+function closeMeetingAlert() {
+  document.getElementById('meeting-overlay').style.display = 'none';
+  document.getElementById('meeting-alert-box').style.display = 'none';
+}
+
+
+// ===== SHOW AUDIT LOG =====
+function showAuditLog() {
+  if (!auditLog || !auditLog.length) { showToast('لا توجد سجلات بعد'); return; }
+  const actionIcons = {
+    'دخول لوحة التحكم':'🔑','تعديل بيانات طالب':'✏️','حفظ جميع البيانات':'💾',
+    'رفع ملف':'📤','تغيير رمز طالب':'🔐','اعتماد خطة تربوية':'✅','طلب تعديل خطة':'🔄','دخول لوحة الإشراف':'🔑'
+  };
+  const rows = auditLog.slice(0,100).map(e => {
+    const dt = new Date(e.timestamp).toLocaleString('ar-SA-u-nu-latn',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    const icon = actionIcons[e.action] || '📋';
+    const details = Object.entries(e.details||{}).map(([k,v])=>`<span style="color:#888;font-size:0.72rem;">${k}: <b style="color:#3F2E63;">${v}</b></span>`).join(' • ');
+    return `<div style="border-bottom:1px solid #f0ede6;padding:10px 0;display:flex;gap:10px;align-items:flex-start;">
+      <div style="font-size:1.2rem;flex-shrink:0;">${icon}</div>
+      <div style="flex:1;">
+        <div style="font-weight:800;font-size:0.88rem;color:#3F2E63;">${e.action}</div>
+        <div style="font-size:0.75rem;color:#888;margin-top:2px;">👤 ${e.user||'—'} • 📅 ${dt} • 🏷️ ${e.program||'—'}</div>
+        ${details?`<div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:6px;">${details}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  const overlay = document.getElementById('dumaj-cell-overlay');
+  const box = document.getElementById('dumaj-cell-box');
+  const contentEl = document.getElementById('dumaj-cell-content');
+  if (!box || !contentEl) { showToast('تعذّر عرض السجل'); return; }
+  contentEl.innerHTML = `<div style="padding:20px;">
+    <div style="font-family:Tajawal,sans-serif;font-size:1.1rem;font-weight:900;color:#3F2E63;margin-bottom:12px;border-bottom:2px solid #DCD2EE;padding-bottom:10px;display:flex;justify-content:space-between;">
+      <span>🔍 سجل التدقيق</span><span style="font-size:0.75rem;color:#888;">${auditLog.length} سجل</span>
+    </div>
+    <div style="max-height:65vh;overflow-y:auto;">${rows}</div>
+  </div>`;
+  overlay.style.display = 'block';
+  box.style.display = 'block';
+}
+
+
+// ===== MEETING TAB =====
+let _lastMeetingInvite = null;
+
+async function loadMeetingTab() {
+  const el = document.getElementById('meetings-tab-content');
+  if (!el) return;
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/dumaj/meeting-invite.json`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (!res.ok) {
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات حالياً</div>';
+      return;
+    }
+    const invite = await res.json();
+    if (!invite || !invite.link) {
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات حالياً</div>';
+      return;
+    }
+    _lastMeetingInvite = invite;
+    const dt = invite.datetime
+      ? new Date(invite.datetime).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})
+      : '—';
+    const shownKey = 'shown_meeting_' + invite.id;
+    const isNew = !localStorage.getItem(shownKey);
+    el.innerHTML = `
+      <div style="background:${isNew?'#EAE1F7':'#FBFAFE'};border:2px solid ${isNew?'#f59e0b':'#DCD2EE'};border-radius:12px;padding:18px 20px;">
+        ${isNew?'<div style="background:#f59e0b;color:#fff;font-size:0.72rem;font-weight:800;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;">🆕 جديد</div>':''}
+        <div style="font-size:0.78rem;font-weight:700;color:#888;margin-bottom:4px;">من المشرف التربوي</div>
+        <div style="font-weight:900;font-size:1rem;color:#3F2E63;margin-bottom:12px;">${invite.supervisorName || 'أحمد سعيد الزهراني'}</div>
+        <div style="background:#fff;border:1px solid #DCD2EE;border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+          <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:3px;">📌 الموضوع</div>
+          <div style="font-size:0.92rem;font-weight:800;color:#3F2E63;">${invite.subject || '—'}</div>
+          <div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📅 الموعد</div>
+          <div style="font-size:0.88rem;font-weight:700;color:#3F2E63;">${dt}</div>
+          ${invite.notes ? `<div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📝 ملاحظات</div><div style="font-size:0.84rem;color:#333;">${invite.notes}</div>` : ''}
+        </div>
+        <a href="${invite.link}" target="_blank"
+           style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.92rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.3);"
+           onclick="localStorage.setItem('shown_meeting_${invite.id}','1');this.closest('[id^=admin-tab]') && setTimeout(()=>loadMeetingTab(),500)">
+          🔗 انضم للاجتماع الآن
+        </a>
+        <button onclick="dismissMeeting('${invite.id}')" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;">
+          ✓ تم الاطلاع
+        </button>
+      </div>`;
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات</div>';
+  }
+}
+
+function dismissMeeting(id) {
+  localStorage.setItem('shown_meeting_' + id, '1');
+  loadMeetingTab();
+  showToast('✅ تم تعليم الاستدعاء كمقروء');
+}
+
 </script>
+
+<!-- زر الرئيسية الثابت -->
+<a href="index.html" id="home-fixed-btn" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 16px rgba(63,46,99,0.45);transition:all 0.2s;" title="العودة للرئيسية" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+
+
+
+<!-- MEETING INVITE ALERT -->
+<div class="meeting-alert-overlay" id="meeting-overlay" onclick="closeMeetingAlert()"></div>
+<div class="meeting-alert-box" id="meeting-alert-box" style="display:none;">
+  <div class="meeting-alert-icon">📹</div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:#0369a1;margin-bottom:6px;">استدعاء اجتماع عن بعد</div>
+  <div style="font-size:0.82rem;color:#6E5F82;margin-bottom:16px;" id="meeting-from-label">من: مشرف ذوي الإعاقة</div>
+  <div style="background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;text-align:right;">
+    <div style="font-size:0.78rem;font-weight:700;color:#6E5F82;margin-bottom:4px;">📌 الموضوع</div>
+    <div style="font-size:0.95rem;font-weight:800;color:#2E2148;" id="meeting-subject-label">—</div>
+    <div style="font-size:0.78rem;font-weight:700;color:#6E5F82;margin-top:10px;margin-bottom:4px;">📅 الموعد</div>
+    <div style="font-size:0.88rem;font-weight:700;color:#2E2148;" id="meeting-datetime-label">—</div>
+    <div id="meeting-notes-wrap" style="margin-top:10px;display:none;">
+      <div style="font-size:0.78rem;font-weight:700;color:#6E5F82;margin-bottom:4px;">📝 ملاحظات</div>
+      <div style="font-size:0.82rem;color:#2E2148;" id="meeting-notes-label"></div>
+    </div>
+  </div>
+  <a id="meeting-join-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px 24px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.35);">
+    🔗 انضم للاجتماع الآن
+  </a>
+  <button onclick="closeMeetingAlert()" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;">لاحقاً</button>
+</div>
+
 </body>
 </html>
