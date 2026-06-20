@@ -1542,6 +1542,7 @@ window._initSupPanel = function(program, username, uname, urole) {
   if (typeof loadMeetingInvite === "function") window.loadMeetingInvite = loadMeetingInvite;
   if (typeof loadAssignments === "function") window.loadAssignments = loadAssignments;
   if (typeof renderAssignTable === "function") window.renderAssignTable = renderAssignTable;
+  if (typeof assignTeacher === "function") window.assignTeacher = assignTeacher;
   if (typeof saveAssignments === "function") window.saveAssignments = saveAssignments;
   if (typeof loadTeacherAnnouncements === "function") window.loadTeacherAnnouncements = loadTeacherAnnouncements;
   if (typeof _initTPListeners === "function") window._initTPListeners = _initTPListeners;
