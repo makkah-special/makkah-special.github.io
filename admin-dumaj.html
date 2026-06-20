@@ -980,6 +980,41 @@ header.portal-header{
 .ann-container{margin-bottom:16px;}
 @media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
 
+
+
+/* ===== FIX: admin supervisor tabs responsive layout ===== */
+.admin-tabs {
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.admin-tabs > .admin-tab-btn {
+  flex: 1 1 135px;
+  min-width: 135px;
+  white-space: nowrap;
+  line-height: 1.45;
+}
+@media (max-width: 640px) {
+  .admin-body { padding: 18px 14px 44px; }
+  .admin-banner { padding: 18px 16px; flex-direction: column; align-items: stretch; gap: 10px; }
+  .admin-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    padding: 7px;
+  }
+  .admin-tabs > .admin-tab-btn {
+    min-width: 0;
+    width: 100%;
+    padding: 10px 6px;
+    font-size: .74rem;
+    white-space: normal;
+    min-height: 44px;
+  }
+}
+@media (max-width: 380px) {
+  .admin-tabs { grid-template-columns: 1fr; }
+}
+
 </style>
 <script>
 function initSupPanel(prog, user, name, role) {
@@ -2475,10 +2510,14 @@ function adminLogout() {
 }
 
 function openAdminTab(id, btn) {
-  document.querySelectorAll('#admin-portal .admin-tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('#admin-portal .admin-tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('admin-tab-' + id).classList.add('active');
-  btn.classList.add('active');
+  const targetPane = document.getElementById('admin-tab-' + id);
+  if (!targetPane) return;
+
+  document.querySelectorAll('#admin-portal > .admin-body > .admin-tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#admin-portal > .admin-body > .admin-tabs > .admin-tab-btn').forEach(b => b.classList.remove('active'));
+
+  targetPane.classList.add('active');
+  if (btn) btn.classList.add('active');
   if (id === 'schedule') renderDumajSchedule();
   if (id === 'upload') populateUploadStudentSelect();
   if (id === 'settings') { loadGradeTeachers(); renderStudentPinList(); }
