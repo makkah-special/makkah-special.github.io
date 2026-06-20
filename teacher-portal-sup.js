@@ -1468,14 +1468,18 @@ function printCurriculum() {
 // ===================================================
 // التهيئة
 // ===================================================
-document.getElementById('pin-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
-document.getElementById('username-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') document.getElementById('pin-input').focus();
-});
-document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
-document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
+// تهيئة آمنة: قد لا تكون عناصر بوابة المعلم موجودة داخل صفحات المشرف
+// لذلك لا نربط الأحداث إلا إذا كان العنصر موجودًا فعلاً حتى لا يتوقف تحميل الملف.
+(function(){
+  var pi = document.getElementById('pin-input');
+  var ui = document.getElementById('username-input');
+  var ct = document.getElementById('cert-title-input');
+  var cm = document.getElementById('cert-message-input');
+  if (pi) pi.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+  if (ui) ui.addEventListener('keydown', function(e) { if (e.key === 'Enter') { var p = document.getElementById('pin-input'); if (p) p.focus(); } });
+  if (ct) ct.addEventListener('input', updateCertPreview);
+  if (cm) cm.addEventListener('input', updateCertPreview);
+})();
 
 
 
