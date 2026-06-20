@@ -1,21 +1,19 @@
-// v1781956496 — teacher-portal-sup.js
-// ===== teacher-portal-sup.js =====
+// v1781957171
 
-// ===== دوال متاحة فوراً =====
 function openMainTab(n,b) {
   var wrap = document.getElementById('sup-portal-wrap') || document;
-  wrap.querySelectorAll('.tab-pane[id^="main-tab-"]').forEach(function(el){el.classList.remove('active');});
+  wrap.querySelectorAll && wrap.querySelectorAll('.tab-pane[id^="main-tab-"]').forEach(function(el){el.classList.remove('active');});
   var t=document.getElementById('main-tab-'+n); if(t) t.classList.add('active');
-  wrap.querySelectorAll('#main-tabs .tab-btn').forEach(function(el){el.classList.remove('active');});
+  if(wrap.querySelectorAll) wrap.querySelectorAll('#main-tabs .tab-btn').forEach(function(el){el.classList.remove('active');});
   if(b) b.classList.add('active');
   if(n==='curriculum' && window.renderCurriculumTab) setTimeout(renderCurriculumTab,0);
   if(n==='assign' && window.renderAssignTable) setTimeout(renderAssignTable,0);
 }
 function openDetailTab(n,b) {
   var wrap = document.getElementById('sup-portal-wrap') || document;
-  wrap.querySelectorAll('.tab-pane[id^="detail-tab-"]').forEach(function(el){el.classList.remove('active');});
+  if(wrap.querySelectorAll) wrap.querySelectorAll('.tab-pane[id^="detail-tab-"]').forEach(function(el){el.classList.remove('active');});
   var t=document.getElementById('detail-tab-'+n); if(t) t.classList.add('active');
-  wrap.querySelectorAll('#detail-tabs .tab-btn').forEach(function(el){el.classList.remove('active');});
+  if(wrap.querySelectorAll) wrap.querySelectorAll('#detail-tabs .tab-btn').forEach(function(el){el.classList.remove('active');});
   if(b) b.classList.add('active');
   if(n==='iep') setTimeout(function(){if(window.renderIEPEval) renderIEPEval();},0);
   if(n==='performance') setTimeout(function(){if(window.renderPerformanceEditor) renderPerformanceEditor();},0);
@@ -24,31 +22,28 @@ function openDetailTab(n,b) {
 }
 function openPortfolioFull() { if(window._openPortfolioFull) window._openPortfolioFull(); }
 
-
 (function() {
 
-  // إخفاء المتغيرات الخارجية بـ var محلية
-  var CORE_SUBJECTS = (typeof window.CORE_SUBJECTS !== 'undefined') ? window.CORE_SUBJECTS : [];
-  var IEP_LEVELS = (typeof window.IEP_LEVELS !== 'undefined') ? window.IEP_LEVELS : [];
-  var IEP_STATUS = (typeof window.IEP_STATUS !== 'undefined') ? window.IEP_STATUS : {};
-  var IEP_SUBJECTS = (typeof window.IEP_SUBJECTS !== 'undefined') ? window.IEP_SUBJECTS : [];
-  
-
-  // ربط currentTeacher بـ window
-  var _ctGet = function() { return window.currentTeacher; };
-  var _ctSet = function(v) { window.currentTeacher = v; return v; };
-  // استخدام Proxy pattern بسيط
+  // مشاركة currentTeacher عبر window
+  if (typeof window.currentTeacher === 'undefined') window.currentTeacher = null;
   Object.defineProperty(window, 'currentTeacher', {
     get: function() { return window._ct || null; },
     set: function(v) { window._ct = v; },
     configurable: true
   });
 
-// ----- Block 0 -----
+  // قراءة المتغيرات من admin
+  var CORE_SUBJECTS = window.CORE_SUBJECTS || [];
+  var IEP_LEVELS = window.IEP_LEVELS || [];
+  var IEP_STATUS = window.IEP_STATUS || {};
+  var IEP_SUBJECTS = window.IEP_SUBJECTS || [];
+
+// Block 0
 
 // ===================================================
 // إعدادات Supabase
 // ===================================================
+var SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
 
 var PROGRAM_INFO = {
   dumaj:  { label: 'الدمج الفكري', dataPath: 'dumaj',  badge: 'dumaj'  },
@@ -73,7 +68,21 @@ var TEACHERS = {
 // ===================================================
 // المواد والمستويات (موحّدة مع بوابة الطلاب)
 // ===================================================
+var CORE_SUBJECTS = [
+  { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖' },
+  { key:'math',    name:'الرياضيات',             icon:'🔢' },
+  { key:'islamic', name:'التربية الإسلامية',     icon:'🕌' },
+  { key:'science', name:'العلوم',                icon:'🔬' },
+  { key:'life',    name:'المهارات الحياتية',     icon:'🌱' },
+];
 
+var IEP_LEVELS = [
+  { value:'excellent', label:'متفوق',          color:'#059669', bg:'#d1fae5' },
+  { value:'advanced',  label:'متقدم',           color:'#2563eb', bg:'#dbeafe' },
+  { value:'capable',   label:'متمكن',           color:'#d97706', bg:'#fef3c7' },
+  { value:'failed',    label:'غير مجتاز',       color:'#dc2626', bg:'#fee2e2' },
+  { value:'none',      label:'— لم يُقيَّم —', color:'#9ca3af', bg:'#f3f4f6' },
+];
 
 var PERF_SUBJECTS = [
   { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖', skills:['القراءة الجهرية','الكتابة والإملاء','الفهم والاستيعاب','التعبير الشفوي','القواعد النحوية'] },
@@ -114,7 +123,7 @@ function toHijriLike(dateStr) {
 
 async function sbGetJSON(path) {
   try {
-    const res = await fetch('https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/' + path + '?t=' + Date.now());
+    const res = await fetch('https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/' + path + '?t=' + Date.now())
     if (!res.ok) return null;
     return await res.json();
   } catch(e) { return null; }
@@ -125,7 +134,7 @@ async function sbSetJSON(path, data) {
     const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
     const res = await fetch('https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/' + path, {
       method:'POST',
-      headers:{'apikey':"sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere",'Authorization':'Bearer '+"sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere",'Content-Type':'application/json','x-upsert':'true'},
+      headers:{'apikey':'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Authorization':'Bearer sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Content-Type':'application/json','x-upsert':'true'},
       body: blob
     });
     return res.ok;
@@ -136,7 +145,7 @@ async function sbUploadFile(path, file) {
   try {
     const res = await fetch('https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/' + path, {
       method:'POST',
-      headers:{'apikey':"sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere",'Authorization':'Bearer '+"sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere",'Content-Type': file.type || 'application/octet-stream','x-upsert':'true'},
+      headers:{'apikey':'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Authorization':'Bearer sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Content-Type': file.type || 'application/octet-stream','x-upsert':'true'},
       body: file
     });
     return res.ok;
@@ -156,12 +165,12 @@ async function saveStudentData(program, pin, patch) {
 }
 
 
-// ----- Block 1 -----
+// Block 1
 
 // ===================================================
 // الحالة العامة
 // ===================================================
-
+var currentTeacher = null;
 var ASSIGNMENTS = { dumaj:{}, yaseer:{} };
 var currentDetail = null;
 var STUDENT_CONFIGS = { dumaj:null, yaseer:null };
@@ -205,13 +214,13 @@ async function openPortal() {
   document.getElementById('teacher-portal').style.display = 'block';
   window.scrollTo(0,0);
 
-  var tavEl=document.getElementById('t-avatar'); if(tavEl) tavEl.textContent = currentTeacher.avatar;
-  var tnEl=document.getElementById('t-name'); if(tnEl) tnEl.textContent = currentTeacher.name;
-  var trEl=document.getElementById('t-role'); if(trEl) trEl.textContent = '🎓 ' + currentTeacher.role;
+  document.getElementById('t-avatar').textContent = currentTeacher.avatar;
+  document.getElementById('t-name').textContent = currentTeacher.name;
+  document.getElementById('t-role').textContent = '🎓 ' + currentTeacher.role;
 
   if (currentTeacher.isSupervisor) {
     document.getElementById('assign-tab-btn').style.display = 'flex';
-    var ahtEl=document.getElementById('assign-head-title'); if(ahtEl) ahtEl.textContent =
+    document.getElementById('assign-head-title').textContent =
       `📋 إسناد طلاب برنامج ${PROGRAM_INFO[currentTeacher.program].label} للمعلمين`;
   } else {
     document.getElementById('assign-tab-btn').style.display = 'none';
@@ -264,11 +273,10 @@ async function getMyStudents() {
 
 async function renderMyStudents() {
   const grid = document.getElementById('students-grid');
-  if (!grid) return;
   grid.innerHTML = '<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ تحميل قائمة طلابك...</div></div>';
 
   const students = await getMyStudents();
-  var tcEl = document.getElementById('t-count'); if(tcEl) tcEl.textContent = `👥 ${students.length} طالب مسند`;
+  document.getElementById('t-count').textContent = `👥 ${students.length} طالب مسند`;
 
   const q = (document.getElementById('student-search').value || '').trim().toLowerCase();
   const filtered = students.filter(s =>
@@ -368,7 +376,7 @@ function closeStudentDetail() {
 }
 
 
-// ----- Block 2 -----
+// Block 2
 
 // ===================================================
 // تقييم الأهداف التربوية (IEP)
@@ -451,7 +459,7 @@ async function saveIEPEval() {
 }
 
 
-// ----- Block 3 -----
+// Block 3
 
 // ===================================================
 // قياس مستوى الأداء الحالي
@@ -533,7 +541,7 @@ async function saveTeacherPerformance() {
 }
 
 
-// ----- Block 4 -----
+// Block 4
 
 // ===================================================
 // جوانب القوة والاحتياج
@@ -673,7 +681,7 @@ async function saveTeacherStrengths() {
 }
 
 
-// ----- Block 5 -----
+// Block 5
 
 // ===================================================
 // الخطة الفردية والتقارير (رفع وعرض)
@@ -691,11 +699,11 @@ async function checkFileExists(url) {
 async function renderFilesTab() {
   const program = currentDetail.program;
   const pin = currentDetail.pin;
-  const base = 'https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/' + program;
+  const base = 'https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/' + program + '/';
 
   // ===== الخطة الفردية =====
   const planEl = document.getElementById('plan-current');
-  planEl.innerHTML = `<div style="color:var(--muted);font-size:.85rem;">⏳ جارٍ التحقق من وجود خطة محفوظة...</div>`;
+  planEl.innerHTML = `<div style='color:var(--muted);font-size:.85rem;">⏳ جارٍ التحقق من وجود خطة محفوظة...</div>`;
   let planFound = null;
   for (const ext of ['pdf','PDF','docx','doc']) {
     const url = `${base}plan-${pin}.${ext}`;
@@ -792,7 +800,7 @@ async function removeReport(idx) {
 }
 
 
-// ----- Block 6 -----
+// Block 6
 
 // ===================================================
 // لوحة التعزيز — شهادات الشكر والتقدير
@@ -976,7 +984,7 @@ async function assignTeacher(pin, uname) {
 }
 
 
-// ----- Block 7 -----
+// Block 7
 
 // ===================================================
 // جدول المعلم الأسبوعي (المعتمد من مشرف البرنامج)
@@ -1226,7 +1234,7 @@ async function saveAnnouncementTP() {
 }
 
 
-// ----- Block 8 -----
+// Block 8
 
 // ===================================================
 // توزيع المنهج الفصلي
@@ -1392,33 +1400,31 @@ function printCurriculum() {
 }
 
 
-// ----- Block 9 -----
+// Block 9
 
 // ===================================================
-// التهيئة — مؤجلة حتى يُنقر تبويب الإشراف
+// التهيئة
 // ===================================================
-function _initTPListeners() {
-  var pi = document.getElementById('pin-input');
-  var ui = document.getElementById('username-input');
-  var ct = document.getElementById('cert-title-input');
-  var cm = document.getElementById('cert-message-input');
-  if (pi) pi.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
-  if (ui) ui.addEventListener('keydown', function(e) { if (e.key === 'Enter') { var p=document.getElementById('pin-input'); if(p) p.focus(); } });
-  if (ct) ct.addEventListener('input', updateCertPreview);
-  if (cm) cm.addEventListener('input', updateCertPreview);
-}
+document.getElementById('pin-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('username-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('pin-input').focus();
+});
+document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
+document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
 
 
 
 var _supReady = false;
 window._initSupPanel = function(program, username, uname, urole) {
   if (_supReady) return; _supReady = true;
-  window.currentTeacher = currentTeacher = {username:username, name:uname, pin:'0000',
+  currentTeacher = {username:username, name:uname, pin:'0000',
     role:urole, program:program, avatar:uname.charAt(0), isSupervisor:true};
   var l=document.getElementById('login-screen'), p=document.getElementById('teacher-portal');
   if(l) l.style.display='none';
   if(p) p.style.display='block';
-  var av=document.getElementById('t-avatar'),nm=document.getElementById('t-name'),rl=document.getElementById('t-role');
+  var av=document.getElementById('t-avatar'), nm=document.getElementById('t-name'), rl=document.getElementById('t-role');
   if(av) av.textContent=currentTeacher.avatar;
   if(nm) nm.textContent=currentTeacher.name;
   if(rl) rl.textContent='🎓 '+currentTeacher.role;
@@ -1432,7 +1438,6 @@ window._initSupPanel = function(program, username, uname, urole) {
   if(window.loadTeacherAnnouncements) loadTeacherAnnouncements();
 };
 
-  // تصدير الدوال للـ global scope
   if (typeof doLogin === "function") window.doLogin = doLogin;
   if (typeof doLogout === "function") window.doLogout = doLogout;
   if (typeof openPortal === "function") window.openPortal = openPortal;
@@ -1460,5 +1465,7 @@ window._initSupPanel = function(program, username, uname, urole) {
   if (typeof saveAssignments === "function") window.saveAssignments = saveAssignments;
   if (typeof loadTeacherAnnouncements === "function") window.loadTeacherAnnouncements = loadTeacherAnnouncements;
   if (typeof _initTPListeners === "function") window._initTPListeners = _initTPListeners;
+  if (typeof annLoadLog === "function") window.annLoadLog = annLoadLog;
+  if (typeof loadStudentConfig === "function") window.loadStudentConfig = loadStudentConfig;
 
 })();

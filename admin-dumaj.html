@@ -1166,7 +1166,78 @@ function initSupPanel(prog, user, name, role) {
 
     <div class="admin-tab-pane" id="admin-tab-supervisor">
       <div id="sup-portal-wrap">
-        <div class="portal-body">
+        
+
+<!-- الشريط العلوي الرسمي -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="وزارة التعليم">
+        </a>
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      <b class="topbar-year">1447هـ</b>
+    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+  </div>
+</div>
+
+<header class="portal-header">
+  <div class="header-left">
+    <div class="header-icon">👨‍🏫</div>
+    <div>
+      <div class="header-title">بوابة المعلمين — متابعة الطلاب</div>
+      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+    </div>
+  </div>
+  <a href="index.html" class="back-btn">← الرئيسية</a>
+</header>
+
+<!-- ============ تسجيل الدخول ============ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-badge">🔐 بوابة آمنة للمعلمين</div>
+    <div class="login-icon-big">👨‍🏫</div>
+    <h2>بوابة المعلمين</h2>
+    <div class="login-desc">
+      بوابة موحّدة لمعلمي برنامج الدمج الفكري وبرنامج يسير — لمتابعة الطلاب المسندين إليك،
+      تقييم الأهداف، قياس مستوى الأداء، توثيق جوانب القوة والاحتياج، وإرسال شهادات تعزيز.
+    </div>
+
+    <div class="input-label">👤 اسم المستخدم</div>
+    <input type="text" class="text-input" id="username-input" placeholder="مثال: a.malki" autocomplete="username">
+
+    <div class="input-label">🔑 الرمز السري</div>
+    <input type="password" class="pin-input" id="pin-input" placeholder="• • • •" maxlength="6" autocomplete="current-password">
+
+    <div class="error-msg" id="login-error">❌ اسم المستخدم أو الرمز السري غير صحيح</div>
+    <button class="login-btn" onclick="doLogin()" id="login-btn">🔓 دخول</button>
+
+    <div class="hint-box">
+      💡 إن لم يكن لديك بيانات دخول، يرجى التواصل مع مشرف البرنامج (الدمج الفكري أو يسير) لإنشاء حساب لك.
+    </div>
+  </div>
+</div>
+
+<!-- ============ بوابة المعلم ============ -->
+<div id="teacher-portal">
+  <div class="portal-banner">
+    <div class="teacher-identity">
+      <div class="teacher-avatar" id="t-avatar">👨‍🏫</div>
+      <div>
+        <div class="teacher-name-display" id="t-name">—</div>
+        <div class="teacher-meta-display">
+          <span class="meta-chip" id="t-role">—</span>
+          <span class="meta-chip" id="t-count">0 طالب</span>
+        </div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">🚪 تسجيل الخروج</button>
+  </div>
+
+  <div class="portal-body">
 
     <!-- سجل استدعاءات الاجتماع -->
     <div id="meetings-log" class="meetings-log-wrap" style="display:none;"></div>
@@ -1372,6 +1443,8 @@ function initSupPanel(prog, user, name, role) {
 </div>
 
 <div class="success-toast" id="success-toast"></div>
+
+
       </div>
     </div>
 
@@ -5425,7 +5498,7 @@ function dismissMeeting(id) {
 </div>
 
 
-<script src="teacher-portal-sup.js?v=1781956496"></script>
+<script src="teacher-portal-sup.js?v=1781957171"></script>
 <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
 </body>
 </html>
