@@ -205,13 +205,13 @@ async function openPortal() {
   document.getElementById('teacher-portal').style.display = 'block';
   window.scrollTo(0,0);
 
-  document.getElementById('t-avatar').textContent = currentTeacher.avatar;
-  document.getElementById('t-name').textContent = currentTeacher.name;
-  document.getElementById('t-role').textContent = '🎓 ' + currentTeacher.role;
+  var tavEl=document.getElementById('t-avatar'); if(tavEl) tavEl.textContent = currentTeacher.avatar;
+  var tnEl=document.getElementById('t-name'); if(tnEl) tnEl.textContent = currentTeacher.name;
+  var trEl=document.getElementById('t-role'); if(trEl) trEl.textContent = '🎓 ' + currentTeacher.role;
 
   if (currentTeacher.isSupervisor) {
     document.getElementById('assign-tab-btn').style.display = 'flex';
-    document.getElementById('assign-head-title').textContent =
+    var ahtEl=document.getElementById('assign-head-title'); if(ahtEl) ahtEl.textContent =
       `📋 إسناد طلاب برنامج ${PROGRAM_INFO[currentTeacher.program].label} للمعلمين`;
   } else {
     document.getElementById('assign-tab-btn').style.display = 'none';
@@ -264,10 +264,11 @@ async function getMyStudents() {
 
 async function renderMyStudents() {
   const grid = document.getElementById('students-grid');
+  if (!grid) return;
   grid.innerHTML = '<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ تحميل قائمة طلابك...</div></div>';
 
   const students = await getMyStudents();
-  document.getElementById('t-count').textContent = `👥 ${students.length} طالب مسند`;
+  var tcEl = document.getElementById('t-count'); if(tcEl) tcEl.textContent = `👥 ${students.length} طالب مسند`;
 
   const q = (document.getElementById('student-search').value || '').trim().toLowerCase();
   const filtered = students.filter(s =>
