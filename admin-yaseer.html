@@ -1077,6 +1077,8 @@ header.portal-header{
   .admin-tabs { grid-template-columns: 1fr; }
 }
 
+
+body > .topbar, body > header { display:none !important; }
 </style>
 <script>
 function initSupPanel(prog, user, name, role) {
@@ -1088,33 +1090,6 @@ function initSupPanel(prog, user, name, role) {
 }
 </script></head>
 <body>
-
-<!-- الشريط العلوي الرسمي -->
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-row">
-      <div class="topbar-gov">
-        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
-          <img src="moe-logo.png" alt="وزارة التعليم">
-        </a>
-        <span>المملكة العربية السعودية — وزارة التعليم</span>
-      </div>
-      
-    </div>
-    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
-  </div>
-</div>
-
-<header>
-  <div class="header-left">
-    <div class="header-icon">🔧</div>
-    <div>
-      <div class="header-title">لوحة مشرف يسير</div>
-      <div class="header-sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
-    </div>
-  </div>
-  <a href="index.html" style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);color:#fff;padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
-</header>
 
 <div id="pin-screen" style="display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;background:var(--bg);">
   <a href="index.html" style="position:absolute;top:20px;right:20px;background:rgba(63,46,99,0.08);border:1.5px solid rgba(63,46,99,0.2);color:var(--primary,#3F2E63);padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
@@ -1274,19 +1249,6 @@ function initSupPanel(prog, user, name, role) {
         
 
 <!-- الشريط العلوي الرسمي -->
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-row">
-      <div class="topbar-gov">
-        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
-          <img src="moe-logo.png" alt="وزارة التعليم">
-        </a>
-        <span>المملكة العربية السعودية — وزارة التعليم</span>
-      </div>
-      <b class="topbar-year">1447هـ</b>
-    </div>
-    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
-  </div>
 </div>
 
 <header class="portal-header">
@@ -2379,11 +2341,14 @@ async function loadAdminPanel() {
 
 async function sbListFolderQuiet(bucket, folder) {
   try {
-    const url = `${SB_URL}/storage/v1/object/list/${encodeURIComponent(bucket)}/${String(folder||'').split('/').filter(Boolean).map(encodeURIComponent).join('/')}`;
-    const res = await fetch(url, {
+    const cleanBucket = String(bucket || '').trim();
+    const cleanFolder = String(folder || '').replace(/^\/+|\/+$/g, '');
+    if (!cleanBucket) return [];
+    // Supabase Storage list endpoint يجب أن يكون على البكت فقط، والمجلد يرسل داخل prefix
+    const res = await fetch(`${SB_URL}/storage/v1/object/list/${encodeURIComponent(cleanBucket)}`, {
       method: 'POST',
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } })
+      body: JSON.stringify({ prefix: cleanFolder, limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } })
     });
     if (!res.ok) return [];
     const rows = await res.json();

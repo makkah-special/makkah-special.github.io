@@ -148,7 +148,7 @@ async function sbObjectExists(path) {
       const res = await fetch(SB_URL + '/storage/v1/object/list/' + encodeURIComponent(info.bucket), {
         method: 'POST',
         headers: Object.assign({}, SB_HEADERS, { 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ prefix: folder, limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } })
+        body: JSON.stringify({ prefix: String(folder || '').replace(/^\/+|\/+$/g, ''), limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } })
       });
       if (!res.ok) return false; // لا نطلب الملف إذا تعذر التحقق حتى لا تظهر أخطاء 400
       const rows = await res.json();
