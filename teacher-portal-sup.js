@@ -325,7 +325,7 @@ async function getMyStudents() {
 }
 
 async function renderMyStudents() {
-  const grid = document.getElementById('students-grid');
+  const grid = document.querySelector('#sup-portal-wrap #students-grid') || document.getElementById('students-grid');
   grid.innerHTML = '<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ تحميل قائمة طلابك...</div></div>';
 
   const students = await getMyStudents();
@@ -1003,9 +1003,13 @@ async function renderAssignTable() {
   const q = (document.getElementById('assign-search').value || '').trim().toLowerCase();
   const filtered = list.filter(s => !q || (s.name||'').toLowerCase().includes(q) || (s.pin||'').includes(q));
 
-  const teacherOptions = Object.entries(TEACHERS)
+  let teacherOptions = Object.entries(TEACHERS)
     .filter(([uname, t]) => t.program === program && (!t.isSupervisor || uname === currentTeacher.username))
-    .map(([uname, t]) => ({ uname, name: t.name }));
+    .map(([uname, t]) => ({ uname, name: t.name, role: t.role || '' }));
+  if (!teacherOptions.some(t => t.uname === currentTeacher.username)) {
+    teacherOptions.push({ uname: currentTeacher.username, name: currentTeacher.name, role: currentTeacher.role || 'مشرف البرنامج' });
+  }
+  teacherOptions.sort((a,b) => (a.role.includes('مشرف') ? -1 : b.role.includes('مشرف') ? 1 : a.name.localeCompare(b.name,'ar')));
 
   const tbody = document.getElementById('assign-tbody');
 
@@ -1021,7 +1025,7 @@ async function renderAssignTable() {
   tbody.innerHTML = filtered.map(s => {
     const current = ASSIGNMENTS[program][s.pin] || '';
     const options = `<option value="">— غير مُسند —</option>` +
-      teacherOptions.map(t => `<option value="${t.uname}" ${current===t.uname?'selected':''}>${escHtml(t.name)}</option>`).join('');
+      teacherOptions.map(t => `<option value="${t.uname}" ${current===t.uname?'selected':''}>${escHtml(t.name)}${t.role&&t.role.includes('مشرف')?' — مشرف':''}</option>`).join('');
     return `<tr>
       <td style="font-weight:700;">${escHtml(s.name || '')}</td>
       <td>${escHtml(s.pin || '')}</td>
@@ -1489,7 +1493,8 @@ function _initTPListeners() {
 
 var _supReady = false;
 window._initSupPanel = function(program, username, uname, urole) {
-  if (_supReady) return; _supReady = true;
+  // تهيئة لوحة الإشراف داخل صفحات المشرف، وتفعيل إسناد الطلاب للمشرف ومعلمي برنامجه فقط
+  _supReady = true;
   currentTeacher = {username:username, name:uname, pin:'0000',
     role:urole, program:program, avatar:uname.charAt(0), isSupervisor:true};
   var l=document.getElementById('login-screen'), p=document.getElementById('teacher-portal');
@@ -1502,9 +1507,9 @@ window._initSupPanel = function(program, username, uname, urole) {
   var ab=document.getElementById('assign-tab-btn');
   if(ab) ab.style.display='flex';
   var at=document.getElementById('assign-head-title');
-  if(at) at.textContent='📋 إسناد طلاب البرنامج للمعلمين';
+  if(at) at.textContent='📋 إسناد طلاب برنامج '+(PROGRAM_INFO[program]?.label||program)+' للمعلمين';
   _initTPListeners();
-  loadAssignments().then(function(){ renderMyStudents(); renderAssignTable(); });
+  loadAssignments().then(function(){ var first=document.querySelector('#main-tabs .tab-btn'); if(first && window.openMainTab) openMainTab('students', first); renderMyStudents(); renderAssignTable(); });
   loadMeetingInvite();
   if(window.loadTeacherAnnouncements) loadTeacherAnnouncements();
 };
