@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#6B4C9A">
-<title>بوابة طلاب الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
+<title>ملف الطالب الإلكتروني | برنامج الدمج الفكري</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -988,7 +988,7 @@
   <div class="header-left">
     <div class="header-icon">📘</div>
     <div>
-      <div class="header-title">بوابة ملفات الطلاب — برنامج الدمج الفكري</div>
+      <div class="header-title">ملف الطالب الإلكتروني — برنامج الدمج الفكري</div>
       <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
     </div>
   </div>
@@ -1000,16 +1000,16 @@
   <div class="login-card">
     <div class="login-badge">🔐 بوابة آمنة</div>
     <div class="login-icon-big">🎓</div>
-    <h2>بوابة ملفات الطلاب</h2>
+    <h2>ملف الطالب الإلكتروني</h2>
     <p class="login-desc">
-      أدخل آخر 4 أرقام من السجل المدني للطالب للاطلاع على ملفه الكامل
+      أدخل رمز الدخول للاطلاع على ملف الطالب الإلكتروني المخصص لولي الأمر
     </p>
     <div class="input-label">🔑 رمز الدخول (آخر 4 أرقام من السجل المدني)</div>
     <input type="password" class="pin-input" id="pin-input" maxlength="4" placeholder="• • • •" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')" onkeydown="if(event.key==='Enter') checkPin()">
     <div class="error-msg" id="error-msg">❌ الرمز غير صحيح، يرجى المحاولة مجدداً</div>
     <button class="login-btn" onclick="checkPin()">🔓 دخول البوابة</button>
     <div class="hint-box">
-      💡 <strong>لأولياء الأمور:</strong> رمز الدخول هو آخر 4 أرقام من السجل المدني لابنكم. في حال وجود أي استفسار تواصلوا مع المعلم المختص.
+      💡 <strong>تنبيه لأولياء الأمور:</strong> هذه البوابة مخصصة لولي أمر الطالب للاطلاع والمتابعة، ورمز الدخول هو آخر 4 أرقام من السجل المدني للطالب.
     </div>
   </div>
 </div>
@@ -1039,16 +1039,25 @@
 
   <div class="portal-body">
 
+    <div class="e-file-intro">
+      <div>
+        <h3>📁 ملف الطالب الإلكتروني</h3>
+        <p>مساحة موحّدة لولي الأمر للاطلاع على بيانات الطالب، الخطط، التقارير، المتابعة، الأنشطة، المواعيد، النماذج، والتنبيهات.</p>
+      </div>
+      <div class="privacy-badge">🔐 خاص بولي الأمر</div>
+    </div>
+
     <div class="tabs">
       <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
       <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
-      <button class="tab-btn" onclick="openTab('performance',this)">📏 قياس مستوى الأداء</button>
-      <button class="tab-btn" onclick="openTab('strengths',this)">💪 جوانب القوة والضعف</button>
       <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
-      <button class="tab-btn" onclick="openTab('iep',this)">🎯 تقييم الأهداف</button>
-      <button class="tab-btn" onclick="openTab('schedule',this)">📅 الجدول الدراسي</button>
+      <button class="tab-btn" onclick="openTab('progress',this)">📏 المتابعة</button>
+      <button class="tab-btn" onclick="openTab('home',this)">🏠 أنشطة منزلية</button>
+      <button class="tab-btn" onclick="openTab('meetings',this)">📅 المواعيد</button>
+      <button class="tab-btn" onclick="openTab('forms',this)">🧾 النماذج</button>
+      <button class="tab-btn" onclick="openTab('messages',this)">🔔 التنبيهات</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
-      <button class="tab-btn" onclick="openTab('reinforce',this)">🏆 لوحة التعزيز</button>
+      <button class="tab-btn" onclick="openTab('reinforce',this)">🏆 التعزيز</button>
     </div>
 
     <!-- INFO -->
@@ -1145,6 +1154,51 @@
           </div>
         </div>
       </div>
+    </div>
+
+
+    <!-- PROGRESS: IEP + PERFORMANCE + STRENGTHS (عرض فقط) -->
+    <div class="tab-pane" id="tab-progress">
+      <div class="s-card">
+        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span>📏 المستوى والمتابعة التربوية</span>
+          <span style="background:#EAE1F7;color:#6B4C9A;border-radius:8px;padding:5px 14px;font-size:0.78rem;font-weight:700;">👁️ للاطلاع فقط — يحدّثها المعلم المسؤول</span>
+        </div>
+        <div style="padding:20px;" id="progress-content"></div>
+      </div>
+    </div>
+
+    <!-- HOME ACTIVITIES -->
+    <div class="tab-pane" id="tab-home">
+      <div class="s-card">
+        <div class="s-card-head">🏠 الواجبات والأنشطة المنزلية الداعمة</div>
+        <div id="home-content"></div>
+      </div>
+    </div>
+
+    <!-- MEETINGS -->
+    <div class="tab-pane" id="tab-meetings">
+      <div class="s-card">
+        <div class="s-card-head">📅 مواعيد الاجتماعات واللقاءات</div>
+        <div id="meetings-content"></div>
+      </div>
+    </div>
+
+    <!-- FORMS -->
+    <div class="tab-pane" id="tab-forms">
+      <div class="s-card">
+        <div class="s-card-head">🧾 النماذج والموافقات</div>
+        <div id="forms-content"></div>
+      </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="tab-pane" id="tab-messages">
+      <div class="s-card">
+        <div class="s-card-head">🔔 الرسائل والتنبيهات لولي الأمر</div>
+        <div id="messages-content"></div>
+      </div>
+      <div class="notice-box">🔐 تذكير خصوصية: محتوى ملف الطالب الإلكتروني مخصص لولي الأمر فقط، ويمنع مشاركة رمز الدخول أو ملفات الطالب مع أي طرف غير مخوّل.</div>
     </div>
 
     <!-- IQRAR -->
@@ -1475,6 +1529,11 @@ function loadStudent(pin) {
   window.scrollTo(0, 0);
   // تطبيق وتهيئة IEP
   ensureIEP(pin);
+  renderProgressTab();
+  renderHomeTab();
+  renderMeetingsTab();
+  renderFormsTab();
+  renderMessagesTab();
 }
 
 function logout() {
@@ -1504,6 +1563,11 @@ function openTab(id, btn) {
   if (id === 'schedule') renderStudentSchedule();
   if (id === 'performance') renderPerformanceTab();
   if (id === 'strengths') renderStrengthsTab();
+  if (id === 'progress') renderProgressTab();
+  if (id === 'home') renderHomeTab();
+  if (id === 'meetings') renderMeetingsTab();
+  if (id === 'forms') renderFormsTab();
+  if (id === 'messages') renderMessagesTab();
   if (id === 'reinforce') renderReinforceTab();
   if (id === 'iqrar') setTimeout(initCanvas, 100);
 }
@@ -3974,6 +4038,133 @@ function renderStrengthsTab() {
     } catch(e) {}
   }
 
+  container.innerHTML = html;
+}
+
+
+function normalizeList(value) {
+  if (Array.isArray(value)) return value;
+  if (!value) return [];
+  return [value];
+}
+
+function renderSimpleCards(containerId, items, emptyIcon, emptyTitle, emptySub, defaults = []) {
+  const container = document.getElementById(containerId);
+  if (!container || !currentStudent) return;
+  const list = normalizeList(items);
+  const source = list.length ? list : defaults;
+  if (!source.length) {
+    container.innerHTML = `<div class="empty-state"><div class="es-icon">${emptyIcon}</div><div class="es-title">${emptyTitle}</div><div class="es-sub">${emptySub}</div></div>`;
+    return;
+  }
+  container.innerHTML = `<div class="content-grid">${source.map(item => {
+    const title = item.title || item.name || item.subject || 'عنصر جديد';
+    const desc = item.desc || item.description || item.note || item.message || '';
+    const date = item.date || item.dateLabel || item.due || item.when || '';
+    const icon = item.icon || emptyIcon;
+    const url = item.url || item.link || item.file || '';
+    return `<div class="content-card">
+      <div class="content-card-icon">${escHtml(icon)}</div>
+      <div class="content-card-title">${escHtml(title)}</div>
+      ${desc ? `<div class="content-card-desc">${escHtml(desc)}</div>` : ''}
+      ${date ? `<div class="content-card-meta">📅 ${escHtml(date)}</div>` : ''}
+      ${url ? `<a class="action-link" href="${escHtml(url)}" target="_blank" rel="noopener">فتح / تحميل</a>` : ''}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderHomeTab() {
+  const defaults = [
+    { icon:'🧩', title:'مهارة حياتية يومية', desc:'إشراك الطالب في مهمة منزلية بسيطة مناسبة لقدراته مثل ترتيب الحقيبة أو تنظيم الأدوات.', date:'توصية مستمرة' },
+    { icon:'🗣️', title:'تدريب تواصل قصير', desc:'تخصيص دقائق يومية للحوار الهادئ، تسمية الأشياء، أو التعبير عن الاحتياج بكلمات واضحة.', date:'يومياً' },
+    { icon:'✍️', title:'نشاط تعليمي مبسط', desc:'مراجعة مهارة قصيرة يحددها المعلم مثل مطابقة، تلوين، قراءة كلمة، أو عدّ بسيط.', date:'حسب توجيه المعلم' }
+  ];
+  renderSimpleCards('home-content', currentStudent.homeActivities, '🏠', 'لا توجد أنشطة منزلية مخصصة بعد', 'ستظهر هنا الأنشطة التي يضيفها المعلم لدعم الطالب في المنزل.', defaults);
+}
+
+function renderMeetingsTab() {
+  renderSimpleCards('meetings-content', currentStudent.meetings, '📅', 'لا توجد مواعيد مجدولة حالياً', 'عند تحديد لقاء أو اجتماع مع ولي الأمر سيظهر الموعد هنا.', []);
+}
+
+function renderFormsTab() {
+  const defaults = [
+    { icon:'📄', title:'إقرار الاطلاع على الخطة', desc:'يمكن توقيعه من تبويب الإقرار داخل ملف الطالب الإلكتروني.', date:'متاح إلكترونياً' },
+    { icon:'🧾', title:'نماذج وموافقات الطالب', desc:'تظهر هنا نماذج الموافقات أو الملفات التي يتم رفعها مستقبلاً من الإدارة أو المعلم.', date:'قريباً' }
+  ];
+  renderSimpleCards('forms-content', currentStudent.forms, '🧾', 'لا توجد نماذج مرفوعة حالياً', 'سيتم عرض النماذج والموافقات الخاصة بالطالب عند توفرها.', defaults);
+}
+
+function renderMessagesTab() {
+  const defaults = [
+    { icon:'🔔', title:'مرحباً بولي الأمر', desc:'هذه الصفحة مخصصة لتنبيهات ملف الطالب الإلكتروني مثل رفع خطة جديدة أو تقرير أو موعد اجتماع.', date:'إشعار عام' }
+  ];
+  renderSimpleCards('messages-content', currentStudent.messages, '🔔', 'لا توجد رسائل جديدة', 'ستظهر هنا التنبيهات المهمة الخاصة بالطالب.', defaults);
+}
+
+function renderProgressTab() {
+  const container = document.getElementById('progress-content');
+  if (!container || !currentStudent) return;
+
+  const iep = currentStudent.iep || {};
+  const allIEPSubjects = [
+    ...CORE_SUBJECTS.map(cs => ({ key: cs.key, info: cs, data: iep[cs.key] })),
+    ...Object.entries(iep._custom || {}).map(([k,d]) => ({ key:k, info:{name:d.name, icon:d.icon}, data:d }))
+  ].filter(s => s.data && Array.isArray(s.data.goals) && s.data.goals.length > 0);
+
+  const perf = currentStudent.performance || {};
+  const hasPerf = Object.keys(perf).length > 0;
+
+  const sw = currentStudent.strengths || {};
+  const hasSW = Object.values(sw).some(s => (s.strengths && s.strengths.length) || (s.needs && s.needs.length));
+
+  if (allIEPSubjects.length === 0 && !hasPerf && !hasSW) {
+    container.innerHTML = `<div class="empty-state"><div class="es-icon">📏</div><div class="es-title">لا توجد بيانات متابعة بعد</div><div class="es-sub">يقوم المعلم المسؤول عن الطالب بتعبئة هذا القسم من بوابة المعلمين</div></div>`;
+    return;
+  }
+
+  let html = '';
+  html += `<div class="progress-section-title">🎯 تقييم الأهداف التربوية</div>`;
+  if (allIEPSubjects.length === 0) {
+    html += `<div class="empty-state"><div class="es-icon">🎯</div><div class="es-title">لا توجد أهداف مُحددة بعد</div></div>`;
+  } else {
+    allIEPSubjects.forEach(sub => {
+      html += `<div class="iep-subject-block"><div class="iep-subject-head"><span>${escHtml(sub.info.icon || '📚')}</span><span>${escHtml(sub.info.name)}</span></div>`;
+      sub.data.goals.forEach((g, i) => {
+        const lv = IEP_LEVELS.find(l => l.value === (g.level || 'none')) || IEP_LEVELS[4];
+        html += `<div class="iep-goal-row"><div class="iep-goal-num">${i+1}</div><div class="iep-goal-text">${escHtml(g.text || '')}</div><span class="iep-level-badge" style="color:${lv.color};background:${lv.bg};">${lv.label}</span></div>`;
+      });
+      html += `</div>`;
+    });
+  }
+
+  html += `<div class="progress-section-title">📏 مستوى الأداء الحالي</div>`;
+  if (!hasPerf) {
+    html += `<div class="empty-state"><div class="es-icon">📏</div><div class="es-title">لم يتم تقييم مستوى الأداء بعد</div></div>`;
+  } else {
+    html += `<div class="perf-legend">${PERF_LEVELS.map(l => `<span style="background:${l.bg};color:${l.color};padding:2px 8px;border-radius:6px;font-size:0.73rem;font-weight:700;">${l.label}</span>`).join('')}</div>`;
+    PERF_SUBJECTS.forEach(subj => {
+      const subjData = perf[subj.key];
+      if (!subjData) return;
+      html += `<div class="perf-subject-block"><div class="perf-subject-head">${subj.icon} ${escHtml(subj.name)}</div><table class="perf-skills-table"><thead><tr><th style="width:46%;">المهارة</th><th style="width:24%;text-align:center;">المستوى</th><th>ملاحظات</th></tr></thead><tbody>${subj.skills.map((skill, si) => {
+        const skillData = subjData[si] || {};
+        const lv = PERF_LEVELS.find(l => l.value === (skillData.level || 'na')) || PERF_LEVELS[4];
+        return `<tr><td style="font-weight:600;">${escHtml(skill)}</td><td style="text-align:center;"><span style="display:inline-block;padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:700;color:${lv.color};background:${lv.bg};">${lv.label}</span></td><td style="color:var(--muted);font-size:0.85rem;">${escHtml(skillData.note || '') || '—'}</td></tr>`;
+      }).join('')}</tbody></table></div>`;
+    });
+  }
+
+  html += `<div class="progress-section-title">💪 جوانب القوة والاحتياج</div>`;
+  if (!hasSW) {
+    html += `<div class="empty-state"><div class="es-icon">💪</div><div class="es-title">لم تُضف جوانب القوة والاحتياج بعد</div></div>`;
+  } else {
+    PERF_SUBJECTS.forEach(subj => {
+      const subjData = sw[subj.key] || { strengths: [], needs: [] };
+      const strengths = subjData.strengths || [];
+      const needs = subjData.needs || [];
+      if (strengths.length === 0 && needs.length === 0) return;
+      html += `<div class="sw-block"><div class="sw-subject-head">${subj.icon} ${escHtml(subj.name)}</div><div class="sw-body"><div><div class="sw-side-title sw-strength-title">✅ جوانب القوة</div><div class="sw-item-list">${strengths.length ? strengths.map(item => `<div class="sw-item"><div class="sw-item-dot-green"></div><span style="flex:1;">${escHtml(item)}</span></div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}</div></div><div><div class="sw-side-title sw-need-title">🎯 جوانب الاحتياج</div><div class="sw-item-list">${needs.length ? needs.map(item => `<div class="sw-item"><div class="sw-item-dot-orange"></div><span style="flex:1;">${escHtml(item)}</span></div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}</div></div></div></div>`;
+    });
+  }
   container.innerHTML = html;
 }
 
