@@ -2376,6 +2376,32 @@ async function loadAdminPanel() {
 
 
 // ===== SUPABASE SYNC =====
+
+async function sbListFolderQuiet(bucket, folder) {
+  try {
+    const url = `${SB_URL}/storage/v1/object/list/${encodeURIComponent(bucket)}/${String(folder||'').split('/').filter(Boolean).map(encodeURIComponent).join('/')}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } })
+    });
+    if (!res.ok) return [];
+    const rows = await res.json();
+    return Array.isArray(rows) ? rows : [];
+  } catch(e) { return []; }
+}
+
+async function sbPublicJSONIfListed(bucket, folder, fileName) {
+  const rows = await sbListFolderQuiet(bucket, folder);
+  if (!rows.some(x => x && x.name === fileName)) return null;
+  try {
+    const fullPath = [bucket, folder, fileName].filter(Boolean).join('/').split('/').filter(Boolean).map(encodeURIComponent).join('/');
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/${fullPath}?t=${Date.now()}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) { return null; }
+}
+
 const SB_TABLE = SUPABASE_URL + '/rest/v1/yaseer_students';
 const SB_HEADERS = {
   'apikey': SUPABASE_KEY,
@@ -2385,30 +2411,31 @@ const SB_HEADERS = {
 };
 
 async function syncFromSupabase() {
-  // جلب قائمة الطلاب من config ثم تحميل بياناتهم
+  // تحميل البيانات بدون طلب الملفات غير الموجودة حتى لا تظهر أخطاء 400 في Console
   try {
-    const cfgRes = await fetch(`${SB_URL}/storage/v1/object/public/reports/admin-yaseer-config.json?t=${Date.now()}`);
-    if (cfgRes.ok) {
-      const cfg = await cfgRes.json();
-      if (cfg && cfg.students && Array.isArray(cfg.students)) {
-        cfg.students.forEach(s => {
-          if (!STUDENTS[s.pin]) {
-            STUDENTS[s.pin] = { name: s.name||'', id_full: s.id_full||'', grade: s.grade||'', phone: s.phone||'', plan:[], reports:[], followup:[] };
-          }
-        });
-      }
+    const cfg = await sbPublicJSONIfListed('reports', '', 'admin-yaseer-config.json');
+    if (cfg && cfg.students && Array.isArray(cfg.students)) {
+      cfg.students.forEach(s => {
+        if (!STUDENTS[s.pin]) {
+          STUDENTS[s.pin] = { name: s.name||'', id_full: s.id_full||'', grade: s.grade||'', phone: s.phone||'', plan:[], reports:[], followup:[] };
+        }
+      });
     }
   } catch(e) {}
-  // جلب بيانات جميع الطلاب من Storage
-  const pins = Object.keys(STUDENTS);
-  await Promise.all(pins.map(pin => loadStudentDataFromStorage(pin)));
+
+  const rows = await sbListFolderQuiet('reports', 'yaseer/data');
+  const existingPins = rows
+    .map(x => (x && x.name || '').match(/^student-(.+)\.json$/))
+    .filter(Boolean)
+    .map(m => m[1])
+    .filter(pin => STUDENTS[pin]);
+  await Promise.all(existingPins.map(pin => loadStudentDataFromStorage(pin)));
 }
 
 async function loadStudentDataFromStorage(pin) {
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/yaseer/data/student-${pin}.json?t=${Date.now()}`);
-    if (!res.ok) return; // لا يوجد ملف محفوظ بعد
-    const data = await res.json();
+    const data = await sbPublicJSONIfListed('reports', 'yaseer/data', `student-${pin}.json`);
+    if (!data) return; // لا يوجد ملف محفوظ بعد
     if (data && STUDENTS[pin]) {
       STUDENTS[pin].name     = data.name     || STUDENTS[pin].name;
       STUDENTS[pin].grade    = data.grade    || STUDENTS[pin].grade;

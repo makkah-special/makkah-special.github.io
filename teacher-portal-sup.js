@@ -1,4 +1,4 @@
-// v1781959901 - fixed optional Supabase missing-file 400 errors
+// v1781959902 - avoid Supabase public fetch 400 by listing files before loading
 
 function openMainTab(n,b) {
   var wrap = document.getElementById('sup-portal-wrap') || document;
@@ -150,13 +150,13 @@ async function sbObjectExists(path) {
         headers: Object.assign({}, SB_HEADERS, { 'Content-Type': 'application/json' }),
         body: JSON.stringify({ prefix: folder, limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } })
       });
-      if (!res.ok) return true; // fallback: try normal fetch if listing is blocked
+      if (!res.ok) return false; // لا نطلب الملف إذا تعذر التحقق حتى لا تظهر أخطاء 400
       const rows = await res.json();
       _sbListCache[cacheKey] = Array.isArray(rows) ? rows.map(x => x.name) : [];
     }
     return _sbListCache[cacheKey].includes(fileName);
   } catch(e) {
-    return true; // fallback: try normal fetch on unexpected errors
+    return false; // لا نطلب الملف إذا تعذر التحقق حتى لا تظهر أخطاء 400
   }
 }
 
@@ -745,8 +745,14 @@ function fileExtFromName(name) {
 }
 
 async function checkFileExists(url) {
-  try { const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { method: 'HEAD' }); return r.ok; }
-  catch(e) { return false; }
+  try {
+    const u = new URL(url);
+    const marker = '/storage/v1/object/public/reports/';
+    const idx = u.pathname.indexOf(marker);
+    if (idx < 0) return false;
+    const rel = decodeURIComponent(u.pathname.slice(idx + marker.length));
+    return await sbObjectExists('reports/' + rel);
+  } catch(e) { return false; }
 }
 
 async function renderFilesTab() {
