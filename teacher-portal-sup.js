@@ -1416,6 +1416,18 @@ document.getElementById('cert-message-input').addEventListener('input', updateCe
 
 
 
+
+function _initTPListeners() {
+  var pi = document.getElementById('pin-input');
+  var ui = document.getElementById('username-input');
+  var ct = document.getElementById('cert-title-input');
+  var cm = document.getElementById('cert-message-input');
+  if (pi) pi.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+  if (ui) ui.addEventListener('keydown', function(e) { if (e.key === 'Enter') { var p=document.getElementById('pin-input'); if(p) p.focus(); } });
+  if (ct) ct.addEventListener('input', updateCertPreview);
+  if (cm) cm.addEventListener('input', updateCertPreview);
+}
+
 var _supReady = false;
 window._initSupPanel = function(program, username, uname, urole) {
   if (_supReady) return; _supReady = true;
