@@ -1081,19 +1081,23 @@ function initSupPanel(prog, user, name, role) {
   <a href="index.html" style="background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);color:#fff;padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
 </header>
 
-<!-- PIN SCREEN -->
 <div id="pin-screen" style="display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;background:var(--bg);">
   <a href="index.html" style="position:absolute;top:20px;right:20px;background:rgba(63,46,99,0.08);border:1.5px solid rgba(63,46,99,0.2);color:var(--primary,#3F2E63);padding:8px 18px;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:6px;">🏠 الرئيسية</a>
-  <div style="background:#fff;border-radius:20px;padding:40px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
-    <div style="font-size:2.6rem;margin-bottom:14px;">🔐</div>
-    <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:var(--primary);margin-bottom:6px;">لوحة مشرف يسير</div>
-    <div style="font-size:0.83rem;color:var(--muted);margin-bottom:22px;">أدخل رمز المشرف للدخول</div>
-    <input type="password" id="admin-pin-ys" maxlength="6" placeholder="• • • •"
-      class="pin-input"
-      onkeydown="if(event.key==='Enter') checkPin()"
-      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <div id="pin-error-ys" style="display:none;color:#dc2626;font-size:0.8rem;font-weight:700;margin-bottom:10px;background:#fee2e2;padding:7px 12px;border-radius:8px;">❌ الرمز غير صحيح</div>
-    <button onclick="checkPin()" style="width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;margin-top:10px;">✅ دخول</button>
+  <div style="background:#fff;border-radius:24px;padding:44px 36px;max-width:400px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.12);text-align:center;">
+    <div style="font-size:2.8rem;margin-bottom:10px;">🎓</div>
+    <div style="font-family:'Tajawal',sans-serif;font-size:1.35rem;font-weight:900;color:#2E2148;margin-bottom:6px;">لوحة مشرف يسير التعليمي</div>
+    <div style="font-size:0.83rem;color:#6E5F82;margin-bottom:28px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+    <div style="text-align:right;margin-bottom:6px;"><label style="font-size:0.8rem;font-weight:700;color:#6E5F82;">👤 اسم المستخدم</label></div>
+    <input type="text" id="admin-username" placeholder="أدخل اسم المستخدم"
+      style="width:100%;padding:11px 14px;border:1.5px solid #DCD2EE;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.9rem;color:#221335;background:#FBFAFE;outline:none;margin-bottom:14px;text-align:right;direction:ltr;"
+      onkeydown="if(event.key==='Enter') document.getElementById('admin-pin').focus()">
+    <div style="text-align:right;margin-bottom:6px;"><label style="font-size:0.8rem;font-weight:700;color:#6E5F82;">🔑 الرمز السري</label></div>
+    <input type="password" id="admin-pin" placeholder="• • • •"
+      style="width:100%;padding:11px 14px;border:1.5px solid #DCD2EE;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.9rem;color:#221335;background:#FBFAFE;outline:none;margin-bottom:8px;"
+      onkeydown="if(event.key==='Enter') checkPin()">
+    <div id="pin-error" style="display:none;color:#dc2626;font-size:0.8rem;font-weight:700;margin-bottom:10px;background:#fee2e2;padding:8px 12px;border-radius:9px;text-align:center;"></div>
+    <button onclick="checkPin()" style="width:100%;padding:13px;background:linear-gradient(135deg,#2E2148,#6B4C9A);color:#fff;border:none;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;margin-top:8px;">✅ دخول</button>
+    <div style="font-size:0.72rem;color:#9C8DB0;margin-top:16px;">للحصول على بيانات الدخول تواصل مع رئيس القسم</div>
   </div>
 </div>
 
@@ -2300,40 +2304,24 @@ function showPinMsg(btn, txt, color) {
   btn.style.background = color;
   setTimeout(() => { btn.textContent = "حفظ"; btn.style.background = "#3F2E63"; }, 2000);
 }
+
 async function checkPin() {
-  const enteredPin = document.getElementById('admin-pin-ys').value.trim();
-  const errMsg = document.getElementById('pin-error-ys');
-  const pinInput = document.getElementById('admin-pin-ys');
-  const btn = document.querySelector('.btn-enter');
-
-  if (!enteredPin) return;
-  if (btn) { btn.disabled = true; btn.textContent = '⏳ جارٍ التحقق...'; }
-  errMsg.style.display = 'none';
-
-  try {
-    const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/admin-yaseer-config.json?t=${Date.now()}`
-    );
-    if (res.ok) {
-      const config = await res.json();
-      if (config && config.pin && enteredPin === config.pin) {
-        ADMIN_PIN = config.pin;
-        pinInput.classList.remove('error');
-        loadAdminPanel();
-        return;
-      }
-    }
-    errMsg.style.display = 'block';
-    pinInput.classList.add('error');
-    pinInput.value = '';
-    setTimeout(() => pinInput.classList.remove('error'), 500);
-  } catch(e) {
-    errMsg.textContent = '❌ تعذّر الاتصال';
-    errMsg.style.display = 'block';
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = '🔓 دخول'; }
+  var u = ((document.getElementById('admin-username')||{}).value||'').trim().toLowerCase();
+  var p = ((document.getElementById('admin-pin')||{}).value||'').trim();
+  var err = document.getElementById('pin-error');
+  if (!u||!p) { err.textContent='⚠️ أدخل اسم المستخدم والرمز'; err.style.display='block'; return; }
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(u+':'+p));
+  var hash = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  if (hash === 'f2b0cf9e7be68013c9e267101cfa2cbc891ccb61125ac6bbfd7a8a6bcbf14f4a') {
+    document.getElementById('pin-screen').style.display = 'none';
+    loadAdminPanel();
+    return;
   }
+  err.textContent = '❌ اسم المستخدم أو الرمز غير صحيح';
+  err.style.display = 'block';
+  setTimeout(function(){ err.style.display='none'; }, 3000);
 }
+
 
 async function loadAdminPanel() {
   document.getElementById('pin-screen').style.display = 'none';
@@ -4027,7 +4015,7 @@ function dismissMeeting(id) {
 </div>
 
 
-<script src="teacher-portal-sup.js?v=1781957171"></script>
+<script src="teacher-portal-sup.js?v=1781957903"></script>
 <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
 </body>
 </html>
