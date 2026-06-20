@@ -20,7 +20,13 @@ function openDetailTab(n,b) {
   if(n==='strengths') setTimeout(function(){if(window.renderStrengthsEditor) renderStrengthsEditor();},0);
   if(n==='reinforce') setTimeout(function(){if(window.renderReinforceTab) renderReinforceTab();},0);
 }
-function openPortfolioFull() { if(window._openPortfolioFull) window._openPortfolioFull(); }
+function openPortfolioFull() {
+  if (window._openPortfolioFull && window._openPortfolioFull !== openPortfolioFull) return window._openPortfolioFull();
+  if (window.currentTeacher && window.currentTeacher.username) {
+    var m = (window.PORTFOLIO_MAP || {})[window.currentTeacher.username];
+    if (m) return window.open((m.file || '') + '?t=' + encodeURIComponent(m.name || '') + '&p=' + encodeURIComponent(window.currentTeacher.pin || ''), '_blank');
+  }
+}
 
 (function() {
 
@@ -1047,7 +1053,16 @@ async function assignTeacher(pin, uname) {
   else showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
 }
 
-if (typeof assignTeacher === 'function') window.assignTeacher = assignTeacher; // direct export after definition
+
+// تصدير دوال الإسناد وملف الإنجاز لصفحات المشرف الخارجية
+if (typeof assignTeacher === 'function') {
+  window.assignTeacher = assignTeacher;
+}
+if (typeof openPortfolioFull === 'function') {
+  window.openPortfolioFull = openPortfolioFull;
+  window._openPortfolioFull = openPortfolioFull;
+}
+
 
 
 // Block 7
@@ -1079,6 +1094,7 @@ var PORTFOLIO_MAP = {
   'h.kubaishi': { file:'teachers-yaseer.html', name:'حسين منصور الكبيشي'  },
   'saad.z':     { file:'teachers-yaseer.html', name:'سعد سالم الزهراني'   },
 };
+window.PORTFOLIO_MAP = PORTFOLIO_MAP;
 
 function openPortfolioFull() {
   const map = PORTFOLIO_MAP[currentTeacher.username];
@@ -1545,6 +1561,7 @@ window._initSupPanel = function(program, username, uname, urole) {
   if (typeof loadMeetingInvite === "function") window.loadMeetingInvite = loadMeetingInvite;
   if (typeof loadAssignments === "function") window.loadAssignments = loadAssignments;
   if (typeof renderAssignTable === "function") window.renderAssignTable = renderAssignTable;
+  if (typeof openPortfolioFull === "function") { window.openPortfolioFull = openPortfolioFull; window._openPortfolioFull = openPortfolioFull; }
   if (typeof assignTeacher === "function") window.assignTeacher = assignTeacher;
   if (typeof saveAssignments === "function") window.saveAssignments = saveAssignments;
   if (typeof loadTeacherAnnouncements === "function") window.loadTeacherAnnouncements = loadTeacherAnnouncements;
