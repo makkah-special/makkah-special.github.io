@@ -1,3 +1,4 @@
+// v1781956496 — teacher-portal-sup.js
 // ===== teacher-portal-sup.js =====
 
 // ===== دوال متاحة فوراً =====
