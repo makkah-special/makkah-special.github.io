@@ -1,4 +1,4 @@
-// v1781957171
+// v1781959901 - fixed optional Supabase missing-file 400 errors
 
 function openMainTab(n,b) {
   var wrap = document.getElementById('sup-portal-wrap') || document;
@@ -121,9 +121,52 @@ function toHijriLike(dateStr) {
   } catch(e) { return dateStr; }
 }
 
+const SB_KEY = 'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere';
+const SB_HEADERS = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY };
+const _sbListCache = Object.create(null);
+
+function sbSplitPath(path) {
+  const parts = String(path || '').split('/').filter(Boolean);
+  return { bucket: parts.shift() || 'reports', object: parts.join('/') };
+}
+
+function sbEncodePath(path) {
+  return String(path || '').split('/').filter(Boolean).map(encodeURIComponent).join('/');
+}
+
+async function sbObjectExists(path) {
+  const info = sbSplitPath(path);
+  if (!info.bucket || !info.object) return false;
+
+  const slash = info.object.lastIndexOf('/');
+  const folder = slash >= 0 ? info.object.slice(0, slash) : '';
+  const fileName = slash >= 0 ? info.object.slice(slash + 1) : info.object;
+  const cacheKey = info.bucket + '::' + folder;
+
+  try {
+    if (!_sbListCache[cacheKey]) {
+      const res = await fetch(SB_URL + '/storage/v1/object/list/' + encodeURIComponent(info.bucket), {
+        method: 'POST',
+        headers: Object.assign({}, SB_HEADERS, { 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ prefix: folder, limit: 1000, offset: 0, sortBy: { column: 'name', order: 'asc' } })
+      });
+      if (!res.ok) return true; // fallback: try normal fetch if listing is blocked
+      const rows = await res.json();
+      _sbListCache[cacheKey] = Array.isArray(rows) ? rows.map(x => x.name) : [];
+    }
+    return _sbListCache[cacheKey].includes(fileName);
+  } catch(e) {
+    return true; // fallback: try normal fetch on unexpected errors
+  }
+}
+
 async function sbGetJSON(path) {
   try {
-    const res = await fetch('https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/' + path + '?t=' + Date.now())
+    const exists = await sbObjectExists(path);
+    if (!exists) return null; // يمنع ظهور أخطاء 400 للملفات غير المنشأة بعد
+
+    const safePath = sbEncodePath(path);
+    const res = await fetch(SB_URL + '/storage/v1/object/public/' + safePath + '?t=' + Date.now());
     if (!res.ok) return null;
     return await res.json();
   } catch(e) { return null; }
@@ -132,20 +175,30 @@ async function sbGetJSON(path) {
 async function sbSetJSON(path, data) {
   try {
     const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
-    const res = await fetch('https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/' + path, {
+    const safePath = sbEncodePath(path);
+    const res = await fetch(SB_URL + '/storage/v1/object/' + safePath, {
       method:'POST',
-      headers:{'apikey':'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Authorization':'Bearer sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Content-Type':'application/json','x-upsert':'true'},
+      headers:Object.assign({}, SB_HEADERS, {'Content-Type':'application/json','x-upsert':'true'}),
       body: blob
     });
+    if (res.ok) {
+      const info = sbSplitPath(path);
+      const slash = info.object.lastIndexOf('/');
+      const folder = slash >= 0 ? info.object.slice(0, slash) : '';
+      const fileName = slash >= 0 ? info.object.slice(slash + 1) : info.object;
+      const cacheKey = info.bucket + '::' + folder;
+      if (_sbListCache[cacheKey] && !_sbListCache[cacheKey].includes(fileName)) _sbListCache[cacheKey].push(fileName);
+    }
     return res.ok;
   } catch(e) { console.error('sbSetJSON error:', e); return false; }
 }
 
 async function sbUploadFile(path, file) {
   try {
-    const res = await fetch('https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/' + path, {
+    const safePath = sbEncodePath(path);
+    const res = await fetch(SB_URL + '/storage/v1/object/' + safePath, {
       method:'POST',
-      headers:{'apikey':'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Authorization':'Bearer sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere','Content-Type': file.type || 'application/octet-stream','x-upsert':'true'},
+      headers:Object.assign({}, SB_HEADERS, {'Content-Type': file.type || 'application/octet-stream','x-upsert':'true'}),
       body: file
     });
     return res.ok;
