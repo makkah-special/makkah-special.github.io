@@ -237,6 +237,183 @@ tbody tr:last-child { border-bottom:none; }
   .pdf-btn-row { margin:0 12px 16px; }
   .sign-section { margin:0 12px 16px; }
 }
+
+/* ===== HIJRI CALENDAR TOGGLE ===== */
+.date-picker-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cal-toggle-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+.cal-toggle-btn {
+  flex: 1;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1.5px solid #d1d5db;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #f9fafb;
+  color: #6b7280;
+  transition: all 0.15s;
+}
+.cal-toggle-btn.active {
+  background: var(--primary, #7a2800);
+  color: #fff;
+  border-color: var(--primary, #7a2800);
+}
+
+/* Hijri popup */
+.hijri-popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 18px 20px;
+  min-width: 280px;
+  border: 1px solid #e5e7eb;
+  animation: popIn 0.18s ease;
+}
+@keyframes popIn {
+  from { opacity:0; transform:translateY(-8px) scale(0.97); }
+  to   { opacity:1; transform:none; }
+}
+.hijri-popup.open { display: block; }
+.hijri-popup-title {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--primary, #7a2800);
+  margin-bottom: 12px;
+  text-align: center;
+}
+.hijri-inputs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.hijri-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+.hijri-field label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #6b7280;
+}
+.hijri-field input, .hijri-field select {
+  padding: 7px 8px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  width: 100%;
+}
+.hijri-field input:focus, .hijri-field select:focus {
+  border-color: var(--primary, #7a2800);
+}
+.hijri-popup-btns {
+  display: flex;
+  gap: 8px;
+}
+.hijri-popup-btns button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 9px;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-hijri-apply {
+  background: var(--primary, #7a2800);
+  color: #fff;
+}
+.btn-hijri-cancel {
+  background: #f3f4f6;
+  color: #374151;
+}
+.hijri-display {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent, #e07020);
+  text-align: center;
+  min-height: 16px;
+  margin-top: 2px;
+}
+.hijri-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+}
+.hijri-overlay.open { display: block; }
+
+
+/* حقل هجري مدمج */
+.hijri-inline {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.hijri-sel {
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #374151;
+  background: #fff;
+  outline: none;
+  padding: 5px 6px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.hijri-sel:focus { border-color: var(--primary, #7a2800); }
+#hDay   { width: 60px; text-align: center; }
+#hMonth { width: 110px; }
+#hYear  { width: 72px; text-align: center; -moz-appearance: textfield; }
+#hYear::-webkit-outer-spin-button,
+#hYear::-webkit-inner-spin-button { -webkit-appearance: none; }
+.cal-field-wrap { display: flex; align-items: center; }
+
+
+.day-bulk-row td {
+  padding: 4px 6px;
+  background: #f8f4f0;
+  border-bottom: 2px solid #e8d8cc;
+}
+.day-bulk-select {
+  width: 100%;
+  padding: 5px 4px;
+  border: 1.5px solid #e8d8cc;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: #fff;
+  color: #c25a00;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.day-bulk-select:hover { border-color: #c25a00; }
+.day-bulk-select:focus { border-color: #c25a00; box-shadow: 0 0 0 2px rgba(194,90,0,0.12); }
+
 </style>
 </head>
 <body>
@@ -254,7 +431,37 @@ tbody tr:last-child { border-bottom:none; }
 <div class="toolbar">
   <div class="toolbar-group">
     <label>📅 الأسبوع:</label>
-    <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)">
+    <div class="date-picker-wrap">
+        <!-- حقل ميلادي -->
+        <div class="cal-field-wrap" id="miladiWrap">
+          <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)">
+        </div>
+        <!-- حقل هجري بنفس شكل الميلادي -->
+        <div class="cal-field-wrap hijri-wrap" id="hijriWrap" style="display:none;">
+          <div class="hijri-inline">
+            <select class="hijri-sel" id="hDay" onchange="applyHijriInline()">
+              <option value="">يوم</option>
+            </select>
+            <select class="hijri-sel" id="hMonth" onchange="applyHijriInline()">
+              <option value="">شهر</option>
+              <option value="1">محرم</option><option value="2">صفر</option>
+              <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
+              <option value="5">جمادى الأولى</option><option value="6">جمادى الثانية</option>
+              <option value="7">رجب</option><option value="8">شعبان</option>
+              <option value="9">رمضان</option><option value="10">شوال</option>
+              <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+            </select>
+            <input class="hijri-sel" id="hYear" type="number" min="1400" max="1500"
+              placeholder="السنة" oninput="applyHijriInline()">
+          </div>
+        </div>
+        <!-- زرا التبديل -->
+        <div class="cal-toggle-row">
+          <button class="cal-toggle-btn active" data-mode="miladi" onclick="setCalMode('miladi')">📅 ميلادي</button>
+          <button class="cal-toggle-btn" data-mode="hijri" onclick="setCalMode('hijri')">🌙 هجري</button>
+        </div>
+        <div class="hijri-display" id="hijriDisplay"></div>
+      </div>
   </div>
   <div class="toolbar-group">
     <label>📚 الفصل:</label>
@@ -305,6 +512,17 @@ tbody tr:last-child { border-bottom:none; }
         <th class="day-col">الخميس</th>
         <th>ملاحظات</th>
         <th>غياب</th>
+      </tr>
+      <tr class="day-bulk-row" id="day-bulk-row">
+        <td colspan="2" style="text-align:center;font-size:0.72rem;font-weight:800;color:#c25a00;">
+          تحكم يومي ↓
+        </td>
+        <td id="bulk-td-0"></td>
+        <td id="bulk-td-1"></td>
+        <td id="bulk-td-2"></td>
+        <td id="bulk-td-3"></td>
+        <td id="bulk-td-4"></td>
+        <td colspan="2"></td>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -421,6 +639,7 @@ function renderAll() {
   updateStats();
   // تحديث input التاريخ
   document.getElementById('weekStart').value = weekKey(currentWeekStart);
+  updateHijriDisplay();
 }
 
 function updateWeekHeader() {
@@ -445,6 +664,7 @@ function renderTable() {
   ths.forEach((th, i) => {
     th.innerHTML = `${days[i].name}<br><small style="font-weight:400;opacity:0.8;">${days[i].dateStr}</small>`;
   });
+  renderBulkRow();
 
   tbody.innerHTML = STUDENTS.map((stu, idx) => {
     const rec  = (attendanceData[wk]?.[stu.pin]) || {};
@@ -619,7 +839,6 @@ async function saveAttendance() {
   const wk   = weekKey(currentWeekStart);
   const sem  = document.getElementById('semesterSelect').value;
 
-  const supervisorSign = null;
   const teacherSign = canvases['teacherCanvas']?.hasContent
     ? document.getElementById('teacherCanvas').toDataURL() : null;
 
@@ -633,20 +852,29 @@ async function saveAttendance() {
     savedAt:    new Date().toISOString(),
   };
 
-  const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+  const blob    = new Blob([JSON.stringify(payload)], {type:'application/json'});
+  const path    = `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`;
+  const headers = {'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+
   try {
-    const res = await fetch(
-      `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`,
-      {
-        method:'POST',
-        headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
-        body: blob
-      }
-    );
-    if (res.ok) showToast('✅ تم الحفظ بنجاح في السحابة');
-    else        showToast('❌ خطأ في الحفظ: ' + await res.text());
+    // حاول PUT (تحديث ملف موجود)
+    let res = await fetch(path, {method:'PUT', headers, body: blob});
+
+    // إن فشل PUT جرّب POST (إنشاء ملف جديد)
+    if (!res.ok) {
+      res = await fetch(path, {method:'POST', headers:{...headers,'x-upsert':'true'}, body: blob});
+    }
+
+    if (res.ok) {
+      showToast('✅ تم الحفظ بنجاح');
+    } else {
+      const err = await res.text();
+      showToast('❌ فشل الحفظ: ' + err.slice(0,80));
+      console.error('Save error:', err);
+    }
   } catch(e) {
-    showToast('❌ تعذّر الاتصال');
+    showToast('❌ تعذّر الاتصال بالخادم');
+    console.error(e);
   }
 }
 
@@ -743,7 +971,40 @@ function printAttendance() {
       </div>
     </div>
     <script>window.onload=()=>{setTimeout(()=>window.print(),400);}<\/script>
-  </body></html>`);
+    <div class="hijri-inputs">
+    <div class="hijri-field">
+      <label>اليوم</label>
+      <input type="number" id="hijriDay" min="1" max="30" value="1" placeholder="يوم">
+    </div>
+    <div class="hijri-field">
+      <label>الشهر</label>
+      <select id="hijriMonth">
+        <option value="1">محرم</option>
+        <option value="2">صفر</option>
+        <option value="3">ربيع الأول</option>
+        <option value="4">ربيع الثاني</option>
+        <option value="5">جمادى الأولى</option>
+        <option value="6">جمادى الثانية</option>
+        <option value="7">رجب</option>
+        <option value="8">شعبان</option>
+        <option value="9">رمضان</option>
+        <option value="10">شوال</option>
+        <option value="11">ذو القعدة</option>
+        <option value="12">ذو الحجة</option>
+      </select>
+    </div>
+    <div class="hijri-field">
+      <label>السنة</label>
+      <input type="number" id="hijriYear" min="1400" max="1500" value="1447" placeholder="سنة">
+    </div>
+  </div>
+  <div class="hijri-popup-btns">
+    <button class="btn-hijri-apply" onclick="applyHijriDate()">✅ تطبيق</button>
+    <button class="btn-hijri-cancel" onclick="closeHijriPicker()">إلغاء</button>
+  </div>
+</div>
+
+</body></html>`);
   win.document.close();
 }
 
@@ -765,6 +1026,145 @@ window.addEventListener('load', () => {
 window.addEventListener('resize', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
 });
+
+// ===== HIJRI CALENDAR =====
+let _calMode = 'miladi';
+
+function getHijriParts(d) {
+  try {
+    const s = d.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
+      {day:'numeric', month:'numeric', year:'numeric'});
+    const p = s.split('/'); // M/D/Y
+    return {m: parseInt(p[0]), d: parseInt(p[1]), y: parseInt(p[2])};
+  } catch(e) { return {m:9, d:1, y:1447}; }
+}
+
+function getHijriLabel(d) {
+  try {
+    return '🌙 ' + d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
+      {day:'numeric', month:'long', year:'numeric'});
+  } catch(e) { return ''; }
+}
+
+function fillHijriDays(month, year, selectedDay) {
+  const sel = document.getElementById('hDay');
+  if (!sel) return;
+  // أقصى أيام الشهر الهجري 29 أو 30
+  const maxDay = 30;
+  const cur = selectedDay || parseInt(sel.value) || 1;
+  sel.innerHTML = '<option value="">يوم</option>' +
+    Array.from({length: maxDay}, (_, i) => i+1)
+      .map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`)
+      .join('');
+}
+
+function setCalMode(mode) {
+  _calMode = mode;
+  document.querySelectorAll('.cal-toggle-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.mode === mode));
+
+  const miladiWrap = document.getElementById('miladiWrap');
+  const hijriWrap  = document.getElementById('hijriWrap');
+
+  if (mode === 'miladi') {
+    miladiWrap.style.display = '';
+    hijriWrap.style.display  = 'none';
+  } else {
+    miladiWrap.style.display = 'none';
+    hijriWrap.style.display  = '';
+    // ملء القيم الحالية
+    const p = getHijriParts(currentWeekStart);
+    document.getElementById('hMonth').value = p.m;
+    document.getElementById('hYear').value  = p.y;
+    fillHijriDays(p.m, p.y, p.d);
+  }
+  updateHijriDisplay();
+}
+
+function applyHijriInline() {
+  const d = parseInt(document.getElementById('hDay').value);
+  const m = parseInt(document.getElementById('hMonth').value);
+  const y = parseInt(document.getElementById('hYear').value);
+  if (!d || !m || !y || y < 1400 || y > 1500) return;
+
+  const miladi = hijriToMiladi(y, m, d);
+  if (!miladi) return;
+
+  // اضبط على الأحد
+  miladi.setHours(0,0,0,0);
+  miladi.setDate(miladi.getDate() - miladi.getDay());
+  currentWeekStart = miladi;
+  document.getElementById('weekStart').value = weekKey(currentWeekStart);
+  renderAll();
+}
+
+function updateHijriDisplay() {
+  const el = document.getElementById('hijriDisplay');
+  if (el) el.textContent = getHijriLabel(currentWeekStart);
+}
+
+function hijriToMiladi(hy, hm, hd) {
+  const approxJD = Math.floor((11*hy+3)/30) + 354*hy + 30*hm
+    - Math.floor((hm-1)/2) + hd + 1948440 - 385;
+  const approx = julianToDate(approxJD);
+  for (let offset = -45; offset <= 45; offset++) {
+    const test = new Date(approx);
+    test.setDate(test.getDate() + offset);
+    try {
+      const p = test.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
+        {day:'numeric', month:'numeric', year:'numeric'}).split('/');
+      if (parseInt(p[2])===hy && parseInt(p[0])===hm && parseInt(p[1])===hd)
+        return test;
+    } catch(e) {}
+  }
+  return approx;
+}
+
+function julianToDate(jd) {
+  let l=jd+68569, n=Math.floor(4*l/146097);
+  l=l-Math.floor((146097*n+3)/4);
+  const i=Math.floor(4000*(l+1)/1461001);
+  l=l-Math.floor(1461*i/4)+31;
+  const j=Math.floor(80*l/2447), d=l-Math.floor(2447*j/80);
+  l=Math.floor(j/11);
+  return new Date(100*(n-49)+i+l, j+2-12*l-1, d);
+}
+
+
+// ===== تحكم يومي =====
+const BULK_OPTS = [
+  {val:'p', label:'✅ حاضر الكل'},
+  {val:'a', label:'❌ غائب الكل'},
+  {val:'h', label:'🏖️ إجازة الكل'},
+  {val:'s', label:'🚫 تعليق الكل'},
+];
+
+function renderBulkRow() {
+  for (let di = 0; di < 5; di++) {
+    const td = document.getElementById('bulk-td-' + di);
+    if (!td) continue;
+    const opts = [
+      `<option value="" disabled selected>— تطبيق على الكل —</option>`,
+      ...BULK_OPTS.map(o => `<option value="${o.val}">${o.label}</option>`)
+    ].join('');
+    td.innerHTML = `<select class="day-bulk-select" onchange="markDay(${di},this.value);this.selectedIndex=0;">${opts}</select>`;
+  }
+}
+
+function markDay(di, val) {
+  const wk = weekKey(currentWeekStart);
+  if (!attendanceData[wk]) attendanceData[wk] = {};
+  STUDENTS.forEach(stu => {
+    if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
+    attendanceData[wk][stu.pin][`d${di}`] = val;
+  });
+  renderTable();
+  updateStats();
+  const dayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+  const labels = {p:'حاضر',a:'غائب',h:'إجازة',s:'تعليق'};
+  showToast(`✅ ${dayNames[di]}: تم تسجيل ${labels[val]||val} لجميع الطلاب`);
+}
+
 </script>
 </body>
 </html>
