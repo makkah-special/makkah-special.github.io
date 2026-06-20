@@ -27,11 +27,22 @@ function openPortfolioFull() { if(window._openPortfolioFull) window._openPortfol
 (function() {
 
   // إخفاء المتغيرات الخارجية بـ var محلية
-  var CORE_SUBJECTS = (typeof CORE_SUBJECTS !== 'undefined') ? CORE_SUBJECTS : [];
-  var IEP_LEVELS = (typeof IEP_LEVELS !== 'undefined') ? IEP_LEVELS : [];
-  var IEP_STATUS = (typeof IEP_STATUS !== 'undefined') ? IEP_STATUS : {};
-  var IEP_SUBJECTS = (typeof IEP_SUBJECTS !== 'undefined') ? IEP_SUBJECTS : [];
+  var CORE_SUBJECTS = (typeof window.CORE_SUBJECTS !== 'undefined') ? window.CORE_SUBJECTS : [];
+  var IEP_LEVELS = (typeof window.IEP_LEVELS !== 'undefined') ? window.IEP_LEVELS : [];
+  var IEP_STATUS = (typeof window.IEP_STATUS !== 'undefined') ? window.IEP_STATUS : {};
+  var IEP_SUBJECTS = (typeof window.IEP_SUBJECTS !== 'undefined') ? window.IEP_SUBJECTS : [];
   
+
+  // ربط currentTeacher بـ window
+  var _ctGet = function() { return window.currentTeacher; };
+  var _ctSet = function(v) { window.currentTeacher = v; return v; };
+  // استخدام Proxy pattern بسيط
+  Object.defineProperty(window, 'currentTeacher', {
+    get: function() { return window._ct || null; },
+    set: function(v) { window._ct = v; },
+    configurable: true
+  });
+
 // ----- Block 0 -----
 
 // ===================================================
@@ -149,7 +160,7 @@ async function saveStudentData(program, pin, patch) {
 // ===================================================
 // الحالة العامة
 // ===================================================
-var currentTeacher = null;
+
 var ASSIGNMENTS = { dumaj:{}, yaseer:{} };
 var currentDetail = null;
 var STUDENT_CONFIGS = { dumaj:null, yaseer:null };
@@ -1398,7 +1409,7 @@ document.getElementById('cert-message-input').addEventListener('input', updateCe
 var _supReady = false;
 window._initSupPanel = function(program, username, uname, urole) {
   if (_supReady) return; _supReady = true;
-  currentTeacher = {username:username, name:uname, pin:'0000',
+  window.currentTeacher = currentTeacher = {username:username, name:uname, pin:'0000',
     role:urole, program:program, avatar:uname.charAt(0), isSupervisor:true};
   var l=document.getElementById('login-screen'), p=document.getElementById('teacher-portal');
   if(l) l.style.display='none';
