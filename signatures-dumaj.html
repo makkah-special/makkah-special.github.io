@@ -3,168 +3,553 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بوابة مشرف يسير | مدرسة مكة المكرمة المتوسطة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
+<title>لوحة المدير | مدرسة مكة المكرمة المتوسطة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #1a3a5c;
-    --accent: #c8973a;
-    --accent-light: #f0b84a;
-    --green: #1a6b4a;
-    --green-light: #22a06b;
-    --bg: #f5f2eb;
-    --card: #ffffff;
-    --border: #e0d8c8;
-    --text: #1a1a2e;
-    --muted: #5a6478;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+:root {
+  --primary:      #3F2E63;
+  --primary-dark: #2E2148;
+  --accent:       #D7A24A;
+  --accent-light: #E8C27A;
+  --orange:       #6B4C9A;
+  --green:        #129E7C;
+  --bg:           #F7F5FC;
+  --card:         #ffffff;
+  --border:       #DCD2EE;
+  --text:         #221335;
+  --muted:        #6E5F82;
+  --radius:       14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-  header { background:linear-gradient(135deg,var(--primary) 0%,#0f2448 60%,#1a3a5c 100%); position:relative; }
-  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
-  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; border-bottom:1px solid rgba(255,255,255,0.08); }
-  .header-logos { display:flex; align-items:center; gap:14px; }
-  .logo-icon { width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; }
-  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
-  .header-sub { color:rgba(255,255,255,0.5); font-size:0.75rem; }
-  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; transition:all 0.2s; }
-  .back-link:hover { background:rgba(255,255,255,0.18); }
-  .hero { padding:36px 40px 44px; text-align:center; }
-  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:14px; }
-  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:900; color:#fff; margin-bottom:6px; }
-  .hero h1 span { color:var(--accent-light); }
-  .hero p { color:rgba(255,255,255,0.6); font-size:0.88rem; }
+/* HEADER */
+/* ===== الشريط العلوي الرسمي ===== */
+.topbar{ background: linear-gradient(120deg, #2E2148, #3F2E63 70%, #4A3470); color: rgba(255,255,255,.92); }
+.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
+.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
+.topbar-gov{ display:flex; align-items:center; gap:10px; }
+.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
+.topbar-gov a{ display:flex; align-items:center; }
+.topbar-gov a:hover img{ opacity:1; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+@media (max-width:640px){
+  .topbar-row{ font-size:.7rem; }
+  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+  .topbar-inner{ padding:7px 14px; }
+}
 
-  /* PIN */
-  .pin-screen { display:flex; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
-  .pin-box { background:var(--card); border-radius:20px; padding:40px 32px; max-width:360px; width:100%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.1); }
-  .pin-icon { font-size:2.6rem; margin-bottom:14px; }
-  .pin-title { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
-  .pin-desc { font-size:0.83rem; color:var(--muted); margin-bottom:22px; line-height:1.7; }
-  .pin-input { width:100%; padding:13px; border:2px solid var(--border); border-radius:11px; font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:700; text-align:center; letter-spacing:8px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:10px; }
-  .pin-input:focus { border-color:var(--primary); background:#fff; }
-  .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
-  .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
-  .pin-error.show { display:block; }
-  .btn-enter { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(26,58,92,0.3); transition:all 0.2s; }
-  .btn-enter:hover { transform:translateY(-2px); }
+header{background:linear-gradient(135deg,#2E2148 0%,#3F2E63 55%,#4A3470 100%);position:relative;}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent));}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:10px;}
+.header-logos{display:flex;align-items:center;gap:14px;}
+.logo-icon{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(215,162,74,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.header-name{color:rgba(255,255,255,0.9);font-size:0.83rem;font-weight:600;}
+.header-sub{color:rgba(255,255,255,0.5);font-size:0.75rem;}
+.back-link{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);padding:7px 16px;border-radius:8px;text-decoration:none;font-size:0.82rem;font-weight:600;transition:all 0.2s;white-space:nowrap;}
+.back-link:hover{background:rgba(255,255,255,0.18);}
+.hero{padding:36px 40px 44px;text-align:center;}
+.hero-badge{display:inline-block;background:rgba(215,162,74,0.15);border:1px solid rgba(215,162,74,0.35);color:var(--accent-light);padding:5px 18px;border-radius:20px;font-size:0.8rem;font-weight:600;margin-bottom:14px;}
+.hero h1{font-family:'Tajawal',sans-serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:900;color:#fff;margin-bottom:6px;}
+.hero h1 span{color:var(--accent-light);}
+.hero p{color:rgba(255,255,255,0.6);font-size:0.88rem;}
 
-  /* CONTENT */
-  .content { display:none; }
-  main { max-width:960px; margin:0 auto; padding:26px 22px 60px; }
+/* PIN */
+.pin-screen{display:flex;align-items:center;justify-content:center;min-height:60vh;padding:20px;}
+.pin-box{background:var(--card);border-radius:20px;padding:40px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.1);}
+.pin-icon{font-size:2.8rem;margin-bottom:14px;}
+.pin-title{font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;color:var(--primary);margin-bottom:6px;}
+.pin-desc{font-size:0.83rem;color:var(--muted);margin-bottom:22px;line-height:1.7;}
+.pin-input{width:100%;padding:13px;border:2px solid var(--border);border-radius:11px;font-family:'Cairo',sans-serif;font-size:1.3rem;font-weight:700;text-align:center;letter-spacing:8px;outline:none;transition:all 0.2s;background:#FBFAFE;margin-bottom:10px;}
+.pin-input:focus{border-color:var(--primary);background:#fff;}
+.pin-input.error{border-color:#ef4444;animation:shake 0.4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pin-error{display:none;color:#dc2626;font-size:0.8rem;font-weight:700;margin-bottom:10px;background:#fee2e2;padding:7px 12px;border-radius:8px;}
+.pin-error.show{display:block;}
+.btn-enter{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(63,46,99,0.3);transition:all 0.2s;}
+.btn-enter:hover{transform:translateY(-2px);}
 
-  .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:22px; }
-  .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-  .stat-num { font-family:'Tajawal',sans-serif; font-size:2rem; font-weight:900; color:var(--primary); }
-  .stat-label { font-size:0.75rem; color:var(--muted); font-weight:600; margin-top:4px; }
+/* CONTENT */
+#content{display:none;}
+main{max-width:1100px;margin:0 auto;padding:28px 22px 60px;}
 
-  .toolbar { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:18px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-  .search-input { flex:1; min-width:180px; padding:8px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.84rem; outline:none; background:#fafafa; }
-  .search-input:focus { border-color:var(--primary); }
-  .btn-refresh { padding:8px 16px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-  .btn-refresh:hover { background:#2563a8; }
+/* TABS */
+.tabs-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:6px;display:flex;gap:4px;flex-wrap:wrap;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.tab-btn{flex:1;min-width:100px;padding:10px 8px;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:4px;}
+.tab-btn:hover{background:#EAE1F7;color:var(--text);}
+.tab-btn.active{background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;box-shadow:0 3px 10px rgba(63,46,99,0.25);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;animation:fadeIn 0.25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-  .sigs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
-  .sig-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.05); transition:all 0.2s; }
-  .sig-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
-  .sig-head { padding:14px 16px; background:linear-gradient(135deg,#f0f4ff,#e8f0ff); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
-  .sig-avatar { width:38px; height:38px; background:var(--primary); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; font-weight:800; flex-shrink:0; }
-  .sig-name { font-size:0.88rem; font-weight:800; color:var(--primary); }
-  .sig-grade { font-size:0.74rem; color:var(--muted); margin-top:2px; }
-  .sig-img-wrap { padding:12px 16px; background:#f9f9f9; border-bottom:1px solid var(--border); height:100px; display:flex; align-items:center; justify-content:center; }
-  .sig-img-wrap img { max-height:88px; max-width:100%; object-fit:contain; }
-  .sig-foot { padding:10px 16px; display:flex; align-items:center; justify-content:space-between; }
-  .sig-date { font-size:0.73rem; color:var(--muted); }
-  .sig-badge { background:#d1fae5; color:#065f46; padding:3px 10px; border-radius:10px; font-size:0.72rem; font-weight:700; }
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.04);position:relative;overflow:hidden;transition:transform 0.2s;}
+.kpi-card:hover{transform:translateY(-2px);}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi-card.c-blue::before{background:var(--primary);}
+.kpi-card.c-green::before{background:var(--green);}
+.kpi-card.c-orange::before{background:var(--orange);}
+.kpi-card.c-gold::before{background:var(--accent);}
+.kpi-card.c-red::before{background:#dc2626;}
+.kpi-card.c-purple::before{background:#7c3aed;}
+.kpi-icon{font-size:1.6rem;margin-bottom:8px;}
+.kpi-val{font-family:'Tajawal',sans-serif;font-size:2rem;font-weight:900;color:var(--primary);}
+.kpi-label{font-size:0.7rem;color:var(--muted);margin-top:4px;font-weight:600;}
 
-  .sig-actions { display:flex; gap:8px; padding:10px 16px; background:#f8f8f8; border-top:1px solid var(--border); }
-  .btn-dl-png { flex:1; padding:7px; background:#e8f0ff; color:#1e40af; border:1px solid #bfdbfe; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-  .btn-dl-png:hover { background:#bfdbfe; }
-  .btn-dl-pdf { flex:1; padding:7px; background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-  .btn-dl-pdf:hover { background:#6ee7b7; }
-  .btn-dl-del { flex:1; padding:7px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-  .btn-dl-del:hover { background:#dc2626; color:#fff; }
+/* PROG SWITCH */
+.prog-switch{display:flex;background:#EAE1F7;border:1px solid var(--border);border-radius:10px;padding:4px;gap:4px;width:fit-content;margin-bottom:16px;}
+.prog-btn{padding:7px 18px;border:none;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;}
+.prog-btn.active{background:var(--primary);color:#fff;}
 
-  .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
-  .empty-icon { font-size:3rem; margin-bottom:12px; }
+/* TABLE */
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.data-table{width:100%;border-collapse:collapse;min-width:560px;}
+.data-table thead th{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;padding:12px 14px;font-size:0.75rem;font-weight:700;text-align:right;white-space:nowrap;}
+.data-table tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s;}
+.data-table tbody tr:hover{background:#FBFAFE;}
+.data-table tbody td{padding:10px 14px;font-size:0.8rem;vertical-align:middle;}
+.sp{display:inline-block;padding:2px 10px;border-radius:20px;font-size:0.68rem;font-weight:800;}
+.sp-p{background:#d1fae5;color:#065f46;}.sp-a{background:#fee2e2;color:#dc2626;}
+.sp-l{background:#fef3c7;color:#92400e;}.sp-e{background:#ede9fe;color:#5b21b6;}
+.sp-h{background:#dbeafe;color:#1e40af;}.sp-s{background:#f1f5f9;color:#475569;}
 
-  .loading-spinner { text-align:center; padding:40px; color:var(--muted); font-size:0.9rem; }
+/* WEEK NAV */
+.week-nav{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.week-info{flex:1;text-align:center;}
+.week-num{font-family:'Tajawal',sans-serif;font-size:1.05rem;font-weight:900;color:var(--primary);}
+.week-dates{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+.week-hijri{font-size:0.7rem;color:var(--orange);margin-top:1px;}
+.btn-nav{background:var(--bg);border:1.5px solid var(--border);border-radius:9px;padding:8px 16px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;color:var(--primary);cursor:pointer;transition:all 0.2s;}
+.btn-nav:hover{border-color:var(--primary);background:#DDD0F2;}
+.btn-load{background:var(--primary);border:none;border-radius:9px;padding:8px 18px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;color:#fff;cursor:pointer;}
+.btn-load:hover{background:var(--primary-dark);}
+.btn-print{background:#EAE1F7;border:1.5px solid var(--border);border-radius:9px;padding:8px 14px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;color:var(--muted);cursor:pointer;}
+.btn-print:hover{color:var(--primary);border-color:var(--primary);}
+.date-inp{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-family:'Cairo',sans-serif;font-size:0.8rem;color:var(--text);outline:none;}
+.date-inp:focus{border-color:var(--primary);}
 
-  footer { background:var(--primary); color:rgba(255,255,255,0.65); text-align:center; padding:20px 40px; font-size:0.8rem; border-top:3px solid var(--accent); margin-top:40px; }
-  footer strong { color:var(--accent-light); }
+/* STUDENTS */
+.stu-search{width:min(380px,100%);padding:10px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;background:var(--card);color:var(--text);outline:none;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.04);}
+.stu-search:focus{border-color:var(--primary);}
+.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;}
+.stu-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.2s;cursor:pointer;}
+.stu-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.1);border-color:#b0c4e0;}
+.stu-head{padding:14px 16px;background:linear-gradient(135deg,#EAE1F7,#DDD0F2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.stu-avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#8B6ABF);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.9rem;font-weight:900;flex-shrink:0;overflow:hidden;}
+.stu-avatar img{width:100%;height:100%;object-fit:cover;}
+.stu-name{font-size:0.88rem;font-weight:800;color:var(--primary);line-height:1.3;}
+.stu-grade{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+.stu-foot{padding:10px 16px;display:flex;gap:6px;flex-wrap:wrap;}
+.stu-tag{background:#EAE1F7;border:1px solid #c7d9f5;border-radius:6px;padding:2px 9px;font-size:0.65rem;color:var(--primary);font-weight:700;}
 
-  @media(max-width:640px) {
-    .header-top { padding:12px 16px; }
-    .hero { padding:28px 16px 34px; }
-    main { padding:16px 14px 40px; }
-  }
+/* TIMETABLE */
+.grade-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.grade-tab{background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:8px 18px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.grade-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.tt-wrap{overflow-x:auto;}
+.tt-table{width:100%;border-collapse:collapse;min-width:700px;background:var(--card);border-radius:var(--radius);overflow:hidden;}
+.tt-th{background:linear-gradient(180deg,var(--primary-dark),var(--primary));color:#fff;padding:10px 8px;font-size:0.72rem;font-weight:700;text-align:center;border-left:1px solid rgba(255,255,255,0.1);}
+.tt-day{background:linear-gradient(135deg,#EAE1F7,#DDD0F2);padding:10px 14px;font-weight:800;font-size:0.82rem;color:var(--primary);text-align:center;border-bottom:1px solid var(--border);white-space:nowrap;}
+.tt-td{padding:5px;border-left:1px solid var(--border);border-bottom:1px solid var(--border);vertical-align:top;min-width:100px;}
+.tt-cell{border-radius:8px;padding:6px 8px;min-height:46px;display:flex;flex-direction:column;justify-content:center;}
+.tt-teacher{font-size:0.58rem;font-weight:800;opacity:0.8;margin-bottom:2px;}
+.tt-subj{font-size:0.68rem;font-weight:700;line-height:1.3;}
+
+/* PORTFOLIO */
+.port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+.port-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.05);transition:all 0.2s;}
+.port-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.09);}
+.port-head{padding:13px 16px;background:linear-gradient(135deg,#EAE1F7,#DDD0F2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.port-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.port-name{font-size:0.85rem;font-weight:800;color:var(--primary);}
+.port-sub{font-size:0.7rem;color:var(--muted);margin-top:2px;}
+.port-body{padding:12px 16px;}
+.port-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:0.75rem;}
+.port-key{color:var(--muted);}
+.port-val{color:var(--text);font-weight:700;}
+.sig-thumb{height:70px;background:#FBFAFE;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.sig-thumb img{max-height:66px;max-width:100%;object-fit:contain;}
+
+/* OVERVIEW SUMMARY */
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin-top:22px;}
+.ov-head{background:linear-gradient(135deg,var(--primary-dark),var(--primary));padding:14px 20px;color:#fff;font-weight:800;font-size:0.9rem;}
+.prog-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--border);}
+.prog-label{font-weight:800;font-size:0.88rem;color:var(--primary);width:90px;flex-shrink:0;}
+.day-chip{flex:1;min-width:55px;text-align:center;background:#EAE1F7;border-radius:8px;padding:6px 4px;}
+.day-chip-n{color:var(--muted);font-size:0.62rem;}
+.day-chip-v{font-weight:800;color:var(--primary);margin-top:2px;font-size:0.78rem;}
+.pct{padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;}
+.pct-h{background:#d1fae5;color:#065f46;}
+.pct-m{background:#fef3c7;color:#92400e;}
+.pct-l{background:#fee2e2;color:#dc2626;}
+
+/* SETTINGS */
+.settings-wrap{max-width:500px;display:grid;gap:14px;}
+.set-row{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.set-label{font-weight:700;font-size:0.88rem;color:var(--primary);}
+.set-sub{font-size:0.72rem;color:var(--muted);margin-top:3px;}
+.set-inp{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;width:130px;text-align:center;outline:none;}
+.set-inp:focus{border-color:var(--primary);}
+.btn-save{background:var(--primary);border:none;border-radius:8px;padding:8px 14px;color:#fff;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;}
+.btn-save:hover{background:var(--primary-dark);}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9000;align-items:center;justify-content:center;backdrop-filter:blur(3px);}
+.modal-bg.open{display:flex;}
+.modal-box{background:#fff;border-radius:20px;width:min(780px,96vw);max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+.modal-head{background:linear-gradient(135deg,var(--primary-dark),var(--primary));padding:18px 22px;border-radius:20px 20px 0 0;display:flex;align-items:center;justify-content:space-between;}
+.modal-title{color:#fff;font-weight:800;font-size:0.95rem;}
+.modal-sub{color:rgba(255,255,255,0.6);font-size:0.72rem;margin-top:2px;}
+.modal-close{background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:30px;height:30px;color:#fff;font-size:1rem;cursor:pointer;}
+.modal-body{padding:22px;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.detail-item{background:#FBFAFE;border-radius:9px;padding:10px 14px;}
+.detail-key{font-size:0.68rem;color:var(--muted);}
+.detail-val{font-size:0.84rem;font-weight:700;color:var(--text);margin-top:2px;}
+
+/* TOAST */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--primary);color:#fff;border-radius:12px;padding:10px 22px;font-size:0.84rem;font-weight:700;box-shadow:0 6px 24px rgba(63,46,99,0.3);z-index:9999;transition:transform 0.3s;white-space:nowrap;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{background:var(--primary);color:rgba(255,255,255,0.65);text-align:center;padding:20px 40px;font-size:0.8rem;border-top:3px solid var(--accent);margin-top:40px;}
+footer strong{color:var(--accent-light);}
+
+/* MISC */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted);}
+.empty-icon{font-size:3rem;margin-bottom:14px;}
+.loading{text-align:center;padding:50px 20px;color:var(--muted);font-size:0.9rem;}
+.sec-title{font-family:'Tajawal',sans-serif;font-size:1.05rem;font-weight:900;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+
+@media(max-width:640px){
+  .header-top{padding:12px 16px;}
+  .hero{padding:28px 16px 34px;}
+  main{padding:16px 14px 40px;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .tab-btn{min-width:80px;font-size:0.7rem;padding:8px 4px;}
+  .detail-grid{grid-template-columns:1fr;}
+}
+.ann-card{background:#fff;border:1.5px solid #DCD2EE;border-radius:16px;padding:20px;margin-bottom:16px;}
+.ann-card-title{font-weight:900;font-size:.9rem;color:#3F2E63;margin-bottom:14px;border-bottom:1px solid #EAE1F7;padding-bottom:8px;}
+.ann-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.ann-f{display:flex;flex-direction:column;gap:4px;}
+.ann-f label{font-size:.74rem;font-weight:700;color:#6E5F82;}
+.ann-inp,.ann-sel{padding:8px 12px;border:1.5px solid #DCD2EE;border-radius:8px;font-family:Cairo,sans-serif;font-size:.83rem;width:100%;color:#221335;background:#FBFAFE;outline:none;}
+.ann-inp:focus,.ann-sel:focus{border-color:#8B6ABF;}
+.ann-send-btn{width:100%;margin-top:10px;padding:11px;background:linear-gradient(135deg,#6B4C9A,#8B6ABF);color:#fff;border:none;border-radius:10px;font-family:Cairo,sans-serif;font-weight:800;font-size:.87rem;cursor:pointer;}
+.ann-disable-row{margin-top:8px;padding:9px 13px;background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.ann-disable-lbl{font-size:.78rem;color:#7F1D1D;font-weight:700;}
+.ann-disable-btn{background:#DC2626;color:#fff;border:none;border-radius:7px;padding:6px 14px;font-family:Cairo,sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;}
+.ann-res{font-size:.78rem;min-height:16px;margin-top:6px;font-weight:700;text-align:center;}
+.ann-log{margin-top:14px;border-top:1px solid #EAE1F7;padding-top:12px;}
+.ann-log-title{font-weight:800;font-size:.82rem;color:#3F2E63;margin-bottom:8px;}
+.ann-log-item{background:#FBFAFE;border:1px solid #DCD2EE;border-radius:9px;padding:9px 36px 9px 13px;margin-bottom:7px;position:relative;}
+.ann-log-msg{font-weight:700;font-size:.82rem;color:#221335;margin-bottom:3px;}
+.ann-log-meta{font-size:.7rem;color:#6E5F82;}
+.ann-log-del{position:absolute;top:7px;left:8px;background:#FEF2F2;color:#DC2626;border:none;border-radius:5px;padding:2px 8px;font-size:.7rem;cursor:pointer;font-weight:700;}
+.ann-log-empty{text-align:center;color:#9ca3af;font-size:.8rem;padding:16px 0;}
+.t-ann-box{border-radius:13px;padding:13px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;border-right:5px solid #D7A24A;background:linear-gradient(135deg,rgba(215,162,74,.08),#fff);}
+.t-ann-icon{font-size:1.3rem;flex-shrink:0;}
+.t-ann-body{flex:1;}
+.t-ann-msg{font-weight:800;font-size:.87rem;margin-bottom:3px;}
+.t-ann-meta{font-size:.73rem;color:#6E5F82;}
+.t-ann-link{font-size:.74rem;color:#6B4C9A;font-weight:700;text-decoration:none;}
+.ann-container{margin-bottom:16px;}
+@media(max-width:640px){.ann-row2{grid-template-columns:1fr;}}
 </style>
+<link rel="stylesheet" href="assets/css/common-ui.css">
 </head>
 <body>
+
+<!-- الشريط العلوي الرسمي -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-gov">
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
+          <img src="moe-logo.png" alt="وزارة التعليم">
+        </a>
+        <span>المملكة العربية السعودية — وزارة التعليم</span>
+      </div>
+      
+    </div>
+    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+  </div>
+</div>
 
 <header>
   <div class="header-top">
     <div class="header-logos">
-      <div class="logo-icon">✍️</div>
+      <div class="logo-icon">🏫</div>
       <div>
-        <div class="header-name">مدرسة مكة المكرمة المتوسطة — بوابة مشرف يسير</div>
-        <div class="header-sub">قسم ذوي الإعاقة — سجل التوقيعات</div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة — لوحة متابعة المدير</div>
+        <div class="header-sub">قسم ذوي الإعاقة — إشراف إداري شامل</div>
       </div>
     </div>
-    <a href="upload-reports.html" class="back-link" style="background:rgba(200,151,58,0.2);border-color:rgba(200,151,58,0.4);color:var(--accent-light);">📤 رفع التقارير</a>
     <a href="index.html" class="back-link">← الرئيسية</a>
   </div>
   <div class="hero">
-    <div class="hero-badge">✍️ سجل التوقيعات</div>
-    <h1>إقرارات <span>أولياء الأمور</span></h1>
-    <p>عرض جميع توقيعات الإقرار المحفوظة من بوابة الطلاب</p>
+   
+    <h1>لوحة <span>المتابعة </span></h1>
+    <p>مؤشرات الأداء والبيانات الإحصائية للبرامج التعليمية </p>
   </div>
 </header>
 
-<!-- PIN SCREEN -->
+<!-- PIN -->
 <div class="pin-screen" id="pin-screen">
   <div class="pin-box">
     <div class="pin-icon">🔐</div>
-    <div class="pin-title">صفحة المشرف</div>
-    <div class="pin-desc">أدخل رمز المشرف لعرض سجل توقيعات أولياء الأمور</div>
-    <input type="password" class="pin-input" id="admin-pin" maxlength="6" placeholder="• • • •"
-      onkeydown="if(event.key==='Enter') checkPin()"
-      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-title">دخول المدير</div>
+    <div class="pin-desc">أدخل رمز المدير للاطلاع على بيانات البرامج</div>
+    <input type="password" class="pin-input" id="admin-pin" maxlength="8"
+           placeholder="• • • •" onkeydown="if(event.key==='Enter')doLogin()"
+           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
     <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
-    <button class="btn-enter" onclick="checkPin()">✅ دخول</button>
+    <button class="btn-enter" onclick="doLogin()">✅ دخول</button>
   </div>
 </div>
 
 <!-- CONTENT -->
-<div class="content" id="content">
-  <main>
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-num" id="stat-total">0</div>
-        <div class="stat-label">إجمالي التوقيعات</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-today">0</div>
-        <div class="stat-label">توقيعات اليوم</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-students">0</div>
-        <div class="stat-label">طلاب وقّعوا</div>
-      </div>
-    </div>
+<div id="content">
+<main>
 
-    <div class="toolbar">
-      <input type="text" class="search-input" id="search-input" placeholder="🔍 ابحث باسم الطالب أو الصف..." oninput="filterSigs()">
-      <button class="btn-refresh" onclick="loadSignatures()">🔄 تحديث</button>
-    </div>
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📊 نظرة عامة</button>
+    <button class="tab-btn" onclick="switchTab('attendance',this)">📋 الحضور</button>
+    <button class="tab-btn" onclick="switchTab('students',this)">👨‍🎓 الطلاب</button>
+    <button class="tab-btn" onclick="switchTab('iep',this)">📋 الخطط الفردية</button>
+    <button class="tab-btn" onclick="switchTab('timetable',this)">📅 الجداول</button>
+    <button class="tab-btn" onclick="switchTab('portfolio',this)">📁 الاقرارات</button>
+    <button class="tab-btn" onclick="switchTab('settings',this)">⚙️ الإعدادات</button>
+  </div>
 
-    <div id="sigs-container">
-      <div class="loading-spinner">⏳ جاري التحميل...</div>
+  <!-- OVERVIEW -->
+  <div class="tab-pane active" id="tab-overview">
+    <div class="kpi-grid">
+      <div class="kpi-card c-blue"><div class="kpi-icon">👨‍🎓</div><div class="kpi-val" id="kpi-total">—</div><div class="kpi-label">إجمالي الطلاب</div></div>
+      <div class="kpi-card c-orange"><div class="kpi-icon">📘</div><div class="kpi-val">20</div><div class="kpi-label">طلاب برنامج يسير</div></div>
+      <div class="kpi-card c-green"><div class="kpi-icon">🧑‍🏫</div><div class="kpi-val" id="kpi-dumaj">—</div><div class="kpi-label">طلاب برنامج الدمج</div></div>
+      <div class="kpi-card c-gold"><div class="kpi-icon">✅</div><div class="kpi-val" id="kpi-att">—</div><div class="kpi-label">نسبة الحضور</div></div>
+      <div class="kpi-card c-red"><div class="kpi-icon">❌</div><div class="kpi-val" id="kpi-abs">—</div><div class="kpi-label">غيابات هذا الأسبوع</div></div>
+      <div class="kpi-card c-purple"><div class="kpi-icon">📅</div><div class="kpi-val" id="kpi-week">—</div><div class="kpi-label">الأسبوع الحالي</div></div>
     </div>
-  </main>
+    <div class="ov-card">
+      <div class="ov-head">📊 ملخص الحضور اليومي — الأسبوع الحالي</div>
+      <div id="ov-body"><div class="loading">⏳ جاري التحميل...</div></div>
+    </div>
+  </div>
+
+  <!-- ATTENDANCE -->
+  <div class="tab-pane" id="tab-attendance">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div class="sec-title" style="border:none;margin:0;padding:0;">📋 كشف الحضور والغياب</div>
+      <div class="prog-switch">
+        <button class="prog-btn active" onclick="switchAttProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchAttProg('yaseer',this)">📘 يسير</button>
+      </div>
+    </div>
+    <div class="week-nav">
+      <button class="btn-nav" onclick="changeAttWeek(-1)">→ السابق</button>
+      <div class="week-info">
+        <div class="week-num" id="att-wn">—</div>
+        <div class="week-dates" id="att-wd">—</div>
+        <div class="week-hijri" id="att-wh">—</div>
+      </div>
+      <button class="btn-nav" onclick="changeAttWeek(1)">التالي ←</button>
+      <input type="date" class="date-inp" id="att-date" onchange="setAttDate(this.value)">
+      <button class="btn-load" onclick="loadAttView()">🔄 عرض</button>
+      <button class="btn-print" onclick="window.print()">🖨️ طباعة</button>
+    </div>
+    <div id="att-wrap"><div class="empty-state"><div class="empty-icon">📋</div>اختر أسبوعاً واضغط عرض</div></div>
+  </div>
+
+  <!-- STUDENTS -->
+  <div class="tab-pane" id="tab-students">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div class="sec-title" style="border:none;margin:0;padding:0;">👨‍🎓 ملفات الطلاب</div>
+      <div class="prog-switch">
+        <button class="prog-btn active" onclick="switchStudProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchStudProg('yaseer',this)">📘 يسير</button>
+      </div>
+    </div>
+    <input type="text" class="stu-search" id="stu-q" placeholder="🔍 ابحث باسم الطالب..." oninput="filterStu()">
+    <div class="stu-grid" id="stu-grid"><div class="loading">⏳ جاري التحميل...</div></div>
+  </div>
+
+  <!-- TIMETABLE -->
+  <div class="tab-pane" id="tab-timetable">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div class="sec-title" style="border:none;margin:0;padding:0;">📅 جداول الحصص</div>
+      <div class="prog-switch">
+        <button class="prog-btn active" onclick="switchTTProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchTTProg('yaseer',this)">📘 يسير</button>
+      </div>
+    </div>
+    <div class="grade-tabs" id="grade-tabs"></div>
+    <div class="tt-wrap"><table class="tt-table" id="tt-table"><tbody><tr><td class="loading" colspan="9">⏳ جاري التحميل...</td></tr></tbody></table></div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="tab-pane" id="tab-portfolio">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div class="sec-title" style="border:none;margin:0;padding:0;">📁 الاقرارات</div>
+      <div class="prog-switch">
+        <button class="prog-btn active" onclick="switchPortProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" onclick="switchPortProg('yaseer',this)">📘 يسير</button>
+      </div>
+    </div>
+    <div class="port-grid" id="port-grid"><div class="loading">⏳ جاري التحميل...</div></div>
+  </div>
+
+  <!-- IEP PLANS -->
+  <div class="tab-pane" id="tab-iep">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div class="sec-title" style="border:none;margin:0;padding:0;">📋 الخطط التعليمية الفردية</div>
+      <div class="prog-switch">
+        <button class="prog-btn active" id="iep-prog-dumaj" onclick="switchIepProg('dumaj',this)">🧑‍🏫 دمج</button>
+        <button class="prog-btn" id="iep-prog-yaseer" onclick="switchIepProg('yaseer',this)">📘 يسير</button>
+      </div>
+    </div>
+    <!-- بحث -->
+    <div style="position:relative;margin-bottom:20px;">
+      <input type="text" id="iep-search" placeholder="🔍 ابحث باسم الطالب..." oninput="filterIepStudents()"
+        style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;background:#fff;transition:all 0.2s;"
+        onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+    <!-- قائمة الطلاب -->
+    <div id="iep-students-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:20px;"></div>
+    <!-- عرض الخطة -->
+    <div id="iep-plan-view" style="display:none;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <button onclick="closeIepView()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;">← رجوع</button>
+        <div id="iep-plan-title" style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:900;color:var(--primary);"></div>
+      </div>
+      <div id="iep-plan-content" style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;min-height:200px;"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="tab-pane" id="tab-settings">
+<div class="ann-card">
+<div class="ann-card-title">📢 إرسال إشعار</div>
+<div class="ann-row2">
+<div class="ann-f"><label>نوع الإشعار</label>
+<select id="ann-type-g" class="ann-sel">
+<option value="default">📢 إشعار عام</option>
+<option value="news">📰 خبر</option>
+<option value="alert">🔔 تنبيه</option>
+<option value="important">⚠️ مهم</option>
+</select></div>
+<div class="ann-f"><label>الوجهة</label>
+<select id="ann-target-g" class="ann-sel">
+<option value="site">🌐 الصفحة الرئيسية</option>
+<option value="teachers">👨‍🏫 المعلمون</option>
+<option value="site_teachers">📡 الرئيسية + المعلمون</option>
+<option value="all_admin">🏫 جميع المشرفين</option>
+<option value="site_teachers_students">🌍 الجميع (رئيسية + معلمون + طلاب)</option>
+</select></div>
 </div>
+<div class="ann-row2">
+<div class="ann-f"><label>البرنامج</label>
+<select id="ann-prog-g" class="ann-sel">
+<option value="both">الكل</option>
+<option value="dumaj">الدمج الفكري</option>
+<option value="yaseer">يسير</option>
+</select></div>
+<div class="ann-f"><label>المدة</label>
+<select id="ann-dur-g" class="ann-sel">
+<option value="0">بدون انتهاء</option>
+<option value="1">يوم</option>
+<option value="3">3 أيام</option>
+<option value="7" selected>أسبوع</option>
+<option value="14">أسبوعان</option>
+<option value="30">شهر</option>
+</select></div>
+</div>
+<div class="ann-f" style="margin-bottom:9px;"><label>نص الإشعار</label>
+<input type="text" id="ann-msg-g" class="ann-inp" placeholder="نص الإشعار..."></div>
+<div class="ann-f" style="margin-bottom:9px;"><label>رابط (اختياري)</label>
+<input type="url" id="ann-link-g" class="ann-inp" placeholder="https://..."></div>
+<label style="display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:700;color:#3F2E63;margin-bottom:3px;">
+<input type="checkbox" id="ann-en-g" checked style="width:15px;height:15px;"> تفعيل فوراً</label>
+<button class="ann-send-btn" onclick="annSend('مدير المدرسة')">📤 إرسال</button>
+<div class="ann-res" id="ann-res"></div>
+<div class="ann-disable-row">
+<div class="ann-disable-lbl">⚡ تعطيل إشعار الصفحة الرئيسية</div>
+<button class="ann-disable-btn" onclick="annDisable()">🔴 تعطيل</button>
+</div>
+<div class="ann-log" id="ann-log-section">
+<div class="ann-log-title">📋 سجل الإشعارات المرسلة</div>
+<div id="ann-log-items"><div class="ann-log-empty">جارٍ التحميل...</div></div>
+</div>
+</div>
+
+    <div class="sec-title">⚙️ إعدادات لوحة المدير</div>
+    <div class="settings-wrap">
+      <div class="set-row">
+        <div><div class="set-label">🔐 تغيير رمز الدخول</div><div class="set-sub">الرمز الحالي محفوظ في المتصفح</div></div>
+        <div style="display:flex;gap:6px;">
+          <input type="password" class="set-inp" id="new-pin" placeholder="رمز جديد">
+          <button class="btn-save" onclick="changePin()">حفظ</button>
+        </div>
+      </div>
+      <div class="set-row">
+        <div><div class="set-label">🏫 اسم المدير</div><div class="set-sub">للسجل والتقارير</div></div>
+        <div style="display:flex;gap:6px;">
+          <input type="text" class="set-inp" id="p-name" placeholder="الاسم">
+          <button class="btn-save" onclick="saveName()">حفظ</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding:18px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
+      <div class="set-label" style="margin-bottom:10px;">📢 شريط الإشعارات (أعلى الصفحة الرئيسية)</div>
+      <div class="set-sub" style="margin-bottom:12px;">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه</div>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:10px;">
+        <input type="checkbox" id="announce-enabled" style="width:18px;height:18px;">
+        تفعيل عرض الشريط
+      </label>
+      <input type="text" class="set-inp" id="announce-message" placeholder="نص الإشعار..." style="width:100%;margin-bottom:8px;">
+      <input type="url" class="set-inp" id="announce-link" placeholder="رابط إضافي (اختياري)" style="width:100%;margin-bottom:10px;">
+      <button class="btn-save" onclick="saveAnnouncementP()">📢 حفظ ونشر الإشعار</button>
+    </div>
+
+    <div style="margin-top:24px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:0.78rem;color:var(--muted);line-height:2.2;">
+      🏫 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+      📚 برنامج يسير + برنامج الدمج الفكري<br>
+      🗓️ الفصل الثاني 1447هـ<br>
+      <strong style="color:var(--primary);">إعداد وتنفيذ: أ. سعد الزهراني</strong>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- STUDENT MODAL -->
+<div class="modal-bg" id="stu-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="modal-avatar" style="width:60px;height:60px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">👤</div>
+        <div><div class="modal-title" id="m-name">—</div><div class="modal-sub" id="m-info">—</div></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="m-body"><div class="loading">⏳ جاري التحميل...</div></div>
+  </div>
+</div>
+
+<div id="toast"></div>
 
 <footer>
   © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
@@ -172,205 +557,525 @@
 </footer>
 
 <script>
-const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-const ADMIN_PIN    = "1129";
+const SB_URL='https://pyrxwqgapwjwhiskowhk.supabase.co';
+const SB_KEY='sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere';
+const PIN_KEY='principal_pin_v1';
+const DEFAULT_PIN='9999';
+const DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+const WEEK_MAP={"2026-01-18":1,"2026-01-25":2,"2026-02-01":3,"2026-02-08":4,"2026-02-15":5,"2026-02-22":6,"2026-03-01":7,"2026-03-29":8,"2026-04-05":9,"2026-04-12":10,"2026-04-19":11,"2026-04-26":12,"2026-05-03":13,"2026-05-10":14,"2026-05-31":15,"2026-06-07":16,"2026-06-14":17,"2026-06-21":18,"2026-06-28":19};
+const HOLIDAYS=new Set(["2026-03-08","2026-03-15","2026-03-22","2026-05-17","2026-05-24"]);
+const YS=[
+  {pin:'5271',name:'محمد علي غرم الله الشمراني',grade:'الصف الأول / ١'},
+  {pin:'3955',name:'عبدالله قائد عبدالله الشهراني',grade:'الصف الثاني / ١'},
+  {pin:'3154',name:'بسام خالد عبدالرحمن المالكي',grade:'الصف الثاني / ١'},
+  {pin:'3493',name:'وسام عوض بن شينان السهيمي',grade:'الصف الرابع / ١'},
+  {pin:'9055',name:'حسن صالح حسن الزهراني',grade:'الصف الخامس / ١'},
+  {pin:'0962',name:'إياد خليل طاهر مصطفى',grade:'الصف الأول متوسط / 6'},
+  {pin:'4073',name:'محمد عمر محمد بلقاسم الحرازي',grade:'الصف الثاني / ٢'},
+  {pin:'0788',name:'أمجد مرزوق علي المحوري',grade:'الصف الثاني / ٢'},
+  {pin:'8726',name:'مراد علي ظلميس المنتشري',grade:'الصف الرابع / ٢'},
+  {pin:'2261',name:'فيصل حاتم حامد الغامدي',grade:'الصف الرابع / ٢'},
+  {pin:'9446',name:'عبدالرحمن توفيق علوان مقري',grade:'الصف الخامس / ٢'},
+  {pin:'7895',name:'محمد فارس صالح الغامدي',grade:'الصف الثامن / ٢'},
+  {pin:'5362',name:'وسيم أحمد علي الرزقي',grade:'انتساب'},
+  {pin:'2571',name:'فارس محمد مانع القحطاني',grade:'الصف الأول / ٣'},
+  {pin:'3590',name:'عبدالمجيد عبدالله حامد الهلالي',grade:'الصف الأول / ٣'},
+  {pin:'8151',name:'مسفر حسن سعد القحطاني',grade:'الصف الثالث / ٣'},
+  {pin:'8061',name:'هتان عبيدالله جميل المحمادي',grade:'الصف الثالث / ٣'},
+  {pin:'5455',name:'طلال عبدالله عبدالرحمن العصماني',grade:'الصف الرابع / ٣'},
+  {pin:'6812',name:'لوى أحمد علي الرزقي',grade:'انتساب'},
+  {pin:'5237',name:'عبدالله ماجد عبدالله الزهراني',grade:'انتساب'},
+];
+const DT=[
+  {key:'suhaimy',name:'محمد أحمد السهيمي',color:'#3F2E63',bg:'rgba(63,46,99,0.1)'},
+  {key:'alzahrani',name:'علي محمد الزهراني',color:'#129E7C',bg:'rgba(18,158,124,0.1)'},
+  {key:'alghamdi',name:'علي سعيد الغامدي',color:'#7c3aed',bg:'rgba(124,58,237,0.1)'},
+  {key:'almalki',name:'علي محمد المالكي',color:'#b45309',bg:'rgba(180,83,9,0.1)'},
+  {key:'alyani',name:'حسن علي العلياني',color:'#be185d',bg:'rgba(190,24,93,0.1)'},
+  {key:'alqarni',name:'زين العابدين القرني',color:'#0f766e',bg:'rgba(15,118,110,0.1)'},
+];
+const YT=[
+  {key:'saad',  name:'سعد الزهراني',  color:'#3F2E63', accent:'#8B6ABF', light:'#e8f0fa', bg:'rgba(63,46,99,0.1)'},
+  {key:'husain',name:'حسين الكبيشي', color:'#129E7C', accent:'#15803d', light:'#e8f7f1', bg:'rgba(18,158,124,0.1)'},
+];
+const DG=['أول متوسط','ثاني متوسط','ثالث متوسط'];
 
-let allSigs = [];
+const DS=[
+  {pin:'7405',name:'اياد موسى حولي القرني',grade:'الأول المتوسط / ١'},
+  {pin:'4526',name:'عبدالله صالح أحمد المشجري',grade:'الأول المتوسط / ١'},
+  {pin:'9050',name:'علي محمد مطر السهيمي',grade:'الأول المتوسط / ١'},
+  {pin:'4612',name:'محمد علي محمد المنتشري',grade:'الأول المتوسط / ١'},
+  {pin:'0977',name:'مشاري فيحان سميح البقمي',grade:'الأول المتوسط / ١'},
+  {pin:'6630',name:'يزن محمد مصلح سلامي',grade:'الأول المتوسط / ١'},
+  {pin:'7543',name:'احمد عبدالله معطي الجدعاني',grade:'الثاني المتوسط / ١'},
+  {pin:'4218',name:'راكان سمير فقيهي اليماني',grade:'الثاني المتوسط / ١'},
+  {pin:'7892',name:'عبدالرحمن حسن سعد القحطاني',grade:'الثاني المتوسط / ١'},
+  {pin:'4304',name:'فهد علي حسين الصومالي',grade:'الثاني المتوسط / ١'},
+  {pin:'4511',name:'حسن خالد حسن صغير',grade:'الثالث المتوسط / ١'},
+  {pin:'6984',name:'خالد ابراهيم منصور العامري',grade:'الثالث المتوسط / ١'},
+  {pin:'5210',name:'سامي اقبال أحمد أحمد',grade:'الثالث المتوسط / ١'},
+  {pin:'4447',name:'عبدالله احمد بن ابراهيم الزهراني',grade:'الثالث المتوسط / ١'},
+  {pin:'5460',name:'ماجد نادر أحمد عيسى',grade:'الثالث المتوسط / ١'},
+  {pin:'7907',name:'محمد سليمان ابراهيم طواشي',grade:'الثالث المتوسط / ١'},
+  {pin:'8315',name:'مشاري خليل ابراهيم الزهراني',grade:'الثالث المتوسط / ١'},
+  {pin:'2407',name:'مهند محمد عبدالله الشهري',grade:'الثالث المتوسط / ١'},
+  {pin:'9867',name:'مؤيد مشعل علي العمري',grade:'الثالث المتوسط / ١'},
+  {pin:'2335',name:'مؤيد نعيم ابراهيم بدير',grade:'الثالث المتوسط / ١'},
+  {pin:'9258',name:'وليد عبدالله يحي الشهري',grade:'الثالث المتوسط / ١'},
+];
+let attWk=getSun(new Date()), attProg='dumaj', studProg='dumaj', ttProg='dumaj', portProg='dumaj', ttGrade='أول متوسط';
 
-function checkPin() {
-  const val = document.getElementById('admin-pin').value;
-  if (val === ADMIN_PIN) {
-    document.getElementById('pin-screen').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-    loadSignatures();
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function getSun(d){
+  const s=new Date(d);
+  s.setHours(0,0,0,0);
+  s.setDate(s.getDate()-s.getDay()); // الأحد
+  return s;
+}
+function wk(d){
+  // نفس منطق ملفات الحضور تماماً: toISOString().slice(0,10)
+  // لكن نبني التاريخ من المكوّنات المحلية لتجنب shift المنطقة الزمنية
+  const iso=new Date(d.getFullYear(),d.getMonth(),d.getDate()).toLocaleDateString('en-CA');
+  return iso; // yyyy-mm-dd
+}
+function dr(d){const e=new Date(d);e.setDate(e.getDate()+4);const f=x=>x.toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric'});return `${f(d)} — ${f(e)}`;}
+function hijri(d){try{return d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});}catch(e){return '';}}
+function getWN(d){const k=wk(d);if(WEEK_MAP[k])return WEEK_MAP[k];const e=Object.entries(WEEK_MAP).sort();for(let i=e.length-1;i>=0;i--)if(e[i][0]<=k)return e[i][1];return null;}
+function isHol(d){return HOLIDAYS.has(wk(d));}
+function sl(v){return {p:'حاضر',a:'غائب',l:'متأخر',e:'بعذر',h:'إجازة',s:'تعليق',n:'انتساب'}[v]||v;}
+function sc(v){return {p:'sp-p',a:'sp-a',l:'sp-l',e:'sp-e',h:'sp-h',s:'sp-s',n:'sp-s'}[v]||'';}
+async function sbGet(path){try{const r=await fetch(`${SB_URL}${path}`,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},cache:'no-store'});return r.ok?r.json():null;}catch(e){return null;}}
+async function sbPub(path){
+  // Supabase Storage public — 400 يعني الملف غير موجود (طبيعي)
+  try{
+    const r=await fetch(`${SB_URL}/storage/v1/object/public/${path}`,{cache:'no-store'});
+    if(r.ok) return r.json();
+  }catch(e){}
+  return null;
+}
+// تحميل بيانات الحضور من Storage (يُخزَّن هناك فقط)
+async function loadAttData(prog,wk){
+  return await sbGet(`/storage/v1/object/reports/${prog}/attendance/attendance-${wk}.json`);
+}
+
+// AUTH
+function getPin(){return localStorage.getItem(PIN_KEY)||DEFAULT_PIN;}
+function doLogin(){
+  const v=document.getElementById('admin-pin').value;
+  if(v===getPin()){
+    document.getElementById('pin-screen').style.display='none';
+    document.getElementById('content').style.display='block';
+    initDash();
   } else {
-    const err = document.getElementById('pin-error');
-    const inp = document.getElementById('admin-pin');
-    err.classList.add('show');
-    inp.classList.add('error');
-    inp.value = '';
-    setTimeout(() => inp.classList.remove('error'), 500);
+    const err=document.getElementById('pin-error'),inp=document.getElementById('admin-pin');
+    err.classList.add('show');inp.classList.add('error');inp.value='';
+    setTimeout(()=>{inp.classList.remove('error');err.classList.remove('show');},1500);
   }
 }
+function changePin(){const v=document.getElementById('new-pin').value.trim();if(!v||v.length<3){toast('⚠️ الرمز قصير');return;}localStorage.setItem(PIN_KEY,v);toast('✅ تم تغيير الرمز');document.getElementById('new-pin').value='';}
+function saveName(){const v=document.getElementById('p-name').value.trim();if(v){localStorage.setItem('principal_name',v);toast('✅ تم الحفظ');}}
 
-async function loadSignatures() {
-  document.getElementById('sigs-container').innerHTML = '<div class="loading-spinner">⏳ جاري التحميل...</div>';
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/signatures?order=signed_at.desc`, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      }
+// TABS
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  if(id==='attendance')updateAttH();
+  if(id==='students')renderStu();
+  if(id==='timetable')loadTT();
+  if(id==='portfolio')loadPort();
+  if(id==='iep')renderIepStudents();
+  if(id==='settings') { if(window.annLoadLog) window.annLoadLog(false); }loadAnnouncementSettingsP();
+}
+
+// شريط الإشعارات العام
+async function loadAnnouncementSettingsP(){
+  const data = await sbPub('reports/site-announcement.json');
+  if(data){
+    document.getElementById('announce-enabled').checked = !!data.enabled;
+    document.getElementById('announce-message').value = data.message || '';
+    document.getElementById('announce-link').value = data.link || '';
+  }
+}
+async function saveAnnouncementP(){
+  const enabled = document.getElementById('announce-enabled').checked;
+  const message = document.getElementById('announce-message').value.trim();
+  const link = document.getElementById('announce-link').value.trim();
+  if(enabled && !message){ toast('⚠️ يرجى كتابة نص الإشعار قبل التفعيل'); return; }
+  const payload = { enabled, message, link, updatedAt:new Date().toISOString(), updatedBy: localStorage.getItem('principal_name')||'مدير المدرسة' };
+  try{
+    const blob = new Blob([JSON.stringify(payload)],{type:'application/json'});
+    const res = await fetch(`${SB_URL}/storage/v1/object/reports/site-announcement.json`,{
+      method:'POST',
+      headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
+      body: blob
     });
-    allSigs = await res.json();
-    updateStats();
-    renderSigs(allSigs);
-  } catch(e) {
-    document.getElementById('sigs-container').innerHTML = '<div class="empty-state"><div class="empty-icon">❌</div><p>خطأ في تحميل البيانات</p></div>';
+    toast(res.ok ? '✅ تم حفظ ونشر الإشعار' : '⚠️ تعذر الحفظ');
+  }catch(e){ toast('⚠️ تعذر الحفظ، تحقق من الاتصال'); }
+}
+
+// INIT
+async function initDash(){
+  updateAttH();
+  await Promise.all([loadOverview(),loadDumajCount()]);
+  renderStu();
+}
+
+// OVERVIEW
+async function loadOverview(){
+  const k=wk(attWk),wn=getWN(attWk);
+  document.getElementById('kpi-week').textContent=wn?'الأسبوع '+wn:'—';
+  let yD=null,dD=null;
+  if(!isHol(attWk)){
+    [yD,dD]=await Promise.all([loadAttData('yaseer',k),loadAttData('dumaj',k)]);
   }
-}
+  let totP=0,totA=0,tot=0;
+  function cnt(data,pins){if(!data?.data)return;pins.forEach(p=>{const r=data.data[p]||{};for(let i=0;i<5;i++){tot++;const v=r['d'+i]||'p';if(v==='p')totP++;else if(v==='a')totA++;}});}
+  cnt(yD,YS.map(s=>s.pin));
+  if(dD?.data)cnt(dD,DS.map(s=>s.pin));
+  document.getElementById('kpi-att').textContent=tot?Math.round(totP/tot*100)+'%':'—';
+  document.getElementById('kpi-abs').textContent=totA||'—';
 
-function updateStats() {
-  document.getElementById('stat-total').textContent = allSigs.length;
-  const today = new Date().toDateString();
-  const todayCount = allSigs.filter(s => new Date(s.signed_at).toDateString() === today).length;
-  document.getElementById('stat-today').textContent = todayCount;
-  const unique = new Set(allSigs.map(s => s.student_pin)).size;
-  document.getElementById('stat-students').textContent = unique;
-}
-
-function renderSigs(sigs) {
-  const container = document.getElementById('sigs-container');
-  if (!sigs.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد توقيعات محفوظة بعد</p></div>';
+  function buildRow(label,data,students){
+    if(!data?.data)return `<div class="prog-row"><div class="prog-label">${label}</div><div style="color:var(--muted);font-size:0.78rem;">لا توجد بيانات لهذا الأسبوع</div></div>`;
+    const pins=students.length?students.map(s=>s.pin):Object.keys(data.data);
+    const chips=DAYS.map((_,di)=>{let p=0;pins.forEach(pin=>{if((data.data[pin]?.['d'+di]||'p')==='p')p++;});return `<div class="day-chip"><div class="day-chip-n">${['أحد','اثنين','ثلاثاء','أربعاء','خميس'][di]}</div><div class="day-chip-v">${p}/${pins.length}</div></div>`;}).join('');
+    let pres=0;pins.forEach(pin=>{for(let i=0;i<5;i++)if((data.data[pin]?.['d'+i]||'p')==='p')pres++;});
+    const tp=pins.length?Math.round(pres/(pins.length*5)*100):0;
+    const cls=tp>=90?'pct-h':tp>=70?'pct-m':'pct-l';
+    return `<div class="prog-row"><div class="prog-label">${label}</div>${chips}<div class="pct ${cls}">${tp}%</div></div>`;
+  }
+  if(!yD&&!dD){
+    document.getElementById('ov-body').innerHTML=`<div style="padding:24px 20px;text-align:center;color:var(--muted);"><div style="font-size:2rem;margin-bottom:8px;">📭</div><div style="font-weight:700;">لا توجد بيانات حضور للأسبوع الحالي</div><div style="font-size:0.75rem;margin-top:6px;">سيظهر الملخص بعد حفظ الحضور من صفحة المعلم</div></div>`;
     return;
   }
-  container.innerHTML = `<div class="sigs-grid">${sigs.map(s => {
-    const date = new Date(s.signed_at).toLocaleDateString('ar-SA-u-nu-latn', {
-      year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'
-    });
-    const initial = s.student_name ? s.student_name.split(' ').map(w=>w[0]).join('').slice(0,2) : '؟';
-    const idx = sigs.indexOf(s);
-    return `
-      <div class="sig-card">
-        <div class="sig-head">
-          <div class="sig-avatar">${initial}</div>
-          <div>
-            <div class="sig-name">${s.student_name || '—'}</div>
-            <div class="sig-grade">${s.grade || '—'}</div>
-          </div>
-        </div>
-        <div class="sig-img-wrap">
-          ${s.signature_data
-            ? `<img src="${s.signature_data}" alt="التوقيع" id="sigimg-${idx}">`
-            : '<span style="color:#9ca3af;font-size:0.8rem;">لا يوجد توقيع</span>'}
-        </div>
-        <div class="sig-foot">
-          <span class="sig-date">📅 ${date}</span>
-          <span class="sig-badge">✅ موقّع</span>
-        </div>
-        ${s.signature_data ? `
-        <div class="sig-actions">
-          <button class="btn-dl-png" onclick="downloadPNG('${s.signature_data}', '${s.student_name}')">⬇️ صورة</button>
-          <button class="btn-dl-pdf" onclick="downloadPDF(${idx})">🖨️ PDF</button>
-          <button class="btn-dl-del" onclick="deleteSig(${s.id}, '${s.student_name}')">🗑️ حذف</button>
-        </div>` : ''}
+  document.getElementById('ov-body').innerHTML=buildRow('📘 يسير',yD,YS)+buildRow('🧑‍🏫 دمج',dD,DS);
+}
+async function loadDumajCount(){
+  document.getElementById('kpi-dumaj').textContent=DS.length;
+  document.getElementById('kpi-total').textContent=YS.length+DS.length;
+}
+
+// ATTENDANCE
+function updateAttH(){
+  const wn=getWN(attWk),hol=isHol(attWk);
+  document.getElementById('att-wn').textContent=hol?'🌙 إجازة':(wn?'الأسبوع '+wn:'خارج الفصل');
+  document.getElementById('att-wd').textContent=dr(attWk);
+  document.getElementById('att-wh').textContent=hijri(attWk);
+  document.getElementById('att-date').value=wk(attWk);
+}
+function changeAttWeek(dir){attWk.setDate(attWk.getDate()+dir*7);updateAttH();document.getElementById('att-wrap').innerHTML='<div class="empty-state"><div class="empty-icon">📋</div>اضغط عرض لتحميل البيانات</div>';}
+function setAttDate(v){const[y,m,d]=v.split('-').map(Number);attWk=getSun(new Date(y,m-1,d));updateAttH();}
+function switchAttProg(p,btn){attProg=p;document.querySelectorAll('#tab-attendance .prog-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+async function loadAttView(){
+  const k=wk(attWk),wrap=document.getElementById('att-wrap');
+  if(isHol(attWk)){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">🌙</div>هذا الأسبوع إجازة</div>';return;}
+  wrap.innerHTML='<div class="loading">⏳ جاري التحميل...</div>';
+  let data=await loadAttData(attProg,k);
+  if(!data?.data){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد بيانات محفوظة لهذا الأسبوع</div>';return;}
+  const students=attProg==='yaseer'?YS:DS;
+  const dayHds=DAYS.map((_,i)=>{const d=new Date(attWk);d.setDate(d.getDate()+i);return d.toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'numeric'});});
+  const rows=students.map((s,idx)=>{
+    const rec=data.data[s.pin]||{};
+    const cells=[0,1,2,3,4].map(i=>{const v=rec['d'+i]||'p';return `<td style="text-align:center;"><span class="sp ${sc(v)}">${sl(v)}</span></td>`;}).join('');
+    const abs=[0,1,2,3,4].filter(i=>(rec['d'+i]||'p')==='a').length;
+    return `<tr><td style="text-align:center;color:var(--muted);font-size:0.75rem;">${idx+1}</td><td style="font-weight:700;color:var(--primary);">${s.name}</td>${cells}<td style="text-align:center;font-weight:800;color:${abs>0?'#dc2626':'#065f46'};">${abs}</td></tr>`;
+  }).join('');
+  wrap.innerHTML=`<div class="table-wrap"><table class="data-table"><thead><tr><th>#</th><th>اسم الطالب</th>${dayHds.map(d=>`<th>${d}</th>`).join('')}<th>غياب</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+// STUDENTS
+function switchStudProg(p,btn){studProg=p;document.querySelectorAll('#tab-students .prog-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderStu();}
+function filterStu(){renderStu();}
+function renderStu(){
+  const q=document.getElementById('stu-q').value.toLowerCase();
+  const students=studProg==='yaseer'?YS:DS;
+  const fl=students.filter(s=>!q||s.name.includes(q)||s.grade?.includes(q));
+  const grid=document.getElementById('stu-grid');
+  if(!fl.length){grid.innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div>لا توجد نتائج</div>';return;}
+  grid.innerHTML=fl.map(s=>{
+    const ini=s.name.trim().split(' ').map(w=>w[0]).slice(0,2).join('');
+    return `<div class="stu-card" onclick="openStuModal('${s.pin}','${studProg}')">
+      <div class="stu-head">
+        <div class="stu-avatar" id="av-${s.pin}">${ini}</div>
+        <div><div class="stu-name">${s.name}</div><div class="stu-grade">${s.grade||''}</div></div>
       </div>
-    `;
-  }).join('')}</div>`;
+      <div class="stu-foot">
+        <span class="stu-tag">رمز: ${s.pin}</span>
+        <span class="stu-tag">${studProg==='yaseer'?'📘 يسير':'🧑‍🏫 دمج'}</span>
+      </div>
+    </div>`;
+  }).join('');
+  fl.forEach(s=>loadPhoto(s.pin,studProg));
 }
-
-function filterSigs() {
-  const q = document.getElementById('search-input').value.trim().toLowerCase();
-  if (!q) { renderSigs(allSigs); return; }
-  const filtered = allSigs.filter(s =>
-    (s.student_name||'').includes(q) || (s.grade||'').includes(q)
-  );
-  renderSigs(filtered);
+async function loadPhoto(pin,prog){
+  // الصور تُحمَّل فقط عند فتح ملف الطالب لتجنب أخطاء 400
+  const el=document.getElementById('av-'+pin);
+  if(!el) return;
+  // جرّب امتداداً واحداً فقط باستخدام onerror بدل HEAD requests
+  const baseUrl=`${SB_URL}/storage/v1/object/public/reports/${prog}/photos/photo-${pin}`;
+  const img=new Image();
+  img.onload=()=>{ el.innerHTML=`<img src="${img.src}" alt="">`; };
+  // لا نضع onerror لتجنب تسلسل المحاولات — نجرب jpg فقط
+  img.src=baseUrl+'.jpg';
 }
+async function openStuModal(pin,prog){
+  document.getElementById('stu-modal').classList.add('open');
+  const s=(studProg==='yaseer'?YS:DS).find(x=>x.pin===pin)||YS.find(x=>x.pin===pin)||DS.find(x=>x.pin===pin)||{name:'—',grade:'—',pin};
+  document.getElementById('m-name').textContent=s.name;
+  document.getElementById('m-info').textContent=`${s.grade} — رمز: ${pin} — ${prog==='yaseer'?'برنامج يسير':'برنامج الدمج'}`;
+  const body=document.getElementById('m-body');
+  body.innerHTML='<div class="loading">⏳ جاري التحميل...</div>';
+  // تحميل صورة الطالب في المودال
+  const modalAv = document.getElementById('m-name');
+  const baseUrl=`${SB_URL}/storage/v1/object/public/reports/${prog}/photos/photo-${pin}`;
+  const mImg=new Image();
+  mImg.onload=()=>{
+    const avEl=document.getElementById('modal-avatar');
+    if(avEl) avEl.innerHTML=`<img src="${mImg.src}" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">`;
+  };
+  mImg.src=baseUrl+'.jpg';
+  // حاول REST أولاً ثم Storage
+  let data=null;
+  const stuR=await sbGet(`/rest/v1/teacher_portfolios?teacher_key=eq.student_${prog}_${pin}&select=data`);
+  if(stuR?.length) data=stuR[0].data;
+  if(!data) data=await sbPub(`reports/${prog}/data/student-${pin}.json`);
+  if(!data){body.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>لا توجد بيانات محفوظة لهذا الطالب بعد</div>';return;}
+  // بناء بطاقة الطالب الكاملة
+  const SECTIONS = [
+    { title:'🪪 البيانات الشخصية', color:'#3F2E63', fields:[
+        ['رقم الهوية / الإقامة', data.id_full || data.id],
+        ['تاريخ الميلاد', data.birthdate],
+        ['العمر', data.age ? data.age+' سنوات' : null],
+        ['الجنسية', data.nationality],
+        ['العنوان', data.address],
+    ]},
+    { title:'👨‍👩‍👦 بيانات ولي الأمر', color:'#1a6b3a', fields:[
+        ['اسم ولي الأمر', data.parentName],
+        ['الهاتف', data.phone],
+        ['المستوى الاقتصادي', data.economic_level],
+    ]},
+    { title:'📋 البيانات التعليمية', color:'#7a2800', fields:[
+        ['التشخيص', data.diagnosis],
+        ['نوع الإعاقة', data.disabilityType],
+        ['مستوى الأداء', data.level],
+        ['المعلم المسؤول', data.teacher],
+        ['الفصل الدراسي', data.semester],
+        ['تاريخ الخطة التعليمية', data.planDate],
+    ]},
+  ];
+  let sectionsHTML = '';
+  SECTIONS.forEach(sec=>{
+    const rows=sec.fields.filter(([,v])=>v);
+    if(!rows.length) return;
+    sectionsHTML+=`<div style="margin-bottom:14px;">
+      <div style="font-size:0.78rem;font-weight:800;color:${sec.color};margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid ${sec.color}33;">${sec.title}</div>
+      <div class="detail-grid">${rows.map(([k,v])=>`<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v}</div></div>`).join('')}</div>
+    </div>`;
+  });
+  const goals=data.goals?`<div style="margin-top:16px;background:#FBFAFE;border-radius:10px;padding:14px;"><div style="font-weight:800;color:var(--primary);font-size:0.85rem;margin-bottom:10px;">🎯 الأهداف التعليمية</div>${Object.entries(data.goals).map(([subj,gs])=>`<div style="margin-bottom:10px;"><div style="font-size:0.73rem;font-weight:700;color:var(--muted);margin-bottom:4px;">${subj}</div>${(Array.isArray(gs)?gs:[]).map(g=>`<div style="font-size:0.75rem;background:#fff;border:1px solid var(--border);border-radius:6px;padding:4px 10px;margin-bottom:4px;">${g}</div>`).join('')}</div>`).join('')}</div>`:'';
+  body.innerHTML=sectionsHTML+goals;
+}
+function closeModal(){document.getElementById('stu-modal').classList.remove('open');}
 
-async function deleteSig(id, name) {
-  if (!confirm(`هل تريد حذف توقيع "${name}"؟`)) return;
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/signatures?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
+// TIMETABLE
+function switchTTProg(p,btn){ttProg=p;document.querySelectorAll('#tab-timetable .prog-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadTT();}
+function switchTTGrade(g,btn){ttGrade=g;document.querySelectorAll('.grade-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadDumajTT(g);}
+async function loadTT(){
+  const tabs=document.getElementById('grade-tabs');
+  if(ttProg==='yaseer'){tabs.innerHTML='';await loadYaseerTT();}
+  else{tabs.innerHTML=DG.map(g=>`<button class="grade-tab ${g===ttGrade?'active':''}" onclick="switchTTGrade('${g}',this)">${g}</button>`).join('');await loadDumajTT(ttGrade);}
+}
+async function loadYaseerTT(){
+  const tbl=document.getElementById('tt-table');
+  tbl.innerHTML='<tbody><tr><td class="loading" colspan="7">⏳ جاري التحميل...</td></tr></tbody>';
+  const r=await sbGet('/rest/v1/teacher_portfolios?teacher_key=eq.yaseer_timetable_main&select=data');
+  if(!r?.length){tbl.innerHTML='<tbody><tr><td class="empty-state" colspan="7">لا يوجد جدول محفوظ</td></tr></tbody>';return;}
+  renderTT(tbl,r[0].data,YT,5,'yaseer');
+}
+async function loadDumajTT(grade){
+  const tbl=document.getElementById('tt-table');
+  tbl.innerHTML='<tbody><tr><td class="loading" colspan="9">⏳ جاري التحميل...</td></tr></tbody>';
+  const k=encodeURIComponent('dumaj_timetable_'+grade);
+  const r=await sbGet(`/rest/v1/teacher_portfolios?teacher_key=eq.${k}&select=data`);
+  if(!r?.length){tbl.innerHTML='<tbody><tr><td class="empty-state" colspan="9">لا يوجد جدول محفوظ</td></tr></tbody>';return;}
+  renderTT(tbl,r[0].data,DT,7,'dumaj');
+}
+function renderTT(tbl,data,teachers,periods,mode){
+  // mode='yaseer': cell={teacher,students:[]} / mode='dumaj': cell={type,teacher,subject}
+  const pL=['الأولى','الثانية','الثالثة','الرابعة','الخامسة','السادسة','السابعة'].slice(0,periods);
+  const thead=`<thead><tr><th class="tt-th" style="width:70px;">اليوم</th>${pL.map(l=>`<th class="tt-th">الحصة ${l}</th>`).join('')}</tr></thead>`;
+  const tbody=DAYS.map(day=>{
+    const cells=Array.from({length:periods},(_,pi)=>{
+      const cell=data[day]?.[pi+1]||{};
+      const t=teachers.find(x=>x.key===cell.teacher);
+      let inner='<div style="color:#e0e0e0;text-align:center;padding:14px 0;">·</div>';
+
+      if(mode==='yaseer'){
+        // يسير: خلية فيها معلم وطلاب
+        if(t && cell.teacher && (cell.students?.length>0)){
+          const stuNames=(cell.students||[]).map(s=>s.name||s).slice(0,3).join(' / ');
+          const more=cell.students?.length>3?` +${cell.students.length-3}`:'';
+          inner=`<div class="tt-cell" style="background:${t.light||t.bg};border:1px solid ${t.color}33;">
+            <div class="tt-teacher" style="color:${t.color};">أ. ${t.name.split(' ').slice(-1)[0]}</div>
+            <div class="tt-subj" style="color:${t.color};font-size:0.62rem;">${stuNames}${more}</div>
+          </div>`;
+        } else if(t && cell.teacher) {
+          inner=`<div class="tt-cell" style="background:${t.light||t.bg};border:1px solid ${t.color}33;">
+            <div class="tt-teacher" style="color:${t.color};">أ. ${t.name.split(' ').slice(-1)[0]}</div>
+            <div class="tt-subj" style="color:${t.color};opacity:0.6;">حصة</div>
+          </div>`;
+        }
+      } else {
+        // دمج: خلية فيها type + teacher + subject
+        const ct=cell.type||(!cell.type&&cell.teacher?'lesson':'empty');
+        if((ct==='lesson'||ct==='')&&t&&cell.subject){
+          inner=`<div class="tt-cell" style="background:${t.bg};border:1px solid ${t.color}22;">
+            <div class="tt-teacher" style="color:${t.color};">أ. ${t.name.split(' ').slice(-1)[0]}</div>
+            <div class="tt-subj" style="color:${t.color};">${cell.subject}</div>
+          </div>`;
+        }else if(['break','break_sup'].includes(ct)){
+          inner=`<div class="tt-cell" style="background:#fef9c3;border:1px solid #fde047;text-align:center;">
+            <div style="font-size:0.75rem;">☕</div>
+            <div class="tt-subj" style="color:#92400e;">فسحة</div>
+            ${t?`<div class="tt-teacher" style="color:#92400e;">${t.name.split(' ').slice(-1)[0]}</div>`:''}
+          </div>`;
+        }else if(ct==='end_sup'){
+          inner=`<div class="tt-cell" style="background:#dbeafe;border:1px solid #93c5fd;text-align:center;">
+            <div style="font-size:0.75rem;">🏫</div>
+            <div class="tt-subj" style="color:#1e40af;">نهاية الدوام</div>
+            ${t?`<div class="tt-teacher" style="color:#1e40af;">${t.name.split(' ').slice(-1)[0]}</div>`:''}
+          </div>`;
+        }
       }
-    });
-    if (res.ok) {
-      allSigs = allSigs.filter(s => s.id !== id);
-      updateStats();
-      filterSigs();
-    } else {
-      alert('❌ خطأ في الحذف');
+      return `<td class="tt-td">${inner}</td>`;
+    }).join('');
+    return `<tr><td class="tt-day">${day}</td>${cells}</tr>`;
+  }).join('');
+  tbl.innerHTML=thead+'<tbody>'+tbody+'</tbody>';
+}
+
+// PORTFOLIO
+function switchPortProg(p,btn){portProg=p;document.querySelectorAll('#tab-portfolio .prog-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadPort();}
+async function loadPort(){
+  const grid=document.getElementById('port-grid');
+  grid.innerHTML='<div class="loading">⏳ جاري التحميل...</div>';
+  const sigs=await sbGet(`/rest/v1/signatures?program=eq.${portProg}&order=signed_at.desc&limit=60`);
+  const fl_raw=sigs||[];
+  const fl=fl_raw;
+  if(!fl.length){
+    grid.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div>
+      لا توجد توقيعات محفوظة لبرنامج ${portProg==='yaseer'?'يسير':'الدمج'}
+      <div style="font-size:0.78rem;margin-top:8px;color:var(--muted);">تُضاف التوقيعات عند موافقة أولياء الأمور من بوابة الطالب</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML=fl.map(s=>{
+    const dt=(s.signed_at||s.created_at)?new Date(s.signed_at||s.created_at).toLocaleDateString('ar-SA-u-nu-latn',{day:'numeric',month:'long',year:'numeric'}):'—';
+    const thumb=s.signature_data?`<div class="sig-thumb"><img src="${s.signature_data}" alt="توقيع"></div>`:'';
+    return `<div class="port-card">
+      <div class="port-head"><div class="port-icon" style="background:#DDD0F2;">✍️</div><div><div class="port-name">${s.student_name||'—'}</div><div class="port-sub">${s.program||portProg} — ${s.semester||''}</div></div></div>
+      <div class="port-body">
+        <div class="port-row"><span class="port-key">الصف</span><span class="port-val">${s.grade||'—'}</span></div>
+        <div class="port-row"><span class="port-key">تاريخ التوقيع</span><span class="port-val">${dt}</span></div>
+        ${s.teacher_name?`<div class="port-row"><span class="port-key">المعلم</span><span class="port-val">${s.teacher_name}</span></div>`:''}
+      </div>${thumb}</div>`;
+  }).join('');
+}
+
+document.getElementById('admin-pin').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+// ===== IEP PLANS =====
+let iepProg = 'dumaj';
+
+function switchIepProg(prog, btn) {
+  iepProg = prog;
+  document.querySelectorAll('#tab-iep .prog-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('iep-search').value = '';
+  closeIepView();
+  renderIepStudents();
+}
+
+function renderIepStudents() {
+  const list = iepProg === 'dumaj' ? DS : YS;
+  const q = (document.getElementById('iep-search').value || '').trim().toLowerCase();
+  const filtered = q ? list.filter(s => s.name.toLowerCase().includes(q)) : list;
+  const el = document.getElementById('iep-students-list');
+  if (!filtered.length) {
+    el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#9ca3af;">لا توجد نتائج</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(s => `
+    <div onclick="openIepPlan('${s.pin}','${s.name.replace(/'/g,"\\'")}','${iepProg}')"
+      style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all 0.2s;"
+      onmouseover="this.style.borderColor='var(--primary)';this.style.boxShadow='0 4px 12px rgba(63,46,99,0.1)'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+      <div style="font-weight:800;font-size:0.88rem;color:var(--primary);margin-bottom:4px;">${s.name}</div>
+      <div style="font-size:0.75rem;color:var(--muted);">${s.grade || '—'}</div>
+      <div style="margin-top:8px;font-size:0.72rem;background:${iepProg==='dumaj'?'#EAE1F7':'#e8f5e9'};color:${iepProg==='dumaj'?'#6B4C9A':'#129E7C'};padding:3px 8px;border-radius:6px;display:inline-block;font-weight:700;">
+        ${iepProg==='dumaj'?'🧑‍🏫 دمج فكري':'📘 يسير'}
+      </div>
+    </div>`).join('');
+}
+
+function filterIepStudents() {
+  closeIepView();
+  renderIepStudents();
+}
+
+async function openIepPlan(pin, name, prog) {
+  document.getElementById('iep-students-list').style.display = 'none';
+  document.getElementById('iep-search').style.display = 'none';
+  const view = document.getElementById('iep-plan-view');
+  const content = document.getElementById('iep-plan-content');
+  document.getElementById('iep-plan-title').textContent = '📋 ' + name;
+  view.style.display = 'block';
+  content.innerHTML = '<div style="text-align:center;padding:30px;color:#9ca3af;">⏳ جارٍ تحميل الخطة...</div>';
+
+  try {
+    const folder = prog === 'dumaj' ? 'dumaj' : 'yaseer';
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/${folder}/data/student-${pin}.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('not found');
+    const data = await res.json();
+    const iep = data.iep || {};
+    const subjects = Object.keys(iep).filter(k => k !== '_custom');
+
+    if (!subjects.length) {
+      content.innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af;"><div style="font-size:2rem;margin-bottom:10px;">📋</div><div style="font-weight:700;">لم تُضف أهداف الخطة بعد</div></div>';
+      return;
     }
+
+    content.innerHTML = subjects.map(subj => {
+      const s = iep[subj];
+      if (!s || !s.goals || !s.goals.length) return '';
+      const levels = { mastered:'✅ متقن', inprogress:'🔄 قيد التنفيذ', notstarted:'⭕ لم يبدأ', none:'—' };
+      const goalsHtml = s.goals.map(g => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#FBFAFE;border-radius:8px;margin-bottom:6px;border:1px solid #f0ede6;">
+          <div style="font-size:0.83rem;color:#221335;flex:1;">${g.text}</div>
+          <div style="font-size:0.75rem;font-weight:700;color:#6E5F82;white-space:nowrap;margin-right:8px;">${levels[g.level]||'—'}</div>
+        </div>`).join('');
+      return `
+        <div style="margin-bottom:20px;">
+          <div style="background:linear-gradient(135deg,var(--primary),#8B6ABF);color:#fff;padding:10px 16px;border-radius:10px 10px 0 0;font-family:'Tajawal',sans-serif;font-weight:800;font-size:0.95rem;">
+            ${s.icon||'📚'} ${s.name||subj}
+          </div>
+          <div style="border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:12px;">${goalsHtml}</div>
+        </div>`;
+    }).join('');
   } catch(e) {
-    alert('❌ خطأ في الاتصال: ' + e.message);
+    content.innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af;"><div style="font-size:2rem;margin-bottom:10px;">📭</div><div style="font-weight:700;">لا توجد خطة محفوظة لهذا الطالب</div></div>';
   }
 }
 
-function downloadPNG(dataUrl, name) {
-  const a = document.createElement('a');
-  a.href = dataUrl;
-  a.download = `توقيع_${name || 'ولي_الأمر'}.png`;
-  a.click();
-}
-
-function downloadPDF(idx) {
-  const s = allSigs[idx];
-  if (!s) return;
-  const dateObj = new Date(s.signed_at);
-  const date = dateObj.toLocaleDateString('ar-SA-u-nu-latn', {
-    year:'numeric', month:'long', day:'numeric', weekday:'long'
-  });
-  const time = dateObj.toLocaleTimeString('ar-SA-u-nu-latn', {
-    hour:'2-digit', minute:'2-digit', hour12:true
-  });
-  const win = window.open('', '_blank');
-  win.document.write(`
-    <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
-    <head>
-      <meta charset="UTF-8">
-      <title>إقرار — ${s.student_name}</title>
-      <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Cairo',sans-serif; background:#fff; color:#1a1a2e; padding:40px; direction:rtl; }
-        .header { text-align:center; margin-bottom:28px; border-bottom:3px solid #1a3a5c; padding-bottom:18px; }
-        .school { font-size:0.78rem; color:#fff; background:#1a3a5c; display:inline-block; padding:4px 16px; border-radius:20px; margin-bottom:10px; }
-        h1 { font-size:1.35rem; font-weight:900; color:#1a3a5c; margin-bottom:4px; }
-        .sub { font-size:0.83rem; color:#5a6478; }
-        .iqrar-text { background:#fffbf0; border:1px solid #f0d898; border-right:4px solid #c8973a; border-radius:10px; padding:16px 18px; margin:20px 0; font-size:0.88rem; line-height:2; }
-        .fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0; }
-        .fields .field:last-child:nth-child(odd) { grid-column: span 2; }
-        .field { border:1px solid #e0d8c8; border-radius:8px; padding:10px 14px; }
-        .field-label { font-size:0.7rem; font-weight:700; color:#5a6478; margin-bottom:3px; }
-        .field-value { font-size:0.88rem; font-weight:800; color:#1a3a5c; }
-        .sign-section { margin-top:22px; }
-        .sign-title { font-size:0.83rem; font-weight:700; color:#1a3a5c; margin-bottom:8px; }
-        .sign-box { border:2px solid #1a3a5c; border-radius:10px; height:110px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-        .sign-box img { max-height:100px; }
-        .footer { margin-top:26px; text-align:center; font-size:0.72rem; color:#9ca3af; border-top:1px solid #e0d8c8; padding-top:12px; }
-        @media print { body { padding:20px; } }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <div class="school">وزارة التعليم — مدرسة مكة المكرمة المتوسطة</div>
-        <h1>إقرار اطلاع ولي الأمر على الخطة الفردية</h1>
-        <div class="sub">قسم ذوي الإعاقة — برنامج يسير التعليمي</div>
-      </div>
-      <div class="iqrar-text">
-        أنا ولي أمر الطالب / <strong>${s.student_name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
-        وأتعهد بالتعاون مع فريق التربية الخاصة لتحقيق أفضل النتائج لابني.
-      </div>
-      <div class="fields">
-        <div class="field"><div class="field-label">اسم الطالب</div><div class="field-value">${s.student_name}</div></div>
-        <div class="field"><div class="field-label">الصف الدراسي</div><div class="field-value">${s.grade || '—'}</div></div>
-        <div class="field"><div class="field-label">البرنامج</div><div class="field-value">📘 برنامج يسير التعليمي</div></div>
-        <div class="field"><div class="field-label">تاريخ التوقيع</div><div class="field-value">${date}</div></div>
-        <div class="field"><div class="field-label">وقت التوقيع</div><div class="field-value">${time}</div></div>
-      </div>
-      <div class="sign-section">
-        <div class="sign-title">✍️ توقيع ولي الأمر</div>
-        <div class="sign-box">
-          ${s.signature_data
-            ? `<img src="${s.signature_data}">`
-            : '<span style="color:#9ca3af;font-size:0.8rem;">لا يوجد توقيع</span>'}
-        </div>
-      </div>
-      <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني</div>
-      <script>window.onload=()=>window.print();<\/script>
-    </body>
-    </html>
-  `);
-  win.document.close();
+function closeIepView() {
+  document.getElementById('iep-plan-view').style.display = 'none';
+  document.getElementById('iep-students-list').style.display = 'grid';
+  document.getElementById('iep-search').style.display = 'block';
 }
 </script>
+<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>
+<script src="ann-system.js"></script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js");});}</script>
