@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بوابة مشرف الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
+<title>بوابة مشرف يسير | مدرسة مكة المكرمة المتوسطة</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #7a2800;
-    --accent: #e07020;
-    --accent-light: #f59040;
-    --green: #c25a00;
-    --green-light: #e07020;
+    --primary: #1a3a5c;
+    --accent: #c8973a;
+    --accent-light: #f0b84a;
+    --green: #1a6b4a;
+    --green-light: #22a06b;
     --bg: #f5f2eb;
     --card: #ffffff;
     --border: #e0d8c8;
@@ -22,7 +21,7 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-  header { background:linear-gradient(135deg,#7a2800 0%,#a33800 60%,#c25a00 100%); position:relative; }
+  header { background:linear-gradient(135deg,var(--primary) 0%,#0f2448 60%,#1a3a5c 100%); position:relative; }
   header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
   .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; border-bottom:1px solid rgba(255,255,255,0.08); }
   .header-logos { display:flex; align-items:center; gap:14px; }
@@ -110,11 +109,11 @@
     <div class="header-logos">
       <div class="logo-icon">✍️</div>
       <div>
-        <div class="header-name">مدرسة مكة المكرمة المتوسطة — بوابة مشرف الدمج الفكري</div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة — بوابة مشرف يسير</div>
         <div class="header-sub">قسم ذوي الإعاقة — سجل التوقيعات</div>
       </div>
     </div>
-    <a href="upload-dumaj.html" class="back-link" style="background:rgba(200,151,58,0.2);border-color:rgba(200,151,58,0.4);color:var(--accent-light);">📤 رفع التقارير</a>
+    <a href="upload-reports.html" class="back-link" style="background:rgba(200,151,58,0.2);border-color:rgba(200,151,58,0.4);color:var(--accent-light);">📤 رفع التقارير</a>
     <a href="index.html" class="back-link">← الرئيسية</a>
   </div>
   <div class="hero">
@@ -175,7 +174,7 @@
 <script>
 const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-const ADMIN_PIN    = "7410";
+const ADMIN_PIN    = "1129";
 
 let allSigs = [];
 
@@ -198,7 +197,7 @@ function checkPin() {
 async function loadSignatures() {
   document.getElementById('sigs-container').innerHTML = '<div class="loading-spinner">⏳ جاري التحميل...</div>';
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/signatures?program=eq.dumaj&order=signed_at.desc`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/signatures?order=signed_at.desc`, {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY

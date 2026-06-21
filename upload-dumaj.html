@@ -1,417 +1,170 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رفع تقارير الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
+<title>لوحة التحكم الموحدة | قسم ذوي الإعاقة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/common-ui.css">
+<link rel="stylesheet" href="assets/css/admin-platform.css">
+
 <style>
-  :root {
-    --primary: #7a2800;
-    --accent: #e07020;
-    --accent-light: #f59040;
-    --green: #c25a00;
-    --green-light: #e07020;
-    --bg: #f5f2eb;
-    --card: #ffffff;
-    --border: #e0d8c8;
-    --text: #1a1a2e;
-    --muted: #5a6478;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+/* تنسيق احتياطي داخل الصفحة حتى تعمل لوحة التحكم حتى لو لم تُرفع ملفات assets بالخطأ */
+:root{--admin-purple:#4b2d73;--admin-gold:#d9aa45;--admin-bg:#f7f3ff;--admin-text:#2d2140;--admin-muted:#756987;--admin-card:#fff;--admin-border:#e4d8f3}
+*{box-sizing:border-box}body{margin:0;font-family:Tajawal,Cairo,Arial,sans-serif;background:linear-gradient(180deg,#faf7ff,#f2ecfb);color:var(--admin-text);direction:rtl}.admin-topbar{background:linear-gradient(90deg,#4b2d73,#6b4c9a);color:white;padding:12px 20px}.admin-topbar-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:12px;align-items:center}.admin-home-link{color:white;text-decoration:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 12px;font-weight:800}.admin-hero{padding:34px 18px}.admin-hero-card,main{max-width:1180px;margin:auto}.admin-hero-card,.panel,.role,.quick-card{background:rgba(255,255,255,.92);border:1px solid var(--admin-border);border-radius:22px;box-shadow:0 18px 45px rgba(75,45,115,.10);padding:22px}.admin-hero-card h1{margin:0 0 10px;font-size:clamp(1.8rem,4vw,3rem);color:var(--admin-purple)}.admin-hero-card p{line-height:1.9;color:var(--admin-muted)}.hero-actions,.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn,.tab-btn,.mini-btn{border:0;border-radius:14px;padding:11px 16px;font-family:inherit;font-weight:800;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}.btn.primary,.btn.dark,.tab-btn.active{background:linear-gradient(135deg,#6b4c9a,#4b2d73);color:white}.btn.ghost,.mini-btn{background:#f1e9fb;color:#4b2d73}.mini-btn.green{background:#e5fff2;color:#06623b}.mini-btn.warn{background:#fff1d6;color:#835100}.section-head{max-width:1180px;margin:24px auto 12px;display:flex;justify-content:space-between;align-items:end;gap:12px}.section-head h2{margin:0;color:var(--admin-purple)}.section-head span,.note{color:var(--admin-muted)}.metrics,.cards,.permission-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.layout{display:grid;grid-template-columns:1fr 1.35fr;gap:16px}.tab-panel{display:none}.tab-panel.active{display:block}.grid-2,.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}input,select,textarea{font-family:inherit;border:1px solid var(--admin-border);border-radius:12px;padding:11px;background:white}textarea{min-height:90px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden}th,td{border-bottom:1px solid #eee;padding:10px;text-align:right;white-space:nowrap}th{background:#f3ecfb;color:#4b2d73}.audit-list{display:grid;gap:10px}.mk-backtop{position:fixed;left:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:0;background:#4b2d73;color:white;font-size:20px;box-shadow:0 12px 30px rgba(0,0,0,.2);cursor:pointer}@media(max-width:800px){.layout{grid-template-columns:1fr}.admin-topbar-inner,.section-head{align-items:flex-start;flex-direction:column}.hero-actions .btn{width:100%}}
 
-  header { background:linear-gradient(135deg,#7a2800 0%,#a33800 60%,#c25a00 100%); position:relative; }
-  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
-  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; }
-  .logo-wrap { display:flex; align-items:center; gap:14px; }
-  .logo-icon { width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; }
-  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
-  .header-sub { color:rgba(255,255,255,0.5); font-size:0.75rem; }
-  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; }
-  .hero { padding:28px 40px 36px; text-align:center; }
-  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:12px; }
-  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.5rem,4vw,2rem); font-weight:900; color:#fff; margin-bottom:6px; }
-  .hero h1 span { color:var(--accent-light); }
-  .hero p { color:rgba(255,255,255,0.6); font-size:0.85rem; }
+/* Supabase Auth Guard */
+.auth-screen{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2f1f4f,#6b4c9a);padding:20px}
+.auth-card{width:min(440px,100%);background:#fff;border-radius:26px;padding:28px;box-shadow:0 30px 80px rgba(0,0,0,.28);text-align:center;border:1px solid rgba(255,255,255,.4)}
+.auth-card .lock{width:70px;height:70px;border-radius:22px;background:#f0e7ff;display:grid;place-items:center;margin:0 auto 14px;font-size:2rem}
+.auth-card h2{margin:0 0 8px;color:#4b2d73;font-size:1.7rem}.auth-card p{margin:0 0 18px;color:#756987;line-height:1.8}.auth-card .field{text-align:right;margin-bottom:12px}.auth-card input{width:100%;font-size:1rem}.auth-error{display:none;margin-top:12px;background:#fff1f1;color:#9b1c1c;border:1px solid #ffd0d0;padding:10px;border-radius:14px;font-weight:800}.auth-note{font-size:.85rem;color:#756987;margin-top:12px;line-height:1.7}.admin-logout{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:7px 12px;font-family:inherit;font-weight:800;cursor:pointer}.admin-user-chip{color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 12px;font-weight:800}#adminApp{display:none}.auth-ready #adminApp{display:block}
 
-  /* PIN */
-  .pin-screen { display:flex; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
-  .pin-box { background:var(--card); border-radius:20px; padding:40px 32px; max-width:360px; width:100%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.1); }
-  .pin-icon { font-size:2.6rem; margin-bottom:14px; }
-  .pin-title { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
-  .pin-desc { font-size:0.83rem; color:var(--muted); margin-bottom:22px; }
-  .pin-input { width:100%; padding:13px; border:2px solid var(--border); border-radius:11px; font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:700; text-align:center; letter-spacing:8px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:10px; }
-  .pin-input:focus { border-color:var(--primary); background:#fff; }
-  .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
-  .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
-  .pin-error.show { display:block; }
-  .btn-enter { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; }
 
-  /* CONTENT */
-  .content { display:none; }
-  main { max-width:1000px; margin:0 auto; padding:26px 22px 60px; }
+.auth-home-link{display:block;width:100%;margin-top:12px;padding:13px 14px;text-align:center;border:1.5px solid #6b4c9a;border-radius:14px;color:#4b2d73;background:#fff;text-decoration:none;font-weight:900;transition:.25s}
+.auth-home-link:hover{background:#f0e7ff;transform:translateY(-1px)}
 
-  /* Student Selector */
-  .selector-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-  .selector-title { font-size:0.9rem; font-weight:800; color:var(--primary); margin-bottom:12px; }
-  .student-select { width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:600; outline:none; background:#fafafa; color:var(--text); cursor:pointer; }
-  .student-select:focus { border-color:var(--primary); }
-
-  /* Upload Area */
-  .upload-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
-  .upload-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04); transition:all 0.2s; }
-  .upload-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
-  .upload-head { padding:14px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
-  .upload-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
-  .upload-title { font-size:0.85rem; font-weight:800; color:var(--primary); }
-  .upload-filename { font-size:0.72rem; color:var(--muted); margin-top:2px; font-family:monospace; }
-  .upload-body { padding:14px 16px; }
-
-  .drop-zone { border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:all 0.2s; background:#fafafa; position:relative; }
-  .drop-zone:hover, .drop-zone.dragover { border-color:var(--primary); background:#f0f4ff; }
-  .drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
-  .drop-icon { font-size:1.6rem; margin-bottom:6px; }
-  .drop-text { font-size:0.78rem; color:var(--muted); font-weight:600; }
-  .drop-sub { font-size:0.7rem; color:#9ca3af; margin-top:3px; }
-
-  /* Status */
-  .upload-status { margin-top:10px; font-size:0.78rem; font-weight:700; text-align:center; padding:6px 10px; border-radius:8px; display:none; }
-  .status-uploading { background:#fef3c7; color:#92400e; display:flex; align-items:center; justify-content:center; gap:6px; }
-  .status-success { background:#d1fae5; color:#065f46; }
-  .status-error { background:#fee2e2; color:#dc2626; }
-  .status-exists { background:#dbeafe; color:#1e40af; }
-
-  /* File preview */
-  .file-preview { margin-top:10px; padding:8px 12px; background:#f0f4ff; border-radius:8px; display:none; align-items:center; gap:8px; font-size:0.78rem; color:var(--primary); font-weight:600; }
-  .file-preview .del-btn { margin-right:auto; background:#fee2e2; color:#dc2626; border:none; border-radius:6px; padding:3px 8px; font-size:0.72rem; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; }
-
-  .btn-upload { width:100%; padding:9px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:10px; display:none; transition:all 0.2s; box-shadow:0 3px 10px rgba(26,107,74,0.25); }
-  .btn-upload:hover { transform:translateY(-1px); }
-
-  .progress-bar { height:4px; background:#e0d8c8; border-radius:2px; margin-top:8px; display:none; overflow:hidden; }
-  .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--green-light)); border-radius:2px; transition:width 0.3s; width:0%; }
-  .btn-delete { width:100%; padding:9px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:6px; transition:all 0.2s; }
-  .btn-delete:hover { background:#dc2626; color:#fff; }
-
-  footer { background:var(--primary); color:rgba(255,255,255,0.6); text-align:center; padding:18px; font-size:0.78rem; border-top:3px solid var(--accent); }
-  footer strong { color:var(--accent-light); }
-
-  @media(max-width:640px) {
-    .header-top { padding:12px 16px; }
-    .hero { padding:22px 16px 28px; }
-    main { padding:16px 14px 40px; }
-  }
 </style>
 </head>
 <body>
-
-<header>
-  <div class="header-top">
-    <div class="logo-wrap">
-      <div class="logo-icon">📁</div>
-      <div>
-        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
-        <div class="header-sub">الدمج الفكري — رفع التقارير</div>
-      </div>
-    </div>
-    <a href="index.html" class="back-link">← الرئيسية</a>
-  </div>
-  <div class="hero">
-    <div class="hero-badge">🧑🏻‍🏫 برنامج الدمج الفكري</div>
-    <h1>رفع <span>تقارير الدمج الفكري</span></h1>
-    <p>اختر الطالب ثم ارفع ملفات تقاريره مباشرة من جهازك</p>
-  </div>
-</header>
-
-<!-- PIN -->
-<div class="pin-screen" id="pin-screen">
-  <div class="pin-box">
-    <div class="pin-icon">🔐</div>
-    <div class="pin-title">صفحة المشرف</div>
-    <div class="pin-desc">أدخل رمز المشرف للوصول لرفع التقارير</div>
-    <input type="password" class="pin-input" id="admin-pin" maxlength="6" placeholder="• • • •"
-      onkeydown="if(event.key==='Enter') checkPin()"
-      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
-    <button class="btn-enter" onclick="checkPin()">✅ دخول</button>
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="lock">🔐</div>
+    <h2>دخول لوحة التحكم الموحدة</h2>
+    <p>هذه الصفحة مخصصة للمشرفين فقط. سجّل دخولك بحساب Supabase المعتمد.</p>
+    <form id="adminLoginForm">
+      <div class="field"><label>البريد الإلكتروني</label><input id="adminEmail" type="email" autocomplete="email" required placeholder="example@email.com"></div>
+      <div class="field"><label>كلمة المرور</label><input id="adminPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></div>
+      <button class="btn primary" type="submit" style="width:100%">دخول آمن</button>
+      <div id="authError" class="auth-error"></div>
+      <a href="index.html" class="auth-home-link">🏠 العودة للصفحة الرئيسية</a>
+    </form>
+    <div class="auth-note">يتم التحقق من صلاحية المستخدم من جدول profiles، ولا تفتح اللوحة إلا لدور admin.</div>
   </div>
 </div>
+<div id="adminApp">
+<div class="admin-topbar"><div class="admin-topbar-inner"><a class="admin-home-link" href="index.html">🏠 العودة للرئيسية</a><span>مدرسة مكة المكرمة المتوسطة</span><strong>قسم ذوي الإعاقة</strong></div></div>
+<section class="admin-hero"><div class="admin-hero-card"><h1>لوحة التحكم الموحدة</h1><p>مركز إدارة واحد لملفات الطلاب والمعلمين والصلاحيات والتقارير والتنبيهات. هذه النسخة تعمل محليًا داخل المتصفح كمرحلة تطوير، وهي مجهزة لاحقًا للربط مع Supabase وFirebase دون تغيير تجربة المستخدم.</p><div class="hero-actions"><a class="btn primary" href="index.html">🏠 الرئيسية</a><a class="btn primary" href="students.html">ملف طالب يسير</a><a class="btn ghost" href="dumaj-students.html">ملف طالب الدمج</a><a class="btn ghost" href="#permissions">الصلاحيات</a><button class="btn ghost" id="exportData" type="button">تصدير البيانات</button></div></div></section>
+<main>
+  <div class="section-head"><h2>مؤشرات سريعة</h2><span>لوحة إحصائيات مباشرة</span></div>
+  <div class="metrics" id="metrics"></div>
 
-<!-- CONTENT -->
-<div class="content" id="content">
-  <main>
-    <!-- اختيار الطالب -->
-    <div class="selector-card">
-      <div class="selector-title">👤 اختر الطالب</div>
-      <select class="student-select" id="student-select" onchange="loadStudentUploads()">
-        <option value="">— اختر الطالب —</option>
-        <optgroup label="الأول المتوسط">
-          <option value="7405">اياد موسى حولي القرني — 7405</option>
-          <option value="4526">عبدالله صالح أحمد المشجري — 4526</option>
-          <option value="9050">علي محمد مطر السهيمي — 9050</option>
-          <option value="4612">محمد علي محمد المنتشري — 4612</option>
-          <option value="0977">مشاري فيحان سميح البقمي — 0977</option>
-          <option value="6630">يزن محمد مصلح سلامي — 6630</option>
-        </optgroup>
-        <optgroup label="الثاني المتوسط">
-          <option value="7543">احمد عبدالله معطي الجدعاني — 7543</option>
-          <option value="4218">راكان سمير فقيهي اليماني — 4218</option>
-          <option value="7892">عبدالرحمن حسن سعد القحطاني — 7892</option>
-          <option value="4304">فهد علي حسين الصومالي — 4304</option>
-        </optgroup>
-        <optgroup label="الثالث المتوسط">
-          <option value="4511">حسن خالد حسن صغير — 4511</option>
-          <option value="6984">خالد ابراهيم منصور العامري — 6984</option>
-          <option value="5210">سامي اقبال أحمد — 5210</option>
-          <option value="4447">عبدالله احمد بن ابراهيم الزهراني — 4447</option>
-          <option value="5460">ماجد نادر أحمد عيسى — 5460</option>
-          <option value="7907">محمد سليمان ابراهيم طواشي — 7907</option>
-          <option value="8315">مشاري خليل ابراهيم الزهراني — 8315</option>
-          <option value="2407">مهند محمد عبدالله الشهري — 2407</option>
-          <option value="9867">مؤيد مشعل علي العمري — 9867</option>
-          <option value="2335">مؤيد نعيم ابراهيم بدير — 2335</option>
-          <option value="9258">وليد عبدالله يحي الشهري — 9258</option>
-        </optgroup>
-      </select>
-    </div>
+  <div class="section-head"><h2>إدارة العمل اليومي</h2><span>طلاب · معلمون · تنبيهات · سجل</span></div>
+  <div class="tabs"><button class="tab-btn active" data-tab="tabStudents">إدارة الطلاب</button><button class="tab-btn" data-tab="tabTeachers">إدارة المعلمين</button><button class="tab-btn" data-tab="tabAlerts">التنبيهات</button><button class="tab-btn" data-tab="tabAudit">سجل التعديلات</button><button class="tab-btn" data-tab="tabLinks">الروابط السريعة</button></div>
 
-    <!-- بطاقات الرفع -->
-    <div class="upload-grid" id="upload-grid"></div>
-  </main>
+  <section id="tabStudents" class="tab-panel active"><div class="layout"><div class="panel"><h3>إضافة / تحديث طالب</h3><form id="studentForm"><div class="grid-2"><div class="field"><label>رقم الطالب</label><input id="studentId" placeholder="مثال: Y-021"></div><div class="field"><label>اسم الطالب</label><input id="studentName" required></div><div class="field"><label>البرنامج</label><select id="studentProgram"><option value="yaseer">برنامج يسير</option><option value="dumaj">برنامج الدمج الفكري</option></select></div><div class="field"><label>الصف</label><input id="studentGrade" placeholder="مثال: الأول متوسط"></div><div class="field"><label>المعلم المسند</label><select id="studentTeacher"></select></div><div class="field"><label>رمز دخول ولي الأمر</label><input id="studentPin" inputmode="numeric"></div></div><div class="grid-3"><label><input type="checkbox" id="cPlan"> الخطة</label><label><input type="checkbox" id="cReport"> التقرير</label><label><input type="checkbox" id="cPortfolio"> ملف الإنجاز</label><label><input type="checkbox" id="cActivities"> الأنشطة</label><label><input type="checkbox" id="cAppointments"> المواعيد</label><label><input type="checkbox" id="cForms"> النماذج</label><label><input type="checkbox" id="cAlerts"> التنبيهات</label></div><button class="btn dark" type="submit">حفظ الطالب</button></form><div class="note">الصلاحية المقترحة: المعلم يضيف بيانات طلابه، والمشرف يراجع ويعتمد ويصحح عند الحاجة.</div></div><div class="panel"><h3>متابعة اكتمال ملفات الطلاب</h3><div class="table-wrap"><table><thead><tr><th>الطالب</th><th>البرنامج</th><th>الصف</th><th>المعلم</th><th>الاكتمال</th><th>خطة</th><th>تقرير</th><th>إجراء</th></tr></thead><tbody id="studentsBody"></tbody></table></div></div></div></section>
+
+  <section id="tabTeachers" class="tab-panel"><div class="layout"><div class="panel"><h3>إضافة معلم / مشرف</h3><form id="teacherForm"><div class="grid-2"><div class="field"><label>الرقم</label><input id="teacherId" placeholder="مثال: T-003"></div><div class="field"><label>الاسم</label><input id="teacherName" required></div><div class="field"><label>البرنامج</label><select id="teacherProgram"><option value="yaseer">برنامج يسير</option><option value="dumaj">برنامج الدمج الفكري</option><option value="all">كلا البرنامجين</option></select></div><div class="field"><label>الدور</label><select id="teacherRole"><option value="teacher">معلم مسند</option><option value="supervisor">مشرف برنامج</option></select></div><div class="field"><label>التواصل</label><input id="teacherPhone"></div></div><button class="btn dark" type="submit">حفظ المستخدم</button></form></div><div class="panel"><h3>قائمة المعلمين والمشرفين</h3><div class="table-wrap"><table><thead><tr><th>الاسم</th><th>البرنامج</th><th>الدور</th><th>التواصل</th><th>طلاب مسندون</th><th>إجراء</th></tr></thead><tbody id="teachersBody"></tbody></table></div></div></div></section>
+
+  <section id="tabAlerts" class="tab-panel"><div class="layout"><div class="panel"><h3>إضافة تنبيه</h3><form id="alertForm"><div class="grid-2"><div class="field"><label>البرنامج</label><select id="alertProgram"><option value="all">عام</option><option value="yaseer">برنامج يسير</option><option value="dumaj">برنامج الدمج الفكري</option></select></div><div class="field"><label>الجمهور</label><select id="alertAudience"><option>أولياء الأمور</option><option>المعلمون</option><option>الجميع</option></select></div></div><div class="field"><label>عنوان التنبيه</label><input id="alertTitle" required></div><div class="field"><label>النص</label><textarea id="alertBody"></textarea></div><button class="btn dark" type="submit">حفظ التنبيه</button></form></div><div class="panel"><h3>التنبيهات الحالية</h3><div id="alertsList" class="audit-list"></div></div></div></section>
+
+  <section id="tabAudit" class="tab-panel"><div class="panel"><h3>سجل التعديلات</h3><div class="audit-list" id="auditList"></div><div class="note">السجل الحالي تجريبي داخل المتصفح. عند الربط مع قاعدة البيانات سيصبح محفوظًا مركزيًا ويظهر للمشرف.</div><button class="mini-btn warn" id="resetDemo" type="button">استعادة البيانات التجريبية</button></div></section>
+
+  <section id="tabLinks" class="tab-panel"><div class="cards"><div class="quick-card"><h3>ملف الطالب الإلكتروني - يسير</h3><p>الواجهة المعتمدة لولي أمر طالب برنامج يسير.</p><a class="mini-btn green" href="students.html">فتح</a></div><div class="quick-card"><h3>ملف الطالب الإلكتروني - الدمج</h3><p>نفس تنسيق يسير مع بيانات ومسارات الدمج الفكري.</p><a class="mini-btn green" href="dumaj-students.html">فتح</a></div><div class="quick-card"><h3>بوابة المعلمين</h3><p>مركز المعلم المسند لإدارة أعماله وملفات الإنجاز.</p><a class="mini-btn green" href="teachers-portal.html">فتح</a></div><div class="quick-card"><h3>روابط إنجاز المعلمين</h3><p>روابط مباشرة لكل معلم بدون كلمة مرور أو اختيار اسم.</p><a class="mini-btn green" href="teacher-portfolio-links.html">فتح</a></div><div class="quick-card"><h3>مشرف يسير</h3><p>متابعة برنامج يسير وملفات الطلاب.</p><a class="mini-btn green" href="admin-yaseer.html">فتح</a></div><div class="quick-card"><h3>مشرف الدمج</h3><p>متابعة برنامج الدمج الفكري وملفات الطلاب.</p><a class="mini-btn green" href="admin-dumaj.html">فتح</a></div><div class="quick-card"><h3>لوحة الفصول</h3><p>إحصاءات الفصول العامة والحالات.</p><a class="mini-btn green" href="dashboard.html">فتح</a></div></div></section>
+
+  <div class="section-head" id="permissions"><h2>نموذج الصلاحيات المعتمد</h2><span>بدون تداخل</span></div>
+  <div class="permission-grid"><div class="role"><h3>المعلم المسند</h3><ul><li>إدخال الأنشطة المنزلية.</li><li>رفع تقارير التقدم.</li><li>تحديث ملف الإنجاز.</li><li>إضافة المواعيد الفردية.</li></ul></div><div class="role"><h3>مشرف البرنامج</h3><ul><li>اعتماد الخطة التربوية الفردية.</li><li>إضافة النماذج الرسمية.</li><li>إرسال التنبيهات العامة.</li><li>مراجعة اكتمال الملفات.</li></ul></div><div class="role"><h3>ولي الأمر</h3><ul><li>عرض ملف الطالب الإلكتروني.</li><li>تحميل الخطة والتقارير.</li><li>قراءة الأنشطة والتنبيهات.</li><li>الاطلاع على المواعيد.</li></ul></div></div>
+
+  <div class="section-head"><h2>جاهزية الربط الذكي</h2><span>Supabase / Firebase</span></div>
+  <div class="panel"><p>تم تجهيز ملف <b>data/platform-config.json</b> ليكون مرجعًا للجداول والصلاحيات ومسارات التخزين. عند الانتقال للمرحلة القادمة يمكن تحويل النماذج الحالية من تخزين محلي إلى جداول Supabase مباشرة.</p><div class="note">هذه النسخة لا تطلب تسجيل دخول فعلي ولا تغيّر بيانات الطلاب المنشورة، لكنها تقدم شكل النظام النهائي وطريقة العمل قبل الربط الحقيقي.</div></div>
+</main>
+<script src="assets/js/common-ui.js" defer></script>
+<script src="assets/js/platform-admin.js" defer></script>
 </div>
-
-<footer>
-  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
-  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-const BUCKET = "reports";
-const ADMIN_PIN = "7410";
+(function(){
+  const SUPABASE_URL = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5cnh3cWdhcHdqd2hpc2tvd2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDM3MjcsImV4cCI6MjA4NzExOTcyN30.nEJivQNdtbI8Vn7thWe29zHEOzK-Z8eZVQMnSyvKlII';
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const authScreen = document.getElementById('authScreen');
+  const loginForm = document.getElementById('adminLoginForm');
+  const authError = document.getElementById('authError');
+  const emailInput = document.getElementById('adminEmail');
+  const passwordInput = document.getElementById('adminPassword');
 
-const REPORT_TYPES = [
-  { key: "plan",    label: "📋 الخطة الفردية",        icon: "📋", color: "#fff3e0" },
-  { key: "psych",   label: "التقرير النفسي الموحد",   icon: "🧑🏻‍🏫", color: "#ede9fe" },
-  { key: "medical", label: "التقرير الطبي",            icon: "🏥", color: "#dbeafe" },
-  { key: "report1", label: "التقرير الدوري ١",         icon: "📄", color: "#fef3c7" },
-  { key: "report2", label: "التقرير الدوري ٢",         icon: "📊", color: "#d1fae5" },
-  { key: "report3", label: "التقرير الدوري ٣",         icon: "📋", color: "#ede9fe" },
-];
-
-let selectedFiles = {};
-
-function checkPin() {
-  const val = document.getElementById('admin-pin').value;
-  if (val === ADMIN_PIN) {
-    document.getElementById('pin-screen').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-  } else {
-    const err = document.getElementById('pin-error');
-    const inp = document.getElementById('admin-pin');
-    err.classList.add('show');
-    inp.classList.add('error');
-    inp.value = '';
-    setTimeout(() => inp.classList.remove('error'), 500);
+  function showError(message){
+    authError.textContent = message || 'تعذر تسجيل الدخول. تأكد من البيانات.';
+    authError.style.display = 'block';
   }
-}
-
-function loadStudentUploads() {
-  const pin = document.getElementById('student-select').value;
-  const grid = document.getElementById('upload-grid');
-  if (!pin) { grid.innerHTML = ''; return; }
-
-  selectedFiles = {};
-  grid.innerHTML = REPORT_TYPES.map(r => `
-    <div class="upload-card" id="card-${r.key}">
-      <div class="upload-head">
-        <div class="upload-icon" style="background:${r.color}">${r.icon}</div>
-        <div>
-          <div class="upload-title">${r.label}</div>
-          <div class="upload-filename" id="fname-${r.key}">${r.key}-${pin}.pdf</div>
-        </div>
-      </div>
-      <div class="upload-body">
-        <div class="drop-zone" id="drop-${r.key}"
-          ondragover="event.preventDefault();this.classList.add('dragover')"
-          ondragleave="this.classList.remove('dragover')"
-          ondrop="handleDrop(event,'${r.key}','${pin}')">
-          <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" onchange="handleFile(this,'${r.key}','${pin}')">
-          <div class="drop-icon">📂</div>
-          <div class="drop-text">اضغط لاختيار الملف أو اسحبه هنا</div>
-          <div class="drop-sub">PDF, Word, صور</div>
-        </div>
-        <div class="file-preview" id="preview-${r.key}">
-          <span>📎</span>
-          <span id="preview-name-${r.key}"></span>
-          <button class="del-btn" onclick="clearFile('${r.key}')">✕ إلغاء</button>
-        </div>
-        <div class="progress-bar" id="progress-${r.key}">
-          <div class="progress-fill" id="progress-fill-${r.key}"></div>
-        </div>
-        <div class="upload-status" id="status-${r.key}"></div>
-        <button class="btn-upload" id="btn-${r.key}" onclick="uploadFile('${r.key}','${pin}')">
-          ⬆️ رفع الملف
-        </button>
-        <button class="btn-delete" id="del-btn-${r.key}" onclick="deleteFile('${r.key}','${pin}')" style="display:none;">
-          🗑️ حذف الملف المرفوع
-        </button>
-      </div>
-    </div>
-  `).join('');
-
-  // تحقق من الملفات الموجودة
-  checkExistingFiles(pin);
-}
-
-async function checkExistingFiles(pin) {
-  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
-  for (const r of REPORT_TYPES) {
-    for (const ext of extensions) {
-      try {
-        const fileName = `${r.key}-${pin}.${ext}`;
-        const url = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/dumaj/${fileName}`;
-        const res = await fetch(url, { method: 'HEAD' });
-        if (res.ok) {
-          showStatus(r.key, 'exists', `✅ يوجد ملف مرفوع — ${fileName}`);
-          document.getElementById(`del-btn-${r.key}`).style.display = 'block';
-          document.getElementById(`fname-${r.key}`).textContent = fileName;
-          // عرض معاينة الملف الموجود
-          document.getElementById(`preview-name-${r.key}`).textContent = fileName;
-          document.getElementById(`preview-${r.key}`).style.display = 'flex';
-          break;
-        }
-      } catch(e) {}
+  function clearError(){
+    authError.textContent = '';
+    authError.style.display = 'none';
+  }
+  async function signOut(){
+    await client.auth.signOut();
+    document.body.classList.remove('auth-ready');
+    authScreen.style.display = 'flex';
+    clearError();
+  }
+  function showAdmin(profile, email){
+    authScreen.style.display = 'none';
+    document.body.classList.add('auth-ready');
+    const topbar = document.querySelector('.admin-topbar-inner');
+    if(topbar && !document.getElementById('adminSignOut')){
+      const chip = document.createElement('span');
+      chip.className = 'admin-user-chip';
+      chip.textContent = '👤 ' + (profile.full_name || email || 'مشرف');
+      const btn = document.createElement('button');
+      btn.id = 'adminSignOut';
+      btn.className = 'admin-logout';
+      btn.type = 'button';
+      btn.textContent = 'تسجيل خروج';
+      btn.addEventListener('click', signOut);
+      topbar.appendChild(chip);
+      topbar.appendChild(btn);
     }
   }
-}
-
-function handleFile(input, key, pin) {
-  const file = input.files[0];
-  if (!file) return;
-  selectedFiles[key] = file;
-  showPreview(key, file.name, pin);
-}
-
-function handleDrop(e, key, pin) {
-  e.preventDefault();
-  document.getElementById(`drop-${key}`).classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-  selectedFiles[key] = file;
-  showPreview(key, file.name, pin);
-}
-
-function showPreview(key, name, pin) {
-  document.getElementById(`preview-name-${key}`).textContent = name;
-  document.getElementById(`preview-${key}`).style.display = 'flex';
-  document.getElementById(`btn-${key}`).style.display = 'block';
-  document.getElementById(`status-${key}`).style.display = 'none';
-}
-
-function clearFile(key) {
-  delete selectedFiles[key];
-  document.getElementById(`preview-${key}`).style.display = 'none';
-  document.getElementById(`btn-${key}`).style.display = 'none';
-  document.getElementById(`status-${key}`).style.display = 'none';
-  document.getElementById(`progress-${key}`).style.display = 'none';
-}
-
-async function uploadFile(key, pin) {
-  const file = selectedFiles[key];
-  if (!file) return;
-
-  const ext = file.name.split('.').pop();
-  const fileName = `${key}-${pin}.${ext}`;
-
-  const btn = document.getElementById(`btn-${key}`);
-  btn.disabled = true;
-  btn.textContent = '⏳ جاري الرفع...';
-
-  showStatus(key, 'uploading', '⏳ جاري رفع الملف...');
-  document.getElementById(`progress-${key}`).style.display = 'block';
-
-  // Simulate progress
-  let prog = 0;
-  const interval = setInterval(() => {
-    prog = Math.min(prog + 10, 85);
-    document.getElementById(`progress-fill-${key}`).style.width = prog + '%';
-  }, 200);
-
-  try {
-    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': file.type || 'application/octet-stream',
-        'x-upsert': 'true'
-      },
-      body: file
-    });
-
-    clearInterval(interval);
-    document.getElementById(`progress-fill-${key}`).style.width = '100%';
-
-    if (res.ok) {
-      showStatus(key, 'success', `✅ تم رفع الملف بنجاح — ${fileName}`);
-      document.getElementById(`fname-${key}`).textContent = fileName;
-      btn.textContent = '✅ تم الرفع';
-      document.getElementById(`del-btn-${key}`).style.display = 'block';
-    } else {
-      const err = await res.text();
-      showStatus(key, 'error', '❌ فشل الرفع — حاول مرة أخرى');
-      btn.textContent = '⬆️ إعادة المحاولة';
+  async function verifyAdmin(){
+    clearError();
+    const { data: sessionData, error: sessionError } = await client.auth.getSession();
+    if(sessionError){ showError('تعذر التحقق من الجلسة.'); return; }
+    const session = sessionData && sessionData.session;
+    if(!session){ authScreen.style.display = 'flex'; return; }
+    const { data: profile, error: profileError } = await client
+      .from('profiles')
+      .select('id, full_name, role, program')
+      .eq('id', session.user.id)
+      .single();
+    if(profileError || !profile){
+      await client.auth.signOut();
+      showError('الحساب موجود لكن لا توجد له صلاحية في جدول profiles.');
+      return;
+    }
+    if(profile.role !== 'admin'){
+      await client.auth.signOut();
+      showError('هذا الحساب لا يملك صلاحية مشرف.');
+      return;
+    }
+    showAdmin(profile, session.user.email);
+  }
+  loginForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    clearError();
+    const btn = loginForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'جاري التحقق...';
+    try{
+      const { error } = await client.auth.signInWithPassword({ email: emailInput.value.trim(), password: passwordInput.value });
+      if(error){ showError('البريد أو كلمة المرور غير صحيحة.'); return; }
+      await verifyAdmin();
+    }catch(err){
+      showError('حدث خطأ أثناء الاتصال بـ Supabase.');
+    }finally{
       btn.disabled = false;
+      btn.textContent = 'دخول آمن';
     }
-  } catch(e) {
-    clearInterval(interval);
-    showStatus(key, 'error', '❌ خطأ في الاتصال');
-    btn.textContent = '⬆️ إعادة المحاولة';
-    btn.disabled = false;
-  }
-}
-
-async function deleteFile(key, pin) {
-  if (!confirm(`هل تريد حذف ملف "${key}-${pin}" نهائياً؟`)) return;
-
-  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
-  let deleted = false;
-
-  for (const ext of extensions) {
-    const fileName = `${key}-${pin}.${ext}`;
-    try {
-      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
-        method: 'DELETE',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY
-        }
-      });
-      if (res.ok) {
-        deleted = true;
-        showStatus(key, 'error', '🗑️ تم حذف الملف بنجاح');
-        document.getElementById(`del-btn-${key}`).style.display = 'none';
-        document.getElementById(`fname-${key}`).textContent = `${key}-${pin}.pdf`;
-        clearFile(key);
-        break;
-      }
-    } catch(e) {}
-  }
-
-  if (!deleted) showStatus(key, 'error', '❌ لم يُعثر على ملف للحذف');
-}
-
-function showStatus(key, type, msg) {
-  const el = document.getElementById(`status-${key}`);
-  el.style.display = 'block';
-  el.className = `upload-status status-${type}`;
-  el.textContent = msg;
-}
+  });
+  document.addEventListener('DOMContentLoaded', verifyAdmin);
+})();
 </script>
 </body>
 </html>

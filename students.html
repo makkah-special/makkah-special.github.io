@@ -8,1004 +8,368 @@
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#6B4C9A">
-<title>ملف الطالب الإلكتروني | مدرسة مكة المكرمة المتوسطة</title>
+<title>برنامج يسير التعليمي | مدرسة مكة المكرمة المتوسطة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #3F2E63;
-    --accent: #8B6ABF;
-    --accent-light: #D7A24A;
-    --purple: #6B4C9A;
-    --purple-light: #8B6ABF;
-    --green: #6B4C9A;
-    --green-light: #8B6ABF;
-    --bg: #F7F5FC;
-    --card: #ffffff;
-    --border: #DCD2EE;
-    --text: #221335;
-    --muted: #6E5F82;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  /* ===== الشريط العلوي الرسمي (الخزامى) ===== */
-  .topbar{
-    background: linear-gradient(120deg, #2E2148, #3F2E63 70%, #4A3470);
-    color: rgba(255,255,255,.92);
-  }
-  .topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
-  .topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
-  .topbar-gov{ display:flex; align-items:center; gap:10px; }
-  .topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; transition:opacity .2s; }
-  .topbar-gov a{ display:flex; align-items:center; }
-  .topbar-gov a:hover img{ opacity:1; }
-  .topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
-  .topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
-  .topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
-  .topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
-  @media (max-width:640px){
-    .topbar-row{ font-size:.7rem; }
-    .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
-    .topbar-inner{ padding:7px 14px; }
-  }
-
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
-
-  /* ===== HEADER ===== */
-  header {
-    background: linear-gradient(135deg, #3F2E63 0%, #2E2148 60%, #4A3470 100%);
-    padding: 16px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 3px solid var(--accent);
-  }
-
-  .header-left { display: flex; align-items: center; gap: 14px; }
-
-  .header-icon {
-    width: 46px; height: 46px;
-    border-radius: 12px;
-    background: rgba(215,162,74,0.18);
-    border: 1px solid rgba(215,162,74,0.35);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
-  }
-
-  .header-title { color: #fff; font-family: 'Tajawal', sans-serif; font-size: 1.1rem; font-weight: 900; }
-  .header-sub { color: rgba(255,255,255,0.55); font-size: 0.76rem; margin-top: 2px; }
-
-  .back-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
-    color: rgba(255,255,255,0.8);
-    padding: 8px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 0.82rem;
-    font-weight: 600;
-    transition: all 0.2s;
-  }
-  .back-btn:hover { background: rgba(255,255,255,0.15); }
-
-  /* ===== LOGIN SCREEN ===== */
-  #login-screen {
-    min-height: calc(100vh - 76px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-
-  .login-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 48px 40px;
-    max-width: 420px;
-    width: 100%;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-
-  .login-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #EAE1F7;
-    border: 1px solid #B79EE0;
-    color: var(--purple);
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
-  .login-icon-big {
-    width: 80px; height: 80px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #EAE1F7, #DDD0F2);
-    margin: 0 auto 22px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.6rem;
-    box-shadow: 0 8px 24px rgba(107,76,154,0.2);
-  }
-
-  .login-card h2 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--primary);
-    margin-bottom: 8px;
-  }
-
-  .login-card .login-desc {
-    color: var(--muted);
-    font-size: 0.86rem;
-    line-height: 1.7;
-    margin-bottom: 30px;
-  }
-
-  .input-label {
-    text-align: right;
-    font-size: 0.83rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .pin-input {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: 8px;
-    color: var(--primary);
-    outline: none;
-    transition: all 0.25s;
-    background: #FBFAFE;
-    margin-bottom: 12px;
-  }
-
-  .pin-input:focus {
-    border-color: var(--purple-light);
-    background: #fff;
-    box-shadow: 0 0 0 4px rgba(139,106,191,0.1);
-  }
-
-  .pin-input.error {
-    border-color: #ef4444;
-    background: #fff5f5;
-    animation: shake 0.4s ease;
-  }
-
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    20% { transform: translateX(-10px); }
-    60% { transform: translateX(10px); }
-    80% { transform: translateX(-5px); }
-  }
-
-  .error-msg {
-    display: none;
-    color: #dc2626;
-    font-size: 0.82rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    background: #fee2e2;
-    border-radius: 8px;
-    padding: 8px 14px;
-  }
-  .error-msg.show { display: block; }
-
-  .login-btn {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, var(--purple), var(--purple-light));
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(107,76,154,0.3);
-    letter-spacing: 0.5px;
-  }
-  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(107,76,154,0.45); }
-  .login-btn:active { transform: translateY(0); }
-
-  .hint-box {
-    margin-top: 22px;
-    background: #EAE1F7;
-    border: 1px solid #DCD2EE;
-    border-right: 3px solid var(--accent);
-    border-radius: 10px;
-    padding: 13px 16px;
-    font-size: 0.79rem;
-    color: #7a5800;
-    text-align: right;
-    line-height: 1.7;
-  }
-
-  /* ===== PORTAL ===== */
-  #student-portal { display: none; }
-
-  .portal-banner {
-    background: linear-gradient(135deg, var(--green) 0%, #2E2148 100%);
-    padding: 26px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 14px;
-    border-bottom: 3px solid var(--accent);
-  }
-
-  .student-identity { color: #fff; display:flex; align-items:center; gap:16px; }
-
-  .student-photo-wrap {
-    position: relative;
-    flex-shrink: 0;
-  }
-  .student-photo {
-    width: 70px; height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid rgba(215,162,74,0.7);
-    background: rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .student-photo:hover { border-color: #E8C27A; transform: scale(1.05); }
-  .student-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
-  .photo-change-btn {
-    position: absolute;
-    bottom: 0; left: 0;
-    background: #E8C27A;
-    color: #3F2E63;
-    border: none;
-    border-radius: 50%;
-    width: 22px; height: 22px;
-    font-size: 0.65rem;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 900;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  }
-  .photo-input { display: none; }
-
-  .student-name-display {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 900;
-    margin-bottom: 4px;
-  }
-
-  .student-meta-display {
-    opacity: 0.7;
-    font-size: 0.82rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .meta-chip {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.76rem;
-  }
-
-  .logout-btn {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.85);
-    padding: 9px 20px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    transition: all 0.2s;
-  }
-  .logout-btn:hover { background: rgba(255,255,255,0.2); }
-
-  .portal-body {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 28px 36px 60px;
-  }
-
-  /* TABS */
-  .tabs {
-    display: flex;
-    gap: 4px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 6px;
-    margin-bottom: 26px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-
-  .tab-btn {
-    flex: 1;
-    padding: 10px 8px;
-    border: none;
-    background: transparent;
-    border-radius: 9px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.22s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-  }
-
-  .tab-btn.active {
-    background: linear-gradient(135deg, var(--green), var(--green-light));
-    color: #fff;
-    box-shadow: 0 3px 12px rgba(18,158,124,0.35);
-  }
-
-  .tab-pane { display: none; animation: fadeIn 0.3s ease; }
-  .tab-pane.active { display: block; }
-
-  .tabs { overflow-x: auto; scrollbar-width: thin; }
-  .tab-btn { min-width: 118px; }
-
-  .e-file-intro {
-    background: linear-gradient(135deg, #fff, #F4EEFF);
-    border: 1px solid var(--border);
-    border-right: 5px solid var(--accent-light);
-    border-radius: 16px;
-    padding: 18px 20px;
-    margin-bottom: 18px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 14px;
-    align-items: center;
-  }
-  .e-file-intro h3 { font-family:'Tajawal',sans-serif; color:var(--primary); font-size:1.05rem; margin-bottom:6px; }
-  .e-file-intro p { color:var(--muted); font-size:.84rem; line-height:1.8; margin:0; }
-  .privacy-badge { background:#2E2148; color:#fff; border-radius:999px; padding:8px 14px; font-size:.75rem; font-weight:800; white-space:nowrap; }
-
-  .quick-grid, .content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-    padding: 18px;
-  }
-  .quick-card, .content-card {
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:16px;
-    box-shadow:0 2px 10px rgba(0,0,0,.035);
-  }
-  .quick-card-icon, .content-card-icon { font-size:1.55rem; margin-bottom:8px; }
-  .quick-card-title, .content-card-title { color:var(--primary); font-weight:900; font-size:.92rem; margin-bottom:5px; }
-  .quick-card-desc, .content-card-desc { color:var(--muted); font-size:.78rem; line-height:1.7; }
-  .content-card-meta { margin-top:10px; color:#9ca3af; font-size:.73rem; font-weight:700; }
-  .notice-box {
-    background:#FFFBEB;
-    border:1px solid #FDE68A;
-    color:#92400E;
-    border-radius:12px;
-    padding:14px 16px;
-    margin:18px;
-    font-size:.82rem;
-    line-height:1.8;
-    font-weight:700;
-  }
-  .empty-state { text-align:center; padding:34px 18px; color:#9ca3af; }
-  .es-icon { font-size:2.4rem; margin-bottom:10px; }
-  .es-title { font-weight:900; color:var(--muted); font-size:.95rem; }
-  .es-sub { font-size:.78rem; margin-top:6px; line-height:1.7; }
-  .action-link {
-    display:inline-flex; align-items:center; gap:6px; margin-top:12px;
-    background:linear-gradient(135deg,var(--primary),var(--accent)); color:#fff;
-    padding:8px 14px; border-radius:9px; text-decoration:none; font-size:.78rem; font-weight:800;
-  }
-  @media (max-width:640px){ .e-file-intro{grid-template-columns:1fr;} .privacy-badge{width:max-content;} .tab-btn{min-width:132px;} }
-
-
-  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-  /* CARD */
-  .s-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 18px;
-    box-shadow: 0 2px 14px rgba(0,0,0,0.04);
-  }
-
-  .s-card-head {
-    padding: 14px 22px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    font-weight: 800;
-    font-size: 0.92rem;
-    color: var(--primary);
-    background: linear-gradient(135deg, #FBFAFE, #EAE1F7);
-  }
-
-  /* INFO TABLE */
-  .info-tbl { width: 100%; border-collapse: collapse; }
-  .info-tbl tr { border-bottom: 1px solid var(--border); }
-  .info-tbl tr:last-child { border-bottom: none; }
-  .info-tbl th {
-    padding: 12px 22px;
-    text-align: right;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--muted);
-    background: #f9f9f9;
-    width: 30%;
-  }
-  .info-tbl td {
-    padding: 12px 22px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .tag {
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.76rem;
-    font-weight: 700;
-  }
-  .tag-green { background: #d1fae5; color: #065f46; }
-  .btn-download-report {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: linear-gradient(135deg, #3F2E63, #8B6ABF);
-    color: #fff; padding: 5px 12px; border-radius: 8px;
-    font-size: 0.75rem; font-weight: 700; text-decoration: none;
-    white-space: nowrap; transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(63,46,99,0.2);
-  }
-  .btn-download-report:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(63,46,99,0.3); }
-  .tag-blue  { background: #dbeafe; color: #1e40af; }
-  .tag-blue { background: #dbeafe; color: #1e40af; }
-  .tag-yellow { background: #fef3c7; color: #92400e; }
-  .tag-purple { background: #EAE1F7; color: #5b21b6; }
-  .tag-gray { background: #f3f4f6; color: #4b5563; }
-
-  /* PLAN GRID */
-  .plan-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 14px;
-    padding: 18px;
-  }
-
-  .plan-box {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    background: #fafcff;
-    transition: all 0.2s;
-  }
-  .plan-box:hover { border-color: var(--green-light); transform: translateY(-2px); }
-
-  .plan-box-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-
-  .plan-dot {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .plan-box h4 { font-size: 0.86rem; font-weight: 800; color: var(--primary); }
-  .plan-box p { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
-
-  /* REPORTS */
-  .report-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 22px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-    gap: 14px;
-  }
-  .report-row:last-child { border-bottom: none; }
-  .report-row:hover { background: #FBFAFE; }
-
-  .report-left { display: flex; align-items: center; gap: 14px; }
-
-  .report-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-  }
-
-  .report-name { font-size: 0.88rem; font-weight: 700; color: var(--primary); }
-  .report-date { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-
-  /* FOLLOW-UP TABLE */
-  .fu-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-  .fu-table th {
-    background: linear-gradient(135deg, var(--green), var(--green-light));
-    color: #fff;
-    padding: 11px 14px;
-    text-align: center;
-    font-weight: 700;
-  }
-  .fu-table td {
-    padding: 10px 14px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
-    font-weight: 600;
-  }
-  .fu-table tr:last-child td { border-bottom: none; }
-  .fu-table tr:hover td { background: #EAE1F7; }
-
-  .circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    font-size: 0.85rem;
-  }
-  .c-done { background: #d1fae5; color: #065f46; }
-  .c-part { background: #fef3c7; color: #92400e; }
-  .c-no   { background: #fee2e2; color: #991b1b; }
-
-  /* PDF VIEWER */
-  .pdf-section {
-    margin-bottom: 24px;
-  }
-
-  .pdf-section-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--border);
-  }
-
-  .pdf-level-badge {
-    background: var(--accent);
-    color: #fff;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.76rem;
-    font-weight: 700;
-  }
-
-  .pdf-frame-wrap {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    background: #f5f5f5;
-    position: relative;
-  }
-
-  .pdf-frame-wrap iframe {
-    width: 100%;
-    height: 500px;
-    border: none;
-    display: block;
-  }
-
-  .pdf-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-
-  .btn-pdf {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 18px;
-    border-radius: 9px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.84rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s;
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn-pdf-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light, #8B6ABF));
-    color: #fff;
-    box-shadow: 0 3px 12px rgba(63,46,99,0.25);
-  }
-
-  .btn-pdf-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(63,46,99,0.35); }
-
-  .btn-pdf-secondary {
-    background: #fff;
-    color: var(--primary);
-    border: 1px solid var(--border);
-  }
-
-  .btn-pdf-secondary:hover { border-color: var(--primary); background: #f0f4ff; }
-
-  /* IQRAR */
-  .iqrar-box {
-    background: linear-gradient(135deg, #EAE1F7, #EAE1F7);
-    border: 1px solid #DCD2EE;
-    border-right: 4px solid var(--accent);
-    border-radius: 14px;
-    padding: 24px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    line-height: 2;
-    color: var(--text);
-  }
-
-  .iqrar-box h3 {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 900;
-    color: var(--primary);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .iqrar-fields {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 20px 0;
-  }
-
-  .iqrar-field {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-  }
-
-  .iqrar-field label {
-    display: block;
-    font-size: 0.76rem;
-    font-weight: 700;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-
-  .iqrar-field span {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--primary);
-  }
-
-  .sign-area {
-    border: 2px dashed var(--border);
-    border-radius: 12px;
-    background: #fff;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.25s;
-    margin: 16px 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .sign-area:hover { border-color: var(--accent); background: #EAE1F7; }
-  .sign-area.signed { border-color: var(--green-light); border-style: solid; background: #EAE1F7; }
-
-  .sign-area canvas {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-  }
-
-  .sign-placeholder { color: var(--muted); font-size: 0.84rem; font-weight: 600; text-align: center; }
-  .sign-placeholder span { font-size: 1.6rem; display: block; margin-bottom: 4px; }
-
-  .iqrar-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-
-  .btn-sign {
-    background: linear-gradient(135deg, var(--green), var(--green-light));
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 10px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.25s;
-    box-shadow: 0 4px 14px rgba(18,158,124,0.3);
-  }
-
-  .btn-sign:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(18,158,124,0.4); }
-
-  .btn-clear-sign {
-    background: #fff;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-clear-sign:hover { border-color: #ef4444; color: #ef4444; }
-
-  .signed-badge {
-    display: none;
-    background: #d1fae5;
-    border: 1px solid #6ee7b7;
-    color: #065f46;
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* ADMIN PANEL */
-  #admin-portal { display:none; }
-
-  .admin-banner {
-    background: linear-gradient(135deg, #3F2E63 0%, #2E2148 60%, #4A3470 100%);
-    padding: 22px 36px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 4px solid #D7A24A;
-  }
-  .admin-badge {
-    background: rgba(215,162,74,0.2); border: 1px solid rgba(215,162,74,0.4);
-    color: #E8C27A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
-  }
-  .admin-body { max-width: 960px; margin: 0 auto; padding: 28px 36px 60px; }
-
-  .admin-tabs {
-    display: flex; gap: 4px; background: #fff; border: 1px solid var(--border);
-    border-radius: 14px; padding: 6px; margin-bottom: 26px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  .admin-tab-btn {
-    flex: 1; padding: 10px 8px; border: none; background: transparent; border-radius: 9px;
-    font-family: 'Cairo', sans-serif; font-size: 0.84rem; font-weight: 700;
-    color: var(--muted); cursor: pointer; transition: all 0.22s;
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-  }
-  .admin-tab-btn.active {
-    background: linear-gradient(135deg, #3F2E63, #8B6ABF);
-    color: #fff; box-shadow: 0 3px 12px rgba(63,46,99,0.35);
-  }
-  .admin-tab-pane { display: none; animation: fadeIn 0.3s ease; }
-  .admin-tab-pane.active { display: block; }
-
-  /* Student cards grid */
-  .students-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
-  }
-  .stu-card {
-    background: #fff; border: 1px solid var(--border); border-radius: 14px;
-    padding: 16px 18px; cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .stu-card:hover { border-color: var(--green-light); box-shadow: 0 4px 18px rgba(18,158,124,0.12); transform: translateY(-2px); }
-  .stu-card-avatar {
-    width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#EAE1F7,#d1fae5);
-    display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;
-  }
-  .stu-card-name { font-weight: 800; font-size: 0.88rem; color: var(--primary); margin-bottom: 3px; }
-  .stu-card-meta { font-size: 0.75rem; color: var(--muted); }
-  .stu-card-pin { font-size: 0.72rem; background: #EAE1F7; color: #5b21b6; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
-
-  /* Edit Modal */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5); z-index: 1000;
-    align-items: center; justify-content: center; padding: 20px;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-box {
-    background: #fff; border-radius: 20px; padding: 32px; width: 100%;
-    max-width: 560px; max-height: 90vh; overflow-y: auto;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
-    animation: fadeIn 0.2s ease;
-  }
-  .modal-title {
-    font-family: 'Tajawal', sans-serif; font-size: 1.2rem; font-weight: 900;
-    color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
-    border-bottom: 2px solid var(--border); padding-bottom: 14px;
-  }
-  .form-group { margin-bottom: 16px; }
-  .form-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
-  .form-input {
-    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
-    font-family: 'Cairo', sans-serif; font-size: 0.88rem; color: var(--text); outline: none;
-    transition: border-color 0.2s;
-  }
-  .form-input:focus { border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(139,106,191,0.1); }
-  .form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-  .btn-save {
-    background: linear-gradient(135deg, var(--green), var(--green-light)); color: #fff;
-    border: none; padding: 12px 24px; border-radius: 10px;
-    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 800;
-    cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(18,158,124,0.3);
-  }
-  .btn-save:hover { transform: translateY(-2px); }
-  .btn-cancel {
-    background: #fff; color: var(--muted); border: 1px solid var(--border);
-    padding: 12px 20px; border-radius: 10px; font-family: 'Cairo', sans-serif;
-    font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
-  }
-  .btn-delete-student {
-    background: #fff; color: #dc2626; border: 1px solid #fecaca;
-    padding: 12px 20px; border-radius: 10px; font-family: 'Cairo', sans-serif;
-    font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-right: auto;
-  }
-  .btn-delete-student:hover { background: #fee2e2; }
-
-  /* Plan goals editor */
-  .goal-row {
-    background: #f9fafb; border: 1px solid var(--border); border-radius: 10px;
-    padding: 12px 14px; margin-bottom: 10px; position: relative;
-  }
-  .goal-row .form-input { margin-bottom: 8px; }
-  .goal-row .form-input:last-of-type { margin-bottom: 0; }
-  .btn-remove-goal {
-    position: absolute; top: 8px; left: 8px; background: #fee2e2; color: #dc2626;
-    border: none; border-radius: 6px; width: 26px; height: 26px; cursor: pointer;
-    font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
-  }
-  .btn-add-goal {
-    background: #EAE1F7; border: 1.5px dashed var(--green-light); color: var(--green);
-    width: 100%; padding: 10px; border-radius: 10px; font-family: 'Cairo', sans-serif;
-    font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px;
-  }
-  .btn-add-goal:hover { background: #EAE1F7; }
-
-  /* Follow-up editor */
-  .fu-edit-row {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 28px;
-    gap: 6px; align-items: center; margin-bottom: 8px;
-  }
-  .fu-edit-row input, .fu-edit-row select {
-    padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px;
-    font-family: 'Cairo', sans-serif; font-size: 0.78rem; outline: none; width: 100%;
-  }
-  .fu-edit-row select { text-align: center; }
-
-  /* Add student form */
-  .add-student-card {
-    background: #fff; border: 2px dashed var(--green-light); border-radius: 16px;
-    padding: 28px; text-align: center; cursor: pointer; transition: all 0.2s;
-    color: var(--green); font-weight: 700;
-  }
-  .add-student-card:hover { background: #EAE1F7; }
-
-  .success-toast {
-    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-    background: #129E7C; color: #fff; padding: 12px 28px; border-radius: 12px;
-    font-weight: 700; font-size: 0.88rem; z-index: 9999;
-    box-shadow: 0 8px 24px rgba(18,158,124,0.4); display: none;
-    animation: fadeIn 0.3s ease;
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 640px) {
-    header { padding: 12px 18px; }
-    .portal-banner { padding: 18px; }
-    .portal-body { padding: 18px 16px 40px; }
-    .tabs { flex-wrap: wrap; }
-    .tab-btn { font-size: 0.75rem; padding: 8px 4px; }
-    .login-card { padding: 32px 22px; }
-  }
-
-  /* ===== المستوى والمتابعة + التعزيز (عرض فقط) ===== */
-  .empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
-  .empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
-  .empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
-  .empty-state .es-sub{ font-size:.82rem; }
-
-  .progress-section-title{
-    font-family:'Tajawal',sans-serif; font-size:1rem; font-weight:900; color:var(--primary);
-    margin:22px 0 12px; padding-right:10px; border-right:4px solid var(--accent);
-  }
-  .progress-section-title:first-child{ margin-top:0; }
-
-  .perf-legend{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
-  .perf-subject-block{ margin-bottom:16px; }
-  .perf-subject-head{ font-weight:800; font-size:.92rem; color:var(--primary); margin-bottom:8px; }
-  .perf-skills-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
-  .perf-skills-table th{ background:#FBFAFE; color:var(--primary); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
-  .perf-skills-table td{ padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
-  .perf-skills-table tr:last-child td{ border-bottom:none; }
-
-  .sw-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px; }
-  .sw-subject-head{ padding:12px 16px; background:#FBFAFE; font-weight:800; font-size:.9rem; color:var(--primary); }
-  .sw-body{ display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:14px; }
-  .sw-side-title{ font-size:.82rem; font-weight:800; margin-bottom:8px; }
-  .sw-strength-title{ color:var(--green); }
-  .sw-need-title{ color:#92400e; }
-  .sw-item-list{ display:flex; flex-direction:column; gap:6px; }
-  .sw-item{ display:flex; align-items:center; gap:8px; background:#FBFAFE; border:1px solid var(--border); border-radius:8px; padding:7px 10px; font-size:.82rem; }
-  .sw-item-dot-green{ width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0; }
-  .sw-item-dot-orange{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0; }
-  @media (max-width:640px){ .sw-body{ grid-template-columns:1fr; } }
-
-  .iep-subject-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:12px; }
-  .iep-subject-head{ display:flex; align-items:center; gap:8px; padding:12px 16px; background:#FBFAFE; font-weight:800; font-size:.9rem; color:var(--primary); }
-  .iep-goal-row{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-  .iep-goal-row:last-child{ border-bottom:none; }
-  .iep-goal-num{ background:var(--accent); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800; flex-shrink:0; }
-  .iep-goal-text{ flex:1; min-width:180px; font-size:.85rem; color:var(--text); line-height:1.7; }
-  .iep-level-badge{ padding:5px 14px; border-radius:8px; font-size:.78rem; font-weight:700; white-space:nowrap; }
-
-  .reinforce-item{
-    display:flex; align-items:flex-start; gap:12px; background:#fffaf3; border:1px solid var(--border);
-    border-right:4px solid var(--accent); border-radius:10px; padding:12px 16px; margin-bottom:10px;
-  }
-  .reinforce-icon{ font-size:1.4rem; flex-shrink:0; }
-  .reinforce-title{ font-weight:800; font-size:.86rem; color:var(--primary); }
-  .reinforce-meta{ font-size:.74rem; color:#9ca3af; margin-top:2px; }
-  .reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
-  .btn-print-cert{
-    background:#fff; color:var(--primary); border:1px solid var(--border); border-radius:8px;
-    padding:7px 14px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s;
-  }
-  .btn-print-cert:hover{ border-color:var(--primary); background:var(--bg); }
+/* ============================================================
+   نظام الألوان — هوية "الخزامى" الرسمية (فاتح)
+   ============================================================ */
+:root{
+  --bg:        #F7F5FC;
+  --bg-soft:   #EFE8FA;
+  --surface:   #FFFFFF;
+  --surface2:  #FBFAFE;
+
+  --ink:       #221335;
+  --ink-soft:  rgba(34,19,53,.62);
+  --ink-faint: rgba(34,19,53,.42);
+
+  --line:      rgba(107,76,154,.14);
+  --line2:     rgba(107,76,154,.26);
+
+  --lav-900:   #2E2148;
+  --lav-800:   #3F2E63;
+  --lav-700:   #6B4C9A;
+  --lav-600:   #7C5BAE;
+  --lav-500:   #8B6ABF;
+  --lav-300:   #B79EE0;
+  --lav-100:   #EAE1F7;
+
+  --teal:      #129E7C;
+  --teal-soft: rgba(18,158,124,.12);
+  --gold:      #D7A24A;
+  --gold-soft: rgba(215,162,74,.14);
+  --red:       #DC2626;
+  --red-soft:  rgba(220,38,38,.08);
+
+  --shadow-sm: 0 6px 20px rgba(107,76,154,.10);
+  --shadow-md: 0 16px 44px rgba(107,76,154,.16);
+  --radius-lg: 22px;
+  --radius-md: 16px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+.dot-field{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Ccircle cx='18' cy='26' r='3' fill='%236B4C9A' opacity='0.10'/%3E%3Ccircle cx='58' cy='12' r='4.5' fill='%238B6ABF' opacity='0.09'/%3E%3Ccircle cx='100' cy='40' r='2.5' fill='%23D7A24A' opacity='0.10'/%3E%3Ccircle cx='150' cy='20' r='5' fill='%23B79EE0' opacity='0.10'/%3E%3Ccircle cx='190' cy='60' r='3' fill='%236B4C9A' opacity='0.08'/%3E%3Ccircle cx='40' cy='100' r='4' fill='%238B6ABF' opacity='0.07'/%3E%3Ccircle cx='120' cy='110' r='2.5' fill='%23129E7C' opacity='0.08'/%3E%3Ccircle cx='180' cy='150' r='4.5' fill='%236B4C9A' opacity='0.07'/%3E%3Ccircle cx='70' cy='180' r='3' fill='%23B79EE0' opacity='0.09'/%3E%3Ccircle cx='10' cy='190' r='2.5' fill='%238B6ABF' opacity='0.08'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+}
+
+/* ============================================================
+   الشريط العلوي الرسمي
+   ============================================================ */
+.topbar{
+  position:relative; z-index:60;
+  background: linear-gradient(120deg, var(--lav-900), var(--lav-800) 70%, #4A3470);
+  color: rgba(255,255,255,.92);
+}
+.topbar-inner{
+  max-width:1180px; margin:0 auto;
+  padding:8px 24px;
+  font-weight:600;
+}
+.topbar-row{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  font-size:.78rem;
+}
+.topbar-gov{ display:flex; align-items:center; gap:10px; }
+.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; transition:opacity .2s; }
+.topbar-gov a{ display:flex; align-items:center; }
+.topbar-gov a:hover img{ opacity:1; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+.topbar-dept{
+  margin-top:3px; padding-right:30px;
+  font-size:.68rem; font-weight:600;
+  color:rgba(255,255,255,.45);
+}
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+@media (max-width:640px){
+  .topbar-row{ font-size:.7rem; }
+  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
+  .topbar-inner{ padding:7px 14px; }
+}
+
+/* ============================================================
+   شريط التنقل الرئيسي
+   ============================================================ */
+.navbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.navbar-inner{
+  max-width:1180px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:12px 24px;
+}
+.nav-brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+.nav-brand img{
+  width:46px; height:46px; border-radius:14px;
+  box-shadow: var(--shadow-sm);
+}
+.nav-brand-text b{
+  display:block; font-family:'Tajawal',sans-serif;
+  font-size:1.08rem; font-weight:900; color:var(--lav-700);
+  letter-spacing:.2px;
+}
+.nav-brand-text span{ font-size:.7rem; color:var(--ink-faint); font-weight:600; }
+
+.nav-links{ display:flex; align-items:center; gap:2px; }
+.nav-link{
+  padding:10px 16px; border-radius:12px;
+  color:var(--ink-soft); text-decoration:none;
+  font-weight:700; font-size:.86rem; transition:.2s;
+}
+.nav-link:hover{ background:var(--lav-100); color:var(--lav-700); }
+.nav-cta{
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
+  color:#fff; padding:10px 20px; border-radius:12px;
+  font-weight:800; font-size:.85rem; text-decoration:none;
+  box-shadow: var(--shadow-sm); transition:.2s; white-space:nowrap;
+}
+.nav-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(107,76,154,.28); }
+
+@media (max-width:900px){ .nav-links{ display:none; } }
+@media (max-width:640px){
+  .navbar-inner{ padding:10px 16px; }
+  .nav-brand img{ width:40px; height:40px; }
+  .nav-brand-text b{ font-size:.95rem; }
+  .nav-cta{ padding:9px 14px; font-size:.78rem; }
+}
+
+/* ============================================================
+   هيرو الصفحة
+   ============================================================ */
+.page-hero{
+  position:relative; z-index:5;
+  text-align:center;
+  padding:48px 24px 38px;
+  overflow:hidden;
+}
+.page-hero::before{
+  content:'';
+  position:absolute; top:-220px; left:50%; transform:translateX(-50%);
+  width:680px; height:680px; border-radius:50%;
+  background: radial-gradient(circle, rgba(107,76,154,.14) 0%, rgba(139,106,191,.06) 45%, transparent 72%);
+  pointer-events:none;
+}
+.page-hero-content{ position:relative; max-width:720px; margin:0 auto; }
+.page-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,.7);
+  border:1px solid var(--line2);
+  color:var(--lav-700);
+  padding:7px 18px; border-radius:30px;
+  font-size:.8rem; font-weight:800;
+  margin-bottom:18px;
+  box-shadow: var(--shadow-sm);
+}
+.page-hero h1{
+  font-family:'Tajawal',sans-serif;
+  font-size:clamp(1.9rem, 5vw, 3rem);
+  font-weight:900; line-height:1.25;
+  margin-bottom:12px; color:var(--ink);
+}
+.page-hero h1 span{
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-300));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.page-hero p{ color:var(--ink-soft); font-size:.94rem; line-height:1.9; margin-bottom:24px; }
+.page-hero-btns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn-primary{
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
+  color:#fff; padding:13px 28px; border-radius:14px;
+  font-weight:800; font-size:.9rem; text-decoration:none;
+  transition:.25s; box-shadow:0 10px 30px rgba(107,76,154,.28);
+}
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 36px rgba(107,76,154,.4); }
+.btn-outline{
+  background:var(--surface);
+  border:1px solid var(--line2);
+  color:var(--lav-700);
+  padding:13px 24px; border-radius:14px;
+  font-weight:800; font-size:.88rem; text-decoration:none;
+  transition:.25s; box-shadow: var(--shadow-sm);
+}
+.btn-outline:hover{ background:var(--lav-100); transform:translateY(-2px); }
+
+/* ============================================================
+   شريط تنقل الأقسام
+   ============================================================ */
+.subnav{
+  position:sticky; top:71px; z-index:40;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.subnav-inner{
+  max-width:1000px; margin:0 auto;
+  display:flex; gap:4px; overflow-x:auto;
+  padding:0 20px; scrollbar-width:none;
+}
+.subnav-inner::-webkit-scrollbar{ display:none; }
+.subnav-link{
+  padding:14px 16px; color:var(--ink-soft); text-decoration:none;
+  font-size:.84rem; font-weight:700; white-space:nowrap;
+  border-bottom:3px solid transparent; transition:.2s;
+}
+.subnav-link:hover{ color:var(--lav-700); border-bottom-color:var(--lav-300); }
+@media (max-width:640px){ .subnav{ top:61px; } }
+
+/* ============================================================
+   المحتوى الرئيسي
+   ============================================================ */
+main{ position:relative; z-index:5; max-width:1000px; margin:0 auto; padding:40px 24px 80px; }
+
+.intro-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-bottom:44px; }
+.intro-item{
+  background:var(--surface); border:1px solid var(--line);
+  border-right:4px solid var(--lav-500);
+  border-radius:var(--radius-md); padding:20px;
+  box-shadow: var(--shadow-sm);
+}
+.intro-item h4{ font-size:.84rem; font-weight:900; color:var(--lav-700); margin-bottom:8px; }
+.intro-item p{ font-size:.84rem; color:var(--ink-soft); line-height:1.8; }
+
+.section{ margin-bottom:48px; }
+.section-head{
+  font-family:'Tajawal',sans-serif; font-size:1.28rem; font-weight:900;
+  color:var(--ink); margin-bottom:18px; display:flex; align-items:center; gap:12px;
+  padding-bottom:12px; border-bottom:2px solid var(--line);
+}
+.section-head span{
+  background:linear-gradient(135deg,var(--lav-700),var(--lav-500));
+  color:#fff; width:34px; height:34px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.88rem; flex-shrink:0; font-weight:900;
+}
+
+.content-card{
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-md); overflow:hidden;
+  margin-bottom:14px; box-shadow: var(--shadow-sm);
+}
+.content-card-head{
+  padding:13px 20px; background:var(--lav-100); border-bottom:1px solid var(--line);
+  font-weight:900; font-size:.9rem; color:var(--lav-700);
+  display:flex; align-items:center; gap:8px;
+}
+.content-card-body{ padding:18px 20px; }
+.content-list{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+.content-list li{ display:flex; align-items:flex-start; gap:10px; font-size:.86rem; color:var(--ink-soft); line-height:1.8; }
+.content-list li::before{ content:'✓'; color:var(--teal); font-weight:900; flex-shrink:0; margin-top:1px; }
+
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+
+/* ── الاختبار ── */
+.quiz-card{
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-md); padding:22px; margin-bottom:12px;
+  box-shadow: var(--shadow-sm);
+}
+.quiz-q{ font-size:.9rem; font-weight:800; color:var(--ink); margin-bottom:12px; }
+.quiz-options{ display:flex; flex-direction:column; gap:8px; }
+.quiz-opt{
+  display:flex; align-items:center; gap:10px;
+  background:var(--surface2); border:1px solid var(--line);
+  border-radius:10px; padding:11px 14px; cursor:pointer;
+  font-size:.85rem; color:var(--ink-soft); transition:all .2s;
+}
+.quiz-opt input{ accent-color:var(--lav-700); width:16px; height:16px; }
+.quiz-opt:hover{ background:var(--lav-100); border-color:var(--line2); }
+.quiz-opt.correct{ background:var(--teal-soft); border-color:rgba(18,158,124,.35); color:#0c6b54; }
+.quiz-opt.wrong{ background:var(--red-soft); border-color:rgba(220,38,38,.3); color:#991b1b; }
+.quiz-submit{
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
+  color:#fff; border:none; padding:13px 30px; border-radius:12px;
+  font-family:'Cairo',sans-serif; font-size:.9rem; font-weight:800;
+  cursor:pointer; margin-top:16px; box-shadow: var(--shadow-sm); transition:all .25s;
+}
+.quiz-submit:hover{ transform:translateY(-2px); box-shadow: var(--shadow-md); }
+.result-box{ display:none; margin-top:16px; padding:14px 18px; border-radius:12px; font-weight:800; font-size:.9rem; }
+
+/* ── الملفات ── */
+.file-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 20px; border-bottom:1px solid var(--line); gap:14px; transition:background .15s;
+}
+.file-row:last-child{ border-bottom:none; }
+.file-row:hover{ background:var(--lav-100); }
+.file-left{ display:flex; align-items:center; gap:12px; }
+.file-icon{
+  width:40px; height:40px; border-radius:10px; background:var(--lav-100);
+  display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;
+}
+.file-name{ font-size:.88rem; font-weight:800; color:var(--ink); }
+.file-type{ font-size:.75rem; color:var(--ink-faint); margin-top:2px; }
+.btn-download{
+  background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
+  color:#fff; padding:8px 18px; border-radius:10px; text-decoration:none;
+  font-size:.8rem; font-weight:800; white-space:nowrap; transition:all .2s; flex-shrink:0;
+}
+.btn-download:hover{ transform:translateY(-1px); box-shadow: var(--shadow-sm); }
+
+/* ============================================================
+   الفوتر
+   ============================================================ */
+footer{
+  position:relative; z-index:5;
+  background:linear-gradient(160deg, var(--lav-900), #3A2B5C 60%, var(--lav-800));
+  padding:40px 24px 26px; text-align:center;
+}
+.footer-inner{ max-width:760px; margin:0 auto; }
+.footer-logo{ display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:8px; }
+.footer-logo img{ width:42px; height:42px; border-radius:12px; }
+.footer-logo-text{ font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:#fff; }
+.footer-copy{ font-size:.78rem; color:rgba(255,255,255,.45); margin-bottom:4px; }
+.footer-credit{ font-size:.8rem; color:var(--lav-300); font-weight:800; margin-bottom:22px; }
+.footer-back{
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.8); padding:9px 22px; border-radius:20px;
+  font-size:.82rem; font-weight:700; text-decoration:none; transition:.2s;
+}
+.footer-back:hover{ background:rgba(255,255,255,.14); color:#fff; }
+
+/* ============================================================
+   حركات واستجابة
+   ============================================================ */
+.fade-in{ opacity:0; transform:translateY(20px); transition:all .7s ease; }
+.fade-in.visible{ opacity:1; transform:translateY(0); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+}
+
+@media(max-width:768px){
+  .page-hero{ padding:34px 16px 26px; }
+  .page-hero p{ font-size:.86rem; }
+  main{ padding:30px 16px 56px; }
+  .two-col{ grid-template-columns:1fr; }
+  .section-head{ font-size:1.1rem; }
+  footer{ padding:32px 16px 20px; }
+  .footer-logo-text{ font-size:1.1rem; }
+}
 </style>
+<link rel="stylesheet" href="assets/css/common-ui.css">
 </head>
 <body>
+
+<div class="dot-field"></div>
 
 <!-- الشريط العلوي الرسمي -->
 <div class="topbar">
@@ -1023,1793 +387,315 @@
   </div>
 </div>
 
-<header>
-  <div class="header-left">
-    <div class="header-icon">📘</div>
-    <div>
-      <div class="header-title">ملف الطالب الإلكتروني — برنامج يسير</div>
-      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
-    </div>
+<!-- شريط التنقل -->
+<div class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="icon-192.png" alt="شعار مَعَاك">
+      <div class="nav-brand-text">
+        <b>مَعَاك</b>
+        <span>قسم ذوي الإعاقة — مدرسة مكة المكرمة المتوسطة</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#top" class="nav-link">الرئيسية</a>
+      <a href="index.html#programs" class="nav-link">البرامج</a>
+      <a href="index.html#portals" class="nav-link">البوابات</a>
+      <a href="index.html#about" class="nav-link">عن القسم</a>
+      <a href="contact.html" class="nav-link">تواصل معنا</a>
+    </nav>
+    <a href="index.html#portals" class="nav-cta">🔐 بوابة الطلاب</a>
   </div>
-  <a href="index.html" class="back-btn">← الرئيسية</a>
-</header>
+</div>
 
-<!-- ============ LOGIN ============ -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-badge">🔐 بوابة آمنة</div>
-    <div class="login-icon-big">🎓</div>
-    <h2>ملف الطالب الإلكتروني</h2>
-    <p class="login-desc">
-      أدخل رمز الدخول للاطلاع على ملف الطالب الإلكتروني المخصص لولي الأمر
-    </p>
-    <div class="input-label">🔑 رمز الدخول (آخر 4 أرقام من السجل المدني)</div>
-    <input type="password" class="pin-input" id="pin-input" maxlength="4" placeholder="• • • •" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')" onkeydown="if(event.key==='Enter') checkPin()">
-    <div class="error-msg" id="error-msg">❌ الرمز غير صحيح، يرجى المحاولة مجدداً</div>
-    <button class="login-btn" onclick="checkPin()">🔓 دخول البوابة</button>
-    <div class="hint-box">
-      💡 <strong>تنبيه لأولياء الأمور:</strong> هذه البوابة مخصصة لولي أمر الطالب للاطلاع والمتابعة، ورمز الدخول هو آخر 4 أرقام من السجل المدني للطالب.
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+     
+    <h1>برنامج <span>يسير</span> التعليمي</h1>
+    <p>صفحة توعوية للمعلمين وأولياء الأمور — ضمن برامج قسم ذوي الإعاقة في مدرسة مكة المكرمة المتوسطة</p>
+    <div class="page-hero-btns">
+      <a href="#definition" class="btn-primary">ابدأ من التعريف</a>
+      <a href="#forms" class="btn-outline">📎 النماذج والملفات</a>
+      <a href="https://makkah-special.github.io/dashboard.html" class="btn-outline">📊 لوحة المتابعة</a>
     </div>
   </div>
 </div>
 
-<!-- ============ PORTAL ============ -->
-<div id="student-portal">
+<!-- شريط تنقل الأقسام -->
+<nav class="subnav">
+  <div class="subnav-inner">
+    <a href="#definition" class="subnav-link">🔍 تعريف البرنامج</a>
+    <a href="#eligibility" class="subnav-link">✅ الأهلية والقبول</a>
+    <a href="#teachers" class="subnav-link">👨‍🏫 للمعلمين</a>
+    <a href="#parents" class="subnav-link">👨‍👩‍👦 لأولياء الأمور</a>
+    <a href="#quiz" class="subnav-link">🧠 اختبر نفسك</a>
+    <a href="#forms" class="subnav-link">📎 النماذج</a>
+  </div>
+</nav>
 
-  <div class="portal-banner">
-    <div class="student-identity">
-      <div class="student-photo-wrap">
-        <div class="student-photo" id="student-photo-circle" onclick="document.getElementById('photo-input').click()">
-          <img id="student-photo-img" src="" alt="" style="display:none;">
-          <span id="student-photo-emoji">🎓</span>
-        </div>
-        <button class="photo-change-btn" onclick="document.getElementById('photo-input').click()" title="تغيير الصورة">✏️</button>
-        <input type="file" id="photo-input" class="photo-input" accept="image/*" onchange="uploadStudentPhoto(this)">
-      </div>
-      <div class="student-name-display" id="disp-name">—</div>
-      <div class="student-meta-display">
-        <span class="meta-chip" id="disp-grade">—</span>
-        <span class="meta-chip">📘 برنامج يسير التعليمي</span>
-        <span class="meta-chip" id="disp-id">—</span>
-      </div>
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-grid fade-in">
+    <div class="intro-item">
+      <h4>👥 الفئة المستهدفة</h4>
+      <p>طلاب لديهم خصائص بطء التعلم ويحتاجون دعمًا تربويًا وفق خطط فردية</p>
     </div>
-    <button class="logout-btn" onclick="logout()">🚪 خروج</button>
+    <div class="intro-item">
+      <h4>🏫 مكان تقديم الخدمة</h4>
+      <p>داخل المدرسة عبر الدمج قدر الإمكان وغرفة مصادر حسب الخطة</p>
+    </div>
+    <div class="intro-item">
+      <h4>🎯 هدف البرنامج</h4>
+      <p>تنمية مهارات التواصل والسلوك التكيفي والمهارات الأكاديمية والحياتية</p>
+    </div>
   </div>
 
-  <div class="portal-body">
-
-    <div class="e-file-intro">
-      <div>
-        <h3>📁 ملف الطالب الإلكتروني</h3>
-        <p>مساحة موحّدة لولي الأمر للاطلاع على بيانات الطالب، الخطط، التقارير، المتابعة، الأنشطة، المواعيد، النماذج، والتنبيهات.</p>
-      </div>
-      <div class="privacy-badge">🔐 خاص بولي الأمر</div>
-    </div>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('info',this)">👤 البيانات</button>
-      <button class="tab-btn" onclick="openTab('reports',this)">📊 التقارير</button>
-      <button class="tab-btn" onclick="openTab('plan',this)">📋 الخطة الفردية</button>
-      <button class="tab-btn" onclick="openTab('progress',this)">📏 المتابعة</button>
-      <button class="tab-btn" onclick="openTab('home',this)">🏠 أنشطة منزلية</button>
-      <button class="tab-btn" onclick="openTab('meetings',this)">📅 المواعيد</button>
-      <button class="tab-btn" onclick="openTab('forms',this)">🧾 النماذج</button>
-      <button class="tab-btn" onclick="openTab('messages',this)">🔔 التنبيهات</button>
-      <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
-      <button class="tab-btn" onclick="openTab('reinforce',this)">🏆 التعزيز</button>
-    </div>
-
-    <!-- INFO -->
-    <div class="tab-pane active" id="tab-info">
-      <div class="s-card">
-        <div class="s-card-head">👤 بيانات الطالب</div>
-        <table class="info-tbl" id="info-tbl"></table>
-      </div>
-    </div>
-
-    <!-- REPORTS -->
-    <div class="tab-pane" id="tab-reports">
-      <div class="s-card">
-        <div class="s-card-head">📊 التقارير والوثائق</div>
-        <div id="reports-list"></div>
-      </div>
-    </div>
-
-    <!-- PLAN -->
-    <div class="tab-pane" id="tab-plan">
-      <div class="s-card">
-        <div class="s-card-head">📋 الخطة التعليمية الفردية — الفصل الثاني 1447هـ</div>
-        <div style="padding:20px;" id="plan-pdfs"></div>
-      </div>
-    </div>
-
-    <!-- PROGRESS: IEP + PERFORMANCE + STRENGTHS (عرض فقط) -->
-    <div class="tab-pane" id="tab-progress">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>📏 المستوى والمتابعة التربوية</span>
-          <span style="background:#EAE1F7;color:#6B4C9A;border-radius:8px;padding:5px 14px;font-size:0.78rem;font-weight:700;">👁️ للاطلاع فقط — يحدّثها المعلم المسؤول</span>
+  <!-- DEFINITION -->
+  <div class="section fade-in" id="definition">
+    <div class="section-head"><span>١</span> تعريف الذكاء الحدي والبرنامج</div>
+    <div class="two-col">
+      <div class="content-card">
+        <div class="content-card-head">🧠 ما هو الذكاء الحدي؟</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>قدرات عقلية تقع بين الإعاقة الفكرية والقدرات العقلية العامة</li>
+            <li>درجة ذكاء تتراوح بين 70–80 على اختبار ستانفورد–بينيه أو ما يعادله</li>
+          </ul>
         </div>
-        <div style="padding:20px;" id="progress-content"></div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-head">📘 ما هو برنامج يسير؟</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>برنامج تعليمي في مدارس التعليم العام لخدمة الطلبة ذوي الذكاء الحدي</li>
+            <li>يعتمد على خطط فردية وأهداف قابلة للقياس والمتابعة</li>
+          </ul>
+        </div>
       </div>
     </div>
-
-    <!-- HOME ACTIVITIES -->
-    <div class="tab-pane" id="tab-home">
-      <div class="s-card">
-        <div class="s-card-head">🏠 الواجبات والأنشطة المنزلية الداعمة</div>
-        <div id="home-content"></div>
-      </div>
-    </div>
-
-    <!-- MEETINGS -->
-    <div class="tab-pane" id="tab-meetings">
-      <div class="s-card">
-        <div class="s-card-head">📅 مواعيد الاجتماعات واللقاءات</div>
-        <div id="meetings-content"></div>
-      </div>
-    </div>
-
-    <!-- FORMS -->
-    <div class="tab-pane" id="tab-forms">
-      <div class="s-card">
-        <div class="s-card-head">🧾 النماذج والموافقات</div>
-        <div id="forms-content"></div>
-      </div>
-    </div>
-
-    <!-- MESSAGES -->
-    <div class="tab-pane" id="tab-messages">
-      <div class="s-card">
-        <div class="s-card-head">🔔 الرسائل والتنبيهات لولي الأمر</div>
-        <div id="messages-content"></div>
-      </div>
-      <div class="notice-box">🔐 تذكير خصوصية: محتوى ملف الطالب الإلكتروني مخصص لولي الأمر فقط، ويمنع مشاركة رمز الدخول أو ملفات الطالب مع أي طرف غير مخوّل.</div>
-    </div>
-
-    <!-- IQRAR -->
-    <div class="tab-pane" id="tab-iqrar">
-      <div class="s-card">
-        <div class="s-card-head">✍️ إقرار اطلاع ولي الأمر على الخطة الفردية</div>
-        <div style="padding:24px;" id="iqrar-content"></div>
-      </div>
-    </div>
-
-    <!-- REINFORCEMENT BOARD -->
-    <div class="tab-pane" id="tab-reinforce">
-      <div class="s-card">
-        <div class="s-card-head">🏆 لوحة التعزيز — شهادات الشكر والتقدير</div>
-        <div style="padding:20px;" id="reinforce-content"></div>
-      </div>
-    </div>
-
   </div>
-</div>
 
+  <!-- ELIGIBILITY -->
+  <div class="section fade-in" id="eligibility">
+    <div class="section-head"><span>٢</span> الأهلية والقبول وخدمات البرنامج</div>
 
-<!-- Toast -->
-<div class="success-toast" id="success-toast">✅ تم الحفظ بنجاح</div>
+    <div class="content-card">
+      <div class="content-card-head">✅ معايير الأهلية والقبول</div>
+      <div class="content-card-body">
+        <ul class="content-list">
+          <li>أن تكون درجة ذكاء الطالب بين 70–80 مع انخفاض في السلوك التكيفي</li>
+          <li>ألا تكون المشكلة ناتجة مباشرة عن إعاقة أخرى مصاحبة</li>
+          <li>وجود تكرار في الرسوب لأسباب غير أسرية أو اجتماعية أو صحية</li>
+          <li>موافقة فريق التربية الخاصة برئاسة قائد المدرسة أو الوكيل</li>
+          <li>يبدأ القبول من الصف الثاني الابتدائي ويستمر حتى المرحلة الثانوية</li>
+          <li>يلتحق الطالب في السنة التالية لسنة رسوبه أو تشخيص حالته</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-head">🏫 المكان التربوي وخدمات البرنامج</div>
+      <div class="content-card-body">
+        <ul class="content-list">
+          <li>يلتحق الطالب في فصل التعليم العام مع زملائه</li>
+          <li>ألا تزيد نسبة الطلبة ذوي الإعاقة عن 20٪ من إجمالي طلبة المدرسة</li>
+          <li>ألا يزيد عدد طلبة الذكاء الحدي في الفصل عن ثلاثة طلبة</li>
+          <li>تُقدم خدمات غرفة المصادر بما لا يتجاوز 50٪ من اليوم الدراسي</li>
+          <li>يستفيد الطلبة من الخدمات المساندة (نطق، علاج وظيفي، إرشاد نفسي)</li>
+          <li>يستفيد طلبة البرنامج من النقل المدرسي والمكافأة الشهرية</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEACHERS -->
+  <div class="section fade-in" id="teachers">
+    <div class="section-head"><span>٣</span> دليل المعلمين في برنامج يسير</div>
+    <div class="two-col">
+      <div class="content-card">
+        <div class="content-card-head">📋 مهام معلم التربية الخاصة</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>إعداد الخطة التربوية الفردية (IEP) ومتابعة التنفيذ</li>
+            <li>تقديم أدوات دعم بصري/سلوكي وتدريب الطالب عليها</li>
+            <li>التنسيق مع معلمي المواد بشأن التكييفات والتقويم</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-head">👨‍🏫 مهام معلم التعليم العام</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>تهيئة بيئة الصف وتقليل المشتتات</li>
+            <li>تقسيم الواجبات وتوضيح المتوقع خطوة بخطوة</li>
+            <li>مشاركة البيانات مع فريق البرنامج بشكل دوري</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARENTS -->
+  <div class="section fade-in" id="parents">
+    <div class="section-head"><span>٤</span> حقوق ومسؤوليات الأسرة</div>
+    <div class="two-col">
+      <div class="content-card">
+        <div class="content-card-head">⭐ حقوق الأسرة</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>الاطلاع على الخطة الفردية والمشاركة في القرارات</li>
+            <li>توضيح الخدمات المقدمة وما يقابلها من أهداف</li>
+            <li>الحفاظ على سرية بيانات الطالب</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="content-card-head">📌 مسؤوليات الأسرة</div>
+        <div class="content-card-body">
+          <ul class="content-list">
+            <li>الالتزام بخطة المتابعة المنزلية (روتين/تعزيز/تواصل)</li>
+            <li>إبلاغ المدرسة بأي تغييرات مؤثرة في سلوك الطالب</li>
+            <li>حضور الاجتماعات ومشاركة الملاحظات</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="section fade-in" id="quiz">
+    <div class="section-head"><span>٥</span> اختبر معلوماتك عن برنامج يسير</div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">١) نطاق درجة الذكاء الحدّي للطلبة المستهدفين في برنامج يسير هو تقريباً:</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q1" value="a"> 50-60</label>
+        <label class="quiz-opt"><input type="radio" name="q1" value="b"> 70-80</label>
+        <label class="quiz-opt"><input type="radio" name="q1" value="c"> 90-110</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٢) أين يتلقى طالب يسير تعليمه في الأصل؟</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q2" value="a"> في فصل التعليم العام مع الاستفادة من غرفة المصادر</label>
+        <label class="quiz-opt"><input type="radio" name="q2" value="b"> في معهد التربية الفكرية فقط</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٣) الحد الأعلى للوقت في غرفة المصادر هو:</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q3" value="a"> لا يزيد عن 50% من اليوم الدراسي</label>
+        <label class="quiz-opt"><input type="radio" name="q3" value="b"> اليوم الدراسي كاملاً</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٤) يبدأ القبول في برنامج يسير من:</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q4" value="a"> الصف الأول الابتدائي</label>
+        <label class="quiz-opt"><input type="radio" name="q4" value="b"> الصف الثاني الابتدائي</label>
+        <label class="quiz-opt"><input type="radio" name="q4" value="c"> المرحلة المتوسطة فقط</label>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">٥) من أهم عوامل نجاح خطة يسير:</div>
+      <div class="quiz-options">
+        <label class="quiz-opt"><input type="radio" name="q5" value="a"> التنسيق بين الأسرة والمدرسة ومتابعة الخطة</label>
+        <label class="quiz-opt"><input type="radio" name="q5" value="b"> تغيير الخطة يومياً دون بيانات</label>
+      </div>
+    </div>
+    <button class="quiz-submit" onclick="checkQuiz()">📊 عرض النتيجة</button>
+    <div class="result-box" id="result-box"></div>
+  </div>
+
+  <!-- FORMS -->
+  <div class="section fade-in" id="forms">
+    <div class="section-head"><span>٦</span> النماذج والملفات</div>
+    <div class="content-card">
+      <div class="content-card-head">📋 نماذج الخطط التربوية الفردية (IEP)</div>
+      <div class="file-row">
+        <div class="file-left">
+          <div class="file-icon">📐</div>
+          <div>
+            <div class="file-name">خطة رياضيات المستوى الأول 2026</div>
+            <div class="file-type">PDF — خطة فردية</div>
+          </div>
+        </div>
+        <a href="iep-math-level1-2026.pdf" class="btn-download" target="_blank">⬇️ تحميل</a>
+      </div>
+      <div class="file-row">
+        <div class="file-left">
+          <div class="file-icon">📐</div>
+          <div>
+            <div class="file-name">خطة رياضيات المستوى الثاني 2026</div>
+            <div class="file-type">PDF — خطة فردية</div>
+          </div>
+        </div>
+        <a href="iep-math-level2-2026.pdf" class="btn-download" target="_blank">⬇️ تحميل</a>
+      </div>
+      <div class="file-row">
+        <div class="file-left">
+          <div class="file-icon">📖</div>
+          <div>
+            <div class="file-name">خطة لغتي المستوى الأول 2026</div>
+            <div class="file-type">PDF — خطة فردية</div>
+          </div>
+        </div>
+        <a href="iep-arabic-level1-2026.pdf" class="btn-download" target="_blank">⬇️ تحميل</a>
+      </div>
+      <div class="file-row">
+        <div class="file-left">
+          <div class="file-icon">📖</div>
+          <div>
+            <div class="file-name">خطة لغتي المستوى الثاني 2026</div>
+            <div class="file-type">PDF — خطة فردية</div>
+          </div>
+        </div>
+        <a href="iep-arabic-level2-2026.pdf" class="btn-download" target="_blank">⬇️ تحميل</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="icon-192.png" alt="شعار مَعَاك">
+      <div class="footer-logo-text">منصة مَعَاك</div>
+    </div>
+    <div class="footer-copy">© 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
+    <div class="footer-credit">إعداد وتنفيذ: أ. سعد سالم الزهراني</div>
+    <a href="index.html" class="footer-back">← الرجوع للرئيسية</a>
+  </div>
+</footer>
 
 <script>
-// =====================================================
-// Supabase Config
-// =====================================================
-const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-let ADMIN_PIN = "1129"; // رمز المشرف
-const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-
-async function sbSaveSignature(pin, name, grade, signData) {
-  try {
-    await fetch(SUPABASE_URL + '/rest/v1/signatures', {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({
-        student_pin: pin,
-        student_name: name,
-        grade: grade,
-        signature_data: signData,
-        program: 'yaseer'
-      })
-    });
-    console.log('✅ التوقيع حُفظ في Supabase');
-  } catch(e) {
-    console.error('خطأ في حفظ التوقيع:', e);
-  }
-}
-
-// =====================================================
-// قاعدة بيانات الطلاب — برنامج يسير
-// الرمز = آخر 4 أرقام من السجل المدني
-// =====================================================
-const BASE_URL = "https://makkah-special.github.io/";
-
-// STUDENTS محذوف من الكود — التحقق يتم عبر Supabase
-const STUDENTS = {};
-
-// =====================================================
-// LOGIC
-// =====================================================
-let currentStudent = null;
-
-// ===== STUDENT PHOTO =====
-const SB_PHOTOS = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/photos/";
-const SB_URL    = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SB_KEY    = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
-
-async function loadStudentPhoto(pin) {
-  // يتم عرض الصورة الافتراضية بدون فحص الشبكة لتجنب أخطاء 400 في وحدة التحكم.
-  // عند ربط الصور فعليًا لاحقًا يمكن تمرير رابط مباشر داخل بيانات الطالب باسم photo_url.
-  if (currentStudent && currentStudent.photo_url) {
-    const img = document.getElementById('student-photo-img');
-    img.src = currentStudent.photo_url;
-    img.style.display = 'block';
-    document.getElementById('student-photo-emoji').style.display = 'none';
-  }
-}
-
-async function uploadStudentPhoto(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const pin = currentStudent?.pin;
-  if (!pin) return;
-
-  const ext = file.name.split('.').pop();
-  const fileName = `photos/photo-${pin}.${ext}`;
-
-  // عرض مسبق
-  const reader = new FileReader();
-  reader.onload = e => {
-    document.getElementById('student-photo-img').src = e.target.result;
-    document.getElementById('student-photo-img').style.display = 'block';
-    document.getElementById('student-photo-emoji').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-
-  // رفع لـ Supabase
-  try {
-    await fetch(`${SB_URL}/storage/v1/object/reports/${fileName}`, {
-      method: 'POST',
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Content-Type': file.type,
-        'x-upsert': 'true'
-      },
-      body: file
-    });
-  } catch(e) { console.error('خطأ في رفع الصورة:', e); }
-}
-
-function hidePlanSection(id) {
-  const el = document.getElementById(id);
-  if (el) el.style.display = 'none';
-}
-
-function checkIframe(iframe, sectionId) {
-  try {
-    // إذا كان المحتوى 404 نخفي القسم
-    const loc = iframe.contentWindow.location.href;
-    if (loc.includes('404') || loc.includes('not-found')) hidePlanSection(sectionId);
-  } catch(e) {
-    // cross-origin = الملف موجود
-  }
-}
-
-function loadStudent(pin) {
-  const s = STUDENTS[pin];
-  s.pin = pin;
-  currentStudent = s;
-
-  document.getElementById('disp-name').textContent = s.name;
-  // تحميل صورة الطالب
-  document.getElementById('student-photo-img').style.display = 'none';
-  document.getElementById('student-photo-emoji').style.display = 'block';
-  loadStudentPhoto(pin);
-  document.getElementById('disp-grade').textContent = s.grade === 'انتساب' ? '📋 انتساب' : '🏫 ' + s.grade;
-  document.getElementById('disp-id').textContent = 'السجل: ' + s.id_full;
-
-  // PLAN — من Supabase فقط
-  const SB_PLAN = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/";
-
-  document.getElementById('plan-pdfs').innerHTML = `
-    <div class="pdf-section" id="custom-plan-section" style="display:none;">
-      <div class="pdf-section-title">📋 الخطة الفردية المخصصة</div>
-      <div class="pdf-frame-wrap" id="custom-plan-frame"></div>
-      <div class="pdf-actions" id="custom-plan-actions"></div>
-    </div>
-    <div id="no-plan-msg" style="text-align:center;padding:40px;color:#9ca3af;">
-      <div style="font-size:2.5rem;margin-bottom:12px;">📋</div>
-      <div style="font-weight:700;font-size:0.95rem;">لم يتم رفع الخطة الفردية بعد</div>
-      <div style="font-size:0.8rem;margin-top:6px;">سيتم إشعارك عند إضافتها</div>
-    </div>
-  `;
-
-  // لا يتم فحص Supabase تلقائيًا هنا حتى لا تظهر أخطاء 400 عند عدم وجود ملفات مرفوعة.
-  // عند توفر رابط خطة مباشر داخل بيانات الطالب باسم plan_url سيتم عرضه فورًا.
-  if (s.plan_url) {
-    document.getElementById('no-plan-msg').style.display = 'none';
-    document.getElementById('custom-plan-section').style.display = 'block';
-    document.getElementById('custom-plan-frame').innerHTML = String(s.plan_url).toLowerCase().includes('.pdf')
-      ? `<iframe src="${s.plan_url}" title="الخطة الفردية المخصصة"></iframe>`
-      : `<div style="padding:20px;text-align:center;color:#6E5F82;font-size:0.88rem;">📎 ملف الخطة جاهز للتحميل</div>`;
-    document.getElementById('custom-plan-actions').innerHTML = `
-      <a href="${s.plan_url}" target="_blank" class="btn-pdf btn-pdf-primary">🔗 فتح الخطة</a>
-      <a href="${s.plan_url}" download class="btn-pdf btn-pdf-secondary">⬇️ تحميل الخطة الفردية</a>
-    `;
-  }
-
-
-  // REPORTS
-  const rl = document.getElementById('reports-list');
-  const studentPin = s.pin || Object.keys(STUDENTS).find(k => STUDENTS[k] === s) || '';
-  const SB_STORAGE = "https://pyrxwqgapwjwhiskowhk.supabase.co/storage/v1/object/public/reports/";
-
-  // التقارير تعرض كرابط فقط إذا وُجد رابط مباشر في بيانات الطالب (url أو fileUrl).
-  // تم إيقاف الفحص التلقائي للشبكة لتجنب ظهور أخطاء Supabase 400 للملفات غير المرفوعة.
-
-
-  // التقارير الثابتة لكل طالب
-  const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#EAE1F7", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
-    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
-    { title: "تقرير التقدم الدراسي",   icon: "📈", bg: "#ecfdf5", tag: "تقدم", tagClass: "tag-green",  date: "آخر تحديث", fileKey: `progress-${studentPin}` },
-    { title: "ملف إنجاز الطالب",       icon: "📁", bg: "#fff7ed", tag: "إنجاز", tagClass: "tag-yellow", date: "متجدد", fileKey: `portfolio-${studentPin}` },
-  ];
-
-  const reportsWithFiles = (s.reports || []).map((r, i) => ({
-    ...r,
-    fileKey: r.fileKey || `report${i+1}-${studentPin}`
-  }));
-
-  const allReports = [...fixedReports, ...reportsWithFiles];
-
-  // رسم التقارير أولاً
-  rl.innerHTML = allReports.map((r, idx) => `
-    <div class="report-row">
-      <div class="report-left">
-        <div class="report-icon" style="background:${r.bg}">${r.icon}</div>
-        <div>
-          <div class="report-name">${r.title}</div>
-          <div class="report-date">📅 ${r.date}</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span class="tag ${r.tagClass}">${r.tag}</span>
-        <span id="dl-btn-${idx}" class="btn-download-report" style="opacity:0.4;cursor:default;">⏳</span>
-      </div>
-    </div>
-  `).join('');
-
-  // تحديث أزرار التحميل بدون طلبات شبكة.
-  allReports.forEach((r, idx) => {
-    const btn = document.getElementById(`dl-btn-${idx}`);
-    const fileUrl = r.url || r.fileUrl || r.href || '';
-    if (btn && fileUrl) {
-      btn.outerHTML = `<a href="${fileUrl}" download target="_blank" class="btn-download-report" title="تحميل ${r.title}">⬇️ تحميل</a>`;
-    } else if (btn) {
-      btn.textContent = 'سيضاف لاحقًا';
-      btn.style.opacity = '0.55';
-      btn.style.cursor = 'default';
-    }
-  });
-
-
-  // INFO
-  const it = document.getElementById('info-tbl');
-  it.innerHTML = `
-    <tr><th>اسم الطالب</th><td>${s.name}</td></tr>
-    <tr><th>رقم السجل المدني</th><td>${s.id_full}</td></tr>
-    <tr><th>الصف الدراسي</th><td>${s.grade}</td></tr>
-    <tr><th>البرنامج</th><td><span class="tag tag-green">📘 برنامج يسير التعليمي</span></td></tr>
-    <tr><th>الغرض من الدخول</th><td>متابعة ملف الطالب الإلكتروني بواسطة ولي الأمر</td></tr>
-    <tr><th>جوال ولي الأمر</th><td><a href="tel:${s.phone}" style="color:var(--green); font-weight:700;">${s.phone}</a></td></tr>
-    <tr><th>العام الدراسي</th><td>1447هـ</td></tr>
-    <tr><th>الفصل الدراسي</th><td>الفصل الثاني</td></tr>
-    ${s.birthdate ? `<tr><th>تاريخ الميلاد</th><td>${s.birthdate}</td></tr>` : ''}
-    ${s.nationality ? `<tr><th>الجنسية</th><td>${s.nationality}</td></tr>` : ''}
-    ${s.age ? `<tr><th>العمر</th><td>${s.age}</td></tr>` : ''}
-    ${s.address ? `<tr><th>العنوان</th><td>${s.address}</td></tr>` : ''}
-    ${s.iq ? `<tr><th>درجة الذكاء</th><td>${s.iq}</td></tr>` : ''}
-    ${s.diagnosis ? `<tr><th>التشخيص</th><td>${s.diagnosis}</td></tr>` : ''}
-    ${s.program_place ? `<tr><th>المكان التربوي</th><td>${s.program_place}</td></tr>` : ''}
-    ${s.program_start ? `<tr><th>تاريخ بدء البرنامج</th><td>${s.program_start}</td></tr>` : ''}
-    ${s.program_end ? `<tr><th>تاريخ إنهاء البرنامج</th><td>${s.program_end}</td></tr>` : ''}
-    ${s.status_health ? `<tr><th>الوضع الصحي</th><td>${s.status_health}</td></tr>` : ''}
-    ${s.status_psych ? `<tr><th>الوضع النفسي</th><td>${s.status_psych}</td></tr>` : ''}
-    ${s.status_social ? `<tr><th>الوضع الاجتماعي</th><td>${s.status_social}</td></tr>` : ''}
-    ${s.sibling_order ? `<tr><th>الترتيب بين إخوته</th><td>${s.sibling_order}</td></tr>` : ''}
-    ${s.economic_level ? `<tr><th>المستوى الاقتصادي</th><td>${s.economic_level}</td></tr>` : ''}
-    ${s.father_edu ? `<tr><th>تعليم الأب</th><td>${s.father_edu}</td></tr>` : ''}
-    ${s.mother_edu ? `<tr><th>تعليم الأم</th><td>${s.mother_edu}</td></tr>` : ''}
-  `;
-
-  // IQRAR
-  const today = new Date();
-  const dateStr = today.toLocaleDateString('ar-SA-u-nu-latn', { year:'numeric', month:'long', day:'numeric' });
-  document.getElementById('iqrar-content').innerHTML = `
-    <div class="iqrar-box">
-      <h3>📄 نص الإقرار</h3>
-      <p>
-        أنا ولي أمر الطالب / <strong>${s.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
-        وأتعهد بالتعاون مع فريق التربية الخاصة لتحقيق أفضل النتائج لابني.
-      </p>
-    </div>
-
-    <div class="iqrar-fields">
-      <div class="iqrar-field">
-        <label>اسم الطالب</label>
-        <span>${s.name}</span>
-      </div>
-      <div class="iqrar-field">
-        <label>الصف الدراسي</label>
-        <span>${s.grade}</span>
-      </div>
-      <div class="iqrar-field">
-        <label>البرنامج</label>
-        <span>📘 برنامج يسير التعليمي</span>
-      </div>
-      <div class="iqrar-field">
-        <label>تاريخ الإقرار</label>
-        <span id="iqrar-date">${dateStr}</span>
-      </div>
-    </div>
-
-    <div style="font-size:0.84rem; font-weight:700; color:var(--primary); margin-bottom:8px;">✍️ توقيع ولي الأمر (ارسم توقيعك بالأسفل)</div>
-    <div class="sign-area" id="sign-area">
-      <canvas id="sign-canvas"></canvas>
-      <div class="sign-placeholder" id="sign-placeholder">
-        <span>✍️</span>
-        اضغط هنا وارسم توقيعك
-      </div>
-    </div>
-
-    <div class="iqrar-actions">
-      <button class="btn-sign" onclick="submitIqrar()">✅ تأكيد الإقرار والتوقيع</button>
-      <button class="btn-clear-sign" onclick="clearSign()">🗑️ مسح التوقيع</button>
-      <button id="btn-save-pdf" onclick="saveIqrarPDF()" style="display:none; align-items:center; gap:7px; padding:9px 18px; border-radius:9px; background:linear-gradient(135deg,#3F2E63,#8B6ABF); color:#fff; border:none; font-family:'Cairo',sans-serif; font-size:0.84rem; font-weight:700; cursor:pointer; box-shadow:0 3px 12px rgba(63,46,99,0.3);">🖨️ طباعة / حفظ PDF</button>
-    </div>
-
-    <div class="signed-badge" id="signed-badge">
-      ✅ تم تسجيل إقرارك بنجاح — شكراً لتعاونكم
-    </div>
-  `;
-
-  // Initialize signature canvas
-  initCanvas();
-
-  // SHOW PORTAL
-  // Reset to first tab (info)
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
-  document.querySelectorAll('.tab-pane').forEach((p,i) => p.classList.toggle('active', i===0));
-
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('student-portal').style.display = 'block';
-  window.scrollTo(0, 0);
-}
-
-function logout() {
-  currentStudent = null;
-  document.getElementById('pin-input').value = '';
-  document.getElementById('student-portal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  // Reset tabs
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-plan').classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.tab-btn').classList.add('active');
-}
-
-function openTab(id, btn) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active');
-  if (id === 'progress') renderProgressTab();
-  if (id === 'reinforce') renderReinforceTab();
-  if (id === 'home') renderHomeTab();
-  if (id === 'meetings') renderMeetingsTab();
-  if (id === 'forms') renderFormsTab();
-  if (id === 'messages') renderMessagesTab();
-  // Init canvas when iqrar tab is opened
-  if (id === 'iqrar') setTimeout(initCanvas, 100);
-}
-
-// Legend
-// =====================================================
-// SIGNATURE CANVAS
-// =====================================================
-let isDrawing = false;
-let signCanvas, signCtx;
-
-function initCanvas() {
-  setTimeout(() => {
-    signCanvas = document.getElementById('sign-canvas');
-    if (!signCanvas) return;
-    const area = document.getElementById('sign-area');
-    signCanvas.width = area.offsetWidth;
-    signCanvas.height = area.offsetHeight;
-    signCtx = signCanvas.getContext('2d');
-    signCtx.strokeStyle = '#3F2E63';
-    signCtx.lineWidth = 2.5;
-    signCtx.lineCap = 'round';
-    signCtx.lineJoin = 'round';
-
-    signCanvas.addEventListener('mousedown', startDraw);
-    signCanvas.addEventListener('mousemove', draw);
-    signCanvas.addEventListener('mouseup', stopDraw);
-    signCanvas.addEventListener('mouseleave', stopDraw);
-    signCanvas.addEventListener('touchstart', e => { e.preventDefault(); startDraw(e.touches[0]); }, {passive:false});
-    signCanvas.addEventListener('touchmove', e => { e.preventDefault(); draw(e.touches[0]); }, {passive:false});
-    signCanvas.addEventListener('touchend', stopDraw);
-  }, 150);
-}
-
-function getPos(e) {
-  const rect = signCanvas.getBoundingClientRect();
-  return {
-    x: (e.clientX - rect.left) * (signCanvas.width / rect.width),
-    y: (e.clientY - rect.top) * (signCanvas.height / rect.height)
-  };
-}
-
-function startDraw(e) {
-  isDrawing = true;
-  let pos = getPos(e);
-  signCtx.beginPath();
-  signCtx.moveTo(pos.x, pos.y);
-  document.getElementById('sign-placeholder').style.display = 'none';
-  document.getElementById('sign-area').classList.add('signed');
-}
-
-function draw(e) {
-  if (!isDrawing) return;
-  let pos = getPos(e);
-  signCtx.lineTo(pos.x, pos.y);
-  signCtx.stroke();
-}
-
-function stopDraw() { isDrawing = false; }
-
-function clearSign() {
-  if (!signCtx) return;
-  signCtx.clearRect(0, 0, signCanvas.width, signCanvas.height);
-  const ph = document.getElementById('sign-placeholder');
-  if (ph) ph.style.display = 'flex';
-  document.getElementById('sign-area').classList.remove('signed');
-  document.getElementById('signed-badge').style.display = 'none';
-  const btnClear = document.querySelector('.btn-sign');
-  if (btnClear) { btnClear.textContent = '✅ تأكيد الإقرار والتوقيع'; btnClear.disabled = false; btnClear.style.opacity = '1'; }
-}
-
-async function submitIqrar() {
-  if (!signCanvas) return;
-  let data = signCtx.getImageData(0, 0, signCanvas.width, signCanvas.height).data;
-  const hasDrawing = Array.from(data).some((v, i) => i % 4 === 3 && v > 0);
-  if (!hasDrawing) {
-    alert('⚠️ يرجى رسم توقيعك في المربع أولاً');
-    return;
-  }
-
-  // Embed signature image into iqrar
-  let signImg = signCanvas.toDataURL('image/png');
-  const signArea = document.getElementById('sign-area');
-  signArea.innerHTML = `<img src="${signImg}" style="width:100%;height:100%;object-fit:contain;padding:6px;">`;
-  signArea.classList.add('signed');
-
-  // حفظ التوقيع في Supabase
-  const sIqrar = currentStudent;
-  const btnSign = document.querySelector('.btn-sign');
-  btnSign.textContent = '⏳ جاري الحفظ...';
-  btnSign.disabled = true;
-  btnSign.style.opacity = '0.7';
-
-  await sbSaveSignature(sIqrar.pin, sIqrar.name, sIqrar.grade, signImg);
-
-  document.getElementById('signed-badge').style.display = 'flex';
-  btnSign.textContent = '✅ تم تسجيل الإقرار وحفظ التوقيع';
-
-  // Show PDF save button
-  document.getElementById('btn-save-pdf').style.display = 'inline-flex';
-}
-
-function saveIqrarPDF() {
-  const sPDF = currentStudent;
-  let signImg = document.querySelector('#sign-area img');
-  let signSrc = signImg ? signImg.src : '';
-  let todayPDF = new Date().toLocaleDateString('ar-SA-u-nu-latn', {year:'numeric',month:'long',day:'numeric'});
-
-  const win = window.open('', '_blank');
-  win.document.write(`
-    <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
-    <head>
-      <meta charset="UTF-8">
-      <title>إقرار ولي الأمر — ${sPDF.name}</title>
-      <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Cairo',sans-serif; background:#fff; color:#221335; padding:40px; direction:rtl; }
-        .header { text-align:center; margin-bottom:30px; border-bottom:3px solid #3F2E63; padding-bottom:20px; }
-        .header h1 { font-size:1.4rem; font-weight:800; color:#3F2E63; margin-bottom:4px; }
-        .header p { font-size:0.85rem; color:#6E5F82; }
-        .badge { display:inline-block; background:#3F2E63; color:#fff; padding:4px 16px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:10px; }
-        .iqrar-text { background:#EAE1F7; border:1px solid #DCD2EE; border-right:4px solid #D7A24A; border-radius:10px; padding:18px 20px; margin:20px 0; font-size:0.9rem; line-height:2; }
-        .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
-        .field { border:1px solid #DCD2EE; border-radius:8px; padding:10px 14px; }
-        .field-label { font-size:0.72rem; font-weight:700; color:#6E5F82; margin-bottom:4px; }
-        .field-value { font-size:0.9rem; font-weight:800; color:#3F2E63; }
-        .sign-section { margin-top:24px; }
-        .sign-title { font-size:0.85rem; font-weight:700; color:#3F2E63; margin-bottom:10px; }
-        .sign-box { border:2px solid #3F2E63; border-radius:10px; height:120px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-        .sign-box img { max-height:110px; }
-        .footer { margin-top:30px; text-align:center; font-size:0.75rem; color:#9ca3af; border-top:1px solid #DCD2EE; padding-top:14px; }
-        @media print { body { padding:20px; } }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <div class="badge">وزارة التعليم — مدرسة مكة المكرمة المتوسطة</div>
-        <h1>إقرار اطلاع ولي الأمر على الخطة الفردية</h1>
-        <p>قسم ذوي الإعاقة — برنامج يسير التعليمي</p>
-      </div>
-
-      <div class="iqrar-text">
-        أنا ولي أمر الطالب / <strong>${sPDF.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
-        وأتعهد بالتعاون مع فريق التربية الخاصة لتحقيق أفضل النتائج لابني.
-      </div>
-
-      <div class="fields">
-        <div class="field"><div class="field-label">اسم الطالب</div><div class="field-value">${sPDF.name}</div></div>
-        <div class="field"><div class="field-label">الصف الدراسي</div><div class="field-value">${sPDF.grade}</div></div>
-        <div class="field"><div class="field-label">البرنامج</div><div class="field-value">📘 برنامج يسير التعليمي</div></div>
-        <div class="field"><div class="field-label">تاريخ الإقرار</div><div class="field-value">${todayPDF}</div></div>
-      </div>
-
-      <div class="sign-section">
-        <div class="sign-title">✍️ توقيع ولي الأمر</div>
-        <div class="sign-box">
-          ${signSrc ? `<img src="${signSrc}">` : '<span style="color:#9ca3af;font-size:0.85rem;">لا يوجد توقيع</span>'}
-        </div>
-      </div>
-
-      <div class="footer">
-        © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
-      </div>
-      <scr' + 'ipt>window.onload=()=>window.print();</scr' + 'ipt>
-    </body>
-    </html>
-  `);
-  win.document.close();
-}
-
-
-
-// =====================================================
-// ADMIN PANEL FUNCTIONS
-// =====================================================
-let editingPin = null;
-
-
-// ══ SETTINGS: change PINs ══════════════════════════════════════
-
-
-
-
-async function checkPin() {
-  const enteredPin = document.getElementById('pin-input').value.trim();
-  const errMsg = document.getElementById('error-msg');
-  const pinInput = document.getElementById('pin-input');
-  const loginBtn = document.querySelector('.login-btn');
-
-  if (!enteredPin || enteredPin.length !== 4) {
-    errMsg.textContent = '❌ أدخل رمزاً مكوناً من 4 أرقام';
-    errMsg.classList.add('show');
-    return;
-  }
-
-  if (loginBtn) { loginBtn.disabled = true; loginBtn.textContent = '⏳ جارٍ التحقق...'; }
-  errMsg.classList.remove('show');
-
-  try {
-    const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/yaseer/data/student-${enteredPin}.json?t=${Date.now()}`
-    );
-
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.name) {
-        STUDENTS[enteredPin] = {
-          name: data.name || '',
-          id_full: data.id_full || '',
-          grade: data.grade || '',
-          phone: data.phone || '',
-          plan: data.plan || [],
-          reports: data.reports || [],
-          followup: data.followup || [],
-          homeActivities: data.homeActivities || data.home_activities || [],
-          meetings: data.meetings || [],
-          forms: data.forms || [],
-          messages: data.messages || data.notifications || [],
-          pin: enteredPin
-        };
-        pinInput.classList.remove('error');
-        loadStudentWithSync(enteredPin);
-        return;
-      }
-    }
-
-    errMsg.textContent = '❌ الرمز غير صحيح، يرجى المحاولة مجدداً';
-    errMsg.classList.add('show');
-    pinInput.classList.add('error');
-    pinInput.value = '';
-    setTimeout(() => pinInput.classList.remove('error'), 500);
-
-  } catch(e) {
-    errMsg.textContent = '❌ تعذّر الاتصال، تحقق من الإنترنت';
-    errMsg.classList.add('show');
-  } finally {
-    if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = '🔓 دخول البوابة'; }
-  }
-}
-
-
-// ===== SUPABASE SYNC =====
-const SB_TABLE = SUPABASE_URL + '/rest/v1/yaseer_students';
-const SB_HEADERS = {
-  'apikey': SUPABASE_KEY,
-  'Authorization': 'Bearer ' + SUPABASE_KEY,
-  'Content-Type': 'application/json',
-  'Prefer': 'return=minimal'
-};
-
-async function syncFromSupabase() {
-  // لا نحتاج sync عند البداية — البيانات تُجلب فقط بعد تسجيل الدخول
-}
-
-async function loadStudentDataFromStorage(pin) {
-  try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/reports/yaseer/data/student-${pin}.json?t=${Date.now()}`);
-    if (!res.ok) return; // لا يوجد ملف محفوظ بعد
-    const data = await res.json();
-    if (data && STUDENTS[pin]) {
-      STUDENTS[pin].name     = data.name     || STUDENTS[pin].name;
-      STUDENTS[pin].grade    = data.grade    || STUDENTS[pin].grade;
-      STUDENTS[pin].id_full  = data.id_full  || STUDENTS[pin].id_full;
-      STUDENTS[pin].phone    = (data.phone !== undefined && data.phone !== null) ? data.phone : (STUDENTS[pin].phone || '');
-      STUDENTS[pin].plan     = data.plan     || STUDENTS[pin].plan     || [];
-      STUDENTS[pin].followup = data.followup || STUDENTS[pin].followup || [];
-      const sd = (key) => (data[key] !== undefined && data[key] !== null) ? data[key] : (STUDENTS[pin][key] || '');
-      STUDENTS[pin].birthdate      = sd('birthdate');
-      STUDENTS[pin].nationality    = sd('nationality');
-      STUDENTS[pin].age            = sd('age');
-      STUDENTS[pin].address        = sd('address');
-      STUDENTS[pin].iq             = sd('iq');
-      STUDENTS[pin].sibling_order  = sd('sibling_order');
-      STUDENTS[pin].economic_level = sd('economic_level');
-      STUDENTS[pin].father_edu     = sd('father_edu');
-      STUDENTS[pin].mother_edu     = sd('mother_edu');
-      STUDENTS[pin].status_psych   = sd('status_psych');
-      STUDENTS[pin].status_social  = sd('status_social');
-      STUDENTS[pin].status_health  = sd('status_health');
-      STUDENTS[pin].diagnosis      = sd('diagnosis');
-      STUDENTS[pin].program_place  = sd('program_place');
-      STUDENTS[pin].program_start  = sd('program_start');
-      STUDENTS[pin].program_end    = sd('program_end');
-      STUDENTS[pin].reports        = data.reports || STUDENTS[pin].reports || [];
-      STUDENTS[pin].iep            = data.iep || STUDENTS[pin].iep || {};
-      STUDENTS[pin].performance    = data.performance || STUDENTS[pin].performance || {};
-      STUDENTS[pin].performanceMeta = data.performanceMeta || STUDENTS[pin].performanceMeta || null;
-      STUDENTS[pin].strengths      = data.strengths || STUDENTS[pin].strengths || {};
-      STUDENTS[pin].strengthsMeta  = data.strengthsMeta || STUDENTS[pin].strengthsMeta || null;
-      STUDENTS[pin].reinforcements = data.reinforcements || STUDENTS[pin].reinforcements || [];
-      STUDENTS[pin].homeActivities = data.homeActivities || data.home_activities || STUDENTS[pin].homeActivities || [];
-      STUDENTS[pin].meetings       = data.meetings || STUDENTS[pin].meetings || [];
-      STUDENTS[pin].forms          = data.forms || STUDENTS[pin].forms || [];
-      STUDENTS[pin].messages       = data.messages || data.notifications || STUDENTS[pin].messages || [];
-    }
-  } catch(e) { /* ملف غير موجود */ }
-}
-
-async function loadStudentWithSync(pin) {
-  await loadStudentDataFromStorage(pin);
-  loadStudent(pin);
-}
-
-async function upsertToSupabase(pin, studentData) {
-  try {
-    const jsonStr = JSON.stringify({
-      pin,
-      name:     studentData.name,
-      id_full:  studentData.id_full,
-      grade:    studentData.grade,
-      phone:    studentData.phone || '',
-      plan:     studentData.plan     || [],
-      followup: studentData.followup || [],
-      birthdate:  studentData.birthdate || '',
-      nationality:  studentData.nationality || '',
-      age:  studentData.age || '',
-      address:  studentData.address || '',
-      iq:  studentData.iq || '',
-      sibling_order:  studentData.sibling_order || '',
-      economic_level:  studentData.economic_level || '',
-      father_edu:  studentData.father_edu || '',
-      mother_edu:  studentData.mother_edu || '',
-      status_psych:  studentData.status_psych || '',
-      status_social:  studentData.status_social || '',
-      status_health:  studentData.status_health || '',
-      diagnosis:  studentData.diagnosis || '',
-      program_place:  studentData.program_place || '',
-      program_start:  studentData.program_start || '',
-      program_end:  studentData.program_end || '',
-    });
-    const blob = new Blob([jsonStr], {type: 'application/json'});
-    const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
-      method: 'POST',
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Content-Type': 'application/json',
-        'x-upsert': 'true'
-      },
-      body: blob
-    });
-    if (res.ok) {
-      showToast('✅ تم حفظ بيانات ' + studentData.name);
-    } else {
-      const err = await res.text();
-      console.error('Storage error:', err);
-      showToast('❌ خطأ: ' + err.slice(0,60));
-    }
-  } catch(e) {
-    console.error('خطأ:', e);
-    showToast('❌ تعذّر الاتصال');
-  }
-}
-
-
-
-
-// ===== حفظ جميع الطلاب دفعة واحدة =====
-
-// =====================================================
-// الجدول الأسبوعي — برنامج يسير
-// =====================================================
-
-const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
-const PERIODS = [
-  { num: 1, label: 'الأولى',  timeS: '7:00–7:45',    timeW: '7:30–8:15'   },
-  { num: 2, label: 'الثانية', timeS: '7:45–8:30',    timeW: '8:15–9:00'   },
-  { num: 3, label: 'الثالثة', timeS: '8:30–9:15',    timeW: '9:00–9:45'   },
-  { num: 4, label: 'الرابعة', timeS: '9:35–10:20',   timeW: '10:05–10:50' },
-  { num: 5, label: 'الخامسة', timeS: '10:20–11:05',  timeW: '10:50–11:35' },
-];
-const TEACHERS_TBL = [
-  { key: 'saad',   name: 'سعد الزهراني',  color: '#3F2E63', accent: '#8B6ABF', light: '#e8f0fa' },
-  { key: 'husain', name: 'حسين الكبيشي', color: '#129E7C', accent: '#15803d', light: '#e8f7f1' },
-];
-const SUBJECTS_LIST = ['لغة عربية', 'رياضيات'];
-const TIMETABLE_KEY = 'yaseer_timetable_v4'; // للـ cache المحلي فقط
-const SB_TIMETABLE_KEY = 'yaseer_timetable_main'; // المفتاح في Supabase
-
-// ---- تحميل من Supabase (مع fallback للـ localStorage) ----
-async function loadTimetable() {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/teacher_portfolios?teacher_key=eq.${SB_TIMETABLE_KEY}&select=data`, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
-    if (res.ok) {
-      const rows = await res.json();
-      if (rows?.length > 0 && rows[0].data) {
-        localStorage.setItem(TIMETABLE_KEY, JSON.stringify(rows[0].data));
-        return rows[0].data;
-      }
-    }
-  } catch(e) {}
-  // fallback: localStorage
-  try { const r = localStorage.getItem(TIMETABLE_KEY); return r ? JSON.parse(r) : null; }
-  catch(e) { return null; }
-}
-
-// ---- حفظ في Supabase ----
-async function saveTimetable(d) {
-  // حفظ محلي فوري
-  try { localStorage.setItem(TIMETABLE_KEY, JSON.stringify(d)); } catch(e) {}
-  // حفظ في Supabase
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/teacher_portfolios`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify({ teacher_key: SB_TIMETABLE_KEY, data: d })
-    });
-  } catch(e) {}
-}
-
-// هيكل الخلية: { teacher: 'saad'|'husain'|'', students: [{name, subject}] }
-function getEmptyTimetable() {
-  const t = {};
-  DAYS.forEach(d => { t[d] = {}; PERIODS.forEach(p => { t[d][p.num] = { teacher: '', students: [] }; }); });
-  return t;
-}
-
-function getDefaultTimetable() {
-  const t = getEmptyTimetable();
-  const fill = (day, period, teacher, students) => {
-    t[day][period] = { teacher, students };
-  };
-  // أ. سعد الزهراني
-  fill('الأحد',    2, 'saad',   [{name:'أمجد المحوري',        subject:'لغة عربية'}]);
-  fill('الأحد',    3, 'saad',   [{name:'فارس القحطاني',       subject:'لغة عربية'}, {name:'عبدالمجيد الهلالي', subject:'لغة عربية'}]);
-  fill('الأحد',    4, 'saad',   [{name:'مسفر القحطاني',       subject:'رياضيات'}]);
-  fill('الاثنين',  3, 'saad',   [{name:'مسفر القحطاني',       subject:'رياضيات'}]);
-  fill('الثلاثاء', 3, 'saad',   [{name:'فارس القحطاني',       subject:'لغة عربية'}, {name:'عبدالمجيد الهلالي', subject:'لغة عربية'}]);
-  fill('الأربعاء', 3, 'saad',   [{name:'فارس القحطاني',       subject:'رياضيات'}]);
-  fill('الأربعاء', 4, 'saad',   [{name:'مسفر القحطاني',       subject:'رياضيات'}]);
-  fill('الخميس',   3, 'saad',   [{name:'مسفر القحطاني',       subject:'لغة عربية'}]);
-  fill('الخميس',   4, 'saad',   [{name:'طلال العصماني',       subject:'لغة عربية'}, {name:'عبدالله الزهراني',  subject:'لغة عربية'}]);
-  // أ. حسين الكبيشي
-  fill('الأحد',    5, 'husain', [{name:'محمد الشمراني',       subject:'لغة عربية'}, {name:'وسام السهيمي',      subject:'لغة عربية'}]);
-  fill('الاثنين',  2, 'husain', [{name:'حسن الزهراني',        subject:'لغة عربية'}]);
-  fill('الاثنين',  5, 'husain', [{name:'محمد الشمراني',       subject:'رياضيات'},   {name:'وسام السهيمي',      subject:'رياضيات'}]);
-  fill('الثلاثاء', 2, 'husain', [{name:'بسام المالكي',        subject:'لغة عربية'}]);
-  fill('الثلاثاء', 4, 'husain', [{name:'مراد المنتشري',       subject:'رياضيات'},   {name:'فيصل الغامدي',      subject:'رياضيات'}]);
-  fill('الثلاثاء', 5, 'husain', [{name:'عبدالرحمن مقري',     subject:'لغة عربية'}, {name:'محمد الغامدي',      subject:'لغة عربية'}]);
-  fill('الأربعاء', 2, 'husain', [{name:'بسام المالكي',        subject:'رياضيات'}]);
-  fill('الأربعاء', 5, 'husain', [{name:'محمد الغامدي',        subject:'رياضيات'}]);
-  fill('الخميس',   2, 'husain', [{name:'حسن الزهراني',        subject:'رياضيات'}]);
-  return t;
-}
-
-let timetableData = null;
-let editingCell = null;
-
-let isSummerMode = false; // حالة الوضع صيفي/شتوي
-
-async function renderSchedule() {
-  // إعادة تحميل البيانات الافتراضية دائماً إذا كانت الأسماء قديمة
-  const loaded = await loadTimetable();
-  if (loaded) {
-    // فحص إذا كانت الأسماء قديمة (مختصرة)
-    const allNames = Object.values(loaded).flatMap(day => Object.values(day)).flatMap(cell => cell.students || []).map(s => s.name);
-    const hasOldNames = allNames.some(n => ['أمجد المحوري','فارس القحطاني','مسفر القحطاني','محمد الشمراني','حسن الزهراني','بسام المالكي','مراد المنتشري','فيصل الغامدي','عبدالرحمن مقري','محمد الغامدي','وسام السهيمي','طلال العصماني','عبدالله الزهراني'].includes(n));
-    timetableData = hasOldNames ? getDefaultTimetable() : loaded;
-    if (hasOldNames) await saveTimetable(timetableData);
-  } else {
-    timetableData = getDefaultTimetable();
-  }
-  const isSummer = isSummerMode;
-  const container = document.getElementById('schedule-container');
-
-  // حساب الإجماليات
-  const totals = { saad: 0, husain: 0 };
-  DAYS.forEach(d => PERIODS.forEach(p => {
-    const cell = timetableData[d]?.[p.num];
-    if (cell?.teacher && cell.students?.length > 0) totals[cell.teacher]++;
-  }));
-
-  container.innerHTML = `
-    <style>
-      @media print {
-        @page { size: A4 landscape; margin: 12mm 10mm; }
-        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        body > *:not(#admin-portal) { display: none !important; }
-        #admin-portal { display: block !important; padding: 0 !important; margin: 0 !important; }
-        #admin-portal > *:not(.admin-body) { display: none !important; }
-        .admin-body { padding: 0 !important; margin: 0 !important; }
-        .admin-tabs, .no-print { display: none !important; }
-        #admin-tab-list, #admin-tab-add { display: none !important; }
-        #admin-tab-schedule { display: block !important; padding: 0 !important; }
-        .sched-print-header { display: flex !important; }
-        #schedule-container { padding: 0 !important; }
-        .timetable-card {
-          box-shadow: none !important;
-          border: 1.5px solid #3F2E63 !important;
-          border-radius: 0 !important;
-          overflow: visible !important;
-        }
-        .sched-table { width: 100% !important; table-layout: fixed !important; }
-        .sched-th-day, .sched-th-period { padding: 8px 4px !important; font-size: 8pt !important; }
-        .sched-td-day { padding: 6px 4px !important; font-size: 8pt !important; }
-        .sched-td-cell { padding: 4px 3px !important; min-width: unset !important; }
-        .cell-inner-saad, .cell-inner-husain { padding: 4px 5px !important; border-radius: 5px !important; }
-        .cell-stu-name { font-size: 8pt !important; }
-        .cell-teacher-label { font-size: 6pt !important; }
-        .subj-pill { font-size: 6pt !important; padding: 1px 4px !important; }
-        div[style*="font-size:0.6rem"] { font-size: 6pt !important; }
-        div[style*="font-size:0.58rem"] { font-size: 6pt !important; }
-      }
-      .sched-print-header { display: none; }
-
-      .sched-wrap { font-family: 'Cairo', sans-serif; direction: rtl; }
-
-      /* Header bar */
-      .sched-topbar {
-        background: linear-gradient(135deg, #2E2148 0%, #3F2E63 50%, #1e4976 100%);
-        border-radius: 16px; padding: 18px 22px;
-        display: flex; align-items: center; justify-content: space-between;
-        flex-wrap: wrap; gap: 12px; margin-bottom: 20px;
-        box-shadow: 0 4px 24px rgba(15,36,64,0.25);
-        position: relative; overflow: hidden;
-      }
-      .sched-topbar::before {
-        content: ''; position: absolute; top: -40px; left: -40px;
-        width: 180px; height: 180px; border-radius: 50%;
-        background: rgba(255,255,255,0.04); pointer-events: none;
-      }
-      .sched-topbar::after {
-        content: ''; position: absolute; bottom: -60px; right: 10%;
-        width: 240px; height: 240px; border-radius: 50%;
-        background: rgba(215,162,74,0.08); pointer-events: none;
-      }
-      .sched-title { color: #fff; font-size: 1.05rem; font-weight: 800; margin: 0; }
-      .sched-sub   { color: rgba(255,255,255,0.55); font-size: 0.72rem; margin-top: 3px; }
-
-      /* Season toggle */
-      .season-toggle {
-        display: flex; border-radius: 10px; overflow: hidden;
-        border: 1.5px solid rgba(255,255,255,0.15);
-        background: rgba(255,255,255,0.07);
-      }
-      .season-btn {
-        padding: 7px 16px; border: none; cursor: pointer;
-        font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700;
-        transition: all 0.22s; background: transparent; color: rgba(255,255,255,0.55);
-      }
-      .season-btn.active { background: rgba(255,255,255,0.18); color: #fff; }
-      .season-btn.active-gold { background: rgba(215,162,74,0.7); color: #fff; }
-
-      /* Action buttons */
-      .sched-btn {
-        display: flex; align-items: center; gap: 5px;
-        padding: 8px 16px; border: none; border-radius: 9px;
-        font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700;
-        cursor: pointer; transition: all 0.18s; white-space: nowrap;
-      }
-      .sched-btn:hover { transform: translateY(-1px); }
-      .sched-btn-print { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
-      .sched-btn-save  { background: #D7A24A; color: #fff; box-shadow: 0 2px 10px rgba(215,162,74,0.4); }
-      .sched-btn-reset { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
-
-      /* Teacher stat cards */
-      .sched-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-      .stat-card {
-        border-radius: 14px; padding: 14px 18px;
-        display: flex; align-items: center; gap: 14px;
-        border: 1.5px solid transparent; transition: transform 0.2s;
-      }
-      .stat-card:hover { transform: translateY(-2px); }
-      .stat-avatar {
-        width: 44px; height: 44px; border-radius: 12px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.3rem; flex-shrink: 0;
-      }
-      .stat-info { flex: 1; }
-      .stat-name  { font-size: 0.85rem; font-weight: 800; }
-      .stat-count { font-size: 0.72rem; margin-top: 2px; }
-      .stat-num   { font-size: 1.6rem; font-weight: 900; }
-
-      /* Legend */
-      .sched-legend { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
-      .legend-pill {
-        display: flex; align-items: center; gap: 5px;
-        padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
-        border: 1px solid transparent;
-      }
-      .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-      /* Table */
-      .timetable-card {
-        border-radius: 16px; overflow: hidden;
-        box-shadow: 0 4px 30px rgba(15,36,64,0.1);
-        border: 1px solid #e2e8f0;
-      }
-      .sched-table { width: 100%; border-collapse: collapse; min-width: 680px; background: #fff; }
-      .sched-th-day {
-        background: linear-gradient(180deg, #2E2148 0%, #3F2E63 100%);
-        color: #fff; padding: 14px 10px; text-align: center;
-        font-size: 0.8rem; font-weight: 800; width: 76px;
-        border-left: 1px solid rgba(255,255,255,0.08);
-      }
-      .sched-th-period {
-        background: linear-gradient(180deg, #2E2148 0%, #3F2E63 100%);
-        color: #fff; padding: 11px 8px; text-align: center;
-        font-size: 0.76rem; border-left: 1px solid rgba(255,255,255,0.08);
-      }
-      .sched-th-period .p-num  { font-weight: 800; font-size: 0.8rem; }
-      .sched-th-period .p-time { font-size: 0.63rem; color: #7fa8cc; margin-top: 3px; }
-
-      .sched-td-day {
-        padding: 10px 8px; text-align: center; font-weight: 800; font-size: 0.84rem;
-        color: #3F2E63; border-left: 2px solid #e8eef6;
-        background: linear-gradient(180deg, #f4f7fb 0%, #eaf0f8 100%);
-        vertical-align: middle; white-space: nowrap;
-      }
-      .sched-td-cell {
-        padding: 6px 5px; vertical-align: top;
-        border-left: 1px solid #eef1f6; cursor: pointer;
-        transition: background 0.15s; min-width: 108px; min-height: 64px;
-      }
-      .sched-td-cell:hover { background: #f0f6ff !important; }
-      .sched-row-even { background: #fff; }
-      .sched-row-odd  { background: #FBFAFE; }
-
-      .sched-cell { min-height: 60px; }
-      .cell-teacher-label {
-        font-size: 0.6rem; font-weight: 800; letter-spacing: 0.02em;
-        text-transform: uppercase; margin-bottom: 4px; opacity: 0.75;
-      }
-      .cell-student-row {
-        display: flex; align-items: center; gap: 4px;
-        margin-bottom: 3px; flex-wrap: wrap;
-      }
-      .cell-stu-name {
-        font-size: 0.74rem; font-weight: 700; line-height: 1.2;
-      }
-      .subj-pill {
-        font-size: 0.6rem; font-weight: 800; padding: 1px 6px;
-        border-radius: 10px; white-space: nowrap; flex-shrink: 0;
-      }
-      .subj-ar   { background: #fef3c7; color: #92400e; }
-      .subj-math { background: #dbeafe; color: #1e40af; }
-      .cell-empty-icon { color: #d4dbe8; font-size: 1rem; text-align: center; padding-top: 18px; }
-      .cell-inner-saad   { background: linear-gradient(135deg, #e8f0fa, #dde8f5); border: 1px solid #b8cfe8; border-radius: 9px; padding: 6px 8px; }
-      .cell-inner-husain { background: linear-gradient(135deg, #e6f5ee, #daf0e6); border: 1px solid #b0dfc4; border-radius: 9px; padding: 6px 8px; }
-    </style>
-
-    <!-- رأس الطباعة -->
-    <div class="sched-print-header" style="align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 18px;background:linear-gradient(135deg,#2E2148,#3F2E63);border-radius:8px;">
-      <div style="text-align:right;">
-        <div style="font-weight:900;font-size:13pt;color:#fff;">جدول الحصص الأسبوعي — برنامج يسير التعليمي</div>
-        <div style="font-size:8.5pt;color:rgba(255,255,255,0.7);margin-top:4px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة</div>
-      </div>
-      <div style="color:rgba(255,255,255,0.85);font-size:9pt;font-weight:700;text-align:left;">أ. سعد الزهراني &nbsp;|&nbsp; أ. حسين الكبيشي</div>
-    </div>
-
-    <div class="sched-wrap">
-
-      <!-- Top bar -->
-      <div class="sched-topbar no-print">
-        <div>
-          <div class="sched-title">📅 الجدول الأسبوعي — برنامج يسير التعليمي</div>
-          <div class="sched-sub">القاعة مشتركة · الفصل الدراسي الثاني 1447هـ</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:relative;z-index:1;">
-          <div class="season-toggle">
-            <button class="season-btn ${!isSummer ? 'active' : ''}" onclick="setSeasonMode(false)">❄️ شتوي</button>
-            <button class="season-btn ${isSummer ? 'active-gold' : ''}" onclick="setSeasonMode(true)">☀️ صيفي</button>
-          </div>
-          <button class="sched-btn sched-btn-print" onclick="printTimetable()">🖨️ طباعة</button>
-          <button class="sched-btn sched-btn-save"  onclick="saveTimetableBtn()">💾 حفظ</button>
-        </div>
-      </div>
-
-      <!-- Stat cards -->
-      <div class="sched-stats no-print">
-        ${TEACHERS_TBL.map(t => `
-          <div class="stat-card" style="background:${t.light};border-color:${t.color}22;">
-            <div class="stat-avatar" style="background:${t.color}18;">${t.key === 'saad' ? '👨‍🏫' : '👨‍💼'}</div>
-            <div class="stat-info">
-              <div class="stat-name" style="color:${t.color};">أ. ${t.name}</div>
-              <div class="stat-count" style="color:${t.accent};">إجمالي الحصص الأسبوعية</div>
-            </div>
-            <div class="stat-num" style="color:${t.color};">${totals[t.key]}</div>
-          </div>`).join('')}
-      </div>
-
-      <!-- Legend -->
-      <div class="sched-legend no-print">
-        ${TEACHERS_TBL.map(t => `
-          <div class="legend-pill" style="background:${t.light};border-color:${t.color}33;">
-            <div class="legend-dot" style="background:${t.color};"></div>
-            <span style="color:${t.color};">أ. ${t.name.split(' ')[0]}</span>
-          </div>`).join('')}
-        <div class="legend-pill subj-ar" style="border-color:#f59e0b44;">📚 لغة عربية</div>
-        <div class="legend-pill subj-math" style="border-color:#3b82f644;">🔢 رياضيات</div>
-        <div style="font-size:0.71rem;color:#aaa;margin-right:4px;">• اضغط على أي خلية للتعديل</div>
-      </div>
-
-      <!-- Table -->
-      <div class="timetable-card" style="overflow-x:auto;">
-        <table class="sched-table">
-          <thead>
-            <tr>
-              <th class="sched-th-day">اليوم</th>
-              ${PERIODS.map(p => `
-                <th class="sched-th-period">
-                  <div class="p-num">الحصة ${p.label}</div>
-                  <div class="p-time">${isSummer ? p.timeS : p.timeW}</div>
-                </th>`).join('')}
-            </tr>
-          </thead>
-          <tbody>
-            ${DAYS.map((day, di) => `
-              <tr class="${di % 2 === 0 ? 'sched-row-even' : 'sched-row-odd'}">
-                <td class="sched-td-day">${day}</td>
-                ${PERIODS.map(p => {
-                  const cell = timetableData[day]?.[p.num] || { teacher: '', students: [] };
-                  const t = TEACHERS_TBL.find(x => x.key === cell.teacher);
-                  const hasData = cell.teacher && cell.students?.length > 0;
-                  const rowBg = di % 2 === 0 ? '#fff' : '#FBFAFE';
-                  return `
-                    <td class="sched-td-cell ${di%2===0?'sched-row-even':'sched-row-odd'}"
-                        onclick="openCellEditor('${day}',${p.num})"
-                        onmouseleave="this.style.background='${rowBg}'">
-                      <div class="sched-cell">
-                        ${hasData ? `
-                          <div class="cell-inner-${t.key}">
-                            <div class="cell-teacher-label" style="color:${t.accent};">أ. ${t.name.split(' ')[0]}</div>
-                            ${cell.students.map(s => {
-                              const parts = s.name.trim().split(' ');
-                              const shortName = parts.length >= 2 ? parts[0] + ' ' + parts[parts.length - 1] : s.name;
-                              const stuEntry = Object.values(STUDENTS).find(x => x.name === s.name);
-                              const grade = stuEntry?.grade || '';
-                              return `
-                                <div style="margin-bottom:5px;">
-                                  <div style="display:flex;align-items:center;gap:4px;">
-                                    <span class="cell-stu-name" style="color:${t.color};">${shortName}</span>
-                                    <span class="subj-pill ${s.subject === 'رياضيات' ? 'subj-math' : 'subj-ar'}">${s.subject === 'رياضيات' ? '🔢' : '📚'}</span>
-                                  </div>
-                                  ${grade ? `<div style="font-size:0.6rem;font-weight:600;color:${t.accent};opacity:0.85;margin-top:1px;">${grade}</div>` : ''}
-                                </div>`;
-                            }).join('')}
-                          </div>` : `<div class="cell-empty-icon">·</div>`}
-                      </div>
-                    </td>`;
-                }).join('')}
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-
-  `;
-}
-
-function openCellEditor(day, period) {
-  editingCell = { day, period };
-  const cell = timetableData[day]?.[period] || { teacher: '', students: [] };
-  const periodInfo = PERIODS.find(p => p.num === period);
-  const allPins = Object.keys(STUDENTS);
-
-  const html = `
-    <div style="background:linear-gradient(135deg,#2E2148,#3F2E63);padding:18px 22px;border-radius:20px 20px 0 0;">
-      <div style="display:flex;align-items:center;justify-content:space-between;">
-        <div>
-          <div style="color:#fff;font-weight:800;font-size:0.95rem;">✏️ تعديل الحصة</div>
-          <div style="color:rgba(255,255,255,0.5);font-size:0.72rem;margin-top:2px;">${day} — الحصة ${periodInfo?.label}</div>
-        </div>
-        <button onclick="closeCellEditor()" style="background:rgba(255,255,255,0.12);border:none;border-radius:50%;width:30px;height:30px;color:#fff;font-size:1rem;cursor:pointer;line-height:30px;text-align:center;">✕</button>
-      </div>
-    </div>
-    <div style="padding:20px 22px;">
-
-      <!-- اختيار المعلم -->
-      <div style="margin-bottom:18px;">
-        <div style="font-size:0.78rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-          <span style="background:#3F2E63;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">١</span>
-          المعلم المسؤول عن هذه الحصة
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;">
-          ${TEACHERS_TBL.map(t => {
-            const isSelected = cell.teacher === t.key;
-            return `
-              <label style="display:flex;align-items:center;gap:8px;background:${isSelected ? t.light : '#FBFAFE'};border:2px solid ${isSelected ? t.color : '#DCD2EE'};border-radius:12px;padding:10px 14px;cursor:pointer;transition:all 0.15s;">
-                <input type="radio" name="cell-teacher" value="${t.key}" ${isSelected ? 'checked' : ''} style="accent-color:${t.color};width:14px;height:14px;" onchange="updateTeacherSelection()">
-                <div>
-                  <div style="font-size:0.82rem;font-weight:800;color:${t.color};">${t.name.split(' ')[0]}</div>
-                  <div style="font-size:0.68rem;color:#aaa;">${t.name.split(' ')[1] || ''}</div>
-                </div>
-              </label>`;
-          }).join('')}
-          <label style="display:flex;align-items:center;gap:6px;background:${!cell.teacher ? '#f0f0f0' : '#FBFAFE'};border:2px solid ${!cell.teacher ? '#999' : '#DCD2EE'};border-radius:12px;padding:10px 12px;cursor:pointer;">
-            <input type="radio" name="cell-teacher" value="" ${!cell.teacher ? 'checked' : ''} style="width:14px;height:14px;" onchange="updateTeacherSelection()">
-            <span style="font-size:0.78rem;color:#888;font-weight:600;">فارغة</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- تحذير التعارض -->
-      <div id="conflict-warning" style="display:none;background:#fff1f1;border:1.5px solid #fca5a5;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:0.78rem;color:#b91c1c;font-weight:700;display:flex;align-items:center;gap:6px;">
-        ⚠️ تعارض: المعلم الآخر لديه حصة في نفس الوقت!
-      </div>
-
-      <!-- الطلاب -->
-      <div style="margin-bottom:18px;">
-        <div style="font-size:0.78rem;font-weight:700;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-          <span style="background:#3F2E63;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:900;">٢</span>
-          الطلاب في هذه الحصة
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;">
-          ${allPins.map(pin => {
-            const s = STUDENTS[pin];
-            const parts = s.name.trim().split(' ');
-            const shortName = parts.length >= 2 ? parts[0] + ' ' + parts[parts.length - 1] : s.name;
-            const entry = cell.students?.find(x => x.name === s.name);
-            const checked = !!entry;
-            const subj = entry?.subject || 'لغة عربية';
-            return `
-              <div id="stu-wrap-${pin}" style="background:${checked ? '#f0f4fa' : '#FBFAFE'};border:1.5px solid ${checked ? '#3F2E63' : '#DCD2EE'};border-radius:10px;padding:7px 10px;transition:all 0.15s;min-width:90px;">
-                <label style="display:flex;align-items:center;gap:5px;cursor:pointer;margin-bottom:${checked ? '6px' : '0'};">
-                  <input type="checkbox" data-pin="${pin}" ${checked ? 'checked' : ''} style="accent-color:#3F2E63;width:13px;height:13px;" onchange="toggleStudentInCell(this,'${pin}')">
-                  <span style="font-size:0.77rem;font-weight:700;color:#3F2E63;">${shortName}</span>
-                </label>
-                <div id="subj-row-${pin}" style="display:${checked ? 'flex' : 'none'};gap:4px;flex-wrap:wrap;">
-                  ${SUBJECTS_LIST.map(subj2 => `
-                    <label style="display:flex;align-items:center;gap:3px;cursor:pointer;">
-                      <input type="radio" name="subj-${pin}" value="${subj2}" ${subj === subj2 ? 'checked' : ''} style="width:11px;height:11px;accent-color:${subj2 === 'رياضيات' ? '#1e40af' : '#92400e'};">
-                      <span style="font-size:0.65rem;font-weight:700;padding:1px 6px;border-radius:8px;" class="${subj2 === 'رياضيات' ? 'subj-math' : 'subj-ar'}">${subj2}</span>
-                    </label>`).join('')}
-                </div>
-              </div>`;
-          }).join('')}
-        </div>
-      </div>
-
-      <button onclick="saveCellEdit()" style="width:100%;background:linear-gradient(135deg,#2E2148,#8B6ABF);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(15,36,64,0.3);transition:transform 0.15s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='none'">
-        💾 حفظ التعديلات
-      </button>
-    </div>
-  `;
-
-  document.getElementById('cell-content').innerHTML = html;
-  document.getElementById('cell-overlay').style.display = 'block';
-  document.getElementById('cell-box').style.display = 'block';
-  checkConflict();
-}
-
-
-function updateTeacherSelection() { checkConflict(); }
-
-function checkConflict() {
-  const { day, period } = editingCell;
-  const selectedTeacher = document.querySelector('input[name="cell-teacher"]:checked')?.value;
-  if (!selectedTeacher) { document.getElementById('conflict-warning').style.display = 'none'; return; }
-  const otherKey = selectedTeacher === 'saad' ? 'husain' : 'saad';
-  const otherCell = timetableData[day]?.[period];
-  const hasConflict = otherCell?.teacher === otherKey && otherCell.students?.length > 0;
-  document.getElementById('conflict-warning').style.display = hasConflict ? 'block' : 'none';
-}
-
-function toggleStudentInCell(cb, pin) {
-  const wrap = document.getElementById('stu-wrap-' + pin);
-  const subjRow = document.getElementById('subj-row-' + pin);
-  if (cb.checked) {
-    wrap.style.borderColor = '#3F2E63';
-    subjRow.style.display = 'flex';
-  } else {
-    wrap.style.borderColor = '#e0e0e0';
-    subjRow.style.display = 'none';
-  }
-}
-
-function closeCellEditor() {
-  document.getElementById('cell-overlay').style.display = 'none';
-  document.getElementById('cell-box').style.display = 'none';
-  editingCell = null;
-}
-
-async function saveCellEdit() {
-  if (!editingCell) return;
-  const { day, period } = editingCell;
-  const teacher = document.querySelector('input[name="cell-teacher"]:checked')?.value || '';
-  const allPins = Object.keys(STUDENTS);
-  const students = [];
-  allPins.forEach(pin => {
-    const cb = document.querySelector(`input[data-pin="${pin}"]`);
-    if (cb?.checked) {
-      const subject = document.querySelector(`input[name="subj-${pin}"]:checked`)?.value || 'لغة عربية';
-      students.push({ name: STUDENTS[pin].name, subject });
-    }
-  });
-  if (!timetableData[day]) timetableData[day] = {};
-  timetableData[day][period] = { teacher, students };
-  await saveTimetable(timetableData);
-  closeCellEditor();
-  renderSchedule();
-}
-
-function setSeasonMode(summer) {
-  isSummerMode = summer;
-  renderSchedule();
-}
-
-async function saveTimetableBtn() {
-  await saveTimetable(timetableData);
-  showToast('✅ تم حفظ الجدول في Supabase');
-}
-
-function printTimetable() {
-  document.querySelector('.sched-print-header').style.display = 'flex';
-  window.print();
-  setTimeout(() => { document.querySelector('.sched-print-header').style.display = 'none'; }, 1200);
-}
-
-async function resetTimetable() {
-  if (!confirm('إعادة تعيين الجدول للبيانات الأصلية؟')) return;
-  await saveTimetable(getDefaultTimetable());
-  renderSchedule();
-}
-
-
-
-
-// ===== PLAN EDITOR =====
-
-
-
-
-// ===== FOLLOWUP EDITOR =====
-const FU_OPTIONS = ['✓','~','✗'];
-
-
-
-
-
-// ===== SAVE =====
-
-// ===== DELETE FROM SUPABASE =====
-
-// ===== DELETE =====
-
-// ===== ADD NEW STUDENT =====
-// auto-fill pin from ID
-document.addEventListener('input', e => {
-  if (e.target.id === 'new-id') {
-    const val = e.target.value.trim();
-    document.getElementById('new-pin-preview').value = val.length >= 4 ? val.slice(-4) : '';
-  }
-});
-
-
-// ===== TOAST =====
-function showToast(msg) {
-  const t = document.getElementById('success-toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 3000);
-}
-
-// إغلاق المودال بالضغط خارجه
-document.getElementById('edit-modal')?.addEventListener('click', e => {
-  if (e.target === document.getElementById('edit-modal')) closeModal();
-});
-
-// =====================================================
-// أدوات مساعدة + ثوابت المواد والمستويات
-// (للعرض فقط — تُعبَّأ من بوابة المعلمين)
-// =====================================================
-function escHtml(str) {
-  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-const CORE_SUBJECTS_Y = [
-  { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖' },
-  { key:'math',    name:'الرياضيات',             icon:'🔢' },
-  { key:'islamic', name:'التربية الإسلامية',     icon:'🕌' },
-  { key:'science', name:'العلوم',                icon:'🔬' },
-  { key:'life',    name:'المهارات الحياتية',     icon:'🌱' },
-];
-
-const IEP_LEVELS_Y = [
-  { value:'excellent', label:'متفوق',          color:'#059669', bg:'#d1fae5' },
-  { value:'advanced',  label:'متقدم',           color:'#2563eb', bg:'#dbeafe' },
-  { value:'capable',   label:'متمكن',           color:'#d97706', bg:'#fef3c7' },
-  { value:'failed',    label:'غير مجتاز',       color:'#dc2626', bg:'#fee2e2' },
-  { value:'none',      label:'— لم يُقيَّم —', color:'#9ca3af', bg:'#f3f4f6' },
-];
-
-const PERF_SUBJECTS_Y = [
-  { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖', skills:['القراءة الجهرية','الكتابة والإملاء','الفهم والاستيعاب','التعبير الشفوي','القواعد النحوية'] },
-  { key:'math',    name:'الرياضيات',             icon:'🔢', skills:['العمليات الحسابية الأساسية','الأعداد والتسلسل','الأشكال الهندسية','القياس والوحدات','حل المسائل'] },
-  { key:'islamic', name:'التربية الإسلامية',     icon:'🕌', skills:['الحفظ والتلاوة','العقيدة والأركان','الفقه والعبادات','السيرة والأخلاق','التطبيق العملي'] },
-  { key:'science', name:'العلوم',                icon:'🔬', skills:['الفهم والاستيعاب','التجارب العلمية','حفظ المعلومات','التطبيق والاستنتاج','المفاهيم البيئية'] },
-  { key:'life',    name:'المهارات الحياتية',     icon:'🌱', skills:['العناية الشخصية','التواصل الاجتماعي','المهارات العملية','الاستقلالية','التنظيم وإدارة الوقت'] },
-];
-
-const PERF_LEVELS_Y = [
-  { value:'mastered',   label:'متقن',       color:'#059669', bg:'#d1fae5' },
-  { value:'developing', label:'في التطور',  color:'#2563eb', bg:'#dbeafe' },
-  { value:'emerging',   label:'بدايات',     color:'#d97706', bg:'#fef3c7' },
-  { value:'not_yet',    label:'لم يصل بعد', color:'#dc2626', bg:'#fee2e2' },
-  { value:'na',         label:'غير مقيَّم', color:'#9ca3af', bg:'#f3f4f6' },
-];
-
-// =====================================================
-// المستوى والمتابعة (تقييم الأهداف + الأداء + القوة والاحتياج)
-// عرض فقط — يقوم المعلم المسؤول بالتحديث من بوابة المعلمين
-// =====================================================
-
-function normalizeList(value) {
-  if (Array.isArray(value)) return value;
-  if (!value) return [];
-  return [value];
-}
-
-function renderSimpleCards(containerId, items, emptyIcon, emptyTitle, emptySub, defaults = []) {
-  const container = document.getElementById(containerId);
-  if (!container || !currentStudent) return;
-  const list = normalizeList(items);
-  const source = list.length ? list : defaults;
-  if (!source.length) {
-    container.innerHTML = `<div class="empty-state"><div class="es-icon">${emptyIcon}</div><div class="es-title">${emptyTitle}</div><div class="es-sub">${emptySub}</div></div>`;
-    return;
-  }
-  container.innerHTML = `<div class="content-grid">${source.map(item => {
-    const title = item.title || item.name || item.subject || 'عنصر جديد';
-    const desc = item.desc || item.description || item.note || item.message || '';
-    const date = item.date || item.dateLabel || item.due || item.when || '';
-    const icon = item.icon || emptyIcon;
-    const url = item.url || item.link || item.file || '';
-    return `<div class="content-card">
-      <div class="content-card-icon">${escHtml(icon)}</div>
-      <div class="content-card-title">${escHtml(title)}</div>
-      ${desc ? `<div class="content-card-desc">${escHtml(desc)}</div>` : ''}
-      ${date ? `<div class="content-card-meta">📅 ${escHtml(date)}</div>` : ''}
-      ${url ? `<a class="action-link" href="${escHtml(url)}" target="_blank" rel="noopener">فتح / تحميل</a>` : ''}
-    </div>`;
-  }).join('')}</div>`;
-}
-
-function renderHomeTab() {
-  const defaults = [
-    { icon:'📖', title:'قراءة يومية قصيرة', desc:'تخصيص 10 دقائق يومياً لقراءة كلمات أو جمل قصيرة مناسبة لمستوى الطالب.', date:'توصية مستمرة' },
-    { icon:'✍️', title:'تدريب كتابي مبسط', desc:'نسخ كلمات مختارة أو كتابة جملة قصيرة مع التشجيع اللفظي بعد كل محاولة.', date:'حسب توجيه المعلم' },
-    { icon:'🧩', title:'مهارة حياتية', desc:'مشاركة الطالب في مهمة منزلية بسيطة مثل ترتيب الأدوات أو تجهيز الحقيبة.', date:'مرتين أسبوعياً' }
-  ];
-  renderSimpleCards('home-content', currentStudent.homeActivities, '🏠', 'لا توجد أنشطة منزلية مخصصة بعد', 'ستظهر هنا الأنشطة التي يضيفها المعلم لدعم الطالب في المنزل.', defaults);
-}
-
-function renderMeetingsTab() {
-  renderSimpleCards('meetings-content', currentStudent.meetings, '📅', 'لا توجد مواعيد مجدولة حالياً', 'عند تحديد لقاء أو اجتماع مع ولي الأمر سيظهر الموعد هنا.', []);
-}
-
-function renderFormsTab() {
-  const defaults = [
-    { icon:'📄', title:'إقرار الاطلاع على الخطة', desc:'يمكن توقيعه من تبويب الإقرار داخل ملف الطالب الإلكتروني.', date:'متاح إلكترونياً' },
-    { icon:'🧾', title:'نماذج وموافقات الطالب', desc:'تظهر هنا نماذج الموافقات أو الملفات التي يتم رفعها مستقبلاً من الإدارة أو المعلم.', date:'قريباً' }
-  ];
-  renderSimpleCards('forms-content', currentStudent.forms, '🧾', 'لا توجد نماذج مرفوعة حالياً', 'سيتم عرض النماذج والموافقات الخاصة بالطالب عند توفرها.', defaults);
-}
-
-function renderMessagesTab() {
-  const defaults = [
-    { icon:'🔔', title:'مرحباً بولي الأمر', desc:'هذه الصفحة مخصصة لتنبيهات ملف الطالب الإلكتروني مثل رفع خطة جديدة أو تقرير أو موعد اجتماع.', date:'إشعار عام' }
-  ];
-  renderSimpleCards('messages-content', currentStudent.messages, '🔔', 'لا توجد رسائل جديدة', 'ستظهر هنا التنبيهات المهمة الخاصة بالطالب.', defaults);
-}
-
-function renderProgressTab() {
-  const container = document.getElementById('progress-content');
-  if (!container || !currentStudent) return;
-
-  const iep = currentStudent.iep || {};
-  const allIEPSubjects = [
-    ...CORE_SUBJECTS_Y.map(cs => ({ key: cs.key, info: cs, data: iep[cs.key] })),
-    ...Object.entries(iep._custom || {}).map(([k,d]) => ({ key:k, info:{name:d.name, icon:d.icon}, data:d }))
-  ].filter(s => s.data && Array.isArray(s.data.goals) && s.data.goals.length > 0);
-
-  const perf = currentStudent.performance || {};
-  const hasPerf = Object.keys(perf).length > 0;
-
-  const sw = currentStudent.strengths || {};
-  const hasSW = Object.values(sw).some(s => (s.strengths && s.strengths.length) || (s.needs && s.needs.length));
-
-  if (allIEPSubjects.length === 0 && !hasPerf && !hasSW) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">📏</div>
-        <div class="es-title">لا توجد بيانات متابعة بعد</div>
-        <div class="es-sub">يقوم المعلم المسؤول عن الطالب بتعبئة هذا القسم من بوابة المعلمين</div>
-      </div>`;
-    return;
-  }
-
-  let html = '';
-
-  // ===== تقييم الأهداف =====
-  html += `<div class="progress-section-title">🎯 تقييم الأهداف التربوية</div>`;
-  if (allIEPSubjects.length === 0) {
-    html += `<div class="empty-state"><div class="es-icon">🎯</div><div class="es-title">لا توجد أهداف مُحددة بعد</div></div>`;
-  } else {
-    allIEPSubjects.forEach(sub => {
-      html += `<div class="iep-subject-block">
-        <div class="iep-subject-head"><span>${escHtml(sub.info.icon || '📚')}</span><span>${escHtml(sub.info.name)}</span></div>`;
-      sub.data.goals.forEach((g, i) => {
-        const lv = IEP_LEVELS_Y.find(l => l.value === (g.level || 'none')) || IEP_LEVELS_Y[4];
-        html += `
-        <div class="iep-goal-row">
-          <div class="iep-goal-num">${i+1}</div>
-          <div class="iep-goal-text">${escHtml(g.text || '')}</div>
-          <span class="iep-level-badge" style="color:${lv.color};background:${lv.bg};">${lv.label}</span>
-        </div>`;
+  // QUIZ
+  const answers = { q1:'b', q2:'a', q3:'a', q4:'b', q5:'a' };
+  function checkQuiz() {
+    let score = 0;
+    Object.keys(answers).forEach(q => {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      document.querySelectorAll(`input[name="${q}"]`).forEach(r => {
+        const opt = r.closest('.quiz-opt');
+        if (r.value === answers[q]) opt.classList.add('correct');
+        else if (selected && r.value === selected.value) opt.classList.add('wrong');
       });
-      html += `</div>`;
+      if (selected && selected.value === answers[q]) score++;
     });
-    if (iep._lastEval) {
-      try {
-        const d = new Date(iep._lastEval.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
-        html += `<div style="font-size:0.78rem;color:#9ca3af;margin-bottom:8px;">آخر تقييم: ${escHtml(d)} — بواسطة ${escHtml(iep._lastEval.teacher)}</div>`;
-      } catch(e) {}
-    }
+    const rb = document.getElementById('result-box');
+    rb.style.display = 'block';
+    if (score === 5) { rb.style.background='rgba(18,158,124,.12)'; rb.style.color='#0c6b54'; rb.style.border='1px solid rgba(18,158,124,.35)'; rb.textContent=`🏆 ممتاز! حصلت على ${score}/5`; }
+    else if (score >= 3) { rb.style.background='rgba(215,162,74,.14)'; rb.style.color='#8a6116'; rb.style.border='1px solid rgba(215,162,74,.4)'; rb.textContent=`👍 جيد! حصلت على ${score}/5`; }
+    else { rb.style.background='rgba(220,38,38,.08)'; rb.style.color='#991b1b'; rb.style.border='1px solid rgba(220,38,38,.3)'; rb.textContent=`📚 حصلت على ${score}/5 — راجع المحتوى أعلاه`; }
   }
 
-  // ===== مستوى الأداء =====
-  html += `<div class="progress-section-title">📏 مستوى الأداء الحالي</div>`;
-  if (!hasPerf) {
-    html += `<div class="empty-state"><div class="es-icon">📏</div><div class="es-title">لم يتم تقييم مستوى الأداء بعد</div></div>`;
-  } else {
-    html += `<div class="perf-legend">${PERF_LEVELS_Y.map(l => `<span style="background:${l.bg};color:${l.color};padding:2px 8px;border-radius:6px;font-size:0.73rem;font-weight:700;">${l.label}</span>`).join('')}</div>`;
-    PERF_SUBJECTS_Y.forEach(subj => {
-      const subjData = perf[subj.key];
-      if (!subjData) return;
-      html += `
-      <div class="perf-subject-block">
-        <div class="perf-subject-head">${subj.icon} ${escHtml(subj.name)}</div>
-        <table class="perf-skills-table">
-          <thead><tr><th style="width:46%;">المهارة</th><th style="width:24%;text-align:center;">المستوى</th><th>ملاحظات</th></tr></thead>
-          <tbody>
-            ${subj.skills.map((skill, si) => {
-              const skillData = subjData[si] || {};
-              const level = skillData.level || 'na';
-              const note  = skillData.note  || '';
-              const lv = PERF_LEVELS_Y.find(l => l.value === level) || PERF_LEVELS_Y[4];
-              return `<tr>
-                <td style="font-weight:600;">${escHtml(skill)}</td>
-                <td style="text-align:center;"><span style="display:inline-block;padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:700;color:${lv.color};background:${lv.bg};">${lv.label}</span></td>
-                <td style="color:var(--muted);font-size:0.85rem;">${escHtml(note) || '—'}</td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>`;
-    });
-    const pm = currentStudent.performanceMeta;
-    if (pm) {
-      try {
-        const d = new Date(pm.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
-        html += `<div style="font-size:0.78rem;color:#9ca3af;margin-bottom:8px;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(pm.teacher)}</div>`;
-      } catch(e) {}
-    }
-  }
-
-  // ===== القوة والاحتياج =====
-  html += `<div class="progress-section-title">💪 جوانب القوة والاحتياج</div>`;
-  if (!hasSW) {
-    html += `<div class="empty-state"><div class="es-icon">💪</div><div class="es-title">لم تُضف جوانب القوة والاحتياج بعد</div></div>`;
-  } else {
-    PERF_SUBJECTS_Y.forEach(subj => {
-      const subjData = sw[subj.key] || { strengths: [], needs: [] };
-      const strengths = subjData.strengths || [];
-      const needs     = subjData.needs     || [];
-      if (strengths.length === 0 && needs.length === 0) return;
-      html += `
-      <div class="sw-block">
-        <div class="sw-subject-head">${subj.icon} ${escHtml(subj.name)}</div>
-        <div class="sw-body">
-          <div>
-            <div class="sw-side-title sw-strength-title">✅ جوانب القوة</div>
-            <div class="sw-item-list">
-              ${strengths.length ? strengths.map(item => `<div class="sw-item"><div class="sw-item-dot-green"></div><span style="flex:1;">${escHtml(item)}</span></div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
-            </div>
-          </div>
-          <div>
-            <div class="sw-side-title sw-need-title">🎯 جوانب الاحتياج</div>
-            <div class="sw-item-list">
-              ${needs.length ? needs.map(item => `<div class="sw-item"><div class="sw-item-dot-orange"></div><span style="flex:1;">${escHtml(item)}</span></div>`).join('') : `<div style="font-size:0.8rem;color:#9ca3af;">لا توجد عناصر</div>`}
-            </div>
-          </div>
-        </div>
-      </div>`;
-    });
-    const sm = currentStudent.strengthsMeta;
-    if (sm) {
-      try {
-        const d = new Date(sm.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
-        html += `<div style="font-size:0.78rem;color:#9ca3af;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(sm.teacher)}</div>`;
-      } catch(e) {}
-    }
-  }
-
-  container.innerHTML = html;
-}
-
-// =====================================================
-// لوحة التعزيز — شهادات الشكر والتقدير (عرض + طباعة)
-// =====================================================
-function renderReinforceTab() {
-  const container = document.getElementById('reinforce-content');
-  if (!container || !currentStudent) return;
-  const history = (currentStudent.reinforcements || []).slice().reverse();
-
-  if (history.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">🏆</div>
-        <div class="es-title">لا توجد شهادات شكر حتى الآن</div>
-        <div class="es-sub">عند إرسال شهادة شكر من المعلم المسؤول ستظهر هنا ويمكن طباعتها</div>
-      </div>`;
-    return;
-  }
-
-  container.innerHTML = history.map(item => `
-    <div class="reinforce-item">
-      <div class="reinforce-icon">🏆</div>
-      <div style="flex:1;">
-        <div class="reinforce-title">${escHtml(item.title)}</div>
-        <div class="reinforce-meta">📅 ${escHtml(item.dateLabel)} — ✍️ ${escHtml(item.teacher)}</div>
-        ${item.message ? `<div class="reinforce-msg">${escHtml(item.message)}</div>` : ''}
-      </div>
-      <button class="btn-print-cert" onclick="printCertificate('${item.id}')">🖨️ طباعة الشهادة</button>
-    </div>`).join('');
-}
-
-function printCertificate(id) {
-  if (!currentStudent) return;
-  const item = (currentStudent.reinforcements || []).find(r => r.id === id);
-  if (!item) return;
-  const studentName = currentStudent.name || '';
-
-  const win = window.open('', '_blank');
-  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
-
-  win.document.write(`
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-<title>شهادة شكر — ${escHtml(studentName)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  *{box-sizing:border-box;}
-  body{font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#F7F5FC;}
-  .cert{width:740px;max-width:92vw;border:10px solid #6B4C9A;border-radius:22px;padding:50px 44px;text-align:center;background:#fff;position:relative;}
-  .cert::after{content:'';position:absolute;inset:14px;border:2px dashed #B79EE0;border-radius:14px;pointer-events:none;}
-  .emoji{font-size:2.6rem;margin-bottom:6px;}
-  h1{font-family:'Tajawal',sans-serif;font-size:2.1rem;color:#2E2148;margin:0 0 6px;}
-  .sub{color:#6E5F82;font-size:.92rem;margin-bottom:26px;}
-  .lead{font-size:.95rem;color:#6E5F82;}
-  .name{font-family:'Tajawal',sans-serif;font-size:1.7rem;font-weight:900;color:#6B4C9A;margin:14px 0 18px;}
-  .reason{font-size:1.05rem;color:#221335;margin-bottom:10px;font-weight:800;}
-  .msg{font-size:.95rem;color:#221335;line-height:2;margin-bottom:28px;}
-  .footer{display:flex;justify-content:space-between;margin-top:36px;font-size:.84rem;color:#6E5F82;border-top:1px solid #EAE1F7;padding-top:14px;}
-  @media print{ body{background:#fff;} .cert{border-color:#6B4C9A;box-shadow:none;} }
-</style><link rel="stylesheet" href="assets/css/common-ui.css">
-</head><body>
-  <div class="cert">
-    <div class="emoji">🏆</div>
-    <h1>شهادة شكر وتقدير</h1>
-    <div class="sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
-    <div class="lead">تُمنح هذه الشهادة للطالب/ـة</div>
-    <div class="name">${escHtml(studentName)}</div>
-    <div class="reason">${escHtml(item.title)}</div>
-    ${item.message ? `<div class="msg">${escHtml(item.message)}</div>` : ''}
-    <div class="footer">
-      <span>📅 ${escHtml(item.dateLabel)}</span>
-      <span>✍️ ${escHtml(item.teacher)}</span>
-    </div>
-  </div>
-  <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
-</body></html>`);
-  win.document.close();
-}
-
-</script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("/sw.js");
-  });
-}
+  // FADE IN
+  const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.08});
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 <script src="assets/js/common-ui.js" defer></script>
 </body>
