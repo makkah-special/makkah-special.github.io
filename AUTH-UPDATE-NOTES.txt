@@ -1,0 +1,6 @@
+تحديث الحماية القوية:
+- تم ربط unified-admin.html مع Supabase Auth.
+- لا تفتح لوحة التحكم إلا بعد تسجيل الدخول بحساب موجود في Authentication وله role=admin داخل جدول profiles.
+- تم إضافة زر تسجيل خروج داخل لوحة التحكم.
+- لا تستخدم service_role key داخل الموقع.
+- ملف SUPABASE-AUTH-POLICIES.sql مرفق كمرجع عند الحاجة لتحديث سياسات RLS.
