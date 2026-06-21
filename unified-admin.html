@@ -18,10 +18,33 @@
 /* تنسيق احتياطي داخل الصفحة حتى تعمل لوحة التحكم حتى لو لم تُرفع ملفات assets بالخطأ */
 :root{--admin-purple:#4b2d73;--admin-gold:#d9aa45;--admin-bg:#f7f3ff;--admin-text:#2d2140;--admin-muted:#756987;--admin-card:#fff;--admin-border:#e4d8f3}
 *{box-sizing:border-box}body{margin:0;font-family:Tajawal,Cairo,Arial,sans-serif;background:linear-gradient(180deg,#faf7ff,#f2ecfb);color:var(--admin-text);direction:rtl}.admin-topbar{background:linear-gradient(90deg,#4b2d73,#6b4c9a);color:white;padding:12px 20px}.admin-topbar-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:12px;align-items:center}.admin-home-link{color:white;text-decoration:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 12px;font-weight:800}.admin-hero{padding:34px 18px}.admin-hero-card,main{max-width:1180px;margin:auto}.admin-hero-card,.panel,.role,.quick-card{background:rgba(255,255,255,.92);border:1px solid var(--admin-border);border-radius:22px;box-shadow:0 18px 45px rgba(75,45,115,.10);padding:22px}.admin-hero-card h1{margin:0 0 10px;font-size:clamp(1.8rem,4vw,3rem);color:var(--admin-purple)}.admin-hero-card p{line-height:1.9;color:var(--admin-muted)}.hero-actions,.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn,.tab-btn,.mini-btn{border:0;border-radius:14px;padding:11px 16px;font-family:inherit;font-weight:800;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}.btn.primary,.btn.dark,.tab-btn.active{background:linear-gradient(135deg,#6b4c9a,#4b2d73);color:white}.btn.ghost,.mini-btn{background:#f1e9fb;color:#4b2d73}.mini-btn.green{background:#e5fff2;color:#06623b}.mini-btn.warn{background:#fff1d6;color:#835100}.section-head{max-width:1180px;margin:24px auto 12px;display:flex;justify-content:space-between;align-items:end;gap:12px}.section-head h2{margin:0;color:var(--admin-purple)}.section-head span,.note{color:var(--admin-muted)}.metrics,.cards,.permission-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.layout{display:grid;grid-template-columns:1fr 1.35fr;gap:16px}.tab-panel{display:none}.tab-panel.active{display:block}.grid-2,.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}input,select,textarea{font-family:inherit;border:1px solid var(--admin-border);border-radius:12px;padding:11px;background:white}textarea{min-height:90px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden}th,td{border-bottom:1px solid #eee;padding:10px;text-align:right;white-space:nowrap}th{background:#f3ecfb;color:#4b2d73}.audit-list{display:grid;gap:10px}.mk-backtop{position:fixed;left:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:0;background:#4b2d73;color:white;font-size:20px;box-shadow:0 12px 30px rgba(0,0,0,.2);cursor:pointer}@media(max-width:800px){.layout{grid-template-columns:1fr}.admin-topbar-inner,.section-head{align-items:flex-start;flex-direction:column}.hero-actions .btn{width:100%}}
+
+/* حماية مؤقتة للوحة التحكم الموحدة */
+body.admin-auth-pending .admin-protected{display:none!important}
+.admin-login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at top,#7653aa 0,#4b2d73 35%,#20142e 100%);color:#fff}
+.admin-login-card{width:min(460px,100%);background:rgba(255,255,255,.95);color:#2d2140;border:1px solid rgba(255,255,255,.55);border-radius:28px;padding:28px;box-shadow:0 30px 80px rgba(0,0,0,.28);text-align:center}
+.admin-login-card .login-badge{width:76px;height:76px;border-radius:24px;margin:0 auto 14px;background:linear-gradient(135deg,#6b4c9a,#d9aa45);display:grid;place-items:center;font-size:34px;color:#fff}
+.admin-login-card h1{margin:0 0 8px;color:#4b2d73;font-size:1.7rem}.admin-login-card p{margin:0 0 18px;color:#756987;line-height:1.8}.admin-login-card label{display:block;text-align:right;font-weight:900;margin:8px 0;color:#4b2d73}.admin-login-card input{width:100%;font-size:1.1rem;text-align:center;letter-spacing:4px}.admin-login-actions{display:grid;gap:10px;margin-top:14px}.login-error{display:none;margin-top:10px;color:#9f1d1d;background:#fff0f0;border:1px solid #ffd3d3;border-radius:12px;padding:10px;font-weight:800}.login-note{margin-top:14px!important;font-size:.9rem}.logout-btn{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:7px 12px;font-family:inherit;font-weight:900;cursor:pointer}
+
 </style>
 </head>
-<body>
-<div class="admin-topbar"><div class="admin-topbar-inner"><a class="admin-home-link" href="index.html">🏠 العودة للرئيسية</a><span>مدرسة مكة المكرمة المتوسطة</span><strong>قسم ذوي الإعاقة</strong></div></div>
+<body class="admin-auth-pending">
+<div id="adminLogin" class="admin-login-screen" aria-label="تسجيل دخول لوحة التحكم">
+  <div class="admin-login-card">
+    <div class="login-badge">🔐</div>
+    <h1>دخول لوحة التحكم الموحدة</h1>
+    <p>هذه الصفحة مخصصة للمشرفين فقط. الرجاء إدخال كلمة المرور المؤقتة للمتابعة.</p>
+    <form id="adminLoginForm">
+      <label for="adminPassword">كلمة المرور</label>
+      <input id="adminPassword" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••" required>
+      <div class="admin-login-actions"><button class="btn primary" type="submit">دخول</button><a class="btn ghost" href="index.html">العودة للرئيسية</a></div>
+      <div id="adminLoginError" class="login-error">كلمة المرور غير صحيحة</div>
+    </form>
+    <p class="login-note">حماية مؤقتة لحين ربط الموقع بقاعدة البيانات ونظام الحسابات.</p>
+  </div>
+</div>
+<div class="admin-protected">
+<div class="admin-topbar"><div class="admin-topbar-inner"><a class="admin-home-link" href="index.html">🏠 العودة للرئيسية</a><span>مدرسة مكة المكرمة المتوسطة</span><strong>قسم ذوي الإعاقة</strong><button class="logout-btn" id="adminLogout" type="button">تسجيل خروج</button></div></div>
 <section class="admin-hero"><div class="admin-hero-card"><h1>لوحة التحكم الموحدة</h1><p>مركز إدارة واحد لملفات الطلاب والمعلمين والصلاحيات والتقارير والتنبيهات. هذه النسخة تعمل محليًا داخل المتصفح كمرحلة تطوير، وهي مجهزة لاحقًا للربط مع Supabase وFirebase دون تغيير تجربة المستخدم.</p><div class="hero-actions"><a class="btn primary" href="index.html">🏠 الرئيسية</a><a class="btn primary" href="students.html">ملف طالب يسير</a><a class="btn ghost" href="dumaj-students.html">ملف طالب الدمج</a><a class="btn ghost" href="#permissions">الصلاحيات</a><button class="btn ghost" id="exportData" type="button">تصدير البيانات</button></div></div></section>
 <main>
   <div class="section-head"><h2>مؤشرات سريعة</h2><span>لوحة إحصائيات مباشرة</span></div>
@@ -46,6 +69,54 @@
   <div class="section-head"><h2>جاهزية الربط الذكي</h2><span>Supabase / Firebase</span></div>
   <div class="panel"><p>تم تجهيز ملف <b>data/platform-config.json</b> ليكون مرجعًا للجداول والصلاحيات ومسارات التخزين. عند الانتقال للمرحلة القادمة يمكن تحويل النماذج الحالية من تخزين محلي إلى جداول Supabase مباشرة.</p><div class="note">هذه النسخة لا تطلب تسجيل دخول فعلي ولا تغيّر بيانات الطلاب المنشورة، لكنها تقدم شكل النظام النهائي وطريقة العمل قبل الربط الحقيقي.</div></div>
 </main>
+</div>
+<script>
+(function(){
+  const ADMIN_HASH = "d4758ff40ebce1b5d0980f165c14d660f4723e50cd8c59d25403cde2ad87edc6";
+  const SESSION_KEY = "makkah_unified_admin_auth";
+  const enc = new TextEncoder();
+  async function sha256(text){
+    const buffer = await crypto.subtle.digest("SHA-256", enc.encode(text));
+    return Array.from(new Uint8Array(buffer)).map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+  function unlock(){
+    document.body.classList.remove("admin-auth-pending");
+    const login = document.getElementById("adminLogin");
+    if(login) login.style.display = "none";
+  }
+  function lock(){
+    sessionStorage.removeItem(SESSION_KEY);
+    document.body.classList.add("admin-auth-pending");
+    const login = document.getElementById("adminLogin");
+    if(login) login.style.display = "flex";
+    const input = document.getElementById("adminPassword");
+    if(input) setTimeout(()=>input.focus(), 80);
+  }
+  if(sessionStorage.getItem(SESSION_KEY) === "1") unlock();
+  const form = document.getElementById("adminLoginForm");
+  if(form){
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      const input = document.getElementById("adminPassword");
+      const error = document.getElementById("adminLoginError");
+      const value = (input && input.value ? input.value : "").trim();
+      const hash = await sha256(value);
+      if(hash === ADMIN_HASH){
+        sessionStorage.setItem(SESSION_KEY, "1");
+        if(input) input.value = "";
+        if(error) error.style.display = "none";
+        unlock();
+      }else{
+        if(error) error.style.display = "block";
+        if(input){ input.value = ""; input.focus(); }
+      }
+    });
+  }
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.id === "adminLogout") lock();
+  });
+})();
+</script>
 <script src="assets/js/common-ui.js" defer></script>
 <script src="assets/js/platform-admin.js" defer></script>
 </body>
