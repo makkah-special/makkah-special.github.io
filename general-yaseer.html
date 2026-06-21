@@ -1,1172 +1,651 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كشف الحضور — برنامج يسير التعليمي</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root {
-  --primary: #1a3a5c;
-  --accent:  #1a6b4a;
-  --accent2: #22a06b;
-  --bg:      #f3faf6;
-  --card:    #ffffff;
-  --border:  #c8e6d4;
-  --text:    #1a1a2e;
-  --muted:   #7a7a9a;
-  --green:   #16a34a;
-  --red:     #dc2626;
-  --yellow:  #d97706;
-  --radius:  14px;
-  --shadow:  0 4px 24px rgba(194,90,0,0.10);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لوحة فصول التعليم العام – تشخيص طلاب يسير | مدرسة مكة المكرمة المتوسطة</title>
+  <meta name="description" content="لوحة تفاعلية لفصول التعليم العام لتسجيل طلاب يسير وبانتظار التشخيص مع وضع عرض فقط للزوار ووضع تعديل محمي." />
 
-/* HEADER */
-.page-header {
-  background: linear-gradient(135deg, #1a3a5c 0%, #c25a00 100%);
-  color:#fff; padding:18px 24px;
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  flex-wrap:wrap;
-}
-.page-header h1 { font-size:1.2rem; font-weight:800; }
-.page-header p  { font-size:0.78rem; opacity:0.85; margin-top:2px; }
-.back-btn {
-  background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
-  padding:8px 16px; border-radius:20px; font-size:0.82rem; font-weight:700;
-  text-decoration:none; transition:all 0.2s;
-}
-.back-btn:hover { background:rgba(255,255,255,0.25); }
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.10);
+      --text:#eaf2ff;
+      --muted:rgba(234,242,255,.72);
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+      --radius:22px;
 
-/* TOOLBAR */
-.toolbar {
-  background:#fff; border-bottom:2px solid var(--border);
-  padding:14px 20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;
-  position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.06);
-}
-.toolbar-group { display:flex; align-items:center; gap:8px; }
-.toolbar label { font-size:0.82rem; font-weight:700; color:var(--muted); white-space:nowrap; }
-select, input[type="date"], input[type="text"] {
-  border:1px solid var(--border); border-radius:8px;
-  padding:7px 12px; font-family:'Cairo',sans-serif; font-size:0.84rem;
-  color:var(--text); background:#fff; outline:none;
-  transition: border-color 0.2s;
-}
-select:focus, input:focus { border-color:var(--accent); }
-.btn {
-  padding:8px 16px; border-radius:10px; border:none; cursor:pointer;
-  font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700;
-  transition:all 0.2s; display:flex; align-items:center; gap:6px;
-}
-.btn-primary   { background:var(--accent); color:#fff; }
-.btn-primary:hover { background:var(--accent2); transform:translateY(-1px); }
-.btn-success   { background:#16a34a; color:#fff; }
-.btn-success:hover { background:#15803d; }
-.btn-outline   { background:#fff; color:var(--accent); border:1.5px solid var(--accent); }
-.btn-outline:hover { background:#f0faf5; }
-.btn-dark      { background:var(--primary); color:#fff; }
-.btn-dark:hover { background:#0f2440; }
+      --green: rgba(34,197,94,.95);
+      --gray: rgba(148,163,184,.85);
+      --blue: rgba(59,130,246,.90);
+      --amber: rgba(245,158,11,.95);
+      --purple: rgba(124,92,255,.95);
 
-/* WEEK SELECTOR */
-.week-info {
-  background: linear-gradient(135deg, #f0faf5, #fff);
-  border:1.5px solid var(--border); border-radius:var(--radius);
-  padding:12px 20px; margin:16px 20px;
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
-}
-.week-info .week-label { font-size:0.9rem; font-weight:800; color:var(--accent); }
-.week-info .week-dates { font-size:0.78rem; color:var(--muted); }
-.week-nav { display:flex; gap:8px; }
-.week-nav-btn {
-  background:var(--accent); color:#fff; border:none; border-radius:8px;
-  padding:6px 14px; cursor:pointer; font-size:0.82rem; font-weight:700;
-  font-family:'Cairo',sans-serif; transition:all 0.2s;
-}
-.week-nav-btn:hover { background:var(--accent2); }
+      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Tajawal", Tahoma, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 500px at 20% 10%, rgba(59,130,246,.25), transparent 60%),
+        radial-gradient(1000px 600px at 80% 0%, rgba(34,197,94,.18), transparent 55%),
+        linear-gradient(160deg, #0b1220, #071022);
+      min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:22px 16px 34px}
 
-/* STATS */
-.stats-row {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px; margin:0 20px 16px;
-}
-.stat-box {
-  background:#fff; border:1px solid var(--border); border-radius:var(--radius);
-  padding:14px 16px; text-align:center; box-shadow:var(--shadow);
-}
-.stat-box .stat-n { font-size:1.6rem; font-weight:900; }
-.stat-box .stat-l { font-size:0.72rem; color:var(--muted); margin-top:2px; }
-.stat-green .stat-n { color:var(--green); }
-.stat-red   .stat-n { color:var(--red); }
-.stat-yellow .stat-n{ color:var(--yellow); }
-.stat-blue  .stat-n { color:var(--primary); }
+    /* Top */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:56px;height:56px;border-radius:16px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      display:grid;place-items:center;overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .logo img{width:100%;height:100%;object-fit:contain;padding:10px}
+    .title{margin:0;font-size:18px;line-height:1.4}
+    .sub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.7}
 
-/* TABLE */
-.table-wrap {
-  margin:0 20px 20px; border-radius:var(--radius);
-  overflow:auto; box-shadow:var(--shadow);
-  border:1px solid var(--border);
-}
-table { border-collapse:collapse; width:100%; min-width:900px; background:#fff; }
-thead tr { background:linear-gradient(135deg, #1a3a5c, #1a6b4a); color:#fff; }
-thead th {
-  padding:12px 10px; font-size:0.78rem; font-weight:700;
-  text-align:center; white-space:nowrap;
-  border-left:1px solid rgba(255,255,255,0.15);
-}
-thead th:first-child { text-align:right; padding-right:16px; min-width:180px; }
-thead th.day-col { min-width:90px; }
+    /* Buttons */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(135deg, rgba(59,130,246,.28), rgba(124,92,255,.18));
+      color:var(--text);
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn.secondary{background: rgba(255,255,255,.06)}
+    .btn.danger{background: rgba(239,68,68,.18)}
 
-tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
-tbody tr:hover { background:#f0faf5; }
-tbody tr:last-child { border-bottom:none; }
+    /* Panel */
+    .panel{
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      overflow:hidden;
+    }
+    .panelHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .panelHead h1{margin:0;font-size:18px}
+    .panelHead p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.7}
 
-.student-cell {
-  padding:10px 16px 10px 10px;
-  display:flex; align-items:center; gap:10px;
-}
-.student-num {
-  background:var(--accent); color:#fff;
-  width:22px; height:22px; border-radius:50%;
-  font-size:0.68rem; font-weight:800;
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-}
-.student-name { font-size:0.82rem; font-weight:700; }
-.student-absent-count {
-  font-size:0.68rem; color:var(--red); font-weight:700;
-  background:#fee2e2; padding:1px 7px; border-radius:20px; margin-top:1px;
-}
+    /* Admin */
+    .adminBar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      margin-bottom:12px;
+    }
+    .modeTag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      font-weight:900;
+      font-size:12px;
+      color:rgba(234,242,255,.88);
+    }
+    .hint{color:var(--muted);font-size:12.5px;line-height:1.7}
 
-/* STATUS BUTTONS */
-.status-cell { padding:8px; text-align:center; }
-.status-btn {
-  width:100%; padding:6px 4px; border-radius:8px; border:none;
-  cursor:pointer; font-size:0.78rem; font-weight:700;
-  font-family:'Cairo',sans-serif; transition:all 0.2s;
-  min-width:70px;
-}
-.status-present { background:#dcfce7; color:#16a34a; }
-.status-absent  { background:#fee2e2; color:#dc2626; }
-.status-late    { background:#fef9c3; color:#b45309; }
-.status-excuse  { background:#ede9fe; color:#7c3aed; }
-.status-btn:hover { transform:scale(1.05); filter:brightness(0.95); }
-.status-btn.active-present { background:#16a34a; color:#fff; }
-.status-btn.active-absent  { background:#dc2626; color:#fff; }
-.status-btn.active-late    { background:#d97706; color:#fff; }
-.status-btn.active-excuse  { background:#7c3aed; color:#fff; }
+    /* KPIs */
+    .summary{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .kpi{
+      grid-column: span 4;
+      background: rgba(0,0,0,.10);
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      padding: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .kpi .num{font-size:24px;font-weight:1000;line-height:1}
+    .kpi .lab{color:var(--muted);font-size:13px;line-height:1.6}
+    .kpi .ic{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      font-size:20px;
+      flex:0 0 auto;
+    }
+    .kpi.blue .num{color:var(--blue)}
+    .kpi.green .num{color:var(--green)}
+    .kpi.amber .num{color:var(--amber)}
+    .kpi.purple .num{color:var(--purple)}
+    @media (max-width: 980px){ .kpi{grid-column: span 6;} }
+    @media (max-width: 560px){ .kpi{grid-column: span 12;} }
 
-/* DROPDOWN STATUS */
-.status-select {
-  width:100%; padding:6px 4px; border-radius:8px;
-  border:1.5px solid var(--border); font-family:'Cairo',sans-serif;
-  font-size:0.78rem; font-weight:700; cursor:pointer;
-  outline:none; text-align:center;
-}
-.status-select.val-p { background:#dcfce7; color:#16a34a; border-color:#86efac; }
-.status-select.val-a { background:#fee2e2; color:#dc2626; border-color:#fca5a5; }
-.status-select.val-l { background:#fef9c3; color:#b45309; border-color:#fde047; }
-.status-select.val-e { background:#ede9fe; color:#7c3aed; border-color:#c4b5fd; }
-.status-select.val-h { background:#e0f2fe; color:#0369a1; border-color:#7dd3fc; }
-.status-select.val-s { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
-.status-select.val-n { background:#fdf4ff; color:#7e22ce; border-color:#d8b4fe; }
+    /* Table */
+    .tableWrap{
+      border:1px solid var(--stroke);
+      border-radius: 18px;
+      overflow:hidden;
+      background:rgba(0,0,0,.10);
+    }
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{
+      text-align:right;
+      padding:12px 10px;
+      background:rgba(255,255,255,.05);
+      border-bottom:1px solid var(--stroke);
+      color: rgba(234,242,255,.92);
+      font-weight:1000;
+      white-space:nowrap;
+    }
+    tbody td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      vertical-align:middle;
+    }
+    tbody tr:hover td{background:rgba(255,255,255,.03)}
+    .numCell{ text-align:center; font-weight:1000; }
 
-.note-cell { padding:8px 6px; }
-.note-input {
-  width:100%; padding:5px 8px; border-radius:6px;
-  border:1px solid var(--border); font-family:'Cairo',sans-serif;
-  font-size:0.75rem; resize:none; min-width:80px; max-width:140px;
-}
-.note-input:focus { border-color:var(--accent); outline:none; }
+    input[type="number"], input[type="text"], select{
+      width:100%;
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      outline:none;
+      font-weight:900;
+      font-size:13px;
+    }
+    input[type="number"]{text-align:center}
+    input[disabled], select[disabled]{opacity:.65;cursor:not-allowed}
 
-.total-cell {
-  padding:8px; text-align:center;
-  font-weight:800; font-size:0.85rem;
-}
+    .statusPill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:1000;
+      font-size:12px;
+      min-width:120px;
+      white-space:nowrap;
+    }
+    .statusGreen{ background: rgba(34,197,94,.14); color: rgba(219,255,235,.95); border-color: rgba(34,197,94,.30); }
+    .statusGray{ background: rgba(148,163,184,.10); color: rgba(234,242,255,.80); border-color: rgba(148,163,184,.25); }
 
-/* SIGNATURE SECTION */
-.sign-section {
-  background:#fff; border:1.5px solid var(--border);
-  border-radius:var(--radius); margin:0 20px 20px;
-  padding:20px; box-shadow:var(--shadow);
-}
-.sign-section h3 { font-size:0.95rem; font-weight:800; color:var(--primary); margin-bottom:16px; }
-.sign-grid { display:grid; grid-template-columns:1fr; gap:20px; max-width:400px; }
-.sign-box-wrap { display:flex; flex-direction:column; gap:8px; }
-.sign-label { font-size:0.82rem; font-weight:700; color:var(--muted); }
-.sign-name-input {
-  border:1px solid var(--border); border-radius:8px;
-  padding:8px 12px; font-family:'Cairo',sans-serif; font-size:0.84rem; width:100%;
-}
-.sign-canvas-wrap {
-  border:2px dashed var(--border); border-radius:10px;
-  height:100px; position:relative; overflow:hidden; background:#fafafa;
-  cursor:crosshair;
-}
-.sign-canvas-wrap canvas { width:100%; height:100%; display:block; }
-.sign-canvas-wrap .sign-placeholder {
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  color:var(--muted); font-size:0.8rem; pointer-events:none;
-}
-.sign-actions { display:flex; gap:8px; margin-top:4px; }
-.btn-sm { padding:5px 12px; font-size:0.75rem; border-radius:8px; border:none; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; transition:all 0.2s; }
-.btn-sm-clear { background:#fee2e2; color:#dc2626; }
-.btn-sm-clear:hover { background:#fca5a5; }
-
-/* SAVE STATUS TOAST */
-.toast {
-  position:fixed; bottom:24px; right:24px; z-index:9999;
-  background:var(--primary); color:#fff; padding:12px 20px;
-  border-radius:12px; font-size:0.85rem; font-weight:700;
-  box-shadow:0 8px 24px rgba(0,0,0,0.2);
-  transform:translateY(80px); opacity:0;
-  transition:all 0.3s; pointer-events:none;
-}
-.toast.show { transform:translateY(0); opacity:1; }
-
-/* PDF PREVIEW */
-.pdf-btn-row { display:flex; gap:10px; flex-wrap:wrap; margin:0 20px 20px; }
-
-/* RESPONSIVE */
-@media(max-width:768px) {
-  .toolbar { padding:10px 12px; }
-  .sign-grid { grid-template-columns:1fr; }
-  .stats-row { grid-template-columns:repeat(2,1fr); }
-  .week-info { margin:12px; }
-  .table-wrap { margin:0 12px 16px; }
-  .pdf-btn-row { margin:0 12px 16px; }
-  .sign-section { margin:0 12px 16px; }
-}
-
-/* ===== HIJRI CALENDAR TOGGLE ===== */
-.date-picker-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.cal-toggle-row {
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-}
-.cal-toggle-btn {
-  flex: 1;
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1.5px solid #d1d5db;
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  cursor: pointer;
-  background: #f9fafb;
-  color: #6b7280;
-  transition: all 0.15s;
-}
-.cal-toggle-btn.active {
-  background: var(--primary, #7a2800);
-  color: #fff;
-  border-color: var(--primary, #7a2800);
-}
-
-/* Hijri popup */
-.hijri-popup {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  padding: 18px 20px;
-  min-width: 280px;
-  border: 1px solid #e5e7eb;
-  animation: popIn 0.18s ease;
-}
-@keyframes popIn {
-  from { opacity:0; transform:translateY(-8px) scale(0.97); }
-  to   { opacity:1; transform:none; }
-}
-.hijri-popup.open { display: block; }
-.hijri-popup-title {
-  font-weight: 800;
-  font-size: 0.88rem;
-  color: var(--primary, #7a2800);
-  margin-bottom: 12px;
-  text-align: center;
-}
-.hijri-inputs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-  align-items: center;
-}
-.hijri-field {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  flex: 1;
-}
-.hijri-field label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #6b7280;
-}
-.hijri-field input, .hijri-field select {
-  padding: 7px 8px;
-  border: 1.5px solid #d1d5db;
-  border-radius: 8px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-align: center;
-  outline: none;
-  width: 100%;
-}
-.hijri-field input:focus, .hijri-field select:focus {
-  border-color: var(--primary, #7a2800);
-}
-.hijri-popup-btns {
-  display: flex;
-  gap: 8px;
-}
-.hijri-popup-btns button {
-  flex: 1;
-  padding: 8px;
-  border-radius: 9px;
-  border: none;
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-hijri-apply {
-  background: var(--primary, #7a2800);
-  color: #fff;
-}
-.btn-hijri-cancel {
-  background: #f3f4f6;
-  color: #374151;
-}
-.hijri-display {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--accent, #e07020);
-  text-align: center;
-  min-height: 16px;
-  margin-top: 2px;
-}
-.hijri-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-}
-.hijri-overlay.open { display: block; }
-
-
-/* حقل هجري مدمج */
-.hijri-inline {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-.hijri-sel {
-  border: 1.5px solid #d1d5db;
-  border-radius: 8px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #374151;
-  background: #fff;
-  outline: none;
-  padding: 5px 6px;
-  cursor: pointer;
-  transition: border-color 0.15s;
-}
-.hijri-sel:focus { border-color: var(--primary, #7a2800); }
-#hDay   { width: 60px; text-align: center; }
-#hMonth { width: 110px; }
-#hYear  { width: 72px; text-align: center; -moz-appearance: textfield; }
-#hYear::-webkit-outer-spin-button,
-#hYear::-webkit-inner-spin-button { -webkit-appearance: none; }
-.cal-field-wrap { display: flex; align-items: center; }
-
-
-.day-bulk-row td {
-  padding: 4px 6px;
-  background: #f8f4f0;
-  border-bottom: 2px solid #e8d8cc;
-}
-.day-bulk-select {
-  width: 100%;
-  padding: 5px 4px;
-  border: 1.5px solid #e8d8cc;
-  border-radius: 8px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  cursor: pointer;
-  background: #fff;
-  color: #c25a00;
-  outline: none;
-  transition: border-color 0.15s;
-}
-.day-bulk-select:hover { border-color: #c25a00; }
-.day-bulk-select:focus { border-color: #c25a00; box-shadow: 0 0 0 2px rgba(194,90,0,0.12); }
-
-</style>
+    .footer{
+      margin-top:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color: rgba(234,242,255,.55);
+      font-size:12px;
+      line-height:1.8;
+    }
+    .note{
+      margin-top:10px;
+      color: rgba(234,242,255,.65);
+      font-size:12.5px;
+      line-height:1.8;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+    }
+  </style>
+<link rel="stylesheet" href="assets/css/common-ui.css">
 </head>
+
 <body>
+  <div class="wrap">
 
-<!-- HEADER -->
-<div class="page-header">
-  <div>
-    <h1>📘 كشف حضور — برنامج يسير التعليمي</h1>
-    <p>مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</p>
-  </div>
-  <a href="students.html" class="back-btn">← العودة</a>
-</div>
-
-<!-- TOOLBAR -->
-<div class="toolbar">
-  <div class="toolbar-group">
-    <label>📅 الأسبوع:</label>
-    <div class="date-picker-wrap">
-        <!-- حقل ميلادي -->
-        <div class="cal-field-wrap" id="miladiWrap">
-          <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" title="شعار المدرسة">
+          <img src="school-logo.png" alt="شعار المدرسة">
         </div>
-        <!-- حقل هجري بنفس شكل الميلادي -->
-        <div class="cal-field-wrap hijri-wrap" id="hijriWrap" style="display:none;">
-          <div class="hijri-inline">
-            <select class="hijri-sel" id="hDay" onchange="applyHijriInline()">
-              <option value="">يوم</option>
-            </select>
-            <select class="hijri-sel" id="hMonth" onchange="applyHijriInline()">
-              <option value="">شهر</option>
-              <option value="1">محرم</option><option value="2">صفر</option>
-              <option value="3">ربيع الأول</option><option value="4">ربيع الثاني</option>
-              <option value="5">جمادى الأولى</option><option value="6">جمادى الثانية</option>
-              <option value="7">رجب</option><option value="8">شعبان</option>
-              <option value="9">رمضان</option><option value="10">شوال</option>
-              <option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
-            </select>
-            <input class="hijri-sel" id="hYear" type="number" min="1400" max="1500"
-              placeholder="السنة" oninput="applyHijriInline()">
-          </div>
+        <div>
+          <h2 class="title">لوحة فصول التعليم العام – تشخيص طلاب يسير</h2>
+          <p class="sub">عرض فقط للزوار — التعديل للمسؤول بكلمة مرور</p>
         </div>
-        <!-- زرا التبديل -->
-        <div class="cal-toggle-row">
-          <button class="cal-toggle-btn active" data-mode="miladi" onclick="setCalMode('miladi')">📅 ميلادي</button>
-          <button class="cal-toggle-btn" data-mode="hijri" onclick="setCalMode('hijri')">🌙 هجري</button>
-        </div>
-        <div class="hijri-display" id="hijriDisplay"></div>
       </div>
-  </div>
-  <div class="toolbar-group">
-    <label>📚 الفصل:</label>
-    <select id="semesterSelect">
-      <option value="الفصل الأول 1447">الفصل الأول 1447</option>
-      <option value="الفصل الثاني 1447" selected>الفصل الثاني 1447</option>
-    </select>
-  </div>
-  <div class="toolbar-group" style="margin-right:auto;">
-    <button class="btn btn-success" onclick="saveAttendance()">💾 حفظ في السحابة</button>
-    <button class="btn btn-dark" onclick="printAttendance()">🖨️ طباعة</button>
-    <button class="btn btn-outline" onclick="markAllPresent()">✅ تحضير الكل</button>
-  </div>
-</div>
 
-<!-- WEEK INFO -->
-<div class="week-info">
-  <div>
-    <div class="week-label" id="weekLabel">الأسبوع الحالي</div>
-    <div class="week-dates" id="weekDates">—</div>
-  </div>
-  <div class="week-nav">
-    <button class="week-nav-btn" onclick="changeWeek(-1)">→ الأسبوع السابق</button>
-    <button class="week-nav-btn" onclick="changeWeek(1)">← الأسبوع التالي</button>
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats-row" id="statsRow">
-  <div class="stat-box stat-green"><div class="stat-n" id="statP">0</div><div class="stat-l">✅ حاضر</div></div>
-  <div class="stat-box stat-red">  <div class="stat-n" id="statA">0</div><div class="stat-l">❌ غائب</div></div>
-  <div class="stat-box stat-yellow"><div class="stat-n" id="statL">0</div><div class="stat-l">⏰ متأخر</div></div>
-  <div class="stat-box">            <div class="stat-n" id="statE">0</div><div class="stat-l">📋 بعذر</div></div>
-  <div class="stat-box stat-blue">  <div class="stat-n" id="statPct">0%</div><div class="stat-l">نسبة الحضور</div></div>
-</div>
-
-<!-- TABLE -->
-<div class="table-wrap">
-  <table id="attendanceTable">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th style="text-align:right">اسم الطالب</th>
-        <th class="day-col">الأحد</th>
-        <th class="day-col">الاثنين</th>
-        <th class="day-col">الثلاثاء</th>
-        <th class="day-col">الأربعاء</th>
-        <th class="day-col">الخميس</th>
-        <th>ملاحظات</th>
-        <th>غياب</th>
-      </tr>
-      <tr class="day-bulk-row" id="day-bulk-row">
-        <td colspan="2" style="text-align:center;font-size:0.72rem;font-weight:800;color:#c25a00;">
-          تحكم يومي ↓
-        </td>
-        <td id="bulk-td-0"></td>
-        <td id="bulk-td-1"></td>
-        <td id="bulk-td-2"></td>
-        <td id="bulk-td-3"></td>
-        <td id="bulk-td-4"></td>
-        <td colspan="2"></td>
-      </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-  </table>
-</div>
-
-<!-- SIGNATURE SECTION -->
-<div class="sign-section">
-  <h3>✍️ التوقيعات</h3>
-  <div class="sign-grid">
-    <div class="sign-box-wrap">
-      <div class="sign-label">توقيع المعلم</div>
-      <input class="sign-name-input" id="teacherName" placeholder="اسم المعلم">
-      <div class="sign-canvas-wrap" id="teacherWrap">
-        <canvas id="teacherCanvas"></canvas>
-        <div class="sign-placeholder" id="tchPlaceholder">✍️ وقّع هنا</div>
-      </div>
-      <div class="sign-actions">
-        <button class="btn-sm btn-sm-clear" onclick="clearSign('teacherCanvas','tchPlaceholder')">مسح التوقيع</button>
-      </div>
+      <a class="btn secondary" href="index.html">⬅︎ الرجوع للرئيسية</a>
     </div>
-  </div>
-</div>
 
-<!-- BUTTONS -->
-<div class="pdf-btn-row">
-  <button class="btn btn-success" onclick="saveAttendance()">💾 حفظ في السحابة</button>
-  <button class="btn btn-dark" onclick="printAttendance()">🖨️ طباعة / تصدير PDF</button>
-</div>
+    <section class="panel">
+      <div class="panelHead">
+        <div>
+          <h1>📊 لوحة المتابعة</h1>
+          <p>سجّل عدد طلاب يسير + بانتظار التشخيص + إجمالي طلاب الفصل. (الحالة تتحول تلقائيًا أخضر/رمادي)</p>
+        </div>
+      </div>
 
-<div class="toast" id="toast"></div>
+      <!-- Admin Bar -->
+      <div class="adminBar">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <span class="modeTag" id="modeTag">🔒 الوضع: عرض فقط</span>
+          <span class="hint" id="saveHint">يتم حفظ البيانات تلقائيًا على نفس الجهاز.</span>
+        </div>
 
-<script>
-// ===== CONFIG =====
-const PROGRAM   = 'yaseer';
-const SB_URL    = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
-const SB_KEY    = 'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere';
-const DAYS      = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
-const STATUS_OPTS = [
-  {val:'p', label:'✅ حاضر',         cls:'val-p'},
-  {val:'a', label:'❌ غياب',         cls:'val-a'},
-  {val:'l', label:'⏰ متأخر',        cls:'val-l'},
-  {val:'e', label:'📋 بعذر',         cls:'val-e'},
-  {val:'h', label:'🏖️ إجازة',       cls:'val-h'},
-  {val:'s', label:'🚫 تعليق دراسة', cls:'val-s'},
-  {val:'n', label:'📝 انتساب',       cls:'val-n'},
-];
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <button class="btn" id="unlockBtn">🔑 تفعيل التعديل</button>
+          <button class="btn secondary" id="lockBtn" style="display:none;">✅ قفل اللوحة</button>
+          <button class="btn danger" id="resetBtn" style="display:none;">🧹 تصفير البيانات</button>
+        </div>
+      </div>
 
-const STUDENTS = [
-  {pin:'5271', name:'محمد علي غرم الله الشمراني'},
-  {pin:'3955', name:'عبدالله قائد عبدالله الشهراني'},
-  {pin:'3154', name:'بسام خالد عبدالرحمن المالكي'},
-  {pin:'3493', name:'وسام عوض بن شينان السهيمي'},
-  {pin:'9055', name:'حسن صالح حسن الزهراني'},
-  {pin:'0962', name:'إياد خليل طاهر مصطفى'},
-  {pin:'4073', name:'محمد عمر محمد بلقاسم الحرازي'},
-  {pin:'0788', name:'أمجد مرزوق علي المحوري'},
-  {pin:'8726', name:'مراد علي ظلميس المنتشري'},
-  {pin:'2261', name:'فيصل حاتم حامد الغامدي'},
-  {pin:'9446', name:'عبدالرحمن توفيق علوان مقري'},
-  {pin:'7895', name:'محمد فارس صالح الغامدي'},
-  {pin:'5362', name:'وسيم أحمد علي الرزقي'},
-  {pin:'2571', name:'فارس محمد مانع القحطاني'},
-  {pin:'3590', name:'عبدالمجيد عبدالله حامد الهلالي'},
-  {pin:'8151', name:'مسفر حسن سعد القحطاني'},
-  {pin:'8061', name:'هتان عبيدالله جميل المحمادي'},
-  {pin:'5455', name:'طلال عبدالله عبدالرحمن العصماني'},
-  {pin:'6812', name:'لوى أحمد علي الرزقي'},
-  {pin:'5237', name:'عبدالله ماجد عبدالله الزهراني'},
-];
-
-// ===== STATE =====
-let currentWeekStart = getThisSunday();
-let attendanceData   = {}; // {weekKey: {pin: {day0..4: 'p'|'a'|'l'|'e', note:''}}}
-
-// ===== WEEK UTILS =====
-function getThisSunday() {
-  const d = new Date();
-  const day = d.getDay(); // 0=Sun
-  d.setDate(d.getDate() - day);
-  d.setHours(0,0,0,0);
-  return d;
-}
-function weekKey(d) {
-  return d.toISOString().slice(0,10);
-}
-function formatDate(d) {
-  return d.toLocaleDateString('ar-SA-u-nu-latn', {day:'numeric',month:'numeric'});
-}
-function setWeekFromDate(val) {
-  const d = new Date(val);
-  const day = d.getDay();
-  d.setDate(d.getDate() - day);
-  d.setHours(0,0,0,0);
-  currentWeekStart = d;
-  renderAll();
-}
-function changeWeek(dir) {
-  currentWeekStart.setDate(currentWeekStart.getDate() + dir * 7);
-  renderAll();
-}
-function getWeekDays() {
-  return DAYS.map((name, i) => {
-    const d = new Date(currentWeekStart);
-    d.setDate(d.getDate() + i);
-    return {name, date: d, dateStr: formatDate(d)};
-  });
-}
-
-// ===== RENDER =====
-function renderAll() {
-  updateWeekHeader();
-  renderTable();
-  updateStats();
-  // تحديث input التاريخ
-  document.getElementById('weekStart').value = weekKey(currentWeekStart);
-  updateHijriDisplay();
-}
-
-function updateWeekHeader() {
-  const days = getWeekDays();
-  // رقم الأسبوع من بداية الفصل الدراسي (11 يناير 2026)
-  const semesterStart = new Date(Date.UTC(2026, 0, 11)); // 11 يناير 2026 بتوقيت UTC
-  const startUTC = Date.UTC(currentWeekStart.getFullYear(), currentWeekStart.getMonth(), currentWeekStart.getDate());
-  const wk = Math.floor((startUTC - semesterStart) / 604800000) + 1;
-  const wkLabel = wk >= 1 ? `الأسبوع ${wk}` : 'قبل الفصل';
-  document.getElementById('weekLabel').textContent = wkLabel;
-  document.getElementById('weekDates').textContent =
-    `${days[0].dateStr} — ${days[4].dateStr}`;
-}
-
-function renderTable() {
-  const wk   = weekKey(currentWeekStart);
-  const days = getWeekDays();
-  const tbody = document.getElementById('tableBody');
-
-  // تحديث رأس الجدول بالتواريخ
-  const ths = document.querySelectorAll('#attendanceTable thead th.day-col');
-  ths.forEach((th, i) => {
-    th.innerHTML = `${days[i].name}<br><small style="font-weight:400;opacity:0.8;">${days[i].dateStr}</small>`;
-  });
-  renderBulkRow();
-
-  tbody.innerHTML = STUDENTS.map((stu, idx) => {
-    const rec  = (attendanceData[wk]?.[stu.pin]) || {};
-    const absCount = countAbsences(stu.pin);
-
-    const dayCells = DAYS.map((_, di) => {
-      const val = rec[`d${di}`] || 'p';
-      const opts = STATUS_OPTS.map(o =>
-        `<option value="${o.val}" ${val===o.val?'selected':''}>${o.label}</option>`
-      ).join('');
-      return `<td class="status-cell">
-        <select class="status-select val-${val}"
-          data-pin="${stu.pin}" data-day="${di}"
-          onchange="onStatusChange(this)">
-          ${opts}
-        </select>
-      </td>`;
-    }).join('');
-
-    return `<tr>
-      <td style="text-align:center;padding:8px;font-size:0.78rem;color:var(--muted);">${idx+1}</td>
-      <td>
-        <div class="student-cell">
-          <div class="student-num">${idx+1}</div>
+      <!-- KPIs (دقيقة وتتحدث تلقائيًا) -->
+      <div class="summary" aria-label="ملخص الإحصائيات">
+        <div class="kpi blue">
           <div>
-            <div class="student-name">${stu.name}</div>
-            ${absCount > 0 ? `<div class="student-absent-count">غياب: ${absCount} يوم</div>` : ''}
+            <div class="num" id="kpiClasses">0</div>
+            <div class="lab">إجمالي الفصول</div>
           </div>
+          <div class="ic">🏫</div>
         </div>
-      </td>
-      ${dayCells}
-      <td class="note-cell">
-        <input class="note-input" type="text" placeholder="ملاحظة..."
-          value="${rec.note||''}" data-pin="${stu.pin}"
-          onchange="onNoteChange(this)" maxlength="60">
-      </td>
-      <td class="total-cell" id="abs-${stu.pin}" style="color:var(--red);">
-        ${getDayAbsences(stu.pin, wk)}
-      </td>
-    </tr>`;
-  }).join('');
-}
 
-function onStatusChange(sel) {
-  const pin = sel.dataset.pin;
-  const day = sel.dataset.day;
-  const val = sel.value;
-  const wk  = weekKey(currentWeekStart);
+        <div class="kpi green">
+          <div>
+            <div class="num" id="kpiClassesWithYaseer">0</div>
+            <div class="lab">فصول يوجد فيها طلاب يسير</div>
+          </div>
+          <div class="ic">🟢</div>
+        </div>
 
-  if (!attendanceData[wk]) attendanceData[wk] = {};
-  if (!attendanceData[wk][pin]) attendanceData[wk][pin] = {};
-  attendanceData[wk][pin][`d${day}`] = val;
+        <div class="kpi purple">
+          <div>
+            <div class="num" id="kpiYaseer">0</div>
+            <div class="lab">إجمالي طلاب يسير</div>
+          </div>
+          <div class="ic">📘</div>
+        </div>
 
-  // تحديث لون الـ select
-  sel.className = `status-select val-${val}`;
+        <div class="kpi amber">
+          <div>
+            <div class="num" id="kpiPending">0</div>
+            <div class="lab">بانتظار التشخيص</div>
+          </div>
+          <div class="ic">⏳</div>
+        </div>
 
-  updateStats();
-  // تحديث عداد الغياب للطالب
-  document.getElementById(`abs-${pin}`).textContent = getDayAbsences(pin, wk);
+        <div class="kpi blue">
+          <div>
+            <div class="num" id="kpiTotalStudents">0</div>
+            <div class="lab">إجمالي طلاب الفصول (حسب إدخالك)</div>
+          </div>
+          <div class="ic">👥</div>
+        </div>
 
-  // تحديث عداد الغياب الكلي
-  const row = sel.closest('tr');
-  const absDiv = row.querySelector('.student-absent-count');
-  const total = countAbsences(pin);
-  if (total > 0) {
-    if (absDiv) absDiv.textContent = `غياب: ${total} يوم`;
-    else row.querySelector('.student-name').insertAdjacentHTML('afterend',
-      `<div class="student-absent-count">غياب: ${total} يوم</div>`);
-  } else {
-    absDiv?.remove();
-  }
-}
-
-function onNoteChange(inp) {
-  const pin = inp.dataset.pin;
-  const wk  = weekKey(currentWeekStart);
-  if (!attendanceData[wk]) attendanceData[wk] = {};
-  if (!attendanceData[wk][pin]) attendanceData[wk][pin] = {};
-  attendanceData[wk][pin].note = inp.value;
-}
-
-function getDayAbsences(pin, wk) {
-  const rec = attendanceData[wk]?.[pin] || {};
-  return DAYS.filter((_, i) => rec[`d${i}`] === 'a').length;
-}
-
-function countAbsences(pin) {
-  let total = 0;
-  for (const wk of Object.keys(attendanceData)) {
-    total += getDayAbsences(pin, wk);
-  }
-  return total;
-}
-
-function updateStats() {
-  const wk = weekKey(currentWeekStart);
-  let p=0, a=0, l=0, e=0, total=0;
-  STUDENTS.forEach(stu => {
-    const rec = attendanceData[wk]?.[stu.pin] || {};
-    DAYS.forEach((_, di) => {
-      const v = rec[`d${di}`] || 'p';
-      if (v==='n') return; // انتساب لا يُحسب
-      total++;
-      if (v==='p') p++;
-      else if (v==='a') a++;
-      else if (v==='l') l++;
-      else if (v==='e' || v==='h' || v==='s') e++;
-    });
-  });
-  document.getElementById('statP').textContent = p;
-  document.getElementById('statA').textContent = a;
-  document.getElementById('statL').textContent = l;
-  document.getElementById('statE').textContent = e;
-  document.getElementById('statPct').textContent = total ? Math.round((p+l)/total*100)+'%' : '0%';
-}
-
-function markAllPresent() {
-  const wk = weekKey(currentWeekStart);
-  if (!attendanceData[wk]) attendanceData[wk] = {};
-  STUDENTS.forEach(stu => {
-    if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
-    DAYS.forEach((_, di) => { attendanceData[wk][stu.pin][`d${di}`] = 'p'; });
-  });
-  renderTable();
-  updateStats();
-  showToast('✅ تم تحضير جميع الطلاب');
-}
-
-// ===== SIGNATURE =====
-const canvases = {};
-
-function initCanvas(id, wrapperId, placeholderId) {
-  const wrap = document.getElementById(wrapperId);
-  const canvas = document.getElementById(id);
-  const ph = document.getElementById(placeholderId);
-  canvas.width  = wrap.offsetWidth  || 400;
-  canvas.height = wrap.offsetHeight || 100;
-  const ctx = canvas.getContext('2d');
-  ctx.strokeStyle = '#1a3a5c';
-  ctx.lineWidth   = 2.5;
-  ctx.lineCap     = 'round';
-  canvases[id]    = {ctx, drawing:false, hasContent:false};
-
-  function getPos(e) {
-    const r = canvas.getBoundingClientRect();
-    const src = e.touches?.[0] || e;
-    return {x:(src.clientX-r.left)*(canvas.width/r.width), y:(src.clientY-r.top)*(canvas.height/r.height)};
-  }
-  function start(e) { e.preventDefault(); const p=getPos(e); canvases[id].drawing=true; ctx.beginPath(); ctx.moveTo(p.x,p.y); ph.style.display='none'; }
-  function move(e)  { e.preventDefault(); if(!canvases[id].drawing) return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); canvases[id].hasContent=true; }
-  function end()    { canvases[id].drawing=false; }
-
-  canvas.addEventListener('mousedown', start);
-  canvas.addEventListener('mousemove', move);
-  canvas.addEventListener('mouseup',   end);
-  canvas.addEventListener('touchstart', start, {passive:false});
-  canvas.addEventListener('touchmove',  move,  {passive:false});
-  canvas.addEventListener('touchend',   end);
-}
-
-function clearSign(id, phId) {
-  const {ctx} = canvases[id];
-  const canvas = document.getElementById(id);
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  canvases[id].hasContent = false;
-  document.getElementById(phId).style.display='flex';
-}
-
-// ===== SAVE / LOAD =====
-async function saveAttendance() {
-  showToast('⏳ جاري الحفظ...');
-  const wk   = weekKey(currentWeekStart);
-  const sem  = document.getElementById('semesterSelect').value;
-
-  const teacherSign = canvases['teacherCanvas']?.hasContent
-    ? document.getElementById('teacherCanvas').toDataURL() : null;
-
-  const payload = {
-    week:       wk,
-    semester:   sem,
-    program:    PROGRAM,
-    data:       attendanceData[wk] || {},
-    teacher:    document.getElementById('teacherName').value,
-    teacherSign,
-    savedAt:    new Date().toISOString(),
-  };
-
-  const blob    = new Blob([JSON.stringify(payload)], {type:'application/json'});
-  const path    = `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`;
-  const headers = {'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
-
-  try {
-    // حاول PUT (تحديث ملف موجود)
-    let res = await fetch(path, {method:'PUT', headers, body: blob});
-
-    // إن فشل PUT جرّب POST (إنشاء ملف جديد)
-    if (!res.ok) {
-      res = await fetch(path, {method:'POST', headers:{...headers,'x-upsert':'true'}, body: blob});
-    }
-
-    if (res.ok) {
-      showToast('✅ تم الحفظ بنجاح');
-    } else {
-      const err = await res.text();
-      showToast('❌ فشل الحفظ: ' + err.slice(0,80));
-      console.error('Save error:', err);
-    }
-  } catch(e) {
-    showToast('❌ تعذّر الاتصال بالخادم');
-    console.error(e);
-  }
-}
-
-async function loadAttendance(wk) {
-  try {
-    const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/${PROGRAM}/attendance/attendance-${wk}.json`
-    );
-    if (!res.ok) return;
-    const payload = await res.json();
-    if (payload.data) {
-      attendanceData[wk] = payload.data;
-      // استعادة أسماء الموقّعين
-      // supervisor removed
-      if (payload.teacher)    document.getElementById('teacherName').value    = payload.teacher;
-    }
-    renderTable();
-    updateStats();
-  } catch(e) {}
-}
-
-// ===== PRINT =====
-function printAttendance() {
-  const wk   = weekKey(currentWeekStart);
-  const days = getWeekDays();
-  const sem  = document.getElementById('semesterSelect').value;
-  const supName = '';
-  const tchName = document.getElementById('teacherName').value;
-  const tchSign = canvases['teacherCanvas']?.hasContent    ? document.getElementById('teacherCanvas').toDataURL()    : null;
-
-  const statusLabel = {p:'حاضر', a:'غياب', l:'متأخر', e:'بعذر', h:'إجازة', s:'تعليق', n:'انتساب'};
-  const statusColor = {p:'#dcfce7', a:'#fee2e2', l:'#fef9c3', e:'#ede9fe', h:'#e0f2fe', s:'#f1f5f9', n:'#fdf4ff'};
-  const statusTxt   = {p:'#16a34a', a:'#dc2626', l:'#b45309', e:'#7c3aed', h:'#0369a1', s:'#475569', n:'#7e22ce'};
-
-  const rows = STUDENTS.map((stu, idx) => {
-    const rec = attendanceData[wk]?.[stu.pin] || {};
-    const cells = DAYS.map((_, di) => {
-      const v = rec[`d${di}`] || 'p';
-      return `<td style="text-align:center;background:${statusColor[v]};color:${statusTxt[v]};font-weight:700;font-size:0.75rem;padding:6px 4px;">${statusLabel[v]}</td>`;
-    }).join('');
-    const absCount = getDayAbsences(stu.pin, wk);
-    return `<tr style="border-bottom:1px solid #e0d8c8;">
-      <td style="text-align:center;padding:6px;font-size:0.75rem;color:#888;">${idx+1}</td>
-      <td style="padding:6px 12px;font-size:0.82rem;font-weight:700;">${stu.name}</td>
-      ${cells}
-      <td style="padding:6px 10px;font-size:0.75rem;color:#888;">${rec.note||''}</td>
-      <td style="text-align:center;padding:6px;font-size:0.8rem;font-weight:800;color:#dc2626;">${absCount||''}</td>
-    </tr>`;
-  }).join('');
-
-  const dayHeaders = days.map(d =>
-    `<th style="padding:10px 6px;text-align:center;min-width:70px;">${d.name}<br><small>${d.dateStr}</small></th>`
-  ).join('');
-
-  const win = window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    <meta charset="UTF-8">
-    <title>كشف حضور — يسير — ${wk}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-      body{font-family:'Cairo',sans-serif;padding:24px;color:#1a1a2e;direction:rtl;}
-      h2{color:#1a3a5c;font-size:1.1rem;margin-bottom:4px;}
-      .meta{font-size:0.78rem;color:#888;margin-bottom:16px;}
-      table{width:100%;border-collapse:collapse;font-size:0.82rem;}
-      thead{background:linear-gradient(135deg,#1a3a5c,#c25a00);color:#fff;}
-      thead th{padding:10px 6px;font-weight:700;}
-      .sign-row{display:flex;gap:40px;margin-top:30px;}
-      .sign-box{flex:1;border:1px solid #e0d8c8;border-radius:10px;padding:14px;text-align:center;}
-      .sign-box label{font-size:0.75rem;color:#888;display:block;margin-bottom:8px;}
-      .sign-box .name{font-size:0.88rem;font-weight:800;margin-bottom:8px;}
-      .sign-img{max-height:70px;border:1px dashed #ccc;border-radius:6px;}
-      @media print{body{padding:10px;}}
-    </style>
-  <link rel="stylesheet" href="assets/css/common-ui.css">
-</head><body>
-    <h2>📘 كشف حضور — برنامج يسير التعليمي</h2>
-    <div class="meta">
-      مدرسة مكة المكرمة المتوسطة | ${sem} | الأسبوع: ${days[0].dateStr} — ${days[4].dateStr}
-    </div>
-    <table>
-      <thead><tr>
-        <th style="padding:10px 6px;">#</th>
-        <th style="text-align:right;padding:10px 12px;min-width:160px;">اسم الطالب</th>
-        ${dayHeaders}
-        <th style="padding:10px 6px;">ملاحظات</th>
-        <th style="padding:10px 6px;">غياب</th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-    <div class="sign-row">
-      <div class="sign-box">
-        <label>توقيع المعلم</label>
-        <div class="name">${tchName||'——'}</div>
-        ${tchSign ? `<img src="${tchSign}" class="sign-img">` : '<div style="height:50px;border:1px dashed #ccc;border-radius:6px;"></div>'}
+        <div class="kpi purple">
+          <div>
+            <div class="num" id="kpiAllYaseerPending">0</div>
+            <div class="lab">إجمالي (يسير + انتظار)</div>
+          </div>
+          <div class="ic">📌</div>
+        </div>
       </div>
-    </div>
-    <script>window.onload=()=>{setTimeout(()=>window.print(),400);}<\/script>
-    <div class="hijri-inputs">
-    <div class="hijri-field">
-      <label>اليوم</label>
-      <input type="number" id="hijriDay" min="1" max="30" value="1" placeholder="يوم">
-    </div>
-    <div class="hijri-field">
-      <label>الشهر</label>
-      <select id="hijriMonth">
-        <option value="1">محرم</option>
-        <option value="2">صفر</option>
-        <option value="3">ربيع الأول</option>
-        <option value="4">ربيع الثاني</option>
-        <option value="5">جمادى الأولى</option>
-        <option value="6">جمادى الثانية</option>
-        <option value="7">رجب</option>
-        <option value="8">شعبان</option>
-        <option value="9">رمضان</option>
-        <option value="10">شوال</option>
-        <option value="11">ذو القعدة</option>
-        <option value="12">ذو الحجة</option>
-      </select>
-    </div>
-    <div class="hijri-field">
-      <label>السنة</label>
-      <input type="number" id="hijriYear" min="1400" max="1500" value="1447" placeholder="سنة">
-    </div>
+
+      <!-- Table -->
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الفصل</th>
+              <th>المبنى</th>
+              <th>الصف</th>
+              <th class="numCell">طلاب يسير</th>
+              <th class="numCell">بانتظار التشخيص</th>
+              <th class="numCell">إجمالي طلاب الفصل</th>
+              <th class="numCell">الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        ✅ <b>تنبيه:</b> الحماية هنا تمنع العبث للزوار (عرض فقط). للتعديل افتح وضع التعديل بكلمة المرور ثم <b>اقفل اللوحة</b> بعد الانتهاء.
+      </div>
+
+      <div class="footer">
+        <div>إعداد وتنفيذ: أ. سعد الزهراني</div>
+        <div>© <span id="y"></span> مدرسة مكة المكرمة المتوسطة — لوحة التعليم العام</div>
+      </div>
+    </section>
+
   </div>
-  <div class="hijri-popup-btns">
-    <button class="btn-hijri-apply" onclick="applyHijriDate()">✅ تطبيق</button>
-    <button class="btn-hijri-cancel" onclick="closeHijriPicker()">إلغاء</button>
-  </div>
-</div>
 
-</body></html>`);
-  win.document.close();
-}
+  <script>
+    /* ===============================
+       1) كلمة المرور (غيّرها الآن)
+       =============================== */
+    const ADMIN_PASS = "Saadzh99";
 
-// ===== TOAST =====
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
+    /* ===============================
+       2) التخزين المحلي
+       =============================== */
+    const STORAGE_KEY = "makkah_special_general_yaseer_v2";
 
-// ===== INIT =====
-window.addEventListener('load', () => {
-  initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
-  renderAll();
-  // حمّل بيانات الأسبوع الحالي من السحابة
-  loadAttendance(weekKey(currentWeekStart));
-});
-window.addEventListener('resize', () => {
-  initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
-});
+    /* ===============================
+       3) توليد صفوف الفصول المطلوبة:
+          ١/١..٨/١ + ٢/٢..٨/٢ + ٣/٣..٨/٣
+       =============================== */
+    function makeClassRows(){
+      const rows = [];
+      const groups = [
+        { grade:"أول متوسط", prefix:"1" },
+        { grade:"ثاني متوسط", prefix:"2" },
+        { grade:"ثالث متوسط", prefix:"3" },
+      ];
 
-// ===== HIJRI CALENDAR =====
-let _calMode = 'miladi';
+      // المطلوب: من 1..8 لكل مجموعة
+      for(const g of groups){
+        for(let n=1; n<=8; n++){
+          rows.push({
+            cls: `${g.prefix}/${n}`,
+            building: "المبنى الرئيسي",
+            grade: g.grade,
+            yaseer: 0,
+            pending: 0,
+            totalStudents: 0
+          });
+        }
+      }
+      return rows;
+    }
 
-function getHijriParts(d) {
-  try {
-    const s = d.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
-      {day:'numeric', month:'numeric', year:'numeric'});
-    const p = s.split('/'); // M/D/Y
-    return {m: parseInt(p[0]), d: parseInt(p[1]), y: parseInt(p[2])};
-  } catch(e) { return {m:9, d:1, y:1447}; }
-}
+    const BUILDINGS = ["المبنى الشمالي","المبنى الجنوبي","المبنى الرئيسي"];
+    const GRADES = ["أول متوسط","ثاني متوسط","ثالث متوسط"];
 
-function getHijriLabel(d) {
-  try {
-    return '🌙 ' + d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',
-      {day:'numeric', month:'long', year:'numeric'});
-  } catch(e) { return ''; }
-}
+    const els = {
+      tbody: document.getElementById("tbody"),
+      modeTag: document.getElementById("modeTag"),
+      unlockBtn: document.getElementById("unlockBtn"),
+      lockBtn: document.getElementById("lockBtn"),
+      resetBtn: document.getElementById("resetBtn"),
 
-function fillHijriDays(month, year, selectedDay) {
-  const sel = document.getElementById('hDay');
-  if (!sel) return;
-  // أقصى أيام الشهر الهجري 29 أو 30
-  const maxDay = 30;
-  const cur = selectedDay || parseInt(sel.value) || 1;
-  sel.innerHTML = '<option value="">يوم</option>' +
-    Array.from({length: maxDay}, (_, i) => i+1)
-      .map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`)
-      .join('');
-}
+      kpiClasses: document.getElementById("kpiClasses"),
+      kpiClassesWithYaseer: document.getElementById("kpiClassesWithYaseer"),
+      kpiYaseer: document.getElementById("kpiYaseer"),
+      kpiPending: document.getElementById("kpiPending"),
+      kpiTotalStudents: document.getElementById("kpiTotalStudents"),
+      kpiAllYaseerPending: document.getElementById("kpiAllYaseerPending"),
+    };
 
-function setCalMode(mode) {
-  _calMode = mode;
-  document.querySelectorAll('.cal-toggle-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.mode === mode));
+    document.getElementById("y").textContent = new Date().getFullYear();
 
-  const miladiWrap = document.getElementById('miladiWrap');
-  const hijriWrap  = document.getElementById('hijriWrap');
+    let editMode = false;
+    let data = loadData();
 
-  if (mode === 'miladi') {
-    miladiWrap.style.display = '';
-    hijriWrap.style.display  = 'none';
-  } else {
-    miladiWrap.style.display = 'none';
-    hijriWrap.style.display  = '';
-    // ملء القيم الحالية
-    const p = getHijriParts(currentWeekStart);
-    document.getElementById('hMonth').value = p.m;
-    document.getElementById('hYear').value  = p.y;
-    fillHijriDays(p.m, p.y, p.d);
-  }
-  updateHijriDisplay();
-}
+    function num(v){
+      const n = Number(v);
+      if(!Number.isFinite(n) || n < 0) return 0;
+      return Math.floor(n);
+    }
 
-function applyHijriInline() {
-  const d = parseInt(document.getElementById('hDay').value);
-  const m = parseInt(document.getElementById('hMonth').value);
-  const y = parseInt(document.getElementById('hYear').value);
-  if (!d || !m || !y || y < 1400 || y > 1500) return;
+    function loadData(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return makeClassRows();
+        const parsed = JSON.parse(raw);
+        if(!Array.isArray(parsed) || parsed.length === 0) return makeClassRows();
 
-  const miladi = hijriToMiladi(y, m, d);
-  if (!miladi) return;
+        // تطبيع مع الحفاظ على نفس ترتيب الفصول المطلوب
+        const base = makeClassRows();
+        const map = new Map(parsed.map(r=>[String(r.cls).trim(), r]));
 
-  // اضبط على الأحد
-  miladi.setHours(0,0,0,0);
-  miladi.setDate(miladi.getDate() - miladi.getDay());
-  currentWeekStart = miladi;
-  document.getElementById('weekStart').value = weekKey(currentWeekStart);
-  renderAll();
-}
+        return base.map(r=>{
+          const old = map.get(r.cls);
+          if(!old) return r;
+          return {
+            cls: r.cls,
+            building: BUILDINGS.includes(old.building) ? old.building : r.building,
+            grade: GRADES.includes(old.grade) ? old.grade : r.grade,
+            yaseer: num(old.yaseer),
+            pending: num(old.pending),
+            totalStudents: num(old.totalStudents),
+          };
+        });
+      }catch(e){
+        return makeClassRows();
+      }
+    }
 
-function updateHijriDisplay() {
-  const el = document.getElementById('hijriDisplay');
-  if (el) el.textContent = getHijriLabel(currentWeekStart);
-}
+    function saveData(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
 
-function hijriToMiladi(hy, hm, hd) {
-  const approxJD = Math.floor((11*hy+3)/30) + 354*hy + 30*hm
-    - Math.floor((hm-1)/2) + hd + 1948440 - 385;
-  const approx = julianToDate(approxJD);
-  for (let offset = -45; offset <= 45; offset++) {
-    const test = new Date(approx);
-    test.setDate(test.getDate() + offset);
-    try {
-      const p = test.toLocaleDateString('en-SA-u-ca-islamic-umalqura',
-        {day:'numeric', month:'numeric', year:'numeric'}).split('/');
-      if (parseInt(p[2])===hy && parseInt(p[0])===hm && parseInt(p[1])===hd)
-        return test;
-    } catch(e) {}
-  }
-  return approx;
-}
+    function statusInfo(row){
+      const has = num(row.yaseer) > 0;
+      return {
+        text: has ? "يوجد طلاب يسير" : "لا يوجد",
+        cls: has ? "statusGreen" : "statusGray"
+      };
+    }
 
-function julianToDate(jd) {
-  let l=jd+68569, n=Math.floor(4*l/146097);
-  l=l-Math.floor((146097*n+3)/4);
-  const i=Math.floor(4000*(l+1)/1461001);
-  l=l-Math.floor(1461*i/4)+31;
-  const j=Math.floor(80*l/2447), d=l-Math.floor(2447*j/80);
-  l=Math.floor(j/11);
-  return new Date(100*(n-49)+i+l, j+2-12*l-1, d);
-}
+    function makeSelect(options, value, disabled){
+      const sel = document.createElement("select");
+      options.forEach(opt=>{
+        const o = document.createElement("option");
+        o.value = opt;
+        o.textContent = opt;
+        if(opt === value) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.disabled = disabled;
+      return sel;
+    }
 
+    function render(){
+      els.tbody.innerHTML = "";
 
-// ===== تحكم يومي =====
-const BULK_OPTS = [
-  {val:'p', label:'✅ حاضر الكل'},
-  {val:'a', label:'❌ غائب الكل'},
-  {val:'h', label:'🏖️ إجازة الكل'},
-  {val:'s', label:'🚫 تعليق الكل'},
-];
+      data.forEach((row, idx)=>{
+        const tr = document.createElement("tr");
 
-function renderBulkRow() {
-  for (let di = 0; di < 5; di++) {
-    const td = document.getElementById('bulk-td-' + di);
-    if (!td) continue;
-    const opts = [
-      `<option value="" disabled selected>— تطبيق على الكل —</option>`,
-      ...BULK_OPTS.map(o => `<option value="${o.val}">${o.label}</option>`)
-    ].join('');
-    td.innerHTML = `<select class="day-bulk-select" onchange="markDay(${di},this.value);this.selectedIndex=0;">${opts}</select>`;
-  }
-}
+        // 1) الفصل (ثابت)
+        const tdClass = document.createElement("td");
+        tdClass.textContent = row.cls;
+        tdClass.style.fontWeight = "1000";
+        tdClass.style.whiteSpace = "nowrap";
 
-function markDay(di, val) {
-  const wk = weekKey(currentWeekStart);
-  if (!attendanceData[wk]) attendanceData[wk] = {};
-  STUDENTS.forEach(stu => {
-    if (!attendanceData[wk][stu.pin]) attendanceData[wk][stu.pin] = {};
-    attendanceData[wk][stu.pin][`d${di}`] = val;
-  });
-  renderTable();
-  updateStats();
-  const dayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
-  const labels = {p:'حاضر',a:'غائب',h:'إجازة',s:'تعليق'};
-  showToast(`✅ ${dayNames[di]}: تم تسجيل ${labels[val]||val} لجميع الطلاب`);
-}
+        // 2) المبنى
+        const tdBuilding = document.createElement("td");
+        const buildingSel = makeSelect(BUILDINGS, row.building, !editMode);
+        buildingSel.addEventListener("change", ()=>{
+          data[idx].building = buildingSel.value;
+          saveData();
+        });
+        tdBuilding.appendChild(buildingSel);
 
-</script>
+        // 3) الصف
+        const tdGrade = document.createElement("td");
+        const gradeSel = makeSelect(GRADES, row.grade, !editMode);
+        gradeSel.addEventListener("change", ()=>{
+          data[idx].grade = gradeSel.value;
+          saveData();
+        });
+        tdGrade.appendChild(gradeSel);
+
+        // 4) يسير
+        const tdY = document.createElement("td");
+        tdY.className = "numCell";
+        const yInput = document.createElement("input");
+        yInput.type = "number";
+        yInput.min = "0";
+        yInput.value = row.yaseer;
+        yInput.disabled = !editMode;
+        yInput.addEventListener("input", ()=>{
+          data[idx].yaseer = num(yInput.value);
+          yInput.value = data[idx].yaseer;
+          saveData();
+          updateKPIs();
+          updateStatus(tr, idx);
+        });
+        tdY.appendChild(yInput);
+
+        // 5) انتظار
+        const tdP = document.createElement("td");
+        tdP.className = "numCell";
+        const pInput = document.createElement("input");
+        pInput.type = "number";
+        pInput.min = "0";
+        pInput.value = row.pending;
+        pInput.disabled = !editMode;
+        pInput.addEventListener("input", ()=>{
+          data[idx].pending = num(pInput.value);
+          pInput.value = data[idx].pending;
+          saveData();
+          updateKPIs();
+        });
+        tdP.appendChild(pInput);
+
+        // 6) إجمالي طلاب الفصل (يدوي)
+        const tdT = document.createElement("td");
+        tdT.className = "numCell";
+        const tInput = document.createElement("input");
+        tInput.type = "number";
+        tInput.min = "0";
+        tInput.value = row.totalStudents;
+        tInput.disabled = !editMode;
+        tInput.addEventListener("input", ()=>{
+          data[idx].totalStudents = num(tInput.value);
+          tInput.value = data[idx].totalStudents;
+          saveData();
+          updateKPIs();
+        });
+        tdT.appendChild(tInput);
+
+        // 7) الحالة
+        const tdS = document.createElement("td");
+        tdS.className = "numCell";
+        const pill = document.createElement("span");
+        const st = statusInfo(row);
+        pill.className = `statusPill ${st.cls}`;
+        pill.textContent = st.text;
+        tdS.appendChild(pill);
+
+        tr.appendChild(tdClass);
+        tr.appendChild(tdBuilding);
+        tr.appendChild(tdGrade);
+        tr.appendChild(tdY);
+        tr.appendChild(tdP);
+        tr.appendChild(tdT);
+        tr.appendChild(tdS);
+
+        els.tbody.appendChild(tr);
+      });
+
+      updateKPIs();
+      updateModeUI();
+    }
+
+    function updateStatus(tr, idx){
+      const pill = tr.querySelector(".statusPill");
+      if(!pill) return;
+      const st = statusInfo(data[idx]);
+      pill.className = `statusPill ${st.cls}`;
+      pill.textContent = st.text;
+    }
+
+    function updateKPIs(){
+      const totalClasses = data.length;
+      const totalYaseer = data.reduce((a,r)=>a + num(r.yaseer), 0);
+      const totalPending = data.reduce((a,r)=>a + num(r.pending), 0);
+      const totalStudents = data.reduce((a,r)=>a + num(r.totalStudents), 0);
+      const classesWithYaseer = data.reduce((a,r)=>a + (num(r.yaseer) > 0 ? 1 : 0), 0);
+
+      els.kpiClasses.textContent = String(totalClasses);
+      els.kpiClassesWithYaseer.textContent = String(classesWithYaseer);
+      els.kpiYaseer.textContent = String(totalYaseer);
+      els.kpiPending.textContent = String(totalPending);
+      els.kpiTotalStudents.textContent = String(totalStudents);
+      els.kpiAllYaseerPending.textContent = String(totalYaseer + totalPending);
+    }
+
+    function updateModeUI(){
+      els.modeTag.textContent = editMode ? "🔓 الوضع: تعديل" : "🔒 الوضع: عرض فقط";
+      els.unlockBtn.style.display = editMode ? "none" : "";
+      els.lockBtn.style.display = editMode ? "" : "none";
+      els.resetBtn.style.display = editMode ? "" : "none";
+
+      // تمكين/تعطيل الحقول
+      document.querySelectorAll("input, select").forEach(el=>{
+        el.disabled = !editMode;
+      });
+    }
+
+    els.unlockBtn.addEventListener("click", ()=>{
+      const p = prompt("أدخل كلمة المرور لتفعيل وضع التعديل:");
+      if(p === null) return;
+      if(p === ADMIN_PASS){
+        editMode = true;
+        render();
+      }else{
+        alert("كلمة المرور غير صحيحة.");
+      }
+    });
+
+    els.lockBtn.addEventListener("click", ()=>{
+      editMode = false;
+      render();
+      alert("تم قفل اللوحة (عرض فقط).");
+    });
+
+    els.resetBtn.addEventListener("click", ()=>{
+      const ok = confirm("تأكيد: هل تريد تصفير البيانات؟ (سيتم تصفير الأرقام فقط)");
+      if(!ok) return;
+      data = makeClassRows();
+      saveData();
+      render();
+    });
+
+    // تشغيل
+    render();
+  </script>
 <script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>
