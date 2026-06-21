@@ -1522,8 +1522,7 @@ function printProfile() {
     '.w-t{font-weight:800;font-size:0.86rem;color:#2E2148}.w-imgs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}' +
     '.w-imgs img{max-width:150px;max-height:130px;object-fit:cover;border-radius:6px;border:1px solid #DDD0F2}' +
     '.ft{margin-top:24px;text-align:center;font-size:0.68rem;color:#9ca3af;border-top:1px solid #DCD2EE;padding-top:12px}' +
-    '@media print{body{padding:12px}}</style><link rel="stylesheet" href="assets/css/common-ui.css">
-</head><body>';
+    '@media print{body{padding:12px}}</style></head><body>';
   html += '<div class="hdr">' + photoEl + '<div><h1>' + escHtml(currentTeacher) + '</h1><div class="sub">' + escHtml(t.role) + '</div><div class="sub">📅 ' + todayG + ' | 🌙 ' + todayH + '</div></div></div>';
   html += '<div class="sec"><div class="sec-t">📋 البيانات الشخصية والوظيفية</div><div class="g2">' +
     '<div class="f"><div class="lbl">الاسم</div><div class="val">' + escHtml(p.name||'—') + '</div></div>' +

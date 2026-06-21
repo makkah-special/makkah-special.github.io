@@ -9,6 +9,7 @@
     ['ملف الطالب','students.html','👨‍👩‍👧'],
     ['ملف الدمج','dumaj-students.html','🧠'],
     ['بوابة المعلمين','teachers-portal.html','👨‍🏫'],
+    ['روابط الإنجاز','teacher-portfolio-links.html','📁'],
     ['لوحة التحكم','unified-admin.html','📊'],
     ['تواصل','contact.html','☎️']
   ];
@@ -53,7 +54,7 @@
     if (document.querySelector('.mk-quick-files')) return;
     const box = document.createElement('div');
     box.className='mk-quick-files';
-    box.innerHTML = `<a href="students.html">ملف طالب يسير</a><a href="dumaj-students.html">ملف طالب الدمج</a><a href="unified-admin.html">لوحة التحكم</a>`;
+    box.innerHTML = `<a href="students.html">ملف طالب يسير</a><a href="dumaj-students.html">ملف طالب الدمج</a><a href="teacher-portfolio-links.html">روابط إنجاز المعلمين</a><a href="unified-admin.html">لوحة التحكم</a>`;
     document.body.appendChild(box);
   }
   function markExternal(){
