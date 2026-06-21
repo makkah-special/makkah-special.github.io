@@ -3541,51 +3541,49 @@ function closeMeetingAlert() {
 
 
 // ===== MEETING TAB =====
-let _lastMeetingInvite = null;
-
 async function loadMeetingTab() {
   const el = document.getElementById('meetings-tab-content');
   if (!el) return;
+  el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">⏳ جارٍ تحميل سجل الاستدعاءات...</div>';
   try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/meeting-invite.json`, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-    });
-    if (!res.ok) {
+    const list = await meetingLoadList();
+    if (!list.length) {
       el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات حالياً</div>';
       return;
     }
-    const invite = await res.json();
-    if (!invite || !invite.link) {
-      el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات حالياً</div>';
-      return;
-    }
-    _lastMeetingInvite = invite;
-    const dt = invite.datetime
-      ? new Date(invite.datetime).toLocaleDateString('ar-SA-u-nu-latn',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})
-      : '—';
-    const shownKey = 'shown_meeting_' + invite.id;
-    const isNew = !localStorage.getItem(shownKey);
     el.innerHTML = `
-      <div style="background:${isNew?'#EAE1F7':'#FBFAFE'};border:2px solid ${isNew?'#f59e0b':'#DCD2EE'};border-radius:12px;padding:18px 20px;">
-        ${isNew?'<div style="background:#f59e0b;color:#fff;font-size:0.72rem;font-weight:800;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;">🆕 جديد</div>':''}
-        <div style="font-size:0.78rem;font-weight:700;color:#888;margin-bottom:4px;">من المشرف التربوي</div>
-        <div style="font-weight:900;font-size:1rem;color:#3F2E63;margin-bottom:12px;">${invite.supervisorName || 'أحمد سعيد الزهراني'}</div>
-        <div style="background:#fff;border:1px solid #DCD2EE;border-radius:10px;padding:14px 16px;margin-bottom:14px;">
-          <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:3px;">📌 الموضوع</div>
-          <div style="font-size:0.92rem;font-weight:800;color:#3F2E63;">${invite.subject || '—'}</div>
-          <div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📅 الموعد</div>
-          <div style="font-size:0.88rem;font-weight:700;color:#3F2E63;">${dt}</div>
-          ${invite.notes ? `<div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📝 ملاحظات</div><div style="font-size:0.84rem;color:#333;">${invite.notes}</div>` : ''}
-        </div>
-        <a href="${invite.link}" target="_blank"
-           style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.92rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.3);"
-           onclick="localStorage.setItem('shown_meeting_${invite.id}','1');this.closest('[id^=admin-tab]') && setTimeout(()=>loadMeetingTab(),500)">
-          🔗 انضم للاجتماع الآن
-        </a>
-        <button onclick="dismissMeeting('${invite.id}')" style="width:100%;padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;">
-          ✓ تم الاطلاع
-        </button>
-      </div>`;
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;">
+        <div style="font-weight:900;color:#3F2E63;">📋 سجل الاستدعاءات</div>
+        <div style="font-size:0.78rem;color:#888;background:#F4EFFB;border:1px solid #DCD2EE;border-radius:999px;padding:5px 12px;">${list.length} استدعاء</div>
+      </div>
+      ${list.map(invite => {
+        const isNew = !localStorage.getItem('shown_meeting_' + invite.id);
+        const legacyBadge = invite._legacySingle ? '<span style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:999px;padding:3px 9px;font-size:0.7rem;font-weight:800;">قديم</span>' : '';
+        return `
+          <div style="background:${isNew?'#EAE1F7':'#FBFAFE'};border:2px solid ${isNew?'#f59e0b':'#DCD2EE'};border-radius:12px;padding:18px 20px;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;">
+              <div>${isNew?'<span style="background:#f59e0b;color:#fff;font-size:0.72rem;font-weight:800;padding:3px 10px;border-radius:20px;display:inline-block;">🆕 جديد</span>':''} ${legacyBadge}</div>
+            </div>
+            <div style="font-size:0.78rem;font-weight:700;color:#888;margin-bottom:4px;">من المشرف التربوي</div>
+            <div style="font-weight:900;font-size:1rem;color:#3F2E63;margin-bottom:12px;">${meetingEscapeHtml(invite.supervisorName || 'أحمد سعيد الزهراني')}</div>
+            <div style="background:#fff;border:1px solid #DCD2EE;border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+              <div style="font-size:0.72rem;font-weight:700;color:#888;margin-bottom:3px;">📌 الموضوع</div>
+              <div style="font-size:0.92rem;font-weight:800;color:#3F2E63;">${meetingEscapeHtml(invite.subject || '—')}</div>
+              <div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📅 الموعد</div>
+              <div style="font-size:0.88rem;font-weight:700;color:#3F2E63;">${meetingEscapeHtml(meetingFormatDate(invite.datetime))}</div>
+              ${invite.notes ? `<div style="font-size:0.72rem;font-weight:700;color:#888;margin:10px 0 3px;">📝 ملاحظات</div><div style="font-size:0.84rem;color:#333;">${meetingEscapeHtml(invite.notes)}</div>` : ''}
+            </div>
+            <a href="${meetingEscapeHtml(invite.link)}" target="_blank"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0369a1,#0284c7);color:#fff;padding:13px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:0.92rem;font-weight:800;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 14px rgba(3,105,161,0.3);"
+               onclick="localStorage.setItem('shown_meeting_${meetingEscapeHtml(invite.id)}','1');setTimeout(()=>loadMeetingTab(),500)">
+              🔗 انضم للاجتماع الآن
+            </a>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <button onclick="dismissMeeting('${meetingEscapeHtml(invite.id)}')" style="padding:10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;">✓ تم الاطلاع</button>
+              <button onclick="deleteMeetingFromAdmin('${meetingEscapeHtml(invite.id)}')" style="padding:10px;background:#fee2e2;color:#dc2626;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;">🗑️ حذف الاستدعاء</button>
+            </div>
+          </div>`;
+      }).join('')}`;
   } catch(e) {
     el.innerHTML = '<div style="text-align:center;padding:30px;color:#999;">📭 لا توجد استدعاءات</div>';
   }
@@ -3595,6 +3593,25 @@ function dismissMeeting(id) {
   localStorage.setItem('shown_meeting_' + id, '1');
   loadMeetingTab();
   showToast('✅ تم تعليم الاستدعاء كمقروء');
+}
+
+async function deleteMeetingFromAdmin(id) {
+  if (!confirm('هل تريد حذف هذا الاستدعاء من سجل مشرف يسير؟')) return;
+  const current = await meetingLoadList();
+  const item = current.find(m => String(m.id) === String(id));
+  const filtered = current
+    .filter(m => String(m.id) !== String(id))
+    .filter(m => !m._legacySingle)
+    .map(({_legacySingle, ...m}) => m);
+  const ok = await meetingSaveList(filtered);
+  if (item && item._legacySingle) await meetingDeleteLegacySingle();
+  if (ok || (item && item._legacySingle)) {
+    localStorage.removeItem('shown_meeting_' + id);
+    showToast('🗑️ تم حذف الاستدعاء من السجل');
+    loadMeetingTab();
+  } else {
+    showToast('⚠️ تعذر حذف الاستدعاء، تحقق من الاتصال');
+  }
 }
 
 </script>

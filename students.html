@@ -793,8 +793,8 @@ async function loadMeetings() {
     sbGet('reports/yaseer/meeting-invites.json'),
   ]);
   const list = [
-    ...(Array.isArray(dj) ? dj.map(m=>({...m,_prog:'الدمج الفكري'})) : []),
-    ...(Array.isArray(ys) ? ys.map(m=>({...m,_prog:'يسير'}))         : []),
+    ...(Array.isArray(dj) ? dj.map(m=>({...m,_prog:'الدمج الفكري',_programKey:'dumaj'})) : []),
+    ...(Array.isArray(ys) ? ys.map(m=>({...m,_prog:'يسير',_programKey:'yaseer'}))         : []),
   ].sort((a,b)=>(b.sentAt||'').localeCompare(a.sentAt||''));
 
   if (!list.length) {
@@ -810,9 +810,19 @@ async function loadMeetings() {
       <div class="note-meta">📅 ${escHtml(dt)}${m.notes?' — '+escHtml(m.notes):''}${m.supervisorName?' | من: '+escHtml(m.supervisorName):''}</div>
       <div class="btn-row" style="margin-top:8px;">
         <a href="${m.link}" target="_blank" class="btn-sm btn-sm-primary" style="text-decoration:none;font-size:.76rem;">🔗 الانضمام للاجتماع</a>
+        <button class="btn-sm" onclick="deleteMeetingFromSection('${m._programKey}','${m.id}')" style="background:#fee2e2;color:#dc2626;border:1px solid #fecaca;font-size:.76rem;">🗑️ حذف</button>
       </div>
     </div>`;
   }).join('');
+}
+
+async function deleteMeetingFromSection(program, id) {
+  if (!confirm('هل تريد حذف هذا الاستدعاء من السجل؟')) return;
+  const list = await sbGet(`reports/${program}/meeting-invites.json`);
+  const filtered = (Array.isArray(list) ? list : []).filter(m => String(m.id) !== String(id));
+  const ok = await sbSet(`reports/${program}/meeting-invites.json`, filtered);
+  if (ok) { showToast('🗑️ تم حذف الاستدعاء'); loadMeetings(); }
+  else showToast('⚠️ تعذر حذف الاستدعاء');
 }
 
 // ====================================================
