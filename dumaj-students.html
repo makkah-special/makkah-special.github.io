@@ -1717,33 +1717,45 @@ async function checkPin() {
   if (loginBtn) { loginBtn.disabled = true; loginBtn.textContent = '⏳ جارٍ التحقق...'; }
   errMsg.classList.remove('show');
 
-  try {
-    const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${enteredPin}.json?t=${Date.now()}`
-    );
+ try {
+  const safePin = String(enteredPin || '').trim().replace(/[^\d]/g, '');
 
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.name) {
-        STUDENTS[enteredPin] = {
-          name: data.name || '',
-          id_full: data.id_full || '',
-          grade: data.grade || '',
-          phone: data.phone || '',
-          plan: data.plan || [],
-          reports: data.reports || [],
-          followup: data.followup || [],
-          homeActivities: data.homeActivities || data.home_activities || [],
-          meetings: data.meetings || [],
-          forms: data.forms || [],
-          messages: data.messages || data.notifications || [],
-          pin: enteredPin
-        };
-        pinInput.classList.remove('error');
-        loadStudentWithSync(enteredPin);
-        return;
-      }
+  if (!safePin) {
+    console.warn('PIN فارغ أو غير صحيح');
+    return;
+  }
+
+  const res = await fetch(
+    `${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${encodeURIComponent(safePin)}.json?t=${Date.now()}`
+  );
+
+  if (res.ok) {
+    const data = await res.json();
+
+    if (data && data.name) {
+      STUDENTS[safePin] = {
+        name: data.name || '',
+        id_full: data.id_full || '',
+        grade: data.grade || '',
+        phone: data.phone || '',
+        plan: data.plan || [],
+        reports: data.reports || [],
+        followup: data.followup || [],
+        homeActivities: data.homeActivities || data.home_activities || [],
+        meetings: data.meetings || [],
+        forms: data.forms || [],
+        messages: data.messages || data.notifications || [],
+        pin: safePin
+      };
+
+      pinInput.classList.remove('error');
+      loadStudentWithSync(safePin);
+      return;
     }
+  }
+} catch (error) {
+  console.error(error);
+}
 
     errMsg.textContent = '❌ الرمز غير صحيح، يرجى المحاولة مجدداً';
     errMsg.classList.add('show');
