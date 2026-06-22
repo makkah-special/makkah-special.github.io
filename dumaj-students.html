@@ -1717,7 +1717,7 @@ async function checkPin() {
   if (loginBtn) { loginBtn.disabled = true; loginBtn.textContent = '⏳ جارٍ التحقق...'; }
   errMsg.classList.remove('show');
 
- try {
+try {
   const safePin = String(enteredPin || '').trim().replace(/[^\d]/g, '');
 
   if (!safePin) {
@@ -1754,7 +1754,7 @@ async function checkPin() {
     }
   }
 } catch (error) {
-  console.error(error);
+  console.error('خطأ في تحميل بيانات الطالب:', error);
 }
 
     errMsg.textContent = '❌ الرمز غير صحيح، يرجى المحاولة مجدداً';
