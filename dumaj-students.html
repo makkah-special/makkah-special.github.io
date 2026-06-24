@@ -1714,45 +1714,48 @@ async function checkPin() {
     return;
   }
 
-  if (loginBtn) { loginBtn.disabled = true; loginBtn.textContent = '⏳ جارٍ التحقق...'; }
-  errMsg.classList.remove('show');
-
-try {
   const safePin = String(enteredPin || '').trim().replace(/[^\d]/g, '');
 
-  if (!safePin) {
-    console.warn('PIN فارغ أو غير صحيح');
+  if (!safePin || safePin.length !== 4) {
+    errMsg.textContent = '❌ أدخل رمزاً صحيحاً مكوناً من 4 أرقام';
+    errMsg.classList.add('show');
+    pinInput.classList.add('error');
+    setTimeout(() => pinInput.classList.remove('error'), 500);
     return;
   }
 
-  const res = await fetch(
-    `${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${encodeURIComponent(safePin)}.json?t=${Date.now()}`
-  );
+  if (loginBtn) { loginBtn.disabled = true; loginBtn.textContent = '⏳ جارٍ التحقق...'; }
+  errMsg.classList.remove('show');
 
-  if (res.ok) {
-    const data = await res.json();
+  try {
+    const res = await fetch(
+      `${SB_URL}/storage/v1/object/public/reports/dumaj/data/student-${encodeURIComponent(safePin)}.json?t=${Date.now()}`
+    );
 
-    if (data && data.name) {
-      STUDENTS[safePin] = {
-        name: data.name || '',
-        id_full: data.id_full || '',
-        grade: data.grade || '',
-        phone: data.phone || '',
-        plan: data.plan || [],
-        reports: data.reports || [],
-        followup: data.followup || [],
-        homeActivities: data.homeActivities || data.home_activities || [],
-        meetings: data.meetings || [],
-        forms: data.forms || [],
-        messages: data.messages || data.notifications || [],
-        pin: safePin
-      };
+    if (res.ok) {
+      const data = await res.json();
 
-      pinInput.classList.remove('error');
-      loadStudentWithSync(safePin);
-      return;
+      if (data && data.name) {
+        STUDENTS[safePin] = {
+          name: data.name || '',
+          id_full: data.id_full || '',
+          grade: data.grade || '',
+          phone: data.phone || '',
+          plan: data.plan || [],
+          reports: data.reports || [],
+          followup: data.followup || [],
+          homeActivities: data.homeActivities || data.home_activities || [],
+          meetings: data.meetings || [],
+          forms: data.forms || [],
+          messages: data.messages || data.notifications || [],
+          pin: safePin
+        };
+
+        pinInput.classList.remove('error');
+        loadStudentWithSync(safePin);
+        return;
+      }
     }
-  }
 
     errMsg.textContent = '❌ الرمز غير صحيح، يرجى المحاولة مجدداً';
     errMsg.classList.add('show');
@@ -1761,6 +1764,7 @@ try {
     setTimeout(() => pinInput.classList.remove('error'), 500);
 
   } catch(e) {
+    console.error('خطأ في تحميل بيانات الطالب:', e);
     errMsg.textContent = '❌ تعذّر الاتصال، تحقق من الإنترنت';
     errMsg.classList.add('show');
   } finally {
