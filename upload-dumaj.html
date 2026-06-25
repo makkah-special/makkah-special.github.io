@@ -1,2034 +1,420 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<meta name="theme-color" content="#6B4C9A">
-<title>بوابة المعلمين | مدرسة مكة المكرمة المتوسطة</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>رفع تقارير الدمج الفكري | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:        #F7F5FC;
-  --bg-soft:   #EFE8FA;
-  --card:      #FFFFFF;
-  --surface2:  #FBFAFE;
+  :root {
+    --primary: #7a2800;
+    --accent: #e07020;
+    --accent-light: #f59040;
+    --green: #c25a00;
+    --green-light: #e07020;
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --border: #e0d8c8;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-  --ink:       #221335;
-  --muted:     #6E5F82;
-  --ink-faint: rgba(34,19,53,.42);
+  header { background:linear-gradient(135deg,#7a2800 0%,#a33800 60%,#c25a00 100%); position:relative; }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; }
+  .logo-wrap { display:flex; align-items:center; gap:14px; }
+  .logo-icon { width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; }
+  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
+  .header-sub { color:rgba(255,255,255,0.5); font-size:0.75rem; }
+  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; }
+  .hero { padding:28px 40px 36px; text-align:center; }
+  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:12px; }
+  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.5rem,4vw,2rem); font-weight:900; color:#fff; margin-bottom:6px; }
+  .hero h1 span { color:var(--accent-light); }
+  .hero p { color:rgba(255,255,255,0.6); font-size:0.85rem; }
 
-  --border:    #DCD2EE;
-  --line2:     rgba(107,76,154,.26);
+  /* PIN */
+  .pin-screen { display:flex; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
+  .pin-box { background:var(--card); border-radius:20px; padding:40px 32px; max-width:360px; width:100%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.1); }
+  .pin-icon { font-size:2.6rem; margin-bottom:14px; }
+  .pin-title { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
+  .pin-desc { font-size:0.83rem; color:var(--muted); margin-bottom:22px; }
+  .pin-input { width:100%; padding:13px; border:2px solid var(--border); border-radius:11px; font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:700; text-align:center; letter-spacing:8px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:10px; }
+  .pin-input:focus { border-color:var(--primary); background:#fff; }
+  .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
+  .pin-error.show { display:block; }
+  .btn-enter { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; }
 
-  --lav-900:   #2E2148;
-  --lav-800:   #3F2E63;
-  --lav-700:   #6B4C9A;
-  --lav-600:   #7C5BAE;
-  --lav-500:   #8B6ABF;
-  --lav-300:   #B79EE0;
-  --lav-100:   #EAE1F7;
+  /* CONTENT */
+  .content { display:none; }
+  main { max-width:1000px; margin:0 auto; padding:26px 22px 60px; }
 
-  --primary:   #3F2E63;
-  --accent:    #8B6ABF;
-  --gold:      #D7A24A;
-  --gold-soft: rgba(215,162,74,.14);
-  --teal:      #129E7C;
-  --teal-soft: rgba(18,158,124,.12);
-  --red:       #DC2626;
-  --red-soft:  rgba(220,38,38,.08);
+  /* Student Selector */
+  .selector-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .selector-title { font-size:0.9rem; font-weight:800; color:var(--primary); margin-bottom:12px; }
+  .student-select { width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:600; outline:none; background:#fafafa; color:var(--text); cursor:pointer; }
+  .student-select:focus { border-color:var(--primary); }
 
-  --shadow-sm: 0 6px 20px rgba(107,76,154,.10);
-  --shadow-md: 0 16px 44px rgba(107,76,154,.16);
-}
+  /* Upload Area */
+  .upload-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+  .upload-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04); transition:all 0.2s; }
+  .upload-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  .upload-head { padding:14px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
+  .upload-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .upload-title { font-size:0.85rem; font-weight:800; color:var(--primary); }
+  .upload-filename { font-size:0.72rem; color:var(--muted); margin-top:2px; font-family:monospace; }
+  .upload-body { padding:14px 16px; }
 
-*{ margin:0; padding:0; box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-body{
-  font-family:'Cairo', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height:100vh;
-}
+  .drop-zone { border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:all 0.2s; background:#fafafa; position:relative; }
+  .drop-zone:hover, .drop-zone.dragover { border-color:var(--primary); background:#f0f4ff; }
+  .drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .drop-icon { font-size:1.6rem; margin-bottom:6px; }
+  .drop-text { font-size:0.78rem; color:var(--muted); font-weight:600; }
+  .drop-sub { font-size:0.7rem; color:#9ca3af; margin-top:3px; }
 
-/* ===== الشريط العلوي الرسمي ===== */
-.topbar{ background: linear-gradient(120deg, var(--lav-900), var(--lav-800) 70%, #4A3470); color: rgba(255,255,255,.92); }
-.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
-.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
-.topbar-gov{ display:flex; align-items:center; gap:10px; }
-.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
-.topbar-gov a{ display:flex; align-items:center; }
-.topbar-gov a:hover img{ opacity:1; }
-.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
-.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
-.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
-.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
-@media (max-width:640px){
-  .topbar-row{ font-size:.7rem; }
-  .topbar-dept{ font-size:.6rem; padding-right:0; white-space:normal; line-height:1.6; }
-  .topbar-inner{ padding:7px 14px; }
-}
+  /* Status */
+  .upload-status { margin-top:10px; font-size:0.78rem; font-weight:700; text-align:center; padding:6px 10px; border-radius:8px; display:none; }
+  .status-uploading { background:#fef3c7; color:#92400e; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .status-success { background:#d1fae5; color:#065f46; }
+  .status-error { background:#fee2e2; color:#dc2626; }
+  .status-exists { background:#dbeafe; color:#1e40af; }
 
-/* ===== هيدر البوابة ===== */
-header.portal-header{
-  background: linear-gradient(135deg, var(--lav-800) 0%, var(--lav-900) 60%, var(--lav-700) 100%);
-  padding:16px 36px; display:flex; align-items:center; justify-content:space-between;
-  border-bottom:3px solid var(--gold); gap:14px; flex-wrap:wrap;
-}
-.header-left{ display:flex; align-items:center; gap:14px; }
-.header-icon{
-  width:46px; height:46px; border-radius:12px;
-  background:rgba(215,162,74,.18); border:1px solid rgba(215,162,74,.35);
-  display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0;
-}
-.header-title{ color:#fff; font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:900; }
-.header-sub{ color:rgba(255,255,255,.55); font-size:.76rem; margin-top:2px; }
-.back-btn{
-  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
-  color:rgba(255,255,255,.8); padding:8px 18px; border-radius:8px;
-  text-decoration:none; font-size:.82rem; font-weight:600; transition:all .2s; white-space:nowrap;
-}
-.back-btn:hover{ background:rgba(255,255,255,.15); }
-</style>
+  /* File preview */
+  .file-preview { margin-top:10px; padding:8px 12px; background:#f0f4ff; border-radius:8px; display:none; align-items:center; gap:8px; font-size:0.78rem; color:var(--primary); font-weight:600; }
+  .file-preview .del-btn { margin-right:auto; background:#fee2e2; color:#dc2626; border:none; border-radius:6px; padding:3px 8px; font-size:0.72rem; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; }
 
-<style>
-/* ===== شاشة الدخول ===== */
-#login-screen{ min-height:calc(100vh - 130px); display:flex; align-items:center; justify-content:center; padding:40px 20px; }
-.login-card{
-  background:var(--card); border:1px solid var(--border); border-radius:24px;
-  padding:44px 38px; max-width:420px; width:100%;
-  box-shadow:var(--shadow-md); text-align:center;
-}
-.login-badge{
-  display:inline-flex; align-items:center; gap:8px; background:var(--lav-100);
-  border:1px solid var(--lav-300); color:var(--lav-700);
-  padding:6px 18px; border-radius:20px; font-size:.8rem; font-weight:700; margin-bottom:18px;
-}
-.login-icon-big{
-  width:78px; height:78px; border-radius:20px;
-  background:linear-gradient(135deg, var(--lav-100), #DDD0F2);
-  margin:0 auto 20px; display:flex; align-items:center; justify-content:center;
-  font-size:2.5rem; box-shadow:0 8px 24px rgba(107,76,154,.2);
-}
-.login-card h2{ font-family:'Tajawal',sans-serif; font-size:1.45rem; font-weight:900; color:var(--lav-800); margin-bottom:8px; }
-.login-card .login-desc{ color:var(--muted); font-size:.85rem; line-height:1.7; margin-bottom:26px; }
-.input-label{ text-align:right; font-size:.83rem; font-weight:700; color:var(--lav-800); margin-bottom:7px; display:flex; align-items:center; gap:6px; }
-.text-input, .pin-input{
-  width:100%; padding:13px 16px; border:2px solid var(--border); border-radius:12px;
-  font-family:'Cairo',sans-serif; font-size:1rem; font-weight:700; color:var(--ink);
-  outline:none; transition:all .25s; background:var(--surface2); margin-bottom:12px;
-}
-.pin-input{ text-align:center; letter-spacing:8px; font-size:1.3rem; }
-.text-input:focus, .pin-input:focus{ border-color:var(--lav-500); background:#fff; box-shadow:0 0 0 4px rgba(139,106,191,.12); }
-.text-input.error, .pin-input.error{ border-color:#ef4444; background:#fff5f5; animation:shake .4s ease; }
-@keyframes shake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-10px);} 60%{transform:translateX(10px);} 80%{transform:translateX(-5px);} }
-.error-msg{ display:none; color:#dc2626; font-size:.82rem; font-weight:700; margin-bottom:12px; background:#fee2e2; border-radius:8px; padding:8px 14px; }
-.error-msg.show{ display:block; }
-.login-btn{
-  width:100%; padding:14px; background:linear-gradient(135deg, var(--lav-700), var(--lav-500));
-  color:#fff; border:none; border-radius:12px; font-family:'Cairo',sans-serif;
-  font-size:1rem; font-weight:800; cursor:pointer; transition:all .3s;
-  box-shadow:0 6px 20px rgba(107,76,154,.3); letter-spacing:.5px;
-}
-.login-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 28px rgba(107,76,154,.45); }
-.hint-box{
-  margin-top:22px; background:var(--gold-soft); border:1px solid rgba(215,162,74,.35);
-  border-right:3px solid var(--gold); border-radius:10px; padding:13px 16px;
-  font-size:.79rem; color:#8a6116; text-align:right; line-height:1.7;
-}
+  .btn-upload { width:100%; padding:9px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:10px; display:none; transition:all 0.2s; box-shadow:0 3px 10px rgba(26,107,74,0.25); }
+  .btn-upload:hover { transform:translateY(-1px); }
 
-/* ===== لوحة المعلم ===== */
-#teacher-portal{ display:none; }
-.portal-banner{
-  background: linear-gradient(135deg, var(--lav-700) 0%, var(--lav-900) 100%);
-  padding:26px 36px; display:flex; align-items:center; justify-content:space-between;
-  flex-wrap:wrap; gap:14px; border-bottom:3px solid var(--gold);
-}
-.teacher-identity{ color:#fff; display:flex; align-items:center; gap:16px; }
-.teacher-avatar{
-  width:64px; height:64px; border-radius:50%; flex-shrink:0;
-  background:rgba(255,255,255,.12); border:3px solid rgba(215,162,74,.7);
-  display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:900;
-}
-.teacher-name-display{ font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; margin-bottom:4px; }
-.teacher-meta-display{ opacity:.75; font-size:.82rem; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.meta-chip{ background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); padding:3px 12px; border-radius:12px; font-size:.76rem; }
-.logout-btn{
-  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.85);
-  padding:9px 20px; border-radius:9px; cursor:pointer; font-family:'Cairo',sans-serif;
-  font-size:.84rem; font-weight:700; transition:all .2s;
-}
-.logout-btn:hover{ background:rgba(255,255,255,.2); }
+  .progress-bar { height:4px; background:#e0d8c8; border-radius:2px; margin-top:8px; display:none; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--green-light)); border-radius:2px; transition:width 0.3s; width:0%; }
+  .btn-delete { width:100%; padding:9px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:6px; transition:all 0.2s; }
+  .btn-delete:hover { background:#dc2626; color:#fff; }
 
-.portal-body{ max-width:1040px; margin:0 auto; padding:28px 24px 60px; }
+  footer { background:var(--primary); color:rgba(255,255,255,0.6); text-align:center; padding:18px; font-size:0.78rem; border-top:3px solid var(--accent); }
+  footer strong { color:var(--accent-light); }
 
-/* TABS (أعلى المستوى) */
-.tabs{ display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:22px; box-shadow:var(--shadow-sm); flex-wrap:wrap; }
-.tab-btn{
-  flex:1; min-width:110px; padding:10px 8px; border:none; background:transparent; border-radius:9px;
-  font-family:'Cairo',sans-serif; font-size:.84rem; font-weight:700; color:var(--muted); cursor:pointer;
-  transition:all .22s; display:flex; align-items:center; justify-content:center; gap:5px;
-}
-.tab-btn.active{ background:linear-gradient(135deg, var(--lav-700), var(--lav-500)); color:#fff; box-shadow:0 3px 12px rgba(107,76,154,.35); }
-.tab-pane{ display:none; animation:fadeIn .3s ease; }
-.tab-pane.active{ display:block; }
-@keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
-
-/* بطاقة عامة */
-.s-card{ background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:18px; box-shadow:var(--shadow-sm); }
-.s-card-head{
-  padding:14px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center;
-  justify-content:space-between; gap:9px; flex-wrap:wrap; font-weight:800; font-size:.92rem;
-  color:var(--lav-700); background:var(--lav-100);
-}
-.s-card-body{ padding:18px 22px; }
-
-.btn-sm{
-  border:none; border-radius:8px; padding:7px 16px; font-family:'Cairo',sans-serif;
-  font-size:.8rem; font-weight:700; cursor:pointer; transition:all .2s; white-space:nowrap;
-}
-.btn-sm-primary{ background:linear-gradient(135deg, var(--lav-700), var(--lav-500)); color:#fff; }
-.btn-sm-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
-.btn-sm-gold{ background:linear-gradient(135deg, var(--gold), #E8C27A); color:#5c3d0c; }
-.btn-sm-gold:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
-.btn-sm-outline{ background:#fff; color:var(--lav-700); border:1px solid var(--border); }
-.btn-sm-outline:hover{ border-color:var(--lav-500); background:var(--lav-100); }
-.btn-sm-danger{ background:#fee2e2; color:#dc2626; }
-.btn-sm-danger:hover{ background:#fecaca; }
-</style>
-
-<style>
-/* شبكة بطاقات الطلاب */
-.students-toolbar{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
-.students-toolbar .search-input{
-  flex:1; min-width:180px; padding:11px 16px; border:1.5px solid var(--border); border-radius:10px;
-  font-family:'Cairo',sans-serif; font-size:.85rem; outline:none; background:#fff;
-}
-.students-toolbar .search-input:focus{ border-color:var(--lav-500); }
-.students-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; }
-.stu-card{
-  background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px 18px;
-  cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px;
-}
-.stu-card:hover{ border-color:var(--lav-500); box-shadow:var(--shadow-sm); transform:translateY(-2px); }
-.stu-card-avatar{
-  width:46px; height:46px; border-radius:50%; background:var(--lav-100); color:var(--lav-700);
-  display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex-shrink:0; font-weight:900;
-}
-.stu-card-name{ font-weight:800; font-size:.88rem; color:var(--lav-800); margin-bottom:3px; }
-.stu-card-meta{ font-size:.75rem; color:var(--muted); display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
-.prog-badge{ font-size:.7rem; font-weight:700; padding:2px 9px; border-radius:8px; }
-.prog-badge.dumaj{ background:var(--lav-100); color:var(--lav-700); }
-.prog-badge.yaseer{ background:var(--gold-soft); color:#8a6116; }
-.empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
-.empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
-.empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
-.empty-state .es-sub{ font-size:.82rem; }
-
-/* لوحة الإسناد (المشرف) */
-.assign-table{ width:100%; border-collapse:collapse; font-size:.85rem; }
-.assign-table th{ background:var(--lav-100); color:var(--lav-700); padding:10px 14px; text-align:right; font-weight:800; font-size:.8rem; }
-.assign-table td{ padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
-.assign-table tr:last-child td{ border-bottom:none; }
-.assign-select{
-  padding:8px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif;
-  font-size:.82rem; color:var(--ink); outline:none; background:#fff; min-width:170px; cursor:pointer;
-}
-.assign-select:focus{ border-color:var(--lav-500); }
-.assign-status{ font-size:.74rem; font-weight:700; padding:2px 9px; border-radius:8px; }
-.assign-status.assigned{ background:var(--teal-soft); color:#0c6b54; }
-.assign-status.unassigned{ background:#f3f4f6; color:#6b7280; }
-
-/* زر العودة لقائمة الطلاب */
-.student-detail-back{
-  display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid var(--border);
-  color:var(--lav-700); padding:9px 18px; border-radius:10px; font-size:.84rem; font-weight:700;
-  cursor:pointer; margin-bottom:16px; transition:all .2s;
-}
-.student-detail-back:hover{ background:var(--lav-100); }
-.student-detail-head{
-  display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--border);
-  border-radius:16px; padding:16px 20px; margin-bottom:18px; box-shadow:var(--shadow-sm); flex-wrap:wrap;
-}
-.student-detail-head .sd-avatar{
-  width:54px; height:54px; border-radius:50%; background:var(--lav-100); color:var(--lav-700);
-  display:flex; align-items:center; justify-content:center; font-size:1.4rem; font-weight:900; flex-shrink:0;
-}
-.student-detail-head .sd-name{ font-family:'Tajawal',sans-serif; font-weight:900; font-size:1.05rem; color:var(--lav-800); }
-.student-detail-head .sd-meta{ font-size:.8rem; color:var(--muted); margin-top:3px; }
-
-/* ===== تقييم الأهداف ===== */
-.iep-subject-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:12px; }
-.iep-subject-head{ display:flex; align-items:center; gap:8px; padding:12px 16px; background:var(--lav-100); font-weight:800; font-size:.9rem; color:var(--lav-700); }
-.iep-goal-row{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-.iep-goal-row:last-child{ border-bottom:none; }
-.iep-goal-num{ background:var(--lav-500); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800; flex-shrink:0; }
-.iep-goal-text{ flex:1; min-width:180px; font-size:.85rem; color:var(--ink); line-height:1.7; }
-.iep-level-select{ padding:7px 10px; border-radius:8px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; outline:none; cursor:pointer; min-width:120px; border:1.5px solid var(--border); }
-
-/* ===== استمارة الأداء ===== */
-.perf-legend{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-.perf-subject-block{ margin-bottom:18px; }
-.perf-subject-head{ font-weight:800; font-size:.92rem; color:var(--lav-700); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
-.perf-skills-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
-.perf-skills-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
-.perf-skills-table td{ padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
-.perf-skills-table tr:last-child td{ border-bottom:none; }
-.perf-level-select{ padding:6px 10px; border-radius:8px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; outline:none; cursor:pointer; border:1.5px solid var(--border); width:100%; }
-.perf-notes-input{ width:100%; padding:7px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:.8rem; outline:none; }
-.perf-notes-input:focus, .perf-level-select:focus{ border-color:var(--lav-500); }
-
-/* ===== جوانب القوة والاحتياج ===== */
-.sw-block{ border:1.5px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px; }
-.sw-subject-head{ padding:12px 16px; background:var(--lav-100); font-weight:800; font-size:.9rem; color:var(--lav-700); }
-.sw-body{ display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:14px; }
-.sw-side-title{ font-size:.82rem; font-weight:800; margin-bottom:8px; }
-.sw-strength-title{ color:#0c6b54; }
-.sw-need-title{ color:#8a6116; }
-.sw-item-list{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
-.sw-item{ display:flex; align-items:center; gap:8px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:7px 10px; font-size:.82rem; }
-.sw-item-dot-green{ width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0; }
-.sw-item-dot-orange{ width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0; }
-.sw-del-btn{ background:#fee2e2; color:#dc2626; border:none; border-radius:6px; width:22px; height:22px; cursor:pointer; font-size:.7rem; flex-shrink:0; }
-.sw-add-input{ display:flex; gap:8px; }
-.sw-add-input input{ flex:1; padding:8px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:.8rem; outline:none; }
-.sw-add-btn{ background:var(--teal-soft); color:#0c6b54; border:1.5px dashed var(--teal); border-radius:8px; padding:8px 14px; font-family:'Cairo',sans-serif; font-size:.8rem; font-weight:700; cursor:pointer; white-space:nowrap; }
-.sw-add-btn.need{ background:var(--gold-soft); color:#8a6116; border-color:var(--gold); }
-@media (max-width:640px){ .sw-body{ grid-template-columns:1fr; } }
-
-/* ===== الملفات والتقارير ===== */
-.file-row{ display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); gap:14px; }
-.file-row:last-child{ border-bottom:none; }
-.file-left{ display:flex; align-items:center; gap:12px; }
-.file-icon{ width:40px; height:40px; border-radius:10px; background:var(--lav-100); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
-.file-name{ font-size:.88rem; font-weight:800; color:var(--ink); }
-.file-type{ font-size:.75rem; color:var(--ink-faint); margin-top:2px; }
-.upload-zone{
-  border:2px dashed var(--border); border-radius:12px; padding:22px; text-align:center;
-  color:var(--muted); font-size:.85rem; cursor:pointer; transition:all .2s; background:var(--surface2);
-}
-.upload-zone:hover{ border-color:var(--lav-500); background:var(--lav-100); }
-.upload-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px; }
-.upload-row input[type=text]{ flex:1; min-width:160px; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:.84rem; outline:none; }
-
-/* ===== لوحة التعزيز ===== */
-.cert-preview{
-  background:linear-gradient(135deg,#fff, var(--lav-100));
-  border:3px double var(--lav-500); border-radius:18px; padding:34px 26px; text-align:center; position:relative; overflow:hidden;
-}
-.cert-preview::before{ content:'🏆'; position:absolute; font-size:7rem; opacity:.06; top:-10px; left:-10px; }
-.cert-title{ font-family:'Tajawal',sans-serif; font-size:1.6rem; font-weight:900; color:var(--lav-800); margin-bottom:6px; }
-.cert-sub{ font-size:.85rem; color:var(--muted); margin-bottom:18px; }
-.cert-student{ font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--lav-700); margin:14px 0; }
-.cert-message{ font-size:.95rem; color:var(--ink); line-height:2; margin-bottom:18px; }
-.cert-footer{ display:flex; justify-content:space-between; font-size:.78rem; color:var(--muted); margin-top:24px; flex-wrap:wrap; gap:8px; }
-.reinforce-history{ margin-top:18px; }
-.reinforce-item{
-  display:flex; align-items:flex-start; gap:12px; background:var(--surface2); border:1px solid var(--border);
-  border-right:4px solid var(--gold); border-radius:10px; padding:12px 16px; margin-bottom:10px;
-}
-.reinforce-icon{ font-size:1.4rem; flex-shrink:0; }
-.reinforce-title{ font-weight:800; font-size:.86rem; color:var(--lav-800); }
-.reinforce-meta{ font-size:.74rem; color:var(--ink-faint); margin-top:2px; }
-.reinforce-msg{ font-size:.82rem; color:var(--muted); margin-top:4px; line-height:1.7; }
-
-/* سجل استدعاءات الاجتماع */
-.meetings-log-wrap{ margin-bottom:18px; }
-.meetings-log-head{
-  display:flex; align-items:center; gap:8px; font-weight:800; font-size:.92rem; color:var(--lav-800);
-  margin-bottom:10px;
-}
-.meeting-banner-inner{
-  display:flex; align-items:center; gap:14px; background:linear-gradient(135deg, var(--gold-soft), #fff);
-  border:1.5px solid var(--gold); border-right:5px solid var(--gold); border-radius:14px;
-  padding:14px 20px; margin-bottom:10px; flex-wrap:wrap;
-}
-.meeting-banner-icon{ font-size:1.8rem; flex-shrink:0; }
-.meeting-banner-title{ font-weight:800; font-size:.92rem; color:var(--lav-800); }
-.meeting-banner-meta{ font-size:.8rem; color:var(--muted); margin-top:3px; }
-.meeting-banner-close{
-  background:rgba(220,38,38,.08); color:#dc2626; border:none; border-radius:6px; padding:6px 12px; cursor:pointer;
-  font-size:.78rem; font-weight:700; flex-shrink:0; white-space:nowrap;
-}
-
-/* جدول المعلم الأسبوعي */
-.my-sched-table{ width:100%; border-collapse:collapse; font-size:.8rem; min-width:640px; }
-.my-sched-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 8px; text-align:center; font-weight:800; font-size:.76rem; border:1px solid var(--border); }
-.my-sched-table td{ padding:8px; border:1px solid var(--border); text-align:center; vertical-align:middle; }
-.my-sched-period-col{ background:var(--surface2); font-weight:800; color:var(--lav-700); font-size:.74rem; white-space:nowrap; }
-.my-sched-cell-fill{ background:var(--lav-100); border-radius:8px; padding:6px; }
-.my-sched-subj{ font-weight:800; color:var(--lav-800); font-size:.78rem; }
-.my-sched-grade{ font-size:.7rem; color:var(--muted); margin-top:2px; }
-.my-sched-cell-empty{ color:#c9c2da; font-size:.78rem; }
-
-/* توزيع المنهج */
-.curr-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
-.curr-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
-.curr-table td{ padding:6px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
-.curr-table tr:last-child td{ border-bottom:none; }
-.curr-week-num{ font-weight:800; color:var(--lav-700); white-space:nowrap; font-size:.78rem; }
-.curr-input{ width:100%; padding:7px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Cairo',sans-serif; font-size:.82rem; outline:none; }
-.curr-input:focus{ border-color:var(--lav-500); }
-
-/* عام */
-textarea.text-input{ resize:vertical; min-height:80px; font-weight:600; font-size:.88rem; }
-.success-toast{
-  position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--lav-700); color:#fff;
-  padding:12px 28px; border-radius:12px; font-weight:700; font-size:.88rem; z-index:9999;
-  box-shadow:0 8px 24px rgba(107,76,154,.4); display:none; animation:fadeIn .3s ease;
-}
-@media (max-width:768px){
-  header.portal-header{ padding:14px 18px; }
-  .portal-banner{ padding:18px; }
-  .portal-body{ padding:20px 14px 50px; }
-  .sw-body{ grid-template-columns:1fr; }
-}
+  @media(max-width:640px) {
+    .header-top { padding:12px 16px; }
+    .hero { padding:22px 16px 28px; }
+    main { padding:16px 14px 40px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- الشريط العلوي الرسمي -->
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-row">
-      <div class="topbar-gov">
-        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
-          <img src="moe-logo.png" alt="وزارة التعليم">
-        </a>
-        <span>المملكة العربية السعودية — وزارة التعليم</span>
+<header>
+  <div class="header-top">
+    <div class="logo-wrap">
+      <div class="logo-icon">📁</div>
+      <div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="header-sub">الدمج الفكري — رفع التقارير</div>
       </div>
-      <b class="topbar-year">1447هـ</b>
     </div>
-    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+    <a href="index.html" class="back-link">← الرئيسية</a>
   </div>
-</div>
-
-<header class="portal-header">
-  <div class="header-left">
-    <div class="header-icon">👨‍🏫</div>
-    <div>
-      <div class="header-title">بوابة المعلمين — متابعة الطلاب</div>
-      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
-    </div>
+  <div class="hero">
+    <div class="hero-badge">🧑🏻‍🏫 برنامج الدمج الفكري</div>
+    <h1>رفع <span>تقارير الدمج الفكري</span></h1>
+    <p>اختر الطالب ثم ارفع ملفات تقاريره مباشرة من جهازك</p>
   </div>
-  <a href="index.html" class="back-btn">← الرئيسية</a>
 </header>
 
-<!-- ============ تسجيل الدخول ============ -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-badge">🔐 بوابة آمنة للمعلمين</div>
-    <div class="login-icon-big">👨‍🏫</div>
-    <h2>بوابة المعلمين</h2>
-    <div class="login-desc">
-      بوابة موحّدة لمعلمي برنامج الدمج الفكري وبرنامج يسير — لمتابعة الطلاب المسندين إليك،
-      تقييم الأهداف، قياس مستوى الأداء، توثيق جوانب القوة والاحتياج، وإرسال شهادات تعزيز.
-    </div>
-
-    <div class="input-label">👤 اسم المستخدم</div>
-    <input type="text" class="text-input" id="username-input" placeholder="مثال: a.malki" autocomplete="username">
-
-    <div class="input-label">🔑 الرمز السري</div>
-    <input type="password" class="pin-input" id="pin-input" placeholder="• • • •" maxlength="6" autocomplete="current-password">
-
-    <div class="error-msg" id="login-error">❌ اسم المستخدم أو الرمز السري غير صحيح</div>
-    <button class="login-btn" onclick="doLogin()" id="login-btn">🔓 دخول</button>
-
-    <div class="hint-box">
-      💡 إن لم يكن لديك بيانات دخول، يرجى التواصل مع مشرف البرنامج (الدمج الفكري أو يسير) لإنشاء حساب لك.
-    </div>
+<!-- PIN -->
+<div class="pin-screen" id="pin-screen">
+  <div class="pin-box">
+    <div class="pin-icon">🔐</div>
+    <div class="pin-title">صفحة المشرف</div>
+    <div class="pin-desc">أدخل رمز المشرف للوصول لرفع التقارير</div>
+    <input type="password" class="pin-input" id="admin-pin" maxlength="6" placeholder="• • • •"
+      onkeydown="if(event.key==='Enter') checkPin()"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
+    <button class="btn-enter" onclick="checkPin()">✅ دخول</button>
   </div>
 </div>
 
-<!-- ============ بوابة المعلم ============ -->
-<div id="teacher-portal">
-  <div class="portal-banner">
-    <div class="teacher-identity">
-      <div class="teacher-avatar" id="t-avatar">👨‍🏫</div>
-      <div>
-        <div class="teacher-name-display" id="t-name">—</div>
-        <div class="teacher-meta-display">
-          <span class="meta-chip" id="t-role">—</span>
-          <span class="meta-chip" id="t-count">0 طالب</span>
-        </div>
-      </div>
-    </div>
-    <button class="logout-btn" onclick="doLogout()">🚪 تسجيل الخروج</button>
-  </div>
-
-  <div class="portal-body">
-
-    <!-- سجل استدعاءات الاجتماع -->
-    <div id="meetings-log" class="meetings-log-wrap" style="display:none;"></div>
-
-    <!-- التبويبات الرئيسية -->
-    <div class="tabs" id="main-tabs">
-      <button class="tab-btn active" onclick="openMainTab('students',this)">👥 طلابي</button>
-      <button class="tab-btn" onclick="openMainTab('schedule',this)">📅 جدولي</button>
-      <button class="tab-btn" onclick="openMainTab('curriculum',this)">📘 توزيع المنهج</button>
-      <button class="tab-btn" onclick="openPortfolioFull()">📁 ملف الإنجاز ↗</button>
-      <button class="tab-btn" onclick="window.open('teacher-portfolio-links.html','_blank')">🔗 روابط الإنجاز المباشرة</button>
-      <button class="tab-btn" id="assign-tab-btn" style="display:none;" onclick="openMainTab('assign',this)">📋 إسناد الطلاب</button>
-    </div>
-
-    <!-- ===== طلابي ===== -->
-    <div class="tab-pane active" id="main-tab-students">
-      <div class="students-toolbar">
-        <input class="search-input" id="student-search" placeholder="🔍 بحث باسم الطالب أو الرمز..." oninput="renderMyStudents()">
-      </div>
-      <div class="students-grid" id="students-grid">
-        <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
-      </div>
+<!-- CONTENT -->
+<div class="content" id="content">
+  <main>
+    <!-- اختيار الطالب -->
+    <div class="selector-card">
+      <div class="selector-title">👤 اختر الطالب</div>
+      <select class="student-select" id="student-select" onchange="loadStudentUploads()">
+        <option value="">— اختر الطالب —</option>
+        <optgroup label="الأول المتوسط">
+          <option value="7405">اياد موسى حولي القرني — 7405</option>
+          <option value="4526">عبدالله صالح أحمد المشجري — 4526</option>
+          <option value="9050">علي محمد مطر السهيمي — 9050</option>
+          <option value="4612">محمد علي محمد المنتشري — 4612</option>
+          <option value="0977">مشاري فيحان سميح البقمي — 0977</option>
+          <option value="6630">يزن محمد مصلح سلامي — 6630</option>
+        </optgroup>
+        <optgroup label="الثاني المتوسط">
+          <option value="7543">احمد عبدالله معطي الجدعاني — 7543</option>
+          <option value="4218">راكان سمير فقيهي اليماني — 4218</option>
+          <option value="7892">عبدالرحمن حسن سعد القحطاني — 7892</option>
+          <option value="4304">فهد علي حسين الصومالي — 4304</option>
+        </optgroup>
+        <optgroup label="الثالث المتوسط">
+          <option value="4511">حسن خالد حسن صغير — 4511</option>
+          <option value="6984">خالد ابراهيم منصور العامري — 6984</option>
+          <option value="5210">سامي اقبال أحمد — 5210</option>
+          <option value="4447">عبدالله احمد بن ابراهيم الزهراني — 4447</option>
+          <option value="5460">ماجد نادر أحمد عيسى — 5460</option>
+          <option value="7907">محمد سليمان ابراهيم طواشي — 7907</option>
+          <option value="8315">مشاري خليل ابراهيم الزهراني — 8315</option>
+          <option value="2407">مهند محمد عبدالله الشهري — 2407</option>
+          <option value="9867">مؤيد مشعل علي العمري — 9867</option>
+          <option value="2335">مؤيد نعيم ابراهيم بدير — 2335</option>
+          <option value="9258">وليد عبدالله يحي الشهري — 9258</option>
+        </optgroup>
+      </select>
     </div>
 
-    <!-- ===== جدولي ===== -->
-    <div class="tab-pane" id="main-tab-schedule">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>📅 جدولي الأسبوعي</span>
-          <button class="btn-sm btn-sm-outline" onclick="printMySchedule()">🖨️ طباعة</button>
-        </div>
-        <div class="s-card-body" id="schedule-content" style="overflow-x:auto;">
-          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== توزيع المنهج ===== -->
-    <div class="tab-pane" id="main-tab-curriculum">
-      <div class="s-card">
-        <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span>📘 توزيع المنهج الفصلي</span>
-          <div style="display:flex;gap:8px;">
-            <button class="btn-sm btn-sm-outline" onclick="printCurriculum()">🖨️ طباعة</button>
-            <button class="btn-sm btn-sm-primary" onclick="saveCurriculum()">💾 حفظ</button>
-          </div>
-        </div>
-        <div class="s-card-body" id="curriculum-content">
-          <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ===== إسناد الطلاب (مشرف) ===== -->
-    <div class="tab-pane" id="main-tab-assign">
-      <div class="s-card">
-        <div class="s-card-head">
-          <span id="assign-head-title">📋 إسناد طلاب البرنامج للمعلمين</span>
-          <input class="search-input" id="assign-search" placeholder="🔍 بحث..." style="max-width:220px;" oninput="renderAssignTable()">
-        </div>
-        <div class="s-card-body" style="padding:0;">
-          <div style="overflow-x:auto;">
-            <table class="assign-table" id="assign-table">
-              <thead>
-                <tr><th>الطالب</th><th>الرمز</th><th>الصف</th><th>المعلم المسؤول</th><th>الحالة</th></tr>
-              </thead>
-              <tbody id="assign-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="s-card">
-        <div class="s-card-head">📢 شريط الإشعارات (أعلى الصفحة الرئيسية)</div>
-        <div class="s-card-body">
-          <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">يظهر هذا الشريط لجميع زوار الموقع في أعلى الصفحة الرئيسية حتى يقوم الزائر بإغلاقه. يشترك في إدارته مشرف الإدارة العامة، مدير المدرسة، ومشرفا البرنامجين.</div>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem;font-weight:700;color:var(--lav-800);margin-bottom:12px;">
-            <input type="checkbox" id="tp-announce-enabled" style="width:18px;height:18px;">
-            تفعيل عرض الشريط
-          </label>
-          <div style="margin-bottom:10px;">
-            <label class="input-label">نص الإشعار</label>
-            <input type="text" class="text-input" id="tp-announce-message" placeholder="مثال: تبدأ الاختبارات النهائية يوم الأحد القادم">
-          </div>
-          <div style="margin-bottom:12px;">
-            <label class="input-label">رابط إضافي (اختياري)</label>
-            <input type="url" class="text-input" id="tp-announce-link" placeholder="https://...">
-          </div>
-          <button class="btn-sm btn-sm-primary" onclick="saveAnnouncementTP()">📢 حفظ ونشر الإشعار</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== تفاصيل الطالب ===== -->
-    <div id="student-detail" style="display:none;">
-      <button class="student-detail-back" onclick="closeStudentDetail()">→ رجوع لقائمة طلابي</button>
-      <div class="student-detail-head" id="sd-head"></div>
-
-      <div class="tabs" id="detail-tabs">
-        <button class="tab-btn active" onclick="openDetailTab('iep',this)">🎯 تقييم الأهداف</button>
-        <button class="tab-btn" onclick="openDetailTab('performance',this)">📏 مستوى الأداء</button>
-        <button class="tab-btn" onclick="openDetailTab('strengths',this)">💪 القوة والاحتياج</button>
-        <button class="tab-btn" onclick="openDetailTab('files',this)">📎 الخطط والتقارير</button>
-        <button class="tab-btn" onclick="openDetailTab('reinforce',this)">🏆 لوحة التعزيز</button>
-      </div>
-
-      <!-- تقييم الأهداف -->
-      <div class="tab-pane active" id="detail-tab-iep">
-        <div class="s-card">
-          <div class="s-card-head">
-            <span>🎯 تقييم الأهداف التربوية</span>
-            <button class="btn-sm btn-sm-primary" onclick="saveIEPEval()">💾 حفظ التقييم</button>
-          </div>
-          <div class="s-card-body" id="iep-eval-content"></div>
-        </div>
-      </div>
-
-      <!-- مستوى الأداء -->
-      <div class="tab-pane" id="detail-tab-performance">
-        <div class="s-card">
-          <div class="s-card-head">
-            <span>📏 استمارة قياس مستوى الأداء الحالي</span>
-            <button class="btn-sm btn-sm-primary" onclick="saveTeacherPerformance()">💾 حفظ التقييم</button>
-          </div>
-          <div class="s-card-body" id="performance-content"></div>
-        </div>
-      </div>
-
-      <!-- القوة والاحتياج -->
-      <div class="tab-pane" id="detail-tab-strengths">
-        <div class="s-card">
-          <div class="s-card-head">
-            <span>💪 جوانب القوة والاحتياج</span>
-            <button class="btn-sm btn-sm-primary" onclick="saveTeacherStrengths()">💾 حفظ</button>
-          </div>
-          <div class="s-card-body" id="strengths-content"></div>
-        </div>
-      </div>
-
-      <!-- الخطط والتقارير -->
-      <div class="tab-pane" id="detail-tab-files">
-        <div class="s-card">
-          <div class="s-card-head"><span>📋 الخطة الفردية</span></div>
-          <div class="s-card-body">
-            <div class="upload-zone" onclick="document.getElementById('plan-file-input').click()">
-              📤 اضغط لرفع ملف الخطة الفردية (PDF/Word) — سيستبدل الخطة الحالية إن وُجدت
-            </div>
-            <input type="file" id="plan-file-input" accept=".pdf,.doc,.docx" style="display:none;" onchange="uploadPlanFile(this)">
-            <div id="plan-current" style="margin-top:12px;"></div>
-          </div>
-        </div>
-        <div class="s-card">
-          <div class="s-card-head"><span>📊 التقارير والوثائق</span></div>
-          <div class="s-card-body">
-            <div id="reports-current"></div>
-            <div class="upload-row">
-              <input type="text" id="report-title-input" placeholder="عنوان التقرير (مثال: تقرير المتابعة الشهري)">
-              <input type="file" id="report-file-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display:none;" onchange="uploadReportFile(this)">
-              <button class="btn-sm btn-sm-outline" onclick="document.getElementById('report-file-input').click()">📤 إضافة تقرير</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- لوحة التعزيز -->
-      <div class="tab-pane" id="detail-tab-reinforce">
-        <div class="s-card">
-          <div class="s-card-head"><span>🏆 إرسال شهادة شكر وتقدير</span></div>
-          <div class="s-card-body">
-            <div class="input-label">📝 سبب التكريم</div>
-            <input type="text" class="text-input" id="cert-title-input" placeholder="مثال: التميز في الالتزام بالواجبات اليومية">
-            <div class="input-label">💬 رسالة التعزيز (اختياري)</div>
-            <textarea class="text-input" id="cert-message-input" placeholder="نص إضافي يظهر في الشهادة..."></textarea>
-            <button class="btn-sm btn-sm-gold" onclick="sendCertificate()" style="margin-top:6px;">🏆 إرسال الشهادة لملف الطالب</button>
-
-            <div style="margin-top:22px;">
-              <div class="input-label" style="margin-bottom:10px;">👁️ معاينة الشهادة</div>
-              <div class="cert-preview" id="cert-preview-box">
-                <div class="cert-title">شهادة شكر وتقدير</div>
-                <div class="cert-sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
-                <div class="cert-message">تُمنح هذه الشهادة للطالب</div>
-                <div class="cert-student" id="cert-student-name">—</div>
-                <div class="cert-message" id="cert-message-preview">تقديراً وتشجيعاً له على تميّزه واجتهاده.</div>
-                <div class="cert-footer">
-                  <span id="cert-date-preview">📅 —</span>
-                  <span id="cert-teacher-preview">✍️ —</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="s-card">
-          <div class="s-card-head"><span>📜 سجل شهادات وتعزيزات الطالب</span></div>
-          <div class="s-card-body">
-            <div class="reinforce-history" id="reinforce-history"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+    <!-- بطاقات الرفع -->
+    <div class="upload-grid" id="upload-grid"></div>
+  </main>
 </div>
 
-<div class="success-toast" id="success-toast"></div>
+<footer>
+  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
 
 <script>
-// ===================================================
-// إعدادات Supabase
-// ===================================================
-const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
-const SB_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+const BUCKET = "reports";
+const ADMIN_PIN = "7410";
 
-const PROGRAM_INFO = {
-  dumaj:  { label: 'الدمج الفكري', dataPath: 'dumaj',  badge: 'dumaj'  },
-  yaseer: { label: 'يسير',          dataPath: 'yaseer', badge: 'yaseer' },
-};
-
-// ===================================================
-// قاعدة بيانات المعلمين (موحّدة للبرنامجين)
-// ===================================================
-const TEACHERS = {
-  "m.suhayymi": { name:"محمد أحمد السهيمي",   pin:"1234", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"س",  isSupervisor:false },
-  "z.qarni":    { name:"زين العابدين القرني", pin:"6789", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ز",  isSupervisor:false },
-  "a.ghamdi":   { name:"علي سعيد الغامدي",    pin:"3456", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"غ",  isSupervisor:false },
-  "a.malki":    { name:"علي محمد المالكي",    pin:"4567", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"م",  isSupervisor:false },
-  "h.ulyani":   { name:"حسن علي العلياني",    pin:"5678", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ع",  isSupervisor:false },
-  "a.zahrani":  { name:"علي محمد الزهراني",   pin:"2345", role:"مشرف برنامج الدمج الفكري",       program:"dumaj",  avatar:"ز",  isSupervisor:true  },
-
-  "h.kubaishi": { name:"حسين منصور الكبيشي",  pin:"1111", role:"معلم تربية خاصة — يسير",         program:"yaseer", avatar:"ك",  isSupervisor:false },
-  "saad.z":     { name:"سعد سالم الزهراني",   pin:"2222", role:"مشرف برنامج يسير التعليمي",      program:"yaseer", avatar:"ز",  isSupervisor:true  },
-};
-
-// ===================================================
-// المواد والمستويات (موحّدة مع بوابة الطلاب)
-// ===================================================
-const CORE_SUBJECTS = [
-  { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖' },
-  { key:'math',    name:'الرياضيات',             icon:'🔢' },
-  { key:'islamic', name:'التربية الإسلامية',     icon:'🕌' },
-  { key:'science', name:'العلوم',                icon:'🔬' },
-  { key:'life',    name:'المهارات الحياتية',     icon:'🌱' },
+const REPORT_TYPES = [
+  { key: "plan",    label: "📋 الخطة الفردية",        icon: "📋", color: "#fff3e0" },
+  { key: "psych",   label: "التقرير النفسي الموحد",   icon: "🧑🏻‍🏫", color: "#ede9fe" },
+  { key: "medical", label: "التقرير الطبي",            icon: "🏥", color: "#dbeafe" },
+  { key: "report1", label: "التقرير الدوري ١",         icon: "📄", color: "#fef3c7" },
+  { key: "report2", label: "التقرير الدوري ٢",         icon: "📊", color: "#d1fae5" },
+  { key: "report3", label: "التقرير الدوري ٣",         icon: "📋", color: "#ede9fe" },
 ];
 
-const IEP_LEVELS = [
-  { value:'excellent', label:'متفوق',          color:'#059669', bg:'#d1fae5' },
-  { value:'advanced',  label:'متقدم',           color:'#2563eb', bg:'#dbeafe' },
-  { value:'capable',   label:'متمكن',           color:'#d97706', bg:'#fef3c7' },
-  { value:'failed',    label:'غير مجتاز',       color:'#dc2626', bg:'#fee2e2' },
-  { value:'none',      label:'— لم يُقيَّم —', color:'#9ca3af', bg:'#f3f4f6' },
-];
+let selectedFiles = {};
 
-const PERF_SUBJECTS = [
-  { key:'arabic',  name:'اللغة العربية (لغتي)', icon:'📖', skills:['القراءة الجهرية','الكتابة والإملاء','الفهم والاستيعاب','التعبير الشفوي','القواعد النحوية'] },
-  { key:'math',    name:'الرياضيات',             icon:'🔢', skills:['العمليات الحسابية الأساسية','الأعداد والتسلسل','الأشكال الهندسية','القياس والوحدات','حل المسائل'] },
-  { key:'islamic', name:'التربية الإسلامية',     icon:'🕌', skills:['الحفظ والتلاوة','العقيدة والأركان','الفقه والعبادات','السيرة والأخلاق','التطبيق العملي'] },
-  { key:'science', name:'العلوم',                icon:'🔬', skills:['الفهم والاستيعاب','التجارب العلمية','حفظ المعلومات','التطبيق والاستنتاج','المفاهيم البيئية'] },
-  { key:'life',    name:'المهارات الحياتية',     icon:'🌱', skills:['العناية الشخصية','التواصل الاجتماعي','المهارات العملية','الاستقلالية','التنظيم وإدارة الوقت'] },
-];
-
-const PERF_LEVELS = [
-  { value:'mastered',   label:'متقن',       color:'#059669', bg:'#d1fae5' },
-  { value:'developing', label:'في التطور',  color:'#2563eb', bg:'#dbeafe' },
-  { value:'emerging',   label:'بدايات',     color:'#d97706', bg:'#fef3c7' },
-  { value:'not_yet',    label:'لم يصل بعد', color:'#dc2626', bg:'#fee2e2' },
-  { value:'na',         label:'غير مقيَّم', color:'#9ca3af', bg:'#f3f4f6' },
-];
-
-// ===================================================
-// أدوات مساعدة عامة + Supabase
-// ===================================================
-function escHtml(str) {
-  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function checkPin() {
+  const val = document.getElementById('admin-pin').value;
+  if (val === ADMIN_PIN) {
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  } else {
+    const err = document.getElementById('pin-error');
+    const inp = document.getElementById('admin-pin');
+    err.classList.add('show');
+    inp.classList.add('error');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
+  }
 }
 
-function showToast(msg) {
-  const t = document.getElementById('success-toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  setTimeout(() => { t.style.display = 'none'; }, 2600);
+function loadStudentUploads() {
+  const pin = document.getElementById('student-select').value;
+  const grid = document.getElementById('upload-grid');
+  if (!pin) { grid.innerHTML = ''; return; }
+
+  selectedFiles = {};
+  grid.innerHTML = REPORT_TYPES.map(r => `
+    <div class="upload-card" id="card-${r.key}">
+      <div class="upload-head">
+        <div class="upload-icon" style="background:${r.color}">${r.icon}</div>
+        <div>
+          <div class="upload-title">${r.label}</div>
+          <div class="upload-filename" id="fname-${r.key}">${r.key}-${pin}.pdf</div>
+        </div>
+      </div>
+      <div class="upload-body">
+        <div class="drop-zone" id="drop-${r.key}"
+          ondragover="event.preventDefault();this.classList.add('dragover')"
+          ondragleave="this.classList.remove('dragover')"
+          ondrop="handleDrop(event,'${r.key}','${pin}')">
+          <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" onchange="handleFile(this,'${r.key}','${pin}')">
+          <div class="drop-icon">📂</div>
+          <div class="drop-text">اضغط لاختيار الملف أو اسحبه هنا</div>
+          <div class="drop-sub">PDF, Word, صور</div>
+        </div>
+        <div class="file-preview" id="preview-${r.key}">
+          <span>📎</span>
+          <span id="preview-name-${r.key}"></span>
+          <button class="del-btn" onclick="clearFile('${r.key}')">✕ إلغاء</button>
+        </div>
+        <div class="progress-bar" id="progress-${r.key}">
+          <div class="progress-fill" id="progress-fill-${r.key}"></div>
+        </div>
+        <div class="upload-status" id="status-${r.key}"></div>
+        <button class="btn-upload" id="btn-${r.key}" onclick="uploadFile('${r.key}','${pin}')">
+          ⬆️ رفع الملف
+        </button>
+        <button class="btn-delete" id="del-btn-${r.key}" onclick="deleteFile('${r.key}','${pin}')" style="display:none;">
+          🗑️ حذف الملف المرفوع
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  // تحقق من الملفات الموجودة
+  checkExistingFiles(pin);
 }
 
-function toHijriLike(dateStr) {
+async function checkExistingFiles(pin) {
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  for (const r of REPORT_TYPES) {
+    for (const ext of extensions) {
+      try {
+        const fileName = `${r.key}-${pin}.${ext}`;
+        const url = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/dumaj/${fileName}`;
+        const res = await fetch(url, { method: 'HEAD' });
+        if (res.ok) {
+          showStatus(r.key, 'exists', `✅ يوجد ملف مرفوع — ${fileName}`);
+          document.getElementById(`del-btn-${r.key}`).style.display = 'block';
+          document.getElementById(`fname-${r.key}`).textContent = fileName;
+          // عرض معاينة الملف الموجود
+          document.getElementById(`preview-name-${r.key}`).textContent = fileName;
+          document.getElementById(`preview-${r.key}`).style.display = 'flex';
+          break;
+        }
+      } catch(e) {}
+    }
+  }
+}
+
+function handleFile(input, key, pin) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function handleDrop(e, key, pin) {
+  e.preventDefault();
+  document.getElementById(`drop-${key}`).classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function showPreview(key, name, pin) {
+  document.getElementById(`preview-name-${key}`).textContent = name;
+  document.getElementById(`preview-${key}`).style.display = 'flex';
+  document.getElementById(`btn-${key}`).style.display = 'block';
+  document.getElementById(`status-${key}`).style.display = 'none';
+}
+
+function clearFile(key) {
+  delete selectedFiles[key];
+  document.getElementById(`preview-${key}`).style.display = 'none';
+  document.getElementById(`btn-${key}`).style.display = 'none';
+  document.getElementById(`status-${key}`).style.display = 'none';
+  document.getElementById(`progress-${key}`).style.display = 'none';
+}
+
+async function uploadFile(key, pin) {
+  const file = selectedFiles[key];
+  if (!file) return;
+
+  const ext = file.name.split('.').pop();
+  const fileName = `${key}-${pin}.${ext}`;
+
+  const btn = document.getElementById(`btn-${key}`);
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الرفع...';
+
+  showStatus(key, 'uploading', '⏳ جاري رفع الملف...');
+  document.getElementById(`progress-${key}`).style.display = 'block';
+
+  // Simulate progress
+  let prog = 0;
+  const interval = setInterval(() => {
+    prog = Math.min(prog + 10, 85);
+    document.getElementById(`progress-fill-${key}`).style.width = prog + '%';
+  }, 200);
+
   try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('ar-SA', { year:'numeric', month:'long', day:'numeric' });
-  } catch(e) { return dateStr; }
-}
-
-async function sbGetJSON(path) {
-  try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/${path}?t=${Date.now()}`);
-    if (!res.ok) return null;
-    return await res.json();
-  } catch(e) { return null; }
-}
-
-async function sbSetJSON(path, data) {
-  try {
-    const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
-    const res = await fetch(`${SB_URL}/storage/v1/object/${path}`, {
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','x-upsert':'true'},
-      body: blob
-    });
-    return res.ok;
-  } catch(e) { console.error('sbSetJSON error:', e); return false; }
-}
-
-async function sbUploadFile(path, file) {
-  try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/${path}`, {
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type': file.type || 'application/octet-stream','x-upsert':'true'},
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'true'
+      },
       body: file
     });
-    return res.ok;
-  } catch(e) { console.error('sbUploadFile error:', e); return false; }
-}
 
-async function loadStudentData(program, pin) {
-  const data = await sbGetJSON(`reports/${program}/data/student-${pin}.json`);
-  return data || {};
-}
+    clearInterval(interval);
+    document.getElementById(`progress-fill-${key}`).style.width = '100%';
 
-async function saveStudentData(program, pin, patch) {
-  const existing = await loadStudentData(program, pin);
-  const merged = Object.assign({}, existing, patch);
-  const ok = await sbSetJSON(`reports/${program}/data/student-${pin}.json`, merged);
-  return ok ? merged : null;
-}
-</script>
-<script>
-// ===================================================
-// الحالة العامة
-// ===================================================
-let currentTeacher = null;
-let ASSIGNMENTS = { dumaj:{}, yaseer:{} };
-let currentDetail = null;
-let STUDENT_CONFIGS = { dumaj:null, yaseer:null };
-
-// ===================================================
-// تسجيل الدخول / الخروج
-// ===================================================
-function doLogin() {
-  const username = (document.getElementById('username-input').value || '').trim().toLowerCase();
-  const pin      = (document.getElementById('pin-input').value || '').trim();
-  const errEl    = document.getElementById('login-error');
-  const t = TEACHERS[username];
-
-  if (!t || t.pin !== pin) {
-    errEl.classList.add('show');
-    document.getElementById('pin-input').classList.add('error');
-    document.getElementById('username-input').classList.add('error');
-    setTimeout(() => {
-      document.getElementById('pin-input').classList.remove('error');
-      document.getElementById('username-input').classList.remove('error');
-    }, 500);
-    return;
-  }
-
-  errEl.classList.remove('show');
-  currentTeacher = Object.assign({ username }, t);
-  openPortal();
-}
-
-function doLogout() {
-  currentTeacher = null;
-  currentDetail = null;
-  document.getElementById('teacher-portal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('username-input').value = '';
-  document.getElementById('pin-input').value = '';
-}
-
-async function openPortal() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('teacher-portal').style.display = 'block';
-  window.scrollTo(0,0);
-
-  document.getElementById('t-avatar').textContent = currentTeacher.avatar;
-  document.getElementById('t-name').textContent = currentTeacher.name;
-  document.getElementById('t-role').textContent = '🎓 ' + currentTeacher.role;
-
-  if (currentTeacher.isSupervisor) {
-    document.getElementById('assign-tab-btn').style.display = 'flex';
-    document.getElementById('assign-head-title').textContent =
-      `📋 إسناد طلاب برنامج ${PROGRAM_INFO[currentTeacher.program].label} للمعلمين`;
-  } else {
-    document.getElementById('assign-tab-btn').style.display = 'none';
-  }
-
-  await loadAssignments();
-  await renderMyStudents();
-  if (currentTeacher.isSupervisor) { await renderAssignTable(); loadAnnouncementSettingsTP(); }
-  loadMeetingInvite();
-}
-
-// ===================================================
-// تحميل الإسنادات وتهيئة الإعدادات
-// ===================================================
-async function loadAssignments() {
-  const data = await sbGetJSON('reports/teacher-assignments.json');
-  ASSIGNMENTS = data || {};
-  if (!ASSIGNMENTS.dumaj)  ASSIGNMENTS.dumaj  = {};
-  if (!ASSIGNMENTS.yaseer) ASSIGNMENTS.yaseer = {};
-}
-
-async function saveAssignments() {
-  return sbSetJSON('reports/teacher-assignments.json', ASSIGNMENTS);
-}
-
-async function loadStudentConfig(program) {
-  if (STUDENT_CONFIGS[program]) return STUDENT_CONFIGS[program];
-  const cfg = await sbGetJSON(`reports/admin-${program}-config.json`);
-  const list = (cfg && Array.isArray(cfg.students)) ? cfg.students : [];
-  STUDENT_CONFIGS[program] = list;
-  return list;
-}
-
-// ===================================================
-// طلابي
-// ===================================================
-async function getMyStudents() {
-  const result = [];
-  for (const program of ['dumaj','yaseer']) {
-    const list = await loadStudentConfig(program);
-    list.forEach(s => {
-      if (ASSIGNMENTS[program][s.pin] === currentTeacher.username) {
-        result.push(Object.assign({}, s, { program }));
-      }
-    });
-  }
-  return result;
-}
-
-async function renderMyStudents() {
-  const grid = document.getElementById('students-grid');
-  grid.innerHTML = '<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ تحميل قائمة طلابك...</div></div>';
-
-  const students = await getMyStudents();
-  document.getElementById('t-count').textContent = `👥 ${students.length} طالب مسند`;
-
-  const q = (document.getElementById('student-search').value || '').trim().toLowerCase();
-  const filtered = students.filter(s =>
-    !q || (s.name||'').toLowerCase().includes(q) || (s.pin||'').includes(q)
-  );
-
-  if (students.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">👥</div>
-        <div class="es-title">لا يوجد طلاب مسندون إليك حالياً</div>
-        <div class="es-sub">سيقوم مشرف البرنامج بإسناد الطلاب لك من تبويب «إسناد الطلاب»</div>
-      </div>`;
-    return;
-  }
-  if (filtered.length === 0) {
-    grid.innerHTML = `<div class="empty-state"><div class="es-icon">🔍</div><div class="es-title">لا توجد نتائج مطابقة</div></div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(s => `
-    <div class="stu-card" onclick="openStudentDetail('${s.program}','${s.pin}')">
-      <div class="stu-card-avatar">${escHtml((s.name||'?').trim().charAt(0))}</div>
-      <div>
-        <div class="stu-card-name">${escHtml(s.name||'')}</div>
-        <div class="stu-card-meta">
-          <span class="prog-badge ${s.program}">${PROGRAM_INFO[s.program].label}</span>
-          <span>🏫 ${escHtml(s.grade||'—')}</span>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-// ===================================================
-// التنقل بين التبويبات
-// ===================================================
-function openMainTab(name, btn) {
-  document.querySelectorAll('#main-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('main-tab-students').classList.toggle('active', name === 'students');
-  document.getElementById('main-tab-schedule').classList.toggle('active', name === 'schedule');
-  document.getElementById('main-tab-curriculum').classList.toggle('active', name === 'curriculum');
-  document.getElementById('main-tab-assign').classList.toggle('active', name === 'assign');
-  if (name === 'schedule') renderMySchedule();
-  if (name === 'curriculum') renderCurriculumTab();
-}
-
-function openDetailTab(name, btn) {
-  document.querySelectorAll('#detail-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#student-detail .tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('detail-tab-' + name).classList.add('active');
-}
-
-// ===================================================
-// فتح/إغلاق ملف الطالب
-// ===================================================
-async function openStudentDetail(program, pin) {
-  const cfgList  = await loadStudentConfig(program);
-  const cfgEntry = cfgList.find(s => s.pin === pin) || {};
-  const data     = await loadStudentData(program, pin);
-
-  currentDetail = { program, pin, info: Object.assign({}, cfgEntry, data), data };
-
-  document.getElementById('sd-head').innerHTML = `
-    <div class="sd-avatar">${escHtml((currentDetail.info.name||'?').charAt(0))}</div>
-    <div>
-      <div class="sd-name">${escHtml(currentDetail.info.name || '')}</div>
-      <div class="sd-meta">
-        <span class="prog-badge ${program}">${PROGRAM_INFO[program].label}</span>
-        &nbsp; 🏫 ${escHtml(currentDetail.info.grade || '—')} &nbsp;|&nbsp; الرمز: ${escHtml(pin)}
-      </div>
-    </div>`;
-
-  document.getElementById('main-tabs').style.display = 'none';
-  document.getElementById('main-tab-students').classList.remove('active');
-  document.getElementById('main-tab-assign').classList.remove('active');
-  document.getElementById('student-detail').style.display = 'block';
-
-  document.querySelectorAll('#detail-tabs .tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
-  document.querySelectorAll('#student-detail .tab-pane').forEach((p,i) => p.classList.toggle('active', i===0));
-
-  renderIEPEval();
-  renderPerformanceEditor();
-  renderStrengthsEditor();
-  renderFilesTab();
-  renderReinforceTab();
-}
-
-function closeStudentDetail() {
-  currentDetail = null;
-  document.getElementById('student-detail').style.display = 'none';
-  document.getElementById('main-tabs').style.display = 'flex';
-  const firstBtn = document.querySelector('#main-tabs .tab-btn');
-  openMainTab('students', firstBtn);
-  renderMyStudents();
-}
-</script>
-<script>
-// ===================================================
-// تقييم الأهداف التربوية (IEP)
-// ===================================================
-function renderIEPEval() {
-  const container = document.getElementById('iep-eval-content');
-  const iep = currentDetail.data.iep || {};
-
-  const allSubjects = [
-    ...CORE_SUBJECTS.map(cs => ({ key: cs.key, info: cs, data: iep[cs.key] })),
-    ...Object.entries(iep._custom || {}).map(([k,d]) => ({ key:k, info:{name:d.name, icon:d.icon}, data:d }))
-  ].filter(s => s.data && Array.isArray(s.data.goals) && s.data.goals.length > 0);
-
-  if (allSubjects.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">🎯</div>
-        <div class="es-title">لا توجد أهداف مُحددة لهذا الطالب بعد</div>
-        <div class="es-sub">يقوم مشرف البرنامج بإضافة أهداف الخطة الفردية من لوحة التحكم، وعند توفرها يمكنك تقييمها هنا</div>
-      </div>`;
-    return;
-  }
-
-  let html = `<div style="margin-bottom:14px;font-size:.84rem;color:var(--muted);">قيّم مستوى تحقّق كل هدف من أهداف الخطة الفردية بناءً على ملاحظتك للطالب، ثم اضغط «حفظ التقييم».</div>`;
-
-  allSubjects.forEach(sub => {
-    html += `<div class="iep-subject-block">
-      <div class="iep-subject-head"><span>${escHtml(sub.info.icon || '📚')}</span><span>${escHtml(sub.info.name)}</span></div>`;
-    sub.data.goals.forEach((g, i) => {
-      const lv = IEP_LEVELS.find(l => l.value === (g.level || 'none')) || IEP_LEVELS[4];
-      html += `
-      <div class="iep-goal-row">
-        <div class="iep-goal-num">${i+1}</div>
-        <div class="iep-goal-text">${escHtml(g.text || '')}</div>
-        <select class="iep-level-select" data-iep="${sub.key}:${i}"
-          style="color:${lv.color};background:${lv.bg};border-color:${lv.color}55;"
-          onchange="iepLevelChanged(this)">
-          ${IEP_LEVELS.map(l => `<option value="${l.value}" ${(g.level||'none')===l.value?'selected':''}>${l.label}</option>`).join('')}
-        </select>
-      </div>`;
-    });
-    html += `</div>`;
-  });
-
-  const lastEval = iep._lastEval;
-  if (lastEval) {
-    html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:6px;">آخر تقييم: ${escHtml(toHijriLike(lastEval.date))} — بواسطة ${escHtml(lastEval.teacher)}</div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-function iepLevelChanged(sel) {
-  const lv = IEP_LEVELS.find(l => l.value === sel.value) || IEP_LEVELS[4];
-  sel.style.color = lv.color;
-  sel.style.background = lv.bg;
-  sel.style.borderColor = lv.color + '55';
-}
-
-async function saveIEPEval() {
-  const iep = currentDetail.data.iep || {};
-  document.querySelectorAll('#iep-eval-content [data-iep]').forEach(sel => {
-    const [subKey, idx] = sel.getAttribute('data-iep').split(':');
-    const isCore = CORE_SUBJECTS.some(c => c.key === subKey);
-    const subData = isCore ? iep[subKey] : (iep._custom && iep._custom[subKey]);
-    if (subData && subData.goals && subData.goals[idx]) {
-      subData.goals[idx].level = sel.value;
-    }
-  });
-  iep._lastEval = { date: new Date().toISOString(), teacher: currentTeacher.name };
-
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { iep });
-  if (saved) {
-    currentDetail.data = saved;
-    showToast('✅ تم حفظ تقييم الأهداف');
-    renderIEPEval();
-  } else {
-    showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
-  }
-}
-</script>
-<script>
-// ===================================================
-// قياس مستوى الأداء الحالي
-// ===================================================
-function renderPerformanceEditor() {
-  const container = document.getElementById('performance-content');
-  const saved = currentDetail.data.performance || {};
-
-  let html = `<div class="perf-legend">`;
-  PERF_LEVELS.forEach(l => {
-    html += `<span style="background:${l.bg};color:${l.color};padding:3px 10px;border-radius:7px;font-size:.74rem;font-weight:700;">${l.label}</span>`;
-  });
-  html += `</div>`;
-  html += `<div style="font-size:.84rem;color:var(--muted);margin-bottom:14px;">حدّد مستوى أداء الطالب الحالي في كل مهارة، مع إمكانية إضافة ملاحظة، ثم اضغط «حفظ التقييم».</div>`;
-
-  PERF_SUBJECTS.forEach(subj => {
-    const subjData = saved[subj.key] || {};
-    html += `<div class="perf-subject-block">
-      <div class="perf-subject-head"><span>${subj.icon}</span><span>${escHtml(subj.name)}</span></div>
-      <div style="overflow-x:auto;">
-      <table class="perf-skills-table">
-        <thead><tr><th style="width:38%;">المهارة</th><th style="width:24%;text-align:center;">مستوى الأداء</th><th>ملاحظات</th></tr></thead>
-        <tbody>`;
-    subj.skills.forEach((skill, si) => {
-      const skillData = subjData[si] || {};
-      const level = skillData.level || 'na';
-      const note = skillData.note || '';
-      const lv = PERF_LEVELS.find(l => l.value === level) || PERF_LEVELS[4];
-      html += `<tr>
-        <td style="font-weight:700;">${escHtml(skill)}</td>
-        <td style="text-align:center;">
-          <select class="perf-level-select" data-subj="${subj.key}" data-si="${si}"
-            style="color:${lv.color};background:${lv.bg};border-color:${lv.color}55;"
-            onchange="perfLevelChanged(this)">
-            ${PERF_LEVELS.map(l => `<option value="${l.value}" ${level===l.value?'selected':''}>${l.label}</option>`).join('')}
-          </select>
-        </td>
-        <td><input type="text" class="perf-notes-input" data-subj="${subj.key}" data-si="${si}" value="${escHtml(note)}" placeholder="ملاحظة اختيارية..."></td>
-      </tr>`;
-    });
-    html += `</tbody></table></div></div>`;
-  });
-
-  const meta = currentDetail.data.performanceMeta;
-  if (meta) {
-    html += `<div style="font-size:.78rem;color:var(--ink-faint);">آخر تحديث: ${escHtml(toHijriLike(meta.date))} — بواسطة ${escHtml(meta.teacher)}</div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-function perfLevelChanged(sel) {
-  const lv = PERF_LEVELS.find(l => l.value === sel.value) || PERF_LEVELS[4];
-  sel.style.color = lv.color;
-  sel.style.background = lv.bg;
-  sel.style.borderColor = lv.color + '55';
-}
-
-async function saveTeacherPerformance() {
-  const performance = {};
-  PERF_SUBJECTS.forEach(subj => {
-    performance[subj.key] = {};
-    subj.skills.forEach((_, si) => {
-      const sel  = document.querySelector(`.perf-level-select[data-subj="${subj.key}"][data-si="${si}"]`);
-      const note = document.querySelector(`.perf-notes-input[data-subj="${subj.key}"][data-si="${si}"]`);
-      performance[subj.key][si] = { level: sel ? sel.value : 'na', note: note ? note.value.trim() : '' };
-    });
-  });
-  const performanceMeta = { date: new Date().toISOString(), teacher: currentTeacher.name };
-
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { performance, performanceMeta });
-  if (saved) {
-    currentDetail.data = saved;
-    showToast('✅ تم حفظ قياس مستوى الأداء');
-    renderPerformanceEditor();
-  } else {
-    showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
-  }
-}
-</script>
-<script>
-// ===================================================
-// جوانب القوة والاحتياج
-// ===================================================
-const SW_DEFAULT_SUBJECTS = ['arabic', 'math'];
-
-function renderStrengthsEditor() {
-  const container = document.getElementById('strengths-content');
-  if (!currentDetail.data.strengths) currentDetail.data.strengths = {};
-  const saved = currentDetail.data.strengths;
-
-  if (!Array.isArray(saved._activeSubjects) || saved._activeSubjects.length === 0) {
-    saved._activeSubjects = SW_DEFAULT_SUBJECTS.slice();
-  }
-  const active = saved._activeSubjects;
-
-  let html = `<div style="font-size:.82rem;color:var(--muted);margin-bottom:16px;padding:10px 14px;background:var(--surface2);border-radius:10px;border-right:3px solid var(--gold);">
-    📝 أضف أو احذف جوانب القوة والاحتياج. تظهر مادتا اللغة العربية والرياضيات افتراضياً، ويمكنك إضافة مواد أخرى من القائمة أدناه. يُحفظ التحديث عند الضغط على «حفظ».
-  </div>`;
-
-  active.forEach(subjKey => {
-    const subj = PERF_SUBJECTS.find(s => s.key === subjKey);
-    if (!subj) return;
-    if (!saved[subjKey]) saved[subjKey] = { strengths: [], needs: [] };
-    const strengths = saved[subjKey].strengths || [];
-    const needs     = saved[subjKey].needs || [];
-
-    html += `<div class="sw-block">
-      <div class="sw-subject-head" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-        <span><span>${subj.icon}</span> ${escHtml(subj.name)}</span>
-        <button class="sw-del-btn" style="background:rgba(220,38,38,.08);color:#dc2626;border-radius:6px;width:24px;height:24px;" onclick="removeSwSubject('${subj.key}')" title="إزالة هذه المادة من القائمة">✕</button>
-      </div>
-      <div class="sw-body">
-        <div>
-          <div class="sw-side-title sw-strength-title">✅ جوانب القوة</div>
-          <div class="sw-item-list" id="sw-strengths-${subj.key}">
-            ${strengths.map((item, idx) => `
-              <div class="sw-item">
-                <div class="sw-item-dot-green"></div>
-                <span style="flex:1;">${escHtml(item)}</span>
-                <button class="sw-del-btn" onclick="delSwItem('${subj.key}','strength',${idx})">✕</button>
-              </div>`).join('')}
-          </div>
-          <div class="sw-add-input">
-            <input type="text" id="sw-s-input-${subj.key}" placeholder="أضف جانب قوة..." onkeydown="if(event.key==='Enter'){event.preventDefault();addSwItem('${subj.key}','strength');}">
-            <button class="sw-add-btn" onclick="addSwItem('${subj.key}','strength')">+ إضافة</button>
-          </div>
-        </div>
-        <div>
-          <div class="sw-side-title sw-need-title">🎯 جوانب الاحتياج</div>
-          <div class="sw-item-list" id="sw-needs-${subj.key}">
-            ${needs.map((item, idx) => `
-              <div class="sw-item">
-                <div class="sw-item-dot-orange"></div>
-                <span style="flex:1;">${escHtml(item)}</span>
-                <button class="sw-del-btn" onclick="delSwItem('${subj.key}','need',${idx})">✕</button>
-              </div>`).join('')}
-          </div>
-          <div class="sw-add-input">
-            <input type="text" id="sw-n-input-${subj.key}" placeholder="أضف جانب احتياج..." onkeydown="if(event.key==='Enter'){event.preventDefault();addSwItem('${subj.key}','need');}">
-            <button class="sw-add-btn need" onclick="addSwItem('${subj.key}','need')">+ إضافة</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  });
-
-  // إضافة مادة جديدة
-  const remaining = PERF_SUBJECTS.filter(s => !active.includes(s.key));
-  if (remaining.length) {
-    html += `<div class="sw-add-input" style="margin-top:6px;">
-      <select id="sw-add-subject-select" class="assign-select" style="flex:1;">
-        ${remaining.map(s => `<option value="${s.key}">${s.icon} ${escHtml(s.name)}</option>`).join('')}
-      </select>
-      <button class="btn-sm btn-sm-outline" onclick="addSwSubject()">+ إضافة مادة</button>
-    </div>`;
-  }
-
-  const meta = currentDetail.data.strengthsMeta;
-  if (meta) {
-    html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:10px;">آخر تحديث: ${escHtml(toHijriLike(meta.date))} — بواسطة ${escHtml(meta.teacher)}</div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-function addSwSubject() {
-  const sel = document.getElementById('sw-add-subject-select');
-  if (!sel || !sel.value) return;
-  const key = sel.value;
-  const saved = currentDetail.data.strengths;
-  if (!saved._activeSubjects.includes(key)) saved._activeSubjects.push(key);
-  if (!saved[key]) saved[key] = { strengths: [], needs: [] };
-  renderStrengthsEditor();
-}
-
-function removeSwSubject(subjKey) {
-  if (!confirm('سيتم إخفاء هذه المادة من قائمة القوة والاحتياج (تبقى بياناتها المحفوظة سابقاً). متابعة؟')) return;
-  const saved = currentDetail.data.strengths;
-  saved._activeSubjects = saved._activeSubjects.filter(k => k !== subjKey);
-  if (saved._activeSubjects.length === 0) saved._activeSubjects = SW_DEFAULT_SUBJECTS.slice();
-  renderStrengthsEditor();
-}
-
-function addSwItem(subjKey, type) {
-  const inputId = type === 'strength' ? `sw-s-input-${subjKey}` : `sw-n-input-${subjKey}`;
-  const input = document.getElementById(inputId);
-  const text = (input?.value || '').trim();
-  if (!text) return;
-  if (!currentDetail.data.strengths[subjKey]) currentDetail.data.strengths[subjKey] = { strengths: [], needs: [] };
-  const arr = type === 'strength' ? currentDetail.data.strengths[subjKey].strengths : currentDetail.data.strengths[subjKey].needs;
-  arr.push(text);
-  renderStrengthsEditor();
-}
-
-function delSwItem(subjKey, type, idx) {
-  const sw = currentDetail.data.strengths[subjKey];
-  if (!sw) return;
-  const arr = type === 'strength' ? sw.strengths : sw.needs;
-  arr.splice(idx, 1);
-  renderStrengthsEditor();
-}
-
-async function saveTeacherStrengths() {
-  const strengthsMeta = { date: new Date().toISOString(), teacher: currentTeacher.name };
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, {
-    strengths: currentDetail.data.strengths || {},
-    strengthsMeta
-  });
-  if (saved) {
-    currentDetail.data = saved;
-    showToast('✅ تم حفظ جوانب القوة والاحتياج');
-    renderStrengthsEditor();
-  } else {
-    showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
-  }
-}
-</script>
-<script>
-// ===================================================
-// الخطة الفردية والتقارير (رفع وعرض)
-// ===================================================
-function fileExtFromName(name) {
-  const m = /\.([a-zA-Z0-9]+)$/.exec(name || '');
-  return m ? m[1] : 'pdf';
-}
-
-async function checkFileExists(url) {
-  try { const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { method: 'HEAD' }); return r.ok; }
-  catch(e) { return false; }
-}
-
-async function renderFilesTab() {
-  const program = currentDetail.program;
-  const pin = currentDetail.pin;
-  const base = `${SB_URL}/storage/v1/object/public/reports/${program}/`;
-
-  // ===== الخطة الفردية =====
-  const planEl = document.getElementById('plan-current');
-  planEl.innerHTML = `<div style="color:var(--muted);font-size:.85rem;">⏳ جارٍ التحقق من وجود خطة محفوظة...</div>`;
-  let planFound = null;
-  for (const ext of ['pdf','PDF','docx','doc']) {
-    const url = `${base}plan-${pin}.${ext}`;
-    if (await checkFileExists(url)) { planFound = url; break; }
-  }
-  planEl.innerHTML = planFound
-    ? `<div class="file-row">
-         <div class="file-left">
-           <div class="file-icon">📋</div>
-           <div><div class="file-name">الخطة الفردية الحالية</div><div class="file-type">مرفوعة لملف الطالب</div></div>
-         </div>
-         <a href="${planFound}" target="_blank" class="btn-sm btn-sm-outline">👁️ عرض</a>
-       </div>`
-    : `<div style="color:var(--muted);font-size:.85rem;">لا توجد خطة فردية مرفوعة لهذا الطالب حالياً.</div>`;
-
-  // ===== التقارير =====
-  const reportsEl = document.getElementById('reports-current');
-  const reports = currentDetail.data.reports || [];
-  if (reports.length === 0) {
-    reportsEl.innerHTML = `<div style="color:var(--muted);font-size:.85rem;margin-bottom:8px;">لا توجد تقارير مُضافة من المعلم بعد.</div>`;
-  } else {
-    reportsEl.innerHTML = reports.map((r, idx) => `
-      <div class="file-row">
-        <div class="file-left">
-          <div class="file-icon">${escHtml(r.icon || '📄')}</div>
-          <div>
-            <div class="file-name">${escHtml(r.title || 'تقرير')}</div>
-            <div class="file-type">📅 ${escHtml(r.date || '')}${r.teacher ? ' — ✍️ ' + escHtml(r.teacher) : ''}</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:6px;">
-          <a href="${base}${encodeURIComponent(r.fileKey)}.${r.ext || 'pdf'}" target="_blank" class="btn-sm btn-sm-outline">👁️ عرض</a>
-          <button class="btn-sm btn-sm-danger" onclick="removeReport(${idx})">🗑️ حذف</button>
-        </div>
-      </div>`).join('');
-  }
-}
-
-async function uploadPlanFile(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const ext = fileExtFromName(file.name);
-  const path = `reports/${currentDetail.program}/plan-${currentDetail.pin}.${ext}`;
-  showToast('⏳ جارٍ رفع الخطة الفردية...');
-  const ok = await sbUploadFile(path, file);
-  input.value = '';
-  if (ok) { showToast('✅ تم رفع الخطة الفردية بنجاح'); renderFilesTab(); }
-  else showToast('⚠️ تعذر رفع الملف، تحقق من الاتصال');
-}
-
-async function uploadReportFile(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const titleInput = document.getElementById('report-title-input');
-  const title = (titleInput.value || '').trim() || 'تقرير من المعلم';
-  const ext = fileExtFromName(file.name);
-  const fileKey = `teacherfile-${currentDetail.pin}-${Date.now()}`;
-  const path = `reports/${currentDetail.program}/${fileKey}.${ext}`;
-
-  showToast('⏳ جارٍ رفع التقرير...');
-  const ok = await sbUploadFile(path, file);
-  input.value = '';
-  if (!ok) { showToast('⚠️ تعذر رفع الملف، تحقق من الاتصال'); return; }
-
-  const reports = currentDetail.data.reports || [];
-  reports.push({
-    title, icon: '📄', tag: 'من المعلم', tagClass: 'tag-purple',
-    date: toHijriLike(new Date()), fileKey, ext, teacher: currentTeacher.name
-  });
-
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { reports });
-  if (saved) {
-    currentDetail.data = saved;
-    titleInput.value = '';
-    showToast('✅ تم إضافة التقرير لملف الطالب');
-    renderFilesTab();
-  } else {
-    showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
-  }
-}
-
-async function removeReport(idx) {
-  if (!confirm('هل تريد حذف هذا التقرير من ملف الطالب؟')) return;
-  const reports = currentDetail.data.reports || [];
-  reports.splice(idx, 1);
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { reports });
-  if (saved) {
-    currentDetail.data = saved;
-    showToast('🗑️ تم حذف التقرير');
-    renderFilesTab();
-  } else {
-    showToast('⚠️ تعذر الحذف، تحقق من الاتصال');
-  }
-}
-</script>
-<script>
-// ===================================================
-// لوحة التعزيز — شهادات الشكر والتقدير
-// ===================================================
-function updateCertPreview() {
-  if (!currentDetail) return;
-  const title = (document.getElementById('cert-title-input').value || '').trim();
-  const msg   = (document.getElementById('cert-message-input').value || '').trim();
-
-  document.getElementById('cert-student-name').textContent = currentDetail.info.name || '—';
-  document.getElementById('cert-message-preview').textContent =
-    msg || (title || 'تقديراً وتشجيعاً له على تميّزه واجتهاده.');
-  document.getElementById('cert-date-preview').textContent = '📅 ' + toHijriLike(new Date());
-  document.getElementById('cert-teacher-preview').textContent = '✍️ ' + currentTeacher.name;
-}
-
-function renderReinforceTab() {
-  document.getElementById('cert-title-input').value = '';
-  document.getElementById('cert-message-input').value = '';
-  updateCertPreview();
-
-  const history = (currentDetail.data.reinforcements || []).slice().reverse();
-  const histEl = document.getElementById('reinforce-history');
-
-  if (history.length === 0) {
-    histEl.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">🏆</div>
-        <div class="es-title">لا توجد شهادات مُرسلة بعد</div>
-        <div class="es-sub">عند إرسال شهادة شكر ستظهر هنا وفي ملف الطالب</div>
-      </div>`;
-    return;
-  }
-
-  histEl.innerHTML = history.map(item => `
-    <div class="reinforce-item">
-      <div class="reinforce-icon">🏆</div>
-      <div style="flex:1;">
-        <div class="reinforce-title">${escHtml(item.title)}</div>
-        <div class="reinforce-meta">📅 ${escHtml(item.dateLabel)} — ✍️ ${escHtml(item.teacher)}</div>
-        ${item.message ? `<div class="reinforce-msg">${escHtml(item.message)}</div>` : ''}
-      </div>
-      <div style="display:flex;gap:6px;flex-shrink:0;">
-        <button class="btn-sm btn-sm-outline" onclick="printCertificate('${item.id}')">🖨️ طباعة</button>
-        <button class="btn-sm btn-sm-danger" onclick="deleteCertificate('${item.id}')">🗑️ حذف</button>
-      </div>
-    </div>`).join('');
-}
-
-async function deleteCertificate(id) {
-  if (!confirm('هل تريد حذف هذه الشهادة من ملف الطالب؟ لا يمكن التراجع عن هذا الإجراء.')) return;
-  const reinforcements = (currentDetail.data.reinforcements || []).filter(r => r.id !== id);
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { reinforcements });
-  if (saved) {
-    currentDetail.data = saved;
-    showToast('🗑️ تم حذف الشهادة');
-    renderReinforceTab();
-  } else {
-    showToast('⚠️ تعذر الحذف، تحقق من الاتصال');
-  }
-}
-
-async function sendCertificate() {
-  const title = (document.getElementById('cert-title-input').value || '').trim();
-  if (!title) { showToast('⚠️ يرجى كتابة سبب التكريم أولاً'); return; }
-  const message = (document.getElementById('cert-message-input').value || '').trim();
-
-  const item = {
-    id: 'cert_' + Date.now(),
-    title, message,
-    teacher: currentTeacher.name,
-    date: new Date().toISOString(),
-    dateLabel: toHijriLike(new Date())
-  };
-
-  const reinforcements = currentDetail.data.reinforcements || [];
-  reinforcements.push(item);
-
-  const saved = await saveStudentData(currentDetail.program, currentDetail.pin, { reinforcements });
-  if (saved) {
-    currentDetail.data = saved;
-    showToast('🏆 تم إرسال الشهادة لملف الطالب');
-    renderReinforceTab();
-  } else {
-    showToast('⚠️ تعذر الإرسال، تحقق من الاتصال');
-  }
-}
-
-function printCertificate(id) {
-  const item = (currentDetail.data.reinforcements || []).find(r => r.id === id);
-  if (!item) return;
-  const studentName = currentDetail.info.name || '';
-
-  const win = window.open('', '_blank');
-  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
-
-  win.document.write(`
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-<title>شهادة شكر — ${escHtml(studentName)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  *{box-sizing:border-box;}
-  body{font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#F7F5FC;}
-  .cert{width:740px;max-width:92vw;border:10px solid #6B4C9A;border-radius:22px;padding:50px 44px;text-align:center;background:#fff;position:relative;}
-  .cert::after{content:'';position:absolute;inset:14px;border:2px dashed #B79EE0;border-radius:14px;pointer-events:none;}
-  .emoji{font-size:2.6rem;margin-bottom:6px;}
-  h1{font-family:'Tajawal',sans-serif;font-size:2.1rem;color:#2E2148;margin:0 0 6px;}
-  .sub{color:#6E5F82;font-size:.92rem;margin-bottom:26px;}
-  .lead{font-size:.95rem;color:#6E5F82;}
-  .name{font-family:'Tajawal',sans-serif;font-size:1.7rem;font-weight:900;color:#6B4C9A;margin:14px 0 18px;}
-  .reason{font-size:1.05rem;color:#221335;margin-bottom:10px;font-weight:800;}
-  .msg{font-size:.95rem;color:#221335;line-height:2;margin-bottom:28px;}
-  .footer{display:flex;justify-content:space-between;margin-top:36px;font-size:.84rem;color:#6E5F82;border-top:1px solid #EAE1F7;padding-top:14px;}
-  @media print{ body{background:#fff;} .cert{border-color:#6B4C9A;box-shadow:none;} }
-</style></head><body>
-  <div class="cert">
-    <div class="emoji">🏆</div>
-    <h1>شهادة شكر وتقدير</h1>
-    <div class="sub">مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</div>
-    <div class="lead">تُمنح هذه الشهادة للطالب/ـة</div>
-    <div class="name">${escHtml(studentName)}</div>
-    <div class="reason">${escHtml(item.title)}</div>
-    ${item.message ? `<div class="msg">${escHtml(item.message)}</div>` : ''}
-    <div class="footer">
-      <span>📅 ${escHtml(item.dateLabel)}</span>
-      <span>✍️ ${escHtml(item.teacher)}</span>
-    </div>
-  </div>
-  <script>window.onload = () => setTimeout(() => window.print(), 350);<\/script>
-</body></html>`);
-  win.document.close();
-}
-
-// ===================================================
-// إسناد الطلاب للمعلمين (المشرف فقط)
-// ===================================================
-async function renderAssignTable() {
-  const program = currentTeacher.program;
-  const list = await loadStudentConfig(program);
-
-  const q = (document.getElementById('assign-search').value || '').trim().toLowerCase();
-  const filtered = list.filter(s => !q || (s.name||'').toLowerCase().includes(q) || (s.pin||'').includes(q));
-
-  const teacherOptions = Object.entries(TEACHERS)
-    .filter(([uname, t]) => t.program === program && (!t.isSupervisor || uname === currentTeacher.username))
-    .map(([uname, t]) => ({ uname, name: t.name }));
-
-  const tbody = document.getElementById('assign-tbody');
-
-  if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:30px;">لا يوجد طلاب مسجّلون في هذا البرنامج</td></tr>`;
-    return;
-  }
-  if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:30px;">لا توجد نتائج مطابقة</td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = filtered.map(s => {
-    const current = ASSIGNMENTS[program][s.pin] || '';
-    const options = `<option value="">— غير مُسند —</option>` +
-      teacherOptions.map(t => `<option value="${t.uname}" ${current===t.uname?'selected':''}>${escHtml(t.name)}</option>`).join('');
-    return `<tr>
-      <td style="font-weight:700;">${escHtml(s.name || '')}</td>
-      <td>${escHtml(s.pin || '')}</td>
-      <td>${escHtml(s.grade || '—')}</td>
-      <td><select class="assign-select" onchange="assignTeacher('${s.pin}', this.value)">${options}</select></td>
-      <td>${current ? '<span class="assign-status assigned">✅ مُسند</span>' : '<span class="assign-status unassigned">— غير مُسند —</span>'}</td>
-    </tr>`;
-  }).join('');
-}
-
-async function assignTeacher(pin, uname) {
-  const program = currentTeacher.program;
-  if (uname) ASSIGNMENTS[program][pin] = uname;
-  else delete ASSIGNMENTS[program][pin];
-
-  const ok = await saveAssignments();
-  if (ok) { showToast('✅ تم تحديث إسناد الطالب'); renderAssignTable(); }
-  else showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
-}
-</script>
-<script>
-// ===================================================
-// جدول المعلم الأسبوعي (المعتمد من مشرف البرنامج)
-// ===================================================
-const SCHEDULE_KEY_MAP = {
-  'm.suhayymi': { program:'dumaj',  key:'suhaimy'   },
-  'z.qarni':    { program:'dumaj',  key:'alqarni'   },
-  'a.ghamdi':   { program:'dumaj',  key:'alghamdi'  },
-  'a.malki':    { program:'dumaj',  key:'almalki'   },
-  'h.ulyani':   { program:'dumaj',  key:'alyani'    },
-  'a.zahrani':  { program:'dumaj',  key:'alzahrani' },
-  'h.kubaishi': { program:'yaseer', key:'husain'    },
-  'saad.z':     { program:'yaseer', key:'saad'      },
-};
-
-// ===================================================
-// ملف الإنجاز (مضمَّن من ملفات إنجاز المعلمين)
-// ===================================================
-const PORTFOLIO_MAP = {
-  'm.suhayymi': { file:'teachers-dumaj.html',  name:'محمد أحمد السهيمي', key:'m-suhayymi' },
-  'z.qarni':    { file:'teachers-dumaj.html',  name:'زين العابدين سعد القرني', key:'z-qarni' },
-  'a.ghamdi':   { file:'teachers-dumaj.html',  name:'علي سعيد الغامدي', key:'a-ghamdi' },
-  'a.malki':    { file:'teachers-dumaj.html',  name:'علي محمد المالكي', key:'a-malki' },
-  'h.ulyani':   { file:'teachers-dumaj.html',  name:'حسن علي العلياني', key:'h-ulyani' },
-  'a.zahrani':  { file:'teachers-dumaj.html',  name:'علي محمد الزهراني', key:'a-zahrani' },
-  'h.kubaishi': { file:'teachers-yaseer.html', name:'حسين منصور الكبيشي', key:'h-kubaishi' },
-  'saad.z':     { file:'teachers-yaseer.html', name:'سعد سالم الزهراني', key:'saad-z' },
-};
-
-function openPortfolioFull() {
-  const map = PORTFOLIO_MAP[currentTeacher.username];
-  if (!map) { showToast('⚠️ لا يوجد ملف إنجاز مرتبط بهذا الحساب'); return; }
-  // دخول مباشر لملف إنجاز المعلم بدون كلمة مرور أو اختيار اسم.
-  const url = `${map.file}?teacher=${encodeURIComponent(map.key)}`;
-  window.open(url, '_blank');
-}
-
-const SCHED_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
-
-const DUMAJ_SCHED_PERIODS = [
-  { num:1, label:'الأولى',  time:'7:30–8:15'   },
-  { num:2, label:'الثانية', time:'8:15–9:00'   },
-  { num:3, label:'الثالثة', time:'9:00–9:45'   },
-  { num:4, label:'الرابعة', time:'10:05–10:50' },
-  { num:5, label:'الخامسة', time:'10:50–11:35' },
-  { num:6, label:'السادسة', time:'11:35–12:20' },
-  { num:7, label:'السابعة', time:'12:20–13:05' },
-];
-const DUMAJ_SCHED_GRADES = ['أول متوسط','ثاني متوسط','ثالث متوسط'];
-const DUMAJ_CELL_LABELS = { lesson:'📚', break_sup:'☕ فسحة', end_sup:'🏫 نهاية الدوام' };
-
-const YASEER_SCHED_PERIODS = [
-  { num:1, label:'الأولى',  time:'7:00–7:45'   },
-  { num:2, label:'الثانية', time:'7:45–8:30'   },
-  { num:3, label:'الثالثة', time:'8:30–9:15'   },
-  { num:4, label:'الرابعة', time:'9:35–10:20'  },
-  { num:5, label:'الخامسة', time:'10:20–11:05' },
-];
-
-let lastScheduleHTML = '';
-
-async function fetchTimetableData(key) {
-  try {
-    const res = await fetch(`${SB_URL}/rest/v1/teacher_portfolios?teacher_key=eq.${encodeURIComponent(key)}&select=data`, {
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-    });
     if (res.ok) {
-      const rows = await res.json();
-      if (rows?.length > 0 && rows[0].data) return rows[0].data;
+      showStatus(key, 'success', `✅ تم رفع الملف بنجاح — ${fileName}`);
+      document.getElementById(`fname-${key}`).textContent = fileName;
+      btn.textContent = '✅ تم الرفع';
+      document.getElementById(`del-btn-${key}`).style.display = 'block';
+    } else {
+      const err = await res.text();
+      showStatus(key, 'error', '❌ فشل الرفع — حاول مرة أخرى');
+      btn.textContent = '⬆️ إعادة المحاولة';
+      btn.disabled = false;
     }
-  } catch(e) {}
-  return null;
-}
-
-async function renderMySchedule() {
-  const container = document.getElementById('schedule-content');
-  container.innerHTML = `<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ تحميل الجدول...</div></div>`;
-
-  const map = SCHEDULE_KEY_MAP[currentTeacher.username];
-  if (!map) {
-    container.innerHTML = `<div class="empty-state"><div class="es-icon">📅</div><div class="es-title">لا تتوفر بيانات جدول لهذا الحساب</div></div>`;
-    return;
-  }
-
-  if (map.program === 'dumaj') {
-    const grids = {};
-    for (const grade of DUMAJ_SCHED_GRADES) {
-      grids[grade] = await fetchTimetableData('dumaj_timetable_' + grade);
-    }
-    renderDumajMySchedule(grids, map.key, container);
-  } else {
-    const grid = await fetchTimetableData('yaseer_timetable_main');
-    renderYaseerMySchedule(grid, map.key, container);
+  } catch(e) {
+    clearInterval(interval);
+    showStatus(key, 'error', '❌ خطأ في الاتصال');
+    btn.textContent = '⬆️ إعادة المحاولة';
+    btn.disabled = false;
   }
 }
 
-function renderDumajMySchedule(grids, myKey, container) {
-  let hasAny = false;
-  let html = `<table class="my-sched-table"><thead><tr><th>الحصة</th>${SCHED_DAYS.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>`;
-  DUMAJ_SCHED_PERIODS.forEach(p => {
-    html += `<tr><td class="my-sched-period-col">${p.label}<br><span style="font-weight:400;">${p.time}</span></td>`;
-    SCHED_DAYS.forEach(day => {
-      let found = null, foundGrade = null;
-      DUMAJ_SCHED_GRADES.forEach(grade => {
-        const grid = grids[grade];
-        const cell = grid?.[day]?.[p.num];
-        if (cell && cell.teacher === myKey && cell.type && cell.type !== 'empty') { found = cell; foundGrade = grade; }
+async function deleteFile(key, pin) {
+  if (!confirm(`هل تريد حذف ملف "${key}-${pin}" نهائياً؟`)) return;
+
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  let deleted = false;
+
+  for (const ext of extensions) {
+    const fileName = `${key}-${pin}.${ext}`;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/dumaj/${fileName}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
       });
-      if (found) {
-        hasAny = true;
-        const typeLabel = found.type === 'lesson' ? (found.subject || 'حصة') : (DUMAJ_CELL_LABELS[found.type] || found.subject || '');
-        html += `<td><div class="my-sched-cell-fill"><div class="my-sched-subj">${escHtml(typeLabel)}</div>${found.type==='lesson' ? `<div class="my-sched-grade">${escHtml(foundGrade)}</div>` : ''}</div></td>`;
-      } else {
-        html += `<td class="my-sched-cell-empty">—</td>`;
+      if (res.ok) {
+        deleted = true;
+        showStatus(key, 'error', '🗑️ تم حذف الملف بنجاح');
+        document.getElementById(`del-btn-${key}`).style.display = 'none';
+        document.getElementById(`fname-${key}`).textContent = `${key}-${pin}.pdf`;
+        clearFile(key);
+        break;
       }
-    });
-    html += `</tr>`;
-  });
-  html += `</tbody></table>`;
-
-  if (!hasAny) {
-    html = `<div class="empty-state"><div class="es-icon">📅</div><div class="es-title">لم يتم تحديد حصص لك في الجدول حتى الآن</div><div class="es-sub">يقوم مشرف البرنامج باعتماد الجدول من لوحة التحكم الخاصة به</div></div>` + html;
-  }
-  lastScheduleHTML = html;
-  container.innerHTML = html;
-}
-
-function renderYaseerMySchedule(grid, myKey, container) {
-  let hasAny = false;
-  let html = `<table class="my-sched-table"><thead><tr><th>الحصة</th>${SCHED_DAYS.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>`;
-  YASEER_SCHED_PERIODS.forEach(p => {
-    html += `<tr><td class="my-sched-period-col">${p.label}<br><span style="font-weight:400;">${p.time}</span></td>`;
-    SCHED_DAYS.forEach(day => {
-      const cell = grid?.[day]?.[p.num];
-      if (cell && cell.teacher === myKey && cell.students && cell.students.length) {
-        hasAny = true;
-        const items = cell.students.map(s => `<div class="my-sched-subj">${escHtml(s.name)}</div><div class="my-sched-grade">${escHtml(s.subject)}</div>`).join('<hr style="border:none;border-top:1px dashed var(--border);margin:4px 0;">');
-        html += `<td><div class="my-sched-cell-fill">${items}</div></td>`;
-      } else {
-        html += `<td class="my-sched-cell-empty">—</td>`;
-      }
-    });
-    html += `</tr>`;
-  });
-  html += `</tbody></table>`;
-
-  if (!hasAny) {
-    html = `<div class="empty-state"><div class="es-icon">📅</div><div class="es-title">لم يتم تحديد حصص لك في الجدول حتى الآن</div><div class="es-sub">يقوم مشرف البرنامج باعتماد الجدول من لوحة التحكم الخاصة به</div></div>` + html;
-  }
-  lastScheduleHTML = html;
-  container.innerHTML = html;
-}
-
-function printMySchedule() {
-  const win = window.open('', '_blank');
-  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
-  win.document.write(`
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-<title>جدولي الأسبوعي — ${escHtml(currentTeacher.name)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  *{box-sizing:border-box;}
-  body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;}
-  h1{font-family:'Tajawal',sans-serif;color:#2E2148;}
-  .my-sched-table{ width:100%; border-collapse:collapse; font-size:.85rem; }
-  .my-sched-table th{ background:#EAE1F7; color:#6B4C9A; padding:9px 8px; text-align:center; font-weight:800; border:1px solid #DCD2EE; }
-  .my-sched-table td{ padding:8px; border:1px solid #DCD2EE; text-align:center; }
-  .my-sched-period-col{ background:#FBFAFE; font-weight:800; color:#6B4C9A; }
-  .my-sched-cell-fill{ background:#EAE1F7; border-radius:8px; padding:6px; }
-  .my-sched-subj{ font-weight:800; color:#3F2E63; }
-  .my-sched-grade{ font-size:.78rem; color:#6E5F82; margin-top:2px; }
-  .my-sched-cell-empty{ color:#c9c2da; }
-  .empty-state{ text-align:center; padding:30px; color:#9ca3af; }
-</style></head><body>
-  <h1>📅 جدولي الأسبوعي — ${escHtml(currentTeacher.name)}</h1>
-  <div style="color:#6E5F82;margin-bottom:14px;">${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
-  ${lastScheduleHTML}
-  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
-</body></html>`);
-  win.document.close();
-}
-
-// ===================================================
-// بانر استدعاء الاجتماع (من مشرف الإدارة العامة)
-// ===================================================
-async function loadMeetingInvite() {
-  const list = await sbGetJSON(`reports/${currentTeacher.program}/meeting-invites.json`);
-  renderMeetingsLog(Array.isArray(list) ? list : []);
-}
-
-function renderMeetingsLog(list) {
-  const el = document.getElementById('meetings-log');
-  if (!list || list.length === 0) {
-    el.style.display = 'none';
-    el.innerHTML = '';
-    return;
+    } catch(e) {}
   }
 
+  if (!deleted) showStatus(key, 'error', '❌ لم يُعثر على ملف للحذف');
+}
+
+function showStatus(key, type, msg) {
+  const el = document.getElementById(`status-${key}`);
   el.style.display = 'block';
-  el.innerHTML = `<div class="meetings-log-head">📹 سجل استدعاءات الاجتماع (${list.length})</div>` +
-    list.map(invite => {
-      let dtLabel = invite.datetime;
-      try {
-        dtLabel = new Date(invite.datetime).toLocaleDateString('ar-SA', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
-      } catch(e) {}
-      return `
-    <div class="meeting-banner-inner">
-      <div class="meeting-banner-icon">📹</div>
-      <div style="flex:1;">
-        <div class="meeting-banner-title">استدعاء اجتماع: ${escHtml(invite.subject || '')}</div>
-        <div class="meeting-banner-meta">📅 ${escHtml(dtLabel)}${invite.notes ? ' — ' + escHtml(invite.notes) : ''}${invite.supervisorName ? ' — من: ' + escHtml(invite.supervisorName) : ''}</div>
-      </div>
-      <a href="${invite.link}" target="_blank" class="btn-sm btn-sm-gold">🔗 الانضمام للاجتماع</a>
-      <button class="meeting-banner-close" onclick="deleteMeetingInviteShared('${invite.id}')">🗑️ حذف</button>
-    </div>`;
-    }).join('');
-}
-
-async function deleteMeetingInviteShared(id) {
-  if (!confirm('هل تم الاطلاع على هذا الاستدعاء؟ سيتم حذفه من السجل لجميع المعلمين.')) return;
-  const list = await sbGetJSON(`reports/${currentTeacher.program}/meeting-invites.json`);
-  const filtered = (Array.isArray(list) ? list : []).filter(m => String(m.id) !== String(id));
-  const ok = await sbSetJSON(`reports/${currentTeacher.program}/meeting-invites.json`, filtered);
-  if (ok) { showToast('🗑️ تم حذف الاستدعاء'); renderMeetingsLog(filtered); }
-  else showToast('⚠️ تعذر الحذف، تحقق من الاتصال');
-}
-
-// ===================================================
-// شريط الإشعارات العام (للمعلمين المشرفين)
-// ===================================================
-async function loadAnnouncementSettingsTP() {
-  const data = await sbGetJSON('reports/site-announcement.json');
-  if (data) {
-    document.getElementById('tp-announce-enabled').checked = !!data.enabled;
-    document.getElementById('tp-announce-message').value = data.message || '';
-    document.getElementById('tp-announce-link').value = data.link || '';
-  }
-}
-
-async function saveAnnouncementTP() {
-  const enabled = document.getElementById('tp-announce-enabled').checked;
-  const message = document.getElementById('tp-announce-message').value.trim();
-  const link = document.getElementById('tp-announce-link').value.trim();
-  if (enabled && !message) { showToast('⚠️ يرجى كتابة نص الإشعار قبل التفعيل'); return; }
-  const payload = { enabled, message, link, updatedAt: new Date().toISOString(), updatedBy: currentTeacher.name };
-  const ok = await sbSetJSON('reports/site-announcement.json', payload);
-  showToast(ok ? '✅ تم حفظ ونشر الإشعار' : '⚠️ تعذر الحفظ، تحقق من الاتصال');
+  el.className = `upload-status status-${type}`;
+  el.textContent = msg;
 }
 </script>
-
-<script>
-// ===================================================
-// توزيع المنهج الفصلي
-// ===================================================
-const CURRICULUM_WEEKS = 16;
-
-function emptyCurriculumWeeks() {
-  return Array.from({ length: CURRICULUM_WEEKS }, () => ({ topic: '', notes: '' }));
-}
-
-function defaultCurriculum() {
-  return {
-    activeSubjects: ['arabic', 'math'],
-    subjects: {
-      arabic: { name: 'لغتي (اللغة العربية)', weeks: emptyCurriculumWeeks() },
-      math:   { name: 'الرياضيات',            weeks: emptyCurriculumWeeks() },
-    },
-    meta: null
-  };
-}
-
-let myCurriculum = null;
-
-function curriculumPath() {
-  return `curriculum/${currentTeacher.program}/${currentTeacher.username}.json`;
-}
-
-async function renderCurriculumTab() {
-  const container = document.getElementById('curriculum-content');
-  container.innerHTML = `<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>`;
-
-  if (!myCurriculum) {
-    const data = await sbGetJSON(`reports/${curriculumPath()}`);
-    myCurriculum = data || defaultCurriculum();
-  }
-  if (!Array.isArray(myCurriculum.activeSubjects) || myCurriculum.activeSubjects.length === 0) {
-    myCurriculum.activeSubjects = ['arabic', 'math'];
-  }
-  myCurriculum.activeSubjects.forEach(key => {
-    if (!myCurriculum.subjects[key]) {
-      myCurriculum.subjects[key] = { name: key, weeks: emptyCurriculumWeeks() };
-    }
-  });
-
-  let html = `<div style="font-size:.84rem;color:var(--muted);margin-bottom:16px;padding:10px 14px;background:var(--surface2);border-radius:10px;border-right:3px solid var(--gold);">
-    📝 وزّع محتوى المنهج على أسابيع الفصل الدراسي. يمكن لطاقم الإدارة (مشرف الإدارة العامة، مدير المدرسة، رئيس قسم ذوي الإعاقة) الاطلاع على هذا التوزيع بعد حفظه.
-  </div>`;
-
-  myCurriculum.activeSubjects.forEach(key => {
-    const subj = myCurriculum.subjects[key];
-    html += `<div class="s-card">
-      <div class="s-card-head" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
-        <span>📘 ${escHtml(subj.name)}</span>
-        <button class="btn-sm btn-sm-danger" onclick="removeCurriculumSubject('${key}')">🗑️ إزالة المادة</button>
-      </div>
-      <div class="s-card-body" style="padding:0;overflow-x:auto;">
-        <table class="curr-table">
-          <thead><tr><th style="width:90px;">الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
-          <tbody>
-            ${subj.weeks.map((w, i) => `
-              <tr>
-                <td class="curr-week-num">الأسبوع ${i+1}</td>
-                <td><input type="text" class="curr-input" data-subj="${key}" data-week="${i}" data-field="topic" value="${escHtml(w.topic || '')}" placeholder="موضوع/درس هذا الأسبوع..."></td>
-                <td><input type="text" class="curr-input" data-subj="${key}" data-week="${i}" data-field="notes" value="${escHtml(w.notes || '')}" placeholder="ملاحظات..."></td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>`;
-  });
-
-  html += `<div class="upload-row">
-    <input type="text" id="new-curr-subject" placeholder="اسم مادة جديدة (مثال: العلوم)">
-    <button class="btn-sm btn-sm-outline" onclick="addCurriculumSubject()">+ إضافة مادة</button>
-  </div>`;
-
-  if (myCurriculum.meta) {
-    html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:10px;">آخر حفظ: ${escHtml(toHijriLike(myCurriculum.meta.date))} — بواسطة ${escHtml(myCurriculum.meta.teacher)}</div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-function collectCurriculumInputs() {
-  document.querySelectorAll('.curr-input').forEach(inp => {
-    const subj  = inp.dataset.subj;
-    const week  = +inp.dataset.week;
-    const field = inp.dataset.field;
-    if (myCurriculum.subjects[subj] && myCurriculum.subjects[subj].weeks[week]) {
-      myCurriculum.subjects[subj].weeks[week][field] = inp.value;
-    }
-  });
-}
-
-function addCurriculumSubject() {
-  const input = document.getElementById('new-curr-subject');
-  const name = (input.value || '').trim();
-  if (!name) return;
-  collectCurriculumInputs();
-  const key = 'custom_' + Date.now();
-  myCurriculum.subjects[key] = { name, weeks: emptyCurriculumWeeks() };
-  myCurriculum.activeSubjects.push(key);
-  input.value = '';
-  renderCurriculumTab();
-}
-
-function removeCurriculumSubject(key) {
-  if (!confirm('سيتم حذف توزيع هذه المادة بالكامل. متابعة؟')) return;
-  collectCurriculumInputs();
-  myCurriculum.activeSubjects = myCurriculum.activeSubjects.filter(k => k !== key);
-  delete myCurriculum.subjects[key];
-  if (myCurriculum.activeSubjects.length === 0) myCurriculum.activeSubjects = ['arabic','math'];
-  renderCurriculumTab();
-}
-
-async function saveCurriculum() {
-  collectCurriculumInputs();
-  myCurriculum.meta = { date: new Date().toISOString(), teacher: currentTeacher.name };
-  const ok = await sbSetJSON(`reports/${curriculumPath()}`, myCurriculum);
-  if (ok) { showToast('✅ تم حفظ توزيع المنهج'); renderCurriculumTab(); }
-  else showToast('⚠️ تعذر الحفظ، تحقق من الاتصال');
-}
-
-function printCurriculum() {
-  collectCurriculumInputs();
-  const win = window.open('', '_blank');
-  if (!win) { showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة'); return; }
-
-  const subjectsHtml = myCurriculum.activeSubjects.map(key => {
-    const subj = myCurriculum.subjects[key];
-    return `
-      <h2>📘 ${escHtml(subj.name)}</h2>
-      <table>
-        <thead><tr><th style="width:90px;">الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
-        <tbody>
-          ${subj.weeks.map((w,i) => `<tr><td class="wk">الأسبوع ${i+1}</td><td>${escHtml(w.topic||'')}</td><td>${escHtml(w.notes||'')}</td></tr>`).join('')}
-        </tbody>
-      </table>`;
-  }).join('');
-
-  win.document.write(`
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-<title>توزيع المنهج — ${escHtml(currentTeacher.name)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  *{box-sizing:border-box;}
-  body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;color:#221335;}
-  h1{font-family:'Tajawal',sans-serif;color:#2E2148;font-size:1.5rem;margin-bottom:4px;}
-  .sub{color:#6E5F82;margin-bottom:18px;font-size:.9rem;}
-  h2{font-family:'Tajawal',sans-serif;color:#6B4C9A;font-size:1.05rem;margin:22px 0 8px;}
-  table{ width:100%; border-collapse:collapse; font-size:.85rem; margin-bottom:10px; }
-  th{ background:#EAE1F7; color:#6B4C9A; padding:8px 10px; text-align:right; font-weight:800; border:1px solid #DCD2EE; }
-  td{ padding:7px 10px; border:1px solid #DCD2EE; }
-  .wk{ font-weight:800; color:#6B4C9A; white-space:nowrap; }
-  @media print{ @page{ size:A4; margin:14mm; } }
-</style><link rel="stylesheet" href="assets/css/common-ui.css">
-</head><body>
-  <h1>📘 توزيع المنهج الفصلي</h1>
-  <div class="sub">${escHtml(currentTeacher.name)} — ${escHtml(currentTeacher.role)} — الفصل الدراسي الثاني 1447هـ</div>
-  ${subjectsHtml}
-  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
-</body></html>`);
-  win.document.close();
-}
-</script>
-
-<script>
-// ===================================================
-// التهيئة
-// ===================================================
-document.getElementById('pin-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
-document.getElementById('username-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') document.getElementById('pin-input').focus();
-});
-document.getElementById('cert-title-input').addEventListener('input', updateCertPreview);
-document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
-</script>
-<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>
