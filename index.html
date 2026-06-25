@@ -164,6 +164,34 @@ body{
   .nav-cta{ padding:9px 14px; font-size:.78rem; }
 }
 
+/* ── زر الهامبرغر للجوال ── */
+.nav-hamburger{
+  display:none; flex-direction:column; gap:5px;
+  background:none; border:1px solid var(--line2); border-radius:10px;
+  padding:8px 10px; cursor:pointer;
+}
+.nav-hamburger span{
+  display:block; width:20px; height:2px;
+  background:var(--lav-700); border-radius:2px;
+  transition:all .25s;
+}
+.nav-hamburger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2){ opacity:0; }
+.nav-hamburger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+@media (max-width:900px){
+  .nav-hamburger{ display:flex; }
+  .nav-links.open{
+    display:flex; flex-direction:column; gap:4px;
+    position:absolute; top:100%; right:0; left:0;
+    background:rgba(255,255,255,.97); backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+    padding:12px 20px 16px; box-shadow:0 12px 30px rgba(107,76,154,.12);
+    z-index:100;
+  }
+  .nav-links.open .nav-link{ padding:11px 16px; border-radius:10px; }
+  .navbar{ position:relative; }
+}
+
 /* ============================================================
    الهيرو
    ============================================================ */
@@ -499,6 +527,8 @@ footer{
   .hero h1{ font-size:2.15rem; }
   .hero-btns{ flex-direction:column; align-items:stretch; }
   .btn-primary, .btn-outline{ justify-content:center; }
+}
+
 /* شريط الإشعارات العام */
 
 
@@ -546,7 +576,7 @@ footer{
         </a>
         <span>المملكة العربية السعودية — وزارة التعليم</span>
       </div>
-      
+      <span class="topbar-year">1446 — 1447 هـ</span>
     </div>
     <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
   </div>
@@ -563,7 +593,7 @@ footer{
         <span>قسم ذوي الإعاقة — مدرسة مكة المكرمة المتوسطة</span>
       </div>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" id="main-nav">
       <a href="#top" class="nav-link">الرئيسية</a>
       <a href="#programs" class="nav-link">البرامج</a>
       <a href="#portals" class="nav-link">البوابات</a>
@@ -571,7 +601,12 @@ footer{
       <a href="#about" class="nav-link">عن القسم</a>
       <a href="contact.html" class="nav-link">خدمة المستفيد</a>
     </nav>
-    <a href="#portals" class="nav-cta">🔐 بوابة الطلاب</a>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="#portals" class="nav-cta">🔐 بوابة الطلاب</a>
+      <button class="nav-hamburger" id="nav-toggle" aria-label="قائمة التنقل" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -589,6 +624,11 @@ footer{
       <span class="hero-slogan-item">لا تُعقِّد على ولي الأمر بل تُيسِّر <strong>له</strong></span>
       <span class="hero-slogan-item dot">•</span>
       <span class="hero-slogan-item">لا تُثقِل على الطالب بل تدعمه <strong>دائماً</strong></span>
+    </div>
+
+    <div class="hero-btns">
+      <a href="#portals" class="btn-primary">🔐 بوابة الطلاب وأولياء الأمور</a>
+      <a href="#programs" class="btn-outline">📚 استعراض البرامج</a>
     </div>
   </div>
 
@@ -885,6 +925,32 @@ footer{
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+  // قائمة الجوال — زر الهامبرغر
+  const navToggle = document.getElementById('nav-toggle');
+  const mainNav   = document.getElementById('main-nav');
+  if (navToggle && mainNav) {
+    navToggle.addEventListener('click', function () {
+      const open = mainNav.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+    });
+    // إغلاق عند الضغط على رابط
+    mainNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+    // إغلاق عند الضغط خارج القائمة
+    document.addEventListener('click', function (e) {
+      if (!navToggle.contains(e.target) && !mainNav.contains(e.target)) {
+        mainNav.classList.remove('open');
+        navToggle.classList.remove('open');
+      }
+    });
+  }
+
   // عدادات
   function animateCount(el, target) {
     if (!el) return;
@@ -924,62 +990,9 @@ footer{
   updateClock();
   setInterval(updateClock, 1000);
 
-  // شريط الإشعارات
-  (async function() {
-    try {
-      if (sessionStorage.getItem('ann_closed')) return;
-      var SB  = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
-      var res = await fetch(SB + '/storage/v1/object/public/reports/site-announcement.json?t=' + Date.now());
-      if (!res.ok) return;
-      var d = await res.json();
-      if (!d || !d.enabled || !d.message) return;
-      if (d.expiresAt && new Date(d.expiresAt) < new Date()) return;
-      var icons  = {default:'📢',news:'📰',alert:'🔔',important:'⚠️'};
-      var labels = {default:'إشعار',news:'أخبار',alert:'تنبيه',important:'مهم'};
-      var t = d.type || 'default';
-      var bi = document.getElementById('ann-b-icon');
-      var bl = document.getElementById('ann-b-lbl');
-      if (bi) bi.textContent = icons[t]  || '📢';
-      if (bl) bl.textContent = labels[t] || 'إشعار';
-      function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-      var lnk = d.link ? ' <a style="color:#3F2E63;text-decoration:none;background:rgba(0,0,0,.1);padding:2px 10px;border-radius:8px;font-size:.76rem;" href="'+d.link+'" target="_blank" rel="noopener">← المزيد</a>' : '';
-      var txt = document.getElementById('ann-scroll-txt');
-      if (txt) txt.innerHTML = esc(d.message) + lnk;
-      if (d.expiresAt) {
-        var diff = new Date(d.expiresAt) - new Date();
-        var ddays = Math.floor(diff/86400000);
-        var hrs  = Math.floor((diff%86400000)/3600000);
-        var expEl = document.getElementById('ann-exp-col');
-        if (expEl) expEl.textContent = ddays>0 ? ('⏱ '+ddays+' يوم') : hrs>0 ? ('⏱ '+hrs+' ساعة') : '⏱ ينتهي قريباً';
-      }
-      var bar = document.getElementById('ann-ticker-bar');
-      if (bar) bar.style.display = 'block';
-      var pos = 0, paused = false;
-      if (txt) {
-        txt.addEventListener('mouseenter', function(){ paused = true; });
-        txt.addEventListener('mouseleave', function(){ paused = false; });
-      }
-      function scroll() {
-        if (!paused && txt && bar) {
-          pos -= 1.0;
-          var textW = txt.offsetWidth;
-          var trackW = bar.offsetWidth;
-          if (Math.abs(pos) > textW + trackW) pos = trackW;
-          txt.style.transform = 'translateX(' + pos + 'px)';
-        }
-        requestAnimationFrame(scroll);
-      }
-      pos = (bar ? bar.offsetWidth : 800);
-      requestAnimationFrame(scroll);
-    } catch(e) {}
-  })();
-
-  function annClose() {
-    var bar = document.getElementById('ann-ticker-bar');
-    if (bar) bar.style.display = 'none';
-    try { sessionStorage.setItem('ann_closed','1'); } catch(e) {}
-  }
+  // شريط الإشعارات — مُنقل لملف ann-system.js الخارجي
 </script>
+<script src="ann-system.js" defer></script>
 <script src="assets/js/common-ui.js" defer></script>
 
 <section style="max-width:1180px;margin:26px auto;padding:0 22px;direction:rtl;font-family:Cairo,Tajawal,Arial,sans-serif;">
@@ -989,5 +1002,28 @@ footer{
     <a href="unified-admin.html" style="display:inline-flex;padding:10px 15px;border-radius:999px;background:linear-gradient(135deg,#3F2E63,#6B4C9A);color:#fff;text-decoration:none;font-weight:900;">فتح لوحة التحكم الموحدة</a>
   </div>
 </section>
+
+<!-- زر العودة للأعلى -->
+<button id="back-to-top" aria-label="العودة للأعلى" style="
+  position:fixed;left:20px;bottom:24px;z-index:9000;
+  width:48px;height:48px;border-radius:50%;border:0;
+  background:linear-gradient(135deg,var(--lav-700),var(--lav-500));
+  color:#fff;font-size:1.3rem;font-weight:900;
+  box-shadow:0 8px 24px rgba(107,76,154,.35);
+  cursor:pointer;opacity:0;pointer-events:none;
+  transform:translateY(10px);transition:all .25s ease;
+" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<style>
+  #back-to-top.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+</style>
+<script>
+  (function(){
+    var btn = document.getElementById('back-to-top');
+    if(!btn) return;
+    window.addEventListener('scroll', function(){
+      btn.classList.toggle('show', window.scrollY > 400);
+    }, {passive:true});
+  })();
+</script>
 </body>
 </html>
