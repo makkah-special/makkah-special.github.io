@@ -84,32 +84,14 @@
 (function(){
   const SUPABASE_URL = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5cnh3cWdhcHdqd2hpc2tvd2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NDM3MjcsImV4cCI6MjA4NzExOTcyN30.nEJivQNdtbI8Vn7thWe29zHEOzK-Z8eZVQMnSyvKlII';
-  // حل مشكلة Edge Tracking Prevention التي تمنع localStorage
-  // نجرب sessionStorage أولاً، ثم ذاكرة مؤقتة (in-memory) كبديل آمن
+  // حل مشكلة Edge Tracking Prevention
   function buildStorage() {
-    try {
-      sessionStorage.setItem('_sbtest', '1');
-      sessionStorage.removeItem('_sbtest');
-      return window.sessionStorage;
-    } catch(e) {}
-    // بديل: كائن داخلي في الذاكرة (يُفقد عند إغلاق التبويب)
-    const mem = {};
-    return {
-      getItem:    k => mem[k] ?? null,
-      setItem:    (k,v) => { mem[k] = v; },
-      removeItem: k => { delete mem[k]; },
-      get length(){ return Object.keys(mem).length; },
-      key:        i => Object.keys(mem)[i] ?? null,
-    };
+    try { sessionStorage.setItem('_sbtest','1'); sessionStorage.removeItem('_sbtest'); return window.sessionStorage; } catch(e) {}
+    var mem = {};
+    return { getItem:function(k){return mem[k]??null;}, setItem:function(k,v){mem[k]=v;}, removeItem:function(k){delete mem[k];}, get length(){return Object.keys(mem).length;}, key:function(i){return Object.keys(mem)[i]??null;} };
   }
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: {
-      storage: buildStorage(),
-      storageKey: 'mk_admin_auth',
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: false,
-    }
+    auth: { storage: buildStorage(), storageKey:'mk_admin_auth', autoRefreshToken:true, persistSession:true, detectSessionInUrl:false }
   });
   const authScreen = document.getElementById('authScreen');
   const loginForm = document.getElementById('adminLoginForm');

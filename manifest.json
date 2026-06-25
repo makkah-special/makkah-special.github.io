@@ -157,12 +157,6 @@ body{
 .nav-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(107,76,154,.28); }
 
 @media (max-width:900px){ .nav-links{ display:none; } }
-@media (max-width:640px){
-  .navbar-inner{ padding:10px 16px; }
-  .nav-brand img{ width:40px; height:40px; }
-  .nav-brand-text b{ font-size:.95rem; }
-  .nav-cta{ padding:9px 14px; font-size:.78rem; }
-}
 
 /* ── زر الهامبرغر للجوال ── */
 .nav-hamburger{
@@ -190,6 +184,12 @@ body{
   }
   .nav-links.open .nav-link{ padding:11px 16px; border-radius:10px; }
   .navbar{ position:relative; }
+}
+@media (max-width:640px){
+  .navbar-inner{ padding:10px 16px; }
+  .nav-brand img{ width:40px; height:40px; }
+  .nav-brand-text b{ font-size:.95rem; }
+  .nav-cta{ padding:9px 14px; font-size:.78rem; }
 }
 
 /* ============================================================
@@ -934,7 +934,6 @@ footer{
       navToggle.classList.toggle('open', open);
       navToggle.setAttribute('aria-expanded', open);
     });
-    // إغلاق عند الضغط على رابط
     mainNav.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         mainNav.classList.remove('open');
@@ -942,7 +941,6 @@ footer{
         navToggle.setAttribute('aria-expanded', 'false');
       });
     });
-    // إغلاق عند الضغط خارج القائمة
     document.addEventListener('click', function (e) {
       if (!navToggle.contains(e.target) && !mainNav.contains(e.target)) {
         mainNav.classList.remove('open');
@@ -990,7 +988,7 @@ footer{
   updateClock();
   setInterval(updateClock, 1000);
 
-  // شريط الإشعارات — مُنقل لملف ann-system.js الخارجي
+  // شريط الإشعارات — في ملف ann-system.js
 </script>
 <script src="ann-system.js" defer></script>
 <script src="assets/js/common-ui.js" defer></script>
@@ -1002,7 +1000,6 @@ footer{
     <a href="unified-admin.html" style="display:inline-flex;padding:10px 15px;border-radius:999px;background:linear-gradient(135deg,#3F2E63,#6B4C9A);color:#fff;text-decoration:none;font-weight:900;">فتح لوحة التحكم الموحدة</a>
   </div>
 </section>
-
 <!-- زر العودة للأعلى -->
 <button id="back-to-top" aria-label="العودة للأعلى" style="
   position:fixed;left:20px;bottom:24px;z-index:9000;
@@ -1013,17 +1010,13 @@ footer{
   cursor:pointer;opacity:0;pointer-events:none;
   transform:translateY(10px);transition:all .25s ease;
 " onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<style>
-  #back-to-top.show{opacity:1;pointer-events:auto;transform:translateY(0);}
-</style>
+<style>#back-to-top.show{opacity:1;pointer-events:auto;transform:translateY(0);}</style>
 <script>
-  (function(){
-    var btn = document.getElementById('back-to-top');
-    if(!btn) return;
-    window.addEventListener('scroll', function(){
-      btn.classList.toggle('show', window.scrollY > 400);
-    }, {passive:true});
-  })();
+(function(){
+  var btn=document.getElementById('back-to-top');
+  if(!btn)return;
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>400);},{passive:true});
+})();
 </script>
 </body>
 </html>
