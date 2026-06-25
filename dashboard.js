@@ -3,365 +3,308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>خدمة المستفيد | مدرسة مكة المكرمة المتوسطة</title>
-<link rel="icon" type="image/png" href="icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#6B4C9A">
+<title>عرض توزيع المناهج | مدرسة مكة المكرمة المتوسطة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --lav-900:#2E2148; --lav-800:#3F2E63; --lav-700:#6B4C9A;
-  --lav-500:#8B6ABF; --lav-300:#B79EE0; --lav-100:#EAE1F7;
-  --gold:#D7A24A; --gold-light:#E8C27A; --gold-soft:rgba(215,162,74,.12);
-  --teal:#1A9E7C;
-  --bg:#F4F0FA; --card:#fff; --border:#DCD2EE;
-  --ink:#221335; --muted:#6E5F82; --ink-faint:#9C8DB0;
+:root {
+  --bg:#F7F5FC; --surface2:#FBFAFE; --card:#FFFFFF;
+  --ink:#221335; --muted:#6E5F82; --ink-faint:rgba(34,19,53,.42);
+  --border:#DCD2EE;
+  --lav-900:#2E2148; --lav-800:#3F2E63; --lav-700:#6B4C9A; --lav-500:#8B6ABF; --lav-300:#B79EE0; --lav-100:#EAE1F7;
+  --gold:#D7A24A; --gold-soft:rgba(215,162,74,.14);
+  --shadow-sm:0 6px 20px rgba(107,76,154,.10);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:'Cairo',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; }
 
-/* ===== TOPBAR ===== */
-.topbar{background:linear-gradient(135deg,var(--lav-900),var(--lav-800));padding:0;position:relative;z-index:100;}
-.topbar-inner{max-width:1180px;margin:0 auto;padding:10px 24px;}
-.topbar-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.topbar-gov{display:flex;align-items:center;gap:10px;}
-.topbar-gov img{height:30px;width:auto;opacity:.9;}
-.topbar-gov span{color:rgba(255,255,255,.85);font-weight:700;font-size:.82rem;}
-.topbar-year{color:var(--gold-light);font-weight:800;font-size:.82rem;}
-.topbar-dept{font-size:.68rem;color:rgba(255,255,255,.45);padding-top:4px;text-align:center;}
-.topbar-dept i{font-style:normal;color:rgba(255,255,255,.22);margin:0 5px;}
-@media(max-width:640px){.topbar-gov span{display:none;}.topbar-dept{font-size:.6rem;}}
+.topbar{ background: linear-gradient(120deg, var(--lav-900), var(--lav-800) 70%, #4A3470); color:rgba(255,255,255,.92); }
+.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
+.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
+.topbar-gov{ display:flex; align-items:center; gap:10px; }
+.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
+.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
+.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
+.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
+.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
 
-/* ===== HEADER ===== */
-.page-header{
-  background:linear-gradient(160deg,var(--lav-900) 0%,var(--lav-800) 55%,#4A3575 100%);
-  padding:32px 24px 44px;text-align:center;position:relative;overflow:hidden;
+header.portal-header{
+  background: linear-gradient(135deg, var(--lav-800) 0%, var(--lav-900) 60%, var(--lav-700) 100%);
+  padding:16px 36px; display:flex; align-items:center; justify-content:space-between;
+  border-bottom:3px solid var(--gold); gap:14px; flex-wrap:wrap;
 }
-.page-header::before{
-  content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
-  width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(107,76,154,.3) 0%,transparent 65%);
-  pointer-events:none;
+.header-left{ display:flex; align-items:center; gap:14px; }
+.header-icon{
+  width:46px; height:46px; border-radius:12px; background:rgba(215,162,74,.18);
+  border:1px solid rgba(215,162,74,.35); display:flex; align-items:center; justify-content:center; font-size:1.4rem;
 }
+.header-title{ color:#fff; font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:900; }
+.header-sub{ color:rgba(255,255,255,.55); font-size:.76rem; margin-top:2px; }
 .back-btn{
-  position:absolute;top:20px;right:24px;
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-  color:rgba(255,255,255,.85);padding:7px 16px;border-radius:10px;
-  text-decoration:none;font-size:.8rem;font-weight:700;transition:background .2s;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:rgba(255,255,255,.8);
+  padding:8px 18px; border-radius:8px; text-decoration:none; font-size:.82rem; font-weight:600; transition:all .2s;
 }
-.back-btn:hover{background:rgba(255,255,255,.18);}
-.header-badge{
-  display:inline-block;background:var(--gold-soft);
-  border:1px solid rgba(215,162,74,.35);color:var(--gold-light);
-  padding:5px 20px;border-radius:20px;font-size:.78rem;font-weight:700;margin-bottom:14px;
-}
-.header-title{
-  font-family:'Tajawal',sans-serif;font-size:clamp(1.8rem,4vw,2.4rem);
-  font-weight:900;color:#fff;margin-bottom:8px;
-}
-.header-title span{color:var(--gold-light);}
-.header-sub{color:rgba(255,255,255,.6);font-size:.88rem;max-width:480px;margin:0 auto;}
-.header-wave{position:absolute;bottom:0;left:0;right:0;height:32px;overflow:hidden;}
-.header-wave svg{display:block;width:100%;height:100%;}
+.back-btn:hover{ background:rgba(255,255,255,.15); }
 
-/* ===== MAIN ===== */
-main{max-width:860px;margin:0 auto;padding:36px 20px 60px;}
+.portal-body{ max-width:1040px; margin:0 auto; padding:28px 24px 60px; }
 
-/* ===== GRID ===== */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
-@media(max-width:640px){.contact-grid{grid-template-columns:1fr;}}
+.program-tabs{ display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:22px; box-shadow:var(--shadow-sm); }
+.program-tab-btn{
+  flex:1; padding:10px 8px; border:none; background:transparent; border-radius:9px; font-family:'Cairo',sans-serif;
+  font-size:.86rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all .22s;
+}
+.program-tab-btn.active{ background:linear-gradient(135deg, var(--lav-700), var(--lav-500)); color:#fff; box-shadow:0 3px 12px rgba(107,76,154,.35); }
 
-/* ===== CARD ===== */
-.c-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(46,33,72,.07);}
-.c-card-head{
-  padding:14px 20px;border-bottom:1.5px solid var(--border);
-  font-weight:800;font-size:.9rem;color:var(--lav-800);
-  display:flex;align-items:center;gap:9px;
-  background:linear-gradient(135deg,#FBFAFE,var(--lav-100));
+.teachers-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.t-card{
+  background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px 18px;
+  cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px;
 }
-.c-card-body{padding:22px;}
+.t-card:hover{ border-color:var(--lav-500); box-shadow:var(--shadow-sm); transform:translateY(-2px); }
+.t-avatar{
+  width:46px; height:46px; border-radius:50%; background:var(--lav-100); color:var(--lav-700);
+  display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex-shrink:0; font-weight:900;
+}
+.t-name{ font-weight:800; font-size:.88rem; color:var(--lav-800); margin-bottom:3px; }
+.t-role{ font-size:.75rem; color:var(--muted); }
 
-/* ===== FORM ===== */
-.f-group{margin-bottom:14px;}
-.f-label{font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;display:block;}
-.f-input{
-  width:100%;padding:10px 14px;
-  border:1.5px solid var(--border);border-radius:10px;
-  font-family:'Cairo',sans-serif;font-size:.88rem;color:var(--ink);
-  background:#FBFAFE;outline:none;transition:border .2s,box-shadow .2s;
+.s-card{ background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:18px; box-shadow:var(--shadow-sm); }
+.s-card-head{
+  padding:14px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center;
+  justify-content:space-between; gap:9px; flex-wrap:wrap; font-weight:800; font-size:.92rem;
+  color:var(--lav-700); background:var(--lav-100);
 }
-.f-input:focus{border-color:var(--lav-700);box-shadow:0 0 0 3px rgba(107,76,154,.12);}
-textarea.f-input{resize:vertical;min-height:110px;}
-.send-btn{
-  width:100%;padding:12px;margin-top:4px;
-  background:linear-gradient(135deg,var(--lav-800),var(--lav-700));
-  color:#fff;border:none;border-radius:11px;
-  font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem;
-  cursor:pointer;transition:opacity .2s,transform .2s;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
-.send-btn:hover{opacity:.9;transform:translateY(-1px);}
-.send-note{font-size:.72rem;color:var(--ink-faint);text-align:center;margin-top:8px;}
+.s-card-body{ padding:18px 22px; }
 
-/* ===== INFO ===== */
-.info-item{
-  display:flex;align-items:flex-start;gap:14px;
-  padding:13px 0;border-bottom:1px solid var(--lav-100);
-}
-.info-item:last-child{border-bottom:none;}
-.info-icon{
-  width:40px;height:40px;border-radius:12px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--lav-100),#DDD0F5);
-  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-}
-.info-label{font-size:.75rem;color:var(--muted);font-weight:700;margin-bottom:3px;}
-.info-value{font-size:.86rem;font-weight:700;color:var(--ink);}
-.info-value a{color:var(--lav-700);text-decoration:none;}
-.info-value a:hover{text-decoration:underline;}
-.hours-badge{
-  display:inline-block;background:rgba(26,158,124,.12);color:var(--teal);
-  border:1px solid rgba(26,158,124,.3);border-radius:8px;
-  padding:3px 10px;font-size:.74rem;font-weight:700;
-}
+.btn-sm{ border:none; border-radius:8px; padding:7px 16px; font-family:'Cairo',sans-serif; font-size:.8rem; font-weight:700; cursor:pointer; transition:all .2s; white-space:nowrap; }
+.btn-sm-outline{ background:#fff; color:var(--lav-700); border:1px solid var(--border); }
+.btn-sm-outline:hover{ border-color:var(--lav-500); background:var(--lav-100); }
 
-/* ===== QUICK ACTIONS ===== */
-.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
-@media(max-width:500px){.quick-grid{grid-template-columns:1fr 1fr;}}
-.quick-btn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  padding:18px 12px;border-radius:16px;text-decoration:none;
-  font-family:'Cairo',sans-serif;font-weight:800;font-size:.82rem;
-  transition:transform .2s,box-shadow .2s;text-align:center;
-  border:1.5px solid transparent;
+.back-link{
+  display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid var(--border);
+  color:var(--lav-700); padding:9px 18px; border-radius:10px; font-size:.84rem; font-weight:700;
+  cursor:pointer; margin-bottom:16px; transition:all .2s;
 }
-.quick-btn:hover{transform:translateY(-3px);}
-.quick-btn .qb-icon{font-size:1.6rem;}
-.quick-btn.qb-call{background:linear-gradient(135deg,rgba(26,158,124,.08),rgba(26,158,124,.02));border-color:rgba(26,158,124,.3);color:var(--teal);}
-.quick-btn.qb-mail{background:linear-gradient(135deg,rgba(107,76,154,.08),rgba(107,76,154,.02));border-color:rgba(107,76,154,.3);color:var(--lav-700);}
-.quick-btn.qb-map{background:linear-gradient(135deg,rgba(215,162,74,.1),rgba(215,162,74,.03));border-color:rgba(215,162,74,.3);color:#8a6116;}
-.quick-btn.qb-wa{background:linear-gradient(135deg,rgba(37,211,102,.1),rgba(37,211,102,.03));border-color:rgba(37,211,102,.3);color:#128C7E;}
-.quick-btn.qb-tw{background:linear-gradient(135deg,rgba(29,161,242,.08),rgba(29,161,242,.02));border-color:rgba(29,161,242,.3);color:#1da1f2;}
-.quick-btn.qb-time{background:linear-gradient(135deg,rgba(107,76,154,.06),rgba(107,76,154,.01));border-color:rgba(107,76,154,.2);color:var(--muted);}
+.back-link:hover{ background:var(--lav-100); }
 
-/* ===== SUCCESS ===== */
-.success-toast{
-  display:none;position:fixed;top:24px;left:50%;transform:translateX(-50%);
-  background:linear-gradient(135deg,#0f5132,#198754);
-  color:#fff;padding:12px 28px;border-radius:12px;font-weight:800;font-size:.88rem;
-  box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:9999;
-  animation:slideDown .3s ease;
+.curr-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
+.curr-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
+.curr-table td{ padding:7px 12px; border-bottom:1px solid var(--border); }
+.curr-table tr:last-child td{ border-bottom:none; }
+.curr-week-num{ font-weight:800; color:var(--lav-700); white-space:nowrap; font-size:.78rem; width:90px; }
+
+.empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
+.empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
+.empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
+.empty-state .es-sub{ font-size:.82rem; }
+
+@media (max-width:768px){
+  header.portal-header{ padding:14px 18px; }
+  .portal-body{ padding:20px 14px 50px; }
 }
-@keyframes slideDown{from{top:0;opacity:0}to{top:24px;opacity:1}}
-
-/* ===== FOOTER ===== */
-.page-footer{
-  background:linear-gradient(160deg,var(--lav-900),#3A2B5C);
-  padding:24px;text-align:center;
-  color:rgba(255,255,255,.45);font-size:.75rem;
-}
-.page-footer strong{color:rgba(255,255,255,.7);}
-
-/* ===== FADE IN ===== */
-.fade-in{opacity:0;transform:translateY(16px);transition:all .5s ease;}
-.fade-in.visible{opacity:1;transform:none;}
 </style>
-<link rel="stylesheet" href="assets/css/common-ui.css">
 </head>
 <body>
 
-<!-- الكليشة الرسمية -->
 <div class="topbar">
   <div class="topbar-inner">
     <div class="topbar-row">
       <div class="topbar-gov">
-        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener">
-          <img src="moe-logo.png" alt="وزارة التعليم">
-        </a>
+        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener"><img src="moe-logo.png" alt="وزارة التعليم"></a>
         <span>المملكة العربية السعودية — وزارة التعليم</span>
       </div>
-     
+      <b class="topbar-year">1447هـ</b>
     </div>
     <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
   </div>
 </div>
 
-<!-- هيدر الصفحة -->
-<div class="page-header">
+<header class="portal-header">
+  <div class="header-left">
+    <div class="header-icon">📘</div>
+    <div>
+      <div class="header-title">عرض توزيع المناهج — للاطلاع فقط</div>
+      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
+    </div>
+  </div>
   <a href="index.html" class="back-btn">← الرئيسية</a>
-  <div class="header-badge">📩 تواصل معنا</div>
-  <h1 class="header-title">خدمة <span>المستفيد</span></h1>
-  <p class="header-sub">نسعد بتواصلك واستفسارك — فريقنا جاهز للإجابة والمساعدة</p>
-  <div class="header-wave">
-    <svg viewBox="0 0 1200 32" preserveAspectRatio="none" fill="var(--bg)">
-      <path d="M0,20 C200,40 400,0 600,20 C800,40 1000,0 1200,20 L1200,32 L0,32 Z"/>
-    </svg>
+</header>
+
+<div class="portal-body">
+
+  <!-- قائمة المعلمين -->
+  <div id="view-list">
+    <div class="program-tabs" id="program-tabs">
+      <button class="program-tab-btn active" onclick="switchProgram('dumaj', this)">برنامج الدمج الفكري</button>
+      <button class="program-tab-btn" onclick="switchProgram('yaseer', this)">برنامج يسير</button>
+    </div>
+    <div class="teachers-grid" id="teachers-grid"></div>
   </div>
-</div>
 
-<main>
-
-  <!-- أزرار سريعة -->
-  <div class="quick-grid fade-in">
-    <a href="tel:+966505623207" class="quick-btn qb-call">
-      <span class="qb-icon">📞</span>اتصال مباشر
-    </a>
-    <a href="mailto:32455@mkhb.moe.gov.sa" class="quick-btn qb-mail">
-      <span class="qb-icon">📧</span>البريد الإلكتروني
-    </a>
-    <a href="https://wa.me/966505623207" target="_blank" class="quick-btn qb-wa">
-      <span class="qb-icon">💬</span>واتساب
-    </a>
-    <a href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank" class="quick-btn qb-map">
-      <span class="qb-icon">📍</span>الموقع الجغرافي
-    </a>
-    <a href="index.html#programs" class="quick-btn qb-tw">
-      <span class="qb-icon">📚</span>البرامج المتاحة
-    </a>
-    <div class="quick-btn qb-time">
-      <span class="qb-icon">🕐</span>أثناء الدوام الرسمي
+  <!-- عرض توزيع معلم محدد -->
+  <div id="view-detail" style="display:none;">
+    <button class="back-link" onclick="closeDetail()">→ رجوع لقائمة المعلمين</button>
+    <div class="s-card">
+      <div class="s-card-head">
+        <span id="detail-teacher-name">—</span>
+        <button class="btn-sm btn-sm-outline" onclick="printTeacherCurriculum()">🖨️ طباعة</button>
+      </div>
+      <div class="s-card-body" id="detail-content"></div>
     </div>
   </div>
 
-  <!-- النموذج + بيانات التواصل -->
-  <div class="contact-grid fade-in">
-
-    <!-- نموذج الرسالة -->
-    <div class="c-card">
-      <div class="c-card-head">✉️ أرسل رسالتك</div>
-      <div class="c-card-body">
-        <div class="f-group">
-          <label class="f-label">الاسم الكريم</label>
-          <input type="text" class="f-input" id="msg-name" placeholder="اسمك الكريم">
-        </div>
-        <div class="f-group">
-          <label class="f-label">رقم التواصل (اختياري)</label>
-          <input type="tel" class="f-input" id="msg-phone" placeholder="05xxxxxxxx">
-        </div>
-        <div class="f-group">
-          <label class="f-label">موضوع الرسالة</label>
-          <select class="f-input" id="msg-subject">
-            <option value="استفسار عام">استفسار عام</option>
-            <option value="استفسار عن برنامج الدمج الفكري">استفسار عن برنامج الدمج الفكري</option>
-            <option value="استفسار عن برنامج يسير">استفسار عن برنامج يسير</option>
-            <option value="ملاحظة أو اقتراح">ملاحظة أو اقتراح</option>
-            <option value="شكوى">شكوى</option>
-          </select>
-        </div>
-        <div class="f-group">
-          <label class="f-label">نص الرسالة</label>
-          <textarea class="f-input" id="msg-body" placeholder="اكتب استفسارك أو ملاحظتك هنا..."></textarea>
-        </div>
-        <button class="send-btn" onclick="sendEmail()">
-          <span>📤</span> إرسال عبر البريد الإلكتروني
-        </button>
-        <p class="send-note">* سيتم فتح تطبيق البريد برسالة جاهزة للإرسال</p>
-      </div>
-    </div>
-
-    <!-- بيانات التواصل -->
-    <div class="c-card">
-      <div class="c-card-head">📍 بيانات التواصل الرسمية</div>
-      <div class="c-card-body">
-        <div class="info-item">
-          <div class="info-icon">✉️</div>
-          <div>
-            <div class="info-label">البريد الإلكتروني</div>
-            <div class="info-value"><a href="mailto:32455@mkhb.moe.gov.sa">32455@mkhb.moe.gov.sa</a></div>
-          </div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon">📞</div>
-          <div>
-            <div class="info-label">جوال المدرسة</div>
-            <div class="info-value"><a href="tel:+966505623207">0505623207</a></div>
-          </div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon">💬</div>
-          <div>
-            <div class="info-label">واتساب</div>
-            <div class="info-value"><a href="https://wa.me/966505623207" target="_blank">مراسلة عبر واتساب ↗</a></div>
-          </div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon">🗺️</div>
-          <div>
-            <div class="info-label">الموقع الجغرافي</div>
-            <div class="info-value"><a href="https://maps.app.goo.gl/fhwNJ41QnNiTYXHX6" target="_blank">فتح على خرائط جوجل ↗</a></div>
-          </div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon">🏫</div>
-          <div>
-            <div class="info-label">المدرسة</div>
-            <div class="info-value">مدرسة مكة المكرمة المتوسطة</div>
-          </div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon">🕐</div>
-          <div>
-            <div class="info-label">ساعات التواصل</div>
-            <div class="info-value">
-              <span class="hours-badge">أثناء الدوام الرسمي فقط</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- بطاقة معلومات القسم -->
-  <div class="c-card fade-in" style="margin-bottom:0;">
-    <div class="c-card-head">🎓 عن قسم ذوي الإعاقة</div>
-    <div class="c-card-body" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;">
-      <div style="padding:14px;background:var(--lav-100);border-radius:12px;">
-        <div style="font-size:1.8rem;margin-bottom:6px;">👨‍🎓</div>
-        <div style="font-size:1.4rem;font-weight:900;color:var(--lav-700);">21</div>
-        <div style="font-size:.75rem;color:var(--muted);font-weight:700;">طالب دمج فكري</div>
-      </div>
-      <div style="padding:14px;background:rgba(26,158,124,.08);border-radius:12px;">
-        <div style="font-size:1.8rem;margin-bottom:6px;">📘</div>
-        <div style="font-size:1.4rem;font-weight:900;color:var(--teal);">20</div>
-        <div style="font-size:.75rem;color:var(--muted);font-weight:700;">طالب يسير</div>
-      </div>
-      <div style="padding:14px;background:var(--gold-soft);border-radius:12px;">
-        <div style="font-size:1.8rem;margin-bottom:6px;">👨‍🏫</div>
-        <div style="font-size:1.4rem;font-weight:900;color:#8a6116;">8</div>
-        <div style="font-size:.75rem;color:var(--muted);font-weight:700;">كادر تعليمي</div>
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<!-- toast -->
-<div class="success-toast" id="toast">✅ تم فتح تطبيق البريد بنجاح</div>
-
-<!-- فوتر -->
-<div class="page-footer">
-  © 1447هـ / 2026م — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
-  <strong>إعداد وتنفيذ: أ. سعد سالم الزهراني</strong>
 </div>
 
 <script>
-function sendEmail() {
-  var name    = document.getElementById('msg-name').value.trim();
-  var phone   = document.getElementById('msg-phone').value.trim();
-  var subject = document.getElementById('msg-subject').value;
-  var body    = document.getElementById('msg-body').value.trim();
-  if (!body) { alert('يرجى كتابة رسالتك أولاً'); return; }
-  var text = '';
-  if (name)  text += 'الاسم: ' + name + '\n';
-  if (phone) text += 'رقم التواصل: ' + phone + '\n';
-  text += '\nالرسالة:\n' + body;
-  var mailto = 'mailto:32455@mkhb.moe.gov.sa?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
-  window.location.href = mailto;
-  var t = document.getElementById('toast');
-  if (t) { t.style.display = 'block'; setTimeout(function(){ t.style.display = 'none'; }, 3000); }
+const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+
+const TEACHERS = {
+  "m.suhayymi": { name:"محمد أحمد السهيمي",   role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"س" },
+  "z.qarni":    { name:"زين العابدين القرني", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ز" },
+  "a.ghamdi":   { name:"علي سعيد الغامدي",    role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"غ" },
+  "a.malki":    { name:"علي محمد المالكي",    role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"م" },
+  "h.ulyani":   { name:"حسن علي العلياني",    role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ع" },
+  "a.zahrani":  { name:"علي محمد الزهراني",   role:"مشرف برنامج الدمج الفكري",       program:"dumaj",  avatar:"ز" },
+  "h.kubaishi": { name:"حسين منصور الكبيشي",  role:"معلم تربية خاصة — يسير",         program:"yaseer", avatar:"ك" },
+  "saad.z":     { name:"سعد سالم الزهراني",   role:"مشرف برنامج يسير التعليمي",      program:"yaseer", avatar:"ز" },
+};
+
+let currentProgram = 'dumaj';
+let currentDetailData = null;
+let currentDetailTeacher = null;
+
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.08});
-document.querySelectorAll('.fade-in').forEach(function(el){ obs.observe(el); });
+
+async function sbGetJSON(path) {
+  try {
+    const res = await fetch(`${SB_URL}/storage/v1/object/public/${path}?t=${Date.now()}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) { return null; }
+}
+
+function switchProgram(program, btn) {
+  currentProgram = program;
+  document.querySelectorAll('.program-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTeachersGrid();
+}
+
+function renderTeachersGrid() {
+  const grid = document.getElementById('teachers-grid');
+  const list = Object.entries(TEACHERS).filter(([uname, t]) => t.program === currentProgram);
+  grid.innerHTML = list.map(([uname, t]) => `
+    <div class="t-card" onclick="openTeacherCurriculum('${uname}')">
+      <div class="t-avatar">${escHtml(t.avatar)}</div>
+      <div>
+        <div class="t-name">${escHtml(t.name)}</div>
+        <div class="t-role">${escHtml(t.role)}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function openTeacherCurriculum(uname) {
+  const t = TEACHERS[uname];
+  currentDetailTeacher = { uname, ...t };
+  document.getElementById('view-list').style.display = 'none';
+  document.getElementById('view-detail').style.display = 'block';
+  document.getElementById('detail-teacher-name').textContent = `📘 توزيع منهج: ${t.name}`;
+
+  const content = document.getElementById('detail-content');
+  content.innerHTML = `<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>`;
+
+  const data = await sbGetJSON(`reports/curriculum/${t.program}/${uname}.json`);
+  currentDetailData = data;
+
+  if (!data || !Array.isArray(data.activeSubjects) || data.activeSubjects.length === 0) {
+    content.innerHTML = `<div class="empty-state"><div class="es-icon">📘</div><div class="es-title">لم يقم هذا المعلم بإدخال توزيع المنهج بعد</div></div>`;
+    return;
+  }
+
+  let html = '';
+  data.activeSubjects.forEach(key => {
+    const subj = data.subjects[key];
+    if (!subj) return;
+    html += `
+      <h3 style="font-family:'Tajawal',sans-serif;color:var(--lav-700);font-size:1rem;margin:18px 0 8px;">📘 ${escHtml(subj.name)}</h3>
+      <div style="overflow-x:auto;">
+      <table class="curr-table">
+        <thead><tr><th>الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
+        <tbody>
+          ${subj.weeks.map((w,i) => `<tr><td class="curr-week-num">الأسبوع ${i+1}</td><td>${escHtml(w.topic||'—')}</td><td>${escHtml(w.notes||'—')}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      </div>`;
+  });
+
+  if (data.meta) {
+    try {
+      const d = new Date(data.meta.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+      html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:10px;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(data.meta.teacher)}</div>`;
+    } catch(e) {}
+  }
+
+  content.innerHTML = html;
+}
+
+function closeDetail() {
+  document.getElementById('view-detail').style.display = 'none';
+  document.getElementById('view-list').style.display = 'block';
+}
+
+function printTeacherCurriculum() {
+  if (!currentDetailData || !currentDetailTeacher) { return; }
+  const data = currentDetailData;
+  const t = currentDetailTeacher;
+
+  const subjectsHtml = (data.activeSubjects||[]).map(key => {
+    const subj = data.subjects[key];
+    if (!subj) return '';
+    return `
+      <h2>📘 ${escHtml(subj.name)}</h2>
+      <table>
+        <thead><tr><th style="width:90px;">الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
+        <tbody>
+          ${subj.weeks.map((w,i) => `<tr><td class="wk">الأسبوع ${i+1}</td><td>${escHtml(w.topic||'')}</td><td>${escHtml(w.notes||'')}</td></tr>`).join('')}
+        </tbody>
+      </table>`;
+  }).join('');
+
+  const win = window.open('', '_blank');
+  if (!win) return;
+  win.document.write(`
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<title>توزيع المنهج — ${escHtml(t.name)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;color:#221335;}
+  h1{font-family:'Tajawal',sans-serif;color:#2E2148;font-size:1.5rem;margin-bottom:4px;}
+  .sub{color:#6E5F82;margin-bottom:18px;font-size:.9rem;}
+  h2{font-family:'Tajawal',sans-serif;color:#6B4C9A;font-size:1.05rem;margin:22px 0 8px;}
+  table{ width:100%; border-collapse:collapse; font-size:.85rem; margin-bottom:10px; }
+  th{ background:#EAE1F7; color:#6B4C9A; padding:8px 10px; text-align:right; font-weight:800; border:1px solid #DCD2EE; }
+  td{ padding:7px 10px; border:1px solid #DCD2EE; }
+  .wk{ font-weight:800; color:#6B4C9A; white-space:nowrap; }
+  @media print{ @page{ size:A4; margin:14mm; } }
+</style><link rel="stylesheet" href="assets/css/common-ui.css">
+</head><body>
+  <h1>📘 توزيع المنهج الفصلي</h1>
+  <div class="sub">${escHtml(t.name)} — ${escHtml(t.role)} — الفصل الدراسي الثاني 1447هـ</div>
+  ${subjectsHtml}
+  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
+</body></html>`);
+  win.document.close();
+}
+
+renderTeachersGrid();
 </script>
 <script src="assets/js/common-ui.js" defer></script>
 </body>

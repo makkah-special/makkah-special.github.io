@@ -1,392 +1,60 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>إقرار اطلاع ولي الأمر على الخطة الفردية | مدرسة مكة المكرمة المتوسطة</title>
-  <meta name="description" content="نموذج إقرار رسمي يثبت اطلاع ولي الأمر على الخطة التربوية الفردية (IEP) لطلاب قسم ذوي الإعاقة." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      /* نفس روح ألوان index */
-      --bg0:#070B14;
-      --bg1:#0A1226;
-      --card:rgba(255,255,255,.08);
-      --card2:rgba(255,255,255,.06);
-      --stroke:rgba(255,255,255,.14);
-      --text:#EAF0FF;
-      --muted:rgba(234,240,255,.72);
-      --muted2:rgba(234,240,255,.55);
-      --primary:#4EA1FF;
-      --primary2:#7C5CFF;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
-      --radius: 18px;
-      --max: 900px;
-      --font:"Tajawal",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-    }
-
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% 20%, rgba(124,92,255,.18), transparent 60%),
-        radial-gradient(1000px 600px at 80% 25%, rgba(78,161,255,.16), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-    }
-
-    .wrap{ width:min(var(--max), 92vw); margin:0 auto; padding:26px 0 60px; }
-
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:22px;
-      box-shadow: var(--shadow);
-      padding:18px;
-    }
-
-    .header{
-      display:flex; gap:14px; align-items:center; justify-content:space-between;
-      flex-wrap:wrap;
-      margin-bottom:14px;
-    }
-
-    .title h1{ margin:0; font-size:20px; font-weight:900; letter-spacing:.2px; }
-    .title p{ margin:6px 0 0; color:var(--muted); line-height:1.9; font-size:14px; }
-
-    .actions{ display:flex; gap:10px; flex-wrap:wrap; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      text-decoration:none;
-      font-weight:800;
-      transition:.2s;
-      cursor:pointer;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
-    .btn.primary{
-      border-color:rgba(78,161,255,.45);
-      background: linear-gradient(135deg, rgba(78,161,255,.95), rgba(124,92,255,.92));
-    }
-    .btn.danger{
-      background: rgba(255,255,255,.04);
-      border-color: rgba(255,255,255,.12);
-      opacity:.95;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top:12px;
-    }
-    @media (max-width:720px){ .grid{ grid-template-columns: 1fr; } }
-
-    label{ display:block; margin:10px 0 6px; font-weight:800; color:rgba(234,240,255,.90); }
-    input, select, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-      color: var(--text);
-      outline:none;
-      font-family:var(--font);
-    }
-    textarea{ min-height: 92px; resize: vertical; }
-
-    .divider{ height:1px; background: rgba(255,255,255,.10); margin:14px 0; }
-
-    .note{
-      background: rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      padding:12px 12px;
-      color: var(--muted);
-      line-height:1.9;
-      font-size:13.5px;
-    }
-
-    .sig-wrap{
-      margin-top:12px;
-      border:1px dashed rgba(255,255,255,.22);
-      border-radius:16px;
-      padding:12px;
-      background: rgba(0,0,0,.12);
-    }
-    .sig-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-    .sig-head b{ font-weight:900; }
-    canvas{
-      width:100%;
-      height:170px;
-      background: rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:14px;
-      margin-top:10px;
-      touch-action: none;
-    }
-
-    .foot{
-      margin-top:14px;
-      color: rgba(234,240,255,.55);
-      font-size:12.5px;
-      text-align:center;
-      line-height:1.9;
-    }
-
-    /* ===== وضع الطباعة ===== */
-    @media print{
-      body{ background:#fff !important; color:#000 !important; }
-      .btn, .actions, .note.print-hide{ display:none !important; }
-      .card{ box-shadow:none !important; border:1px solid #ccc !important; background:#fff !important; }
-      input, select, textarea{ border:1px solid #bbb !important; background:#fff !important; color:#000 !important; }
-      .sig-wrap{ border:1px solid #bbb !important; background:#fff !important; }
-      canvas{ border:1px solid #bbb !important; background:#fff !important; }
-      .foot{ color:#333 !important; }
-      label{ color:#000 !important; }
-    }
-  </style>
-<link rel="stylesheet" href="assets/css/common-ui.css">
-</head>
-
-<body>
-  <main class="wrap">
-    <section class="card">
-      <div class="header">
-        <div class="title">
-          <h1>إقرار اطلاع ولي الأمر على الخطة التربوية الفردية (IEP)</h1>
-          <p>هذا النموذج يثبت اطلاع ولي الأمر على الخطة الفردية وموافقته على استلام نسخة/محتوى الخطة والاطلاع عليها.</p>
-        </div>
-
-        <div class="actions">
-          <a class="btn" href="index.html">الرجوع للرئيسية</a>
-          <button class="btn primary" type="button" id="btnPrint">اعتماد وطباعة</button>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="grid">
-        <div>
-          <label for="dept">القسم / البرنامج</label>
-          <select id="dept" required>
-            <option value="" selected disabled>اختر القسم</option>
-            <option>قسم الإعاقة العقلية</option>
-            <option>برنامج يسير التعليمي</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="planNo">المادة</label>
-          <input id="planNo" type="text" placeholder="مثال: رياضيات مستوى أول">
-        </div>
-
-        <div>
-          <label for="planDate">تاريخ الخطة</label>
-          <input id="planDate" type="date" required>
-        </div>
-
-        <div>
-          <label for="schoolYear">العام الدراسي</label>
-          <input id="schoolYear" type="text" placeholder="1447هـ / 2026م" required>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <h2 style="margin:0 0 8px; font-size:16px; font-weight:900;">بيانات الطالب</h2>
-      <div class="grid">
-        <div>
-          <label for="studentName">اسم الطالب</label>
-          <input id="studentName" type="text" required placeholder="اسم الطالب الثلاثي">
-        </div>
-
-        <div>
-          <label for="studentClass">الصف / الفصل</label>
-          <input id="studentClass" type="text" required placeholder="مثال: أول متوسط - 3/2">
-        </div>
-
-        <div>
-          <label for="studentId">رقم السجل/الهوية (اختياري)</label>
-          <input id="studentId" type="text" placeholder="اختياري">
-        </div>
-
-        <div>
-          <label for="teacherName">اسم معلم التربية الخاصة (اختياري)</label>
-          <input id="teacherName" type="text" placeholder="اختياري">
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <h2 style="margin:0 0 8px; font-size:16px; font-weight:900;">بيانات ولي الأمر</h2>
-      <div class="grid">
-        <div>
-          <label for="parentName">اسم ولي الأمر</label>
-          <input id="parentName" type="text" required placeholder="اسم ولي الأمر">
-        </div>
-
-        <div>
-          <label for="parentRelation">صلة القرابة</label>
-          <select id="parentRelation" required>
-            <option value="" selected disabled>اختر</option>
-            <option>الأب</option>
-            <option>الأم</option>
-            <option>الولي الشرعي</option>
-            <option>غير ذلك</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="parentPhone">رقم الجوال</label>
-          <input id="parentPhone" type="tel" required placeholder="05xxxxxxxx">
-        </div>
-
-        <div>
-          <label for="parentId">رقم الهوية (اختياري)</label>
-          <input id="parentId" type="text" placeholder="اختياري">
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <label for="ackText">نص الإقرار</label>
-      <textarea id="ackText" required>
-أقرّ أنا ولي أمر الطالب المذكور أعلاه بأنني اطّلعت على الخطة التربوية الفردية (IEP) الخاصة بابني، وتم شرح أهداف الخطة والخدمات والتكييفات التربوية وآلية المتابعة، وقد استلمت نسخة/محتوى الخطة وأتعهد بالتعاون مع المدرسة لتحقيق أهدافها.
-      </textarea>
-
-      <div class="note print-hide" style="margin-top:12px;">
-        ✅ للتوثيق: بعد تعبئة البيانات والتوقيع اضغط “اعتماد وطباعة”، ومن شاشة الطباعة اختر “حفظ كملف PDF”.
-      </div>
-
-      <div class="sig-wrap">
-        <div class="sig-head">
-          <b>التوقيع الإلكتروني (ولي الأمر)</b>
-          <button class="btn danger" type="button" id="btnClear">مسح التوقيع</button>
-        </div>
-        <canvas id="sig"></canvas>
-        <div class="foot">* التوقيع يُستخدم لأغراض التوثيق داخل الموقع ولا يتم رفعه لأي جهة خارجية.</div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="foot">
-        © 2026 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد وتنفيذ أ. سعد الزهراني
-      </div>
-    </section>
-  </main>
-
-  <script>
-    // ===== إعداد التاريخ الافتراضي + العام الدراسي =====
-    (function initDefaults(){
-      const d = new Date();
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth()+1).padStart(2,'0');
-      const dd = String(d.getDate()).padStart(2,'0');
-      document.getElementById('planDate').value = `${yyyy}-${mm}-${dd}`;
-      document.getElementById('schoolYear').value = `1447هـ / ${yyyy}م`;
-    })();
-
-    // ===== Signature pad (بدون مكتبات) =====
-    const canvas = document.getElementById('sig');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas(){
-      // نخلي الدقة ممتازة للجوال والطباعة
-      const ratio = Math.max(window.devicePixelRatio || 1, 1);
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.floor(rect.width * ratio);
-      canvas.height = Math.floor(rect.height * ratio);
-      ctx.setTransform(ratio,0,0,ratio,0,0);
-      ctx.lineWidth = 2.6;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.strokeStyle = 'rgba(234,240,255,.95)';
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    let drawing = false;
-    let lastX = 0, lastY = 0;
-
-    function getPos(e){
-      const rect = canvas.getBoundingClientRect();
-      const touch = e.touches && e.touches[0];
-      const clientX = touch ? touch.clientX : e.clientX;
-      const clientY = touch ? touch.clientY : e.clientY;
-      return { x: clientX - rect.left, y: clientY - rect.top };
-    }
-
-    function start(e){
-      drawing = true;
-      const p = getPos(e);
-      lastX = p.x; lastY = p.y;
-      e.preventDefault();
-    }
-    function move(e){
-      if(!drawing) return;
-      const p = getPos(e);
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(p.x, p.y);
-      ctx.stroke();
-      lastX = p.x; lastY = p.y;
-      e.preventDefault();
-    }
-    function end(){ drawing = false; }
-
-    canvas.addEventListener('mousedown', start);
-    canvas.addEventListener('mousemove', move);
-    window.addEventListener('mouseup', end);
-
-    canvas.addEventListener('touchstart', start, {passive:false});
-    canvas.addEventListener('touchmove', move, {passive:false});
-    window.addEventListener('touchend', end);
-
-    document.getElementById('btnClear').addEventListener('click', ()=>{
-      const rect = canvas.getBoundingClientRect();
-      ctx.clearRect(0,0,rect.width,rect.height);
-    });
-
-    // ===== تحقق قبل الطباعة =====
-    function isSignatureEmpty(){
-      const tmp = document.createElement('canvas');
-      tmp.width = canvas.width; tmp.height = canvas.height;
-      const tctx = tmp.getContext('2d');
-      tctx.drawImage(canvas,0,0);
-      const data = tctx.getImageData(0,0,tmp.width,tmp.height).data;
-      for(let i=3;i<data.length;i+=4){
-        if(data[i] !== 0) return false;
-      }
-      return true;
-    }
-
-    document.getElementById('btnPrint').addEventListener('click', ()=>{
-      // تحقق بسيط
-      const requiredIds = ['dept','planDate','schoolYear','studentName','studentClass','parentName','parentRelation','parentPhone','ackText'];
-      for(const id of requiredIds){
-        const el = document.getElementById(id);
-        if(!el || !String(el.value || '').trim()){
-          alert('فضلاً أكمل الحقول المطلوبة قبل الاعتماد.');
-          el && el.focus && el.focus();
-          return;
-        }
-      }
-      if(isSignatureEmpty()){
-        alert('فضلاً أضف توقيع ولي الأمر قبل الاعتماد.');
-        return;
-      }
-      window.print();
-    });
-  </script>
-<script src="assets/js/common-ui.js" defer></script>
-</body>
-</html>
+(function(){
+'use strict';
+const KEY='mk_platform_admin_v1';
+const defaultData={
+ students:[
+  {id:'Y-001',name:'طالب تجريبي - يسير',program:'yaseer',grade:'الأول متوسط',teacher:'T-001',pin:'1234',plan:true,report:true,portfolio:false,activities:true,appointments:false,forms:true,alerts:true},
+  {id:'D-001',name:'طالب تجريبي - الدمج الفكري',program:'dumaj',grade:'الأول متوسط',teacher:'T-002',pin:'5678',plan:true,report:false,portfolio:true,activities:false,appointments:true,forms:true,alerts:false}
+ ],
+ teachers:[
+  {id:'T-001',name:'معلم برنامج يسير',program:'yaseer',role:'teacher',phone:''},
+  {id:'T-002',name:'معلم الدمج الفكري',program:'dumaj',role:'teacher',phone:''},
+  {id:'S-001',name:'مشرف البرنامج',program:'all',role:'supervisor',phone:''}
+ ],
+ notifications:[
+  {id:'N-001',program:'all',title:'تنبيه تجريبي',body:'هذه مساحة لإدارة التنبيهات العامة قبل الربط الفعلي.',audience:'أولياء الأمور',date:new Date().toISOString().slice(0,10)}
+ ],
+ audit:[{action:'تهيئة لوحة التحكم الموحدة',user:'النظام',date:new Date().toLocaleString('ar-SA')}]
+};
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||structuredClone(defaultData)}catch(e){return JSON.parse(JSON.stringify(defaultData))}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));renderAll()}
+let state=load();
+const $=s=>document.querySelector(s);
+function pct(s){const keys=['plan','report','portfolio','activities','appointments','forms','alerts'];return Math.round(keys.filter(k=>!!s[k]).length/keys.length*100)}
+function progName(p){return p==='yaseer'?'برنامج يسير':p==='dumaj'?'برنامج الدمج الفكري':'كلا البرنامجين'}
+function roleName(r){return r==='supervisor'?'مشرف برنامج':r==='teacher'?'معلم مسند':'إدارة'}
+function audit(action,user='النظام'){state.audit.unshift({action,user,date:new Date().toLocaleString('ar-SA')});state.audit=state.audit.slice(0,50)}
+function renderMetrics(){
+ const y=state.students.filter(s=>s.program==='yaseer').length,d=state.students.filter(s=>s.program==='dumaj').length,t=state.teachers.filter(x=>x.role==='teacher').length;
+ const avg=state.students.length?Math.round(state.students.reduce((a,s)=>a+pct(s),0)/state.students.length):0;
+ const pending=state.students.filter(s=>pct(s)<80).length;
+ const n=state.notifications.length;
+ const html=[['طلاب يسير',y],['طلاب الدمج',d],['المعلمون',t],['متوسط الإنجاز',avg+'%'],['ملفات تحتاج متابعة',pending],['تنبيهات',n]].map(([a,b])=>`<div class="metric"><b>${b}</b><span>${a}</span></div>`).join('');
+ const box=$('#metrics'); if(box)box.innerHTML=html;
+}
+function renderStudents(){
+ const tbody=$('#studentsBody'); if(!tbody)return;
+ if(!state.students.length){tbody.innerHTML='<tr><td colspan="8" class="empty">لا توجد بيانات</td></tr>';return}
+ tbody.innerHTML=state.students.map(s=>{const teacher=state.teachers.find(t=>t.id===s.teacher)?.name||'غير مسند';const p=pct(s);return `<tr><td><b>${s.name}</b><br><small>${s.id} / PIN: ${s.pin||'-'}</small></td><td>${progName(s.program)}</td><td>${s.grade||'-'}</td><td>${teacher}</td><td><div class="progress" title="${p}%"><i style="width:${p}%"></i></div><small>${p}%</small></td><td>${s.plan?'✅':'—'}</td><td>${s.report?'✅':'—'}</td><td><button class="mini-btn danger" data-del-student="${s.id}">حذف</button></td></tr>`}).join('');
+}
+function renderTeachers(){const tbody=$('#teachersBody'); if(!tbody)return; tbody.innerHTML=state.teachers.map(t=>`<tr><td><b>${t.name}</b><br><small>${t.id}</small></td><td>${progName(t.program)}</td><td>${roleName(t.role)}</td><td>${t.phone||'-'}</td><td>${state.students.filter(s=>s.teacher===t.id).length}</td><td><button class="mini-btn danger" data-del-teacher="${t.id}">حذف</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">لا توجد بيانات</td></tr>'}
+function renderTeacherOptions(){const el=$('#studentTeacher'); if(!el)return; el.innerHTML='<option value="">اختر المعلم</option>'+state.teachers.filter(t=>t.role==='teacher').map(t=>`<option value="${t.id}">${t.name} - ${progName(t.program)}</option>`).join('')}
+function renderAlerts(){const box=$('#alertsList'); if(!box)return; box.innerHTML=state.notifications.map(n=>`<div class="audit-item"><b>${n.title}</b><small>${progName(n.program)} — ${n.audience} — ${n.date}</small><div>${n.body}</div></div>`).join('')||'<div class="empty">لا توجد تنبيهات</div>'}
+function renderAudit(){const box=$('#auditList'); if(!box)return; box.innerHTML=state.audit.map(a=>`<div class="audit-item"><b>${a.action}</b><small>${a.user} — ${a.date}</small></div>`).join('')||'<div class="empty">لا يوجد سجل تعديلات</div>'}
+function renderAll(){renderMetrics();renderStudents();renderTeachers();renderTeacherOptions();renderAlerts();renderAudit()}
+function val(id){return (document.getElementById(id)?.value||'').trim()}
+function checked(id){return !!document.getElementById(id)?.checked}
+function clear(ids){ids.forEach(id=>{const e=document.getElementById(id); if(!e)return; if(e.type==='checkbox')e.checked=false; else e.value=''})}
+function exportJson(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='platform-admin-data.json';a.click();URL.revokeObjectURL(a.href)}
+function bind(){
+ document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab)?.classList.add('active')}));
+ $('#studentForm')?.addEventListener('submit',e=>{e.preventDefault();const id=val('studentId')||('ST-'+Date.now());state.students.push({id,name:val('studentName')||'طالب بدون اسم',program:val('studentProgram')||'yaseer',grade:val('studentGrade'),teacher:val('studentTeacher'),pin:val('studentPin'),plan:checked('cPlan'),report:checked('cReport'),portfolio:checked('cPortfolio'),activities:checked('cActivities'),appointments:checked('cAppointments'),forms:checked('cForms'),alerts:checked('cAlerts')});audit('إضافة/تسجيل طالب: '+(val('studentName')||id),'لوحة التحكم');clear(['studentId','studentName','studentGrade','studentTeacher','studentPin','cPlan','cReport','cPortfolio','cActivities','cAppointments','cForms','cAlerts']);save()});
+ $('#teacherForm')?.addEventListener('submit',e=>{e.preventDefault();const id=val('teacherId')||('T-'+Date.now());state.teachers.push({id,name:val('teacherName')||'معلم بدون اسم',program:val('teacherProgram')||'all',role:val('teacherRole')||'teacher',phone:val('teacherPhone')});audit('إضافة مستخدم/معلم: '+(val('teacherName')||id),'لوحة التحكم');clear(['teacherId','teacherName','teacherPhone']);save()});
+ $('#alertForm')?.addEventListener('submit',e=>{e.preventDefault();state.notifications.unshift({id:'N-'+Date.now(),program:val('alertProgram')||'all',title:val('alertTitle')||'تنبيه',body:val('alertBody')||'',audience:val('alertAudience')||'أولياء الأمور',date:new Date().toISOString().slice(0,10)});audit('إضافة تنبيه: '+(val('alertTitle')||'تنبيه'),'لوحة التحكم');clear(['alertTitle','alertBody']);save()});
+ document.addEventListener('click',e=>{const ds=e.target.dataset.delStudent,dt=e.target.dataset.delTeacher;if(ds){state.students=state.students.filter(s=>s.id!==ds);audit('حذف طالب: '+ds,'لوحة التحكم');save()} if(dt){state.teachers=state.teachers.filter(t=>t.id!==dt);audit('حذف مستخدم: '+dt,'لوحة التحكم');save()} });
+ $('#resetDemo')?.addEventListener('click',()=>{if(confirm('استعادة البيانات التجريبية؟')){state=JSON.parse(JSON.stringify(defaultData));audit('استعادة البيانات التجريبية','لوحة التحكم');save()}});
+ $('#exportData')?.addEventListener('click',exportJson);
+}
+document.addEventListener('DOMContentLoaded',()=>{bind();renderAll()});
+})();

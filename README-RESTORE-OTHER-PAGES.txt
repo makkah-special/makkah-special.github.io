@@ -1,8 +1,16 @@
-استرجاع الصفحات الأخرى فقط - لا يحتوي على index.html
-
-الطريقة:
-1) فك الضغط.
-2) ارفع ملفات HTML الموجودة هنا فقط إلى جذر مستودع GitHub.
-3) وافق على الاستبدال.
-4) لا ترفع index.html لأن الصفحة الرئيسية عندك سليمة.
-5) بعد الرفع Ctrl + F5.
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="0; url=teachers-yaseer.html?teacher=saad-z">
+<title>تحويل إلى ملف إنجاز سعد سالم الزهراني</title>
+<script>location.replace('teachers-yaseer.html?teacher=saad-z');</script>
+<style>body{font-family:Tajawal,Arial,sans-serif;direction:rtl;text-align:center;padding:40px;background:#f7f5fc;color:#2E2148}a{color:#6B4C9A;font-weight:800}</style>
+</head>
+<body>
+<h1>جاري فتح ملف إنجاز المعلم</h1>
+<p>سعد سالم الزهراني</p>
+<p><a href="teachers-yaseer.html?teacher=saad-z">اضغط هنا إذا لم يتم التحويل تلقائيًا</a></p>
+</body>
+</html>

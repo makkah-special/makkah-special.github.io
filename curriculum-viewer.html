@@ -3,309 +3,407 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<meta name="theme-color" content="#6B4C9A">
-<title>عرض توزيع المناهج | مدرسة مكة المكرمة المتوسطة</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<title>رفع تقارير يسير | مدرسة مكة المكرمة المتوسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#F7F5FC; --surface2:#FBFAFE; --card:#FFFFFF;
-  --ink:#221335; --muted:#6E5F82; --ink-faint:rgba(34,19,53,.42);
-  --border:#DCD2EE;
-  --lav-900:#2E2148; --lav-800:#3F2E63; --lav-700:#6B4C9A; --lav-500:#8B6ABF; --lav-300:#B79EE0; --lav-100:#EAE1F7;
-  --gold:#D7A24A; --gold-soft:rgba(215,162,74,.14);
-  --shadow-sm:0 6px 20px rgba(107,76,154,.10);
-}
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ font-family:'Cairo',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; }
+  :root {
+    --primary: #1a3a5c;
+    --accent: #c8973a;
+    --accent-light: #f0b84a;
+    --green: #1a6b4a;
+    --green-light: #22a06b;
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --border: #e0d8c8;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-.topbar{ background: linear-gradient(120deg, var(--lav-900), var(--lav-800) 70%, #4A3470); color:rgba(255,255,255,.92); }
-.topbar-inner{ max-width:1180px; margin:0 auto; padding:8px 24px; font-weight:600; }
-.topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:.78rem; }
-.topbar-gov{ display:flex; align-items:center; gap:10px; }
-.topbar-gov img{ height:32px; width:auto; opacity:.95; flex-shrink:0; }
-.topbar-gov span{ color:rgba(255,255,255,.85); font-weight:700; }
-.topbar-year{ color:#fff; font-weight:800; flex-shrink:0; }
-.topbar-dept{ margin-top:3px; padding-right:30px; font-size:.68rem; font-weight:600; color:rgba(255,255,255,.45); }
-.topbar-dept i{ font-style:normal; color:rgba(255,255,255,.28); margin:0 6px; }
+  header { background:linear-gradient(135deg,var(--primary) 0%,#0f2448 60%,#1a3a5c 100%); position:relative; }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-light),var(--accent)); }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 40px; }
+  .logo-wrap { display:flex; align-items:center; gap:14px; }
+  .logo-icon { width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,0.12); border:2px solid rgba(200,151,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; }
+  .header-name { color:rgba(255,255,255,0.9); font-size:0.83rem; font-weight:600; }
+  .header-sub { color:rgba(255,255,255,0.5); font-size:0.75rem; }
+  .back-link { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; }
+  .hero { padding:28px 40px 36px; text-align:center; }
+  .hero-badge { display:inline-block; background:rgba(200,151,58,0.15); border:1px solid rgba(200,151,58,0.35); color:var(--accent-light); padding:5px 18px; border-radius:20px; font-size:0.8rem; font-weight:600; margin-bottom:12px; }
+  .hero h1 { font-family:'Tajawal',sans-serif; font-size:clamp(1.5rem,4vw,2rem); font-weight:900; color:#fff; margin-bottom:6px; }
+  .hero h1 span { color:var(--accent-light); }
+  .hero p { color:rgba(255,255,255,0.6); font-size:0.85rem; }
 
-header.portal-header{
-  background: linear-gradient(135deg, var(--lav-800) 0%, var(--lav-900) 60%, var(--lav-700) 100%);
-  padding:16px 36px; display:flex; align-items:center; justify-content:space-between;
-  border-bottom:3px solid var(--gold); gap:14px; flex-wrap:wrap;
-}
-.header-left{ display:flex; align-items:center; gap:14px; }
-.header-icon{
-  width:46px; height:46px; border-radius:12px; background:rgba(215,162,74,.18);
-  border:1px solid rgba(215,162,74,.35); display:flex; align-items:center; justify-content:center; font-size:1.4rem;
-}
-.header-title{ color:#fff; font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:900; }
-.header-sub{ color:rgba(255,255,255,.55); font-size:.76rem; margin-top:2px; }
-.back-btn{
-  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:rgba(255,255,255,.8);
-  padding:8px 18px; border-radius:8px; text-decoration:none; font-size:.82rem; font-weight:600; transition:all .2s;
-}
-.back-btn:hover{ background:rgba(255,255,255,.15); }
+  /* PIN */
+  .pin-screen { display:flex; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
+  .pin-box { background:var(--card); border-radius:20px; padding:40px 32px; max-width:360px; width:100%; text-align:center; box-shadow:0 8px 40px rgba(0,0,0,0.1); }
+  .pin-icon { font-size:2.6rem; margin-bottom:14px; }
+  .pin-title { font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:900; color:var(--primary); margin-bottom:6px; }
+  .pin-desc { font-size:0.83rem; color:var(--muted); margin-bottom:22px; }
+  .pin-input { width:100%; padding:13px; border:2px solid var(--border); border-radius:11px; font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:700; text-align:center; letter-spacing:8px; outline:none; transition:all 0.2s; background:#fafafa; margin-bottom:10px; }
+  .pin-input:focus { border-color:var(--primary); background:#fff; }
+  .pin-input.error { border-color:#ef4444; animation:shake 0.4s ease; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .pin-error { display:none; color:#dc2626; font-size:0.8rem; font-weight:700; margin-bottom:10px; background:#fee2e2; padding:7px 12px; border-radius:8px; }
+  .pin-error.show { display:block; }
+  .btn-enter { width:100%; padding:13px; background:linear-gradient(135deg,var(--primary),#2563a8); color:#fff; border:none; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; }
 
-.portal-body{ max-width:1040px; margin:0 auto; padding:28px 24px 60px; }
+  /* CONTENT */
+  .content { display:none; }
+  main { max-width:1000px; margin:0 auto; padding:26px 22px 60px; }
 
-.program-tabs{ display:flex; gap:4px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:6px; margin-bottom:22px; box-shadow:var(--shadow-sm); }
-.program-tab-btn{
-  flex:1; padding:10px 8px; border:none; background:transparent; border-radius:9px; font-family:'Cairo',sans-serif;
-  font-size:.86rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all .22s;
-}
-.program-tab-btn.active{ background:linear-gradient(135deg, var(--lav-700), var(--lav-500)); color:#fff; box-shadow:0 3px 12px rgba(107,76,154,.35); }
+  /* Student Selector */
+  .selector-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .selector-title { font-size:0.9rem; font-weight:800; color:var(--primary); margin-bottom:12px; }
+  .student-select { width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:600; outline:none; background:#fafafa; color:var(--text); cursor:pointer; }
+  .student-select:focus { border-color:var(--primary); }
 
-.teachers-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
-.t-card{
-  background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px 18px;
-  cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px;
-}
-.t-card:hover{ border-color:var(--lav-500); box-shadow:var(--shadow-sm); transform:translateY(-2px); }
-.t-avatar{
-  width:46px; height:46px; border-radius:50%; background:var(--lav-100); color:var(--lav-700);
-  display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex-shrink:0; font-weight:900;
-}
-.t-name{ font-weight:800; font-size:.88rem; color:var(--lav-800); margin-bottom:3px; }
-.t-role{ font-size:.75rem; color:var(--muted); }
+  /* Upload Area */
+  .upload-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+  .upload-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04); transition:all 0.2s; }
+  .upload-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+  .upload-head { padding:14px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
+  .upload-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .upload-title { font-size:0.85rem; font-weight:800; color:var(--primary); }
+  .upload-filename { font-size:0.72rem; color:var(--muted); margin-top:2px; font-family:monospace; }
+  .upload-body { padding:14px 16px; }
 
-.s-card{ background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:18px; box-shadow:var(--shadow-sm); }
-.s-card-head{
-  padding:14px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center;
-  justify-content:space-between; gap:9px; flex-wrap:wrap; font-weight:800; font-size:.92rem;
-  color:var(--lav-700); background:var(--lav-100);
-}
-.s-card-body{ padding:18px 22px; }
+  .drop-zone { border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:all 0.2s; background:#fafafa; position:relative; }
+  .drop-zone:hover, .drop-zone.dragover { border-color:var(--primary); background:#f0f4ff; }
+  .drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .drop-icon { font-size:1.6rem; margin-bottom:6px; }
+  .drop-text { font-size:0.78rem; color:var(--muted); font-weight:600; }
+  .drop-sub { font-size:0.7rem; color:#9ca3af; margin-top:3px; }
 
-.btn-sm{ border:none; border-radius:8px; padding:7px 16px; font-family:'Cairo',sans-serif; font-size:.8rem; font-weight:700; cursor:pointer; transition:all .2s; white-space:nowrap; }
-.btn-sm-outline{ background:#fff; color:var(--lav-700); border:1px solid var(--border); }
-.btn-sm-outline:hover{ border-color:var(--lav-500); background:var(--lav-100); }
+  /* Status */
+  .upload-status { margin-top:10px; font-size:0.78rem; font-weight:700; text-align:center; padding:6px 10px; border-radius:8px; display:none; }
+  .status-uploading { background:#fef3c7; color:#92400e; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .status-success { background:#d1fae5; color:#065f46; }
+  .status-error { background:#fee2e2; color:#dc2626; }
+  .status-exists { background:#dbeafe; color:#1e40af; }
 
-.back-link{
-  display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid var(--border);
-  color:var(--lav-700); padding:9px 18px; border-radius:10px; font-size:.84rem; font-weight:700;
-  cursor:pointer; margin-bottom:16px; transition:all .2s;
-}
-.back-link:hover{ background:var(--lav-100); }
+  /* File preview */
+  .file-preview { margin-top:10px; padding:8px 12px; background:#f0f4ff; border-radius:8px; display:none; align-items:center; gap:8px; font-size:0.78rem; color:var(--primary); font-weight:600; }
+  .file-preview .del-btn { margin-right:auto; background:#fee2e2; color:#dc2626; border:none; border-radius:6px; padding:3px 8px; font-size:0.72rem; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; }
 
-.curr-table{ width:100%; border-collapse:collapse; font-size:.83rem; }
-.curr-table th{ background:var(--lav-100); color:var(--lav-700); padding:9px 12px; text-align:right; font-weight:800; font-size:.78rem; }
-.curr-table td{ padding:7px 12px; border-bottom:1px solid var(--border); }
-.curr-table tr:last-child td{ border-bottom:none; }
-.curr-week-num{ font-weight:800; color:var(--lav-700); white-space:nowrap; font-size:.78rem; width:90px; }
+  .btn-upload { width:100%; padding:9px; background:linear-gradient(135deg,var(--green),var(--green-light)); color:#fff; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:10px; display:none; transition:all 0.2s; box-shadow:0 3px 10px rgba(26,107,74,0.25); }
+  .btn-upload:hover { transform:translateY(-1px); }
 
-.empty-state{ text-align:center; padding:50px 20px; color:#9ca3af; }
-.empty-state .es-icon{ font-size:3rem; margin-bottom:12px; }
-.empty-state .es-title{ font-weight:800; font-size:.95rem; color:var(--muted); margin-bottom:4px; }
-.empty-state .es-sub{ font-size:.82rem; }
+  .progress-bar { height:4px; background:#e0d8c8; border-radius:2px; margin-top:8px; display:none; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--green-light)); border-radius:2px; transition:width 0.3s; width:0%; }
+  .btn-delete { width:100%; padding:9px; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; margin-top:6px; transition:all 0.2s; }
+  .btn-delete:hover { background:#dc2626; color:#fff; }
 
-@media (max-width:768px){
-  header.portal-header{ padding:14px 18px; }
-  .portal-body{ padding:20px 14px 50px; }
-}
+  footer { background:var(--primary); color:rgba(255,255,255,0.6); text-align:center; padding:18px; font-size:0.78rem; border-top:3px solid var(--accent); }
+  footer strong { color:var(--accent-light); }
+
+  @media(max-width:640px) {
+    .header-top { padding:12px 16px; }
+    .hero { padding:22px 16px 28px; }
+    main { padding:16px 14px 40px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-row">
-      <div class="topbar-gov">
-        <a href="https://www.moe.gov.sa/" target="_blank" rel="noopener"><img src="moe-logo.png" alt="وزارة التعليم"></a>
-        <span>المملكة العربية السعودية — وزارة التعليم</span>
+<header>
+  <div class="header-top">
+    <div class="logo-wrap">
+      <div class="logo-icon">📁</div>
+      <div>
+        <div class="header-name">مدرسة مكة المكرمة المتوسطة</div>
+        <div class="header-sub">قسم ذوي الإعاقة — رفع التقارير</div>
       </div>
-      <b class="topbar-year">1447هـ</b>
     </div>
-    <div class="topbar-dept">الإدارة العامة للتعليم بمحافظة جدة <i>›</i> الشؤون التعليمية <i>›</i> إدارة تنمية القدرات <i>›</i> قسم ذوي الإعاقة</div>
+    <a href="index.html" class="back-link">← الرئيسية</a>
   </div>
-</div>
-
-<header class="portal-header">
-  <div class="header-left">
-    <div class="header-icon">📘</div>
-    <div>
-      <div class="header-title">عرض توزيع المناهج — للاطلاع فقط</div>
-      <div class="header-sub">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة</div>
-    </div>
+  <div class="hero">
+    <div class="hero-badge">📘 برنامج يسير</div>
+    <h1>رفع <span>تقارير الطلاب</span></h1>
+    <p>اختر الطالب ثم ارفع ملفات تقاريره مباشرة من جهازك</p>
   </div>
-  <a href="index.html" class="back-btn">← الرئيسية</a>
 </header>
 
-<div class="portal-body">
-
-  <!-- قائمة المعلمين -->
-  <div id="view-list">
-    <div class="program-tabs" id="program-tabs">
-      <button class="program-tab-btn active" onclick="switchProgram('dumaj', this)">برنامج الدمج الفكري</button>
-      <button class="program-tab-btn" onclick="switchProgram('yaseer', this)">برنامج يسير</button>
-    </div>
-    <div class="teachers-grid" id="teachers-grid"></div>
+<!-- PIN -->
+<div class="pin-screen" id="pin-screen">
+  <div class="pin-box">
+    <div class="pin-icon">🔐</div>
+    <div class="pin-title">صفحة المشرف</div>
+    <div class="pin-desc">أدخل رمز المشرف للوصول لرفع التقارير</div>
+    <input type="password" class="pin-input" id="admin-pin" maxlength="6" placeholder="• • • •"
+      onkeydown="if(event.key==='Enter') checkPin()"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <div class="pin-error" id="pin-error">❌ الرمز غير صحيح</div>
+    <button class="btn-enter" onclick="checkPin()">✅ دخول</button>
   </div>
-
-  <!-- عرض توزيع معلم محدد -->
-  <div id="view-detail" style="display:none;">
-    <button class="back-link" onclick="closeDetail()">→ رجوع لقائمة المعلمين</button>
-    <div class="s-card">
-      <div class="s-card-head">
-        <span id="detail-teacher-name">—</span>
-        <button class="btn-sm btn-sm-outline" onclick="printTeacherCurriculum()">🖨️ طباعة</button>
-      </div>
-      <div class="s-card-body" id="detail-content"></div>
-    </div>
-  </div>
-
 </div>
 
+<!-- CONTENT -->
+<div class="content" id="content">
+  <main>
+    <!-- اختيار الطالب -->
+    <div class="selector-card">
+      <div class="selector-title">👤 اختر الطالب</div>
+      <select class="student-select" id="student-select" onchange="loadStudentUploads()">
+        <option value="">— اختر الطالب —</option>
+        <option value="5271">طلال عبدالله عبدالرحمن العصماني — 5271</option>
+        <option value="3955">عبدالله قائد عبدالله الشهراني — 3955</option>
+        <option value="3154">بسام خالد عبدالرحمن المالكي — 3154</option>
+        <option value="3493">وسام عوض بن شينان السهيمي — 3493</option>
+        <option value="9055">حسن صالح حسن الزهراني — 9055</option>
+        <option value="0962">إياد خليل طاهر مصطفى — 0962</option>
+        <option value="4073">محمد عمر محمد بلقاسم الحرازي — 4073</option>
+        <option value="0788">أمجد مرزوق علي المحوري — 0788</option>
+        <option value="8726">مراد علي طلميس المنتشري — 8726</option>
+        <option value="2261">فيصل حاتم حامد الغامدي — 2261</option>
+        <option value="9446">عبدالرحمن توفيق علوان مقري — 9446</option>
+        <option value="7895">محمد فارس صالح الغامدي — 7895</option>
+        <option value="5362">وسيم أحمد علي الرزقي — 5362</option>
+        <option value="2571">فارس محمد مانع القحطاني — 2571</option>
+        <option value="3590">عبدالمجيد عبدالله حامد الهلالي — 3590</option>
+        <option value="8151">مسفر حسن سعد القحطاني — 8151</option>
+        <option value="8061">هتان عبيدالله جميل المحمادي — 8061</option>
+        <option value="5271">محمد علي غرم الله الشمراني — 5271</option>
+        <option value="6812">لوى أحمد علي الرزقي — 6812</option>
+        <option value="5237">عبدالله ماجد عبدالله الزهراني — 5237</option>
+      </select>
+    </div>
+
+    <!-- بطاقات الرفع -->
+    <div class="upload-grid" id="upload-grid"></div>
+  </main>
+</div>
+
+<footer>
+  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
+</footer>
+
 <script>
-const SB_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SUPABASE_URL = "https://pyrxwqgapwjwhiskowhk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere";
+const BUCKET = "reports";
+const ADMIN_PIN = "1129";
 
-const TEACHERS = {
-  "m.suhayymi": { name:"محمد أحمد السهيمي",   role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"س" },
-  "z.qarni":    { name:"زين العابدين القرني", role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ز" },
-  "a.ghamdi":   { name:"علي سعيد الغامدي",    role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"غ" },
-  "a.malki":    { name:"علي محمد المالكي",    role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"م" },
-  "h.ulyani":   { name:"حسن علي العلياني",    role:"معلم تربية خاصة — الدمج الفكري", program:"dumaj",  avatar:"ع" },
-  "a.zahrani":  { name:"علي محمد الزهراني",   role:"مشرف برنامج الدمج الفكري",       program:"dumaj",  avatar:"ز" },
-  "h.kubaishi": { name:"حسين منصور الكبيشي",  role:"معلم تربية خاصة — يسير",         program:"yaseer", avatar:"ك" },
-  "saad.z":     { name:"سعد سالم الزهراني",   role:"مشرف برنامج يسير التعليمي",      program:"yaseer", avatar:"ز" },
-};
+const REPORT_TYPES = [
+  { key: "plan",    label: "📋 الخطة الفردية",        icon: "📋", color: "#fff3e0" },
+  { key: "psych",   label: "التقرير النفسي الموحد",   icon: "🧠", color: "#ede9fe" },
+  { key: "medical", label: "التقرير الطبي",            icon: "🏥", color: "#dbeafe" },
+  { key: "report1", label: "التقرير الدوري ١",         icon: "📄", color: "#fef3c7" },
+  { key: "report2", label: "التقرير الدوري ٢",         icon: "📊", color: "#d1fae5" },
+  { key: "report3", label: "التقرير الدوري ٣",         icon: "📋", color: "#ede9fe" },
+];
 
-let currentProgram = 'dumaj';
-let currentDetailData = null;
-let currentDetailTeacher = null;
+let selectedFiles = {};
 
-function escHtml(str) {
-  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-async function sbGetJSON(path) {
-  try {
-    const res = await fetch(`${SB_URL}/storage/v1/object/public/${path}?t=${Date.now()}`);
-    if (!res.ok) return null;
-    return await res.json();
-  } catch(e) { return null; }
-}
-
-function switchProgram(program, btn) {
-  currentProgram = program;
-  document.querySelectorAll('.program-tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderTeachersGrid();
-}
-
-function renderTeachersGrid() {
-  const grid = document.getElementById('teachers-grid');
-  const list = Object.entries(TEACHERS).filter(([uname, t]) => t.program === currentProgram);
-  grid.innerHTML = list.map(([uname, t]) => `
-    <div class="t-card" onclick="openTeacherCurriculum('${uname}')">
-      <div class="t-avatar">${escHtml(t.avatar)}</div>
-      <div>
-        <div class="t-name">${escHtml(t.name)}</div>
-        <div class="t-role">${escHtml(t.role)}</div>
-      </div>
-    </div>`).join('');
-}
-
-async function openTeacherCurriculum(uname) {
-  const t = TEACHERS[uname];
-  currentDetailTeacher = { uname, ...t };
-  document.getElementById('view-list').style.display = 'none';
-  document.getElementById('view-detail').style.display = 'block';
-  document.getElementById('detail-teacher-name').textContent = `📘 توزيع منهج: ${t.name}`;
-
-  const content = document.getElementById('detail-content');
-  content.innerHTML = `<div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">جارٍ التحميل...</div></div>`;
-
-  const data = await sbGetJSON(`reports/curriculum/${t.program}/${uname}.json`);
-  currentDetailData = data;
-
-  if (!data || !Array.isArray(data.activeSubjects) || data.activeSubjects.length === 0) {
-    content.innerHTML = `<div class="empty-state"><div class="es-icon">📘</div><div class="es-title">لم يقم هذا المعلم بإدخال توزيع المنهج بعد</div></div>`;
-    return;
+function checkPin() {
+  const val = document.getElementById('admin-pin').value;
+  if (val === ADMIN_PIN) {
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  } else {
+    const err = document.getElementById('pin-error');
+    const inp = document.getElementById('admin-pin');
+    err.classList.add('show');
+    inp.classList.add('error');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
   }
+}
 
-  let html = '';
-  data.activeSubjects.forEach(key => {
-    const subj = data.subjects[key];
-    if (!subj) return;
-    html += `
-      <h3 style="font-family:'Tajawal',sans-serif;color:var(--lav-700);font-size:1rem;margin:18px 0 8px;">📘 ${escHtml(subj.name)}</h3>
-      <div style="overflow-x:auto;">
-      <table class="curr-table">
-        <thead><tr><th>الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
-        <tbody>
-          ${subj.weeks.map((w,i) => `<tr><td class="curr-week-num">الأسبوع ${i+1}</td><td>${escHtml(w.topic||'—')}</td><td>${escHtml(w.notes||'—')}</td></tr>`).join('')}
-        </tbody>
-      </table>
-      </div>`;
-  });
+function loadStudentUploads() {
+  const pin = document.getElementById('student-select').value;
+  const grid = document.getElementById('upload-grid');
+  if (!pin) { grid.innerHTML = ''; return; }
 
-  if (data.meta) {
+  selectedFiles = {};
+  grid.innerHTML = REPORT_TYPES.map(r => `
+    <div class="upload-card" id="card-${r.key}">
+      <div class="upload-head">
+        <div class="upload-icon" style="background:${r.color}">${r.icon}</div>
+        <div>
+          <div class="upload-title">${r.label}</div>
+          <div class="upload-filename" id="fname-${r.key}">${r.key}-${pin}.pdf</div>
+        </div>
+      </div>
+      <div class="upload-body">
+        <div class="drop-zone" id="drop-${r.key}"
+          ondragover="event.preventDefault();this.classList.add('dragover')"
+          ondragleave="this.classList.remove('dragover')"
+          ondrop="handleDrop(event,'${r.key}','${pin}')">
+          <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" onchange="handleFile(this,'${r.key}','${pin}')">
+          <div class="drop-icon">📂</div>
+          <div class="drop-text">اضغط لاختيار الملف أو اسحبه هنا</div>
+          <div class="drop-sub">PDF, Word, صور</div>
+        </div>
+        <div class="file-preview" id="preview-${r.key}">
+          <span>📎</span>
+          <span id="preview-name-${r.key}"></span>
+          <button class="del-btn" onclick="clearFile('${r.key}')">✕ إلغاء</button>
+        </div>
+        <div class="progress-bar" id="progress-${r.key}">
+          <div class="progress-fill" id="progress-fill-${r.key}"></div>
+        </div>
+        <div class="upload-status" id="status-${r.key}"></div>
+        <button class="btn-upload" id="btn-${r.key}" onclick="uploadFile('${r.key}','${pin}')">
+          ⬆️ رفع الملف
+        </button>
+        <button class="btn-delete" id="del-btn-${r.key}" onclick="deleteFile('${r.key}','${pin}')" style="display:none;">
+          🗑️ حذف الملف المرفوع
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  // تحقق من الملفات الموجودة
+  checkExistingFiles(pin);
+}
+
+async function checkExistingFiles(pin) {
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  for (const r of REPORT_TYPES) {
+    for (const ext of extensions) {
+      try {
+        const fileName = `${r.key}-${pin}.${ext}`;
+        const url = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${fileName}`;
+        const res = await fetch(url, { method: 'HEAD' });
+        if (res.ok) {
+          showStatus(r.key, 'exists', `✅ يوجد ملف مرفوع — ${fileName}`);
+          document.getElementById(`del-btn-${r.key}`).style.display = 'block';
+          document.getElementById(`fname-${r.key}`).textContent = fileName;
+          // عرض معاينة الملف الموجود
+          document.getElementById(`preview-name-${r.key}`).textContent = fileName;
+          document.getElementById(`preview-${r.key}`).style.display = 'flex';
+          break;
+        }
+      } catch(e) {}
+    }
+  }
+}
+
+function handleFile(input, key, pin) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function handleDrop(e, key, pin) {
+  e.preventDefault();
+  document.getElementById(`drop-${key}`).classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  selectedFiles[key] = file;
+  showPreview(key, file.name, pin);
+}
+
+function showPreview(key, name, pin) {
+  document.getElementById(`preview-name-${key}`).textContent = name;
+  document.getElementById(`preview-${key}`).style.display = 'flex';
+  document.getElementById(`btn-${key}`).style.display = 'block';
+  document.getElementById(`status-${key}`).style.display = 'none';
+}
+
+function clearFile(key) {
+  delete selectedFiles[key];
+  document.getElementById(`preview-${key}`).style.display = 'none';
+  document.getElementById(`btn-${key}`).style.display = 'none';
+  document.getElementById(`status-${key}`).style.display = 'none';
+  document.getElementById(`progress-${key}`).style.display = 'none';
+}
+
+async function uploadFile(key, pin) {
+  const file = selectedFiles[key];
+  if (!file) return;
+
+  const ext = file.name.split('.').pop();
+  const fileName = `${key}-${pin}.${ext}`;
+
+  const btn = document.getElementById(`btn-${key}`);
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الرفع...';
+
+  showStatus(key, 'uploading', '⏳ جاري رفع الملف...');
+  document.getElementById(`progress-${key}`).style.display = 'block';
+
+  // Simulate progress
+  let prog = 0;
+  const interval = setInterval(() => {
+    prog = Math.min(prog + 10, 85);
+    document.getElementById(`progress-fill-${key}`).style.width = prog + '%';
+  }, 200);
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${fileName}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'true'
+      },
+      body: file
+    });
+
+    clearInterval(interval);
+    document.getElementById(`progress-fill-${key}`).style.width = '100%';
+
+    if (res.ok) {
+      showStatus(key, 'success', `✅ تم رفع الملف بنجاح — ${fileName}`);
+      document.getElementById(`fname-${key}`).textContent = fileName;
+      btn.textContent = '✅ تم الرفع';
+      document.getElementById(`del-btn-${key}`).style.display = 'block';
+    } else {
+      const err = await res.text();
+      showStatus(key, 'error', '❌ فشل الرفع — حاول مرة أخرى');
+      btn.textContent = '⬆️ إعادة المحاولة';
+      btn.disabled = false;
+    }
+  } catch(e) {
+    clearInterval(interval);
+    showStatus(key, 'error', '❌ خطأ في الاتصال');
+    btn.textContent = '⬆️ إعادة المحاولة';
+    btn.disabled = false;
+  }
+}
+
+async function deleteFile(key, pin) {
+  if (!confirm(`هل تريد حذف ملف "${key}-${pin}" نهائياً؟`)) return;
+
+  const extensions = ['pdf', 'PDF', 'docx', 'doc', 'jpg', 'png'];
+  let deleted = false;
+
+  for (const ext of extensions) {
+    const fileName = `${key}-${pin}.${ext}`;
     try {
-      const d = new Date(data.meta.date).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
-      html += `<div style="font-size:.78rem;color:var(--ink-faint);margin-top:10px;">آخر تحديث: ${escHtml(d)} — بواسطة ${escHtml(data.meta.teacher)}</div>`;
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${fileName}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
+      });
+      if (res.ok) {
+        deleted = true;
+        showStatus(key, 'error', '🗑️ تم حذف الملف بنجاح');
+        document.getElementById(`del-btn-${key}`).style.display = 'none';
+        document.getElementById(`fname-${key}`).textContent = `${key}-${pin}.pdf`;
+        clearFile(key);
+        break;
+      }
     } catch(e) {}
   }
 
-  content.innerHTML = html;
+  if (!deleted) showStatus(key, 'error', '❌ لم يُعثر على ملف للحذف');
 }
 
-function closeDetail() {
-  document.getElementById('view-detail').style.display = 'none';
-  document.getElementById('view-list').style.display = 'block';
+function showStatus(key, type, msg) {
+  const el = document.getElementById(`status-${key}`);
+  el.style.display = 'block';
+  el.className = `upload-status status-${type}`;
+  el.textContent = msg;
 }
-
-function printTeacherCurriculum() {
-  if (!currentDetailData || !currentDetailTeacher) { return; }
-  const data = currentDetailData;
-  const t = currentDetailTeacher;
-
-  const subjectsHtml = (data.activeSubjects||[]).map(key => {
-    const subj = data.subjects[key];
-    if (!subj) return '';
-    return `
-      <h2>📘 ${escHtml(subj.name)}</h2>
-      <table>
-        <thead><tr><th style="width:90px;">الأسبوع</th><th>الموضوع / الدرس</th><th>ملاحظات</th></tr></thead>
-        <tbody>
-          ${subj.weeks.map((w,i) => `<tr><td class="wk">الأسبوع ${i+1}</td><td>${escHtml(w.topic||'')}</td><td>${escHtml(w.notes||'')}</td></tr>`).join('')}
-        </tbody>
-      </table>`;
-  }).join('');
-
-  const win = window.open('', '_blank');
-  if (!win) return;
-  win.document.write(`
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
-<title>توزيع المنهج — ${escHtml(t.name)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  *{box-sizing:border-box;}
-  body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;color:#221335;}
-  h1{font-family:'Tajawal',sans-serif;color:#2E2148;font-size:1.5rem;margin-bottom:4px;}
-  .sub{color:#6E5F82;margin-bottom:18px;font-size:.9rem;}
-  h2{font-family:'Tajawal',sans-serif;color:#6B4C9A;font-size:1.05rem;margin:22px 0 8px;}
-  table{ width:100%; border-collapse:collapse; font-size:.85rem; margin-bottom:10px; }
-  th{ background:#EAE1F7; color:#6B4C9A; padding:8px 10px; text-align:right; font-weight:800; border:1px solid #DCD2EE; }
-  td{ padding:7px 10px; border:1px solid #DCD2EE; }
-  .wk{ font-weight:800; color:#6B4C9A; white-space:nowrap; }
-  @media print{ @page{ size:A4; margin:14mm; } }
-</style><link rel="stylesheet" href="assets/css/common-ui.css">
-</head><body>
-  <h1>📘 توزيع المنهج الفصلي</h1>
-  <div class="sub">${escHtml(t.name)} — ${escHtml(t.role)} — الفصل الدراسي الثاني 1447هـ</div>
-  ${subjectsHtml}
-  <script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script>
-</body></html>`);
-  win.document.close();
-}
-
-renderTeachersGrid();
 </script>
-<script src="assets/js/common-ui.js" defer></script>
 </body>
 </html>

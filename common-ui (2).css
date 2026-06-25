@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كشف الحضور — برنامج يسير التعليمي</title>
+<title>كشف الحضور — برنامج الدمج الفكري</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --primary: #1a3a5c;
-  --accent:  #1a6b4a;
-  --accent2: #22a06b;
-  --bg:      #f3faf6;
+  --accent:  #c25a00;
+  --accent2: #e07020;
+  --bg:      #fdf8f3;
   --card:    #ffffff;
-  --border:  #c8e6d4;
+  --border:  #e8d5c0;
   --text:    #1a1a2e;
   --muted:   #7a7a9a;
   --green:   #16a34a;
@@ -65,13 +65,13 @@ select:focus, input:focus { border-color:var(--accent); }
 .btn-success   { background:#16a34a; color:#fff; }
 .btn-success:hover { background:#15803d; }
 .btn-outline   { background:#fff; color:var(--accent); border:1.5px solid var(--accent); }
-.btn-outline:hover { background:#f0faf5; }
+.btn-outline:hover { background:#fff7f0; }
 .btn-dark      { background:var(--primary); color:#fff; }
 .btn-dark:hover { background:#0f2440; }
 
 /* WEEK SELECTOR */
 .week-info {
-  background: linear-gradient(135deg, #f0faf5, #fff);
+  background: linear-gradient(135deg, #fff7f0, #fff);
   border:1.5px solid var(--border); border-radius:var(--radius);
   padding:12px 20px; margin:16px 20px;
   display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
@@ -109,7 +109,7 @@ select:focus, input:focus { border-color:var(--accent); }
   border:1px solid var(--border);
 }
 table { border-collapse:collapse; width:100%; min-width:900px; background:#fff; }
-thead tr { background:linear-gradient(135deg, #1a3a5c, #1a6b4a); color:#fff; }
+thead tr { background:linear-gradient(135deg, #1a3a5c, #c25a00); color:#fff; }
 thead th {
   padding:12px 10px; font-size:0.78rem; font-weight:700;
   text-align:center; white-space:nowrap;
@@ -119,7 +119,7 @@ thead th:first-child { text-align:right; padding-right:16px; min-width:180px; }
 thead th.day-col { min-width:90px; }
 
 tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
-tbody tr:hover { background:#f0faf5; }
+tbody tr:hover { background:#fff7f0; }
 tbody tr:last-child { border-bottom:none; }
 
 .student-cell {
@@ -421,10 +421,10 @@ tbody tr:last-child { border-bottom:none; }
 <!-- HEADER -->
 <div class="page-header">
   <div>
-    <h1>📘 كشف حضور — برنامج يسير التعليمي</h1>
+    <h1>🧠 كشف حضور — برنامج الدمج الفكري</h1>
     <p>مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</p>
   </div>
-  <a href="students.html" class="back-btn">← العودة</a>
+  <a href="dumaj-students.html" class="back-btn">← العودة</a>
 </div>
 
 <!-- TOOLBAR -->
@@ -435,6 +435,7 @@ tbody tr:last-child { border-bottom:none; }
         <!-- حقل ميلادي -->
         <div class="cal-field-wrap" id="miladiWrap">
           <input type="date" id="weekStart" onchange="setWeekFromDate(this.value)">
+          <button onclick="goToCurrentWeek()" style="background:#1a3a5c;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">📅 الأسبوع الحالي</button>
         </div>
         <!-- حقل هجري بنفس شكل الميلادي -->
         <div class="cal-field-wrap hijri-wrap" id="hijriWrap" style="display:none;">
@@ -557,7 +558,7 @@ tbody tr:last-child { border-bottom:none; }
 
 <script>
 // ===== CONFIG =====
-const PROGRAM   = 'yaseer';
+const PROGRAM   = 'dumaj';
 const SB_URL    = 'https://pyrxwqgapwjwhiskowhk.supabase.co';
 const SB_KEY    = 'sb_publishable_bfe-B4f-Rag1SR0-PoIb9w_nMfA1Ere';
 const DAYS      = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
@@ -572,26 +573,27 @@ const STATUS_OPTS = [
 ];
 
 const STUDENTS = [
-  {pin:'5271', name:'محمد علي غرم الله الشمراني'},
-  {pin:'3955', name:'عبدالله قائد عبدالله الشهراني'},
-  {pin:'3154', name:'بسام خالد عبدالرحمن المالكي'},
-  {pin:'3493', name:'وسام عوض بن شينان السهيمي'},
-  {pin:'9055', name:'حسن صالح حسن الزهراني'},
-  {pin:'0962', name:'إياد خليل طاهر مصطفى'},
-  {pin:'4073', name:'محمد عمر محمد بلقاسم الحرازي'},
-  {pin:'0788', name:'أمجد مرزوق علي المحوري'},
-  {pin:'8726', name:'مراد علي ظلميس المنتشري'},
-  {pin:'2261', name:'فيصل حاتم حامد الغامدي'},
-  {pin:'9446', name:'عبدالرحمن توفيق علوان مقري'},
-  {pin:'7895', name:'محمد فارس صالح الغامدي'},
-  {pin:'5362', name:'وسيم أحمد علي الرزقي'},
-  {pin:'2571', name:'فارس محمد مانع القحطاني'},
-  {pin:'3590', name:'عبدالمجيد عبدالله حامد الهلالي'},
-  {pin:'8151', name:'مسفر حسن سعد القحطاني'},
-  {pin:'8061', name:'هتان عبيدالله جميل المحمادي'},
-  {pin:'5455', name:'طلال عبدالله عبدالرحمن العصماني'},
-  {pin:'6812', name:'لوى أحمد علي الرزقي'},
-  {pin:'5237', name:'عبدالله ماجد عبدالله الزهراني'},
+  {pin:'7405', name:'اياد موسى حولي القرني'},
+  {pin:'4526', name:'عبدالله صالح أحمد المشجري'},
+  {pin:'9050', name:'علي محمد مطر السهيمي'},
+  {pin:'4612', name:'محمد علي محمد المنتشري'},
+  {pin:'0977', name:'مشاري فيحان سميح البقمي'},
+  {pin:'6630', name:'يزن محمد مصلح سلامي'},
+  {pin:'7543', name:'احمد عبدالله معطي الجدعاني'},
+  {pin:'4218', name:'راكان سمير فقيهي اليماني'},
+  {pin:'7892', name:'عبدالرحمن حسن سعد القحطاني'},
+  {pin:'4304', name:'فهد علي حسين الصومالي'},
+  {pin:'4511', name:'حسن خالد حسن صغير'},
+  {pin:'6984', name:'خالد ابراهيم منصور العامري'},
+  {pin:'5210', name:'سامي اقبال أحمد أحمد'},
+  {pin:'4447', name:'عبدالله احمد بن ابراهيم الزهراني'},
+  {pin:'5460', name:'ماجد نادر أحمد عيسى'},
+  {pin:'7907', name:'محمد سليمان ابراهيم طواشي'},
+  {pin:'8315', name:'مشاري خليل ابراهيم الزهراني'},
+  {pin:'2407', name:'مهند محمد عبدالله الشهري'},
+  {pin:'9867', name:'مؤيد مشعل علي العمري'},
+  {pin:'2335', name:'مؤيد نعيم ابراهيم بدير'},
+  {pin:'9258', name:'وليد عبدالله يحي الشهري'},
 ];
 
 // ===== STATE =====
@@ -600,14 +602,18 @@ let attendanceData   = {}; // {weekKey: {pin: {day0..4: 'p'|'a'|'l'|'e', note:''
 
 // ===== WEEK UTILS =====
 function getThisSunday() {
-  const d = new Date();
-  const day = d.getDay(); // 0=Sun
-  d.setDate(d.getDate() - day);
-  d.setHours(0,0,0,0);
-  return d;
+  const now = new Date();
+  // استخدم التاريخ المحلي لتجنب مشكلة timezone
+  const localDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const day = localDate.getDay(); // 0=Sun
+  localDate.setDate(localDate.getDate() - day);
+  return localDate;
 }
 function weekKey(d) {
-  return d.toISOString().slice(0,10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 function formatDate(d) {
   return d.toLocaleDateString('ar-SA-u-nu-latn', {day:'numeric',month:'numeric'});
@@ -642,13 +648,47 @@ function renderAll() {
   updateHijriDisplay();
 }
 
+// جدول الأسابيع الدراسية — الفصل الثاني 1447هـ
+const WEEK_STARTS_1447 = [
+  { num: 1,  date: "2026-01-18" },  // 1447/07/29هـ
+  { num: 2,  date: "2026-01-25" },  // 1447/08/06هـ
+  { num: 3,  date: "2026-02-01" },  // 1447/08/13هـ
+  { num: 4,  date: "2026-02-08" },  // 1447/08/20هـ
+  { num: 5,  date: "2026-02-15" },  // 1447/08/27هـ
+  { num: 6,  date: "2026-02-23" },  // 1447/09/06هـ
+  { num: 7,  date: "2026-03-02" },  // 1447/09/13هـ
+  // إجازة عيد الفطر
+  { num: 8,  date: "2026-03-29" },  // 1447/10/10هـ
+  { num: 9,  date: "2026-04-05" },  // 1447/10/17هـ
+  { num: 10, date: "2026-04-12" },  // 1447/10/24هـ
+  { num: 11, date: "2026-04-19" },  // 1447/11/02هـ
+  { num: 12, date: "2026-04-26" },  // 1447/11/09هـ
+  { num: 13, date: "2026-05-03" },  // 1447/11/16هـ
+  { num: 14, date: "2026-05-10" },  // 1447/11/23هـ
+  // إجازة عيد الأضحى
+  { num: 15, date: "2026-06-02" },  // 1447/12/16هـ
+  { num: 16, date: "2026-06-09" },  // 1447/12/23هـ
+];
+
+function getWeekNumber(dateStr) {
+  // ابحث عن الأسبوع الذي يقع فيه التاريخ (بين بدايته ونهايته)
+  for (let i = 0; i < WEEK_STARTS_1447.length; i++) {
+    const wkStart = WEEK_STARTS_1447[i].date;
+    const wkEnd   = WEEK_STARTS_1447[i+1]
+      ? WEEK_STARTS_1447[i+1].date
+      : "2026-07-01";
+    if (dateStr >= wkStart && dateStr < wkEnd) {
+      return WEEK_STARTS_1447[i].num;
+    }
+  }
+  return null;
+}
+
 function updateWeekHeader() {
   const days = getWeekDays();
-  // رقم الأسبوع من بداية الفصل الدراسي (11 يناير 2026)
-  const semesterStart = new Date(Date.UTC(2026, 0, 11)); // 11 يناير 2026 بتوقيت UTC
-  const startUTC = Date.UTC(currentWeekStart.getFullYear(), currentWeekStart.getMonth(), currentWeekStart.getDate());
-  const wk = Math.floor((startUTC - semesterStart) / 604800000) + 1;
-  const wkLabel = wk >= 1 ? `الأسبوع ${wk}` : 'قبل الفصل';
+  const currentKey = weekKey(currentWeekStart);
+  const wkNum = getWeekNumber(currentKey);
+  const wkLabel = wkNum ? `الأسبوع ${wkNum}` : 'إجازة / خارج الفصل';
   document.getElementById('weekLabel').textContent = wkLabel;
   document.getElementById('weekDates').textContent =
     `${days[0].dateStr} — ${days[4].dateStr}`;
@@ -881,9 +921,11 @@ async function saveAttendance() {
 async function loadAttendance(wk) {
   try {
     const res = await fetch(
-      `${SB_URL}/storage/v1/object/public/reports/${PROGRAM}/attendance/attendance-${wk}.json`
+      `${SB_URL}/storage/v1/object/reports/${PROGRAM}/attendance/attendance-${wk}.json`,
+      { headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY } }
     );
-    if (!res.ok) return;
+    // 400/404 = الملف غير موجود بعد — ابدأ بكشف فارغ
+    if (!res.ok) { renderTable(); updateStats(); return; }
     const payload = await res.json();
     if (payload.data) {
       attendanceData[wk] = payload.data;
@@ -932,7 +974,7 @@ function printAttendance() {
   const win = window.open('','_blank');
   win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
     <meta charset="UTF-8">
-    <title>كشف حضور — يسير — ${wk}</title>
+    <title>كشف حضور — الدمج الفكري — ${wk}</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
       body{font-family:'Cairo',sans-serif;padding:24px;color:#1a1a2e;direction:rtl;}
@@ -950,7 +992,7 @@ function printAttendance() {
     </style>
   <link rel="stylesheet" href="assets/css/common-ui.css">
 </head><body>
-    <h2>📘 كشف حضور — برنامج يسير التعليمي</h2>
+    <h2>🧑🏻‍🏫 كشف حضور — برنامج الدمج الفكري</h2>
     <div class="meta">
       مدرسة مكة المكرمة المتوسطة | ${sem} | الأسبوع: ${days[0].dateStr} — ${days[4].dateStr}
     </div>
@@ -1017,11 +1059,21 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+
+function goToCurrentWeek() {
+  currentWeekStart = getThisSunday();
+  document.getElementById('weekStart').value = weekKey(currentWeekStart);
+  renderAll();
+  loadAttendance(weekKey(currentWeekStart));
+}
+
 // ===== INIT =====
 window.addEventListener('load', () => {
   initCanvas('teacherCanvas','teacherWrap','tchPlaceholder');
+  // تعيين التاريخ في الـ input تلقائياً
+  currentWeekStart = getThisSunday();
+  document.getElementById('weekStart').value = weekKey(currentWeekStart);
   renderAll();
-  // حمّل بيانات الأسبوع الحالي من السحابة
   loadAttendance(weekKey(currentWeekStart));
 });
 window.addEventListener('resize', () => {
