@@ -1727,6 +1727,13 @@ async function checkPin() {
 
     if (res.ok) {
       const data = await res.json();
+      if (data && data.status === 'archived') {
+        errMsg.textContent = '📦 هذا الملف مؤرشف (تم نقل الطالب لمرحلة أخرى). للاستفسار يرجى التواصل مع الإدارة.';
+        errMsg.classList.add('show');
+        pinInput.value = '';
+        if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = '🔓 دخول البوابة'; }
+        return;
+      }
       if (data && data.name) {
         STUDENTS[enteredPin] = {
           name: data.name || '',
