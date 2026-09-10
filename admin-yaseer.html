@@ -2551,7 +2551,7 @@ function openCellEditor(day, period) {
   editingCell = { day, period };
   const cell = timetableData[day]?.[period] || { teacher: '', students: [] };
   const periodInfo = PERIODS.find(p => p.num === period);
-  const allPins = Object.keys(STUDENTS);
+  const allPins = Object.keys(STUDENTS).filter(pin => STUDENTS[pin].status !== 'archived');
 
   const html = `
     <div style="background:linear-gradient(135deg,#2E2148,#3F2E63);padding:18px 22px;border-radius:20px 20px 0 0;">
@@ -2674,7 +2674,7 @@ async function saveCellEdit() {
   if (!editingCell) return;
   const { day, period } = editingCell;
   const teacher = document.querySelector('input[name="cell-teacher"]:checked')?.value || '';
-  const allPins = Object.keys(STUDENTS);
+  const allPins = Object.keys(STUDENTS).filter(pin => STUDENTS[pin].status !== 'archived');
   const students = [];
   allPins.forEach(pin => {
     const cb = document.querySelector(`input[data-pin="${pin}"]`);
@@ -3184,6 +3184,7 @@ function populateUploadStudentSelectYS() {
   if (sel.options.length > 1) return;
   const byGrade = {};
   Object.entries(STUDENTS).forEach(([pin, s]) => {
+    if (s.status === 'archived') return; // استبعاد الطلاب المؤرشفين
     if (!byGrade[s.grade]) byGrade[s.grade] = [];
     byGrade[s.grade].push({ pin, name: s.name });
   });
