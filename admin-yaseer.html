@@ -1016,8 +1016,12 @@
 
     <!-- قائمة الطلاب -->
     <div class="admin-tab-pane active" id="admin-tab-list">
-      <div style="margin-bottom:14px;">
-        <input type="text" class="form-input" id="admin-search" placeholder="🔍 ابحث باسم الطالب أو رمز الدخول..." oninput="renderStudentCards()" style="max-width:400px;">
+      <div style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <input type="text" class="form-input" id="admin-search" placeholder="🔍 ابحث باسم الطالب أو رمز الدخول..." oninput="renderStudentCards()" style="max-width:400px;flex:1;min-width:220px;">
+        <div style="display:flex;gap:4px;background:#F7F5FC;border-radius:10px;padding:4px;">
+          <button class="admin-tab-btn active" id="stu-view-active-btn" onclick="setStudentListView('active')" style="font-size:0.78rem;padding:7px 14px;">🟢 النشطون</button>
+          <button class="admin-tab-btn" id="stu-view-archived-btn" onclick="setStudentListView('archived')" style="font-size:0.78rem;padding:7px 14px;">📦 الأرشيف</button>
+        </div>
       </div>
       <div class="students-grid" id="students-grid"></div>
     </div>
@@ -1296,8 +1300,9 @@
       </div>
     </div>
 
-    <div class="form-actions">
-      <button class="btn-delete-student" onclick="deleteStudent()">🗑️ حذف الطالب</button>
+    <div class="form-actions" style="flex-wrap:wrap;">
+      <button class="btn-delete-student" onclick="deleteStudent()">🗑️ حذف نهائي</button>
+      <button id="btn-archive-toggle" class="btn-delete-student" style="background:#EAE1F7;color:#3F2E63;" onclick="handleArchiveToggle()">📦 نقل إلى الأرشيف</button>
       <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
       <button class="btn-save" onclick="saveStudentEdits()">💾 حفظ التعديلات</button>
     </div>
@@ -1970,7 +1975,7 @@ async function syncFromSupabase() {
       if (cfg && cfg.students && Array.isArray(cfg.students)) {
         cfg.students.forEach(s => {
           if (!STUDENTS[s.pin]) {
-            STUDENTS[s.pin] = { name: s.name||'', id_full: s.id_full||'', grade: s.grade||'', phone: s.phone||'', plan:[], reports:[], followup:[] };
+            STUDENTS[s.pin] = { name: s.name||'', id_full: s.id_full||'', grade: s.grade||'', phone: s.phone||'', plan:[], reports:[], followup:[], status:'active' };
           }
         });
       }
@@ -2010,6 +2015,9 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].program_place  = sd('program_place');
       STUDENTS[pin].program_start  = sd('program_start');
       STUDENTS[pin].program_end    = sd('program_end');
+      STUDENTS[pin].status         = data.status || 'active';
+      STUDENTS[pin].archive_note   = sd('archive_note');
+      STUDENTS[pin].archived_at    = sd('archived_at');
     }
   } catch(e) { /* ملف غير موجود */ }
 }
@@ -2045,6 +2053,9 @@ async function upsertToSupabase(pin, studentData) {
       program_place:  studentData.program_place || '',
       program_start:  studentData.program_start || '',
       program_end:  studentData.program_end || '',
+      status:  studentData.status || 'active',
+      archive_note: studentData.archive_note || '',
+      archived_at:  studentData.archived_at || '',
     });
     const blob = new Blob([jsonStr], {type: 'application/json'});
     const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
@@ -2103,6 +2114,7 @@ async function saveAllStudents() {
         status_health: s.status_health || '', diagnosis: s.diagnosis || '',
         program_place: s.program_place || '', program_start: s.program_start || '',
         program_end: s.program_end || '',
+        status: s.status || 'active', archive_note: s.archive_note || '', archived_at: s.archived_at || '',
       });
       const blob = new Blob([jsonStr], {type: 'application/json'});
       const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
@@ -2700,53 +2712,109 @@ async function resetTimetable() {
   renderSchedule();
 }
 
+let studentListView = 'active'; // 'active' | 'archived'
+
+function setStudentListView(view) {
+  studentListView = view;
+  document.getElementById('stu-view-active-btn')?.classList.toggle('active', view === 'active');
+  document.getElementById('stu-view-archived-btn')?.classList.toggle('active', view === 'archived');
+  renderStudentCards();
+}
+
 function renderStudentCards() {
   const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
   const grid = document.getElementById('students-grid');
-  const entries = Object.entries(STUDENTS).filter(([pin, s]) =>
-    s.name.toLowerCase().includes(search) || pin.includes(search)
-  );
+  const wantArchived = studentListView === 'archived';
+  const entries = Object.entries(STUDENTS).filter(([pin, s]) => {
+    const isArchived = s.status === 'archived';
+    if (isArchived !== wantArchived) return false;
+    return s.name.toLowerCase().includes(search) || pin.includes(search);
+  });
 
   // ترتيب حسب الصف
   entries.sort((a, b) => a[1].grade.localeCompare(b[1].grade, 'ar'));
 
-  grid.innerHTML = entries.map(([pin, s]) => `
-    <div class="stu-card" style="flex-direction:column;align-items:stretch;cursor:default;padding:0;overflow:hidden;">
-      <!-- رأس البطاقة -->
-      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:linear-gradient(135deg,#FBFAFE,#EAE1F7);border-bottom:1px solid var(--border);" onclick="openEditModal('${pin}')">
-        <div class="stu-card-avatar">🎓</div>
-        <div style="flex:1;min-width:0;">
-          <div class="stu-card-name">${s.name}</div>
-          <div class="stu-card-meta">${s.grade}</div>
-          <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-            <span class="stu-card-pin">${pin}</span>
-            <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
+  if (!entries.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#9ca3af;">
+      <div style="font-size:2.2rem;margin-bottom:10px;">${wantArchived ? '📦' : '🎓'}</div>
+      <div style="font-weight:700;font-size:0.9rem;">${wantArchived ? 'لا يوجد طلاب في الأرشيف' : 'لا يوجد طلاب مطابقون'}</div>
+    </div>`;
+  } else {
+    grid.innerHTML = entries.map(([pin, s]) => `
+      <div class="stu-card" style="flex-direction:column;align-items:stretch;cursor:default;padding:0;overflow:hidden;${wantArchived ? 'opacity:0.85;' : ''}">
+        <!-- رأس البطاقة -->
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:${wantArchived ? 'linear-gradient(135deg,#F5F5F5,#E5E5E5)' : 'linear-gradient(135deg,#FBFAFE,#EAE1F7)'};border-bottom:1px solid var(--border);" onclick="openEditModal('${pin}')">
+          <div class="stu-card-avatar">${wantArchived ? '📦' : '🎓'}</div>
+          <div style="flex:1;min-width:0;">
+            <div class="stu-card-name">${s.name}</div>
+            <div class="stu-card-meta">${s.grade}</div>
+            <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+              <span class="stu-card-pin">${pin}</span>
+              <span style="font-size:0.7rem;color:var(--muted);">${s.phone || '—'}</span>
+            </div>
+            ${wantArchived ? `<div style="margin-top:4px;font-size:0.7rem;color:#8B6ABF;">📦 ${s.archive_note || 'مؤرشف'}${s.archived_at ? ' — ' + s.archived_at : ''}</div>` : ''}
+          </div>
+          <div style="color:var(--muted);font-size:1rem;">✏️</div>
+        </div>
+        <!-- المعلومات الشخصية -->
+        <div style="padding:12px 16px;font-size:0.75rem;border-bottom:1px solid var(--border);background:#FBFAFE;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div style="color:var(--muted);">تاريخ الميلاد: <span style="color:var(--text);font-weight:700;">${s.birthdate || '—'}</span></div>
+            <div style="color:var(--muted);">الجنسية: <span style="color:var(--text);font-weight:700;">${s.nationality || '—'}</span></div>
+            <div style="color:var(--muted);">العمر: <span style="color:var(--text);font-weight:700;">${s.age || '—'}</span></div>
+            <div style="color:var(--muted);">درجة الذكاء: <span style="color:var(--text);font-weight:700;">${s.iq || '—'}</span></div>
+            <div style="color:var(--muted);">العنوان: <span style="color:var(--text);font-weight:700;">${s.address || '—'}</span></div>
+            <div style="color:var(--muted);">رقم الجوال: <span style="color:var(--text);font-weight:700;">${s.phone || '—'}</span></div>
+            <div style="color:var(--muted);grid-column:1/-1;">التشخيص: <span style="color:#129E7C;font-weight:700;">${s.diagnosis || '—'}</span></div>
           </div>
         </div>
-        <div style="color:var(--muted);font-size:1rem;">✏️</div>
-      </div>
-      <!-- المعلومات الشخصية -->
-      <div style="padding:12px 16px;font-size:0.75rem;border-bottom:1px solid var(--border);background:#FBFAFE;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-          <div style="color:var(--muted);">تاريخ الميلاد: <span style="color:var(--text);font-weight:700;">${s.birthdate || '—'}</span></div>
-          <div style="color:var(--muted);">الجنسية: <span style="color:var(--text);font-weight:700;">${s.nationality || '—'}</span></div>
-          <div style="color:var(--muted);">العمر: <span style="color:var(--text);font-weight:700;">${s.age || '—'}</span></div>
-          <div style="color:var(--muted);">درجة الذكاء: <span style="color:var(--text);font-weight:700;">${s.iq || '—'}</span></div>
-          <div style="color:var(--muted);">العنوان: <span style="color:var(--text);font-weight:700;">${s.address || '—'}</span></div>
-          <div style="color:var(--muted);">رقم الجوال: <span style="color:var(--text);font-weight:700;">${s.phone || '—'}</span></div>
-          <div style="color:var(--muted);grid-column:1/-1;">التشخيص: <span style="color:#129E7C;font-weight:700;">${s.diagnosis || '—'}</span></div>
+        <!-- أزرار -->
+        <div style="display:flex;gap:8px;padding:10px 16px;background:#fff;">
+          ${wantArchived
+            ? `<button onclick="restoreStudent('${pin}')" style="flex:1;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">↩️ استعادة</button>
+               <button onclick="printStudentCard('${pin}')" style="flex:1;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">🖨️ طباعة</button>`
+            : `<button onclick="saveOneStudent('${pin}')" style="flex:1;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
+               <button onclick="printStudentCard('${pin}')" style="flex:1;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">🖨️ طباعة</button>`
+          }
         </div>
       </div>
-      <!-- أزرار الحفظ والطباعة -->
-      <div style="display:flex;gap:8px;padding:10px 16px;background:#fff;">
-        <button onclick="saveOneStudent('${pin}')" style="flex:1;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">💾 حفظ</button>
-        <button onclick="printStudentCard('${pin}')" style="flex:1;background:linear-gradient(135deg,#3F2E63,#8B6ABF);color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;">🖨️ طباعة</button>
-      </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
   // إضافة عداد
-  document.getElementById('admin-student-count').textContent = Object.keys(STUDENTS).length + ' طالب';
+  const activeCount = Object.values(STUDENTS).filter(s => s.status !== 'archived').length;
+  const archivedCount = Object.values(STUDENTS).filter(s => s.status === 'archived').length;
+  document.getElementById('admin-student-count').textContent =
+    wantArchived ? (archivedCount + ' مؤرشف') : (activeCount + ' طالب');
+}
+
+// ===== نقل طالب إلى الأرشيف (بدون حذف بياناته) =====
+function archiveStudent(pin) {
+  const s = STUDENTS[pin];
+  if (!s) return;
+  const note = prompt('سبب النقل للأرشيف (مثال: انتقل للمرحلة الثانوية):', 'متخرج / منقول للمرحلة الثانوية');
+  if (note === null) return; // ألغى المستخدم
+  s.status = 'archived';
+  s.archive_note = note.trim();
+  s.archived_at = new Date().toLocaleDateString('ar-SA');
+  closeModal();
+  renderStudentCards();
+  showToast('⏳ جاري النقل للأرشيف...');
+  upsertToSupabase(pin, s).then(() => showToast('📦 تم نقل ' + s.name + ' إلى الأرشيف'));
+}
+
+// ===== إعادة طالب من الأرشيف للقائمة النشطة =====
+function restoreStudent(pin) {
+  const s = STUDENTS[pin];
+  if (!s) return;
+  if (!confirm(`إعادة الطالب "${s.name}" إلى القائمة النشطة؟`)) return;
+  s.status = 'active';
+  s.archive_note = '';
+  s.archived_at = '';
+  closeModal();
+  renderStudentCards();
+  showToast('⏳ جاري الاستعادة...');
+  upsertToSupabase(pin, s).then(() => showToast('✅ تم إرجاع ' + s.name + ' إلى القائمة النشطة'));
 }
 
 // حفظ طالب واحد
@@ -2763,6 +2831,7 @@ async function saveOneStudent(pin) {
     status_health: s.status_health || '', diagnosis: s.diagnosis || '',
     program_place: s.program_place || '', program_start: s.program_start || '',
     program_end: s.program_end || '',
+    status: s.status || 'active', archive_note: s.archive_note || '', archived_at: s.archived_at || '',
   });
   const blob = new Blob([jsonStr], {type: 'application/json'});
   const res = await fetch(`${SB_URL}/storage/v1/object/reports/yaseer/data/student-${pin}.json`, {
@@ -2861,8 +2930,28 @@ async function openEditModal(pin) {
   document.getElementById('edit-program-place').value = s.program_place || '';
   document.getElementById('edit-program-start').value = s.program_start || '';
   document.getElementById('edit-program-end').value = s.program_end || '';
+  // زر الأرشفة / الاستعادة
+  const archBtn = document.getElementById('btn-archive-toggle');
+  if (archBtn) {
+    if (s.status === 'archived') {
+      archBtn.textContent = '↩️ إعادة من الأرشيف';
+      archBtn.style.background = '#d1fae5';
+      archBtn.style.color = '#16a34a';
+    } else {
+      archBtn.textContent = '📦 نقل إلى الأرشيف';
+      archBtn.style.background = '#EAE1F7';
+      archBtn.style.color = '#3F2E63';
+    }
+  }
   openEditTab('basic', document.querySelector('#edit-modal .admin-tab-btn'));
   document.getElementById('edit-modal').classList.add('open');
+}
+
+function handleArchiveToggle() {
+  if (!editingPin) return;
+  const s = STUDENTS[editingPin];
+  if (s.status === 'archived') restoreStudent(editingPin);
+  else archiveStudent(editingPin);
 }
 
 function openEditTab(id, btn) {
@@ -3045,7 +3134,7 @@ function addNewStudent() {
     return;
   }
 
-  STUDENTS[newPin] = { name: newName, id_full: newId, grade: newGrade, phone: newPhone, plan: [], reports: [], followup: [] };
+  STUDENTS[newPin] = { name: newName, id_full: newId, grade: newGrade, phone: newPhone, plan: [], reports: [], followup: [], status: 'active' };
 
   // إعادة ضبط النموذج
   ['new-name','new-id','new-grade','new-phone','new-pin-preview'].forEach(fieldId => {
