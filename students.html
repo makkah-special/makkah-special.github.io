@@ -1255,6 +1255,9 @@ async function sbSaveSignature(pin, name, grade, signData) {
 const BASE_URL = "https://makkah-special.github.io/";
 
 // STUDENTS محذوف من الكود — التحقق يتم عبر Supabase
+// تقويم جدة 1448: بداية الدراسة 30/8/2026 (17 ربيع الأول)، البرنامج يبدأ بعد الأسبوع الأول، والنهاية 1/7/2027 (26 محرم 1449)
+const PROG_START_1448 = '2026-09-06';
+const PROG_END_1448 = '2027-07-01';
 const STUDENTS = {};
 
 // =====================================================
@@ -1443,8 +1446,8 @@ function loadStudent(pin) {
     ${s.iq ? `<tr><th>درجة الذكاء</th><td>${s.iq}</td></tr>` : ''}
     ${s.diagnosis ? `<tr><th>التشخيص</th><td>${s.diagnosis}</td></tr>` : ''}
     ${s.program_place ? `<tr><th>المكان التربوي</th><td>${s.program_place}</td></tr>` : ''}
-    ${s.program_start ? `<tr><th>تاريخ بدء البرنامج</th><td>${s.program_start}</td></tr>` : ''}
-    ${s.program_end ? `<tr><th>تاريخ إنهاء البرنامج</th><td>${s.program_end}</td></tr>` : ''}
+    <tr><th>تاريخ بدء البرنامج</th><td>${PROG_START_1448}</td></tr>
+    <tr><th>تاريخ إنهاء البرنامج</th><td>${PROG_END_1448}</td></tr>
     ${s.status_health ? `<tr><th>الوضع الصحي</th><td>${s.status_health}</td></tr>` : ''}
     ${s.status_psych ? `<tr><th>الوضع النفسي</th><td>${s.status_psych}</td></tr>` : ''}
     ${s.status_social ? `<tr><th>الوضع الاجتماعي</th><td>${s.status_social}</td></tr>` : ''}
@@ -1833,8 +1836,8 @@ async function loadStudentDataFromStorage(pin) {
       STUDENTS[pin].status_health  = sd('status_health');
       STUDENTS[pin].diagnosis      = sd('diagnosis');
       STUDENTS[pin].program_place  = sd('program_place');
-      STUDENTS[pin].program_start  = sd('program_start');
-      STUDENTS[pin].program_end    = sd('program_end');
+      STUDENTS[pin].program_start  = PROG_START_1448;
+      STUDENTS[pin].program_end    = PROG_END_1448;
       STUDENTS[pin].reports        = data.reports || STUDENTS[pin].reports || [];
       STUDENTS[pin].iep            = data.iep || STUDENTS[pin].iep || {};
       STUDENTS[pin].performance    = data.performance || STUDENTS[pin].performance || {};
@@ -2854,10 +2857,18 @@ if ("serviceWorker" in navigator) {
   function lvl(g){g=String(g||'');return g.indexOf('الأول')>-1?1:g.indexOf('الثاني')>-1?2:g.indexOf('الثالث')>-1?3:0;}
   function esc(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function meta(k){for(var i=0;i<ALL.length;i++)if(ALL[i].key===k)return ALL[i];return null;}
-  function defaults(g){var l=lvl(g),subs=[{key:'arabic',name:ALL[0].name,icon:'📖'},{key:'math',name:'الرياضيات',icon:'🔢'}],d={arabic:{strengths:DEF.arabic.s.slice(),needs:DEF.arabic.n.slice()},math:{strengths:DEF.math.s.slice(),needs:DEF.math.n.slice()}};
-    if(l===1)d.arabic.needs.unshift('إتقان مهارات القراءة الأساسية');
-    if(l===3){d.arabic.strengths.push('يقرأ نصوصاً قصيرة بطلاقة نسبية');d.math.strengths.push('يستخدم العمليات الأربع في مواقف بسيطة');}
-    return {subs:subs,data:d};}
+  var POOL={
+    arabic:{s:['يتعرف على الحروف الهجائية بأشكالها المختلفة','يقرأ كلمات مألوفة بطلاقة مقبولة','يقرأ جملاً قصيرة بمساعدة','يكتب اسمه وبعض الكلمات بشكل صحيح','يستمع ويتابع القصص القصيرة بانتباه','يجيب عن أسئلة بسيطة حول نص مسموع','يميز بين الحروف المتشابهة نطقاً','يتحدث بجمل مفهومة للتعبير عن احتياجاته','ينسخ الكلمات والجمل بخط مقروء','يربط الصورة بالكلمة المناسبة'],
+            n:['الطلاقة في القراءة الجهرية','الكتابة الإملائية','فهم المقروء والإجابة عن الأسئلة','التمييز بين الحروف المتشابهة في الشكل','قراءة الكلمات المشتملة على المدود','تكوين جملة مفيدة كتابياً','ضبط الحركات القصيرة والتنوين','التعبير الشفهي المتسلسل عن الأحداث','المحافظة على الأسطر والمسافات أثناء الكتابة','قراءة الكلمات غير المألوفة']},
+    math:{s:['يعد ويقارن الأعداد ضمن المدى المستهدف','ينفذ عمليات الجمع البسيطة','يتعرف على الأشكال الهندسية','يتعرف على فئات النقود ويستخدمها','يرتب الأعداد تصاعدياً وتنازلياً','يقرأ الساعة على الأوقات الكاملة','يقيس الأطوال باستخدام وحدات غير قياسية','يحل مسائل جمع مصورة بنجاح','يميز الأعداد الفردية والزوجية','يتعرف على قيمة المنزلة (الآحاد والعشرات)'],
+          n:['عمليتا الطرح والضرب','حل المسائل اللفظية','إدراك القيمة المنزلية','حفظ جدول الضرب','الجمع والطرح مع الاستلام والاستلاف','قراءة الساعة بالدقائق','التعامل مع الكسور البسيطة','التحويل بين وحدات القياس','تقدير الأعداد والتقريب','استخدام النقود في مواقف شرائية']},
+    other:{s:['يشارك في الأنشطة الصفية','يلتزم بالتعليمات','يتعاون مع زملائه'],n:['تثبيت المفاهيم الأساسية','الاستمرار في الانتباه أثناء الشرح','المراجعة المنتظمة']}
+  };
+  function hash(s){var h=2166136261;s=String(s);for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+  function pick(arr,n,seed){var a=arr.slice(),h=seed,out=[];for(var i=0;i<n&&a.length;i++){h=(Math.imul(h,1103515245)+12345)>>>0;out.push(a.splice(h%a.length,1)[0]);}return out;}
+  function defaults(g,pin){var seed=hash((pin||'')+'|'+(g||''));
+    var d={arabic:{strengths:pick(POOL.arabic.s,3,seed),needs:pick(POOL.arabic.n,3,seed+7)},math:{strengths:pick(POOL.math.s,3,seed+13),needs:pick(POOL.math.n,3,seed+29)}};
+    return {subs:[{key:'arabic',name:ALL[0].name,icon:'📖'},{key:'math',name:'الرياضيات',icon:'🔢'}],data:d};}
   function key(){return 'sw_edit_'+(currentStudent&&currentStudent.pin||'x');}
   var state=null,statePin=null;
   function load(){var st=currentStudent,saved=null;statePin=st.pin;
@@ -2868,7 +2879,7 @@ if ("serviceWorker" in navigator) {
     else if(keys.length){var subs=[];['arabic','math'].concat(keys).forEach(function(k){if(subs.some(function(s){return s.key===k;}))return;var m=meta(k);subs.push({key:k,name:m?m.name:k,icon:m?m.icon:'📘'});});
       var dd=JSON.parse(JSON.stringify(srv));subs.forEach(function(s){dd[s.key]=dd[s.key]||{strengths:[],needs:[]};});
       state={subs:subs,data:dd,src:'من تقييم المعلم',savedAt:(st.strengthsMeta||{}).date};}
-    else{var d=defaults(st.grade);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};}}
+    else{var d=defaults(st.grade,st.pin);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};}}
   function rows(k,t,arr){return arr.map(function(v,i){return '<div class="sw2-row"><span class="sw2-dot '+(t==='s'?'g':'r')+'"></span><input class="sw2-in" value="'+esc(v)+'" oninput="swEdit(\''+k+'\',\''+t+'\','+i+',this.value)"><button class="sw2-x" onclick="swDel(\''+k+'\',\''+t+'\','+i+')" title="حذف">✕</button></div>';}).join('');}
   function render(){var el=document.getElementById('sw-body');if(!el||!currentStudent)return;if(!state||statePin!==currentStudent.pin)load();
     var used={};state.subs.forEach(function(s){used[s.key]=1;});
@@ -2892,25 +2903,25 @@ if ("serviceWorker" in navigator) {
     try{localStorage.setItem(key(),JSON.stringify({subs:state.subs,data:d,savedAt:state.savedAt}));}catch(e){}
     render();if(typeof showToast==='function')showToast('✅ تم الحفظ على هذا الجهاز');};
   window.swReset=function(){if(!confirm('استعادة القيم الافتراضية؟ ستُفقد تعديلاتك.'))return;try{localStorage.removeItem(key());}catch(e){}
-    var d=defaults(currentStudent.grade);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};render();};
+    var d=defaults(currentStudent.grade,currentStudent.pin);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};render();};
 
   // ===== قالب الطباعة الموحّد (نفس هوية الموقع) =====
   function shell(title,sub,st,inner,draft){
     var today=new Date().toLocaleDateString('ar-SA');
     return '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>'+esc(title)+' — '+esc(st.name)+'</title><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"><style>'+
-    '*{box-sizing:border-box}@page{size:A4;margin:12mm}body{font-family:Cairo,Tahoma,sans-serif;margin:0;background:#F7F5FC;color:#221335;-webkit-print-color-adjust:exact;print-color-adjust:exact}'+
+    '*{box-sizing:border-box}@page{size:A4;margin:8mm}body{font-family:Cairo,Tahoma,sans-serif;margin:0;background:#F7F5FC;color:#221335;-webkit-print-color-adjust:exact;print-color-adjust:exact}'+
     '.page{max-width:780px;margin:0 auto;background:#fff;border:1px solid #DCD2EE;border-radius:16px;overflow:hidden}'+
-    '.hd{background:linear-gradient(135deg,#3F2E63,#6B4C9A);color:#fff;padding:18px 22px;display:flex;align-items:center;gap:14px;border-bottom:4px solid #D7A24A}'+
-    '.hd img{height:54px;background:#fff;border-radius:10px;padding:4px}.hd .t{flex:1}.hd h1{font-family:Tajawal,sans-serif;font-size:1.35rem;margin:0 0 3px}.hd p{margin:0;font-size:.82rem;opacity:.9}'+
+    '.hd{background:linear-gradient(135deg,#3F2E63,#6B4C9A);color:#fff;padding:12px 22px;display:flex;align-items:center;gap:14px;border-bottom:4px solid #D7A24A}'+
+    '.hd img.moe{height:58px;width:auto;background:none;border:0;padding:0}.hd .t{flex:1}.hd h1{font-family:Tajawal,sans-serif;font-size:1.35rem;margin:0 0 3px}.hd p{margin:0;font-size:.82rem;opacity:.9}'+
     '.who{display:flex;flex-wrap:wrap;gap:8px 22px;background:#F7F5FC;border-bottom:1px solid #EAE1F7;padding:10px 22px;font-size:.88rem}.who b{color:#3F2E63}'+
-    '.bd{padding:18px 22px}.draft{background:#FFF8E6;border:1px solid #D7A24A;color:#8a5a00;border-radius:8px;text-align:center;padding:5px;font-size:.8rem;margin-bottom:12px}'+
-    'table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{border:1px solid #DCD2EE;padding:8px 10px;text-align:right;vertical-align:top}th{background:#F1ECFA;color:#3F2E63;width:30%;font-weight:700}'+
+    '.bd{padding:12px 22px}.draft{background:#FFF8E6;border:1px solid #D7A24A;color:#8a5a00;border-radius:8px;text-align:center;padding:5px;font-size:.8rem;margin-bottom:12px}'+
+    'table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{border:1px solid #DCD2EE;padding:4px 8px;text-align:right;vertical-align:top}th{background:#F1ECFA;color:#3F2E63;width:17%;font-weight:700}'+
     'table.sw th{background:#3F2E63;color:#fff;width:auto;text-align:center}table.sw td.h{background:#F1ECFA;color:#3F2E63;font-weight:700;width:18%}table.sw td.g li::marker{color:#2e7d32}table.sw td.r li::marker{color:#D7A24A}ul{margin:0;padding-right:18px}li{margin-bottom:3px}tr{page-break-inside:avoid}'+
-    '.sig{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:.88rem;color:#6E5F82}.sig span{flex:1;border-top:1px solid #DCD2EE;padding-top:8px;text-align:center}'+
+    '.sig{display:flex;justify-content:space-between;gap:20px;margin-top:22px;font-size:.88rem;color:#6E5F82}.sig span{flex:1;border-top:1px solid #DCD2EE;padding-top:8px;text-align:center}'+
     '.ft{border-top:1px solid #EAE1F7;background:#FBF9FE;padding:8px 22px;font-size:.75rem;color:#6E5F82;display:flex;justify-content:space-between}'+
     '@media print{body{background:#fff}.page{border:0;border-radius:0;max-width:none}}</style></head><body><div class="page">'+
-    '<div class="hd"><img src="moe-logo.png" alt=""><div class="t"><h1>'+esc(title)+'</h1><p>'+esc(sub)+'</p></div><img src="logo.png" alt="" onerror="this.style.display=\'none\'"></div>'+
-    '<div class="who"><span>الطالب: <b>'+esc(st.name)+'</b></span><span>الصف: <b>'+esc(st.grade)+'</b></span><span>التاريخ: <b>'+today+'</b></span></div>'+
+    '<div class="hd"><img class="moe" src="moe-logo.png" alt="وزارة التعليم"><div class="t"><h1>'+esc(title)+'</h1><p>'+esc(sub)+'</p></div></div>'+
+    '<div class="who"><span>الطالب: <b>'+esc(st.name)+'</b></span><span>الصف: <b>'+esc(st.grade)+'</b></span></div>'+
     '<div class="bd">'+(draft?'<div class="draft">مسودة — لم تُعتمد بعد</div>':'')+inner+'</div>'+
     '<div class="ft"><span>مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</span><span>منصة مَعَاك</span></div></div>'+
     '<script>window.onload=function(){setTimeout(function(){window.print()},500)}<\/script></body></html>';}
@@ -2922,8 +2933,8 @@ if ("serviceWorker" in navigator) {
     var inner='<table class="sw"><tr><th>المادة</th><th>💪 جوانب القوة</th><th>🎯 جوانب تحتاج دعماً</th></tr>'+body+'</table><div class="sig"><span>المعلم</span><span>مشرف البرنامج</span><span>ولي الأمر</span></div>';
     openPrint(shell('جوانب القوة والاحتياج','برنامج يسير — العام الدراسي 1448',st,inner,state.src==='مسودة افتراضية'));};
   window.printStudentData=function(){var s=currentStudent;if(!s)return;
-    var r=[['اسم الطالب',s.name],['رقم السجل المدني',s.id_full],['الصف الدراسي',s.grade],['تاريخ الميلاد',s.birthdate],['الجنسية',s.nationality],['العمر',s.age],['العنوان',s.address],['رقم الجوال',s.phone],['نسبة الذكاء',s.iq],['التشخيص',s.diagnosis],['مكان البرنامج',s.program_place],['بداية البرنامج',s.program_start],['نهاية البرنامج',s.program_end],['الحالة الصحية',s.status_health],['الحالة النفسية',s.status_psych],['الحالة الاجتماعية',s.status_social],['ترتيب الطالب بين إخوته',s.sibling_order],['المستوى الاقتصادي',s.economic_level],['تعليم الأب',s.father_edu],['تعليم الأم',s.mother_edu]].filter(function(x){return x[1]!==undefined&&x[1]!==null&&String(x[1]).trim()!=='';});
-    var inner='<table>'+r.map(function(x){return '<tr><th>'+x[0]+'</th><td>'+esc(x[1])+'</td></tr>';}).join('')+'</table><div class="sig"><span>مشرف البرنامج</span><span>توقيع ولي الأمر</span></div>';
+    var r=[['اسم الطالب',s.name],['رقم السجل المدني',s.id_full],['الصف الدراسي',s.grade],['تاريخ الميلاد',s.birthdate],['الجنسية',s.nationality],['العمر',s.age],['العنوان',s.address],['رقم الجوال',s.phone],['نسبة الذكاء',s.iq],['التشخيص',s.diagnosis],['مكان البرنامج',s.program_place],['بداية البرنامج',PROG_START_1448],['نهاية البرنامج',PROG_END_1448],['الحالة الصحية',s.status_health],['الحالة النفسية',s.status_psych],['الحالة الاجتماعية',s.status_social],['ترتيب الطالب بين إخوته',s.sibling_order],['المستوى الاقتصادي',s.economic_level],['تعليم الأب',s.father_edu],['تعليم الأم',s.mother_edu]].filter(function(x){return x[1]!==undefined&&x[1]!==null&&String(x[1]).trim()!=='';});
+    var h='';for(var q=0;q<r.length;q+=2){var a=r[q],b=r[q+1];h+='<tr><th>'+a[0]+'</th><td>'+esc(a[1])+'</td>'+(b?'<th>'+b[0]+'</th><td>'+esc(b[1])+'</td>':'<td colspan="2"></td>')+'</tr>';}var inner='<table>'+h+'</table><div class="sig"><span>مشرف البرنامج</span><span>توقيع ولي الأمر</span></div>';
     openPrint(shell('بيانات الطالب','برنامج يسير — العام الدراسي 1448',s,inner,false));};
   function watch(){var t=document.getElementById('info-tbl');if(!t||!window.MutationObserver)return;new MutationObserver(function(){render();}).observe(t,{childList:true});render();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch);else watch();
