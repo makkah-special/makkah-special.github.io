@@ -470,8 +470,10 @@ tbody tr:last-child { border-bottom:none; }
   <div class="toolbar-group">
     <label>📚 الفصل:</label>
     <select id="semesterSelect">
+      <option value="الفصل الأول 1448" selected>الفصل الأول 1448</option>
+      <option value="الفصل الثاني 1448">الفصل الثاني 1448</option>
       <option value="الفصل الأول 1447">الفصل الأول 1447</option>
-      <option value="الفصل الثاني 1447" selected>الفصل الثاني 1447</option>
+      <option value="الفصل الثاني 1447">الفصل الثاني 1447</option>
     </select>
   </div>
   <div class="toolbar-group" style="margin-right:auto;">
@@ -1041,7 +1043,7 @@ function printAttendance() {
     </div>
     <div class="hijri-field">
       <label>السنة</label>
-      <input type="number" id="hijriYear" min="1400" max="1500" value="1447" placeholder="سنة">
+      <input type="number" id="hijriYear" min="1400" max="1500" value="1448" placeholder="سنة">
     </div>
   </div>
   <div class="hijri-popup-btns">
@@ -1092,7 +1094,7 @@ function getHijriParts(d) {
       {day:'numeric', month:'numeric', year:'numeric'});
     const p = s.split('/'); // M/D/Y
     return {m: parseInt(p[0]), d: parseInt(p[1]), y: parseInt(p[2])};
-  } catch(e) { return {m:9, d:1, y:1447}; }
+  } catch(e) { return {m:9, d:1, y:1448}; }
 }
 
 function getHijriLabel(d) {

@@ -1240,11 +1240,11 @@
         </div>
         <div class="form-group">
           <label class="form-label">تاريخ بدء البرنامج</label>
-          <input type="text" class="form-input" id="edit-program-start" placeholder="1/1/1447هـ">
+          <input type="text" class="form-input" id="edit-program-start" placeholder="1/1/1448هـ">
         </div>
         <div class="form-group">
           <label class="form-label">تاريخ إنهاء البرنامج</label>
-          <input type="text" class="form-input" id="edit-program-end" placeholder="1/5/1447هـ">
+          <input type="text" class="form-input" id="edit-program-end" placeholder="1/5/1448هـ">
         </div>
       </div>
     </div>
@@ -1261,7 +1261,7 @@
 <div class="success-toast" id="success-toast">✅ تم الحفظ بنجاح</div>
 
 <footer style="background:var(--primary);color:rgba(255,255,255,0.6);text-align:center;padding:18px;font-size:0.78rem;border-top:3px solid var(--accent);margin-top:40px;">
-  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  © 1448هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
   <strong style="color:var(--accent-light);">إعداد وتنفيذ: أ. سعد الزهراني</strong>
 </footer>
 
@@ -1473,8 +1473,8 @@ function loadStudent(pin) {
 
   // التقارير الثابتة لكل طالب
   const fixedReports = [
-    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#EAE1F7", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1447", fileKey: `psych-${studentPin}` },
-    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1447", fileKey: `medical-${studentPin}` },
+    { title: "التقرير النفسي الموحد", icon: "🧠", bg: "#EAE1F7", tag: "نفسي", tagClass: "tag-purple", date: "الفصل الثاني 1448", fileKey: `psych-${studentPin}` },
+    { title: "التقرير الطبي",          icon: "🏥", bg: "#dbeafe", tag: "طبي",  tagClass: "tag-blue",   date: "الفصل الثاني 1448", fileKey: `medical-${studentPin}` },
   ];
 
   const reportsWithFiles = s.reports.map((r, i) => ({
@@ -1531,7 +1531,7 @@ function loadStudent(pin) {
     <tr><th>الصف الدراسي</th><td>${s.grade}</td></tr>
     <tr><th>البرنامج</th><td><span class="tag tag-green">📘 برنامج الدمج الفكري</span></td></tr>
     <tr><th>جوال ولي الأمر</th><td><a href="tel:${s.phone}" style="color:var(--green); font-weight:700;">${s.phone}</a></td></tr>
-    <tr><th>العام الدراسي</th><td>1447هـ</td></tr>
+    <tr><th>العام الدراسي</th><td>1448هـ</td></tr>
     <tr><th>الفصل الدراسي</th><td>الفصل الثاني</td></tr>
     ${s.birthdate ? `<tr><th>تاريخ الميلاد</th><td>${s.birthdate}</td></tr>` : ''}
     ${s.nationality ? `<tr><th>الجنسية</th><td>${s.nationality}</td></tr>` : ''}
@@ -1559,7 +1559,7 @@ function loadStudent(pin) {
       <h3>📄 نص الإقرار</h3>
       <p>
         أنا ولي أمر الطالب / <strong>${s.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
+        للفصل الدراسي الثاني من العام الدراسي 1448هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
         وأتعهد بالتعاون مع فريق برنامج الدمج الفكري لتحقيق أفضل النتائج لابني.
       </p>
     </div>
@@ -1784,7 +1784,7 @@ function saveIqrarPDF() {
 
       <div class="iqrar-text">
         أنا ولي أمر الطالب / <strong>${sPDF.name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
+        للفصل الدراسي الثاني من العام الدراسي 1448هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
         وأتعهد بالتعاون مع فريق برنامج الدمج الفكري لتحقيق أفضل النتائج لابني.
       </div>
 
@@ -1803,7 +1803,7 @@ function saveIqrarPDF() {
       </div>
 
       <div class="footer">
-        © 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
+        © 1448هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني
       </div>
       <scr' + 'ipt>window.onload=()=>window.print();</scr' + 'ipt>
     
@@ -2426,7 +2426,7 @@ function printStudentCard(pin) {
     <div class="header">
       <div style="background:#6B4C9A;color:#fff;display:inline-block;padding:3px 14px;border-radius:20px;font-size:0.76rem;font-weight:700;margin-bottom:6px;">برنامج الدمج الفكري</div>
       <h1>بطاقة الطالب</h1>
-      <p style="font-size:0.8rem;color:#6E5F82;margin-top:3px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
+      <p style="font-size:0.8rem;color:#6E5F82;margin-top:3px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1448هـ</p>
     </div>
     <div class="section">📋 المعلومات الشخصية</div>
     <table>
@@ -2449,7 +2449,7 @@ function printStudentCard(pin) {
       <tr><th>المكان التربوي</th><td colspan="3">${s.program_place||'—'}</td></tr>
       <tr><th>تاريخ البدء</th><td>${s.program_start||'—'}</td><th>تاريخ الإنهاء</th><td>${s.program_end||'—'}</td></tr>
     </table>
-    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
+    <div class="footer">© 1448هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
     <scri` + `pt>window.onload=()=>window.print();</scri` + `pt>
   
 <!-- زر الرئيسية الثابت -->
@@ -3585,7 +3585,7 @@ function exportAnalysisPDF(pin) {
       <div class="header">
         <div class="badge">برنامج الدمج الفكري</div>
         <h1>تحليل نتائج الأهداف التربوية</h1>
-        <p class="sub">${s.name} — ${s.grade} — الفصل الثاني 1447هـ</p>
+        <p class="sub">${s.name} — ${s.grade} — الفصل الثاني 1448هـ</p>
       </div>
 
       <div class="stats-grid">
@@ -3651,7 +3651,7 @@ function exportAnalysisPDF(pin) {
         </tfoot>
       </table>
 
-      <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
+      <div class="footer">© 1448هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
       <script>
         // طباعة تلقائية بعد تحميل الصور
         window.onload = () => setTimeout(() => window.print(), 400);
@@ -3716,7 +3716,7 @@ function savePlanAsPDF(pin) {
     <div class="header">
       <div style="background:#6B4C9A;color:#fff;display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:8px;">برنامج الدمج الفكري</div>
       <h1>الخطة التعليمية الفردية (IEP)</h1>
-      <p style="font-size:0.82rem;color:#6E5F82;margin-top:4px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1447هـ</p>
+      <p style="font-size:0.82rem;color:#6E5F82;margin-top:4px;">مدرسة مكة المكرمة المتوسطة | قسم ذوي الإعاقة | الفصل الثاني 1448هـ</p>
     </div>
     <div class="fields">
       <div class="field"><div class="fl">اسم الطالب</div><div class="fv">${s.name}</div></div>
@@ -3724,7 +3724,7 @@ function savePlanAsPDF(pin) {
       <div class="field"><div class="fl">التشخيص</div><div class="fv">${s.diagnosis||'—'}</div></div>
     </div>
     ${subHTML || '<p style="text-align:center;color:#9ca3af;padding:30px;">لا توجد أهداف مُدخلة بعد</p>'}
-    <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
+    <div class="footer">© 1448هـ — مدرسة مكة المكرمة المتوسطة — إعداد: أ. سعد الزهراني</div>
     <script>window.onload=()=>window.print();<\/script>
   
 <!-- زر الرئيسية الثابت -->
@@ -3914,7 +3914,7 @@ async function renderDumajSchedule() {
     <div class="dumaj-print-hdr" style="align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 18px;background:linear-gradient(135deg,#2E2148,#6B4C9A);border-radius:8px;">
       <div>
         <div style="font-weight:900;font-size:13pt;color:#fff;">جدول الحصص الأسبوعي — برنامج الدمج الفكري</div>
-        <div style="font-size:8.5pt;color:rgba(255,255,255,0.75);margin-top:3px;">الفصل الدراسي الثاني 1447هـ — مدرسة مكة المكرمة المتوسطة — فصل: ${dumajCurrentGrade}</div>
+        <div style="font-size:8.5pt;color:rgba(255,255,255,0.75);margin-top:3px;">الفصل الدراسي الثاني 1448هـ — مدرسة مكة المكرمة المتوسطة — فصل: ${dumajCurrentGrade}</div>
       </div>
       <div style="color:rgba(255,255,255,0.8);font-size:8.5pt;font-weight:700;">قسم ذوي الإعاقة — دمج فكري</div>
     </div>
@@ -3925,7 +3925,7 @@ async function renderDumajSchedule() {
       <div class="dumaj-topbar no-print">
         <div>
           <div style="color:#fff;font-size:1.05rem;font-weight:800;">📅 جدول الحصص — برنامج الدمج الفكري</div>
-          <div style="color:rgba(255,255,255,0.55);font-size:0.72rem;margin-top:3px;">اضغط على أي خلية لتعديلها · الفصل الدراسي الثاني 1447هـ</div>
+          <div style="color:rgba(255,255,255,0.55);font-size:0.72rem;margin-top:3px;">اضغط على أي خلية لتعديلها · الفصل الدراسي الثاني 1448هـ</div>
         </div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:relative;z-index:1;">
           <!-- Grade Tabs -->
@@ -4717,7 +4717,7 @@ function downloadPDF(idx) {
       </div>
       <div class="iqrar-text">
         أنا ولي أمر الطالب / <strong>${s.student_name}</strong>، أُقرّ بأنني اطلعتُ على الخطة التعليمية الفردية المُعدَّة لابني
-        للفصل الدراسي الثاني من العام الدراسي 1447هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
+        للفصل الدراسي الثاني من العام الدراسي 1448هـ، وأنني على دراية بجميع الأهداف والبرامج المذكورة فيها،
         وأتعهد بالتعاون مع فريق التربية الخاصة لتحقيق أفضل النتائج لابني.
       </div>
       <div class="fields">
@@ -4735,7 +4735,7 @@ function downloadPDF(idx) {
             : '<span style="color:#9ca3af;font-size:0.8rem;">لا يوجد توقيع</span>'}
         </div>
       </div>
-      <div class="footer">© 1447هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني</div>
+      <div class="footer">© 1448هـ — مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة — إعداد: أ. سعد الزهراني</div>
       <script>window.onload=()=>window.print();<\/script>
     
 <!-- زر الرئيسية الثابت -->

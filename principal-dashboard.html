@@ -340,7 +340,7 @@ footer strong{color:var(--accent-light);}
   <div class="tab-pane active" id="tab-overview">
     <div class="kpi-grid">
       <div class="kpi-card c-blue"><div class="kpi-icon">👨‍🎓</div><div class="kpi-val" id="kpi-total">—</div><div class="kpi-label">إجمالي الطلاب</div></div>
-      <div class="kpi-card c-orange"><div class="kpi-icon">📘</div><div class="kpi-val">20</div><div class="kpi-label">طلاب برنامج يسير</div></div>
+      <div class="kpi-card c-orange"><div class="kpi-icon">📘</div><div class="kpi-val">14</div><div class="kpi-label">طلاب برنامج يسير</div></div>
       <div class="kpi-card c-green"><div class="kpi-icon">🧑‍🏫</div><div class="kpi-val" id="kpi-dumaj">—</div><div class="kpi-label">طلاب برنامج الدمج</div></div>
       <div class="kpi-card c-gold"><div class="kpi-icon">✅</div><div class="kpi-val" id="kpi-att">—</div><div class="kpi-label">نسبة الحضور</div></div>
       <div class="kpi-card c-red"><div class="kpi-icon">❌</div><div class="kpi-val" id="kpi-abs">—</div><div class="kpi-label">غيابات هذا الأسبوع</div></div>
@@ -530,7 +530,7 @@ footer strong{color:var(--accent-light);}
     <div style="margin-top:24px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:0.78rem;color:var(--muted);line-height:2.2;">
       🏫 مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
       📚 برنامج يسير + برنامج الدمج الفكري<br>
-      🗓️ الفصل الثاني 1447هـ<br>
+      🗓️ الفصل الثاني 1448هـ<br>
       <strong style="color:var(--primary);">إعداد وتنفيذ: أ. سعد الزهراني</strong>
     </div>
   </div>
@@ -555,7 +555,7 @@ footer strong{color:var(--accent-light);}
 <div id="toast"></div>
 
 <footer>
-  © 1447هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
+  © 1448هـ مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة<br>
   <strong>إعداد وتنفيذ: أ. سعد الزهراني</strong>
 </footer>
 
@@ -568,26 +568,20 @@ const DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء',
 const WEEK_MAP={"2026-01-18":1,"2026-01-25":2,"2026-02-01":3,"2026-02-08":4,"2026-02-15":5,"2026-02-22":6,"2026-03-01":7,"2026-03-29":8,"2026-04-05":9,"2026-04-12":10,"2026-04-19":11,"2026-04-26":12,"2026-05-03":13,"2026-05-10":14,"2026-05-31":15,"2026-06-07":16,"2026-06-14":17,"2026-06-21":18,"2026-06-28":19};
 const HOLIDAYS=new Set(["2026-03-08","2026-03-15","2026-03-22","2026-05-17","2026-05-24"]);
 const YS=[
-  {pin:'5271',name:'محمد علي غرم الله الشمراني',grade:'الصف الأول / ١'},
-  {pin:'3955',name:'عبدالله قائد عبدالله الشهراني',grade:'الصف الثاني / ١'},
-  {pin:'3154',name:'بسام خالد عبدالرحمن المالكي',grade:'الصف الثاني / ١'},
-  {pin:'3493',name:'وسام عوض بن شينان السهيمي',grade:'الصف الرابع / ١'},
-  {pin:'9055',name:'حسن صالح حسن الزهراني',grade:'الصف الخامس / ١'},
-  {pin:'0962',name:'إياد خليل طاهر مصطفى',grade:'الصف الأول متوسط / 6'},
+  {pin:'8517',name:'معتز سمير حسن حسين',grade:'الصف الثالث / ١'},
+  {pin:'0962',name:'إياد خليل الطاهر مصطفى',grade:'الصف الخامس / ٢'},
+  {pin:'5271',name:'محمد علي غرم الله الشمراني',grade:'الصف الثاني / ٢'},
+  {pin:'3955',name:'عبدالله قائد عبدالله الشهراني',grade:'الصف الرابع / ٢'},
+  {pin:'3154',name:'بسام خالد عبدالرحمن المالكي',grade:'الصف الثاني / ٢'},
+  {pin:'3493',name:'وسام عوض بن شنان السهيمي',grade:'الصف الرابع / ٢'},
+  {pin:'9055',name:'حسن صالح حسن الزهراني',grade:'الصف الخامس / ٢'},
   {pin:'4073',name:'محمد عمر محمد بلقاسم الحرازي',grade:'الصف الثاني / ٢'},
   {pin:'0788',name:'أمجد مرزوق علي المحوري',grade:'الصف الثاني / ٢'},
-  {pin:'8726',name:'مراد علي ظلميس المنتشري',grade:'الصف الرابع / ٢'},
+  {pin:'8726',name:'مراد علي طلميس المنتشري',grade:'الصف الرابع / ٢'},
   {pin:'2261',name:'فيصل حاتم حامد الغامدي',grade:'الصف الرابع / ٢'},
   {pin:'9446',name:'عبدالرحمن توفيق علوان مقري',grade:'الصف الخامس / ٢'},
   {pin:'7895',name:'محمد فارس صالح الغامدي',grade:'الصف الثامن / ٢'},
   {pin:'5362',name:'وسيم أحمد علي الرزقي',grade:'انتساب'},
-  {pin:'2571',name:'فارس محمد مانع القحطاني',grade:'الصف الأول / ٣'},
-  {pin:'3590',name:'عبدالمجيد عبدالله حامد الهلالي',grade:'الصف الأول / ٣'},
-  {pin:'8151',name:'مسفر حسن سعد القحطاني',grade:'الصف الثالث / ٣'},
-  {pin:'8061',name:'هتان عبيدالله جميل المحمادي',grade:'الصف الثالث / ٣'},
-  {pin:'5455',name:'طلال عبدالله عبدالرحمن العصماني',grade:'الصف الرابع / ٣'},
-  {pin:'6812',name:'لوى أحمد علي الرزقي',grade:'انتساب'},
-  {pin:'5237',name:'عبدالله ماجد عبدالله الزهراني',grade:'انتساب'},
 ];
 const DT=[
   {key:'suhaimy',name:'محمد أحمد السهيمي',color:'#3F2E63',bg:'rgba(63,46,99,0.1)'},

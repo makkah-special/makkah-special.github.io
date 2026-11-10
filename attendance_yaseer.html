@@ -469,8 +469,10 @@ tbody tr:last-child { border-bottom:none; }
   <div class="toolbar-group">
     <label>📚 الفصل:</label>
     <select id="semesterSelect">
+      <option value="الفصل الأول 1448" selected>الفصل الأول 1448</option>
+      <option value="الفصل الثاني 1448">الفصل الثاني 1448</option>
       <option value="الفصل الأول 1447">الفصل الأول 1447</option>
-      <option value="الفصل الثاني 1447" selected>الفصل الثاني 1447</option>
+      <option value="الفصل الثاني 1447">الفصل الثاني 1447</option>
     </select>
   </div>
   <div class="toolbar-group" style="margin-right:auto;">
@@ -575,26 +577,20 @@ const STATUS_OPTS = [
 ];
 
 const STUDENTS = [
+  {pin:'8517', name:'معتز سمير حسن حسين'},
+  {pin:'0962', name:'إياد خليل الطاهر مصطفى'},
   {pin:'5271', name:'محمد علي غرم الله الشمراني'},
   {pin:'3955', name:'عبدالله قائد عبدالله الشهراني'},
   {pin:'3154', name:'بسام خالد عبدالرحمن المالكي'},
-  {pin:'3493', name:'وسام عوض بن شينان السهيمي'},
+  {pin:'3493', name:'وسام عوض بن شنان السهيمي'},
   {pin:'9055', name:'حسن صالح حسن الزهراني'},
-  {pin:'0962', name:'إياد خليل طاهر مصطفى'},
   {pin:'4073', name:'محمد عمر محمد بلقاسم الحرازي'},
   {pin:'0788', name:'أمجد مرزوق علي المحوري'},
-  {pin:'8726', name:'مراد علي ظلميس المنتشري'},
+  {pin:'8726', name:'مراد علي طلميس المنتشري'},
   {pin:'2261', name:'فيصل حاتم حامد الغامدي'},
   {pin:'9446', name:'عبدالرحمن توفيق علوان مقري'},
   {pin:'7895', name:'محمد فارس صالح الغامدي'},
   {pin:'5362', name:'وسيم أحمد علي الرزقي'},
-  {pin:'2571', name:'فارس محمد مانع القحطاني'},
-  {pin:'3590', name:'عبدالمجيد عبدالله حامد الهلالي'},
-  {pin:'8151', name:'مسفر حسن سعد القحطاني'},
-  {pin:'8061', name:'هتان عبيدالله جميل المحمادي'},
-  {pin:'5455', name:'طلال عبدالله عبدالرحمن العصماني'},
-  {pin:'6812', name:'لوى أحمد علي الرزقي'},
-  {pin:'5237', name:'عبدالله ماجد عبدالله الزهراني'},
 ];
 
 // ===== STATE =====
@@ -999,7 +995,7 @@ function printAttendance() {
     </div>
     <div class="hijri-field">
       <label>السنة</label>
-      <input type="number" id="hijriYear" min="1400" max="1500" value="1447" placeholder="سنة">
+      <input type="number" id="hijriYear" min="1400" max="1500" value="1448" placeholder="سنة">
     </div>
   </div>
   <div class="hijri-popup-btns">
@@ -1040,7 +1036,7 @@ function getHijriParts(d) {
       {day:'numeric', month:'numeric', year:'numeric'});
     const p = s.split('/'); // M/D/Y
     return {m: parseInt(p[0]), d: parseInt(p[1]), y: parseInt(p[2])};
-  } catch(e) { return {m:9, d:1, y:1447}; }
+  } catch(e) { return {m:9, d:1, y:1448}; }
 }
 
 function getHijriLabel(d) {
