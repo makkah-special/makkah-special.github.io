@@ -1006,6 +1006,7 @@
     padding:7px 14px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s;
   }
   .btn-print-cert:hover{ border-color:var(--primary); background:var(--bg); }
+.sw2-h{display:flex;justify-content:space-between;align-items:center}.sw2-addsub{display:flex;gap:8px;flex-wrap:wrap}.sw2-addsub select{flex:1;min-width:160px;border:1px solid var(--border);border-radius:8px;padding:6px;font:inherit;font-size:13px}
 </style>
 <style>
 .sw2-note{background:#FFF8E6;border:1px solid #D7A24A;border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:12px}
@@ -1111,7 +1112,6 @@
       <button class="tab-btn" onclick="openTab('messages',this)">🔔 التنبيهات</button>
       <button class="tab-btn" onclick="openTab('iqrar',this)">✍️ الإقرار</button>
       <button class="tab-btn" onclick="openTab('reinforce',this)">🏆 التعزيز</button>
-      <button class="tab-btn" onclick="openTab('sw',this)">💪 القوة والضعف</button>
     </div>
 
     <!-- INFO -->
@@ -1121,11 +1121,7 @@
         <div class="sw2-bar"><button class="btn-pdf btn-pdf-primary" onclick="printStudentData()">🖨️ طباعة بيانات الطالب</button></div>
         <table class="info-tbl" id="info-tbl"></table>
       </div>
-    </div>
-
-    <!-- STRENGTHS / WEAKNESSES -->
-    <div class="tab-pane" id="tab-sw">
-      <div class="s-card">
+      <div class="s-card" id="sw-card">
         <div class="s-card-head">💪 جوانب القوة والاحتياج</div>
         <div class="sw2-bar">
           <button class="btn-pdf btn-pdf-primary" onclick="swSave()">💾 حفظ</button>
@@ -1135,6 +1131,7 @@
         <div id="sw-body"></div>
       </div>
     </div>
+
 
     <!-- REPORTS -->
     <div class="tab-pane" id="tab-reports">
@@ -2849,57 +2846,87 @@ if ("serviceWorker" in navigator) {
 </script>
 <script>
 (function(){
-  var SUBJ=[{key:'arabic',name:'اللغة العربية',icon:'📖'},{key:'math',name:'الرياضيات',icon:'🔢'},{key:'islamic',name:'التربية الإسلامية',icon:'🕌'},{key:'science',name:'العلوم',icon:'🔬'},{key:'life',name:'المهارات الحياتية',icon:'🌱'}];
-  function lvl(g){g=String(g||'');return g.indexOf('الأول')>-1?1:g.indexOf('الثاني')>-1?2:g.indexOf('الثالث')>-1?3:0;}
-  function esc(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  var ALL=[{key:'arabic',name:'اللغة العربية (لغتي)',icon:'📖'},{key:'math',name:'الرياضيات',icon:'🔢'},{key:'islamic',name:'التربية الإسلامية',icon:'🕌'},{key:'science',name:'العلوم',icon:'🔬'},{key:'life',name:'المهارات الحياتية',icon:'🌱'}];
   var DEF={
     arabic:{s:['يتعرف على الحروف والكلمات المألوفة','يقرأ جملاً قصيرة بمساعدة','يكتب اسمه وبعض الكلمات'],n:['الطلاقة في القراءة الجهرية','الكتابة الإملائية','فهم المقروء والإجابة عن الأسئلة']},
-    math:{s:['يعد ويقارن الأعداد ضمن المدى المستهدف','ينفذ عمليات الجمع البسيطة','يتعرف على الأشكال والنقود'],n:['عمليتا الطرح والضرب','حل المسائل اللفظية','إدراك القيمة المنزلية']},
-    islamic:{s:['يحفظ بعض قصار السور','يؤدي الوضوء والصلاة بتوجيه','يتفاعل مع القصص الدينية'],n:['إتقان الأذكار والأدعية','تثبيت المحفوظ ومراجعته']},
-    science:{s:['يلاحظ ويصف الظواهر القريبة منه','يتعاون في الأنشطة العملية'],n:['استخدام المصطلحات العلمية','تسجيل الملاحظات وتفسيرها']},
-    life:{s:['يعتني بنفسه ويحافظ على أدواته','يلتزم بالتعليمات الصفية','يتفاعل مع زملائه'],n:['الاستقلالية في المهام اليومية','مهارات السلامة والتنقل','التواصل في المواقف الاجتماعية']}
+    math:{s:['يعد ويقارن الأعداد ضمن المدى المستهدف','ينفذ عمليات الجمع البسيطة','يتعرف على الأشكال والنقود'],n:['عمليتا الطرح والضرب','حل المسائل اللفظية','إدراك القيمة المنزلية']}
   };
-  function defaults(g){var l=lvl(g),o={};SUBJ.forEach(function(x){var d=DEF[x.key];o[x.key]={strengths:d.s.slice(),needs:d.n.slice()};});
-    if(l===1){o.arabic.needs.unshift('إتقان مهارات القراءة الأساسية');}
-    if(l===3){o.arabic.strengths.push('يقرأ نصوصاً قصيرة بطلاقة نسبية');o.math.strengths.push('يستخدم العمليات الأربع في مواقف بسيطة');}
-    return o;}
+  function lvl(g){g=String(g||'');return g.indexOf('الأول')>-1?1:g.indexOf('الثاني')>-1?2:g.indexOf('الثالث')>-1?3:0;}
+  function esc(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function meta(k){for(var i=0;i<ALL.length;i++)if(ALL[i].key===k)return ALL[i];return null;}
+  function defaults(g){var l=lvl(g),subs=[{key:'arabic',name:ALL[0].name,icon:'📖'},{key:'math',name:'الرياضيات',icon:'🔢'}],d={arabic:{strengths:DEF.arabic.s.slice(),needs:DEF.arabic.n.slice()},math:{strengths:DEF.math.s.slice(),needs:DEF.math.n.slice()}};
+    if(l===1)d.arabic.needs.unshift('إتقان مهارات القراءة الأساسية');
+    if(l===3){d.arabic.strengths.push('يقرأ نصوصاً قصيرة بطلاقة نسبية');d.math.strengths.push('يستخدم العمليات الأربع في مواقف بسيطة');}
+    return {subs:subs,data:d};}
   function key(){return 'sw_edit_'+(currentStudent&&currentStudent.pin||'x');}
-  var state=null;
-  function load(){var st=currentStudent,base=null,saved=null;
+  var state=null,statePin=null;
+  function load(){var st=currentStudent,saved=null;statePin=st.pin;
     try{saved=JSON.parse(localStorage.getItem(key())||'null');}catch(e){}
     var srv=st.strengths||{};
-    var hasSrv=Object.keys(srv).some(function(k){var v=srv[k]||{};return (v.strengths&&v.strengths.length)||(v.needs&&v.needs.length);});
-    if(saved&&saved.data){state={data:saved.data,src:'محفوظ على هذا الجهاز',savedAt:saved.savedAt};}
-    else if(hasSrv){state={data:JSON.parse(JSON.stringify(srv)),src:'من تقييم المعلم',savedAt:(st.strengthsMeta||{}).date};}
-    else{state={data:defaults(st.grade),src:'مسودة افتراضية',savedAt:null};}
-    SUBJ.forEach(function(x){state.data[x.key]=state.data[x.key]||{strengths:[],needs:[]};});}
-  function list(k,t,arr){return arr.map(function(v,i){return '<div class="sw2-row"><span class="sw2-dot '+(t==='s'?'g':'r')+'"></span><input class="sw2-in" value="'+esc(v)+'" oninput="swEdit(\''+k+'\',\''+t+'\','+i+',this.value)"><button class="sw2-x" onclick="swDel(\''+k+'\',\''+t+'\','+i+')">✕</button></div>';}).join('');}
-  function render(){var el=document.getElementById('sw-body');if(!el||!currentStudent)return;if(!state)load();
-    el.innerHTML='<div class="sw2-note">'+(state.src==='مسودة افتراضية'?'⚠️ هذه مسودة افتراضية عامة وليست تقييماً فعلياً — عدّلها حسب حالة الطالب.':'المصدر: '+esc(state.src)+(state.savedAt?' · '+esc(String(state.savedAt).slice(0,10)):''))+'</div>'+
-    SUBJ.map(function(x){var d=state.data[x.key];return '<div class="sw2-sub"><div class="sw2-h">'+x.icon+' '+x.name+'</div><div class="sw2-cols"><div><div class="sw2-t g">💪 جوانب القوة</div>'+list(x.key,'s',d.strengths||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'s\')">＋ إضافة</button></div><div><div class="sw2-t r">🎯 جوانب تحتاج دعماً</div>'+list(x.key,'n',d.needs||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'n\')">＋ إضافة</button></div></div></div>';}).join('');}
+    var keys=Object.keys(srv).filter(function(k){var v=srv[k]||{};return (v.strengths&&v.strengths.length)||(v.needs&&v.needs.length);});
+    if(saved&&saved.data&&saved.subs){state={subs:saved.subs,data:saved.data,src:'محفوظ على هذا الجهاز',savedAt:saved.savedAt};}
+    else if(keys.length){var subs=[];['arabic','math'].concat(keys).forEach(function(k){if(subs.some(function(s){return s.key===k;}))return;var m=meta(k);subs.push({key:k,name:m?m.name:k,icon:m?m.icon:'📘'});});
+      var dd=JSON.parse(JSON.stringify(srv));subs.forEach(function(s){dd[s.key]=dd[s.key]||{strengths:[],needs:[]};});
+      state={subs:subs,data:dd,src:'من تقييم المعلم',savedAt:(st.strengthsMeta||{}).date};}
+    else{var d=defaults(st.grade);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};}}
+  function rows(k,t,arr){return arr.map(function(v,i){return '<div class="sw2-row"><span class="sw2-dot '+(t==='s'?'g':'r')+'"></span><input class="sw2-in" value="'+esc(v)+'" oninput="swEdit(\''+k+'\',\''+t+'\','+i+',this.value)"><button class="sw2-x" onclick="swDel(\''+k+'\',\''+t+'\','+i+')" title="حذف">✕</button></div>';}).join('');}
+  function render(){var el=document.getElementById('sw-body');if(!el||!currentStudent)return;if(!state||statePin!==currentStudent.pin)load();
+    var used={};state.subs.forEach(function(s){used[s.key]=1;});
+    var opts=ALL.filter(function(a){return !used[a.key];}).map(function(a){return '<option value="'+a.key+'">'+a.icon+' '+a.name+'</option>';}).join('')+'<option value="__custom">✏️ مادة أخرى (اكتب الاسم)…</option>';
+    el.innerHTML='<div class="sw2-note">'+(state.src==='مسودة افتراضية'?'⚠️ مسودة افتراضية عامة وليست تقييماً فعلياً — عدّلها حسب حالة الطالب ثم احفظها.':'المصدر: '+esc(state.src)+(state.savedAt?' · '+esc(String(state.savedAt).slice(0,10)):''))+'</div>'+
+    state.subs.map(function(x){var d=state.data[x.key]||(state.data[x.key]={strengths:[],needs:[]});
+      var rm=(x.key==='arabic'||x.key==='math')?'':'<button class="sw2-x" onclick="swRemoveSub(\''+x.key+'\')" title="حذف المادة">🗑️</button>';
+      return '<div class="sw2-sub"><div class="sw2-h"><span>'+x.icon+' '+esc(x.name)+'</span>'+rm+'</div><div class="sw2-cols"><div><div class="sw2-t g">💪 جوانب القوة</div>'+rows(x.key,'s',d.strengths||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'s\')">＋ إضافة</button></div><div><div class="sw2-t r">🎯 جوانب تحتاج دعماً</div>'+rows(x.key,'n',d.needs||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'n\')">＋ إضافة</button></div></div></div>';}).join('')+
+    '<div class="sw2-addsub"><select id="sw-sel">'+opts+'</select><button class="btn-pdf" onclick="swAddSub()">＋ إضافة مادة</button></div>';}
   function arr(k,t){var d=state.data[k];return t==='s'?(d.strengths=d.strengths||[]):(d.needs=d.needs||[]);}
   window.swEdit=function(k,t,i,v){arr(k,t)[i]=v;};
   window.swDel=function(k,t,i){arr(k,t).splice(i,1);render();};
-  window.swAdd=function(k,t){arr(k,t).push('');render();var ins=document.querySelectorAll('#sw-body .sw2-sub');};
+  window.swAdd=function(k,t){arr(k,t).push('');render();};
+  window.swAddSub=function(){var v=document.getElementById('sw-sel').value,m;
+    if(v==='__custom'){var n=prompt('اسم المادة:');if(!n||!n.trim())return;m={key:'c_'+Date.now(),name:n.trim(),icon:'📘'};}
+    else{var a=meta(v);m={key:a.key,name:a.name,icon:a.icon};}
+    state.subs.push(m);state.data[m.key]=state.data[m.key]||{strengths:[''],needs:['']};render();};
+  window.swRemoveSub=function(k){if(!confirm('حذف هذه المادة؟'))return;state.subs=state.subs.filter(function(s){return s.key!==k;});delete state.data[k];render();};
   window.swSave=function(){var d=JSON.parse(JSON.stringify(state.data));Object.keys(d).forEach(function(k){d[k].strengths=(d[k].strengths||[]).filter(Boolean);d[k].needs=(d[k].needs||[]).filter(Boolean);});
-    state={data:d,src:'محفوظ على هذا الجهاز',savedAt:new Date().toISOString()};
-    try{localStorage.setItem(key(),JSON.stringify({data:d,savedAt:state.savedAt}));}catch(e){}
+    state={subs:state.subs,data:d,src:'محفوظ على هذا الجهاز',savedAt:new Date().toISOString()};
+    try{localStorage.setItem(key(),JSON.stringify({subs:state.subs,data:d,savedAt:state.savedAt}));}catch(e){}
     render();if(typeof showToast==='function')showToast('✅ تم الحفظ على هذا الجهاز');};
   window.swReset=function(){if(!confirm('استعادة القيم الافتراضية؟ ستُفقد تعديلاتك.'))return;try{localStorage.removeItem(key());}catch(e){}
-    state={data:defaults(currentStudent.grade),src:'مسودة افتراضية',savedAt:null};render();};
-  window.swPrint=function(){var st=currentStudent,d=state.data;
-    var body=SUBJ.map(function(x){var v=d[x.key]||{};var s=(v.strengths||[]).filter(Boolean),n=(v.needs||[]).filter(Boolean);
-      return '<tr><td class="h">'+x.icon+' '+x.name+'</td><td><ul>'+s.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul></td><td><ul>'+n.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul></td></tr>';}).join('');
-    var w=window.open('');if(!w){alert('اسمح بالنوافذ المنبثقة للطباعة');return;}
-    w.document.write('<html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>جوانب القوة والضعف</title><style>body{font-family:Tahoma,Arial,sans-serif;padding:24px;color:#221335}h1{text-align:center;color:#3F2E63;font-size:20px}.m{display:flex;gap:24px;justify-content:center;margin:10px 0 16px;font-size:14px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #bbb;padding:8px;vertical-align:top;font-size:13px}th{background:#3F2E63;color:#fff}td.h{background:#F7F5FC;font-weight:bold;width:16%}ul{margin:0;padding-right:18px}.f{margin-top:30px;display:flex;justify-content:space-between;font-size:13px}.d{color:#b45309;text-align:center;font-size:12px}</style></head><body><h1>جوانب القوة والاحتياج — برنامج يسير</h1><div class="m"><span>الطالب: <b>'+esc(st.name)+'</b></span><span>الصف: <b>'+esc(st.grade)+'</b></span><span>التاريخ: <b>'+new Date().toLocaleDateString('ar-SA')+'</b></span></div>'+(state.src==='مسودة افتراضية'?'<div class="d">مسودة — لم تُعتمد بعد</div>':'')+'<table><tr><th>المجال</th><th>جوانب القوة</th><th>جوانب تحتاج دعماً</th></tr>'+body+'</table><div class="f"><span>المعلم: ____________</span><span>مشرف البرنامج: ____________</span></div></body></html>');
-    w.document.close();w.onload=function(){w.print();};setTimeout(function(){try{w.print();}catch(e){}},600);};
+    var d=defaults(currentStudent.grade);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};render();};
+
+  // ===== قالب الطباعة الموحّد (نفس هوية الموقع) =====
+  function shell(title,sub,st,inner,draft){
+    var today=new Date().toLocaleDateString('ar-SA');
+    return '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>'+esc(title)+' — '+esc(st.name)+'</title><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"><style>'+
+    '*{box-sizing:border-box}@page{size:A4;margin:12mm}body{font-family:Cairo,Tahoma,sans-serif;margin:0;background:#F7F5FC;color:#221335;-webkit-print-color-adjust:exact;print-color-adjust:exact}'+
+    '.page{max-width:780px;margin:0 auto;background:#fff;border:1px solid #DCD2EE;border-radius:16px;overflow:hidden}'+
+    '.hd{background:linear-gradient(135deg,#3F2E63,#6B4C9A);color:#fff;padding:18px 22px;display:flex;align-items:center;gap:14px;border-bottom:4px solid #D7A24A}'+
+    '.hd img{height:54px;background:#fff;border-radius:10px;padding:4px}.hd .t{flex:1}.hd h1{font-family:Tajawal,sans-serif;font-size:1.35rem;margin:0 0 3px}.hd p{margin:0;font-size:.82rem;opacity:.9}'+
+    '.who{display:flex;flex-wrap:wrap;gap:8px 22px;background:#F7F5FC;border-bottom:1px solid #EAE1F7;padding:10px 22px;font-size:.88rem}.who b{color:#3F2E63}'+
+    '.bd{padding:18px 22px}.draft{background:#FFF8E6;border:1px solid #D7A24A;color:#8a5a00;border-radius:8px;text-align:center;padding:5px;font-size:.8rem;margin-bottom:12px}'+
+    'table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{border:1px solid #DCD2EE;padding:8px 10px;text-align:right;vertical-align:top}th{background:#F1ECFA;color:#3F2E63;width:30%;font-weight:700}'+
+    'table.sw th{background:#3F2E63;color:#fff;width:auto;text-align:center}table.sw td.h{background:#F1ECFA;color:#3F2E63;font-weight:700;width:18%}table.sw td.g li::marker{color:#2e7d32}table.sw td.r li::marker{color:#D7A24A}ul{margin:0;padding-right:18px}li{margin-bottom:3px}tr{page-break-inside:avoid}'+
+    '.sig{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:.88rem;color:#6E5F82}.sig span{flex:1;border-top:1px solid #DCD2EE;padding-top:8px;text-align:center}'+
+    '.ft{border-top:1px solid #EAE1F7;background:#FBF9FE;padding:8px 22px;font-size:.75rem;color:#6E5F82;display:flex;justify-content:space-between}'+
+    '@media print{body{background:#fff}.page{border:0;border-radius:0;max-width:none}}</style></head><body><div class="page">'+
+    '<div class="hd"><img src="moe-logo.png" alt=""><div class="t"><h1>'+esc(title)+'</h1><p>'+esc(sub)+'</p></div><img src="logo.png" alt="" onerror="this.style.display=\'none\'"></div>'+
+    '<div class="who"><span>الطالب: <b>'+esc(st.name)+'</b></span><span>الصف: <b>'+esc(st.grade)+'</b></span><span>التاريخ: <b>'+today+'</b></span></div>'+
+    '<div class="bd">'+(draft?'<div class="draft">مسودة — لم تُعتمد بعد</div>':'')+inner+'</div>'+
+    '<div class="ft"><span>مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</span><span>منصة مَعَاك</span></div></div>'+
+    '<script>window.onload=function(){setTimeout(function(){window.print()},500)}<\/script></body></html>';}
+  function openPrint(html){var w=window.open('','_blank');if(!w){if(typeof showToast==='function')showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة');return;}w.document.write(html);w.document.close();}
+  window.swPrint=function(){var st=currentStudent;
+    var body=state.subs.map(function(x){var v=state.data[x.key]||{};var s=(v.strengths||[]).filter(Boolean),n=(v.needs||[]).filter(Boolean);
+      function ul(a){return a.length?'<ul>'+a.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul>':'—';}
+      return '<tr><td class="h">'+x.icon+' '+esc(x.name)+'</td><td class="g">'+ul(s)+'</td><td class="r">'+ul(n)+'</td></tr>';}).join('');
+    var inner='<table class="sw"><tr><th>المادة</th><th>💪 جوانب القوة</th><th>🎯 جوانب تحتاج دعماً</th></tr>'+body+'</table><div class="sig"><span>المعلم</span><span>مشرف البرنامج</span><span>ولي الأمر</span></div>';
+    openPrint(shell('جوانب القوة والاحتياج','برنامج يسير — العام الدراسي 1448',st,inner,state.src==='مسودة افتراضية'));};
   window.printStudentData=function(){var s=currentStudent;if(!s)return;
-    var rows=[['اسم الطالب',s.name],['رقم السجل المدني',s.id_full],['الصف الدراسي',s.grade],['تاريخ الميلاد',s.birthdate],['الجنسية',s.nationality],['العمر',s.age],['العنوان',s.address],['رقم الجوال',s.phone],['نسبة الذكاء',s.iq],['التشخيص',s.diagnosis],['مكان البرنامج',s.program_place],['بداية البرنامج',s.program_start],['نهاية البرنامج',s.program_end],['الحالة الصحية',s.status_health],['الحالة النفسية',s.status_psych],['الحالة الاجتماعية',s.status_social],['ترتيب الطالب بين إخوته',s.sibling_order],['المستوى الاقتصادي',s.economic_level],['تعليم الأب',s.father_edu],['تعليم الأم',s.mother_edu]].filter(function(r){return r[1]!==undefined&&r[1]!==null&&String(r[1]).trim()!=='';});
-    var w=window.open('');if(!w){alert('اسمح بالنوافذ المنبثقة للطباعة');return;}
-    w.document.write('<html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>بيانات الطالب</title><style>body{font-family:Tahoma,Arial,sans-serif;padding:28px;color:#221335}h1{text-align:center;color:#3F2E63;font-size:20px}table{width:100%;border-collapse:collapse;margin-top:14px}th,td{border:1px solid #bbb;padding:9px;font-size:14px;text-align:right}th{background:#F7F5FC;width:32%;color:#3F2E63}.f{margin-top:36px;display:flex;justify-content:space-between;font-size:13px}</style></head><body><h1>بيانات الطالب — برنامج يسير</h1><table>'+rows.map(function(r){return '<tr><th>'+r[0]+'</th><td>'+esc(r[1])+'</td></tr>';}).join('')+'</table><div class="f"><span>التاريخ: '+new Date().toLocaleDateString('ar-SA')+'</span><span>توقيع ولي الأمر: ____________</span></div></body></html>');
-    w.document.close();w.onload=function(){w.print();};};
-  var prev=window.openTab;
-  window.openTab=function(id,btn){prev(id,btn);if(id==='sw'){state=null;render();}};
+    var r=[['اسم الطالب',s.name],['رقم السجل المدني',s.id_full],['الصف الدراسي',s.grade],['تاريخ الميلاد',s.birthdate],['الجنسية',s.nationality],['العمر',s.age],['العنوان',s.address],['رقم الجوال',s.phone],['نسبة الذكاء',s.iq],['التشخيص',s.diagnosis],['مكان البرنامج',s.program_place],['بداية البرنامج',s.program_start],['نهاية البرنامج',s.program_end],['الحالة الصحية',s.status_health],['الحالة النفسية',s.status_psych],['الحالة الاجتماعية',s.status_social],['ترتيب الطالب بين إخوته',s.sibling_order],['المستوى الاقتصادي',s.economic_level],['تعليم الأب',s.father_edu],['تعليم الأم',s.mother_edu]].filter(function(x){return x[1]!==undefined&&x[1]!==null&&String(x[1]).trim()!=='';});
+    var inner='<table>'+r.map(function(x){return '<tr><th>'+x[0]+'</th><td>'+esc(x[1])+'</td></tr>';}).join('')+'</table><div class="sig"><span>مشرف البرنامج</span><span>توقيع ولي الأمر</span></div>';
+    openPrint(shell('بيانات الطالب','برنامج يسير — العام الدراسي 1448',s,inner,false));};
+  function watch(){var t=document.getElementById('info-tbl');if(!t||!window.MutationObserver)return;new MutationObserver(function(){render();}).observe(t,{childList:true});render();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch);else watch();
 })();
 </script>
 <script src="assets/js/common-ui.js" defer></script>
