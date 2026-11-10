@@ -947,7 +947,7 @@ function showCert(id) {
         <strong>${escHtml(n.by)}</strong>
         رئيس قسم ذوي الإعاقة<br>
         مدرسة مكة المكرمة المتوسطة<br>
-        ${escHtml(dateStr)} | الفصل الثاني 1448هـ
+        ${escHtml(dateStr)} | العام الدراسي 1448هـ
       </div>
     </div>`;
   document.getElementById('cert-modal').style.display='block';
@@ -1078,7 +1078,7 @@ function printTeacherCurriculum() {
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box}body{font-family:'Cairo',sans-serif;padding:24px;direction:rtl;color:#221335}h1{font-family:'Tajawal',sans-serif;color:#2E2148}h2{font-family:'Tajawal',sans-serif;color:#6B4C9A;margin:18px 0 8px}table{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:10px}th{background:#EAE1F7;color:#6B4C9A;padding:8px;text-align:right;font-weight:800;border:1px solid #DCD2EE}td{padding:7px;border:1px solid #DCD2EE}.wk{font-weight:800;color:#6B4C9A;white-space:nowrap}@media print{@page{size:A4;margin:14mm}}</style>
 <link rel="stylesheet" href="assets/css/common-ui.css">
-</head><body><h1>📘 توزيع المنهج — ${escHtml(t.name)}</h1><p style="color:#6E5F82;margin-bottom:14px;">${escHtml(t.role)} — الفصل الثاني 1448هـ</p>
+</head><body><h1>📘 توزيع المنهج — ${escHtml(t.name)}</h1><p style="color:#6E5F82;margin-bottom:14px;">${escHtml(t.role)} — العام الدراسي 1448هـ</p>
 ${subjectsHtml}<script>window.onload=()=>setTimeout(()=>window.print(),350);<\/script></body></html>`);
   win.document.close();
 }
