@@ -1126,7 +1126,6 @@
         <div class="sw2-bar">
           <button class="btn-pdf btn-pdf-primary" onclick="swSave()">💾 حفظ</button>
           <button class="btn-pdf btn-pdf-primary" onclick="swPrint()">🖨️ طباعة</button>
-          <button class="btn-pdf" onclick="swReset()">↺ استعادة الافتراضي</button>
         </div>
         <div id="sw-body"></div>
       </div>
@@ -2884,7 +2883,7 @@ if ("serviceWorker" in navigator) {
   function render(){var el=document.getElementById('sw-body');if(!el||!currentStudent)return;if(!state||statePin!==currentStudent.pin)load();
     var used={};state.subs.forEach(function(s){used[s.key]=1;});
     var opts=ALL.filter(function(a){return !used[a.key];}).map(function(a){return '<option value="'+a.key+'">'+a.icon+' '+a.name+'</option>';}).join('')+'<option value="__custom">✏️ مادة أخرى (اكتب الاسم)…</option>';
-    el.innerHTML='<div class="sw2-note">'+(state.src==='مسودة افتراضية'?'⚠️ مسودة افتراضية عامة وليست تقييماً فعلياً — عدّلها حسب حالة الطالب ثم احفظها.':'المصدر: '+esc(state.src)+(state.savedAt?' · '+esc(String(state.savedAt).slice(0,10)):''))+'</div>'+
+    el.innerHTML=''+
     state.subs.map(function(x){var d=state.data[x.key]||(state.data[x.key]={strengths:[],needs:[]});
       var rm=(x.key==='arabic'||x.key==='math')?'':'<button class="sw2-x" onclick="swRemoveSub(\''+x.key+'\')" title="حذف المادة">🗑️</button>';
       return '<div class="sw2-sub"><div class="sw2-h"><span>'+x.icon+' '+esc(x.name)+'</span>'+rm+'</div><div class="sw2-cols"><div><div class="sw2-t g">💪 جوانب القوة</div>'+rows(x.key,'s',d.strengths||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'s\')">＋ إضافة</button></div><div><div class="sw2-t r">🎯 جوانب تحتاج دعماً</div>'+rows(x.key,'n',d.needs||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'n\')">＋ إضافة</button></div></div></div>';}).join('')+
@@ -2931,7 +2930,7 @@ if ("serviceWorker" in navigator) {
       function ul(a){return a.length?'<ul>'+a.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul>':'—';}
       return '<tr><td class="h">'+x.icon+' '+esc(x.name)+'</td><td class="g">'+ul(s)+'</td><td class="r">'+ul(n)+'</td></tr>';}).join('');
     var inner='<table class="sw"><tr><th>المادة</th><th>💪 جوانب القوة</th><th>🎯 جوانب تحتاج دعماً</th></tr>'+body+'</table><div class="sig"><span>المعلم</span><span>مشرف البرنامج</span><span>ولي الأمر</span></div>';
-    openPrint(shell('جوانب القوة والاحتياج','برنامج يسير — العام الدراسي 1448',st,inner,state.src==='مسودة افتراضية'));};
+    openPrint(shell('جوانب القوة والاحتياج','برنامج يسير — العام الدراسي 1448',st,inner,false));};
   window.printStudentData=function(){var s=currentStudent;if(!s)return;
     var r=[['اسم الطالب',s.name],['رقم السجل المدني',s.id_full],['الصف الدراسي',s.grade],['تاريخ الميلاد',s.birthdate],['الجنسية',s.nationality],['العمر',s.age],['العنوان',s.address],['رقم الجوال',s.phone],['نسبة الذكاء',s.iq],['التشخيص',s.diagnosis],['مكان البرنامج',s.program_place],['بداية البرنامج',PROG_START_1448],['نهاية البرنامج',PROG_END_1448],['الحالة الصحية',s.status_health],['الحالة النفسية',s.status_psych],['الحالة الاجتماعية',s.status_social],['ترتيب الطالب بين إخوته',s.sibling_order],['المستوى الاقتصادي',s.economic_level],['تعليم الأب',s.father_edu],['تعليم الأم',s.mother_edu]].filter(function(x){return x[1]!==undefined&&x[1]!==null&&String(x[1]).trim()!=='';});
     var h='';for(var q=0;q<r.length;q+=2){var a=r[q],b=r[q+1];h+='<tr><th>'+a[0]+'</th><td>'+esc(a[1])+'</td>'+(b?'<th>'+b[0]+'</th><td>'+esc(b[1])+'</td>':'<td colspan="2"></td>')+'</tr>';}var inner='<table>'+h+'</table><div class="sig"><span>مشرف البرنامج</span><span>توقيع ولي الأمر</span></div>';
