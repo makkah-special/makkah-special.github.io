@@ -2033,5 +2033,32 @@ document.getElementById('cert-title-input').addEventListener('input', updateCert
 document.getElementById('cert-message-input').addEventListener('input', updateCertPreview);
 </script>
 <script src="assets/js/common-ui.js" defer></script>
+<script>
+(function(){
+  var POOL={
+    arabic:{s:['يتعرف على الحروف الهجائية بأشكالها المختلفة','يقرأ كلمات مألوفة بطلاقة مقبولة','يقرأ جملاً قصيرة بمساعدة','يكتب اسمه وبعض الكلمات بشكل صحيح','يستمع ويتابع القصص القصيرة بانتباه','يجيب عن أسئلة بسيطة حول نص مسموع','يميز بين الحروف المتشابهة نطقاً','يتحدث بجمل مفهومة للتعبير عن احتياجاته','ينسخ الكلمات والجمل بخط مقروء','يربط الصورة بالكلمة المناسبة'],
+            n:['الطلاقة في القراءة الجهرية','الكتابة الإملائية','فهم المقروء والإجابة عن الأسئلة','التمييز بين الحروف المتشابهة في الشكل','قراءة الكلمات المشتملة على المدود','تكوين جملة مفيدة كتابياً','ضبط الحركات القصيرة والتنوين','التعبير الشفهي المتسلسل عن الأحداث','المحافظة على الأسطر والمسافات أثناء الكتابة','قراءة الكلمات غير المألوفة']},
+    math:{s:['يعد ويقارن الأعداد ضمن المدى المستهدف','ينفذ عمليات الجمع البسيطة','يتعرف على الأشكال الهندسية','يتعرف على فئات النقود ويستخدمها','يرتب الأعداد تصاعدياً وتنازلياً','يقرأ الساعة على الأوقات الكاملة','يقيس الأطوال باستخدام وحدات غير قياسية','يحل مسائل جمع مصورة بنجاح','يميز الأعداد الفردية والزوجية','يتعرف على قيمة المنزلة (الآحاد والعشرات)'],
+          n:['عمليتا الطرح والضرب','حل المسائل اللفظية','إدراك القيمة المنزلية','حفظ جدول الضرب','الجمع والطرح مع الاستلام والاستلاف','قراءة الساعة بالدقائق','التعامل مع الكسور البسيطة','التحويل بين وحدات القياس','تقدير الأعداد والتقريب','استخدام النقود في مواقف شرائية']}
+  };
+  function hash(s){var h=2166136261;s=String(s);for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+  function pick(arr,n,seed){var a=arr.slice(),h=seed,out=[];for(var i=0;i<n&&a.length;i++){h=(Math.imul(h,1103515245)+12345)>>>0;out.push(a.splice(h%a.length,1)[0]);}return out;}
+  var orig=renderStrengthsEditor;
+  renderStrengthsEditor=function(){
+    var d=currentDetail.data;if(!d.strengths)d.strengths={};
+    var sw=d.strengths;
+    var has=['arabic','math'].some(function(k){var v=sw[k];return v&&((v.strengths&&v.strengths.length)||(v.needs&&v.needs.length));});
+    var suggested=false;
+    if(!d.strengthsMeta&&!has){
+      var seed=hash(String(currentDetail.pin));
+      sw.arabic={strengths:pick(POOL.arabic.s,3,seed),needs:pick(POOL.arabic.n,3,seed+7)};
+      sw.math={strengths:pick(POOL.math.s,3,seed+13),needs:pick(POOL.math.n,3,seed+29)};
+      currentDetail._swSuggested=true;
+    }
+    suggested=!!currentDetail._swSuggested&&!d.strengthsMeta;
+    orig();
+  };
+})();
+</script>
 </body>
 </html>

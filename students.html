@@ -1006,7 +1006,7 @@
     padding:7px 14px; font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s;
   }
   .btn-print-cert:hover{ border-color:var(--primary); background:var(--bg); }
-.sw2-h{display:flex;justify-content:space-between;align-items:center}.sw2-addsub{display:flex;gap:8px;flex-wrap:wrap}.sw2-addsub select{flex:1;min-width:160px;border:1px solid var(--border);border-radius:8px;padding:6px;font:inherit;font-size:13px}
+.sw2-h{display:flex;justify-content:space-between;align-items:center}.sw2-ro{font-size:13px;padding:4px 0}.sw2-addsub{display:flex;gap:8px;flex-wrap:wrap}.sw2-addsub select{flex:1;min-width:160px;border:1px solid var(--border);border-radius:8px;padding:6px;font:inherit;font-size:13px}
 </style>
 <style>
 .sw2-note{background:#FFF8E6;border:1px solid #D7A24A;border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:12px}
@@ -1123,10 +1123,7 @@
       </div>
       <div class="s-card" id="sw-card">
         <div class="s-card-head">💪 جوانب القوة والاحتياج</div>
-        <div class="sw2-bar">
-          <button class="btn-pdf btn-pdf-primary" onclick="swSave()">💾 حفظ</button>
-          <button class="btn-pdf btn-pdf-primary" onclick="swPrint()">🖨️ طباعة</button>
-        </div>
+        <div class="sw2-bar"><button class="btn-pdf btn-pdf-primary" id="sw-print-btn" onclick="swPrint()">🖨️ طباعة</button></div>
         <div id="sw-body"></div>
       </div>
     </div>
@@ -2865,45 +2862,26 @@ if ("serviceWorker" in navigator) {
   };
   function hash(s){var h=2166136261;s=String(s);for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
   function pick(arr,n,seed){var a=arr.slice(),h=seed,out=[];for(var i=0;i<n&&a.length;i++){h=(Math.imul(h,1103515245)+12345)>>>0;out.push(a.splice(h%a.length,1)[0]);}return out;}
-  function defaults(g,pin){var seed=hash((pin||'')+'|'+(g||''));
+  function defaults(g,pin){var seed=hash(String(pin||''));
     var d={arabic:{strengths:pick(POOL.arabic.s,3,seed),needs:pick(POOL.arabic.n,3,seed+7)},math:{strengths:pick(POOL.math.s,3,seed+13),needs:pick(POOL.math.n,3,seed+29)}};
     return {subs:[{key:'arabic',name:ALL[0].name,icon:'📖'},{key:'math',name:'الرياضيات',icon:'🔢'}],data:d};}
   function key(){return 'sw_edit_'+(currentStudent&&currentStudent.pin||'x');}
-  var state=null,statePin=null;
-  function load(){var st=currentStudent,saved=null;statePin=st.pin;
-    try{saved=JSON.parse(localStorage.getItem(key())||'null');}catch(e){}
-    var srv=st.strengths||{};
-    var keys=Object.keys(srv).filter(function(k){var v=srv[k]||{};return (v.strengths&&v.strengths.length)||(v.needs&&v.needs.length);});
-    if(saved&&saved.data&&saved.subs){state={subs:saved.subs,data:saved.data,src:'محفوظ على هذا الجهاز',savedAt:saved.savedAt};}
-    else if(keys.length){var subs=[];['arabic','math'].concat(keys).forEach(function(k){if(subs.some(function(s){return s.key===k;}))return;var m=meta(k);subs.push({key:k,name:m?m.name:k,icon:m?m.icon:'📘'});});
-      var dd=JSON.parse(JSON.stringify(srv));subs.forEach(function(s){dd[s.key]=dd[s.key]||{strengths:[],needs:[]};});
-      state={subs:subs,data:dd,src:'من تقييم المعلم',savedAt:(st.strengthsMeta||{}).date};}
-    else{var d=defaults(st.grade,st.pin);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};}}
-  function rows(k,t,arr){return arr.map(function(v,i){return '<div class="sw2-row"><span class="sw2-dot '+(t==='s'?'g':'r')+'"></span><input class="sw2-in" value="'+esc(v)+'" oninput="swEdit(\''+k+'\',\''+t+'\','+i+',this.value)"><button class="sw2-x" onclick="swDel(\''+k+'\',\''+t+'\','+i+')" title="حذف">✕</button></div>';}).join('');}
-  function render(){var el=document.getElementById('sw-body');if(!el||!currentStudent)return;if(!state||statePin!==currentStudent.pin)load();
-    var used={};state.subs.forEach(function(s){used[s.key]=1;});
-    var opts=ALL.filter(function(a){return !used[a.key];}).map(function(a){return '<option value="'+a.key+'">'+a.icon+' '+a.name+'</option>';}).join('')+'<option value="__custom">✏️ مادة أخرى (اكتب الاسم)…</option>';
-    el.innerHTML=''+
-    state.subs.map(function(x){var d=state.data[x.key]||(state.data[x.key]={strengths:[],needs:[]});
-      var rm=(x.key==='arabic'||x.key==='math')?'':'<button class="sw2-x" onclick="swRemoveSub(\''+x.key+'\')" title="حذف المادة">🗑️</button>';
-      return '<div class="sw2-sub"><div class="sw2-h"><span>'+x.icon+' '+esc(x.name)+'</span>'+rm+'</div><div class="sw2-cols"><div><div class="sw2-t g">💪 جوانب القوة</div>'+rows(x.key,'s',d.strengths||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'s\')">＋ إضافة</button></div><div><div class="sw2-t r">🎯 جوانب تحتاج دعماً</div>'+rows(x.key,'n',d.needs||[])+'<button class="sw2-add" onclick="swAdd(\''+x.key+'\',\'n\')">＋ إضافة</button></div></div></div>';}).join('')+
-    '<div class="sw2-addsub"><select id="sw-sel">'+opts+'</select><button class="btn-pdf" onclick="swAddSub()">＋ إضافة مادة</button></div>';}
-  function arr(k,t){var d=state.data[k];return t==='s'?(d.strengths=d.strengths||[]):(d.needs=d.needs||[]);}
-  window.swEdit=function(k,t,i,v){arr(k,t)[i]=v;};
-  window.swDel=function(k,t,i){arr(k,t).splice(i,1);render();};
-  window.swAdd=function(k,t){arr(k,t).push('');render();};
-  window.swAddSub=function(){var v=document.getElementById('sw-sel').value,m;
-    if(v==='__custom'){var n=prompt('اسم المادة:');if(!n||!n.trim())return;m={key:'c_'+Date.now(),name:n.trim(),icon:'📘'};}
-    else{var a=meta(v);m={key:a.key,name:a.name,icon:a.icon};}
-    state.subs.push(m);state.data[m.key]=state.data[m.key]||{strengths:[''],needs:['']};render();};
-  window.swRemoveSub=function(k){if(!confirm('حذف هذه المادة؟'))return;state.subs=state.subs.filter(function(s){return s.key!==k;});delete state.data[k];render();};
-  window.swSave=function(){var d=JSON.parse(JSON.stringify(state.data));Object.keys(d).forEach(function(k){d[k].strengths=(d[k].strengths||[]).filter(Boolean);d[k].needs=(d[k].needs||[]).filter(Boolean);});
-    state={subs:state.subs,data:d,src:'محفوظ على هذا الجهاز',savedAt:new Date().toISOString()};
-    try{localStorage.setItem(key(),JSON.stringify({subs:state.subs,data:d,savedAt:state.savedAt}));}catch(e){}
-    render();if(typeof showToast==='function')showToast('✅ تم الحفظ على هذا الجهاز');};
-  window.swReset=function(){if(!confirm('استعادة القيم الافتراضية؟ ستُفقد تعديلاتك.'))return;try{localStorage.removeItem(key());}catch(e){}
-    var d=defaults(currentStudent.grade,currentStudent.pin);state={subs:d.subs,data:d.data,src:'مسودة افتراضية',savedAt:null};render();};
-
+  var state=null;
+  function load(){var st=currentStudent,srv=st.strengths||{},meta=st.strengthsMeta||null;state=null;
+    if(!meta){var df=defaults(st.grade,st.pin);state={subs:df.subs,data:df.data,src:'افتراضي',savedAt:null,teacher:null};return;}
+    var act=Array.isArray(srv._activeSubjects)&&srv._activeSubjects.length?srv._activeSubjects:['arabic','math'];
+    var subs=[];act.forEach(function(k){var m=meta_(k);var v=srv[k]||{};if(!m)return;
+      if((v.strengths&&v.strengths.length)||(v.needs&&v.needs.length))subs.push({key:k,name:m.name,icon:m.icon});});
+    if(!subs.length){var df2=defaults(st.grade,st.pin);state={subs:df2.subs,data:df2.data,src:'افتراضي',savedAt:null,teacher:null};return;}
+    var dd={};subs.forEach(function(s){dd[s.key]={strengths:(srv[s.key].strengths||[]).filter(Boolean),needs:(srv[s.key].needs||[]).filter(Boolean)};});
+    state={subs:subs,data:dd,src:'معتمد',savedAt:meta.date,teacher:meta.teacher};}
+  function meta_(k){return meta(k);}
+  function render(){var el=document.getElementById('sw-body'),card=document.getElementById('sw-card');if(!el||!currentStudent)return;load();
+    if(!state){el.innerHTML='<div class="sw2-note" style="background:#F7F5FC;border-color:#DCD2EE">لم يُدخل المعلم جوانب القوة والاحتياج لهذا الطالب بعد.</div>';var b=document.getElementById('sw-print-btn');if(b)b.style.display='none';return;}
+    var b2=document.getElementById('sw-print-btn');if(b2)b2.style.display='';
+    function ul(a,c){return a.length?a.map(function(v){return '<div class="sw2-row"><span class="sw2-dot '+c+'"></span><span class="sw2-ro">'+esc(v)+'</span></div>';}).join(''):'<div class="sw2-ro" style="color:#9a8fb0">—</div>';}
+    el.innerHTML=state.subs.map(function(x){var d=state.data[x.key];return '<div class="sw2-sub"><div class="sw2-h"><span>'+x.icon+' '+esc(x.name)+'</span></div><div class="sw2-cols"><div><div class="sw2-t g">💪 جوانب القوة</div>'+ul(d.strengths,'g')+'</div><div><div class="sw2-t r">🎯 جوانب تحتاج دعماً</div>'+ul(d.needs,'r')+'</div></div></div>';}).join('')+
+      (state.savedAt?'<div style="font-size:.78rem;color:#6E5F82">آخر تحديث: '+esc(String(state.savedAt).slice(0,10))+(state.teacher?' — بواسطة '+esc(state.teacher):'')+'</div>':'');}
   // ===== قالب الطباعة الموحّد (نفس هوية الموقع) =====
   function shell(title,sub,st,inner,draft){
     var today=new Date().toLocaleDateString('ar-SA');
@@ -2925,7 +2903,7 @@ if ("serviceWorker" in navigator) {
     '<div class="ft"><span>مدرسة مكة المكرمة المتوسطة — قسم ذوي الإعاقة</span><span>منصة مَعَاك</span></div></div>'+
     '<script>window.onload=function(){setTimeout(function(){window.print()},500)}<\/script></body></html>';}
   function openPrint(html){var w=window.open('','_blank');if(!w){if(typeof showToast==='function')showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة');return;}w.document.write(html);w.document.close();}
-  window.swPrint=function(){var st=currentStudent;
+  window.swPrint=function(){var st=currentStudent;load();if(!state)return;
     var body=state.subs.map(function(x){var v=state.data[x.key]||{};var s=(v.strengths||[]).filter(Boolean),n=(v.needs||[]).filter(Boolean);
       function ul(a){return a.length?'<ul>'+a.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul>':'—';}
       return '<tr><td class="h">'+x.icon+' '+esc(x.name)+'</td><td class="g">'+ul(s)+'</td><td class="r">'+ul(n)+'</td></tr>';}).join('');
